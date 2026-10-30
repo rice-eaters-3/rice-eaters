@@ -1,6 +1,6 @@
 {
   "schemaVersion": 4,
-  "note": "첨부 PDF의 기본판 프로젝트 카드 137장을 등록. 카드 텍스트는 PDF에서 추출했으며, effect 필드는 자동 추출 가능한 기본 효과만 구조화되어 복합 효과/행동은 텍스트를 기준으로 확인해야 함.",
+  "note": "첨부 PDF의 기본판 프로젝트 카드 137장을 등록. 카드 효과는 PDF 원문 텍스트로 보존했으며, effect 필드는 자동 추출 가능한 기본 효과만 구조화되어 복합 효과/행동은 텍스트를 기준으로 확인해야 함.",
   "tagTaxonomy": [
     "building",
     "space",
@@ -3065,13 +3065,16 @@
     {
       "id": "base-200",
       "name": "이민자 도시",
-      "cost": null,
-      "type": "ongoing",
-      "tags": [],
+      "cost": 13,
+      "type": "active",
+      "tags": [
+        "city",
+        "building"
+      ],
       "condition": null,
-      "text": "PDF에서 효과 항목을 확인하지 못함",
+      "text": "지속: 이 카드도 포함해서 아무 도시 타일이 1장 배치될 때마다, 메가크레딧 생산력 1 증가",
       "effect": {},
-      "vpText": null,
+      "vpText": "(없음)",
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "200",
@@ -3081,13 +3084,15 @@
     {
       "id": "base-202",
       "name": "지하 핵폭발",
-      "cost": null,
-      "type": "ongoing",
-      "tags": [],
+      "cost": 6,
+      "type": "active",
+      "tags": [
+        "building"
+      ],
       "condition": null,
-      "text": "PDF에서 효과 항목을 확인하지 못함",
+      "text": "행동: 10 M€을 소비하고, 열 생산력 2 증가",
       "effect": {},
-      "vpText": null,
+      "vpText": "(없음)",
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "202",
@@ -3097,13 +3102,19 @@
     {
       "id": "base-203",
       "name": "솔레타",
-      "cost": null,
+      "cost": 35,
       "type": "ongoing",
-      "tags": [],
+      "tags": [
+        "space"
+      ],
       "condition": null,
-      "text": "PDF에서 효과 항목을 확인하지 못함",
-      "effect": {},
-      "vpText": null,
+      "text": "열 생산력 7 증가",
+      "effect": {
+        "production": {
+          "heat": 7
+        }
+      },
+      "vpText": "(없음)",
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "203",
@@ -3113,13 +3124,19 @@
     {
       "id": "base-205",
       "name": "방사선흡수화합물 공장",
-      "cost": null,
+      "cost": 8,
       "type": "ongoing",
-      "tags": [],
+      "tags": [
+        "building"
+      ],
       "condition": null,
-      "text": "PDF에서 효과 항목을 확인하지 못함",
-      "effect": {},
-      "vpText": null,
+      "text": "에너지 생산력 1 감소. 2 TR 상승",
+      "effect": {
+        "production": {
+          "energy": -1
+        }
+      },
+      "vpText": "(없음)",
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "205",
@@ -3129,13 +3146,16 @@
     {
       "id": "base-206",
       "name": "특수 설계",
-      "cost": null,
-      "type": "ongoing",
-      "tags": [],
+      "cost": 4,
+      "type": "event",
+      "tags": [
+        "science",
+        "event"
+      ],
       "condition": null,
-      "text": "PDF에서 효과 항목을 확인하지 못함",
+      "text": "이번 세대에 자신이 사용하는 다음번 카드의 추진 조건 중 행성 지표에는 +2단계/-2단계 적용",
       "effect": {},
-      "vpText": null,
+      "vpText": "(없음)",
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "206",
