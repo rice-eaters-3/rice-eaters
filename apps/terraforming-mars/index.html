@@ -53,7 +53,7 @@ const CARDS=[
 {id:'asteroid',name:'소행성',cost:14,type:'event',tags:['space','event'],text:'온도 1단계 상승. 플레이어 한 명의 식물 자원을 최대 3개 제거.',effect:{temperature:1,removePlants:3},source:'나무위키 테라포밍 마스/프로젝트 카드 · 본판',verifiedAgainstSource:true},
 {id:'comet',name:'혜성',cost:21,type:'event',tags:['space','event'],text:'온도 1단계 상승. 해양 타일 1개 배치. 플레이어 한 명의 식물 자원을 최대 3개 제거.',effect:{temperature:1,ocean:1,removePlants:3},source:'나무위키 테라포밍 마스/프로젝트 카드 · 본판',verifiedAgainstSource:true}
 ];
-const RESOURCE={mc:['메가크레딧','₥'],steel:['강철','▧'],titanium:['티타늄','◈'],plant:['식물','♣'],energy:['에너지','ϟ'],heat:['열','♨']};
+const RESOURCE={mc:['메가크레딧','<img class="resource-icon" src="../../asset/terraforming-mars/resources/mc.svg" alt="메가크레딧">'],steel:['강철','<img class="resource-icon" src="../../asset/terraforming-mars/resources/steel.svg" alt="강철">'],titanium:['티타늄','<img class="resource-icon" src="../../asset/terraforming-mars/resources/titanium.svg" alt="티타늄">'],plant:['식물','<img class="resource-icon" src="../../asset/terraforming-mars/resources/plant.svg" alt="식물">'],energy:['에너지','<img class="resource-icon" src="../../asset/terraforming-mars/resources/energy.svg" alt="에너지">'],heat:['열','<img class="resource-icon" src="../../asset/terraforming-mars/resources/heat.svg" alt="열">']};
 const HEXES=[];for(let r=-4;r<=4;r++)for(let q=-4;q<=4;q++)if(Math.max(Math.abs(q),Math.abs(r),Math.abs(-q-r))<=4)HEXES.push({q,r});
 const K=h=>h.q+','+h.r;
 const OCEAN_SLOTS=new Set(['-4,0','-4,1','-4,2','-3,-1','-3,3','-2,-2','-1,-3','0,-4','1,-4']);
