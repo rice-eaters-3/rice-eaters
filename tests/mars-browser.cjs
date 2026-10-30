@@ -56,6 +56,16 @@ const assert=require('node:assert/strict');
  assert.equal(await page.locator('#paymentModal').isVisible(),false,'modal closes after confirmation');
  const paid=await page.evaluate(()=>({mc:G.res.mc,steel:G.res.steel,played:G.played.some(c=>c.id==='base-003')}));
  assert.deepEqual(paid,{mc:95,steel:6,played:true},'mixed MC/steel payment deducts exact allocation');
+ const persisted=await page.evaluate(()=>JSON.parse(localStorage.getItem('marsSoloProgressV3')||'null'));
+ assert.equal(persisted?.game?.res?.steel,6,'resource allocations autosaved');
+ assert.equal(persisted?.mapId,'tharsis','map selection autosaved');
+ await page.reload();
+ assert.equal(await page.locator('#resumeBtn').isVisible(),true,'resume button appears on reload');
+ await page.locator('#resumeBtn').click();
+ assert.equal(await page.locator('#game').isVisible(),true,'saved game restores into game view');
+ const restored=await page.evaluate(()=>({map:G.mapId,steel:G.res.steel,played:G.played.some(c=>c.id==='base-003'),tracked:G.seenCardIds instanceof Set}));
+ assert.deepEqual(restored,{map:'tharsis',steel:6,played:true,tracked:true},'resume restores card, map, resources and card-pool set');
+
 
  await page.evaluate(()=>{
  const c=CARDS.find(x=>x.id==='base-053');
