@@ -103,10 +103,10 @@ assert.deepEqual(oceans,{ocean:2,placed:2,played:true},'two ocean positions were
    g=mk();G=g;c=card('가축');c.stored.animal=4;g.played=[c];tests.push(['animal VP',cardScore(c)===4]);
    g=mk();G=g;c=card('인공 광합성 기술');g.hand=[c];playCard(c.id);tests.push(['choice applied',g.prod.plant===1]);
    g=mk();G=g;c=card('극지 미세조류');g.played=[c];g.selected=[...OCEAN_SLOTS][0];placeTile('ocean');tests.push(['persistent ocean +2 plant',g.res.plant===12]);
-   g=mk();G=g;g.selected='0,1';g.res.plant=8;useResourceAction('plant');tests.push(['click plant converts to 1 oxygen + greenery',g.oxy===1&&g.res.plant===0&&g.tiles['0,1']?.type==='greenery']);
+   g=mk();G=g;g.res.plant=8;useResourceAction('plant');boardHexClick('0,1');acceptHexConfirmation();tests.push(['click plant converts to 1 oxygen + greenery',g.oxy===1&&g.res.plant===0&&g.tiles['0,1']?.type==='greenery']);
    g=mk();G=g;g.res.heat=8;useResourceAction('heat');tests.push(['click heat uses 8 heat for +2C',g.temp===-28&&g.res.heat===0]);
    g=mk();G=g;g.temp=-26;raiseTemp(1);tests.push(['-24 heat production reward',g.prod.heat===1&&g.temp===-24]);raiseTemp(2);tests.push(['-20 heat production reward',g.prod.heat===2&&g.temp===-20]);
-   g=mk();G=g;g.temp=-2;raiseTemp(1);tests.push(['0C bonus ocean available',g.pendingBonusOceans===1]);g.selected=[...OCEAN_SLOTS][0];useBonusOcean();tests.push(['0C ocean bonus placed',g.ocean===1&&g.pendingBonusOceans===0]);
+   g=mk();G=g;g.temp=-2;raiseTemp(1);tests.push(['0C bonus ocean available',g.pendingBonusOceans===1]);useBonusOcean();boardHexClick([...OCEAN_SLOTS][0]);acceptHexConfirmation();tests.push(['0C ocean bonus placed',g.ocean===1&&g.pendingBonusOceans===0]);
    g=mk();G=g;g.oxy=7;raiseOxygen(1);tests.push(['8 percent oxygen +2C',g.oxy===8&&g.temp===-28&&g.tr===16]);
    g=mk();G=g;g.oxy=14;raiseOxygen(1);tests.push(['oxygen capped at 14',g.oxy===14&&g.tr===14]);
 
