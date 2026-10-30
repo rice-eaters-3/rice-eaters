@@ -180,15 +180,16 @@ function playCard(id){
  const cost=Math.max(0,c.cost-discount);
  if(G.res.mc<cost){alert('메가크레딧이 부족합니다: 필요 '+cost+' MC');return}
  // Resolve all player choices and target checks before charging the card cost.
- let choice=null,target=null,bonusAnimal=null,bonusMicrobe=null;
+ let choice=null,target=null,bonusAnimal=null,bonusMicrobe=null,chosenMine=null;
  switch(id){
  case 'base-019':choice=promptChoice('수소 수입',['식물 자원 3개','미생물 3개를 다른 카드에','동물 2개를 다른 카드에']);break;
  case 'base-115':choice=promptChoice('인공 광합성 기술',['식물 생산력 +1','에너지 생산력 +2']);break;
  case 'base-143':choice=promptChoice('대규모 수송선단',['식물 자원 5개','동물 4개를 다른 카드에']);break;
  case 'base-190':if(G.res.heat<5){alert('열 자원 5개 필요');return}choice=promptChoice('국소적 축열',['식물 자원 4개','동물 2개를 다른 카드에']);break;
  case 'base-152':choice=promptChoice('단열 처리: 줄일 열 생산력 선택',Array.from({length:Math.max(1,G.prod.heat+1)},(_,i)=>'열 생산력 -'+i+', MC 생산력 +'+i));break;
+ case 'base-067':choice=promptChoice('광업권: 강철/티타늄 중 채굴할 자원 선택',['강철 생산력 +1','티타늄 생산력 +1']);break;
  }
- if((CHOICE_IDS.has(id.slice(-3))||id==='base-152')&&choice<0)return;
+ if((CHOICE_IDS.has(id.slice(-3))||id==='base-152'||id==='base-067')&&choice<0)return;
  if((id==='base-019'&&choice!==0)||(id==='base-143'&&choice===1)||(id==='base-190'&&choice===1)){
    target=targetCard(id==='base-019'?(choice===1?'microbe':'animal'):'animal',id);
    if(!target)return
@@ -210,13 +211,25 @@ function playCard(id){
  const selectedOcean=G.selected&&freeOceans.includes(G.selected)?G.selected:null;
  const oceanSlots=selectedOcean?[selectedOcean,...freeOceans.filter(k=>k!==selectedOcean).slice(0,oceanN-1)]:freeOceans.slice(0,oceanN);
  let chosenTile=G.selected;
+ const specialTile=['base-044','base-067','base-097','base-128','base-140','base-142'].includes(id);
+ const specialOcean=id==='base-142';
+ if(specialTile){
+  if(!chosenTile){alert('특수 타일을 놓을 칸을 먼저 선택하세요.');return}
+  if(specialOcean?G.tiles[chosenTile]?.type!=='ocean-slot':Boolean(G.tiles[chosenTile])){alert('특수 타일을 놓을 수 없는 칸입니다.');return}
+  if(id==='base-044'&&HEXES.some(h=>K(h)===chosenTile&&neighbors(h).some(n=>G.tiles[K(n)]&&G.tiles[K(n)].type!=='ocean-slot'))){alert('자연 보존은 다른 타일에 인접하면 안 됩니다.');return}
+  if(id==='base-128'&&!adjacent(chosenTile,'greenery').length){alert('자연 생태 형성지는 녹지에 인접해야 합니다.');return}
+  if(id==='base-067'){
+    const bonus=BOARD_BONUSES[chosenTile]||{};
+    if(!(bonus.steel||bonus.titanium)){alert('광업권은 강철/티타늄 자원 보너스가 있는 칸에 놓으세요.');return}
+  }
+ }
  if(cityN||greenN){
   if(!chosenTile){alert('지도에서 먼저 타일 배치 위치를 선택하세요.');return}
   const isFree=!G.tiles[chosenTile],reserved=OCEAN_SLOTS.has(chosenTile)||SPECIAL_SLOTS.has(chosenTile);
   const isOceanSlot=G.tiles[chosenTile]?.type==='ocean-slot';
-  if(greenOnOcean?!isOceanSlot:(!isFree||reserved)){alert(greenOnOcean?'빈 해양 예약 칸을 선택하세요.':'선택한 칸은 비어 있는 육지 칸이 아닙니다.');return}
+  if(id==='base-017'&&chosenTile==='0,0'&&G.tiles[chosenTile]?.type==='special'){}else if(greenOnOcean?!isOceanSlot:(!isFree||reserved)){alert(greenOnOcean?'빈 해양 예약 칸을 선택하세요.':'선택한 칸은 비어 있는 육지 칸이 아닙니다.');return}
   if(id==='base-020'&&HEXES.some(h=>{const k=K(h);return G.tiles[k]?.type!=='ocean-slot'&&G.tiles[k]&&neighbors(h).some(n=>K(n)===chosenTile)})){alert('연구 전진 기지는 다른 타일과 인접할 수 없습니다.');return}
-  if(cityN&&adjacent(chosenTile,'city').length){alert('도시는 다른 도시와 인접할 수 없습니다.');return}
+  if(cityN&&id!=='base-017'&&adjacent(chosenTile,'city').length){alert('도시는 다른 도시와 인접할 수 없습니다.');return}
  }
  const production=e.production||{};
  for(const [k,v]of Object.entries(production)){if(v<0&&k!=='mc'&&(G.prod[k]||0)<-v){alert(k+' 생산력이 부족합니다.');return}}
@@ -230,8 +243,9 @@ function playCard(id){
  if(e.temperature)raiseTemp(e.temperature);
  if(e.oxygen&&!greenN){const n=Math.min(e.oxygen,14-G.oxy);G.oxy+=n;G.tr+=n}
  for(const k of oceanSlots){G.selected=k;placeTile('ocean')}
- if(cityN){G.selected=chosenTile;placeTile('city');G.tiles[chosenTile].sourceCard=id}
- if(greenN){G.selected=chosenTile;if(greenOnOcean){G.tiles[chosenTile]={type:'greenery',sourceCard:id};if(G.oxy<14){G.oxy++;G.tr++}onTilePlaced('greenery');G.selected=null}else placeTile('greenery')}
+ if(cityN){G.selected=chosenTile;G.placingCard=id;placeTile('city');G.placingCard=null;G.tiles[chosenTile].sourceCard=id}
+ if(greenN){G.selected=chosenTile;if(greenOnOcean){G.tiles[chosenTile]={type:'greenery',sourceCard:id};if(G.oxy<14){G.oxy++;G.tr++}G.res.mc+=adjacent(chosenTile,'ocean').length*2;onTilePlaced('greenery');G.selected=null}else placeTile('greenery')}
+ if(specialTile){G.tiles[chosenTile]={type:'special',sourceCard:id};G.res.mc+=adjacent(chosenTile,'ocean').length*2;applyBoardBonus(chosenTile);if(id==='base-067')G.prod[choice===0?'steel':'titanium']++}
  const cardTags=(tag)=>G.played.filter(x=>x.type!=='event').reduce((n,x)=>n+(x.tags||[]).filter(t=>t===tag).length,0);
  const cityCount=Object.values(G.tiles).filter(t=>t.type==='city').length;
  const dynamic={...production};
@@ -257,7 +271,7 @@ function playCard(id){
  case 'base-026':if(bonusAnimal)storeOn(bonusAnimal,'animal',1);break;
  case 'base-163':if(bonusMicrobe)storeOn(bonusMicrobe,'microbe',3);if(bonusAnimal)storeOn(bonusAnimal,'animal',2);break;
  case 'base-170':if(bonusMicrobe)storeOn(bonusMicrobe,'microbe',2);break;
- case 'base-152':{break}
+ 
  }
  if(G.corp==='credicor'&&c.cost>=20)G.res.mc+=4;
  if(G.corp==='interplanetary'&&c.type==='event')G.res.mc+=2;
