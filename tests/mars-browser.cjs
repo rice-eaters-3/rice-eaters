@@ -16,6 +16,8 @@ const assert=require('node:assert/strict');
  await page.getByRole('button',{name:'기업 확정하고 게임 시작'}).click();
  assert.equal(await page.locator('#game').isVisible(),true,'game visible after corporation confirmation');
  assert.equal(await page.locator('#activeMapName').textContent(),'타르시스','selected map is used');
+ const soloBoard=await page.evaluate(()=>({neutralCities:Object.values(G.tiles).filter(t=>t.neutral&&t.type==='city').length,neutralGreeneries:Object.values(G.tiles).filter(t=>t.neutral&&t.type==='greenery').length,oxygen:G.oxy,tr:G.tr,score:G.score}));
+ assert.deepEqual(soloBoard,{neutralCities:2,neutralGreeneries:2,oxygen:0,tr:14,score:14},'solo starts with 2 neutral cities and greenery, without oxygen or score');
  await page.evaluate(()=>{
    const all=CARDS.map(c=>cardHTML(c,'hand'));
    const scratch=document.createElement('div');
@@ -32,11 +34,11 @@ const assert=require('node:assert/strict');
  const mapChecks=await page.evaluate(()=>{
   const old=G,mapResults=[];
   for(const id of MAP_IDS){
-   const a=applyMapPreset(id);
+   G.mapId=id;const a=applyMapPreset(id);
    const first=JSON.stringify(BOARD_BONUSES),waterA=Array.from(OCEAN_SLOTS).sort().join('|');
    const second=applyMapPreset(id);
    const limits=mapLimits();
-   mapResults.push([id,first===JSON.stringify(BOARD_BONUSES),waterA===Array.from(OCEAN_SLOTS).sort().join('|'),OCEAN_SLOTS.size>=limits.ocean]);
+   mapResults.push([id,first===JSON.stringify(BOARD_BONUSES),waterA===Array.from(OCEAN_SLOTS).sort().join('|'),OCEAN_SLOTS.size>=limits.ocean,HEXES.length===(id==='amazonis'?91:61)]);
   }
   applyMapPreset('tharsis');G.mapId='tharsis';
   return mapResults
@@ -55,6 +57,22 @@ const assert=require('node:assert/strict');
  const paid=await page.evaluate(()=>({mc:G.res.mc,steel:G.res.steel,played:G.played.some(c=>c.id==='base-003')}));
  assert.deepEqual(paid,{mc:95,steel:6,played:true},'mixed MC/steel payment deducts exact allocation');
 
+ await page.evaluate(()=>{
+ const c=CARDS.find(x=>x.id==='base-053');
+ G.hand=[{...c}];G.temp=0;G.oxy=5;G.ocean=0;G.res.mc=100;G.phase='action';G.selected=null;G.mapId='tharsis';
+ G.tiles={};for(const k of OCEAN_SLOTS)G.tiles[k]={type:'ocean-slot',reserved:true};
+ G.tiles['0,0']={type:'special',reserved:true};renderGame()
+});
+await page.locator('#hand button.choose').first().click();
+assert.equal(await page.locator('#paymentModal').isVisible(),true,'double-ocean card payment opens');
+assert.equal(await page.locator('#paymentConfirm').isDisabled(),true,'ocean placement selection required');
+await page.locator('.payment-ocean-option input[type=checkbox]').nth(0).check();
+await page.locator('.payment-ocean-option input[type=checkbox]').nth(1).check();
+assert.equal(await page.locator('#paymentConfirm').isEnabled(),true,'two ocean slots make payment valid');
+await page.locator('#paymentConfirm').click();
+const oceans=await page.evaluate(()=>({ocean:G.ocean,placed:Object.values(G.tiles).filter(t=>t.type==='ocean').length,played:G.played.some(c=>c.id==='base-053')}));
+assert.deepEqual(oceans,{ocean:2,placed:2,played:true},'two ocean positions were chosen and placed');
+
  const outcomes=await page.evaluate(()=>{
    const tests=[];
    const zero=()=>({mc:150,steel:10,titanium:10,plant:10,energy:10,heat:10});
@@ -67,6 +85,9 @@ const assert=require('node:assert/strict');
    g=mk();G=g;c=card('가축');c.stored.animal=4;g.played=[c];tests.push(['animal VP',cardScore(c)===4]);
    g=mk();G=g;c=card('인공 광합성 기술');g.hand=[c];playCard(c.id);tests.push(['choice applied',g.prod.plant===1]);
    g=mk();G=g;c=card('극지 미세조류');g.played=[c];g.selected=[...OCEAN_SLOTS][0];placeTile('ocean');tests.push(['persistent ocean +2 plant',g.res.plant===12]);
+   g=mk();G=g;g.selected='0,1';g.res.plant=8;useResourceAction('plant');tests.push(['click plant converts to 1 oxygen + greenery',g.oxy===1&&g.res.plant===0&&g.tiles['0,1']?.type==='greenery']);
+   g=mk();G=g;g.res.heat=8;useResourceAction('heat');tests.push(['click heat uses 8 heat for +2C',g.temp===-28&&g.res.heat===0]);
+
    return tests;
  });
  assert.deepEqual(outcomes.filter(x=>!x[1]),[],JSON.stringify(outcomes));
