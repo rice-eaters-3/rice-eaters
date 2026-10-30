@@ -34,7 +34,7 @@
 <script>
 const $=id=>document.getElementById(id);
 const TAGS={building:{label:'건물',file:'building'},space:{label:'우주',file:'space'},power:{label:'에너지',file:'power'},science:{label:'과학',file:'science'},jovian:{label:'목성',file:'jovian'},earth:{label:'지구',file:'earth'},plant:{label:'식물',file:'plant'},microbe:{label:'미생물',file:'microbe'},animal:{label:'동물',file:'animal'},city:{label:'도시',file:'city'},event:{label:'사건',file:'event'},venus:{label:'금성',file:'venus'}};
-const TAG_ASSET_BASE='https://raw.githubusercontent.com/terraforming-mars/terraforming-mars-assets-sources/master/elements/';
+const TAG_ASSET_BASE='../../asset/terraforming-mars/tags/';
 const CORPS=[
 {id:'beginner',name:'초보 기업',money:42,ability:'특수 능력 없음. 시작 TR 14, 생산량 기본값으로 시작.',prod:{},tags:[],builtin:true},
 {id:'credicor',name:'크레디코르',money:57,ability:'프로젝트 카드 비용이 20 MC 이상이면 4 MC 할인.',discount:4,discountMin:20,prod:{},tags:[]},
@@ -42,7 +42,7 @@ const CORPS=[
 {id:'helion',name:'헬리온',money:42,ability:'열 자원을 메가크레딧처럼 비용 지불에 사용할 수 있음.',heatMoney:true,prod:{},tags:['space']},
 {id:'mining',name:'광업 길드',money:30,ability:'강철 생산 +1, 시작 강철 5개.',start:{steel:5},prod:{steel:1},tags:['building']},
 {id:'tharsis',name:'타르시스 공화국',money:40,ability:'도시 타일이 놓일 때 MC 생산량 +1. 시작 MC 생산량 +1.',prod:{mc:1},tags:['building']},
-{id:'teractor',name:'테라토르',money:60,ability:'지구 태그가 있는 카드 비용 3 MC 할인.',earthDiscount:3,prod:{},tags:['earth']},
+{id:'teractor',name:'테렉터',money:60,ability:'지구 태그가 있는 카드 비용 3 MC 할인.',earthDiscount:3,prod:{},tags:['earth']},
 {id:'saturn',name:'토성 시스템',money:42,ability:'시작 티타늄 생산량 +1.',prod:{titanium:1},tags:['jovian','space']},
 {id:'inventrix',name:'인벤트릭스',money:45,ability:'카드의 전제 조건을 확인할 때 행성 지표가 1단계 더 높다고 간주.',prod:{},tags:['science']},
 {id:'phobolog',name:'포보로크',money:23,ability:'시작 티타늄 10개. 티타늄 자원 가치 +1 MC.',start:{titanium:10},titaniumValue:1,prod:{},tags:['space']},
