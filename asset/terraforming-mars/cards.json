@@ -2232,7 +2232,7 @@
     {
       "id": "base-140",
       "name": "용암류",
-      "cost": 3,
+      "cost": 18,
       "type": "event",
       "tags": [
         "event"
@@ -2491,7 +2491,7 @@
     {
       "id": "base-158",
       "name": "공업용 미생물",
-      "cost": 3,
+      "cost": 12,
       "type": "ongoing",
       "tags": [
         "building",
