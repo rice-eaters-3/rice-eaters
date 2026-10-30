@@ -185,8 +185,12 @@ function playCard(id){
  case 'base-019':if(choice===0)G.res.plant+=3;else storeOn(target,choice===1?'microbe':'animal',choice===1?3:2);break;
  case 'base-115':G.prod[choice===0?'plant':'energy']+=choice===0?1:2;break;
  case 'base-143':if(choice===0)G.res.plant+=5;else storeOn(target,'animal',4);break;
- case 'base-190':G.res.heat-=5;if(choice===0)G.res.plant+=4;else storeOn(target,'animal',2);break;
+ case 'base-190':if(choice===0)G.res.plant+=4;else storeOn(target,'animal',2);break;
  case 'base-172':storeOn(c,'animal',1);break;
+ case 'base-026':if(!cardResourceAction(c,'animal',1))log('에오스 협곡 국립공원: 동물 자원 추가 대상 없음');break;
+ case 'base-163':{const m=G.played.filter(x=>x.id!==id&&/미생물/.test((x.effectText||'')+(x.vpText||'')));const an=G.played.filter(x=>x.id!==id&&/동물/.test((x.effectText||'')+(x.vpText||'')));if(m.length)storeOn(m[0],'microbe',3);if(an.length)storeOn(an[0],'animal',2);break}
+ case 'base-170':{const m=G.played.find(x=>x.id!==id&&/미생물/.test((x.effectText||'')+(x.vpText||'')));if(m)storeOn(m,'microbe',2);break}
+ case 'base-152':{break}
  }
  if(G.corp==='credicor'&&c.cost>=20)G.res.mc+=4;
  if(G.corp==='interplanetary'&&c.type==='event')G.res.mc+=2;
