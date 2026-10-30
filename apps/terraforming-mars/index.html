@@ -239,14 +239,14 @@ function renderBoard(id){
  out.push('<defs><radialGradient id="terrain"><stop offset="0%" stop-color="'+current.color+'" stop-opacity=".65"/><stop offset="100%" stop-color="#382521" stop-opacity=".16"/></radialGradient></defs><circle cx="360" cy="270" r="222" fill="url(#terrain)" stroke="#cc8c63" stroke-width="2"/><text x="360" y="40" class="board-map-label">'+esc(current.en)+'</text><text x="360" y="56" class="board-map-subtitle">'+esc(current.subtitle)+'</text>');
  for(const h of HEXES){
   const k=K(h),x=360+size*Math.sqrt(3)*(h.q+h.r/2),y=270+size*1.5*h.r,t=G.tiles[k],type=t?.type||'land';
-  const label=t?.neutral?(type==='city'?'N🏙':'N🌿'):type==='greenery'?'🌿':type==='city'?'🏙':type==='ocean'?'🌊':type==='special'?'N':OCEAN_SLOTS.has(k)?'🌊':'';
+  const label=t?.neutral?(type==='city'?'N🏙':'N🌿'):type==='greenery'?'🌿':type==='city'?'🏙':type==='ocean'?'🌊':type==='special'?'◆':OCEAN_SLOTS.has(k)?'🌊':VOLCANO_SLOTS.has(k)?'▲':'';
   const pts=[];for(let i=0;i<6;i++){const a=Math.PI/180*(60*i-30);pts.push((x+size*Math.cos(a))+','+(y+size*Math.sin(a)))}
   const bonus=!t||t.type==='ocean-slot'?BOARD_BONUSES[k]:null;
   const desc=boardBonusDescription(k),iconMarkup=bonus?Object.entries(bonus).map(([kind,n],i)=>{
    const folder=kind==='draw'?'tags':'resources',file=icons[kind],dx=Object.keys(bonus).length>1?i*21-9:0;
    return '<image href="../../asset/terraforming-mars/'+folder+'/'+file+'.svg" x="'+(x-11+dx)+'" y="'+(y+4)+'" width="17" height="17"/><text class="hexbonus" x="'+(x+10+dx)+'" y="'+(y+17)+'">'+n+'</text>'
   }).join(''):'';
-  out.push('<g data-k="'+k+'"><title>'+esc('칸 '+k+(desc?' · 배치 보너스: '+desc:''))+'</title><polygon class="hex '+type+(G.selected===k?' selected':'')+'" points="'+pts.join(' ')+'"/><text class="hextext" x="'+x+'" y="'+(bonus?y-7:y)+'">'+label+'</text>'+iconMarkup+'</g>')
+  out.push('<g data-k="'+k+'"><title>'+esc('칸 '+k+(VOLCANO_SLOTS.has(k)?' · 화산 지형':'')+(desc?' · 배치 보너스: '+desc:''))+'</title><polygon class="hex '+type+(G.selected===k?' selected':'')+'" points="'+pts.join(' ')+'"/><text class="hextext" x="'+x+'" y="'+(bonus?y-7:y)+'">'+label+'</text>'+iconMarkup+'</g>')
  }
  $(id).innerHTML=out.join('');
  $(id).querySelectorAll('[data-k]').forEach(el=>el.onclick=()=>{
@@ -261,7 +261,7 @@ function pay(cost){if(G.res.mc<cost){alert('메가크레딧이 부족합니다.'
 function raiseTemp(n=1){let before=G.temp;G.temp=Math.min(mapLimits().temp,G.temp+n*2);G.tr+=Math.max(0,(G.temp-before)/2);log('온도 상승: '+before+' → '+G.temp+'°C');}
 function applyBoardBonus(k){const bonus=BOARD_BONUSES[k];if(!bonus)return;for(const [type,n]of Object.entries(bonus)){if(type==='draw')for(let i=0;i<n;i++)drawCard();else G.res[type]=(G.res[type]||0)+n}log('타일 점유 보너스: '+k)}
 function placeTile(type){const k=G.selected;if(!k){alert('먼저 지도에서 칸을 선택하세요.');return false}
- const t=G.tiles[k],noctis=G.placingCard==='base-017'&&type==='city'&&k==='0,0';
+ const t=G.tiles[k],noctis=G.mapId==='tharsis'&&G.placingCard==='base-017'&&type==='city'&&k==='0,0';
  if(t?.reserved&&!noctis){if(!(type==='ocean'&&t.type==='ocean-slot')){alert('예약된 칸에는 해당 타일을 배치할 수 없습니다.');return false}}
  else if(t&&!noctis){alert('이미 점유된 칸입니다.');return false}
  if(SPECIAL_SLOTS.has(k)&&!noctis){alert('특수 예약 칸입니다.');return false}
@@ -328,6 +328,7 @@ function playCard(id){
   if(specialOcean?G.tiles[chosenTile]?.type!=='ocean-slot':Boolean(G.tiles[chosenTile])){alert('특수 타일을 놓을 수 없는 칸입니다.');return}
   if(id==='base-044'&&HEXES.some(h=>K(h)===chosenTile&&neighbors(h).some(n=>G.tiles[K(n)]&&G.tiles[K(n)].type!=='ocean-slot'))){alert('자연 보존은 다른 타일에 인접하면 안 됩니다.');return}
   if(id==='base-128'&&!adjacent(chosenTile,'greenery').length){alert('자연 생태 형성지는 녹지에 인접해야 합니다.');return}
+  if(id==='base-140'&&VOLCANO_SLOTS.size&&!VOLCANO_SLOTS.has(chosenTile)){alert('용암류: 지도에서 화산 지역을 선택하세요.');return}
   if(id==='base-067'){
     const bonus=BOARD_BONUSES[chosenTile]||{};
     if(!(bonus.steel||bonus.titanium)){alert('광업권은 강철/티타늄 자원 보너스가 있는 칸에 놓으세요.');return}
@@ -337,9 +338,9 @@ function playCard(id){
   if(!chosenTile){alert('지도에서 먼저 타일 배치 위치를 선택하세요.');return}
   const isFree=!G.tiles[chosenTile],reserved=OCEAN_SLOTS.has(chosenTile)||SPECIAL_SLOTS.has(chosenTile);
   const isOceanSlot=G.tiles[chosenTile]?.type==='ocean-slot';
-  if(id==='base-017'&&chosenTile==='0,0'&&G.tiles[chosenTile]?.type==='special'){}else if(greenOnOcean?!isOceanSlot:(!isFree||reserved)){alert(greenOnOcean?'빈 해양 예약 칸을 선택하세요.':'선택한 칸은 비어 있는 육지 칸이 아닙니다.');return}
+  if(id==='base-017'&&G.mapId==='tharsis'&&chosenTile==='0,0'&&G.tiles[chosenTile]?.type==='special'){}else if(greenOnOcean?!isOceanSlot:(!isFree||reserved)){alert(greenOnOcean?'빈 해양 예약 칸을 선택하세요.':'선택한 칸은 비어 있는 육지 칸이 아닙니다.');return}
   if(id==='base-020'&&HEXES.some(h=>{const k=K(h);return G.tiles[k]?.type!=='ocean-slot'&&G.tiles[k]&&neighbors(h).some(n=>K(n)===chosenTile)})){alert('연구 전진 기지는 다른 타일과 인접할 수 없습니다.');return}
-  if(cityN&&id!=='base-017'&&adjacent(chosenTile,'city').length){alert('도시는 다른 도시와 인접할 수 없습니다.');return}
+  if(cityN&&!(id==='base-017'&&G.mapId==='tharsis')&&adjacent(chosenTile,'city').length){alert('도시는 다른 도시와 인접할 수 없습니다.');return}
  }
  const production=e.production||{};
  const opponentReduction={'base-052':['plant',1],'base-054':['plant',1],'base-072':['plant',2],'base-178':['heat',2],'base-183':['plant',1]}[id];
