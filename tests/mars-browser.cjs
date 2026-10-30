@@ -82,6 +82,32 @@ const assert=require('node:assert/strict');
  assert.deepEqual(restored,{map:'tharsis',steel:6,played:true,tracked:true},'resume restores card, map, resources and card-pool set');
 
 
+
+ await page.evaluate(()=>{
+   G.res.plant=8;G.oxy=0;G.phase='action';G.corp='credicor';G.selected=null;
+   G.tiles={};for(const k of OCEAN_SLOTS)G.tiles[k]={type:'ocean-slot',reserved:true};
+   G.tiles['0,0']={type:'special',reserved:true};renderGame();
+ });
+ const plantBefore=await page.evaluate(()=>G.res.plant);
+ await page.locator('#resources .res-action').filter({hasText:'식물'}).click();
+ assert.equal(await page.locator('#plantSpendModal').isVisible(),true,'plant spend confirmation appears first');
+ assert.equal(await page.evaluate(()=>G.res.plant),plantBefore,'plant resource not consumed before confirmation');
+ await page.locator('#plantSpendModal').getByRole('button',{name:'취소'}).click();
+ assert.equal(await page.locator('#plantSpendModal').isVisible(),false,'cancel plant resource confirmation');
+ assert.equal(await page.evaluate(()=>G.res.plant),plantBefore,'cancel does not consume plant');
+ await page.locator('#resources .res-action').filter({hasText:'식물'}).click();
+ await page.locator('#plantSpendModal').getByRole('button',{name:/식물 소모 확정/}).click();
+ assert.equal(await page.locator('#paymentPlacementModal').isVisible(),true,'plant spending confirmation leads to hex picking');
+ assert.equal(await page.evaluate(()=>G.res.plant),plantBefore,'plant is not spent while picking tile');
+ await page.locator('#board .hex.valid-target').first().click();
+ assert.equal(await page.locator('#hexConfirmationModal').isVisible(),true,'greenery tile asks yes/no');
+ await page.locator('#hexConfirmationModal').getByRole('button',{name:/아니요/}).click();
+ assert.equal(await page.evaluate(()=>G.res.plant),plantBefore,'decline placement keeps plants');
+ await page.locator('#board .hex.valid-target').first().click();
+ await page.locator('#hexConfirmationModal').getByRole('button',{name:/예, 배치/}).click();
+ const greenPlaced=await page.evaluate(()=>({plant:G.res.plant,oxy:G.oxy,greenery:Object.values(G.tiles).filter(x=>x.type==='greenery'&&!x.neutral).length}));
+ assert.deepEqual(greenPlaced,{plant:0,oxy:1,greenery:1},'confirmed greenery consumes 8 plants and raises oxygen');
+
  await page.evaluate(()=>{
  const c=CARDS.find(x=>x.id==='base-053');
  G.hand=[{...c}];G.temp=0;G.oxy=5;G.ocean=0;G.res.mc=100;G.phase='action';G.selected=null;G.mapId='tharsis';
