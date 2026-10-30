@@ -42,5 +42,5 @@ const assert=require('node:assert/strict');
  assert.deepEqual(outcomes.filter(x=>!x[1]),[],JSON.stringify(outcomes));
  assert.deepEqual(errors,[],'unhandled page JavaScript errors');
  await page.screenshot({path:'mars-browser-smoke.png',fullPage:true});
- await browser.close();console.log(JSON.stringify({status:'PASS',checks:outcomes.length,images:await imgs.count(),pageErrors:errors.length}));
+ const imageCount=await imgs.count();await browser.close();console.log(JSON.stringify({status:'PASS',checks:outcomes.length,images:imageCount,pageErrors:errors.length}));
 })().catch(e=>{console.error(e);process.exitCode=1});
