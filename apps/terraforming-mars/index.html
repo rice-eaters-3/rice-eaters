@@ -379,7 +379,7 @@ function drawCard(){let pool=availableCards();if(!pool.length){log('카드 풀 �
 function openDraft(){if(G.phase!=='action'){alert('현재는 멀리건 단계가 아닙니다.');return}let pool=availableCards();draftCards=pick(pool,Math.min(4,pool.length)).map(c=>({...c,drawGen:G.gen}));markSeen(draftCards.map(c=>c.id));draftSelected=new Set();$('draftGen').textContent=G.gen;$('draftCards').innerHTML=draftCards.map(c=>cardHTML(c,'draft')).join('');updateDraftCount();showPage('draft');saveProgress()}
 function toggleDraft(id,on){if(on)draftSelected.add(id);else draftSelected.delete(id);updateDraftCount();saveProgress()}
 function updateDraftCount(){$('draftCount').textContent=draftSelected.size+'장 선택 · '+(draftSelected.size*3)+' MC'}
-function confirmDraft(){let cost=draftSelected.size*3;if(cost>G.res.mc){alert('메가크레딧이 부족합니다.');return}G.res.mc-=cost;let accepted=draftCards.filter(c=>draftSelected.has(c.id));let rejected=draftCards.filter(c=>!draftSelected.has(c.id));accepted.forEach(c=>G.hand.push(c));G.excludedCards.push(...rejected.map(c=>({...c,excludedAt:G.gen,reason:'세대 멀리건에서 구매하지 않음'})));log('세대 멀리건: '+draftCards.length+'장 중 '+accepted.length+'장 구매, '+rejected.length+'장 제외. 제외 카드는 이후 풀에 다시 들어가지 않습니다.');G.phase='action';showPage('game');renderGame()}
+function confirmDraft(){let cost=draftSelected.size*3;if(!pay(cost))return;let accepted=draftCards.filter(c=>draftSelected.has(c.id));let rejected=draftCards.filter(c=>!draftSelected.has(c.id));accepted.forEach(c=>G.hand.push(c));G.excludedCards.push(...rejected.map(c=>({...c,excludedAt:G.gen,reason:'세대 멀리건에서 구매하지 않음'})));log('세대 멀리건: '+draftCards.length+'장 중 '+accepted.length+'장 구매, '+rejected.length+'장 제외. 제외 카드는 이후 풀에 다시 들어가지 않습니다.');G.phase='action';showPage('game');renderGame()}
 function endGeneration(){if(G.phase!=='action')return;production();if(G.gen>=mapLimits().gen||allParametersComplete()){updateScore();beginFinal(G.gen>=mapLimits().gen?mapLimits().gen+'세대 종료':'행성 지표 완성');return}G.gen++;G.genStartTR=G.tr;G.doneActions=0;log('새 세대 시작. 생산 페이즈 완료.');openDraft()}
 function production(){const previousEnergy=G.res.energy;G.res.heat+=previousEnergy;G.res.energy=0;G.res.mc+=G.tr+G.prod.mc;for(let k of ['steel','titanium','plant','energy','heat'])G.res[k]+=G.prod[k];log('생산: MC +'+(G.tr+G.prod.mc)+', 강철 +'+G.prod.steel+', 티타늄 +'+G.prod.titanium+', 식물 +'+G.prod.plant+', 이전 에너지 '+previousEnergy+'개를 열로 전환, 에너지 +'+G.prod.energy)}
 function allParametersComplete(){const l=mapLimits();return G.temp>=l.temp&&G.oxy>=l.oxy&&G.ocean>=l.ocean}
@@ -410,7 +410,14 @@ function renderBoard(id){
  $('tileCount').textContent=Object.values(G.tiles).filter(t=>['ocean','greenery','city'].includes(t.type)).length+' 타일'
 }
 function updateScore(){let tileVP=Object.values(G.tiles).filter(t=>t.type==='greenery'&&!t.neutral).length+Object.entries(G.tiles).filter(([k,t])=>t.type==='city'&&!t.neutral).reduce((n,[k])=>n+adjacent(k,'greenery').length,0);let cardVP=G.played.reduce((s,c)=>s+cardScore(c),0);let score=G.tr+tileVP+cardVP;G.score=score;$('scoreTotal').textContent=score+' VP';$('scoreDetails').textContent='TR '+G.tr+' + 타일 점수 '+tileVP+' + 카드 점수 '+cardVP+' (카드별 일부 특수 점수는 미포함)'}
-function pay(cost){if(G.res.mc<cost){alert('메가크레딧이 부족합니다.');return false}G.res.mc-=cost;return true}
+function canAfford(cost){return (G.res.mc||0)+(G.corp==='helion'?(G.res.heat||0):0)>=cost}
+function pay(cost){
+ if(!canAfford(cost)){alert('지불에 필요한 메가크레딧이 부족합니다.');return false}
+ const mc=Math.min(G.res.mc||0,cost),heat=cost-mc;
+ G.res.mc-=mc;
+ if(heat){G.res.heat-=heat;log('헬리온: 열 자원 '+heat+'개를 '+heat+' M€로 사용')}
+ return true
+}
 function changeProduction(kind,amount,reason=''){
  if(!G||!Number.isFinite(amount)||!amount)return 0;
  const before=G.prod[kind]||0,after=Math.max(kind==='mc'?-5:0,before+amount),actual=after-before;
@@ -701,23 +708,23 @@ function creditRefund(baseCost){
 }
 function onAction(id){if(!G||G.phase!=='action')return;const c=G.played.find(x=>x.id===id);if(!c||!ACTIVE_IDS.has(id.slice(-3)))return;
  if(c.lastActionGen===G.gen){alert('이 카드는 이번 세대에 이미 행동했습니다.');return}
- let success=true;const need=(kind,n)=>{if((G.res[kind]||0)<n){alert(kind+' 자원 '+n+'개가 필요합니다.');return false}return true};const oxygen=()=>raiseOxygen(1);const mustOcean=()=>G.ocean<mapLimits().ocean&&G.selected&&OCEAN_SLOTS.has(G.selected)&&G.tiles[G.selected]?.type==='ocean-slot';
+ let success=true;const need=(kind,n)=>{if(kind==='mc'? !canAfford(n):(G.res[kind]||0)<n){alert(kind+' 자원 '+n+'개가 필요합니다.');return false}return true};const oxygen=()=>raiseOxygen(1);const mustOcean=()=>G.ocean<mapLimits().ocean&&G.selected&&OCEAN_SLOTS.has(G.selected)&&G.tiles[G.selected]?.type==='ocean-slot';
  switch(id){
- case 'base-005':if(!need('mc',1))return;{let p=availableCards();if(!p.length){alert('덱에 카드가 없습니다.');return}let pickCard=pick(p,1)[0];G.seenCardIds.add(pickCard.id);G.excludedCards.push({...pickCard,reason:'생명체 탐사 공개 후 버림'});G.res.mc--;if(pickCard.tags.includes('microbe'))storeOn(c,'science',1);log('생명체 탐사: '+pickCard.name+' 공개 후 버림')}break;
+ case 'base-005':if(!need('mc',1))return;{let p=availableCards();if(!p.length){alert('덱에 카드가 없습니다.');return}let pickCard=pick(p,1)[0];G.seenCardIds.add(pickCard.id);G.excludedCards.push({...pickCard,reason:'생명체 탐사 공개 후 버림'});pay(1);if(pickCard.tags.includes('microbe'))storeOn(c,'science',1);log('생명체 탐사: '+pickCard.name+' 공개 후 버림')}break;
  case 'base-007':if(!need('energy',1))return;G.res.energy--;G.res.mc+=Object.values(G.tiles).filter(t=>t.type==='city').length;break;
- case 'base-012':if(!need('mc',12)||!mustOcean()){alert('해양 예약 칸을 선택하세요.');return}G.res.mc-=12;placeTile('ocean');break;
+ case 'base-012':if(!need('mc',12)||!mustOcean()){alert('해양 예약 칸을 선택하세요.');return}pay(12);placeTile('ocean');break;
  case 'base-015':if(G.prod.energy<1){alert('에너지 생산력 1 이상이 필요합니다.');return}changeProduction('energy',-1,'적도 자기장');G.tr++;break;
  case 'base-024':case 'base-035':{const kind=id==='base-024'?'animal':'microbe', targets=G.played.filter(x=>x.id!==c.id&&stocked(x,kind)>0&&x.id!=='base-172');if(!targets.length){alert('이동할 자원이 있는 다른 카드가 없습니다.');return}const k=promptChoice('자원을 제거할 카드',targets.map(x=>x.name));if(k<0)return;storeOn(targets[k],kind,-1);storeOn(c,kind,1);break}
  case 'base-033':case 'base-034':case 'base-157':{const kind='microbe',needed=id==='base-157'?3:2,option=promptChoice(c.name,['이 카드에 미생물 1개 추가',id==='base-033'?'미생물 2개 소비 → 산소 +1':id==='base-034'?'미생물 2개 소비 → 기온 +2℃':'미생물 3개 소비 → TR +1']);if(option<0)return;if(option===0)storeOn(c,kind,1);else{if(stocked(c,kind)<needed){alert('카드에 미생물 '+needed+'개가 필요합니다.');return}storeOn(c,kind,-needed);if(id==='base-033')oxygen();else if(id==='base-034')raiseTemp();else G.tr++}break}
  case 'base-052':case 'base-054':case 'base-072':case 'base-184':storeOn(c,'animal',1);break;
- case 'base-076':if(!need('mc',7))return;G.res.mc-=7;changeProduction('energy',1,'카드 행동');break;
+ case 'base-076':if(!need('mc',7))return;pay(7);changeProduction('energy',1,'카드 행동');break;
  case 'base-101':case 'base-103':case 'base-104':if(!need('energy',4))return;G.res.energy-=4;G.res[id==='base-104'?'titanium':'steel']+=id==='base-103'?2:1;oxygen();break;
  case 'base-133':if(!cardResourceAction(c,'microbe',1))return;break;
  case 'base-134':{const k=promptChoice(c.name,['식물 자원 +1','다른 카드에 미생물 자원 +2']);if(k<0)return;if(k===0)G.res.plant++;else if(!cardResourceAction(c,'microbe',2))return;break}
  case 'base-157':break;
  case 'base-177':if(!need('energy',3))return;G.res.energy-=3;oxygen();break;
- case 'base-187':if(!need('mc',8)||!mustOcean()){alert('해양 예약 칸과 8 MC가 필요합니다.');return}G.res.mc-=8;placeTile('ocean');break;
- case 'base-202':if(!need('mc',10))return;G.res.mc-=10;changeProduction('heat',2,'카드 행동');break;
+ case 'base-187':if(!need('mc',8)||!mustOcean()){alert('해양 예약 칸과 8 MC가 필요합니다.');return}pay(8);placeTile('ocean');break;
+ case 'base-202':if(!need('mc',10))return;pay(10);changeProduction('heat',2,'카드 행동');break;
  default:alert('이 카드 행동은 아직 구현되지 않았습니다.');success=false;
  }
  if(success){c.lastActionGen=G.gen;log(c.name+' 행동 수행');renderGame()}
@@ -837,7 +844,7 @@ function beginBoardPlacementAction(action,id=null){
  const cases={'standard-ocean':[1,null,18],'standard-city':[0,'city',25],'standard-greenery':[0,'greenery',23],'plant':[0,'greenery',0],'bonus-ocean':[1,null,0],'corp-city':[0,'city',0],'active-ocean':[1,null,id==='base-012'?12:8]};
  if(!cases[action])return;
  const [ocean,ground,cost]=cases[action];
- if(cost&&G.res.mc<cost){alert('MC '+cost+'가 필요합니다.');return}
+ if(cost&&!canAfford(cost)){alert('MC '+cost+'가 필요합니다.');return}
  if(action==='plant'&&G.res.plant<(G.corp==='ecoline'?7:8)){alert('식물 자원이 부족합니다.');return}
  if(action==='bonus-ocean'&&!G.pendingBonusOceans)return;
  pendingPlacement={kind:'action',id,action,needs:{ocean,ground},ocean:[],ground:null,label:{'standard-ocean':'해양 표준 프로젝트','standard-city':'도시 표준 프로젝트','standard-greenery':'녹지 표준 프로젝트','plant':'식물로 녹지 배치','bonus-ocean':'기온 보너스 해양 배치','corp-city':'타르시스 무료 시작 도시','active-ocean':'카드 행동: 해양 배치'}[action]};
@@ -893,8 +900,8 @@ function finishBoardPlacement(){
  else if(a==='active-ocean'){confirmedActiveOceanId=p.id;requestCardAction(p.id)}
  else if(a.startsWith('standard-')){
   const cost={'standard-ocean':18,'standard-city':25,'standard-greenery':23}[a],kind={'standard-ocean':'ocean','standard-city':'city','standard-greenery':'greenery'}[a];
-  if(G.res.mc<cost){alert('MC가 부족합니다.');return}
-  if(placeTile(kind)){G.res.mc-=cost;creditRefund(cost);renderGame()}
+  if(!canAfford(cost)){alert('지불할 자원이 부족합니다.');return}
+  if(placeTile(kind)){pay(cost);creditRefund(cost);renderGame()}
  }
 }
 
