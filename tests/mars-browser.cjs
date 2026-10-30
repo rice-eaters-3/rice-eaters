@@ -194,6 +194,9 @@ assert.deepEqual(oceans,{ocean:2,placed:2,played:true},'two ocean positions were
   standard('power');test('Thorgate power-plant standard project discounted',g.res.mc===92&&g.prod.energy===1);
   g=make('teractor');G=g;test('Teractor discounts each Earth tag',projectCost({cost:20,tags:['earth','earth']})===14);
   g=make('phobolog');G=g;test('Phobolog titanium worth four',paymentValue('titanium')===4);
+  g=make('helion');G=g;g.res.mc=4;g.res.heat=8;standard('power');
+  test('Helion can pay standard projects using heat',g.res.mc===0&&g.res.heat===1&&g.prod.energy===1);
+
   g=make('credicor');G=g;creditRefund(20);creditRefund(19);
   test('Credicor refund only for cost >=20',g.res.mc===104);
   g=make('interplanetary');G=g;onCardPlayed({id:'event',type:'event',tags:['event']});
@@ -205,6 +208,36 @@ assert.deepEqual(oceans,{ocean:2,placed:2,played:true},'two ocean positions were
   return checks;
  });
  assert.deepEqual(corporateResults.filter(c=>!c.ok),[],JSON.stringify(corporateResults));
+
+ const corporationStarts=await page.evaluate(()=>{
+  const checks=[];
+  const run=id=>{
+   const c=CORPS.find(x=>x.id===id);
+   pendingPlacement=null;choiceSession=null;
+   setupCorp=id;setupLocked=true;window.setupCorps=[c];
+   setupCards=CARDS.slice(0,10).map(x=>({...x,keep:id==='beginner'}));
+   selectedMapId='tharsis';
+   confirmSetup();
+   return G
+  };
+  let g=run('manutech');
+  checks.push(['Manutech setup includes immediate steel bonus',g.res.steel===1&&g.prod.steel===1]);
+  g=run('saturn');
+  checks.push(['Saturn initial Jovian boosts MC production',g.prod.mc===1&&g.prod.titanium===1]);
+  g=run('inventrix');
+  checks.push(['Inventrix gets three free project cards',g.hand.length===3&&g.res.mc===45]);
+  g=run('beginner');
+  checks.push(['Beginner receives ten free cards',g.hand.length===10&&g.res.mc===42]);
+  g=run('tharsis');
+  checks.push(['Tharsis must choose opening city',pendingPlacement?.action==='corp-city'&&g.prod.mc===2]);
+  const first=HEXES.map(K).find(k=>legalPlacementHex(pendingPlacement,k));
+  if(first){boardHexClick(first);acceptHexConfirmation()}
+  checks.push(['Tharsis starting city free and triggers ability',g.corpInitialPlaced===true&&g.prod.mc===3&&g.res.mc>=43]);
+  pendingPlacement=null;choiceSession=null;
+  return checks;
+ });
+ assert.deepEqual(corporationStarts.filter(x=>!x[1]),[],JSON.stringify(corporationStarts));
+
 
  const allProjectResults=await page.evaluate(()=>{
    applyMapPreset('tharsis');
@@ -235,5 +268,5 @@ assert.deepEqual(oceans,{ocean:2,placed:2,played:true},'two ocean positions were
 
  assert.deepEqual(errors,[],'unhandled page JavaScript errors');
  await page.screenshot({path:'mars-browser-smoke.png',fullPage:true});
- const imageCount=await imgs.count();await browser.close();console.log(JSON.stringify({status:'PASS',checks:outcomes.length,cardCases:allProjectResults.tested,corporationChecks:corporateResults.length,images:imageCount,pageErrors:errors.length}));
+ const imageCount=await imgs.count();await browser.close();console.log(JSON.stringify({status:'PASS',checks:outcomes.length,cardCases:allProjectResults.tested,corporationChecks:corporateResults.length+corporationStarts.length,images:imageCount,pageErrors:errors.length}));
 })().catch(e=>{console.error('Browser smoke failed:',e);process.exit(1)});
