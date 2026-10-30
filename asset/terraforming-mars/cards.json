@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "note": "Prototype data for the Rice Eaters Terraforming Mars solo app. This is not a complete official or expansion card catalogue. Corporate starting values and effects must be checked against the rulebook before claiming full fidelity.",
+  "note": "검증 원칙: 카드명/효과를 추측해 추가하지 않는다. 현재 목록은 45mars 소스와 공식 카드 목록 전체 대조가 끝나지 않은 부분 집합이며, 전체 공식 카드 DB라고 간주하지 말 것. 새 카드 추가 시 출처와 검증 상태를 기록한다.",
   "tagTaxonomy": [
     "building",
     "space",
@@ -16,9 +16,9 @@
     "venus"
   ],
   "assetPolicy": {
-    "tagIcons": "Use original tag icon artwork from a properly licensed asset source; expected local paths are asset/terraforming-mars/tags/{building,space,power,science,jovian,earth,plant,microbe,animal,city,event,venus}.png",
+    "tagIcons": "카드 태그는 로컬 asset/terraforming-mars/tags/의 원본 아이콘 파일을 사용해야 한다. 원본을 확보하지 못한 경우 글자/이모지 대체 아이콘을 원본인 것처럼 표시하지 않는다.",
     "source": "https://github.com/terraforming-mars/terraforming-mars-assets-sources",
-    "license": "CC BY-SA 4.0; include attribution and share-alike compliance before copying assets."
+    "license": "원본 에셋을 복제할 때 LICENSE.md의 CC BY-SA 조건과 출처 표기를 따른다."
   },
   "cardTypes": [
     "corporation",
@@ -31,7 +31,8 @@
       "name": "크레디코르",
       "startingMC": 57,
       "effect": "프로젝트 카드 비용이 20 MC 이상이면 4 MC 할인.",
-      "tags": []
+      "tags": [],
+      "verifiedAgainstSource": false
     },
     {
       "id": "ecoline",
@@ -46,7 +47,8 @@
       },
       "tags": [
         "plant"
-      ]
+      ],
+      "verifiedAgainstSource": false
     },
     {
       "id": "helion",
@@ -55,7 +57,8 @@
       "effect": "열 자원을 메가크레딧처럼 비용 지불에 사용할 수 있음.",
       "tags": [
         "space"
-      ]
+      ],
+      "verifiedAgainstSource": false
     },
     {
       "id": "mining",
@@ -70,7 +73,8 @@
       },
       "tags": [
         "building"
-      ]
+      ],
+      "verifiedAgainstSource": false
     },
     {
       "id": "tharsis",
@@ -82,16 +86,19 @@
       },
       "tags": [
         "building"
-      ]
+      ],
+      "verifiedAgainstSource": false
     },
     {
       "id": "teractor",
-      "name": "테라토르",
+      "name": "테렉터",
       "startingMC": 60,
       "effect": "지구 태그가 있는 카드 비용 3 MC 할인.",
       "tags": [
         "earth"
-      ]
+      ],
+      "ability": "지구 태그가 있는 카드의 비용을 3 M€ 할인.",
+      "verifiedAgainstSource": false
     },
     {
       "id": "saturn",
@@ -104,7 +111,8 @@
       "tags": [
         "jovian",
         "space"
-      ]
+      ],
+      "verifiedAgainstSource": false
     },
     {
       "id": "inventrix",
@@ -113,7 +121,8 @@
       "effect": "카드 전제 조건을 확인할 때 행성 지표가 1단계 더 높다고 간주.",
       "tags": [
         "science"
-      ]
+      ],
+      "verifiedAgainstSource": false
     },
     {
       "id": "phobolog",
@@ -125,7 +134,8 @@
       },
       "tags": [
         "space"
-      ]
+      ],
+      "verifiedAgainstSource": false
     },
     {
       "id": "interplanetary",
@@ -138,7 +148,8 @@
       "tags": [
         "earth",
         "building"
-      ]
+      ],
+      "verifiedAgainstSource": false
     }
   ],
   "cards": [
@@ -152,7 +163,8 @@
         "space",
         "event"
       ],
-      "prototypeEffect": "온도 1단계 상승."
+      "prototypeEffect": "온도 1단계 상승.",
+      "verifiedAgainstSource": false
     },
     {
       "id": "comet",
@@ -164,7 +176,8 @@
         "space",
         "event"
       ],
-      "prototypeEffect": "온도 1단계 상승 및 해양 타일 배치."
+      "prototypeEffect": "온도 1단계 상승 및 해양 타일 배치.",
+      "verifiedAgainstSource": false
     },
     {
       "id": "aquifer",
@@ -173,7 +186,8 @@
       "projectType": "automated",
       "cost": 18,
       "tags": [],
-      "prototypeEffect": "해양 타일 1개 배치."
+      "prototypeEffect": "해양 타일 1개 배치.",
+      "verifiedAgainstSource": false
     },
     {
       "id": "greenery",
@@ -182,7 +196,8 @@
       "projectType": "automated",
       "cost": 23,
       "tags": [],
-      "prototypeEffect": "녹지 타일 1개 배치."
+      "prototypeEffect": "녹지 타일 1개 배치.",
+      "verifiedAgainstSource": false
     },
     {
       "id": "powerplant",
@@ -191,7 +206,8 @@
       "projectType": "automated",
       "cost": 11,
       "tags": [],
-      "prototypeEffect": "에너지 생산량 +1."
+      "prototypeEffect": "에너지 생산량 +1.",
+      "verifiedAgainstSource": false
     },
     {
       "id": "citystandard",
@@ -200,7 +216,8 @@
       "projectType": "automated",
       "cost": 25,
       "tags": [],
-      "prototypeEffect": "도시 타일 배치 및 MC 생산량 +1."
+      "prototypeEffect": "도시 타일 배치 및 MC 생산량 +1.",
+      "verifiedAgainstSource": false
     },
     {
       "id": "solar",
@@ -212,7 +229,8 @@
         "space",
         "power"
       ],
-      "prototypeEffect": "에너지 생산량 +1."
+      "prototypeEffect": "에너지 생산량 +1.",
+      "verifiedAgainstSource": false
     },
     {
       "id": "farm",
@@ -224,7 +242,8 @@
         "plant",
         "building"
       ],
-      "prototypeEffect": "식물 생산량 +1, 식물 자원 +2."
+      "prototypeEffect": "식물 생산량 +1, 식물 자원 +2.",
+      "verifiedAgainstSource": false
     },
     {
       "id": "lab",
@@ -236,7 +255,8 @@
         "science",
         "building"
       ],
-      "prototypeEffect": "MC 생산량 +1."
+      "prototypeEffect": "MC 생산량 +1.",
+      "verifiedAgainstSource": false
     },
     {
       "id": "heat",
@@ -247,7 +267,8 @@
       "tags": [
         "power"
       ],
-      "prototypeEffect": "열 자원 +3."
+      "prototypeEffect": "열 자원 +3.",
+      "verifiedAgainstSource": false
     }
   ]
 }
