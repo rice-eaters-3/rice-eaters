@@ -1,7 +1,6 @@
 {
-  "schemaVersion": 2,
-  "status": "prototype-samples",
-  "note": "Original UI test samples only; not a complete official card catalog or full card text.",
+  "schemaVersion": 3,
+  "note": "Prototype data for the Rice Eaters Terraforming Mars solo app. This is not a complete official or expansion card catalogue. Corporate starting values and effects must be checked against the rulebook before claiming full fidelity.",
   "tagTaxonomy": [
     "building",
     "space",
@@ -14,52 +13,241 @@
     "animal",
     "city",
     "event",
-    "venus",
-    "wild"
+    "venus"
   ],
+  "assetPolicy": {
+    "tagIcons": "Use original tag icon artwork from a properly licensed asset source; expected local paths are asset/terraforming-mars/tags/{building,space,power,science,jovian,earth,plant,microbe,animal,city,event,venus}.png",
+    "source": "https://github.com/terraforming-mars/terraforming-mars-assets-sources",
+    "license": "CC BY-SA 4.0; include attribution and share-alike compliance before copying assets."
+  },
   "cardTypes": [
     "corporation",
     "prelude",
     "project"
   ],
-  "projectTypes": [
-    "automated",
-    "active",
-    "event"
+  "corporations": [
+    {
+      "id": "credicor",
+      "name": "크레디코르",
+      "startingMC": 57,
+      "effect": "프로젝트 카드 비용이 20 MC 이상이면 4 MC 할인.",
+      "tags": []
+    },
+    {
+      "id": "ecoline",
+      "name": "에코라인",
+      "startingMC": 36,
+      "effect": "녹지 프로젝트에 식물 자원 7개 필요. 시작 식물 3개.",
+      "startingResources": {
+        "plant": 3
+      },
+      "production": {
+        "plant": 1
+      },
+      "tags": [
+        "plant"
+      ]
+    },
+    {
+      "id": "helion",
+      "name": "헬리온",
+      "startingMC": 42,
+      "effect": "열 자원을 메가크레딧처럼 비용 지불에 사용할 수 있음.",
+      "tags": [
+        "space"
+      ]
+    },
+    {
+      "id": "mining",
+      "name": "광업 길드",
+      "startingMC": 30,
+      "effect": "시작 강철 5개, 강철 생산량 +1.",
+      "startingResources": {
+        "steel": 5
+      },
+      "production": {
+        "steel": 1
+      },
+      "tags": [
+        "building"
+      ]
+    },
+    {
+      "id": "tharsis",
+      "name": "타르시스 공화국",
+      "startingMC": 40,
+      "effect": "도시 타일이 놓일 때 MC 생산량 +1. 시작 MC 생산량 +1.",
+      "production": {
+        "mc": 1
+      },
+      "tags": [
+        "building"
+      ]
+    },
+    {
+      "id": "teractor",
+      "name": "테라토르",
+      "startingMC": 60,
+      "effect": "지구 태그가 있는 카드 비용 3 MC 할인.",
+      "tags": [
+        "earth"
+      ]
+    },
+    {
+      "id": "saturn",
+      "name": "토성 시스템",
+      "startingMC": 42,
+      "effect": "시작 티타늄 생산량 +1.",
+      "production": {
+        "titanium": 1
+      },
+      "tags": [
+        "jovian",
+        "space"
+      ]
+    },
+    {
+      "id": "inventrix",
+      "name": "인벤트릭스",
+      "startingMC": 45,
+      "effect": "카드 전제 조건을 확인할 때 행성 지표가 1단계 더 높다고 간주.",
+      "tags": [
+        "science"
+      ]
+    },
+    {
+      "id": "phobolog",
+      "name": "포보로크",
+      "startingMC": 23,
+      "effect": "시작 티타늄 10개. 티타늄 자원 가치 +1 MC.",
+      "startingResources": {
+        "titanium": 10
+      },
+      "tags": [
+        "space"
+      ]
+    },
+    {
+      "id": "interplanetary",
+      "name": "행성간 영화사",
+      "startingMC": 30,
+      "effect": "사건 태그 카드 사용 시 2 MC 획득. 시작 MC 생산량 +1.",
+      "production": {
+        "mc": 1
+      },
+      "tags": [
+        "earth",
+        "building"
+      ]
+    }
   ],
   "cards": [
+    {
+      "id": "asteroid",
+      "name": "소행성",
+      "type": "project",
+      "projectType": "event",
+      "cost": 14,
+      "tags": [
+        "space",
+        "event"
+      ],
+      "prototypeEffect": "온도 1단계 상승."
+    },
+    {
+      "id": "comet",
+      "name": "혜성",
+      "type": "project",
+      "projectType": "event",
+      "cost": 21,
+      "tags": [
+        "space",
+        "event"
+      ],
+      "prototypeEffect": "온도 1단계 상승 및 해양 타일 배치."
+    },
+    {
+      "id": "aquifer",
+      "name": "대수층",
+      "type": "project",
+      "projectType": "automated",
+      "cost": 18,
+      "tags": [],
+      "prototypeEffect": "해양 타일 1개 배치."
+    },
+    {
+      "id": "greenery",
+      "name": "녹화 사업",
+      "type": "project",
+      "projectType": "automated",
+      "cost": 23,
+      "tags": [],
+      "prototypeEffect": "녹지 타일 1개 배치."
+    },
+    {
+      "id": "powerplant",
+      "name": "발전소",
+      "type": "project",
+      "projectType": "automated",
+      "cost": 11,
+      "tags": [],
+      "prototypeEffect": "에너지 생산량 +1."
+    },
+    {
+      "id": "citystandard",
+      "name": "도시 건설",
+      "type": "project",
+      "projectType": "automated",
+      "cost": 25,
+      "tags": [],
+      "prototypeEffect": "도시 타일 배치 및 MC 생산량 +1."
+    },
     {
       "id": "solar",
       "name": "태양풍 발전",
       "type": "project",
+      "projectType": "automated",
       "cost": 11,
       "tags": [
         "space",
         "power"
       ],
-      "prototypeEffect": "에너지 생산량 +1"
+      "prototypeEffect": "에너지 생산량 +1."
     },
     {
       "id": "farm",
       "name": "화성 농장",
       "type": "project",
+      "projectType": "automated",
       "cost": 14,
       "tags": [
         "plant",
         "building"
       ],
-      "prototypeEffect": "식물 생산량 +1, 식물 +2"
+      "prototypeEffect": "식물 생산량 +1, 식물 자원 +2."
     },
     {
       "id": "lab",
       "name": "연구 전초기지",
       "type": "project",
+      "projectType": "automated",
       "cost": 8,
       "tags": [
         "science",
         "building"
       ],
-      "prototypeEffect": "메가크레딧 생산량 +1"
+      "prototypeEffect": "MC 생산량 +1."
+    },
+    {
+      "id": "heat",
+      "name": "열 포집 장치",
+      "type": "project",
+      "projectType": "automated",
+      "cost": 6,
+      "tags": [
+        "power"
+      ],
+      "prototypeEffect": "열 자원 +3."
     }
   ]
 }
