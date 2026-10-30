@@ -7,7 +7,8 @@ const path = require('node:path');
 const crypto = require('node:crypto');
 
 const ROOT = __dirname;
-const DATA_DIR = process.env.DATA_DIR ? path.resolve(process.env.DATA_DIR) : path.join(ROOT, 'data');
+// Railway volumes expose this automatically; DATA_DIR can override for other hosts.
+const DATA_DIR = path.resolve(process.env.DATA_DIR || process.env.RAILWAY_VOLUME_MOUNT_PATH || path.join(ROOT, 'data'));
 const STATE_FILE = path.join(DATA_DIR, 'state.json');
 const LOG_FILE = path.join(DATA_DIR, 'activity.jsonl');
 const PORT = Number(process.env.PORT || 3000);
@@ -65,7 +66,8 @@ function sessionFor(req,res){
   const id=randomId();
   db.sessions[id]={createdAt:now()};
   persist();
-  res.setHeader('Set-Cookie','rice_session='+id+'; Path=/; HttpOnly; SameSite=Lax');
+  const secure = req.socket.encrypted || req.headers['x-forwarded-proto']==='https';
+  res.setHeader('Set-Cookie','rice_session='+id+'; Path=/; HttpOnly; SameSite=Lax'+(secure?'; Secure':''));
   logActivity('session_created',id);
   return id;
 }
@@ -253,7 +255,7 @@ function staticFile(req,res,url,sid){
   if(name==='/mystery'||name==='/mystery/')name='/apps/murder-mystery/index.html';
   if(name.endsWith('/'))name+='index.html';
   const resolved=path.resolve(ROOT,'.'+name);
-  if(!resolved.startsWith(ROOT+path.sep)||name.split('/').some(p=>['data','.git','node_modules','tests'].includes(p)))fail(403,'접근할 수 없는 경로입니다.');
+  if(!resolved.startsWith(ROOT+path.sep)||name.split('/').some(p=>['data','.git','node_modules','tests','.github'].includes(p))||['/server.js','/package.json','/Dockerfile','/.dockerignore','/.gitignore'].includes(name))fail(403,'접근할 수 없는 경로입니다.');
   const ext=path.extname(resolved).toLowerCase();
   if(!MIME[ext])fail(404,'지원하지 않는 파일입니다.');
   let stat;
@@ -267,6 +269,8 @@ function staticFile(req,res,url,sid){
 const handler=(req,res)=>{
   Promise.resolve().then(async()=>{
     const url=new URL(req.url,'http://localhost');
+    // Healthcheck must not create sessions, mutate storage, or fill activity logs.
+    if(url.pathname==='/healthz'&&req.method==='GET')return json(res,200,{ok:true});
     const sid=sessionFor(req,res);
     if(url.pathname.startsWith('/api/'))return api(req,res,url,sid);
     if(req.method!=='GET'&&req.method!=='HEAD')fail(405,'지원하지 않는 HTTP 메서드입니다.');

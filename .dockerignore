@@ -1,0 +1,10 @@
+# Exclude local state and development tools from the public container.
+.git
+.github
+node_modules
+.env
+.env.*
+data
+.DS_Store
+*.log
+tests

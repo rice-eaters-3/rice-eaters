@@ -13,6 +13,8 @@ npm start
 
 브라우저에서 **http://localhost:3000** 으로 접속하세요.
 
+**Railway 무료 플랜 배포:** [DEPLOY_RAILWAY.md](./DEPLOY_RAILWAY.md) — GitHub 연결, `/data` 볼륨, HTTPS 도메인, Healthcheck까지 안내합니다.
+
 - 홈: http://localhost:3000/
 - 화성: http://localhost:3000/mars
 - 머더 미스터리: http://localhost:3000/mystery
