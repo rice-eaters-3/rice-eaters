@@ -31,6 +31,8 @@ const assert=require('node:assert/strict');
  await page.waitForTimeout(500);
  const bad=await imgs.evaluateAll(arr=>arr.filter(x=>!x.complete||x.naturalWidth===0).map(x=>x.src));
  assert.deepEqual(bad,[],'project effect SVG asset loads');
+ const missingTags=await page.locator('img.tagicon').evaluateAll(arr=>arr.filter(x=>!x.complete||x.naturalWidth===0||!x.src.endsWith('.png')).map(x=>x.src));
+ assert.deepEqual(missingTags,[],'tag images load as upstream PNG artwork');
  
  const mapChecks=await page.evaluate(()=>{
   const old=G,mapResults=[];
@@ -127,6 +129,57 @@ assert.deepEqual(oceans,{ocean:2,placed:2,played:true},'two ocean positions were
  });
  assert.deepEqual(outcomes.filter(x=>!x[1]),[],JSON.stringify(outcomes));
 
+
+ const corporateResults=await page.evaluate(()=>{
+  applyMapPreset('tharsis');
+  const checks=[];
+  const test=(label,ok,details)=>checks.push({label,ok:!!ok,...(ok?{}:{details})});
+  const make=(corp)=>{
+   const tiles={};for(const k of OCEAN_SLOTS)tiles[k]={type:'ocean-slot',reserved:true};tiles['0,0']={type:'special',reserved:true};
+   return {mapId:'tharsis',phase:'action',gen:1,tr:14,genStartTR:14,temp:-30,oxy:0,ocean:0,corp,corpName:corp,ability:'',
+    res:{mc:100,steel:0,titanium:0,plant:0,heat:0,energy:0},prod:{mc:0,steel:0,titanium:0,plant:0,heat:0,energy:0},
+    tiles,selected:null,hand:[],played:[],seenCardIds:new Set(),excludedCards:[],logs:[],score:0}
+  };
+  test('All 14 corporation entries have unique ids',CORPS.length===14&&new Set(CORPS.map(c=>c.id)).size===14);
+  const expectCorp=(id,field,kind,value)=>test(id+' initial '+kind,CORPS.find(c=>c.id===id)?.[field]?.[kind]===value);
+  expectCorp('ecoline','prod','plant',2);expectCorp('helion','prod','heat',3);
+  expectCorp('interplanetary','start','steel',20);expectCorp('mining','prod','steel',1);
+  expectCorp('manutech','prod','steel',1);expectCorp('saturn','prod','titanium',1);
+  expectCorp('thorgate','prod','energy',1);
+  let g=make('manutech');G=g;changeProduction('steel',2);
+  test('Manutech +2 steel production grants 2 steel',g.prod.steel===2&&g.res.steel===2);
+  changeProduction('energy',3);changeProduction('mc',1);
+  test('Manutech all resource production bonuses',g.res.energy===3&&g.res.mc===101);
+  changeProduction('steel',-1);
+  test('Manutech decrease does not grant resources',g.res.steel===2&&g.prod.steel===1);
+  g=make('mining');G=g;const spot=Object.keys(BOARD_BONUSES).find(k=>BOARD_BONUSES[k].steel||BOARD_BONUSES[k].titanium);
+  applyBoardBonus(spot);
+  test('Mining Guild gets steel production from mineral bonus',g.prod.steel===1);
+  g=make('saturn');G=g;onCardPlayed({id:'sample',type:'ongoing',tags:['jovian','jovian']});
+  test('Saturn +1 MC production per Jovian tag',g.prod.mc===2);
+  g=make('tharsis');G=g;g.selected=Object.keys(BOARD_BONUSES).find(k=>!g.tiles[k]&& !OCEAN_SLOTS.has(k)&& !SPECIAL_SLOTS.has(k)&&!adjacent(k,'city').length)||'0,1';
+  const cityOK=placeTile('city');
+  test('Tharsis city production +1 and owner MC +3',cityOK&&g.prod.mc===1&&g.res.mc>=103);
+  g=make('unmi');G=g;g.tr=16;useCorporationAction();
+  test('UNMI action spends 3 MC for TR',g.tr===17&&g.res.mc===97);
+  useCorporationAction();
+  test('UNMI action once per generation',g.tr===17&&g.res.mc===97);
+  g=make('thorgate');G=g;test('Thorgate discounts power tag',projectCost({cost:13,tags:['power']})===10);
+  standard('power');test('Thorgate power-plant standard project discounted',g.res.mc===92&&g.prod.energy===1);
+  g=make('teractor');G=g;test('Teractor discounts each Earth tag',projectCost({cost:20,tags:['earth','earth']})===14);
+  g=make('phobolog');G=g;test('Phobolog titanium worth four',paymentValue('titanium')===4);
+  g=make('credicor');G=g;creditRefund(20);creditRefund(19);
+  test('Credicor refund only for cost >=20',g.res.mc===104);
+  g=make('interplanetary');G=g;onCardPlayed({id:'event',type:'event',tags:['event']});
+  // Interplanetary's effect triggers upon playing, not via onCardPlayed, so verify in playCard.
+  const event={...CARDS.find(c=>c.id==='base-036')};g.hand=[event];playCard(event.id);
+  test('Interplanetary event refund +2',g.res.mc===102-event.cost);
+  g=make('manutech');G=g;g.res.mc=1000;g.hand=[{...CARDS.find(c=>c.id==='base-003')}];playCard('base-003');
+  test('Manutech gains energy on card production increase',g.prod.energy===1&&g.res.energy===1);
+  return checks;
+ });
+ assert.deepEqual(corporateResults.filter(c=>!c.ok),[],JSON.stringify(corporateResults));
+
  const allProjectResults=await page.evaluate(()=>{
    applyMapPreset('tharsis');
    const failed=[];
@@ -156,5 +209,5 @@ assert.deepEqual(oceans,{ocean:2,placed:2,played:true},'two ocean positions were
 
  assert.deepEqual(errors,[],'unhandled page JavaScript errors');
  await page.screenshot({path:'mars-browser-smoke.png',fullPage:true});
- const imageCount=await imgs.count();await browser.close();console.log(JSON.stringify({status:'PASS',checks:outcomes.length,cardCases:allProjectResults.tested,images:imageCount,pageErrors:errors.length}));
+ const imageCount=await imgs.count();await browser.close();console.log(JSON.stringify({status:'PASS',checks:outcomes.length,cardCases:allProjectResults.tested,corporationChecks:corporateResults.length,images:imageCount,pageErrors:errors.length}));
 })().catch(e=>{console.error('Browser smoke failed:',e);process.exit(1)});
