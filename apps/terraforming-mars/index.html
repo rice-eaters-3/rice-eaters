@@ -383,7 +383,7 @@ function confirmDraft(){let cost=draftSelected.size*3;if(cost>G.res.mc){alert('�
 function endGeneration(){if(G.phase!=='action')return;production();if(G.gen>=mapLimits().gen||allParametersComplete()){updateScore();beginFinal(G.gen>=mapLimits().gen?mapLimits().gen+'세대 종료':'행성 지표 완성');return}G.gen++;G.genStartTR=G.tr;G.doneActions=0;log('새 세대 시작. 생산 페이즈 완료.');openDraft()}
 function production(){const previousEnergy=G.res.energy;G.res.heat+=previousEnergy;G.res.energy=0;G.res.mc+=G.tr+G.prod.mc;for(let k of ['steel','titanium','plant','energy','heat'])G.res[k]+=G.prod[k];log('생산: MC +'+(G.tr+G.prod.mc)+', 강철 +'+G.prod.steel+', 티타늄 +'+G.prod.titanium+', 식물 +'+G.prod.plant+', 이전 에너지 '+previousEnergy+'개를 열로 전환, 에너지 +'+G.prod.energy)}
 function allParametersComplete(){const l=mapLimits();return G.temp>=l.temp&&G.oxy>=l.oxy&&G.ocean>=l.ocean}
-function renderGame(){if(!G)return;$('genEyebrow').textContent=G.gen;$('gameTitle').textContent='세대 '+G.gen+' · 행동 단계';$('activeMapName').textContent=MAP_PRESETS[G.mapId]?.name||'타르시스';$('corpName').textContent=G.corpName;$('corpAbility').textContent=G.ability;if($('corpActionSlot'))$('corpActionSlot').innerHTML=G.corp==='unmi'?'<button class="corp-action-btn" onclick="useCorporationAction()" '+((G.phase==='action'&&G.tr>(G.genStartTR??14)&&G.res.mc>=3&&G.corpActionGen!==G.gen)?'':'disabled')+'>🌍 UNMI 행동 · 3 M€ → TR +1</button>':'';$('globalStats').innerHTML=[['TR',G.tr],['온도',G.temp+'°C'],['산소',G.oxy+'%'],['해양',G.ocean+' / '+mapLimits().ocean],['세대',G.gen+' / '+mapLimits().gen],['행성 완성',allParametersComplete()?'완료':'진행 중']].map(([a,b])=>'<div class="metric"><small>'+a+'</small><strong>'+b+'</strong></div>').join('');$('resources').innerHTML=Object.keys(RESOURCE).map(k=>{
+function renderGame(){if(!G)return;$('genEyebrow').textContent=G.gen;$('gameTitle').textContent='세대 '+G.gen+' · 행동 단계';$('activeMapName').textContent=MAP_PRESETS[G.mapId]?.name||'타르시스';$('corpName').textContent=G.corpName;$('corpAbility').textContent=G.ability;if($('corpActionSlot'))$('corpActionSlot').innerHTML=G.corp==='unmi'?'<button class="corp-action-btn" onclick="useCorporationAction()" '+((G.phase==='action'&&G.tr>(G.genStartTR??14)&&G.res.mc>=3&&G.corpActionGen!==G.gen)?'':'disabled')+'>🌍 UNMI 행동 · 3 M€ → TR +1</button>':'';$('globalStats').innerHTML=[['TR',G.tr],['온도',G.temp+'°C / '+mapLimits().temp+'°C'],['산소',G.oxy+'% / '+mapLimits().oxy+'%'],['해양',G.ocean+' / '+mapLimits().ocean],['세대',G.gen+' / '+mapLimits().gen],['행성 완성',allParametersComplete()?'완료':'진행 중']].map(([a,b])=>'<div class="metric"><small>'+a+'</small><strong>'+b+'</strong></div>').join('');$('resources').innerHTML=Object.keys(RESOURCE).map(k=>{
  const action=k==='plant'||k==='heat',need=k==='plant'?(G.corp==='ecoline'?7:8):8;
  const enabled=action&&G.phase==='action'&&G.res[k]>=need&&(k!=='heat'||G.temp<mapLimits().temp);
  const suffix=k==='plant'?' · 녹지 배치 ('+need+'개)':k==='heat'?' · 기온 +2℃ (8개)':'';
@@ -907,9 +907,24 @@ function confirmCardPayment(){
 }
 
 
+function confirmPlantSpending(){
+ if(!G||G.phase!=='action'||pendingPlacement)return closePlantSpendModal();
+ const n=G.corp==='ecoline'?7:8;
+ if(G.res.plant<n){closePlantSpendModal();alert('식물 자원이 부족합니다.');return}
+ closePlantSpendModal();
+ beginBoardPlacementAction('plant')
+}
+function closePlantSpendModal(){$('plantSpendModal').classList.add('hidden')}
+
 function useResourceAction(kind){
  if(!G||G.phase!=='action'||pendingPlacement)return false;
- if(kind==='plant'){beginBoardPlacementAction('plant');return true}
+ if(kind==='plant'){
+  const required=G.corp==='ecoline'?7:8;
+  if(G.res.plant<required){alert('식물 자원 '+required+'개가 필요합니다.');return false}
+  $('plantSpendDescription').textContent='식물 자원 '+required+'개를 사용해 녹지 타일을 배치할까요? 현재 보유 '+G.res.plant+'개 · 배치 성공 시 남는 식물 '+(G.res.plant-required)+'개';
+  $('plantSpendModal').classList.remove('hidden');
+  return true
+ }
  if(kind==='heat'){
   if(G.temp>=mapLimits().temp){alert('기온 최대치입니다.');return false}
   if(G.res.heat<8){alert('열 자원 8개가 필요합니다.');return false}
@@ -927,4 +942,4 @@ renderRecent();
     <div class="actions"><button class="primary" id="paymentConfirm" onclick="confirmCardPayment()">배분 확정 후 카드 사용</button><button onclick="closeCardPayment()">취소</button></div>
   </div>
 </div><div id="paymentPlacementModal" class="payment-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="placementHeading">
-<div class="payment-sheet placement-sheet"><h2 id="placementHeading">타일 배치 위치</h2><p class="muted" id="placementInstruction"></p><div id="placementOptions" class="placement-grid"></div><p class="notice" id="placementState"></p><div class="actions"><button class="primary" id="placementConfirm" onclick="confirmCardPlacement()">배치 확정 · 카드 사용</button><button id="placementCancel" onclick="cancelCardPlacement()">취소</button></div></div></div><div id="optionModal" class="payment-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="optionModalTitle"><div class="payment-sheet option-sheet"><h2 id="optionModalTitle">행동 선택</h2><div id="optionModalOptions" class="option-fields"></div><div class="actions"><button class="primary" onclick="confirmOptionModal()">선택 확정</button><button onclick="closeOptionModal()">취소</button></div></div></div><div id="hexConfirmationModal" class="payment-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="hexConfirmationTitle"><div class="payment-sheet"><h2 id="hexConfirmationTitle">타일 배치 확인</h2><p id="hexConfirmationMessage"></p><div class="actions"><button class="primary" onclick="acceptHexConfirmation()">예, 배치</button><button onclick="dismissHexConfirmation()">아니요, 다시 선택</button></div></div></div></body></html>
+<div class="payment-sheet placement-sheet"><h2 id="placementHeading">타일 배치 위치</h2><p class="muted" id="placementInstruction"></p><div id="placementOptions" class="placement-grid"></div><p class="notice" id="placementState"></p><div class="actions"><button class="primary" id="placementConfirm" onclick="confirmCardPlacement()">배치 확정 · 카드 사용</button><button id="placementCancel" onclick="cancelCardPlacement()">취소</button></div></div></div><div id="optionModal" class="payment-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="optionModalTitle"><div class="payment-sheet option-sheet"><h2 id="optionModalTitle">행동 선택</h2><div id="optionModalOptions" class="option-fields"></div><div class="actions"><button class="primary" onclick="confirmOptionModal()">선택 확정</button><button onclick="closeOptionModal()">취소</button></div></div></div><div id="hexConfirmationModal" class="payment-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="hexConfirmationTitle"><div class="payment-sheet"><h2 id="hexConfirmationTitle">타일 배치 확인</h2><p id="hexConfirmationMessage"></p><div class="actions"><button class="primary" onclick="acceptHexConfirmation()">예, 배치</button><button onclick="dismissHexConfirmation()">아니요, 다시 선택</button></div></div></div><div id="plantSpendModal" class="payment-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="plantSpendTitle"><div class="payment-sheet"><h2 id="plantSpendTitle">🌿 식물 자원 사용 확인</h2><p id="plantSpendDescription"></p><p class="muted small">소모량을 확정하면 지도에서 녹지 타일 위치를 선택합니다. 마지막 배치를 확정하기 전까지 자원은 실제로 차감되지 않습니다.</p><div class="actions"><button class="primary" onclick="confirmPlantSpending()">식물 소모 확정 · 위치 선택</button><button onclick="closePlantSpendModal()">취소</button></div></div></div></body></html>
