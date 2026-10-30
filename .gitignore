@@ -18,3 +18,7 @@ Thumbs.db
 # Build artifacts
 dist/
 build/
+
+# Server data and dependencies
+data/
+node_modules/
