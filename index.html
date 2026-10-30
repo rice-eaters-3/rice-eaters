@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f7f5ef" />
+  <title>rice-eaters 🍚</title>
+  <style>
+    :root { color-scheme: light; --ink: #20231f; --muted: #686d64; --paper: #f7f5ef; --card: #fffefa; --green: #386641; --line: #e5e3d9; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; background: var(--paper); color: var(--ink); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    main { width: min(880px, calc(100% - 40px)); margin: 0 auto; padding: 72px 0 56px; }
+    .eyebrow { color: var(--green); font-size: 12px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+    h1 { margin: 16px 0 12px; font-size: clamp(42px, 8vw, 76px); letter-spacing: -.065em; line-height: .98; }
+    .intro { max-width: 620px; color: var(--muted); font-size: 18px; line-height: 1.75; }
+    .panel { margin-top: 38px; padding: 26px; background: var(--card); border: 1px solid var(--line); border-radius: 20px; box-shadow: 0 12px 35px #262a1b0a; }
+    .panel h2 { margin: 0 0 8px; font-size: 19px; }
+    .panel p { margin: 0; color: var(--muted); line-height: 1.7; }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 18px; }
+    .step { padding: 16px; border: 1px solid var(--line); border-radius: 14px; }
+    .step b { display: block; margin-bottom: 7px; }
+    .step span { color: var(--muted); font-size: 14px; line-height: 1.5; }
+    footer { margin-top: 28px; color: var(--muted); font-size: 13px; }
+    @media (max-width: 620px) { main { padding-top: 48px; } .steps { grid-template-columns: 1fr; } .panel { padding: 20px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="eyebrow">A small project with a big appetite</div>
+    <h1>rice-eaters 🍚</h1>
+    <p class="intro">쌀을 먹는 자들. 대화로 아이디어를 다듬고, 코드를 고치고, 작지만 쓸모 있는 앱을 하나씩 만들어 가는 프로젝트입니다.</p>
+    <section class="panel" aria-labelledby="goal-title">
+      <h2 id="goal-title">우리의 작업 방식</h2>
+      <p>원하는 기능을 대화로 설명하면, 코드 변경 사항을 이 저장소에 반영합니다. 변경된 코드를 내 컴퓨터에서 실행하고 결과를 알려주면 다음 개선을 이어갑니다.</p>
+      <div class="steps">
+        <div class="step"><b>01 · 이야기하기</b><span>만들고 싶은 기능이나 고치고 싶은 점을 말해 주세요.</span></div>
+        <div class="step"><b>02 · 코드 반영</b><span>변경 내용을 검토하고 GitHub 커밋으로 관리합니다.</span></div>
+        <div class="step"><b>03 · 실행하고 개선</b><span>로컬에서 확인한 결과를 바탕으로 다음 버전을 만듭니다.</span></div>
+      </div>
+    </section>
+    <footer>Made iteratively · rice-eaters</footer>
+  </main>
+</body>
+</html>
