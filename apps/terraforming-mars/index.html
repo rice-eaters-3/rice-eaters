@@ -67,7 +67,31 @@ function beginSetup(){setupCorp=null;setupLocked=false;setupCorps=pick(CORPS.fil
 function rerollSetup(){if(setupLocked){alert('기업을 이미 확정했습니다. 기업 후보를 다시 뽑을 수 없습니다.');return}setupCorp=null;setupCorps=pick(CORPS.filter(c=>!c.builtin),6);setupCards=pick(CARDS,Math.min(10,CARDS.length)).map(c=>({...c,keep:false}));renderSetup()}
 function tagIcon(tag){let t=TAGS[tag];if(!t)return '';return '<img class="tagicon" alt="'+t.label+'" title="'+t.label+'" src="'+TAG_ASSET_BASE+t.file+'.svg" onerror="this.onerror=null;this.outerHTML=\'<span class=&quot;tagfallback&quot; title=&quot;'+t.label+'&quot;>'+t.label.slice(0,1)+'</span>\'">'}
 function tagRow(tags){return '<div class="tagrow">'+tags.map(tagIcon).join('')+'</div>'}
-function conditionStatus(c){const cond=String(c.condition||'').trim();if(!cond||cond==='(없음)')return {ok:true,text:''};const tests=[[/기온\s*([+\-−]?\d+)\s*[°℃C]*\s*(이상|이하|초과|미만)/,()=>G.temp],[/산소(?: 농도)?\s*(\d+)\s*%\s*(이상|이하|초과|미만)/,()=>G.oxy],[/해양 타일\s*(\d+)\s*장\s*(이상|이하|초과|미만)/,()=>G.ocean]];let parsed=false,valid=true;for(const[regex,get]of tests){const m=cond.match(regex);if(!m)continue;parsed=true;const n=Number(m[1].replace('−','-')),v=get();valid&&=(m[2]==='이상'?v>=n:m[2]==='이하'?v<=n:m[2]==='초과'?v>n:v<n)}return {ok:parsed&&valid,text:parsed?cond:'확인 불가: '+cond}}
+function conditionStatus(c){
+ const cond=String(c.condition||'').trim();
+ if(!G||!cond||cond==='(없음)')return {ok:true,text:''};
+ const modifier=(G.corp==='inventrix'?2:0)+(G.played.some(x=>x.id==='base-153')?2:0)+(G.paramModifier||0);
+ const tests=[
+ [/기온\s*([+\-−]?\d+)\s*[°℃C]*\s*(이상|이하|초과|미만)/,()=>G.temp,2],
+ [/산소(?: 농도)?\s*(\d+)\s*%\s*(이상|이하|초과|미만)/,()=>G.oxy,1],
+ [/해양 타일\s*(\d+)\s*장\s*(이상|이하|초과|미만)/,()=>G.ocean,1]
+ ];
+ for(const [re,get,step]of tests){
+  const m=cond.match(re);if(!m)continue;
+  const n=Number(m[1].replace('−','-')),v=get(),allow=modifier*step;
+  return {ok:m[2]==='이상'?v+allow>=n:m[2]==='이하'?v-allow<=n:m[2]==='초과'?v+allow>n:v-allow<n,text:cond}
+ }
+ const counts={};
+ for(const card of G.played.filter(x=>x.type!=='event'))for(const tag of card.tags||[])counts[tag]=(counts[tag]||0)+1;
+ if(G.corp==='inventrix')counts.science=(counts.science||0)+1;
+ if(G.corp==='saturn')counts.jovian=(counts.jovian||0)+1;
+ const tagMap={목성:'jovian',과학:'science',식물:'plant',동물:'animal',미생물:'microbe',에너지:'power',우주:'space',도시:'city',건물:'building',지구:'earth'};
+ const tag=cond.match(/보유한\s*(목성|과학|식물|동물|미생물|에너지|우주|도시|건물|지구)\s*태그\s*(\d+)개\s*(이상|이하)/);
+ if(tag){const v=counts[tagMap[tag[1]]]||0;return {ok:tag[3]==='이상'?v>=+tag[2]:v<=+tag[2],text:cond}}
+ if(cond.includes('식물/동물/미생물 태그 각 1개 이상'))return {ok:['plant','animal','microbe'].every(x=>(counts[x]||0)>=1),text:cond};
+ if(cond.includes('소유한 녹지 타일 1장 이상'))return {ok:Object.values(G.tiles).some(t=>t.type==='greenery'&&!t.neutral),text:cond};
+ return {ok:false,text:'확인 불가: '+cond}
+}
 function effectIcons(c){
 const source=String(c.effectText||''),out=[],root='../../asset/terraforming-mars/';
 const res={메가크레딧:'mc',강철:'steel',티타늄:'titanium',식물:'plant',에너지:'energy',열:'heat',미생물:'microbe',동물:'animal'};
@@ -195,7 +219,7 @@ function playCard(id){
  if(G.corp==='credicor'&&c.cost>=20)G.res.mc+=4;
  if(G.corp==='interplanetary'&&c.type==='event')G.res.mc+=2;
  onCardPlayed(c);
- log('카드 사용: '+c.name+' (비용 '+cost+' MC)');
+ if(id==='base-206')G.paramModifier=2;else if(G.paramModifier)G.paramModifier=0;log('카드 사용: '+c.name+' (비용 '+cost+' MC)');
  renderGame()
 }
 function beginFinal(reason){G.phase='final';G.endReason=reason;G.finalPlants=0;G.finished=false;$('finalTitle').textContent=allParametersComplete()?'테라포밍 성공!':'게임 종료';$('finalMessage').textContent=reason+' · 온도 '+G.temp+'°C / 산소 '+G.oxy+'% / 해양 '+G.ocean+'/9';$('finalPlants').textContent='현재 식물 자원: '+G.res.plant+'개 · 배치 가능한 녹지: '+Math.floor(G.res.plant/8)+'개';$('finalScore').textContent=G.score+' VP';$('finalDetails').innerHTML='TR '+G.tr+'<br>보유 자원은 최종 점수에 포함되지 않습니다.';renderBoard('finalBoard');showPage('final')}
