@@ -23,7 +23,7 @@
 <div><section class="panel"><div class="ph"><b>🪐 화성 지도 · <span id="activeMapName" class="map-heading">타르시스</span></b><span id="tileCount" class="pill">0 타일</span></div><div class="pb"><div class="board-scroll"><svg id="board" class="board" viewBox="0 0 720 540" aria-label="육각형 화성 지도"></svg></div><div class="legend"><span>⬡ 일반 육지</span><span>🔵 바다 예약 칸</span><span>▧ 특수 예약 칸</span><span>🌊 바다</span><span>🌿 녹지</span><span>🏙 도시</span></div><p id="tileHint" class="muted small">지도 타일을 선택하면 위치 정보가 표시됩니다.</p><div class="actions"><button onclick="standard('ocean')">바다 프로젝트 · 18 MC</button><button onclick="standard('greenery')">녹지 프로젝트 · 23 MC / 식물 8개</button><button onclick="standard('city')">도시 프로젝트 · 25 MC</button><button onclick="standard('temperature')">소행성 · 14 MC</button><button onclick="standard('heat')">열 자원 8개 → 기온 +2℃</button><button onclick="standard('power')">발전소 · 11 MC</button><button id="bonusOceanButton" class="bonus-action hidden" onclick="useBonusOcean()">🌊 온도 0℃ 보너스 · 해양 배치</button></div></div></section>
 <section class="panel"><div class="ph"><b>손패</b><span id="handCount" class="pill"></span></div><div class="pb"><div id="hand" class="cards"></div></div></section>
 <section class="panel"><div class="ph"><b>사용한 프로젝트</b><span id="playedCount" class="pill"></span></div><div class="pb"><div id="played" class="cards"></div></div></section></div>
-<div><section class="panel"><div class="ph"><b>기업 및 자원</b><span id="corpName" class="pill"></span></div><div class="pb"><div id="corpAbility" class="muted small"></div><h3>자원 보유량</h3><div id="resources" class="resource-grid"></div><h3>생산량</h3><div id="production" class="resource-grid"></div></div></section>
+<div><section class="panel"><div class="ph"><b>기업 및 자원</b><span id="corpName" class="pill"></span></div><div class="pb"><div id="corpAbility" class="muted small"></div><div id="corpActionSlot"></div><h3>자원 보유량</h3><div id="resources" class="resource-grid"></div><h3>생산량</h3><div id="production" class="resource-grid"></div></div></section>
 <section class="panel"><div class="ph"><b>실시간 점수</b><span class="pill">추정 점수</span></div><div class="pb"><div class="scorebox"><div class="scorebig" id="scoreTotal">14 VP</div><div id="scoreDetails" class="small muted"></div></div></div></section>
 <section class="panel"><div class="ph"><b>세대 행동</b></div><div class="pb"><p class="muted small">한 번에 1~2개 행동을 수행할 수 있습니다. 원하는 만큼 행동을 반복한 뒤 세대를 종료하세요.</p><div class="actions"><button onclick="endGeneration()" class="primary">세대 종료 → 생산 페이즈</button><button onclick="openDraft()">4장 멀리건 보기</button><button onclick="endGame(true)">게임 종료</button></div></div></section>
 <section class="panel"><div class="ph"><b>게임 로그</b></div><div class="pb log" id="log"></div></section></div></div>
@@ -434,12 +434,7 @@ function queueBonusOcean(){
  G.pendingBonusOceans=(G.pendingBonusOceans||0)+1;
  log('기온 0℃ 보너스: 해양 타일 1장 배치 가능');
 }
-function useBonusOcean(){
- if(!G?.pendingBonusOceans)return;
- if(!G.selected||!OCEAN_SLOTS.has(G.selected)||G.tiles[G.selected]?.type!=='ocean-slot'){alert('지도에서 빈 해양 칸을 선택하세요.');return}
- if(G.ocean>=mapLimits().ocean){G.pendingBonusOceans=0;renderGame();return}
- if(placeTile('ocean')){G.pendingBonusOceans--;renderGame()}
-}
+function useBonusOcean(){if(!G?.pendingBonusOceans)return;beginBoardPlacementAction('bonus-ocean')}
 
 function applyBoardBonus(k){const bonus=BOARD_BONUSES[k];if(!bonus)return;for(const [type,n]of Object.entries(bonus)){if(type==='draw')for(let i=0;i<n;i++)drawCard();else G.res[type]=(G.res[type]||0)+n}if(G.corp==='mining'&&(bonus.steel||bonus.titanium))changeProduction('steel',1,'광업 점유 보너스');log('타일 점유 보너스: '+k)}
 function placeTile(type){const k=G.selected;if(!k){alert('먼저 지도에서 칸을 선택하세요.');return false}
@@ -669,7 +664,7 @@ function confirmOptionModal(){
  $('optionModal').classList.add('hidden');executeWithChoiceDialog(choiceSession.action,choiceSession.id)
 }
 function closeOptionModal(){choiceSession=null;$('optionModal').classList.add('hidden')}
-function requestCardAction(id){if(!G||G.phase!=='action')return;executeWithChoiceDialog('action',id)}
+function requestCardAction(id){if(!G||G.phase!=='action')return;if((id==='base-012'||id==='base-187')&&!G.selected){beginBoardPlacementAction('active-ocean',id);return}executeWithChoiceDialog('action',id)}
 function requestCardPlay(id){if(!G||G.phase!=='action')return;executeWithChoiceDialog('play',id)}
 function targetCard(kind,excludeId){const arr=G.played.filter(x=>x.id!==excludeId&&(kind==='animal'||kind==='microbe'?/동물|미생물|자원/.test((x.effectText||'')+(x.vpText||'')):true));if(!arr.length){alert('자원을 보관할 대상 카드가 없습니다.');return null}let i=promptChoice(kind+' 자원을 추가할 카드 선택',arr.map(x=>x.name+' ('+stocked(x,kind)+')'));return i<0?null:arr[i]}
 function cardResourceAction(c,kind,n){const t=targetCard(kind,c.id);if(!t)return false;storeOn(t,kind,n);return true}
@@ -753,7 +748,12 @@ function paymentValid(d){
   if(!Number.isInteger(d[kind])||d[kind]<0||d[kind]>(G.res[kind]||0))return false;
   if(!allowedPayment(c,kind)&&d[kind]>0)return false
  }
- if(paymentMetalsValue(d)>d.cost)return false;
+ const resourceValue=paymentMetalsValue(d);
+ if(resourceValue>d.cost){
+  // An indivisible final steel/titanium cube may exceed the remaining cost,
+  // but an additional redundant cube is never allowed.
+  if(['steel','titanium','heat'].some(k=>d[k]>0&&resourceValue-paymentValue(k)>=d.cost))return false
+ }
  if(paymentRemaining(d)>(G.res.mc||0))return false;
  return true
 }
@@ -775,7 +775,7 @@ function renderPaymentModal(){
 
  $('paymentRows').innerHTML=['steel','titanium','heat'].filter(k=>allowedPayment(c,k)).map(k=>{
   const label={steel:'강철',titanium:'티타늄',heat:'열'}[k],v=paymentValue(k);
-  const max=Math.min(G.res[k]||0,Math.floor(d.cost/v));
+  const max=Math.min(G.res[k]||0,Math.ceil(d.cost/v));
   const options=Array.from({length:max+1},(_,i)=>'<option value="'+i+'" '+(d[k]===i?'selected':'')+'>'+i+'개 ('+(i*v)+' M€)</option>').join('');
   return '<label class="payment-row"><span><img src="../../asset/terraforming-mars/resources/'+k+'.svg" alt=""> '+label+'</span><select aria-label="'+label+' 사용 개수" onchange="setPaymentAmount(\''+k+'\',this.value)">'+options+'</select><small>'+v+' M€/개<br>보유 '+(G.res[k]||0)+'</small></label>'
  }).join('');
@@ -793,8 +793,8 @@ function togglePaymentOcean(k,on){
 
 function updatePaymentSummary(){
  if(!paymentDraft)return;
- const d=paymentDraft,resources=paymentMetalsValue(d),remaining=paymentRemaining(d),valid=paymentValid(d);
- $('paymentSummary').innerHTML='<strong>전체 비용 '+d.cost+' M€</strong><p>선택한 자원 가치: '+resources+' M€</p><p>메가크레딧 자동 차감: <b>'+remaining+' M€</b> / 보유 '+G.res.mc+' M€</p><small>'+(valid?'지불 가능합니다.':'자원 가치는 카드 비용을 넘을 수 없고, 부족한 메가크레딧도 자동 지불할 수 있어야 합니다.')+'</small>';
+ const d=paymentDraft,resources=paymentMetalsValue(d),remaining=paymentRemaining(d),valid=paymentValid(d),over=Math.max(0,resources-d.cost);
+ $('paymentSummary').innerHTML='<strong>전체 비용 '+d.cost+' M€</strong><p>선택한 자원 가치: '+resources+' M€</p><p>메가크레딧 자동 차감: <b>'+remaining+' M€</b> / 보유 '+G.res.mc+' M€</p><small>'+(valid?'지불 가능합니다.':'중복으로 낭비되는 자원은 사용할 수 없습니다. 카드 비용과 MC 보유량을 확인하세요.')+'</small>';
  $('paymentConfirm').disabled=!valid
 }
 function setPaymentAmount(kind,value){
@@ -909,21 +909,13 @@ function confirmCardPayment(){
 
 function useResourceAction(kind){
  if(!G||G.phase!=='action')return false;
- if(kind==='plant'){
-  const need=G.corp==='ecoline'?7:8;
-  if(G.res.plant<need){alert('녹지 배치에 식물 '+need+'개가 필요합니다.');return false}
-  if(!G.selected){alert('화성 지도에서 녹지를 배치할 빈 칸을 먼저 선택해 주세요.');return false}
-  if(!placeTile('greenery'))return false;
-  G.res.plant-=need;
-  log('식물 자원 '+need+'개 사용 → 녹지 타일 배치');
- }else if(kind==='heat'){
-  if(G.temp>=mapLimits().temp){alert('이미 기온이 최고 수준입니다.');return false}
-  if(G.res.heat<8){alert('기온 상승에 열 자원 8개가 필요합니다.');return false}
-  G.res.heat-=8;raiseTemp(1);log('열 자원 8개 사용 → 기온 +2℃')
- }else return false;
- renderGame();return true
+ if(kind==='plant'){beginBoardPlacementAction('plant');return true}
+ if(kind==='heat'){
+  if(G.temp>=mapLimits().temp){alert('기온 최대치입니다.');return false}
+  if(G.res.heat<8){alert('열 자원 8개가 필요합니다.');return false}
+  G.res.heat-=8;raiseTemp(1);renderGame();return true
+ }return false
 }
-
 renderRecent();
 
 </script><div id="paymentModal" class="payment-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="paymentTitle">
