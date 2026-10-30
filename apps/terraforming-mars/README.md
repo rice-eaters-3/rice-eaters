@@ -1,14 +1,15 @@
 # Terraforming Mars solo prototype
 
-Open `index.html` in a modern browser; no build step, API key, or external dependency is required.
+Node.js 20 이상에서 저장소 루트에서 `npm start`로 서버를 시작한 다음 **http://localhost:3000/mars** 에 접속합니다. 더 이상 HTML 파일을 직접 여는 방식은 권장하지 않습니다.
 
-## Current features
-- App-library entry point at repository root
-- Clickable hex board, terraforming tracks, resources and production
-- Sample project cards and played-card area
-- End-game records saved in browser localStorage
-- Card metrics table and CSV export
-- Card data separated under `asset/terraforming-mars/cards.json`
+## 현재 기능
+- 육각형 맵, 프로젝트 카드, 자원/생산/세대 진행 및 솔로 점수 기록
+- 진행 중 자동 저장, 이어하기, 종료 게임 통계와 CSV 내보내기
+- 서버의 `/api/mars/data`, `/api/mars/progress`, `/api/mars/records`로 개별 세션의 진행/기록 동기화
+- 기존 `localStorage` 데이터 자동 이전 및 브라우저 장애 대비 캐시
+- 서버 측 익명 접속 로그와 기록 저장 로그 (`data/activity.jsonl`)
 
-## Limitations
-Fan-made prototype, not an official implementation. Rules, balancing, solo win condition, tile adjacency, corporation/prelude selection, and many phases are incomplete. The card JSON is a starter sample, **not the full base-game or expansion catalog**; official artwork and full copyrighted card text are not included. Mulligan metrics are not yet captured. Stats stay in the current browser profile and do not sync across devices.
+저장 데이터는 브라우저별 익명 세션 쿠키로 구분됩니다. 한 계정으로 여러 기기에 걸쳐 이어하기를 지원하는 기능은 아직 없습니다. 앱 내부의 게임 진행은 기존처럼 **솔로**이며, 서버화는 온라인으로 제공하고 저장하는 구조 전환입니다.
+
+## 주의
+팬 메이드 프로토타입으로 공식 제품이 아닙니다. 룰 구현 정확성 및 카드 라이선스는 별개로 검토해야 합니다. 배포 전 보안과 인증을 추가하세요.
