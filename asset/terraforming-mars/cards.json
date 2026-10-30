@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "note": "검증 원칙: 카드명/효과를 추측해 추가하지 않는다. 현재 목록은 45mars 소스와 공식 카드 목록 전체 대조가 끝나지 않은 부분 집합이며, 전체 공식 카드 DB라고 간주하지 말 것. 새 카드 추가 시 출처와 검증 상태를 기록한다.",
+  "note": "검증된 기본판 프로젝트 카드만 게임 풀에 포함한다. 기존 프로토타입 카드 중 공식 카드와 일치하지 않거나 효과를 검증하지 못한 항목은 제거했다. 카드 전체 목록은 아직 구축 중이며, 검증하지 않은 항목을 공식 데이터로 추가하지 않는다.",
   "tagTaxonomy": [
     "building",
     "space",
@@ -163,8 +163,10 @@
         "space",
         "event"
       ],
-      "prototypeEffect": "온도 1단계 상승.",
-      "verifiedAgainstSource": false
+      "effect": "온도 1단계 상승. 플레이어 한 명의 식물 자원을 최대 3개 제거.",
+      "expansion": "기본판",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
     },
     {
       "id": "comet",
@@ -176,99 +178,10 @@
         "space",
         "event"
       ],
-      "prototypeEffect": "온도 1단계 상승 및 해양 타일 배치.",
-      "verifiedAgainstSource": false
-    },
-    {
-      "id": "aquifer",
-      "name": "대수층",
-      "type": "project",
-      "projectType": "automated",
-      "cost": 18,
-      "tags": [],
-      "prototypeEffect": "해양 타일 1개 배치.",
-      "verifiedAgainstSource": false
-    },
-    {
-      "id": "greenery",
-      "name": "녹화 사업",
-      "type": "project",
-      "projectType": "automated",
-      "cost": 23,
-      "tags": [],
-      "prototypeEffect": "녹지 타일 1개 배치.",
-      "verifiedAgainstSource": false
-    },
-    {
-      "id": "powerplant",
-      "name": "발전소",
-      "type": "project",
-      "projectType": "automated",
-      "cost": 11,
-      "tags": [],
-      "prototypeEffect": "에너지 생산량 +1.",
-      "verifiedAgainstSource": false
-    },
-    {
-      "id": "citystandard",
-      "name": "도시 건설",
-      "type": "project",
-      "projectType": "automated",
-      "cost": 25,
-      "tags": [],
-      "prototypeEffect": "도시 타일 배치 및 MC 생산량 +1.",
-      "verifiedAgainstSource": false
-    },
-    {
-      "id": "solar",
-      "name": "태양풍 발전",
-      "type": "project",
-      "projectType": "automated",
-      "cost": 11,
-      "tags": [
-        "space",
-        "power"
-      ],
-      "prototypeEffect": "에너지 생산량 +1.",
-      "verifiedAgainstSource": false
-    },
-    {
-      "id": "farm",
-      "name": "화성 농장",
-      "type": "project",
-      "projectType": "automated",
-      "cost": 14,
-      "tags": [
-        "plant",
-        "building"
-      ],
-      "prototypeEffect": "식물 생산량 +1, 식물 자원 +2.",
-      "verifiedAgainstSource": false
-    },
-    {
-      "id": "lab",
-      "name": "연구 전초기지",
-      "type": "project",
-      "projectType": "automated",
-      "cost": 8,
-      "tags": [
-        "science",
-        "building"
-      ],
-      "prototypeEffect": "MC 생산량 +1.",
-      "verifiedAgainstSource": false
-    },
-    {
-      "id": "heat",
-      "name": "열 포집 장치",
-      "type": "project",
-      "projectType": "automated",
-      "cost": 6,
-      "tags": [
-        "power"
-      ],
-      "prototypeEffect": "열 자원 +3.",
-      "verifiedAgainstSource": false
+      "effect": "온도 1단계 상승. 해양 타일 1개 배치. 플레이어 한 명의 식물 자원을 최대 3개 제거.",
+      "expansion": "기본판",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
     }
   ]
 }
