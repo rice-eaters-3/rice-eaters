@@ -126,7 +126,74 @@ function pay(cost){if(G.res.mc<cost){alert('메가크레딧이 부족합니다.'
 function raiseTemp(n=1){let before=G.temp;G.temp=Math.min(8,G.temp+n*2);G.tr+=Math.max(0,(G.temp-before)/2);log('온도 상승: '+before+' → '+G.temp+'°C');}
 function placeTile(type){let k=G.selected;if(!k){alert('먼저 지도에서 칸을 선택하세요.');return false}let t=G.tiles[k];if(t&&t.reserved){if(!(type==='ocean'&&t.type==='ocean-slot')){alert('예약된 칸에는 해당 타일을 배치할 수 없습니다.');return false}}else if(t){alert('이미 점유된 칸입니다.');return false}if(SPECIAL_SLOTS.has(k)){alert('특수 예약 칸입니다. 일반 타일을 배치할 수 없습니다.');return false}if(type==='ocean'&&!OCEAN_SLOTS.has(k)){alert('해양은 해양 예약 칸에만 배치할 수 있습니다.');return false}if(type!=='ocean'&&OCEAN_SLOTS.has(k)){alert('해양 예약 칸에는 해양만 배치할 수 있습니다.');return false}if(type==='city'&&adjacent(k,'city').length){alert('도시는 다른 도시와 인접할 수 없습니다.');return false}if(type==='greenery'){let possible=HEXES.some(h=>{let kk=K(h);return !G.tiles[kk]&&!OCEAN_SLOTS.has(kk)&&!SPECIAL_SLOTS.has(kk)&&hasOwnAdjacent(kk)});if(possible&&!hasOwnAdjacent(k)){alert('가능하다면 자신의 타일에 인접한 칸에 녹지를 배치해야 합니다.');return false}}let nearO=adjacent(k,'ocean').length;G.tiles[k]={type};if(type==='ocean'){G.ocean++;G.tr++;G.res.mc+=nearO*2}else if(type==='greenery'){if(G.oxy<14){G.oxy++;G.tr++}}else if(type==='city'&&G.corp==='tharsis'){G.prod.mc++;G.res.mc+=3}onTilePlaced(type);G.selected=null;log(type+' 타일 배치 '+k+(nearO?' · 인접 바다 '+nearO+'개로 MC +'+(nearO*2):''));renderGame();return true}
 function standard(type){if(G.phase!=='action')return;if(type==='ocean'){if(G.ocean>=9){alert('해양 목표를 달성했습니다.');return}if(!pay(18))return;if(!placeTile('ocean'))G.res.mc+=18;else log('표준 프로젝트: 해양 배치')}else if(type==='greenery'){if(G.res.plant>=8){G.res.plant-=8;if(!placeTile('greenery'))G.res.plant+=8}else{if(!pay(G.corp==='ecoline'?23:23))return;if(!placeTile('greenery'))G.res.mc+=23}}else if(type==='city'){if(!pay(25))return;if(!placeTile('city'))G.res.mc+=25;else G.prod.mc++}else if(type==='temperature'){if(!pay(14))return;raiseTemp();}else if(type==='power'){if(!pay(11))return;G.prod.energy++;log('표준 프로젝트: 에너지 생산량 +1')}renderGame()}
-function playCard(id){let i=G.hand.findIndex(c=>c.id===id),c=G.hand[i];if(!c)return;const condition=conditionStatus(c);if(!condition.ok){alert('카드 사용 조건 미충족: '+condition.text);return}if(condition.text.startsWith('확인 불가:')){alert('조건을 자동 판정할 수 없어 사용을 막았습니다: '+condition.text);return}let discount=G.corp==='credicor'&&c.cost>=20?4:G.corp==='teractor'&&c.tags.includes('earth')?3:0;let cost=Math.max(0,c.cost-discount);if(!pay(cost))return;G.hand.splice(i,1);c.playGen=G.gen;G.played.push(c);let e=c.effect||{};if(e.tr){G.tr+=e.tr;log('TR +'+e.tr)}if(e.temperature)raiseTemp(e.temperature);if(e.oxygen){let added=Math.min(e.oxygen,14-G.oxy);G.oxy+=added;G.tr+=added;if(added)log('산소 농도 +'+added+'%')}if(e.ocean){for(let j=0;j<e.ocean;j++){let k=G.selected;if(!k){G.res.mc+=cost;G.hand.push(c);G.played.pop();alert('이 카드 효과를 해결하려면 먼저 해양 예약 칸을 선택하세요.');return}if(!placeTile('ocean')){G.res.mc+=cost;G.hand.push(c);G.played.pop();return}}}if(e.greenery){let k=G.selected;if(!k||!placeTile('greenery')){G.res.mc+=cost;G.hand.push(c);G.played.pop();return}}if(e.city){let k=G.selected;if(!k||!placeTile('city')){G.res.mc+=cost;G.hand.push(c);G.played.pop();return}}for(let[k,v]of Object.entries(e.production||{})){G.prod[k]=Math.max(k==='mc'?-5:0,G.prod[k]+v);if(G.corp==='manutech'&&v>0)G.res[k]=(G.res[k]||0)+1}for(let[k,v]of Object.entries(e.resources||{}))G.res[k]=(G.res[k]||0)+v;if(e.draw)for(let j=0;j<e.draw;j++)drawCard();if(G.corp==='interplanetary'&&c.tags.includes('event'))G.res.mc+=2;onCardPlayed(c);log('카드 사용: '+c.name+' (비용 '+cost+' MC)');renderGame()}
+function playCard(id){
+ if(!G||G.phase!=='action')return;
+ const i=G.hand.findIndex(c=>c.id===id),c=G.hand[i];if(!c)return;
+ const cond=conditionStatus(c);
+ if(!cond.ok){alert('카드 사용 조건 미충족: '+cond.text);return}
+ let discount=(G.corp==='teractor'&&c.tags.includes('earth')?3:0);
+ if(persistent('020'))discount+=1;
+ if(persistent('166')&&c.tags.includes('space'))discount+=2;
+ const cost=Math.max(0,c.cost-discount);
+ if(G.res.mc<cost){alert('메가크레딧이 부족합니다: 필요 '+cost+' MC');return}
+ // Resolve all player choices and target checks before charging the card cost.
+ let choice=null,target=null;
+ switch(id){
+ case 'base-019':choice=promptChoice('수소 수입',['식물 자원 3개','미생물 3개를 다른 카드에','동물 2개를 다른 카드에']);break;
+ case 'base-115':choice=promptChoice('인공 광합성 기술',['식물 생산력 +1','에너지 생산력 +2']);break;
+ case 'base-143':choice=promptChoice('대규모 수송선단',['식물 자원 5개','동물 4개를 다른 카드에']);break;
+ case 'base-190':if(G.res.heat<5){alert('열 자원 5개 필요');return}choice=promptChoice('국소적 축열',['식물 자원 4개','동물 2개를 다른 카드에']);break;
+ }
+ if(CHOICE_IDS.has(id.slice(-3))&&choice<0)return;
+ if((id==='base-019'&&choice!==0)||(id==='base-143'&&choice===1)||(id==='base-190'&&choice===1)){
+   target=targetCard(id==='base-019'?(choice===1?'microbe':'animal'):'animal',id);
+   if(!target)return
+ }
+ const e=c.effect||{},oceanN=e.ocean||0,cityN=e.city||0,greenN=e.greenery||0;
+ const requiredOcean=G.ocean+oceanN<=9;
+ if(!requiredOcean){alert('해양 타일을 더 놓을 수 없습니다.');return}
+ const freeOceans=[...OCEAN_SLOTS].filter(k=>G.tiles[k]?.type==='ocean-slot');
+ if(freeOceans.length<oceanN){alert('해양 예약 칸이 부족합니다.');return}
+ const selectedOcean=G.selected&&freeOceans.includes(G.selected)?G.selected:null;
+ const oceanSlots=selectedOcean?[selectedOcean,...freeOceans.filter(k=>k!==selectedOcean).slice(0,oceanN-1)]:freeOceans.slice(0,oceanN);
+ let chosenTile=G.selected;
+ if(cityN||greenN){
+  if(!chosenTile){alert('지도에서 먼저 타일 배치 위치를 선택하세요.');return}
+  const isFree=!G.tiles[chosenTile],reserved=OCEAN_SLOTS.has(chosenTile)||SPECIAL_SLOTS.has(chosenTile);
+  if(!isFree||reserved){alert('선택한 칸은 비어 있는 육지 칸이 아닙니다.');return}
+  if(cityN&&adjacent(chosenTile,'city').length){alert('도시는 다른 도시와 인접할 수 없습니다.');return}
+ }
+ const production=e.production||{};
+ for(const [k,v]of Object.entries(production)){if(v<0&&k!=='mc'&&(G.prod[k]||0)<-v){alert(k+' 생산력이 부족합니다.');return}}
+ const resources=e.resources||{};
+ for(const [k,v]of Object.entries(resources)){if(v<0&&(G.res[k]||0)<-v){alert(k+' 자원이 부족합니다.');return}}
+ // All preconditions have been resolved; now commit changes.
+ G.res.mc-=cost;
+ G.hand.splice(i,1);
+ c.playGen=G.gen;c.stored??={};G.played.push(c);
+ if(e.tr)G.tr+=e.tr;
+ if(e.temperature)raiseTemp(e.temperature);
+ if(e.oxygen){const n=Math.min(e.oxygen,14-G.oxy);G.oxy+=n;G.tr+=n}
+ for(const k of oceanSlots){G.selected=k;placeTile('ocean')}
+ if(cityN){G.selected=chosenTile;placeTile('city');G.tiles[chosenTile].sourceCard=id}
+ if(greenN){G.selected=chosenTile;placeTile('greenery')}
+ for(const [k,v]of Object.entries(production))G.prod[k]=Math.max(k==='mc'?-5:0,(G.prod[k]||0)+v);
+ for(const [k,v]of Object.entries(resources))G.res[k]=(G.res[k]||0)+v;
+ for(let j=0;j<(e.draw||0);j++)drawCard();
+ // Choices are deliberately resolved once; card.effect excludes alternatives.
+ switch(id){
+ case 'base-019':if(choice===0)G.res.plant+=3;else storeOn(target,choice===1?'microbe':'animal',choice===1?3:2);break;
+ case 'base-115':G.prod[choice===0?'plant':'energy']+=choice===0?1:2;break;
+ case 'base-143':if(choice===0)G.res.plant+=5;else storeOn(target,'animal',4);break;
+ case 'base-190':G.res.heat-=5;if(choice===0)G.res.plant+=4;else storeOn(target,'animal',2);break;
+ case 'base-172':storeOn(c,'animal',1);break;
+ }
+ if(G.corp==='credicor'&&c.cost>=20)G.res.mc+=4;
+ if(G.corp==='interplanetary'&&c.type==='event')G.res.mc+=2;
+ onCardPlayed(c);
+ log('카드 사용: '+c.name+' (비용 '+cost+' MC)');
+ renderGame()
+}
 function beginFinal(reason){G.phase='final';G.endReason=reason;G.finalPlants=0;G.finished=false;$('finalTitle').textContent=allParametersComplete()?'테라포밍 성공!':'게임 종료';$('finalMessage').textContent=reason+' · 온도 '+G.temp+'°C / 산소 '+G.oxy+'% / 해양 '+G.ocean+'/9';$('finalPlants').textContent='현재 식물 자원: '+G.res.plant+'개 · 배치 가능한 녹지: '+Math.floor(G.res.plant/8)+'개';$('finalScore').textContent=G.score+' VP';$('finalDetails').innerHTML='TR '+G.tr+'<br>보유 자원은 최종 점수에 포함되지 않습니다.';renderBoard('finalBoard');showPage('final')}
 function finalGreenery(){if(G.res.plant<8){alert('식물 자원이 8개 필요합니다.');return}G.phase='final';G.selected=null;alert('최종 보드에서 녹지를 놓을 칸을 클릭한 뒤 다시 이 버튼을 누르면 배치됩니다.');let svg=$('finalBoard');svg.querySelectorAll('[data-k]').forEach(el=>el.onclick=()=>{G.selected=el.dataset.k;$('finalPlants').textContent='선택 칸 '+G.selected+' · 녹지 배치 버튼을 다시 누르세요.';window.finalPlace=()=>{if(G.res.plant<8)return;if(placeTile('greenery')){G.res.plant-=8;G.finalPlants++;$('finalPlants').textContent='남은 식물 '+G.res.plant+'개 · 종료 녹지 '+G.finalPlants+'개';$('finalScore').textContent=(G.score+G.finalPlants)+' VP';renderBoard('finalBoard');window.finalPlace=null}}}) ;if(window.finalPlace)window.finalPlace()}
 function endGame(manual=false){if(!G)return;beginFinal(manual?'사용자 종료':'14세대 종료')}
