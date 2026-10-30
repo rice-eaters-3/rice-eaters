@@ -161,19 +161,29 @@ function playCard(id){
  const cost=Math.max(0,c.cost-discount);
  if(G.res.mc<cost){alert('메가크레딧이 부족합니다: 필요 '+cost+' MC');return}
  // Resolve all player choices and target checks before charging the card cost.
- let choice=null,target=null;
+ let choice=null,target=null,bonusAnimal=null,bonusMicrobe=null;
  switch(id){
  case 'base-019':choice=promptChoice('수소 수입',['식물 자원 3개','미생물 3개를 다른 카드에','동물 2개를 다른 카드에']);break;
  case 'base-115':choice=promptChoice('인공 광합성 기술',['식물 생산력 +1','에너지 생산력 +2']);break;
  case 'base-143':choice=promptChoice('대규모 수송선단',['식물 자원 5개','동물 4개를 다른 카드에']);break;
  case 'base-190':if(G.res.heat<5){alert('열 자원 5개 필요');return}choice=promptChoice('국소적 축열',['식물 자원 4개','동물 2개를 다른 카드에']);break;
+ case 'base-152':choice=promptChoice('단열 처리: 줄일 열 생산력 선택',Array.from({length:Math.max(1,G.prod.heat+1)},(_,i)=>'열 생산력 -'+i+', MC 생산력 +'+i));break;
  }
- if(CHOICE_IDS.has(id.slice(-3))&&choice<0)return;
+ if((CHOICE_IDS.has(id.slice(-3))||id==='base-152')&&choice<0)return;
  if((id==='base-019'&&choice!==0)||(id==='base-143'&&choice===1)||(id==='base-190'&&choice===1)){
    target=targetCard(id==='base-019'?(choice===1?'microbe':'animal'):'animal',id);
    if(!target)return
  }
+ if(['base-026','base-163','base-170'].includes(id)){
+ const candidates=(kind)=>G.played.filter(x=>x.id!==id&&(kind==='animal'?/동물/.test((x.effectText||'')+(x.vpText||'')):/미생물/.test((x.effectText||'')+(x.vpText||''))));
+ const choose=(kind)=>{const arr=candidates(kind);if(!arr.length)return null;const i=promptChoice(kind+' 자원 대상 카드',arr.map(x=>x.name));if(i<0)return undefined;return arr[i]};
+ if(id==='base-026')bonusAnimal=choose('animal');
+ if(id==='base-170')bonusMicrobe=choose('microbe');
+ if(id==='base-163'){bonusMicrobe=choose('microbe');if(bonusMicrobe!==undefined)bonusAnimal=choose('animal')}
+ if(bonusAnimal===undefined||bonusMicrobe===undefined)return
+}
  const e=c.effect||{},oceanN=e.ocean||0,cityN=e.city||0,greenN=e.greenery||0;
+ const greenOnOcean=id==='base-059'||id==='base-174';
  const requiredOcean=G.ocean+oceanN<=9;
  if(!requiredOcean){alert('해양 타일을 더 놓을 수 없습니다.');return}
  const freeOceans=[...OCEAN_SLOTS].filter(k=>G.tiles[k]?.type==='ocean-slot');
@@ -184,7 +194,9 @@ function playCard(id){
  if(cityN||greenN){
   if(!chosenTile){alert('지도에서 먼저 타일 배치 위치를 선택하세요.');return}
   const isFree=!G.tiles[chosenTile],reserved=OCEAN_SLOTS.has(chosenTile)||SPECIAL_SLOTS.has(chosenTile);
-  if(!isFree||reserved){alert('선택한 칸은 비어 있는 육지 칸이 아닙니다.');return}
+  const isOceanSlot=G.tiles[chosenTile]?.type==='ocean-slot';
+  if(greenOnOcean?!isOceanSlot:(!isFree||reserved)){alert(greenOnOcean?'빈 해양 예약 칸을 선택하세요.':'선택한 칸은 비어 있는 육지 칸이 아닙니다.');return}
+  if(id==='base-020'&&HEXES.some(h=>{const k=K(h);return G.tiles[k]?.type!=='ocean-slot'&&G.tiles[k]&&neighbors(h).some(n=>K(n)===chosenTile)})){alert('연구 전진 기지는 다른 타일과 인접할 수 없습니다.');return}
   if(cityN&&adjacent(chosenTile,'city').length){alert('도시는 다른 도시와 인접할 수 없습니다.');return}
  }
  const production=e.production||{};
@@ -197,12 +209,23 @@ function playCard(id){
  c.playGen=G.gen;c.stored??={};G.played.push(c);
  if(e.tr)G.tr+=e.tr;
  if(e.temperature)raiseTemp(e.temperature);
- if(e.oxygen){const n=Math.min(e.oxygen,14-G.oxy);G.oxy+=n;G.tr+=n}
+ if(e.oxygen&&!greenN){const n=Math.min(e.oxygen,14-G.oxy);G.oxy+=n;G.tr+=n}
  for(const k of oceanSlots){G.selected=k;placeTile('ocean')}
  if(cityN){G.selected=chosenTile;placeTile('city');G.tiles[chosenTile].sourceCard=id}
- if(greenN){G.selected=chosenTile;placeTile('greenery')}
- for(const [k,v]of Object.entries(production))G.prod[k]=Math.max(k==='mc'?-5:0,(G.prod[k]||0)+v);
- for(const [k,v]of Object.entries(resources))G.res[k]=(G.res[k]||0)+v;
+ if(greenN){G.selected=chosenTile;if(greenOnOcean){G.tiles[chosenTile]={type:'greenery',sourceCard:id};if(G.oxy<14){G.oxy++;G.tr++}onTilePlaced('greenery');G.selected=null}else placeTile('greenery')}
+ const cardTags=(tag)=>G.played.filter(x=>x.type!=='event').reduce((n,x)=>n+(x.tags||[]).filter(t=>t===tag).length,0);
+ const cityCount=Object.values(G.tiles).filter(t=>t.type==='city').length;
+ const dynamic={...production};
+ if(id==='base-037')dynamic.plant=cardTags('plant')>=3?4:1;
+ if(id==='base-102')dynamic.energy=cardTags('power');
+ if(id==='base-129')dynamic.mc=cityCount;
+ if(id==='base-130')dynamic.plant=Math.floor(cardTags('microbe')/2);
+ if(id==='base-148')dynamic.plant=cardTags('plant');
+ if(id==='base-189')dynamic.energy=cityCount;
+ for(const [k,v]of Object.entries(dynamic))G.prod[k]=Math.max(k==='mc'?-5:0,(G.prod[k]||0)+v);
+ const dynamicResources={...resources};
+ if(id==='base-096')dynamicResources.plant=cityCount;
+ for(const [k,v]of Object.entries(dynamicResources))G.res[k]=(G.res[k]||0)+v;
  for(let j=0;j<(e.draw||0);j++)drawCard();
  // Choices are deliberately resolved once; card.effect excludes alternatives.
  switch(id){
@@ -211,9 +234,10 @@ function playCard(id){
  case 'base-143':if(choice===0)G.res.plant+=5;else storeOn(target,'animal',4);break;
  case 'base-190':if(choice===0)G.res.plant+=4;else storeOn(target,'animal',2);break;
  case 'base-172':storeOn(c,'animal',1);break;
- case 'base-026':if(!cardResourceAction(c,'animal',1))log('에오스 협곡 국립공원: 동물 자원 추가 대상 없음');break;
- case 'base-163':{const m=G.played.filter(x=>x.id!==id&&/미생물/.test((x.effectText||'')+(x.vpText||'')));const an=G.played.filter(x=>x.id!==id&&/동물/.test((x.effectText||'')+(x.vpText||'')));if(m.length)storeOn(m[0],'microbe',3);if(an.length)storeOn(an[0],'animal',2);break}
- case 'base-170':{const m=G.played.find(x=>x.id!==id&&/미생물/.test((x.effectText||'')+(x.vpText||'')));if(m)storeOn(m,'microbe',2);break}
+ case 'base-152':G.prod.heat-=choice;G.prod.mc+=choice;break;
+ case 'base-026':if(bonusAnimal)storeOn(bonusAnimal,'animal',1);break;
+ case 'base-163':if(bonusMicrobe)storeOn(bonusMicrobe,'microbe',3);if(bonusAnimal)storeOn(bonusAnimal,'animal',2);break;
+ case 'base-170':if(bonusMicrobe)storeOn(bonusMicrobe,'microbe',2);break;
  case 'base-152':{break}
  }
  if(G.corp==='credicor'&&c.cost>=20)G.res.mc+=4;
