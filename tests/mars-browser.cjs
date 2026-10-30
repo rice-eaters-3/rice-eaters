@@ -3,7 +3,7 @@ const path=require('node:path');
 const assert=require('node:assert/strict');
 (async()=>{
  const browser=await chromium.launch({headless:true});
- const page=await browser.newPage({viewport:{width:1440,height:1000}});
+ const page=await browser.newPage({viewport:{width:1440,height:1000}});page.setDefaultTimeout(12000);
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
  page.on('dialog', async dialog=>{await dialog.accept('1')});
  await page.goto('file://'+path.resolve(__dirname,'../apps/terraforming-mars/index.html'));
@@ -43,4 +43,4 @@ const assert=require('node:assert/strict');
  assert.deepEqual(errors,[],'unhandled page JavaScript errors');
  await page.screenshot({path:'mars-browser-smoke.png',fullPage:true});
  const imageCount=await imgs.count();await browser.close();console.log(JSON.stringify({status:'PASS',checks:outcomes.length,images:imageCount,pageErrors:errors.length}));
-})().catch(e=>{console.error(e);process.exitCode=1});
+})().catch(e=>{console.error('Browser smoke failed:',e);process.exit(1)});
