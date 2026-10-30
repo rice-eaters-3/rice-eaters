@@ -77,16 +77,18 @@ const assert=require('node:assert/strict');
    for(const c of CARDS){
      const slots={};for(const k of OCEAN_SLOTS)slots[k]={type:'ocean-slot',reserved:true};slots['0,0']={type:'special',reserved:true};
      const tags=['science','science','science','plant','plant','plant','microbe','animal','jovian','power','power'];
-     const g={phase:'action',gen:1,tr:14,temp:8,oxy:14,ocean:6,corp:'credicor',corpName:'Credicor',ability:'',res:{mc:1000,steel:10,titanium:10,plant:10,heat:10,energy:10},prod:{mc:0,steel:3,titanium:3,plant:10,heat:10,energy:10},tiles:slots,selected:'3,0',hand:[{...c}],played:tags.map((tag,i)=>({id:'test-tag-'+i,type:'ongoing',tags:[tag],effectText:'',vp:0})),seenCardIds:new Set(),excludedCards:[],logs:[],score:0};
+     const g={mapId:'tharsis',phase:'action',gen:1,tr:14,temp:8,oxy:14,ocean:6,corp:'credicor',corpName:'Credicor',ability:'',res:{mc:1000,steel:10,titanium:10,plant:10,heat:10,energy:10},prod:{mc:0,steel:3,titanium:3,plant:10,heat:10,energy:10},tiles:slots,selected:'0,1',hand:[{...c}],played:tags.map((tag,i)=>({id:'test-tag-'+i,type:'ongoing',tags:[tag],effectText:'',vp:0})),seenCardIds:new Set(),excludedCards:[],logs:[],score:0};
      const cond=c.condition||'';
      for(const [kind,key] of [['기온','temp'],['산소','oxy'],['해양','ocean']]){
        if(cond.includes(kind)){const m=cond.match(new RegExp(kind+'.*?([-+]?\\d+)'));if(m)g[key]=Number(m[1])}
      }
      if(c.id==='base-017')g.selected='0,0';
      if(['base-059','base-142','base-174'].includes(c.id))g.selected=[...OCEAN_SLOTS][0];
-     if(c.id==='base-067')g.selected='-2,0';
+     if(c.id==='base-067')g.selected='-2,1';
      if(c.id==='base-020')g.selected='4,0';
-     if(c.id==='base-128'){g.tiles['2,0']={type:'greenery'};g.selected='3,0'}
+     if(c.id==='base-044')g.selected='-4,0';
+     if(c.id==='base-140')g.selected='0,-4';
+     if(c.id==='base-128'){g.tiles['1,1']={type:'greenery'};g.selected='0,1'}
      G=g;
      try{playCard(c.id);if(!g.played.some(x=>x.id===c.id))failed.push(c.name+': not played')}catch(e){failed.push(c.name+': '+e.message)}
    }
