@@ -329,7 +329,7 @@ else if(c.vpText&&c.vpText!=='(없음)')out.push('<span class="effect-note" titl
 if(/행성 지표에는 \+2단계\/-2단계 적용|행성 지표에는 \+2단계\/-2단계 중/.test(source))put('resources','requirements','행성 지표 조건 완화','±2');if(!out.some(x=>x.includes('effect-chip'))&&source&&source!=='(없음)')out.push('<span class="effect-note">특수 효과 · 원문 참조</span>');
 return out.length?'<div class="card-effect-icons">'+out.join('')+'</div>':'';
 }
-function cardHTML(c,mode='hand'){let isCorp=mode==='corp';let cls=isCorp?'corp':mode==='prelude'?'prelude':'';let effect=esc(c.ability||c.text||'효과 설명은 공식 출처 대조 후 보완합니다.');let visual=effect.replace(/메가크레딧|M€/g,'<b title="메가크레딧">M€</b>').replace(/강철/g,'<b title="강철 자원">강철</b>').replace(/티타늄/g,'<b title="티타늄 자원">티타늄</b>').replace(/식물/g,'<b title="식물 자원">식물</b>').replace(/에너지/g,'<b title="에너지 자원">에너지</b>').replace(/열/g,'<b title="열 자원">열</b>');let cs=(!isCorp&&mode==='hand'&&G)?conditionStatus(c):{ok:true,text:''};return '<article tabindex="0" title="'+effect+'" class="card '+cls+' '+(c.keep?'selected-card':'')+'"><div class="card-topline"><span class="cost">'+(isCorp?'기업':(c.cost??'?')+' M€')+'</span>'+tagRow(c.tags||[])+'</div><h3>'+esc(c.name)+'</h3><div class="kind">'+(isCorp?'기업':c.type==='event'?'사건 카드':'프로젝트 카드')+'</div>'+(!isCorp?effectIcons(c):'')+(cs.text?'<div class="condition '+(cs.ok?'condition-ok':'condition-blocked')+'">'+(cs.ok?'✓':'⛔')+' '+esc(cs.text)+'</div>':'')+'<p>'+visual+'</p><div class="card-fulltext"><b>'+esc(c.name)+'</b><br>'+effect+'</div>'+(isCorp?'<div class="corp-badge">시작 자금 '+c.money+' M€</div>':'')+(mode==='first'?'<label class="checks"><input type="checkbox" '+(c.keep?'checked':'')+' onchange="toggleFirst(\''+c.id+'\',this.checked)"> 구매 (3 M€)</label>':'')+(mode==='draft'?'<label class="checks"><input type="checkbox" '+(draftSelected.has(c.id)?'checked':'')+' onchange="toggleDraft(\''+c.id+'\',this.checked)"> 구매 (3 M€)</label>':'')+(mode==='corp'?'<button class="choose" onclick="chooseCorp(\''+c.id+'\')">'+(setupCorp===c.id?'선택됨':'기업 선택')+'</button>':'')+(mode==='played'&&ACTIVE_IDS.has(c.id.slice(-3))?'<div class="card-action"><button class="choose" '+(c.lastActionGen===G?.gen?'disabled':'')+' onclick="requestCardAction(\''+c.id+'\')">'+(c.lastActionGen===G?.gen?'이번 세대 행동 완료':'카드 행동 사용')+'</button></div>':'')+(mode==='played'&&c.stored?'<div class="stored-resource">'+Object.entries(c.stored).filter(([k,v])=>v>0).map(([k,v])=>'<span class="resource-token"><img src="../../asset/terraforming-mars/'+(k==='science'?'tags/science':'resources/'+k)+'.svg" alt="'+esc(k)+'">'+v+'</span>').join(' ')+'</div>':'')+(mode==='hand'?'<button class="choose" '+(cs.ok?'':'disabled title="카드 조건 미충족"')+' onclick="openCardPayment(\''+c.id+'\')">비용 지불 후 사용</button>':'')+'</article>'}function renderSetup(){window.setupCorps=setupCorps;$('corpCount').textContent=setupLocked?'기업 확정 완료':'6개 후보';$('corpChoices').innerHTML=setupCorps.map(c=>cardHTML(c,'corp')).join('');$('firstCards').innerHTML=setupCards.map(c=>cardHTML(c,'first')).join('');$('corpChoices').querySelectorAll('button').forEach(b=>b.disabled=setupLocked);$('corpChoices').style.opacity=setupLocked?'.7':'1';updateFirstCount()}
+function cardHTML(c,mode='hand'){let isCorp=mode==='corp';let cls=isCorp?'corp':mode==='prelude'?'prelude':'';let effect=esc(c.ability||c.text||'효과 설명은 공식 출처 대조 후 보완합니다.');let visual=effect.replace(/메가크레딧|M€/g,'<b title="메가크레딧">M€</b>').replace(/강철/g,'<b title="강철 자원">강철</b>').replace(/티타늄/g,'<b title="티타늄 자원">티타늄</b>').replace(/식물/g,'<b title="식물 자원">식물</b>').replace(/에너지/g,'<b title="에너지 자원">에너지</b>').replace(/열/g,'<b title="열 자원">열</b>');let cs=(!isCorp&&mode==='hand'&&G)?conditionStatus(c):{ok:true,text:''};return '<article tabindex="0" title="'+effect+'" class="card '+cls+' '+(c.keep?'selected-card':'')+'"><div class="card-topline"><span class="cost">'+(isCorp?'기업':(c.cost??'?')+' M€')+'</span>'+tagRow(c.tags||[])+'</div><h3>'+esc(c.name)+'</h3><div class="kind">'+(isCorp?'기업':c.type==='event'?'사건 카드':'프로젝트 카드')+'</div>'+(!isCorp?effectIcons(c):'')+(cs.text?'<div class="condition '+(cs.ok?'condition-ok':'condition-blocked')+'">'+(cs.ok?'✓':'⛔')+' '+esc(cs.text)+'</div>':'')+'<p>'+visual+'</p><div class="card-fulltext"><b>'+esc(c.name)+'</b><br>'+effect+'</div>'+(isCorp?'<div class="corp-badge">시작 자금 '+c.money+' M€</div>':'')+(mode==='first'?'<label class="checks"><input type="checkbox" '+(c.keep?'checked':'')+' '+(setupCorp==='beginner'?'disabled':'')+' onchange="toggleFirst(\''+c.id+'\',this.checked)"> '+(setupCorp==='beginner'?'무료 보유':'구매 (3 M€)')+'</label>':'')+(mode==='draft'?'<label class="checks"><input type="checkbox" '+(draftSelected.has(c.id)?'checked':'')+' onchange="toggleDraft(\''+c.id+'\',this.checked)"> 구매 (3 M€)</label>':'')+(mode==='corp'?'<button class="choose" onclick="chooseCorp(\''+c.id+'\')">'+(setupCorp===c.id?'선택됨':'기업 선택')+'</button>':'')+(mode==='played'&&ACTIVE_IDS.has(c.id.slice(-3))?'<div class="card-action"><button class="choose" '+(c.lastActionGen===G?.gen?'disabled':'')+' onclick="requestCardAction(\''+c.id+'\')">'+(c.lastActionGen===G?.gen?'이번 세대 행동 완료':'카드 행동 사용')+'</button></div>':'')+(mode==='played'&&c.stored?'<div class="stored-resource">'+Object.entries(c.stored).filter(([k,v])=>v>0).map(([k,v])=>'<span class="resource-token"><img src="../../asset/terraforming-mars/'+(k==='science'?'tags/science':'resources/'+k)+'.svg" alt="'+esc(k)+'">'+v+'</span>').join(' ')+'</div>':'')+(mode==='hand'?'<button class="choose" '+(cs.ok?'':'disabled title="카드 조건 미충족"')+' onclick="openCardPayment(\''+c.id+'\')">비용 지불 후 사용</button>':'')+'</article>'}function renderSetup(){window.setupCorps=setupCorps;$('corpCount').textContent=setupLocked?'기업 확정 완료':'6개 후보';$('corpChoices').innerHTML=setupCorps.map(c=>cardHTML(c,'corp')).join('');$('firstCards').innerHTML=setupCards.map(c=>cardHTML(c,'first')).join('');$('corpChoices').querySelectorAll('button').forEach(b=>b.disabled=setupLocked);$('corpChoices').style.opacity=setupLocked?'.7':'1';updateFirstCount()}
 function chooseCorp(id){if(setupLocked){alert('기업이 이미 확정되어 변경할 수 없습니다.');return}const corp=setupCorps.find(c=>c.id===id);if(!corp)return;if(!confirm('기업 카드 「'+corp.name+'」을(를) 확정하시겠습니까?\n확정하면 이번 게임에서 기업을 변경할 수 없습니다.'))return;setupCorp=id;setupLocked=true;if(id==='beginner')setupCards.forEach(c=>c.keep=true);renderSetup()}
 function toggleFirst(id,on){let c=setupCards.find(x=>x.id===id);if(c)c.keep=on;updateFirstCount()}
 function updateFirstCount(){let n=setupCards.filter(c=>c.keep).length;$('firstCount').textContent=setupCorp==='beginner'?'10 / 10장 무료':n+' / 10장 구매';$('firstCost').textContent=setupCorp==='beginner'?'초보 기업: 카드 10장 무료':'구매 비용: '+n*3+' MC'}
@@ -456,7 +456,7 @@ function placeTile(type){const k=G.selected;if(!k){alert('먼저 지도에서 �
  renderGame();return true
 }
 function standard(type){
- if(!G||G.phase!=='action')return;
+ if(!G||G.phase!=='action'||pendingPlacement)return;
  if(type==='heat'){useResourceAction('heat');return}
  if(type==='temperature'){
   if(G.temp>=mapLimits().temp){alert('최고 기온입니다.');return}
@@ -664,7 +664,7 @@ function confirmOptionModal(){
  $('optionModal').classList.add('hidden');executeWithChoiceDialog(choiceSession.action,choiceSession.id)
 }
 function closeOptionModal(){choiceSession=null;$('optionModal').classList.add('hidden')}
-function requestCardAction(id){if(!G||G.phase!=='action')return;if((id==='base-012'||id==='base-187')&&!G.selected){beginBoardPlacementAction('active-ocean',id);return}executeWithChoiceDialog('action',id)}
+function requestCardAction(id){if(!G||G.phase!=='action')return;if((id==='base-012'||id==='base-187')&&confirmedActiveOceanId!==id){beginBoardPlacementAction('active-ocean',id);return}confirmedActiveOceanId=null;executeWithChoiceDialog('action',id)}
 function requestCardPlay(id){if(!G||G.phase!=='action')return;executeWithChoiceDialog('play',id)}
 function targetCard(kind,excludeId){const arr=G.played.filter(x=>x.id!==excludeId&&(kind==='animal'||kind==='microbe'?/동물|미생물|자원/.test((x.effectText||'')+(x.vpText||'')):true));if(!arr.length){alert('자원을 보관할 대상 카드가 없습니다.');return null}let i=promptChoice(kind+' 자원을 추가할 카드 선택',arr.map(x=>x.name+' ('+stocked(x,kind)+')'));return i<0?null:arr[i]}
 function cardResourceAction(c,kind,n){const t=targetCard(kind,c.id);if(!t)return false;storeOn(t,kind,n);return true}
@@ -690,7 +690,7 @@ function onCardPlayed(played){const tags=played.type==='event'?[]:(played.tags||
 }}
 
 function useCorporationAction(){
- if(!G||G.phase!=='action'||G.corp!=='unmi')return;
+ if(!G||G.phase!=='action'||G.corp!=='unmi'||pendingPlacement)return;
  if(G.corpActionGen===G.gen){alert('이번 세대에는 이미 UNMI 행동을 사용했습니다.');return}
  if(G.tr<=(G.genStartTR??14)){alert('이번 세대에 TR이 먼저 상승해야 합니다.');return}
  if(G.res.mc<3){alert('UNMI 행동에는 3 M€가 필요합니다.');return}
@@ -758,7 +758,7 @@ function paymentValid(d){
  return true
 }
 function openCardPayment(id){
- if(!G||G.phase!=='action')return;
+ if(!G||G.phase!=='action'||pendingPlacement)return;
  const c=G.hand.find(x=>x.id===id);if(!c)return;
  const condition=conditionStatus(c);
  if(!condition.ok){alert('카드 사용 조건 미충족: '+condition.text);return}
@@ -806,7 +806,7 @@ function setPaymentAmount(kind,value){
 function closeCardPayment(){paymentDraft=null;$('paymentModal').classList.add('hidden')}
 
 
-let pendingPlacement=null,hexToConfirm=null;
+let pendingPlacement=null,hexToConfirm=null;let confirmedActiveOceanId=null;
 function cardTileRequirements(c){const e=c.effect||{};return {ocean:e.ocean||0,ground:e.city?'city':e.greenery?'greenery':['base-044','base-067','base-097','base-128','base-140','base-142'].includes(c.id)?'special':null}}
 function adjacentOccupied(k){const h=HEXES.find(h=>K(h)===k);return !!h&&neighbors(h).some(n=>G.tiles[K(n)]&&G.tiles[K(n)].type!=='ocean-slot')}
 function legalCardSpace(c,k,kind){
@@ -890,7 +890,7 @@ function finishBoardPlacement(){
  if(a==='plant'){const n=G.corp==='ecoline'?7:8;if(G.res.plant>=n&&placeTile('greenery')){G.res.plant-=n;renderGame()}}
  else if(a==='bonus-ocean'){if(placeTile('ocean')){G.pendingBonusOceans=Math.max(0,(G.pendingBonusOceans||0)-1);renderGame()}}
  else if(a==='corp-city'){if(placeTile('city')){G.corpInitialPlaced=true;renderGame()}}
- else if(a==='active-ocean')requestCardAction(p.id);
+ else if(a==='active-ocean'){confirmedActiveOceanId=p.id;requestCardAction(p.id)}
  else if(a.startsWith('standard-')){
   const cost={'standard-ocean':18,'standard-city':25,'standard-greenery':23}[a],kind={'standard-ocean':'ocean','standard-city':'city','standard-greenery':'greenery'}[a];
   if(G.res.mc<cost){alert('MC가 부족합니다.');return}
@@ -908,7 +908,7 @@ function confirmCardPayment(){
 
 
 function useResourceAction(kind){
- if(!G||G.phase!=='action')return false;
+ if(!G||G.phase!=='action'||pendingPlacement)return false;
  if(kind==='plant'){beginBoardPlacementAction('plant');return true}
  if(kind==='heat'){
   if(G.temp>=mapLimits().temp){alert('기온 최대치입니다.');return false}
