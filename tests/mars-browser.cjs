@@ -9,10 +9,13 @@ const assert=require('node:assert/strict');
  await page.goto('file://'+path.resolve(__dirname,'../apps/terraforming-mars/index.html'));
  await page.getByRole('button',{name:'새 게임 시작'}).click();
  assert.equal(await page.locator('#setup').isVisible(),true,'setup visible after click');
+ await page.locator('#mapOptions .map-choice').filter({hasText:'타르시스'}).click();
+ assert.equal(await page.locator('#mapOptions .map-choice.active').count(),1,'exactly one selected map');
  await page.locator('#corpChoices button.choose').first().click();
  await page.locator('#firstCards input[type=checkbox]').first().check();
  await page.getByRole('button',{name:'기업 확정하고 게임 시작'}).click();
  assert.equal(await page.locator('#game').isVisible(),true,'game visible after corporation confirmation');
+ assert.equal(await page.locator('#activeMapName').textContent(),'타르시스','selected map is used');
  await page.evaluate(()=>{
    const all=CARDS.map(c=>cardHTML(c,'hand'));
    const scratch=document.createElement('div');
@@ -21,10 +24,37 @@ const assert=require('node:assert/strict');
    window.__scratch=scratch;
  });
  const imgs=page.locator('div.card-effect-icons img.effect-icon');
- await imgs.first().waitFor();
+ await imgs.first().waitFor({state:'attached'});
  await page.waitForTimeout(500);
  const bad=await imgs.evaluateAll(arr=>arr.filter(x=>!x.complete||x.naturalWidth===0).map(x=>x.src));
  assert.deepEqual(bad,[],'project effect SVG asset loads');
+ 
+ const mapChecks=await page.evaluate(()=>{
+  const old=G,mapResults=[];
+  for(const id of MAP_IDS){
+   const a=applyMapPreset(id);
+   const first=JSON.stringify(BOARD_BONUSES),waterA=Array.from(OCEAN_SLOTS).sort().join('|');
+   const second=applyMapPreset(id);
+   const limits=mapLimits();
+   mapResults.push([id,first===JSON.stringify(BOARD_BONUSES),waterA===Array.from(OCEAN_SLOTS).sort().join('|'),OCEAN_SLOTS.size>=limits.ocean]);
+  }
+  applyMapPreset('tharsis');G.mapId='tharsis';
+  return mapResults
+ });
+ assert.equal(mapChecks.length,7,'seven official board options');
+ assert.deepEqual(mapChecks.filter(x=>x.slice(1).some(v=>!v)),[],'fixed map coordinates do not shuffle when reselected');
+ await page.evaluate(()=>{const c=CARDS.find(x=>x.id==='base-003');G.hand=[{...c}];G.res.mc=100;G.res.steel=10;G.res.titanium=10;G.phase='action';renderGame()});
+ await page.locator('#hand button.choose').first().click();
+ assert.equal(await page.locator('#paymentModal').isVisible(),true,'card payment opens before card play');
+ const steelfield=page.getByRole('spinbutton',{name:'강철 사용 개수'});
+ await steelfield.fill('4');
+ await page.getByRole('spinbutton',{name:'메가크레딧 사용 개수'}).fill('5');
+ assert.equal(await page.locator('#paymentConfirm').isEnabled(),true);
+ await page.locator('#paymentConfirm').click();
+ assert.equal(await page.locator('#paymentModal').isVisible(),false,'modal closes after confirmation');
+ const paid=await page.evaluate(()=>({mc:G.res.mc,steel:G.res.steel,played:G.played.some(c=>c.id==='base-003')}));
+ assert.deepEqual(paid,{mc:95,steel:6,played:true},'mixed MC/steel payment deducts exact allocation');
+
  const outcomes=await page.evaluate(()=>{
    const tests=[];
    const zero=()=>({mc:150,steel:10,titanium:10,plant:10,energy:10,heat:10});
@@ -42,6 +72,7 @@ const assert=require('node:assert/strict');
  assert.deepEqual(outcomes.filter(x=>!x[1]),[],JSON.stringify(outcomes));
 
  const allProjectResults=await page.evaluate(()=>{
+   applyMapPreset('tharsis');
    const failed=[];
    for(const c of CARDS){
      const slots={};for(const k of OCEAN_SLOTS)slots[k]={type:'ocean-slot',reserved:true};slots['0,0']={type:'special',reserved:true};
