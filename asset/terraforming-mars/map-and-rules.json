@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "map": {
+    "name": "Tharsis-inspired prototype",
+    "coordinateSystem": "axial hex",
+    "radius": 3,
+    "oceanReserved": [
+      "-3,0",
+      "-3,1",
+      "-3,2",
+      "-2,-1",
+      "-2,2",
+      "-1,-2",
+      "0,-3",
+      "1,-3",
+      "2,-3",
+      "2,1",
+      "3,-2",
+      "3,-1"
+    ],
+    "specialCityReserved": [
+      "0,0"
+    ],
+    "bonuses": {
+      "-2,0": {
+        "steel": 2
+      },
+      "-1,0": {
+        "plant": 2
+      },
+      "0,1": {
+        "card": 1
+      },
+      "1,0": {
+        "titanium": 1
+      },
+      "2,0": {
+        "plant": 1
+      },
+      "0,-2": {
+        "steel": 1
+      },
+      "1,1": {
+        "card": 1
+      },
+      "-1,2": {
+        "plant": 1
+      },
+      "2,-1": {
+        "titanium": 1
+      }
+    },
+    "note": "Provisional coordinates and bonuses, not verified as a faithful official map."
+  },
+  "rules": {
+    "solo": {
+      "startingTR": 14,
+      "generation": 1,
+      "endAfterGeneration": 14
+    },
+    "tiles": {
+      "ocean": "Reserved ocean spaces only; neutral; TR +1; adjacent ocean gives 2 MC to later tile placements.",
+      "greenery": "Must be adjacent to own tile if possible; raise oxygen and TR only if oxygen can increase.",
+      "city": "Cannot be adjacent to another city; owned; base city standard project increases MC production.",
+      "placement": "Take printed space bonuses and 2 MC per adjacent ocean."
+    }
+  },
+  "limitations": [
+    "Map layout/bonus locations are provisional and require verification against the exact official board.",
+    "Card catalog contains only original sample records, not all official or expansion cards.",
+    "Card-specific placement exceptions, corporations/preludes, and complete solo win rules are not implemented."
+  ]
+}
