@@ -11,11 +11,12 @@ const assert=require('node:assert/strict');
  assert.equal(await page.locator('#setup').isVisible(),true,'setup visible after click');
  await page.locator('#mapOptions .map-choice').filter({hasText:'타르시스'}).click();
  assert.equal(await page.locator('#mapOptions .map-choice.active').count(),1,'exactly one selected map');
- await page.locator('#corpChoices button.choose').first().click();
+ await page.evaluate(()=>{const c=window.setupCorps.find(x=>!['tharsis','beginner','inventrix'].includes(x.id));if(!c)throw Error('No ordinary corporation candidate');chooseCorp(c.id)});
  await page.locator('#firstCards input[type=checkbox]').first().check();
  await page.getByRole('button',{name:'기업 확정하고 게임 시작'}).click();
  assert.equal(await page.locator('#game').isVisible(),true,'game visible after corporation confirmation');
  assert.equal(await page.locator('#activeMapName').textContent(),'타르시스','selected map is used');
+ assert.equal(await page.locator('#globalStats').textContent().then(x=>x.includes('-30°C / 8°C')&&x.includes('0% / 14%')),true,'oxygen and temperature maximum shown');
  const soloBoard=await page.evaluate(()=>({neutralCities:Object.values(G.tiles).filter(t=>t.neutral&&t.type==='city').length,neutralGreeneries:Object.values(G.tiles).filter(t=>t.neutral&&t.type==='greenery').length,oxygen:G.oxy,tr:G.tr,score:G.score}));
  assert.deepEqual(soloBoard,{neutralCities:2,neutralGreeneries:2,oxygen:0,tr:14,score:14},'solo starts with 2 neutral cities and greenery, without oxygen or score');
  await page.evaluate(()=>{
@@ -56,6 +57,18 @@ const assert=require('node:assert/strict');
  assert.equal(await page.locator('#paymentModal').isVisible(),false,'modal closes after confirmation');
  const paid=await page.evaluate(()=>({mc:G.res.mc,steel:G.res.steel,played:G.played.some(c=>c.id==='base-003')}));
  assert.deepEqual(paid,{mc:95,steel:6,played:true},'mixed MC/steel payment deducts exact allocation');
+
+ const steelOverpayment=await page.evaluate(()=>{
+  const c={...CARDS.find(x=>x.id==='base-003'),cost:11,id:'test-steel-card'};
+  G.hand.push(c);G.res.steel=7;G.res.mc=0;
+  const six={id:c.id,cost:11,steel:6,titanium:0,heat:0};
+  const seven={...six,steel:7};
+  const allowedSix=paymentValid(six),forbiddenSeven=!paymentValid(seven);
+  G.hand=G.hand.filter(x=>x.id!==c.id);
+  return {allowedSix,forbiddenSeven};
+ });
+ assert.deepEqual(steelOverpayment,{allowedSix:true,forbiddenSeven:true},'11 MC building: 6 steel allowed, 7 steel rejected');
+
  const persisted=await page.evaluate(()=>JSON.parse(localStorage.getItem('marsSoloProgressV3')||'null'));
  assert.equal(persisted?.game?.res?.steel,6,'resource allocations autosaved');
  assert.equal(persisted?.mapId,'tharsis','map selection autosaved');
@@ -103,7 +116,7 @@ assert.deepEqual(oceans,{ocean:2,placed:2,played:true},'two ocean positions were
    g=mk();G=g;c=card('가축');c.stored.animal=4;g.played=[c];tests.push(['animal VP',cardScore(c)===4]);
    g=mk();G=g;c=card('인공 광합성 기술');g.hand=[c];playCard(c.id);tests.push(['choice applied',g.prod.plant===1]);
    g=mk();G=g;c=card('극지 미세조류');g.played=[c];g.selected=[...OCEAN_SLOTS][0];placeTile('ocean');tests.push(['persistent ocean +2 plant',g.res.plant===12]);
-   g=mk();G=g;g.res.plant=8;useResourceAction('plant');boardHexClick('0,1');acceptHexConfirmation();tests.push(['click plant converts to 1 oxygen + greenery',g.oxy===1&&g.res.plant===0&&g.tiles['0,1']?.type==='greenery']);
+   g=mk();G=g;g.res.plant=8;useResourceAction('plant');tests.push(['plant confirmation opens without spending',g.res.plant===8&&!$('plantSpendModal').classList.contains('hidden')]);confirmPlantSpending();boardHexClick('0,1');acceptHexConfirmation();tests.push(['click plant converts to 1 oxygen + greenery',g.oxy===1&&g.res.plant===0&&g.tiles['0,1']?.type==='greenery']);
    g=mk();G=g;g.res.heat=8;useResourceAction('heat');tests.push(['click heat uses 8 heat for +2C',g.temp===-28&&g.res.heat===0]);
    g=mk();G=g;g.temp=-26;raiseTemp(1);tests.push(['-24 heat production reward',g.prod.heat===1&&g.temp===-24]);raiseTemp(2);tests.push(['-20 heat production reward',g.prod.heat===2&&g.temp===-20]);
    g=mk();G=g;g.temp=-2;raiseTemp(1);tests.push(['0C bonus ocean available',g.pendingBonusOceans===1]);useBonusOcean();boardHexClick([...OCEAN_SLOTS][0]);acceptHexConfirmation();tests.push(['0C ocean bonus placed',g.ocean===1&&g.pendingBonusOceans===0]);
