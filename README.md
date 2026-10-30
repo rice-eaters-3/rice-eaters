@@ -1,26 +1,54 @@
 # rice-eaters 🍚
 
-**쌀을 먹는 자들** — a conversational, AI-assisted app-building project.
+웹 기반 앱 실험실. **테라포밍 마스 솔로**와 **4인 온라인 머더 미스터리**를 하나의 Node.js 서버에서 실행합니다.
 
-## Project goal
+## 실행 방법
 
-Build and improve small web apps through an iterative conversation with ChatGPT, with source code tracked in this GitHub repository. The initial workflow is intentionally simple: ChatGPT proposes and commits code changes here, and the developer pulls the latest version to run it locally.
+Node.js **20 이상**이 필요합니다. 패키지 설치는 필요하지 않습니다.
 
-## Development workflow
+```bash
+git pull
+npm start
+```
 
-1. Describe the feature or change you want in the ChatGPT conversation.
-2. Review the proposed repository changes and commit summary.
-3. Pull the latest changes locally with `git pull`.
-4. Run and test the app on your machine.
-5. Share errors or feedback so the next iteration can improve it.
+브라우저에서 **http://localhost:3000** 으로 접속하세요.
 
-## Principles
+- 홈: http://localhost:3000/
+- 화성: http://localhost:3000/mars
+- 머더 미스터리: http://localhost:3000/mystery
+- 개발 모드(파일 수정 시 재시작): `npm run dev`
+- API 통합 테스트: `npm test`
 
-- No local LLM required for the initial workflow.
-- Do not require an OpenAI API key merely to collaborate on code through ChatGPT.
-- Keep secrets, credentials, and personal data out of the repository.
-- Prefer small, reviewable changes.
+다른 사람은 서버가 실행 중인 컴퓨터의 **LAN IP 주소:3000**으로 접속할 수 있습니다. 예: `http://192.168.0.20:3000/mystery` (주소는 실제 서버 IP로 바꿔주세요.) 방 링크/코드를 공유하면 서로 다른 브라우저에서 같은 게임을 진행합니다. LAN 방화벽에서 3000번 포트 접근을 허용해야 할 수 있습니다. 기본 바인딩은 `0.0.0.0`이고, 포트는 `PORT=4000 npm start` 등으로 변경할 수 있습니다.
 
-## Status
+**주의:** 현재는 로컬·신뢰 가능한 소규모 네트워크에서 테스트하기 위한 프로토타입입니다. 인터넷에 공개할 경우 HTTPS, 계정 인증, 데이터베이스, 요청 제한 및 운영 보안이 추가로 필요합니다. 공용 서버에 무인증 상태로 직접 노출하지 마세요.
 
-Project initialized. Application structure and first runnable feature will be added next.
+## 서버 저장과 로그
+
+- `data/state.json` — 참가자 세션, 머더 미스터리 방/진행 상태, 화성 개인 저장 데이터 (서버 재시작 후에도 유지)
+- `data/activity.jsonl` — 세션 생성, 방문, 방 참가, 페이즈 진행, 캐릭터 선택, 화성 기록 저장 등의 시간순 로그
+- 파일은 자동 생성되며 `.gitignore`에 의해 Git 추적에서 제외됩니다. JSON 로그에는 익명 세션 식별자의 일부가 기록되며 실명 계정이나 비밀번호는 아직 없습니다.
+- 같은 브라우저의 쿠키로 참가자가 구분됩니다. 다른 브라우저/시크릿 창은 별도 플레이어입니다.
+- 화성 진행 상황과 완료 게임 기록은 서버로 저장되며 기존 브라우저 `localStorage` 기록이 발견되면 초기 접속 시 서버로 이전합니다. 브라우저 저장 데이터는 호환성 및 장애 대비용으로 유지합니다. 다른 기기와 화성 저장 내용을 공유하려면 향후 계정/로그인 기능이 필요합니다.
+
+## 머더 미스터리 - 현재 구현
+
+기본 시나리오 **「자정의 저택」** (4인, 더미 콘텐츠):
+
+1. 방장이 시나리오를 선택해 방 생성, 6자리 방 코드/초대 링크 제공
+2. 참가자 4명이 모두 온라인이면 방장의 게임 시작 버튼 활성화
+3. 시작 후 모든 참여자에게 전체 시놉시스 표시
+4. 4명 모두 '읽음 완료'를 누르면 자동으로 캐릭터 선택 단계 이동
+5. 4개 더미 캐릭터 중 중복 없이 배역 선택 및 참가자 간 실시간 동기화
+
+페이즈 3(캐릭터 숙지)부터 9(결말)까지, 개인 비밀 정보 및 밀담 채팅은 **아직 구현되지 않았습니다**. 다음 개발에서 방별 비밀 채널과 권한을 추가할 예정입니다.
+
+## 테스트
+
+```bash
+npm test
+```
+
+별도 패키지 없이 Node.js의 테스트 러너로 실제 HTTP 4인 방 생성, 연결, 시놉시스 확인, 중복 캐릭터 방지 및 저장 파일/로그를 검사합니다.
+
+기존 화성의 Chromium 스모크 테스트는 Playwright 환경이 준비된 경우 `node tests/mars-browser.cjs`로 실행할 수 있습니다. 기존 게임 규칙·UI 로직은 유지하고 저장 기능에 서버 동기화를 추가했습니다.
