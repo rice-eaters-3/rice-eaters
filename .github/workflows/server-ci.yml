@@ -7,6 +7,8 @@ on:
       - "apps/terraforming-mars/index.html"
       - "tests/server.test.cjs"
       - "package.json"
+      - "Dockerfile"
+      - ".dockerignore"
       - ".github/workflows/server-ci.yml"
   pull_request:
     paths:
@@ -15,14 +17,30 @@ on:
       - "apps/terraforming-mars/index.html"
       - "tests/server.test.cjs"
       - "package.json"
+      - "Dockerfile"
+      - ".dockerignore"
       - ".github/workflows/server-ci.yml"
 jobs:
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
       - run: npm test
+      - name: Build Railway Docker image
+        run: docker build -t rice-eaters-railway .
+      - name: Test Docker container serves public healthcheck
+        run: |
+          docker run -d --name rice-eaters-ci -p 127.0.0.1:3333:3000 rice-eaters-railway
+          for i in $(seq 1 20); do
+            if curl -fsS http://127.0.0.1:3333/healthz; then exit 0; fi
+            sleep 1
+          done
+          docker logs rice-eaters-ci
+          exit 1
+      - name: Clean up Docker container
+        if: always()
+        run: docker rm -f rice-eaters-ci || true
