@@ -1,0 +1,46 @@
+const {chromium} = require('playwright');
+const path=require('node:path');
+const assert=require('node:assert/strict');
+(async()=>{
+ const browser=await chromium.launch({headless:true});
+ const page=await browser.newPage({viewport:{width:1440,height:1000}});
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ page.on('dialog', async dialog=>{await dialog.accept('1')});
+ await page.goto('file://'+path.resolve(__dirname,'../apps/terraforming-mars/index.html'));
+ await page.getByRole('button',{name:'새 게임 시작'}).click();
+ assert.equal(await page.locator('#setup').isVisible(),true,'setup visible after click');
+ await page.locator('#corpChoices button.choose').first().click();
+ await page.locator('#firstCards input[type=checkbox]').first().check();
+ await page.getByRole('button',{name:'기업 확정하고 게임 시작'}).click();
+ assert.equal(await page.locator('#game').isVisible(),true,'game visible after corporation confirmation');
+ await page.evaluate(()=>{
+   const all=CARDS.map(c=>cardHTML(c,'hand'));
+   const scratch=document.createElement('div');
+   scratch.style.cssText='position:fixed;left:-20000px;top:0;';
+   scratch.innerHTML=all.join('');document.body.append(scratch);
+   window.__scratch=scratch;
+ });
+ const imgs=page.locator('div.card-effect-icons img.effect-icon');
+ await imgs.first().waitFor();
+ await page.waitForTimeout(500);
+ const bad=await imgs.evaluateAll(arr=>arr.filter(x=>!x.complete||x.naturalWidth===0).map(x=>x.src));
+ assert.deepEqual(bad,[],'project effect SVG asset loads');
+ const outcomes=await page.evaluate(()=>{
+   const tests=[];
+   const zero=()=>({mc:150,steel:10,titanium:10,plant:10,energy:10,heat:10});
+   const prod=()=>({mc:0,steel:0,titanium:0,plant:0,energy:5,heat:0});
+   const mk=()=>{const tiles={};for(const k of OCEAN_SLOTS)tiles[k]={type:'ocean-slot',reserved:true};tiles['0,0']={type:'special',reserved:true};return {phase:'action',gen:1,tr:14,temp:-30,oxy:0,ocean:0,corp:'credicor',corpName:'Credicor',ability:'',res:zero(),prod:prod(),hand:[],played:[],tiles,selected:null,logs:[],score:0,seenCardIds:new Set(),excludedCards:[]}};
+   const card=name=>({...CARDS.find(x=>x.name===name),stored:{}});
+   let g=mk();G=g;let c=card('칼루나');g.hand=[c];playCard(c.id);tests.push(['cold Caluna blocked',g.hand.length===1&&g.res.mc===150]);g.temp=-14;playCard(c.id);tests.push(['Caluna works at -14',g.hand.length===0&&g.prod.plant===1]);
+   g=mk();G=g;c=card('혜성 견인');g.hand=[c];playCard(c.id);tests.push(['Comet all effects',g.oxy===1&&g.ocean===1&&g.res.plant===12]);
+   g=mk();G=g;c=card('표토 섭식 미생물');g.played=[c];onAction(c.id);tests.push(['microbe stored',c.stored.microbe===1]);onAction(c.id);tests.push(['action limited once',c.stored.microbe===1]);
+   g=mk();G=g;c=card('가축');c.stored.animal=4;g.played=[c];tests.push(['animal VP',cardScore(c)===4]);
+   g=mk();G=g;c=card('인공 광합성 기술');g.hand=[c];playCard(c.id);tests.push(['choice applied',g.prod.plant===1]);
+   g=mk();G=g;c=card('극지 미세조류');g.played=[c];g.selected=[...OCEAN_SLOTS][0];placeTile('ocean');tests.push(['persistent ocean +2 plant',g.res.plant===12]);
+   return tests;
+ });
+ assert.deepEqual(outcomes.filter(x=>!x[1]),[],JSON.stringify(outcomes));
+ assert.deepEqual(errors,[],'unhandled page JavaScript errors');
+ await page.screenshot({path:'mars-browser-smoke.png',fullPage:true});
+ await browser.close();console.log(JSON.stringify({status:'PASS',checks:outcomes.length,images:await imgs.count(),pageErrors:errors.length}));
+})().catch(e=>{console.error(e);process.exitCode=1});
