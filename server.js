@@ -133,7 +133,7 @@ function subscribe(req,res,room,sid){
   if(!own){own=new Set();peers.set(sid,own)}
   own.add(res);sendState(room);
   const ping=setInterval(()=>{try{res.write(': heartbeat\n\n')}catch(e){}},20000);
-  req.on('close',()=>{
+  res.on('close',()=>{
     clearInterval(ping);
     own.delete(res);
     if(!own.size)peers.delete(sid);
