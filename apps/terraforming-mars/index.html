@@ -33,7 +33,7 @@
 </main>
 <script>
 const $=id=>document.getElementById(id);
-const TAGS={building:{label:'건물',file:'building'},space:{label:'우주',file:'space'},power:{label:'에너지',file:'power'},science:{label:'과학',file:'science'},jovian:{label:'목성',file:'jovian'},earth:{label:'지구',file:'earth'},plant:{label:'식물',file:'plant'},microbe:{label:'미생물',file:'microbe'},animal:{label:'동물',file:'animal'},city:{label:'도시',file:'city'},event:{label:'사건',file:'event'},venus:{label:'금성',file:'venus'}};
+const TAGS={city:{label:'도시',file:'city'},event:{label:'사건형',file:'event'},earth:{label:'지구',file:'earth'},plant:{label:'식물',file:'plant'},space:{label:'우주',file:'space'},jovian:{label:'목성',file:'jovian'},science:{label:'과학',file:'science'},building:{label:'건물',file:'building'},power:{label:'에너지',file:'power'},microbe:{label:'미생물',file:'microbe'},animal:{label:'동물',file:'animal'},venus:{label:'금성',file:'venus'}};
 const TAG_ASSET_BASE='../../asset/terraforming-mars/tags/';
 const CORPS=[
 {id:'beginner',name:'초보 기업',money:42,ability:'특수 능력 없음. 시작 TR 14, 생산량 기본값으로 시작.',prod:{},tags:[],builtin:true},
@@ -50,26 +50,8 @@ const CORPS=[
 {id:'manutech',name:'마누테크',money:35,ability:'생산량을 올릴 때 해당 자원을 즉시 1개 획득.',prod:{},tags:['building']}
 ];
 const CARDS=[
-{id:'asteroid',name:'소행성',cost:14,type:'event',tags:['space','event'],text:'온도 1단계 상승.',effect:{temperature:1}},
-{id:'comet',name:'혜성',cost:21,type:'event',tags:['space','event'],text:'온도 1단계 상승 및 해양 타일 배치.',effect:{temperature:1,ocean:1}},
-{id:'aquifer',name:'대수층',cost:18,type:'automated',tags:[],text:'해양 타일 1개 배치.',effect:{ocean:1}},
-{id:'greenery',name:'녹화 사업',cost:23,type:'automated',tags:[],text:'녹지 타일 1개 배치. 식물 자원 8개로 대신할 수 있습니다.',effect:{greenery:1}},
-{id:'powerplant',name:'발전소',cost:11,type:'automated',tags:[],text:'에너지 생산량 +1.',effect:{production:{energy:1}}},
-{id:'citystandard',name:'도시 건설',cost:25,type:'automated',tags:[],text:'도시 타일 배치 및 MC 생산량 +1.',effect:{city:1,production:{mc:1}}},
-{id:'solar',name:'태양풍 발전',cost:11,type:'automated',tags:['space','power'],text:'에너지 생산량 +1.',effect:{production:{energy:1}}},
-{id:'farm',name:'화성 농장',cost:14,type:'automated',tags:['plant','building'],text:'식물 생산량 +1, 식물 자원 +2.',effect:{production:{plant:1},resources:{plant:2}}},
-{id:'lab',name:'연구 전초기지',cost:8,type:'automated',tags:['science','building'],text:'MC 생산량 +1.',effect:{production:{mc:1}}},
-{id:'heat',name:'열 포집 장치',cost:6,type:'automated',tags:['power'],text:'열 자원 +3.',effect:{resources:{heat:3}}},
-{id:'mining',name:'소행성 채굴',cost:13,type:'event',tags:['space','event'],text:'MC +6, 열 +2.',effect:{resources:{mc:6,heat:2}}},
-{id:'microbe',name:'미생물 연구소',cost:7,type:'automated',tags:['science','microbe'],text:'식물 자원 +2.',effect:{resources:{plant:2}}},
-{id:'city',name:'도시 계획',cost:18,type:'automated',tags:['city','building'],text:'MC 생산량 +1.',effect:{production:{mc:1}}},
-{id:'greenhouse',name:'온실 프로젝트',cost:10,type:'automated',tags:['plant'],text:'식물 생산량 +1.',effect:{production:{plant:1}}},
-{id:'network',name:'실험실 네트워크',cost:12,type:'automated',tags:['science'],text:'MC +3, 에너지 +1.',effect:{resources:{mc:3,energy:1}}},
-{id:'research',name:'연구',cost:9,type:'automated',tags:['science'],text:'카드 1장 드로우.',effect:{draw:1}},
-{id:'trees',name:'나무',cost:13,type:'automated',tags:['plant'],text:'식물 생산량 +2.',effect:{production:{plant:2}}},
-{id:'nuclear',name:'핵 발전',cost:10,type:'automated',tags:['power','building'],text:'에너지 생산량 +2, MC 생산량 -2.',effect:{production:{energy:2,mc:-2}}},
-{id:'steelworks',name:'제철소',cost:15,type:'automated',tags:['building','power'],text:'강철 2개 획득, 에너지 생산량 +1.',effect:{resources:{steel:2},production:{energy:1}}},
-{id:'earth',name:'지구 계약',cost:8,type:'automated',tags:['earth'],text:'MC 자원 +4.',effect:{resources:{mc:4}}}
+{id:'asteroid',name:'소행성',cost:14,type:'event',tags:['space','event'],text:'온도 1단계 상승. 플레이어 한 명의 식물 자원을 최대 3개 제거.',effect:{temperature:1,removePlants:3},source:'나무위키 테라포밍 마스/프로젝트 카드 · 본판',verifiedAgainstSource:true},
+{id:'comet',name:'혜성',cost:21,type:'event',tags:['space','event'],text:'온도 1단계 상승. 해양 타일 1개 배치. 플레이어 한 명의 식물 자원을 최대 3개 제거.',effect:{temperature:1,ocean:1,removePlants:3},source:'나무위키 테라포밍 마스/프로젝트 카드 · 본판',verifiedAgainstSource:true}
 ];
 const RESOURCE={mc:['메가크레딧','₥'],steel:['강철','▧'],titanium:['티타늄','◈'],plant:['식물','♣'],energy:['에너지','ϟ'],heat:['열','♨']};
 const HEXES=[];for(let r=-4;r<=4;r++)for(let q=-4;q<=4;q++)if(Math.max(Math.abs(q),Math.abs(r),Math.abs(-q-r))<=4)HEXES.push({q,r});
