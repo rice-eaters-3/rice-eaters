@@ -211,7 +211,7 @@ async function perform(action,button){
       setRoom(await api('/api/rooms/'+code+'/character','POST',{characterId}));
     } else if(action==='copy'){
       const address=inviteUrl(code);
-      if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(address);toast('초대 링크를 복사했습니다.')}
+      if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(address);toast(['localhost','127.0.0.1'].includes(location.hostname)?'링크를 복사했습니다. 다른 기기에서는 localhost를 서버 PC의 LAN IP로 바꿔주세요.':'초대 링크를 복사했습니다.')}
       else window.prompt('다음 링크를 친구에게 전송해주세요.',address);
     }
   }catch(err){toast(err.message)}
