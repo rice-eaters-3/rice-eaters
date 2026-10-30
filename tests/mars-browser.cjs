@@ -108,7 +108,7 @@ assert.deepEqual(oceans,{ocean:2,placed:2,played:true},'two ocean positions were
      if(c.id==='base-067')g.selected='-2,1';
      if(c.id==='base-020')g.selected='4,0';
      if(c.id==='base-044')g.selected='-4,0';
-     if(c.id==='base-140')g.selected='0,-4';
+     if(c.id==='base-140')g.selected='-1,-2';
      if(c.id==='base-128'){g.tiles['1,1']={type:'greenery'};g.selected='0,1'}
      G=g;
      try{playCard(c.id);if(!g.played.some(x=>x.id===c.id))failed.push(c.name+': not played')}catch(e){failed.push(c.name+': '+e.message)}
