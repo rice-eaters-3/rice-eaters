@@ -1,0 +1,12 @@
+{
+  "name": "rice-eaters",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Rice Eaters app library: solo Mars and multiplayer murder mystery",
+  "engines": {"node": ">=20"},
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --test tests/server.test.cjs"
+  }
+}
