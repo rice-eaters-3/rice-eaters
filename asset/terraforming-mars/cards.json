@@ -1,52 +1,35 @@
 {
-  "schemaVersion": 1,
-  "status": "starter-sample",
-  "note": "Prototype sample only; not the complete official or expansion catalog. Add verified metadata incrementally; official artwork and full card text are not bundled.",
+  "schemaVersion": 2,
+  "status": "prototype-samples",
+  "note": "Original UI test samples only; not a complete official card catalog or full card text.",
   "tagTaxonomy": [
-    {
-      "id": "science",
-      "label": "과학",
-      "icon": "⚛"
-    },
-    {
-      "id": "building",
-      "label": "건물",
-      "icon": "▦"
-    },
-    {
-      "id": "space",
-      "label": "우주",
-      "icon": "🌌"
-    },
-    {
-      "id": "event",
-      "label": "사건",
-      "icon": "☄"
-    },
-    {
-      "id": "plant",
-      "label": "식물",
-      "icon": "🌿"
-    },
-    {
-      "id": "power",
-      "label": "에너지",
-      "icon": "⚡"
-    },
-    {
-      "id": "microbe",
-      "label": "미생물",
-      "icon": "🦠"
-    },
-    {
-      "id": "city",
-      "label": "도시",
-      "icon": "🏙"
-    }
+    "building",
+    "space",
+    "power",
+    "science",
+    "jovian",
+    "earth",
+    "plant",
+    "microbe",
+    "animal",
+    "city",
+    "event",
+    "venus",
+    "wild"
+  ],
+  "cardTypes": [
+    "corporation",
+    "prelude",
+    "project"
+  ],
+  "projectTypes": [
+    "automated",
+    "active",
+    "event"
   ],
   "cards": [
     {
-      "id": "solar-wind",
+      "id": "solar",
       "name": "태양풍 발전",
       "type": "project",
       "cost": 11,
@@ -54,13 +37,10 @@
         "space",
         "power"
       ],
-      "effect": "에너지 생산량 +1",
-      "production": {
-        "energy": 1
-      }
+      "prototypeEffect": "에너지 생산량 +1"
     },
     {
-      "id": "martian-farms",
+      "id": "farm",
       "name": "화성 농장",
       "type": "project",
       "cost": 14,
@@ -68,16 +48,10 @@
         "plant",
         "building"
       ],
-      "effect": "식물 생산량 +1, 식물 자원 +2",
-      "production": {
-        "plant": 1
-      },
-      "resources": {
-        "plant": 2
-      }
+      "prototypeEffect": "식물 생산량 +1, 식물 +2"
     },
     {
-      "id": "research-outpost",
+      "id": "lab",
       "name": "연구 전초기지",
       "type": "project",
       "cost": 8,
@@ -85,134 +59,7 @@
         "science",
         "building"
       ],
-      "effect": "메가크레딧 생산량 +1",
-      "production": {
-        "mc": 1
-      }
-    },
-    {
-      "id": "heat-trappers",
-      "name": "열 포집 장치",
-      "type": "project",
-      "cost": 6,
-      "tags": [
-        "power",
-        "building"
-      ],
-      "effect": "열 자원 3개 획득",
-      "resources": {
-        "heat": 3
-      }
-    },
-    {
-      "id": "ocean-farming",
-      "name": "해양 농업",
-      "type": "project",
-      "cost": 16,
-      "tags": [
-        "plant"
-      ],
-      "effect": "바다 타일을 하나 배치하고 TR +1",
-      "ocean": 1,
-      "tr": 1
-    },
-    {
-      "id": "asteroid-mining",
-      "name": "소행성 채굴",
-      "type": "project",
-      "cost": 13,
-      "tags": [
-        "space",
-        "event"
-      ],
-      "effect": "메가크레딧 6개와 열 2개 획득",
-      "resources": {
-        "mc": 6,
-        "heat": 2
-      }
-    },
-    {
-      "id": "microbe-labs",
-      "name": "미생물 연구소",
-      "type": "project",
-      "cost": 7,
-      "tags": [
-        "science",
-        "microbe"
-      ],
-      "effect": "식물 자원 2개 획득",
-      "resources": {
-        "plant": 2
-      }
-    },
-    {
-      "id": "urban-planning",
-      "name": "도시 계획",
-      "type": "project",
-      "cost": 18,
-      "tags": [
-        "city",
-        "building"
-      ],
-      "effect": "도시를 배치하고 메가크레딧 생산량 +1",
-      "city": 1,
-      "production": {
-        "mc": 1
-      }
-    },
-    {
-      "id": "comet-survey",
-      "name": "혜성 관측",
-      "type": "project",
-      "cost": 9,
-      "tags": [
-        "space",
-        "event"
-      ],
-      "effect": "온도 +2°C, TR +1",
-      "temperature": 2,
-      "tr": 1
-    },
-    {
-      "id": "greenhouse",
-      "name": "온실 프로젝트",
-      "type": "project",
-      "cost": 10,
-      "tags": [
-        "plant",
-        "building"
-      ],
-      "effect": "식물 생산량 +1",
-      "production": {
-        "plant": 1
-      }
-    },
-    {
-      "id": "lab-network",
-      "name": "실험실 네트워크",
-      "type": "project",
-      "cost": 12,
-      "tags": [
-        "science"
-      ],
-      "effect": "메가크레딧 3개, 에너지 1개 획득",
-      "resources": {
-        "mc": 3,
-        "energy": 1
-      }
-    },
-    {
-      "id": "heat-export",
-      "name": "열 수출 계약",
-      "type": "project",
-      "cost": 5,
-      "tags": [
-        "power"
-      ],
-      "effect": "열 4개 획득",
-      "resources": {
-        "heat": 4
-      }
+      "prototypeEffect": "메가크레딧 생산량 +1"
     }
   ]
 }
