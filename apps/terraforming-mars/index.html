@@ -283,7 +283,7 @@ function playCard(id){
  for(const [k,v]of Object.entries(resources)){if(v<0&&(G.res[k]||0)<-v){alert(k+' 자원이 부족합니다.');return}}
  // All preconditions have been resolved; now commit changes.
  G.res.mc-=payment?payment.mc:cost;
- if(payment){G.res.steel-=payment.steel;G.res.titanium-=payment.titanium}
+ if(payment){G.res.steel-=payment.steel;G.res.titanium-=payment.titanium;G.res.heat-=payment.heat||0}
  G.hand.splice(i,1);
  c.playGen=G.gen;c.stored??={};G.played.push(c);
  if(e.tr)G.tr+=e.tr;
@@ -409,14 +409,14 @@ function cardScore(c){const v=Number(c.vp||0);const rule=c.vpText||'';if(/^\d+$/
 
 let paymentDraft=null;
 function projectCost(c){let d=(G.corp==='teractor'&&c.tags.includes('earth')?3:0);if(persistent('020'))d++;if(persistent('166')&&c.tags.includes('space'))d+=2;return Math.max(0,c.cost-d)}
-function paymentValue(kind){return kind==='steel'?2:kind==='titanium'?3:1}
-function allowedPayment(c,kind){return kind==='mc'||(kind==='steel'&&c.tags.includes('building'))||(kind==='titanium'&&c.tags.includes('space'))}
-function paymentTotal(d){return d.mc+2*d.steel+3*d.titanium}
+function paymentValue(kind){return kind==='steel'?2:kind==='titanium'?(G?.corp==='phobolog'?4:3):1}
+function allowedPayment(c,kind){return kind==='mc'||(kind==='steel'&&c.tags.includes('building'))||(kind==='titanium'&&c.tags.includes('space'))||(kind==='heat'&&G?.corp==='helion')}
+function paymentTotal(d){return d.mc+2*d.steel+paymentValue('titanium')*d.titanium+(d.heat||0)}
 function paymentValid(d){
  if(!G||!d||!G.hand.some(c=>c.id===d.id))return false;
  const c=G.hand.find(c=>c.id===d.id);
  if(!conditionStatus(c).ok||d.cost!==projectCost(c))return false;
- for(const kind of ['mc','steel','titanium']){
+ for(const kind of ['mc','steel','titanium','heat']){
   if(!Number.isInteger(d[kind])||d[kind]<0||d[kind]>(G.res[kind]||0))return false;
   if(!allowedPayment(c,kind)&&d[kind]>0)return false
  }
@@ -428,9 +428,9 @@ function openCardPayment(id){
  const condition=conditionStatus(c);
  if(!condition.ok){alert('카드 사용 조건 미충족: '+condition.text);return}
  const cost=projectCost(c);
- const draft={id,cost,mc:Math.min(cost,Math.max(0,G.res.mc)),steel:0,titanium:0};
+ const draft={id,cost,mc:Math.min(cost,Math.max(0,G.res.mc)),steel:0,titanium:0,heat:0};
  let missing=Math.max(0,cost-draft.mc);
- for(const kind of ['titanium','steel'])if(allowedPayment(c,kind)&&missing>0){
+ for(const kind of ['titanium','steel','heat'])if(allowedPayment(c,kind)&&missing>0){
   draft[kind]=Math.min(G.res[kind]||0,Math.ceil(missing/paymentValue(kind)));
   missing=Math.max(0,missing-draft[kind]*paymentValue(kind))
  }
@@ -442,8 +442,8 @@ function renderPaymentModal(){
  const d=paymentDraft,c=G.hand.find(x=>x.id===d.id);if(!c)return;
  $('paymentTitle').textContent=c.name+' · 비용 지불';
  $('paymentSubtitle').textContent='카드 가격 '+c.cost+' M€ / 할인 적용 후 '+d.cost+' M€';
- $('paymentRows').innerHTML=['mc','steel','titanium'].filter(k=>allowedPayment(c,k)).map(k=>{
-  const label={mc:'메가크레딧',steel:'강철',titanium:'티타늄'}[k],v=paymentValue(k);
+ $('paymentRows').innerHTML=['mc','steel','titanium','heat'].filter(k=>allowedPayment(c,k)).map(k=>{
+  const label={mc:'메가크레딧',steel:'강철',titanium:'티타늄',heat:'열'}[k],v=paymentValue(k);
   return '<label class="payment-row"><span><img src="../../asset/terraforming-mars/resources/'+k+'.svg" alt=""> '+label+'</span><input aria-label="'+label+' 사용 개수" type="number" min="0" max="'+(G.res[k]||0)+'" step="1" value="'+d[k]+'" oninput="setPaymentAmount(\''+k+'\',this.value)"><small>'+v+' M€/개<br>보유 '+(G.res[k]||0)+'</small></label>'
  }).join('');
  updatePaymentSummary()
