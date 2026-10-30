@@ -1,6 +1,6 @@
 {
-  "schemaVersion": 4,
-  "note": "첨부 PDF의 기본판 프로젝트 카드 137장을 등록. 카드 효과는 PDF 원문 텍스트로 보존했으며, effect 필드는 자동 추출 가능한 기본 효과만 구조화되어 복합 효과/행동은 텍스트를 기준으로 확인해야 함.",
+  "schemaVersion": 5,
+  "note": "프로젝트 카드 137장: 첨부 PDF 본판 항목과 대조해 조건·효과 원문·표시 텍스트 재구성. effect 필드는 단순 즉시 효과만 자동 구조화. 행동/지속/선택/카드 위 자원 등 복합 효과는 effectText를 확인해야 하며 게임 로직에서 완전 지원되지 않을 수 있음.",
   "tagTaxonomy": [
     "building",
     "space",
@@ -163,14 +163,15 @@
         "jovian"
       ],
       "condition": "산소 농도 5% 이하",
-      "text": "조건: 산소 농도 5% 이하 승점: 2",
+      "text": "조건: 산소 농도 5% 이하 / 효과: (없음) / 승점: 2",
       "effect": {},
       "vpText": "2",
-      "vp": 0,
+      "vp": 2,
       "expansion": "기본판",
       "cardNumber": "001",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "(없음)"
     },
     {
       "id": "base-003",
@@ -182,7 +183,7 @@
         "power"
       ],
       "condition": null,
-      "text": "에너지 생산력 1 증가. 기온 1단계 상승",
+      "text": "효과: 에너지 생산력 1 증가. 기온 1단계 상승",
       "effect": {
         "production": {
           "energy": 1
@@ -194,7 +195,8 @@
       "expansion": "기본판",
       "cardNumber": "003",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "에너지 생산력 1 증가. 기온 1단계 상승"
     },
     {
       "id": "base-004",
@@ -203,12 +205,10 @@
       "type": "ongoing",
       "tags": [],
       "condition": "배치된 해양 타일 3장 이상",
-      "text": "조건: 배치된 해양 타일 3장 이상 메가크레딧 생산력 1 감소. 아무 1명의 열 생산력 1 감소. 식물 생산력 2 증가",
+      "text": "조건: 배치된 해양 타일 3장 이상 / 효과: 메가크레딧 생산력 1 감소. 아무 1명의 열 생산력 1 감소. 식물 생산력 2 증가",
       "effect": {
         "production": {
-          "mc": -1,
-          "plant": 2,
-          "heat": -1
+          "mc": -1
         }
       },
       "vpText": null,
@@ -216,7 +216,8 @@
       "expansion": "기본판",
       "cardNumber": "004",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "메가크레딧 생산력 1 감소. 아무 1명의 열 생산력 1 감소. 식물 생산력 2 증가"
     },
     {
       "id": "base-005",
@@ -227,14 +228,15 @@
         "science"
       ],
       "condition": "산소 농도 6% 이하",
-      "text": "조건: 산소 농도 6% 이하 행동: 1 M€을 소비하고, 프로젝트으면, 승점: 이 카드 위에 과학 자원이 1개라도 있으면 승점 3점",
+      "text": "조건: 산소 농도 6% 이하 / 효과: 행동: 1 M€을 소비하고, 프로젝트으면, 덱 최상단 카드 1장 공개하고 버림. 만약 그 카드에 미생물 태그가 있 이 카드 위에 과학 자원 1개 추가 / 승점: 이 카드 위에 과학 자원이 1개라도 있으면 승점 3점",
       "effect": {},
       "vpText": "이 카드 위에 과학 자원이 1개라도 있으면 승점 3점",
       "vp": 3,
       "expansion": "기본판",
       "cardNumber": "005",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "행동: 1 M€을 소비하고, 프로젝트으면, 덱 최상단 카드 1장 공개하고 버림. 만약 그 카드에 미생물 태그가 있 이 카드 위에 과학 자원 1개 추가"
     },
     {
       "id": "base-007",
@@ -245,14 +247,15 @@
         "building"
       ],
       "condition": null,
-      "text": "행동: 에너지 자원을 1개 소비하고, 현재 화성에 배치된 아무 도시 타일 1장당 1 M€ 획득",
+      "text": "효과: 행동: 에너지 자원을 1개 소비하고, 현재 화성에 배치된 아무 도시 타일 1장당 1 M€ 획득",
       "effect": {},
       "vpText": null,
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "007",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "행동: 에너지 자원을 1개 소비하고, 현재 화성에 배치된 아무 도시 타일 1장당 1 M€ 획득"
     },
     {
       "id": "base-008",
@@ -264,7 +267,7 @@
         "city"
       ],
       "condition": "배치된 해양 타일 4장 이상",
-      "text": "조건: 배치된 해양 타일 4장 이상 에너지 생산력 2 감소. 메가크레딧 생산력 5 증가. 위 그림과 같은 타일 배치. 이 타일은 도시로 승점: 이 타일에 인접한 해양 타일 1장당 승점 1점",
+      "text": "조건: 배치된 해양 타일 4장 이상 / 효과: 에너지 생산력 2 감소. 메가크레딧 생산력 5 증가. 위 그림과 같은 타일 배치. 이 타일은 도시로 취급 / 승점: 이 타일에 인접한 해양 타일 1장당 승점 1점",
       "effect": {
         "production": {
           "mc": 5,
@@ -276,7 +279,8 @@
       "expansion": "기본판",
       "cardNumber": "008",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "에너지 생산력 2 감소. 메가크레딧 생산력 5 증가. 위 그림과 같은 타일 배치. 이 타일은 도시로 취급"
     },
     {
       "id": "base-009",
@@ -288,19 +292,20 @@
         "event"
       ],
       "condition": null,
-      "text": "기온 1단계 상승. 티타늄 자원 2개 획득. 아무 1명의 식물 자원을 3개까지 제거",
+      "text": "효과: 기온 1단계 상승. 티타늄 자원 2개 획득. 아무 1명의 식물 자원을 3개까지 제거",
       "effect": {
-        "temperature": 1,
         "resources": {
           "titanium": 2
-        }
+        },
+        "temperature": 1
       },
       "vpText": null,
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "009",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "기온 1단계 상승. 티타늄 자원 2개 획득. 아무 1명의 식물 자원을 3개까지 제거"
     },
     {
       "id": "base-010",
@@ -312,7 +317,7 @@
         "event"
       ],
       "condition": null,
-      "text": "기온 1단계 상승. 해양 타일 1장 배치. 아무 1명의 식물 자원을 3개까지 제거",
+      "text": "효과: 기온 1단계 상승. 해양 타일 1장 배치. 아무 1명의 식물 자원을 3개까지 제거",
       "effect": {
         "temperature": 1,
         "ocean": 1
@@ -322,7 +327,8 @@
       "expansion": "기본판",
       "cardNumber": "010",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "기온 1단계 상승. 해양 타일 1장 배치. 아무 1명의 식물 자원을 3개까지 제거"
     },
     {
       "id": "base-011",
@@ -334,19 +340,20 @@
         "event"
       ],
       "condition": null,
-      "text": "기온 2단계 상승. 티타늄 자원 4개 획득. 아무 1명의 식물 자원을 4개까지 제거",
+      "text": "효과: 기온 2단계 상승. 티타늄 자원 4개 획득. 아무 1명의 식물 자원을 4개까지 제거",
       "effect": {
-        "temperature": 2,
         "resources": {
           "titanium": 4
-        }
+        },
+        "temperature": 2
       },
       "vpText": null,
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "011",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "기온 2단계 상승. 티타늄 자원 4개 획득. 아무 1명의 식물 자원을 4개까지 제거"
     },
     {
       "id": "base-012",
@@ -358,16 +365,15 @@
         "jovian"
       ],
       "condition": null,
-      "text": "행동: 12 M€을 소비하고, 해양 타일 1장 배치. 우주 승점: 보유한 목성 태그 1개당 승점 1점",
-      "effect": {
-        "ocean": 1
-      },
+      "text": "효과: 행동: 12 M€을 소비하고, 해양 타일 1장 배치. 우주 가능 카드를 사용할 때처럼 여기서 티타늄 자원도 소비 / 승점: 보유한 목성 태그 1개당 승점 1점",
+      "effect": {},
       "vpText": "보유한 목성 태그 1개당 승점 1점",
       "vp": 1,
       "expansion": "기본판",
       "cardNumber": "012",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "행동: 12 M€을 소비하고, 해양 타일 1장 배치. 우주 가능 카드를 사용할 때처럼 여기서 티타늄 자원도 소비"
     },
     {
       "id": "base-015",
@@ -378,14 +384,15 @@
         "building"
       ],
       "condition": null,
-      "text": "행동: 에너지 생산력을 1 감소시키고, 1 TR 상승",
+      "text": "효과: 행동: 에너지 생산력을 1 감소시키고, 1 TR 상승",
       "effect": {},
       "vpText": null,
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "015",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "행동: 에너지 생산력을 1 감소시키고, 1 TR 상승"
     },
     {
       "id": "base-016",
@@ -397,23 +404,24 @@
         "city"
       ],
       "condition": "산소 농도 7% 이하",
-      "text": "조건: 산소 농도 7% 이하 식물 자원 3개 획득. 도시 타일 1장 배치. 에너지 생산력 1 감소. 메가크레딧 생산력 3 증가 승점: 1",
+      "text": "조건: 산소 농도 7% 이하 / 효과: 식물 자원 3개 획득. 도시 타일 1장 배치. 에너지 생산력 1 감소. 메가크레딧 생산력 3 증가 / 승점: 1",
       "effect": {
         "production": {
           "mc": 3,
           "energy": -1
         },
-        "city": 1,
         "resources": {
           "plant": 3
-        }
+        },
+        "city": 1
       },
       "vpText": "1",
-      "vp": 0,
+      "vp": 1,
       "expansion": "기본판",
       "cardNumber": "016",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "식물 자원 3개 획득. 도시 타일 1장 배치. 에너지 생산력 1 감소. 메가크레딧 생산력 3 증가"
     },
     {
       "id": "base-017",
@@ -425,19 +433,21 @@
         "city"
       ],
       "condition": null,
-      "text": "에너지 생산력 1 감소. 메가크레딧 생산력 3 증가. 배치 제한 무시하고 녹티스 시티 전용 구역에",
+      "text": "효과: 에너지 생산력 1 감소. 메가크레딧 생산력 3 증가. 배치 제한 무시하고 녹티스 시티 전용 구역에 도시 타일 1장 배치",
       "effect": {
         "production": {
           "mc": 3,
           "energy": -1
-        }
+        },
+        "city": 1
       },
       "vpText": null,
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "017",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "에너지 생산력 1 감소. 메가크레딧 생산력 3 증가. 배치 제한 무시하고 녹티스 시티 전용 구역에 도시 타일 1장 배치"
     },
     {
       "id": "base-018",
@@ -449,7 +459,7 @@
         "jovian"
       ],
       "condition": "산소 농도 2% 이상",
-      "text": "조건: 산소 농도 2% 이상 열 생산력 2 증가. 식물 생산력 2 증가 승점: 2",
+      "text": "조건: 산소 농도 2% 이상 / 효과: 열 생산력 2 증가. 식물 생산력 2 증가 / 승점: 2",
       "effect": {
         "production": {
           "plant": 2,
@@ -457,11 +467,12 @@
         }
       },
       "vpText": "2",
-      "vp": 0,
+      "vp": 2,
       "expansion": "기본판",
       "cardNumber": "018",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "열 생산력 2 증가. 식물 생산력 2 증가"
     },
     {
       "id": "base-019",
@@ -474,14 +485,17 @@
         "event"
       ],
       "condition": null,
-      "text": "중 하나 사용",
-      "effect": {},
+      "text": "효과: 해양 타일 1장 배치. 다음의 효과 중 하나 사용 1) 식물 자원 3개 획득 2) 자신의 아무 카드 1장 위에 미생물 자원 3개 추가 3) 자신의 아무 카드 1장 위에 동물 자원 2개 추가",
+      "effect": {
+        "ocean": 1
+      },
       "vpText": null,
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "019",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "해양 타일 1장 배치. 다음의 효과 중 하나 사용 1) 식물 자원 3개 획득 2) 자신의 아무 카드 1장 위에 미생물 자원 3개 추가 3) 자신의 아무 카드 1장 위에 동물 자원 2개 추가"
     },
     {
       "id": "base-020",
@@ -494,7 +508,7 @@
         "city"
       ],
       "condition": null,
-      "text": "다른 타일과 인접하지 않은 빈 구역 한 곳에 도시 타일 1장 배치",
+      "text": "효과: 다른 타일과 인접하지 않은 빈 구역 한 곳에 도시 타일 1장 배치 지속: 모든 카드의 추진 비용 1 M€ 할인",
       "effect": {
         "city": 1
       },
@@ -503,7 +517,8 @@
       "expansion": "기본판",
       "cardNumber": "020",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "다른 타일과 인접하지 않은 빈 구역 한 곳에 도시 타일 1장 배치 지속: 모든 카드의 추진 비용 1 M€ 할인"
     },
     {
       "id": "base-021",
@@ -515,7 +530,7 @@
         "city"
       ],
       "condition": null,
-      "text": "티타늄 생산력 1 증가. 포보스 우주휴게소 전용 구역에 도시 타일 1장 배치 승점: 3",
+      "text": "효과: 티타늄 생산력 1 증가. 포보스 우주휴게소 전용 구역에 도시 타일 1장 배치 / 승점: 3",
       "effect": {
         "production": {
           "titanium": 1
@@ -523,11 +538,12 @@
         "city": 1
       },
       "vpText": "3",
-      "vp": 0,
+      "vp": 3,
       "expansion": "기본판",
       "cardNumber": "021",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "티타늄 생산력 1 증가. 포보스 우주휴게소 전용 구역에 도시 타일 1장 배치"
     },
     {
       "id": "base-022",
@@ -536,7 +552,7 @@
       "type": "ongoing",
       "tags": [],
       "condition": null,
-      "text": "해양 타일 1장 배치. 메가크레딧 생산력 2 감소. 열 생산력 3 증가",
+      "text": "효과: 해양 타일 1장 배치. 메가크레딧 생산력 2 감소. 열 생산력 3 증가",
       "effect": {
         "production": {
           "mc": -2,
@@ -549,7 +565,8 @@
       "expansion": "기본판",
       "cardNumber": "022",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "해양 타일 1장 배치. 메가크레딧 생산력 2 감소. 열 생산력 3 증가"
     },
     {
       "id": "base-023",
@@ -560,10 +577,10 @@
         "plant"
       ],
       "condition": "기온 -12°C 이하",
-      "text": "조건: 기온 -12°C 이하 지속: 해양 타일이 1장 배치될 때마다, 식물 자원 2개 획득",
+      "text": "조건: 기온 -12°C 이하 / 효과: 식물 자원 1개 획득 지속: 해양 타일이 1장 배치될 때마다, 식물 자원 2개 획득",
       "effect": {
         "resources": {
-          "plant": 2
+          "plant": 1
         }
       },
       "vpText": null,
@@ -571,7 +588,8 @@
       "expansion": "기본판",
       "cardNumber": "023",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "식물 자원 1개 획득 지속: 해양 타일이 1장 배치될 때마다, 식물 자원 2개 획득"
     },
     {
       "id": "base-024",
@@ -582,14 +600,15 @@
         "animal"
       ],
       "condition": "산소 농도 11% 이상",
-      "text": "조건: 산소 농도 11% 이상 행동: 아무 카드 1장 위의 동물 자원을 1개 제거하고, 이 카드 위에 동물 자원 1개 추가 승점: 이 카드 위의 동물 자원 1개당 승점 1점",
+      "text": "조건: 산소 농도 11% 이상 / 효과: 행동: 아무 카드 1장 위의 동물 자원을 1개 제거하고, 이 카드 위에 동물 자원 1개 추가 / 승점: 이 카드 위의 동물 자원 1개당 승점 1점",
       "effect": {},
       "vpText": "이 카드 위의 동물 자원 1개당 승점 1점",
       "vp": 1,
       "expansion": "기본판",
       "cardNumber": "024",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "행동: 아무 카드 1장 위의 동물 자원을 1개 제거하고, 이 카드 위에 동물 자원 1개 추가"
     },
     {
       "id": "base-026",
@@ -601,21 +620,19 @@
         "plant"
       ],
       "condition": "기온 -12°C 이상",
-      "text": "조건: 기온 -12°C 이상 자신의 다른 카드 1장 위에 동물 자원 1개 추가. 식물 자원 3개 획득. 메가크레딧 생산력 2 증 승점: 1",
+      "text": "조건: 기온 -12°C 이상 / 효과: 자신의 다른 카드 1장 위에 동물 자원 1개 추가. 식물 자원 3개 획득. 메가크레딧 생산력 2 증 가 / 승점: 1",
       "effect": {
-        "production": {
-          "mc": 2
-        },
         "resources": {
           "plant": 3
         }
       },
       "vpText": "1",
-      "vp": 0,
+      "vp": 1,
       "expansion": "기본판",
       "cardNumber": "026",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "자신의 다른 카드 1장 위에 동물 자원 1개 추가. 식물 자원 3개 획득. 메가크레딧 생산력 2 증 가"
     },
     {
       "id": "base-029",
@@ -627,7 +644,7 @@
         "city"
       ],
       "condition": "산소 농도 9% 이하",
-      "text": "조건: 산소 농도 9% 이하 도시 타일 1장 배치. 에너지 생산력 1 감소. 메가크레딧 생산력 3 증가",
+      "text": "조건: 산소 농도 9% 이하 / 효과: 도시 타일 1장 배치. 에너지 생산력 1 감소. 메가크레딧 생산력 3 증가",
       "effect": {
         "production": {
           "mc": 3,
@@ -640,7 +657,8 @@
       "expansion": "기본판",
       "cardNumber": "029",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "도시 타일 1장 배치. 에너지 생산력 1 감소. 메가크레딧 생산력 3 증가"
     },
     {
       "id": "base-030",
@@ -652,7 +670,7 @@
         "earth"
       ],
       "condition": null,
-      "text": "메가크레딧 생산력 2 감소. 열 생산력 2 증가. 에너지 생산력 2 증가",
+      "text": "효과: 메가크레딧 생산력 2 감소. 열 생산력 2 증가. 에너지 생산력 2 증가",
       "effect": {
         "production": {
           "mc": -2,
@@ -665,7 +683,8 @@
       "expansion": "기본판",
       "cardNumber": "030",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "메가크레딧 생산력 2 감소. 열 생산력 2 증가. 에너지 생산력 2 증가"
     },
     {
       "id": "base-031",
@@ -676,18 +695,15 @@
         "space"
       ],
       "condition": null,
-      "text": "지속: 우주 사건형 카드 사용 시, 3 M€과 열 자원 3개 획득",
-      "effect": {
-        "resources": {
-          "heat": 3
-        }
-      },
+      "text": "효과: 지속: 우주 사건형 카드 사용 시, 3 M€과 열 자원 3개 획득",
+      "effect": {},
       "vpText": null,
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "031",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "지속: 우주 사건형 카드 사용 시, 3 M€과 열 자원 3개 획득"
     },
     {
       "id": "base-032",
@@ -699,7 +715,7 @@
         "city"
       ],
       "condition": null,
-      "text": "도시 타일 1장 배치. 에너지 생산력 2 감소. 강철 생산력 2 증가",
+      "text": "효과: 도시 타일 1장 배치. 에너지 생산력 2 감소. 강철 생산력 2 증가",
       "effect": {
         "production": {
           "steel": 2,
@@ -712,7 +728,8 @@
       "expansion": "기본판",
       "cardNumber": "032",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "도시 타일 1장 배치. 에너지 생산력 2 감소. 강철 생산력 2 증가"
     },
     {
       "id": "base-033",
@@ -724,14 +741,15 @@
         "microbe"
       ],
       "condition": null,
-      "text": "1) 이 카드 위에 미생물 자원 1개 추가",
+      "text": "효과: 행동: 다음의 행동 중 하나 수행 1) 이 카드 위에 미생물 자원 1개 추가 2) 이 카드 위의 미생물 자원 2개를 소비하고, 산소 농도 1단계 상승",
       "effect": {},
       "vpText": null,
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "033",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "행동: 다음의 행동 중 하나 수행 1) 이 카드 위에 미생물 자원 1개 추가 2) 이 카드 위의 미생물 자원 2개를 소비하고, 산소 농도 1단계 상승"
     },
     {
       "id": "base-034",
@@ -743,14 +761,15 @@
         "microbe"
       ],
       "condition": "산소 농도 4% 이상",
-      "text": "조건: 산소 농도 4% 이상 1) 이 카드 위에 미생물 자원 1개 추가",
+      "text": "조건: 산소 농도 4% 이상 / 효과: 1) 이 카드 위에 미생물 자원 1개 추가 2) 이 카드 위의 미생물 자원 2개를 소비하고, 기온 1단계 상승",
       "effect": {},
       "vpText": null,
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "034",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "1) 이 카드 위에 미생물 자원 1개 추가 2) 이 카드 위의 미생물 자원 2개를 소비하고, 기온 1단계 상승"
     },
     {
       "id": "base-035",
@@ -761,14 +780,15 @@
         "microbe"
       ],
       "condition": "산소 농도 4% 이상",
-      "text": "조건: 산소 농도 4% 이상 행동: 아무 카드 1장 위의 미생물 자원을 1개 제거하고, 이 카드 위에 미생물 자원 1개 추가 승점: 이 카드 위의 미생물 자원 2개당 승점 1점",
+      "text": "조건: 산소 농도 4% 이상 / 효과: 행동: 아무 카드 1장 위의 미생물 자원을 1개 제거하고, 이 카드 위에 미생물 자원 1개 추가 / 승점: 이 카드 위의 미생물 자원 2개당 승점 1점",
       "effect": {},
       "vpText": "이 카드 위의 미생물 자원 2개당 승점 1점",
       "vp": 1,
       "expansion": "기본판",
       "cardNumber": "035",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "행동: 아무 카드 1장 위의 미생물 자원을 1개 제거하고, 이 카드 위에 미생물 자원 1개 추가"
     },
     {
       "id": "base-036",
@@ -779,14 +799,15 @@
         "event"
       ],
       "condition": null,
-      "text": "2 TR 상승",
+      "text": "효과: 2 TR 상승",
       "effect": {},
       "vpText": null,
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "036",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "2 TR 상승"
     },
     {
       "id": "base-037",
@@ -798,7 +819,7 @@
         "event"
       ],
       "condition": null,
-      "text": "2 TR 상승. 기온 1단계 상승. 보유한 식물 태그가 3개 이상이면, 식물 생산력 4 증가. 그렇지 않으면 식",
+      "text": "효과: 2 TR 상승. 기온 1단계 상승. 보유한 식물 태그가 3개 이상이면, 식물 생산력 4 증가. 그렇지 않으면 식 물 생산력 1 증가",
       "effect": {
         "production": {
           "plant": 4
@@ -810,7 +831,8 @@
       "expansion": "기본판",
       "cardNumber": "037",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "2 TR 상승. 기온 1단계 상승. 보유한 식물 태그가 3개 이상이면, 식물 생산력 4 증가. 그렇지 않으면 식 물 생산력 1 증가"
     },
     {
       "id": "base-038",
@@ -821,14 +843,15 @@
         "building"
       ],
       "condition": null,
-      "text": "지속: 아무 도시 타일이 1장 배치될 때마다, 2 M€ 획득 승점: 1",
+      "text": "효과: 지속: 아무 도시 타일이 1장 배치될 때마다, 2 M€ 획득 / 승점: 1",
       "effect": {},
       "vpText": "1",
-      "vp": 0,
+      "vp": 1,
       "expansion": "기본판",
       "cardNumber": "038",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "지속: 아무 도시 타일이 1장 배치될 때마다, 2 M€ 획득"
     },
     {
       "id": "base-039",
@@ -840,19 +863,20 @@
         "event"
       ],
       "condition": null,
-      "text": "기온 3단계 상승. 강철 자원 4개 획득. 아무 1명의 식물 자원을 8개까지 제거",
+      "text": "효과: 기온 3단계 상승. 강철 자원 4개 획득. 아무 1명의 식물 자원을 8개까지 제거",
       "effect": {
-        "temperature": 3,
         "resources": {
           "steel": 4
-        }
+        },
+        "temperature": 3
       },
       "vpText": null,
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "039",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "기온 3단계 상승. 강철 자원 4개 획득. 아무 1명의 식물 자원을 8개까지 제거"
     },
     {
       "id": "base-040",
@@ -864,18 +888,19 @@
         "jovian"
       ],
       "condition": null,
-      "text": "티타늄 생산력 2 증가 승점: 2",
+      "text": "효과: 티타늄 생산력 2 증가 / 승점: 2",
       "effect": {
         "production": {
           "titanium": 2
         }
       },
       "vpText": "2",
-      "vp": 0,
+      "vp": 2,
       "expansion": "기본판",
       "cardNumber": "040",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "티타늄 생산력 2 증가"
     },
     {
       "id": "base-041",
@@ -886,7 +911,7 @@
         "building"
       ],
       "condition": null,
-      "text": "식물 생산력 1 감소. 메가크레딧 생산력 4 증가 승점: 1",
+      "text": "효과: 식물 생산력 1 감소. 메가크레딧 생산력 4 증가 / 승점: 1",
       "effect": {
         "production": {
           "mc": 4,
@@ -894,11 +919,12 @@
         }
       },
       "vpText": "1",
-      "vp": 0,
+      "vp": 1,
       "expansion": "기본판",
       "cardNumber": "041",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "식물 생산력 1 감소. 메가크레딧 생산력 4 증가"
     },
     {
       "id": "base-042",
@@ -909,7 +935,7 @@
         "microbe"
       ],
       "condition": "기온 -18℃ 이하",
-      "text": "조건: 기온 -18℃ 이하 식물 생산력 1 증가",
+      "text": "조건: 기온 -18℃ 이하 / 효과: 식물 생산력 1 증가",
       "effect": {
         "production": {
           "plant": 1
@@ -920,7 +946,8 @@
       "expansion": "기본판",
       "cardNumber": "042",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "식물 생산력 1 증가"
     },
     {
       "id": "base-043",
@@ -931,7 +958,7 @@
         "building"
       ],
       "condition": null,
-      "text": "에너지 생산력 1 감소. 열 생산력 3 증가",
+      "text": "효과: 에너지 생산력 1 감소. 열 생산력 3 증가",
       "effect": {
         "production": {
           "energy": -1,
@@ -943,7 +970,8 @@
       "expansion": "기본판",
       "cardNumber": "043",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "에너지 생산력 1 감소. 열 생산력 3 증가"
     },
     {
       "id": "base-044",
@@ -955,18 +983,15 @@
         "science"
       ],
       "condition": "산소 농도 4% 이하",
-      "text": "조건: 산소 농도 4% 이하 다른 타일과 인접하지 않은 빈 구역 한 곳에 위 그림과 같은 타일 배치. 메가크레딧 생산력 1 증 승점: 1",
-      "effect": {
-        "production": {
-          "mc": 1
-        }
-      },
+      "text": "조건: 산소 농도 4% 이하 / 효과: 다른 타일과 인접하지 않은 빈 구역 한 곳에 위 그림과 같은 타일 배치. 메가크레딧 생산력 1 증 가 / 승점: 1",
+      "effect": {},
       "vpText": "1",
-      "vp": 0,
+      "vp": 1,
       "expansion": "기본판",
       "cardNumber": "044",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "다른 타일과 인접하지 않은 빈 구역 한 곳에 위 그림과 같은 타일 배치. 메가크레딧 생산력 1 증 가"
     },
     {
       "id": "base-045",
@@ -978,7 +1003,7 @@
         "power"
       ],
       "condition": null,
-      "text": "메가크레딧 생산력 2 감소. 에너지 생산력 3 증가",
+      "text": "효과: 메가크레딧 생산력 2 감소. 에너지 생산력 3 증가",
       "effect": {
         "production": {
           "mc": -2,
@@ -990,7 +1015,8 @@
       "expansion": "기본판",
       "cardNumber": "045",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "메가크레딧 생산력 2 감소. 에너지 생산력 3 증가"
     },
     {
       "id": "base-047",
@@ -1001,7 +1027,7 @@
         "plant"
       ],
       "condition": "배치된 해양 타일 5장 이상",
-      "text": "조건: 배치된 해양 타일 5장 이상 식물 자원 1개 획득. 식물 생산력 2 증가",
+      "text": "조건: 배치된 해양 타일 5장 이상 / 효과: 식물 자원 1개 획득. 식물 생산력 2 증가",
       "effect": {
         "production": {
           "plant": 2
@@ -1015,7 +1041,8 @@
       "expansion": "기본판",
       "cardNumber": "047",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "식물 자원 1개 획득. 식물 생산력 2 증가"
     },
     {
       "id": "base-048",
@@ -1026,7 +1053,7 @@
         "plant"
       ],
       "condition": null,
-      "text": "식물 생산력 1 증가",
+      "text": "효과: 식물 생산력 1 증가",
       "effect": {
         "production": {
           "plant": 1
@@ -1037,7 +1064,8 @@
       "expansion": "기본판",
       "cardNumber": "048",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "식물 생산력 1 증가"
     },
     {
       "id": "base-052",
@@ -1048,14 +1076,15 @@
         "animal"
       ],
       "condition": "기온 +2℃ 이상",
-      "text": "조건: 기온 +2℃ 이상 행동:아무이 카드 승점: 이 카드 위의 동물 자원 1개당 승점 1점",
+      "text": "조건: 기온 +2℃ 이상 / 효과: 행동:아무이 카드 1명의 식물 생산력 1 감소 위에 동물 자원 1개 추가 / 승점: 이 카드 위의 동물 자원 1개당 승점 1점",
       "effect": {},
       "vpText": "이 카드 위의 동물 자원 1개당 승점 1점",
       "vp": 1,
       "expansion": "기본판",
       "cardNumber": "052",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "행동:아무이 카드 1명의 식물 생산력 1 감소 위에 동물 자원 1개 추가"
     },
     {
       "id": "base-053",
@@ -1064,16 +1093,17 @@
       "type": "ongoing",
       "tags": [],
       "condition": "기온 0℃ 이상",
-      "text": "조건: 기온 0℃ 이상 해양 타일 2장 배치 승점: 2",
+      "text": "조건: 기온 0℃ 이상 / 효과: 해양 타일 2장 배치 / 승점: 2",
       "effect": {
         "ocean": 2
       },
       "vpText": "2",
-      "vp": 0,
+      "vp": 2,
       "expansion": "기본판",
       "cardNumber": "053",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "해양 타일 2장 배치"
     },
     {
       "id": "base-054",
@@ -1084,18 +1114,15 @@
         "animal"
       ],
       "condition": "산소 농도 6% 이상",
-      "text": "조건: 산소 농도 6% 이상 아무 1명의 식물 생산력 1 감소 승점: 이 카드 위의 동물 자원 2개당 승점 1점",
-      "effect": {
-        "production": {
-          "plant": -1
-        }
-      },
+      "text": "조건: 산소 농도 6% 이상 / 효과: 아무 1명의 식물 생산력 1 감소 행동: 이 카드 위에 동물 자원 1개 추가 / 승점: 이 카드 위의 동물 자원 2개당 승점 1점",
+      "effect": {},
       "vpText": "이 카드 위의 동물 자원 2개당 승점 1점",
       "vp": 1,
       "expansion": "기본판",
       "cardNumber": "054",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "아무 1명의 식물 생산력 1 감소 행동: 이 카드 위에 동물 자원 1개 추가"
     },
     {
       "id": "base-055",
@@ -1106,7 +1133,7 @@
         "plant"
       ],
       "condition": "배치된 해양 타일 6장 이상",
-      "text": "조건: 배치된 해양 타일 6장 이상 메가크레딧 생산력 2 증가. 식물 생산력 3 증가. 식물 자원 2개 획득 승점: 1",
+      "text": "조건: 배치된 해양 타일 6장 이상 / 효과: 메가크레딧 생산력 2 증가. 식물 생산력 3 증가. 식물 자원 2개 획득 / 승점: 1",
       "effect": {
         "production": {
           "mc": 2,
@@ -1117,11 +1144,12 @@
         }
       },
       "vpText": "1",
-      "vp": 0,
+      "vp": 1,
       "expansion": "기본판",
       "cardNumber": "055",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "메가크레딧 생산력 2 증가. 식물 생산력 3 증가. 식물 자원 2개 획득"
     },
     {
       "id": "base-058",
@@ -1134,7 +1162,7 @@
         "jovian"
       ],
       "condition": "보유한 목성 태그 1개 이상",
-      "text": "조건: 보유한 목성 태그 1개 이상 열 생산력 3 증가. 에너지 생산력 3 증가 승점: 1",
+      "text": "조건: 보유한 목성 태그 1개 이상 / 효과: 열 생산력 3 증가. 에너지 생산력 3 증가 / 승점: 1",
       "effect": {
         "production": {
           "energy": 3,
@@ -1142,11 +1170,12 @@
         }
       },
       "vpText": "1",
-      "vp": 0,
+      "vp": 1,
       "expansion": "기본판",
       "cardNumber": "058",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "열 생산력 3 증가. 에너지 생산력 3 증가"
     },
     {
       "id": "base-059",
@@ -1157,16 +1186,17 @@
         "plant"
       ],
       "condition": "기온 +4℃ 이상",
-      "text": "조건: 기온 +4℃ 이상 배치 제한 무시하고 빈 해양 전용 구역 한 곳에 녹지 타일 1장 배치 및 그에 따른 산소 농도 1단 승점: 1",
+      "text": "조건: 기온 +4℃ 이상 / 효과: 배치 제한 무시하고 빈 해양 전용 구역 한 곳에 녹지 타일 1장 배치 및 그에 따른 산소 농도 1단 계 상승 / 승점: 1",
       "effect": {
         "greenery": 1
       },
       "vpText": "1",
-      "vp": 0,
+      "vp": 1,
       "expansion": "기본판",
       "cardNumber": "059",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "배치 제한 무시하고 빈 해양 전용 구역 한 곳에 녹지 타일 1장 배치 및 그에 따른 산소 농도 1단 계 상승"
     },
     {
       "id": "base-060",
@@ -1177,7 +1207,7 @@
         "plant"
       ],
       "condition": "기온 -4℃ 이상",
-      "text": "조건: 기온 -4℃ 이상 식물 생산력 3 증가. 식물 자원 1개 획득 승점: 1",
+      "text": "조건: 기온 -4℃ 이상 / 효과: 식물 생산력 3 증가. 식물 자원 1개 획득 / 승점: 1",
       "effect": {
         "production": {
           "plant": 3
@@ -1187,11 +1217,12 @@
         }
       },
       "vpText": "1",
-      "vp": 0,
+      "vp": 1,
       "expansion": "기본판",
       "cardNumber": "060",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "식물 생산력 3 증가. 식물 자원 1개 획득"
     },
     {
       "id": "base-063",
@@ -1202,19 +1233,17 @@
         "event"
       ],
       "condition": null,
-      "text": "산소 농도 1단계 상승. 아무 1명의 식물 자원 2개까지 제거. 강철 자원 2개 획득",
+      "text": "효과: 산소 농도 1단계 상승. 아무 1명의 식물 자원 2개까지 제거. 강철 자원 2개 획득",
       "effect": {
-        "oxygen": 1,
-        "resources": {
-          "steel": 2
-        }
+        "oxygen": 1
       },
       "vpText": null,
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "063",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "산소 농도 1단계 상승. 아무 1명의 식물 자원 2개까지 제거. 강철 자원 2개 획득"
     },
     {
       "id": "base-067",
@@ -1225,14 +1254,15 @@
         "building"
       ],
       "condition": null,
-      "text": "강철/티타늄 점유 보너스가점유",
+      "text": "효과: 강철/티타늄 점유 보너스가점유 있는 빈 구역 한 곳에 위 그림과 같은 타일 배치. 이 타일로 획득한 해당 보너스 자원 중 한 종류의 생산력 1 증가",
       "effect": {},
       "vpText": null,
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "067",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "강철/티타늄 점유 보너스가점유 있는 빈 구역 한 곳에 위 그림과 같은 타일 배치. 이 타일로 획득한 해당 보너스 자원 중 한 종류의 생산력 1 증가"
     },
     {
       "id": "base-072",
@@ -1243,18 +1273,15 @@
         "animal"
       ],
       "condition": "산소 농도 13% 이상",
-      "text": "조건: 산소 농도 13% 이상 아무 1명의 식물 생산력 2 감소[23] 승점: 이 카드 위의 동물 자원 1개당 승점 1점",
-      "effect": {
-        "production": {
-          "plant": -2
-        }
-      },
+      "text": "조건: 산소 농도 13% 이상 / 효과: 아무 1명의 식물 생산력 2 감소[23] 행동: 이 카드 위에 동물 자원 1개 추가 / 승점: 이 카드 위의 동물 자원 1개당 승점 1점",
+      "effect": {},
       "vpText": "이 카드 위의 동물 자원 1개당 승점 1점",
       "vp": 1,
       "expansion": "기본판",
       "cardNumber": "072",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "아무 1명의 식물 생산력 2 감소[23] 행동: 이 카드 위에 동물 자원 1개 추가"
     },
     {
       "id": "base-075",
@@ -1266,20 +1293,21 @@
         "event"
       ],
       "condition": null,
-      "text": "식물 자원 2개 획득. 산소 농도 1단계 상승. 해양 타일 1장 배치",
+      "text": "효과: 식물 자원 2개 획득. 산소 농도 1단계 상승. 해양 타일 1장 배치",
       "effect": {
-        "oxygen": 1,
-        "ocean": 1,
         "resources": {
           "plant": 2
-        }
+        },
+        "oxygen": 1,
+        "ocean": 1
       },
       "vpText": null,
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "075",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "식물 자원 2개 획득. 산소 농도 1단계 상승. 해양 타일 1장 배치"
     },
     {
       "id": "base-076",
@@ -1291,18 +1319,15 @@
         "power"
       ],
       "condition": null,
-      "text": "행동: 7 M€을 소비하고, 에너지 생산력 1 증가",
-      "effect": {
-        "production": {
-          "energy": 1
-        }
-      },
+      "text": "효과: 행동: 7 M€을 소비하고, 에너지 생산력 1 증가",
+      "effect": {},
       "vpText": null,
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "076",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "행동: 7 M€을 소비하고, 에너지 생산력 1 증가"
     },
     {
       "id": "base-077",
@@ -1315,7 +1340,7 @@
         "science"
       ],
       "condition": null,
-      "text": "에너지 생산력 1 증가. 티타늄 자원 2개 획득",
+      "text": "효과: 에너지 생산력 1 증가. 티타늄 자원 2개 획득",
       "effect": {
         "production": {
           "energy": 1
@@ -1329,7 +1354,8 @@
       "expansion": "기본판",
       "cardNumber": "077",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "에너지 생산력 1 증가. 티타늄 자원 2개 획득"
     },
     {
       "id": "base-078",
@@ -1341,7 +1367,7 @@
         "event"
       ],
       "condition": null,
-      "text": "해양 타일 2장 배치",
+      "text": "효과: 해양 타일 2장 배치",
       "effect": {
         "ocean": 2
       },
@@ -1350,7 +1376,8 @@
       "expansion": "기본판",
       "cardNumber": "078",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "해양 타일 2장 배치"
     },
     {
       "id": "base-080",
@@ -1362,7 +1389,7 @@
         "event"
       ],
       "condition": null,
-      "text": "기온 2단계 상승. 해양 타일 2장 배치. 아무 1명의 식물 자원 6개까지 제거",
+      "text": "효과: 기온 2단계 상승. 해양 타일 2장 배치. 아무 1명의 식물 자원 6개까지 제거",
       "effect": {
         "temperature": 2,
         "ocean": 2
@@ -1372,7 +1399,8 @@
       "expansion": "기본판",
       "cardNumber": "080",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "기온 2단계 상승. 해양 타일 2장 배치. 아무 1명의 식물 자원 6개까지 제거"
     },
     {
       "id": "base-081",
@@ -1385,7 +1413,7 @@
         "city"
       ],
       "condition": null,
-      "text": "가니메데 정착지 전용 구역에 도시 타일 1장 배치 승점: 보유한 목성 태그 1개당 승점 1점[A]",
+      "text": "효과: 가니메데 정착지 전용 구역에 도시 타일 1장 배치 / 승점: 보유한 목성 태그 1개당 승점 1점[A]",
       "effect": {
         "city": 1
       },
@@ -1394,7 +1422,8 @@
       "expansion": "기본판",
       "cardNumber": "081",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "가니메데 정착지 전용 구역에 도시 타일 1장 배치"
     },
     {
       "id": "base-083",
@@ -1406,7 +1435,7 @@
         "power"
       ],
       "condition": null,
-      "text": "에너지 생산력 3 증가",
+      "text": "효과: 에너지 생산력 3 증가",
       "effect": {
         "production": {
           "energy": 3
@@ -1417,7 +1446,8 @@
       "expansion": "기본판",
       "cardNumber": "083",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "에너지 생산력 3 증가"
     },
     {
       "id": "base-087",
@@ -1428,7 +1458,7 @@
         "plant"
       ],
       "condition": "기온 -16℃ 이상",
-      "text": "조건: 기온 -16℃ 이상 식물 생산력 1 증가. 식물 자원 3개 획득",
+      "text": "조건: 기온 -16℃ 이상 / 효과: 식물 생산력 1 증가. 식물 자원 3개 획득",
       "effect": {
         "production": {
           "plant": 1
@@ -1442,7 +1472,8 @@
       "expansion": "기본판",
       "cardNumber": "087",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "식물 생산력 1 증가. 식물 자원 3개 획득"
     },
     {
       "id": "base-088",
@@ -1453,7 +1484,7 @@
         "plant"
       ],
       "condition": "기온 -14℃ 이상",
-      "text": "조건: 기온 -14℃ 이상 식물 생산력 1 증가. 식물 자원 1개 획득",
+      "text": "조건: 기온 -14℃ 이상 / 효과: 식물 생산력 1 증가. 식물 자원 1개 획득",
       "effect": {
         "production": {
           "plant": 1
@@ -1467,7 +1498,8 @@
       "expansion": "기본판",
       "cardNumber": "088",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "식물 생산력 1 증가. 식물 자원 1개 획득"
     },
     {
       "id": "base-089",
@@ -1479,7 +1511,7 @@
         "power"
       ],
       "condition": null,
-      "text": "메가크레딧 생산력 1 감소. 에너지 생산력 2 증가",
+      "text": "효과: 메가크레딧 생산력 1 감소. 에너지 생산력 2 증가",
       "effect": {
         "production": {
           "mc": -1,
@@ -1491,7 +1523,8 @@
       "expansion": "기본판",
       "cardNumber": "089",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "메가크레딧 생산력 1 감소. 에너지 생산력 2 증가"
     },
     {
       "id": "base-093",
@@ -1502,7 +1535,7 @@
         "plant"
       ],
       "condition": "기온 -10℃ 이상",
-      "text": "조건: 기온 -10℃ 이상 식물 생산력 2 증가. 식물 자원 2개 획득",
+      "text": "조건: 기온 -10℃ 이상 / 효과: 식물 생산력 2 증가. 식물 자원 2개 획득",
       "effect": {
         "production": {
           "plant": 2
@@ -1516,7 +1549,8 @@
       "expansion": "기본판",
       "cardNumber": "093",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "식물 생산력 2 증가. 식물 자원 2개 획득"
     },
     {
       "id": "base-096",
@@ -1528,7 +1562,7 @@
         "plant"
       ],
       "condition": null,
-      "text": "현재 배치된 아무 도시 타일 1장당 식물 자원 1개 획득",
+      "text": "효과: 현재 배치된 아무 도시 타일 1장당 식물 자원 1개 획득",
       "effect": {
         "resources": {
           "plant": 1
@@ -1539,7 +1573,8 @@
       "expansion": "기본판",
       "cardNumber": "096",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "현재 배치된 아무 도시 타일 1장당 식물 자원 1개 획득"
     },
     {
       "id": "base-097",
@@ -1550,7 +1585,7 @@
         "earth"
       ],
       "condition": null,
-      "text": "위 그림과 같은[27] 타일 배치. 기온 2단계 상승 승점: -2",
+      "text": "효과: 위 그림과 같은[27] 타일 배치. 기온 2단계 상승 / 승점: -2",
       "effect": {
         "temperature": 2
       },
@@ -1559,7 +1594,8 @@
       "expansion": "기본판",
       "cardNumber": "097",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "위 그림과 같은[27] 타일 배치. 기온 2단계 상승"
     },
     {
       "id": "base-100",
@@ -1571,7 +1607,7 @@
         "power"
       ],
       "condition": null,
-      "text": "메가크레딧 생산력 1 감소. 에너지 생산력 1 증가",
+      "text": "효과: 메가크레딧 생산력 1 감소. 에너지 생산력 1 증가",
       "effect": {
         "production": {
           "mc": -1,
@@ -1583,7 +1619,8 @@
       "expansion": "기본판",
       "cardNumber": "100",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "메가크레딧 생산력 1 감소. 에너지 생산력 1 증가"
     },
     {
       "id": "base-101",
@@ -1594,19 +1631,15 @@
         "building"
       ],
       "condition": null,
-      "text": "행동: 에너지 자원을 4개 소비하고, 강철 자원 1개 획득 및 산소 농도 1단계 상승",
-      "effect": {
-        "oxygen": 1,
-        "resources": {
-          "steel": 1
-        }
-      },
+      "text": "효과: 행동: 에너지 자원을 4개 소비하고, 강철 자원 1개 획득 및 산소 농도 1단계 상승",
+      "effect": {},
       "vpText": null,
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "101",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "행동: 에너지 자원을 4개 소비하고, 강철 자원 1개 획득 및 산소 농도 1단계 상승"
     },
     {
       "id": "base-102",
@@ -1617,7 +1650,7 @@
         "power"
       ],
       "condition": null,
-      "text": "이 카드도 포함해서 보유한 에너지 태그 1개당 에너지 생산력 1 증가",
+      "text": "효과: 이 카드도 포함해서 보유한 에너지 태그 1개당 에너지 생산력 1 증가",
       "effect": {
         "production": {
           "energy": 1
@@ -1628,7 +1661,8 @@
       "expansion": "기본판",
       "cardNumber": "102",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "이 카드도 포함해서 보유한 에너지 태그 1개당 에너지 생산력 1 증가"
     },
     {
       "id": "base-103",
@@ -1639,19 +1673,15 @@
         "building"
       ],
       "condition": null,
-      "text": "행동: 에너지 자원을 4개 소비하고, 강철 자원 2개 획득 및 산소 농도 1단계 상승",
-      "effect": {
-        "oxygen": 1,
-        "resources": {
-          "steel": 2
-        }
-      },
+      "text": "효과: 행동: 에너지 자원을 4개 소비하고, 강철 자원 2개 획득 및 산소 농도 1단계 상승",
+      "effect": {},
       "vpText": null,
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "103",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "행동: 에너지 자원을 4개 소비하고, 강철 자원 2개 획득 및 산소 농도 1단계 상승"
     },
     {
       "id": "base-104",
@@ -1662,19 +1692,15 @@
         "building"
       ],
       "condition": null,
-      "text": "행동: 에너지 자원을 4개 소비하고, 티타늄 자원 1개 획득 및 산소 농도 1단계 상승",
-      "effect": {
-        "oxygen": 1,
-        "resources": {
-          "titanium": 1
-        }
-      },
+      "text": "효과: 행동: 에너지 자원을 4개 소비하고, 티타늄 자원 1개 획득 및 산소 농도 1단계 상승",
+      "effect": {},
       "vpText": null,
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "104",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "행동: 에너지 자원을 4개 소비하고, 티타늄 자원 1개 획득 및 산소 농도 1단계 상승"
     },
     {
       "id": "base-108",
@@ -1686,23 +1712,24 @@
         "city"
       ],
       "condition": "산소 농도 12% 이상",
-      "text": "조건: 산소 농도 12% 이상 에너지 생산력 1 감소. 메가크레딧 생산력 4 증가. 식물 자원 2개 획득. 도시 타일 1장 배치 승점: 1",
+      "text": "조건: 산소 농도 12% 이상 / 효과: 에너지 생산력 1 감소. 메가크레딧 생산력 4 증가. 식물 자원 2개 획득. 도시 타일 1장 배치 / 승점: 1",
       "effect": {
         "production": {
           "mc": 4,
           "energy": -1
         },
-        "city": 1,
         "resources": {
           "plant": 2
-        }
+        },
+        "city": 1
       },
       "vpText": "1",
-      "vp": 0,
+      "vp": 1,
       "expansion": "기본판",
       "cardNumber": "108",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "에너지 생산력 1 감소. 메가크레딧 생산력 4 증가. 식물 자원 2개 획득. 도시 타일 1장 배치"
     },
     {
       "id": "base-113",
@@ -1714,18 +1741,19 @@
         "power"
       ],
       "condition": null,
-      "text": "에너지 생산력 1 증가 승점: 1",
+      "text": "효과: 에너지 생산력 1 증가 / 승점: 1",
       "effect": {
         "production": {
           "energy": 1
         }
       },
       "vpText": "1",
-      "vp": 0,
+      "vp": 1,
       "expansion": "기본판",
       "cardNumber": "113",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "에너지 생산력 1 증가"
     },
     {
       "id": "base-114",
@@ -1736,14 +1764,15 @@
         "science"
       ],
       "condition": "산소 농도 7% 이상",
-      "text": "조건: 산소 농도 7% 이상 승점: 2",
+      "text": "조건: 산소 농도 7% 이상 / 효과: (없음) / 승점: 2",
       "effect": {},
       "vpText": "2",
-      "vp": 0,
+      "vp": 2,
       "expansion": "기본판",
       "cardNumber": "114",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "(없음)"
     },
     {
       "id": "base-115",
@@ -1754,14 +1783,15 @@
         "science"
       ],
       "condition": null,
-      "text": "중 하나 사용",
+      "text": "효과: 다음의 효과 중 하나 사용 1) 식물 생산력 1증가 2) 에너지 생산력 2 증가",
       "effect": {},
       "vpText": null,
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "115",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "다음의 효과 중 하나 사용 1) 식물 생산력 1증가 2) 에너지 생산력 2 증가"
     },
     {
       "id": "base-116",
@@ -1772,16 +1802,17 @@
         "building"
       ],
       "condition": "기온 -6℃ 이상",
-      "text": "조건: 기온 -6℃ 이상 해양 전용 구역이 아닌 빈 구역 한 곳에 해양 타일 1장 배치 승점: 1",
+      "text": "조건: 기온 -6℃ 이상 / 효과: 해양 전용 구역이 아닌 빈 구역 한 곳에 해양 타일 1장 배치 / 승점: 1",
       "effect": {
         "ocean": 1
       },
       "vpText": "1",
-      "vp": 0,
+      "vp": 1,
       "expansion": "기본판",
       "cardNumber": "116",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "해양 전용 구역이 아닌 빈 구역 한 곳에 해양 타일 1장 배치"
     },
     {
       "id": "base-117",
@@ -1793,7 +1824,7 @@
         "power"
       ],
       "condition": null,
-      "text": "에너지 생산력 2 증가",
+      "text": "효과: 에너지 생산력 2 증가",
       "effect": {
         "production": {
           "energy": 2
@@ -1804,7 +1835,8 @@
       "expansion": "기본판",
       "cardNumber": "117",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "에너지 생산력 2 증가"
     },
     {
       "id": "base-118",
@@ -1815,7 +1847,7 @@
         "plant"
       ],
       "condition": "기온 +4℃ 이상",
-      "text": "조건: 기온 +4℃ 이상 메가크레딧 생산력 2 증가. 식물 생산력 2 증가. 식물 자원 2개 획득 승점: 2",
+      "text": "조건: 기온 +4℃ 이상 / 효과: 메가크레딧 생산력 2 증가. 식물 생산력 2 증가. 식물 자원 2개 획득 / 승점: 2",
       "effect": {
         "production": {
           "mc": 2,
@@ -1826,11 +1858,12 @@
         }
       },
       "vpText": "2",
-      "vp": 0,
+      "vp": 2,
       "expansion": "기본판",
       "cardNumber": "118",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "메가크레딧 생산력 2 증가. 식물 생산력 2 증가. 식물 자원 2개 획득"
     },
     {
       "id": "base-119",
@@ -1839,14 +1872,15 @@
       "type": "ongoing",
       "tags": [],
       "condition": "배치된 해양 타일 3장 이하",
-      "text": "조건: 배치된 해양 타일 3장 이하 승점: 1",
+      "text": "조건: 배치된 해양 타일 3장 이하 / 효과: (없음) / 승점: 1",
       "effect": {},
       "vpText": "1",
-      "vp": 0,
+      "vp": 1,
       "expansion": "기본판",
       "cardNumber": "119",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "(없음)"
     },
     {
       "id": "base-120",
@@ -1858,19 +1892,21 @@
         "city"
       ],
       "condition": null,
-      "text": "에너지 생산력 1 감소. 메가크레딧 생산력 2 증가. 아무 도시 타일 2장 이상과 인접한 빈 구역 한",
+      "text": "효과: 에너지 생산력 1 감소. 메가크레딧 생산력 2 증가. 아무 도시 타일 2장 이상과 인접한 빈 구역 한 곳에 도시 타일 1장 배치",
       "effect": {
         "production": {
           "mc": 2,
           "energy": -1
-        }
+        },
+        "city": 1
       },
       "vpText": null,
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "120",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "에너지 생산력 1 감소. 메가크레딧 생산력 2 증가. 아무 도시 타일 2장 이상과 인접한 빈 구역 한 곳에 도시 타일 1장 배치"
     },
     {
       "id": "base-122",
@@ -1881,10 +1917,13 @@
         "plant"
       ],
       "condition": "배치된 해양 타일 3장 이상",
-      "text": "조건: 배치된 해양 타일 3장 이상 식물 자원 1개 제거. 식물 생산력 1 증가",
+      "text": "조건: 배치된 해양 타일 3장 이상 / 효과: 식물 자원 1개 제거. 식물 생산력 1 증가",
       "effect": {
         "production": {
           "plant": 1
+        },
+        "resources": {
+          "plant": -1
         }
       },
       "vpText": null,
@@ -1892,7 +1931,8 @@
       "expansion": "기본판",
       "cardNumber": "122",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "식물 자원 1개 제거. 식물 생산력 1 증가"
     },
     {
       "id": "base-126",
@@ -1903,7 +1943,7 @@
         "building"
       ],
       "condition": null,
-      "text": "에너지 생산력 1 감소. 열 생산력 4 증가[31]",
+      "text": "효과: 에너지 생산력 1 감소. 열 생산력 4 증가[31]",
       "effect": {
         "production": {
           "energy": -1,
@@ -1915,7 +1955,8 @@
       "expansion": "기본판",
       "cardNumber": "126",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "에너지 생산력 1 감소. 열 생산력 4 증가[31]"
     },
     {
       "id": "base-127",
@@ -1926,7 +1967,7 @@
         "event"
       ],
       "condition": null,
-      "text": "해양 타일 1장 배치",
+      "text": "효과: 해양 타일 1장 배치",
       "effect": {
         "ocean": 1
       },
@@ -1935,7 +1976,8 @@
       "expansion": "기본판",
       "cardNumber": "127",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "해양 타일 1장 배치"
     },
     {
       "id": "base-128",
@@ -1946,15 +1988,16 @@
         "plant",
         "animal"
       ],
-      "condition": "소유한 녹지 타일 1장 이상",
-      "text": "조건: 소유한 녹지 타일 1장 이상 지속: 이 카드도 포함해서 카드 사용 시, 그 카드의 식물/동물 태그 1개당 이 카드 위에 동물 자원 1개 승점: 이 카드 위의 동물 자원 2개당 승점 1점",
+      "condition": "소유한 녹지 타일 1장 이상 아무 녹지 타일과 인접한 빈 구역에 왼쪽 그림과 같은 타일 배치",
+      "text": "조건: 소유한 녹지 타일 1장 이상 아무 녹지 타일과 인접한 빈 구역에 왼쪽 그림과 같은 타일 배치 / 효과: 지속: 이 카드도 포함해서 카드 사용 시, 그 카드의 식물/동물 태그 1개당 이 카드 위에 동물 자원 1개 추가 / 승점: 이 카드 위의 동물 자원 2개당 승점 1점",
       "effect": {},
       "vpText": "이 카드 위의 동물 자원 2개당 승점 1점",
       "vp": 1,
       "expansion": "기본판",
       "cardNumber": "128",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "지속: 이 카드도 포함해서 카드 사용 시, 그 카드의 식물/동물 태그 1개당 이 카드 위에 동물 자원 1개 추가"
     },
     {
       "id": "base-129",
@@ -1963,18 +2006,19 @@
       "type": "ongoing",
       "tags": [],
       "condition": "산소 농도 5% 이상",
-      "text": "조건: 산소 농도 5% 이상 현재 화성에 배치된 아무 도시 타일 1장당 자신의 메가크레딧 생산력 1 증가 승점: 1",
+      "text": "조건: 산소 농도 5% 이상 / 효과: 현재 화성에 배치된 아무 도시 타일 1장당 자신의 메가크레딧 생산력 1 증가 / 승점: 1",
       "effect": {
         "production": {
           "mc": 1
         }
       },
       "vpText": "1",
-      "vp": 0,
+      "vp": 1,
       "expansion": "기본판",
       "cardNumber": "129",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "현재 화성에 배치된 아무 도시 타일 1장당 자신의 메가크레딧 생산력 1 증가"
     },
     {
       "id": "base-130",
@@ -1985,7 +2029,7 @@
         "microbe"
       ],
       "condition": "산소 농도 4% 이상",
-      "text": "조건: 산소 농도 4% 이상 이 카드도 포함해서 보유한 미생물 태그 2개당 식물 생산력 1 증가",
+      "text": "조건: 산소 농도 4% 이상 / 효과: 이 카드도 포함해서 보유한 미생물 태그 2개당 식물 생산력 1 증가",
       "effect": {
         "production": {
           "plant": 1
@@ -1996,7 +2040,8 @@
       "expansion": "기본판",
       "cardNumber": "130",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "이 카드도 포함해서 보유한 미생물 태그 2개당 식물 생산력 1 증가"
     },
     {
       "id": "base-131",
@@ -2007,14 +2052,15 @@
         "microbe"
       ],
       "condition": "산소 농도 3% 이상",
-      "text": "조건: 산소 농도 3% 이상 지속: 이 카드도 포함해서 카드 사용 시, 그 카드의 동물/식물/미생물 태그 1개당 이 카드 위에 미생물 승점: 이 카드 위의 미생물 자원 3개당 승점 1점",
+      "text": "조건: 산소 농도 3% 이상 / 효과: 지속: 이 카드도 포함해서 카드 사용 시, 그 카드의 동물/식물/미생물 태그 1개당 이 카드 위에 미생물 자원 1개 추가 / 승점: 이 카드 위의 미생물 자원 3개당 승점 1점",
       "effect": {},
       "vpText": "이 카드 위의 미생물 자원 3개당 승점 1점",
       "vp": 1,
       "expansion": "기본판",
       "cardNumber": "131",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "지속: 이 카드도 포함해서 카드 사용 시, 그 카드의 동물/식물/미생물 태그 1개당 이 카드 위에 미생물 자원 1개 추가"
     },
     {
       "id": "base-132",
@@ -2027,7 +2073,7 @@
         "science"
       ],
       "condition": "보유한 에너지 태그 2개 이상",
-      "text": "조건: 보유한 에너지 태그 2개 이상 에너지 생산력 3 증가",
+      "text": "조건: 보유한 에너지 태그 2개 이상 / 효과: 에너지 생산력 3 증가",
       "effect": {
         "production": {
           "energy": 3
@@ -2038,7 +2084,8 @@
       "expansion": "기본판",
       "cardNumber": "132",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "에너지 생산력 3 증가"
     },
     {
       "id": "base-133",
@@ -2049,14 +2096,15 @@
         "microbe"
       ],
       "condition": "기온 -14°C 이상",
-      "text": "조건: 기온 -14°C 이상 행동: 자신의 다른 카드 1장 위에 미생물 자원 1개 추가",
+      "text": "조건: 기온 -14°C 이상 / 효과: 행동: 자신의 다른 카드 1장 위에 미생물 자원 1개 추가",
       "effect": {},
       "vpText": null,
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "133",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "행동: 자신의 다른 카드 1장 위에 미생물 자원 1개 추가"
     },
     {
       "id": "base-134",
@@ -2067,18 +2115,15 @@
         "microbe"
       ],
       "condition": "기온 -10°C 이하",
-      "text": "조건: 기온 -10°C 이하 1) 식물 자원 1개 획득",
-      "effect": {
-        "resources": {
-          "plant": 1
-        }
-      },
+      "text": "조건: 기온 -10°C 이하 / 효과: 1) 식물 자원 1개 획득 2) 자신의 다른 카드 1장 위에 미생물 자원 2개 추가",
+      "effect": {},
       "vpText": null,
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "134",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "1) 식물 자원 1개 획득 2) 자신의 다른 카드 1장 위에 미생물 자원 2개 추가"
     },
     {
       "id": "base-135",
@@ -2091,14 +2136,15 @@
         "animal"
       ],
       "condition": "보유한 식물/동물/미생물 태그 각 1개 이상",
-      "text": "조건: 보유한 식물/동물/미생물 태그 각 1개 이상 승점: 3",
+      "text": "조건: 보유한 식물/동물/미생물 태그 각 1개 이상 / 효과: (없음) / 승점: 3",
       "effect": {},
       "vpText": "3",
-      "vp": 0,
+      "vp": 3,
       "expansion": "기본판",
       "cardNumber": "135",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "(없음)"
     },
     {
       "id": "base-136",
@@ -2110,18 +2156,19 @@
         "power"
       ],
       "condition": "배치된 해양 타일 4장 이상",
-      "text": "조건: 배치된 해양 타일 4장 이상 에너지 생산력 2 증가 승점: 1",
+      "text": "조건: 배치된 해양 타일 4장 이상 / 효과: 에너지 생산력 2 증가 / 승점: 1",
       "effect": {
         "production": {
           "energy": 2
         }
       },
       "vpText": "1",
-      "vp": 0,
+      "vp": 1,
       "expansion": "기본판",
       "cardNumber": "136",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "에너지 생산력 2 증가"
     },
     {
       "id": "base-138",
@@ -2132,7 +2179,7 @@
         "building"
       ],
       "condition": null,
-      "text": "에너지 생산력 2 감소. 강철 생산력 2 증가. 티타늄 생산력 1 증가. 산소 농도 2단계 상승.",
+      "text": "효과: 에너지 생산력 2 감소. 강철 생산력 2 증가. 티타늄 생산력 1 증가. 산소 농도 2단계 상승.",
       "effect": {
         "production": {
           "steel": 2,
@@ -2146,7 +2193,8 @@
       "expansion": "기본판",
       "cardNumber": "138",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "에너지 생산력 2 감소. 강철 생산력 2 증가. 티타늄 생산력 1 증가. 산소 농도 2단계 상승."
     },
     {
       "id": "base-139",
@@ -2157,18 +2205,19 @@
         "power"
       ],
       "condition": "배치된 해양 타일 3장 이상",
-      "text": "조건: 배치된 해양 타일 3장 이상 에너지 생산력 1 증가 승점: 1",
+      "text": "조건: 배치된 해양 타일 3장 이상 / 효과: 에너지 생산력 1 증가 / 승점: 1",
       "effect": {
         "production": {
           "energy": 1
         }
       },
       "vpText": "1",
-      "vp": 0,
+      "vp": 1,
       "expansion": "기본판",
       "cardNumber": "139",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "에너지 생산력 1 증가"
     },
     {
       "id": "base-140",
@@ -2179,7 +2228,7 @@
         "event"
       ],
       "condition": null,
-      "text": "기온 2단계 상승. 타르시스 소화산/아스크라이우스 화산/파보니스 화산/아르시아 화산 중 빈 구역 한",
+      "text": "효과: 기온 2단계 상승. 타르시스 소화산/아스크라이우스 화산/파보니스 화산/아르시아 화산 중 빈 구역 한 곳에 위 그림과 같은 타일 배치",
       "effect": {
         "temperature": 2
       },
@@ -2188,7 +2237,8 @@
       "expansion": "기본판",
       "cardNumber": "140",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "기온 2단계 상승. 타르시스 소화산/아스크라이우스 화산/파보니스 화산/아르시아 화산 중 빈 구역 한 곳에 위 그림과 같은 타일 배치"
     },
     {
       "id": "base-141",
@@ -2200,7 +2250,7 @@
         "power"
       ],
       "condition": null,
-      "text": "에너지 생산력 1 증가",
+      "text": "효과: 에너지 생산력 1 증가",
       "effect": {
         "production": {
           "energy": 1
@@ -2211,7 +2261,8 @@
       "expansion": "기본판",
       "cardNumber": "141",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "에너지 생산력 1 증가"
     },
     {
       "id": "base-142",
@@ -2222,7 +2273,7 @@
         "building"
       ],
       "condition": null,
-      "text": "열 생산력 4 증가. 빈 해양 전용 구역 한 곳에 왼쪽 그림과 같은 타일 배치",
+      "text": "효과: 열 생산력 4 증가. 빈 해양 전용 구역 한 곳에 왼쪽 그림과 같은 타일 배치",
       "effect": {
         "production": {
           "heat": 4
@@ -2233,7 +2284,8 @@
       "expansion": "기본판",
       "cardNumber": "142",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "열 생산력 4 증가. 빈 해양 전용 구역 한 곳에 왼쪽 그림과 같은 타일 배치"
     },
     {
       "id": "base-143",
@@ -2246,14 +2298,18 @@
         "event"
       ],
       "condition": null,
-      "text": "중 하나 사용 승점: 2",
-      "effect": {},
+      "text": "효과: 해양 타일 1장 배치. 카드 2장 획득. 다음의 효과 중 하나 사용 1) 식물 자원 5개 획득 2) 자신의 다른 카드 1장 위에 동물 자원 4개 추가 / 승점: 2",
+      "effect": {
+        "ocean": 1,
+        "draw": 2
+      },
       "vpText": "2",
-      "vp": 0,
+      "vp": 2,
       "expansion": "기본판",
       "cardNumber": "143",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "해양 타일 1장 배치. 카드 2장 획득. 다음의 효과 중 하나 사용 1) 식물 자원 5개 획득 2) 자신의 다른 카드 1장 위에 동물 자원 4개 추가"
     },
     {
       "id": "base-145",
@@ -2265,18 +2321,19 @@
         "power"
       ],
       "condition": "보유한 과학 태그 2개 이상",
-      "text": "조건: 보유한 과학 태그 2개 이상 에너지 생산력 3 증가 승점: 1",
+      "text": "조건: 보유한 과학 태그 2개 이상 / 효과: 에너지 생산력 3 증가 / 승점: 1",
       "effect": {
         "production": {
           "energy": 3
         }
       },
       "vpText": "1",
-      "vp": 0,
+      "vp": 1,
       "expansion": "기본판",
       "cardNumber": "145",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "에너지 생산력 3 증가"
     },
     {
       "id": "base-146",
@@ -2287,10 +2344,13 @@
         "plant"
       ],
       "condition": "배치된 해양 타일 3장 이상",
-      "text": "조건: 배치된 해양 타일 3장 이상 식물 자원 2개 제거. 식물 생산력 2 증가",
+      "text": "조건: 배치된 해양 타일 3장 이상 / 효과: 식물 자원 2개 제거. 식물 생산력 2 증가",
       "effect": {
         "production": {
           "plant": 2
+        },
+        "resources": {
+          "plant": -2
         }
       },
       "vpText": null,
@@ -2298,7 +2358,8 @@
       "expansion": "기본판",
       "cardNumber": "146",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "식물 자원 2개 제거. 식물 생산력 2 증가"
     },
     {
       "id": "base-147",
@@ -2309,14 +2370,15 @@
         "animal"
       ],
       "condition": "산소 농도 8% 이상",
-      "text": "조건: 산소 농도 8% 이상 지속: 자신이 녹지 타일을 1장 배치할 때마다, 이 카드 위에 동물 자원 1개 추가 승점: 이 카드 위의 동물 자원 2개당 승점 1점",
+      "text": "조건: 산소 농도 8% 이상 / 효과: 지속: 자신이 녹지 타일을 1장 배치할 때마다, 이 카드 위에 동물 자원 1개 추가 / 승점: 이 카드 위의 동물 자원 2개당 승점 1점",
       "effect": {},
       "vpText": "이 카드 위의 동물 자원 2개당 승점 1점",
       "vp": 1,
       "expansion": "기본판",
       "cardNumber": "147",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "지속: 자신이 녹지 타일을 1장 배치할 때마다, 이 카드 위에 동물 자원 1개 추가"
     },
     {
       "id": "base-148",
@@ -2327,18 +2389,15 @@
         "microbe"
       ],
       "condition": "산소 농도 6% 이상",
-      "text": "조건: 산소 농도 6% 이상 보유한 식물 태그 1개당 식물 생산력 1 증가",
-      "effect": {
-        "production": {
-          "plant": 1
-        }
-      },
+      "text": "조건: 산소 농도 6% 이상 / 효과: 보유한 식물 태그 1개당 식물 생산력 1 증가",
+      "effect": {},
       "vpText": null,
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "148",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "보유한 식물 태그 1개당 식물 생산력 1 증가"
     },
     {
       "id": "base-152",
@@ -2347,14 +2406,15 @@
       "type": "ongoing",
       "tags": [],
       "condition": null,
-      "text": "열 생산력을 X 감소. 메가크레딧 생산력 X 증가",
+      "text": "효과: 열 생산력을 X 감소. 메가크레딧 생산력 X 증가",
       "effect": {},
       "vpText": null,
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "152",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "열 생산력을 X 감소. 메가크레딧 생산력 X 증가"
     },
     {
       "id": "base-153",
@@ -2365,14 +2425,15 @@
         "science"
       ],
       "condition": null,
-      "text": "지속: 카드 사용 시, 그 카드의 추진 조건 중 행성 지표에는 +2단계/-2단계 적용 승점: 1",
+      "text": "효과: 지속: 카드 사용 시, 그 카드의 추진 조건 중 행성 지표에는 +2단계/-2단계 적용 / 승점: 1",
       "effect": {},
       "vpText": "1",
-      "vp": 0,
+      "vp": 1,
       "expansion": "기본판",
       "cardNumber": "153",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "지속: 카드 사용 시, 그 카드의 추진 조건 중 행성 지표에는 +2단계/-2단계 적용"
     },
     {
       "id": "base-155",
@@ -2384,7 +2445,7 @@
         "microbe"
       ],
       "condition": "기온 -14℃ 이하",
-      "text": "조건: 기온 -14℃ 이하 식물 생산력 2 증가",
+      "text": "조건: 기온 -14℃ 이하 / 효과: 식물 생산력 2 증가",
       "effect": {
         "production": {
           "plant": 2
@@ -2395,7 +2456,8 @@
       "expansion": "기본판",
       "cardNumber": "155",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "식물 생산력 2 증가"
     },
     {
       "id": "base-157",
@@ -2406,14 +2468,15 @@
         "microbe"
       ],
       "condition": null,
-      "text": "1) 이 카드 위에 미생물 자원 1개 추가",
+      "text": "효과: 행동: 다음의 행동 중 하나 수행 1) 이 카드 위에 미생물 자원 1개 추가 2) 이 카드 위의 미생물 자원 3개를 소비하고, 1TR 상승",
       "effect": {},
       "vpText": null,
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "157",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "행동: 다음의 행동 중 하나 수행 1) 이 카드 위에 미생물 자원 1개 추가 2) 이 카드 위의 미생물 자원 3개를 소비하고, 1TR 상승"
     },
     {
       "id": "base-158",
@@ -2425,7 +2488,7 @@
         "microbe"
       ],
       "condition": null,
-      "text": "에너지 생산력 1 증가. 강철 생산력 1 증가",
+      "text": "효과: 에너지 생산력 1 증가. 강철 생산력 1 증가",
       "effect": {
         "production": {
           "steel": 1,
@@ -2437,7 +2500,8 @@
       "expansion": "기본판",
       "cardNumber": "158",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "에너지 생산력 1 증가. 강철 생산력 1 증가"
     },
     {
       "id": "base-159",
@@ -2448,7 +2512,7 @@
         "plant"
       ],
       "condition": "기온 -24℃ 이상",
-      "text": "조건: 기온 -24℃ 이상 식물 생산력 1 증가",
+      "text": "조건: 기온 -24℃ 이상 / 효과: 식물 생산력 1 증가",
       "effect": {
         "production": {
           "plant": 1
@@ -2459,7 +2523,8 @@
       "expansion": "기본판",
       "cardNumber": "159",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "식물 생산력 1 증가"
     },
     {
       "id": "base-161",
@@ -2471,7 +2536,7 @@
         "event"
       ],
       "condition": null,
-      "text": "해양 타일 1장 배치. 카드 1장 획득",
+      "text": "효과: 해양 타일 1장 배치. 카드 1장 획득",
       "effect": {
         "ocean": 1,
         "draw": 1
@@ -2481,7 +2546,8 @@
       "expansion": "기본판",
       "cardNumber": "161",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "해양 타일 1장 배치. 카드 1장 획득"
     },
     {
       "id": "base-162",
@@ -2494,7 +2560,7 @@
         "event"
       ],
       "condition": null,
-      "text": "열 생산력 1 증가. 열 자원 3개 획득",
+      "text": "효과: 열 생산력 1 증가. 열 자원 3개 획득",
       "effect": {
         "production": {
           "heat": 1
@@ -2508,7 +2574,8 @@
       "expansion": "기본판",
       "cardNumber": "162",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "열 생산력 1 증가. 열 자원 3개 획득"
     },
     {
       "id": "base-163",
@@ -2521,7 +2588,7 @@
         "event"
       ],
       "condition": null,
-      "text": "1 TR 상승. 식물 자원 4개 획득. 자신의 다른 카드 1장 위에 미생물 자원 3개 추가. 자신의 다른 카드 1",
+      "text": "효과: 1 TR 상승. 식물 자원 4개 획득. 자신의 다른 카드 1장 위에 미생물 자원 3개 추가. 자신의 다른 카드 1 장 위에 동물 자원 2개 추가",
       "effect": {
         "resources": {
           "plant": 4
@@ -2532,7 +2599,8 @@
       "expansion": "기본판",
       "cardNumber": "163",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "1 TR 상승. 식물 자원 4개 획득. 자신의 다른 카드 1장 위에 미생물 자원 3개 추가. 자신의 다른 카드 1 장 위에 동물 자원 2개 추가"
     },
     {
       "id": "base-164",
@@ -2541,7 +2609,7 @@
       "type": "ongoing",
       "tags": [],
       "condition": null,
-      "text": "열 생산력 1 증가",
+      "text": "효과: 열 생산력 1 증가",
       "effect": {
         "production": {
           "heat": 1
@@ -2552,7 +2620,8 @@
       "expansion": "기본판",
       "cardNumber": "164",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "열 생산력 1 증가"
     },
     {
       "id": "base-165",
@@ -2563,7 +2632,7 @@
         "building"
       ],
       "condition": null,
-      "text": "에너지 생산력 4 감소. 식물 생산력 2 증가. 3 TR 상승",
+      "text": "효과: 에너지 생산력 4 감소. 식물 생산력 2 증가. 3 TR 상승",
       "effect": {
         "production": {
           "plant": 2,
@@ -2575,7 +2644,8 @@
       "expansion": "기본판",
       "cardNumber": "165",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "에너지 생산력 4 감소. 식물 생산력 2 증가. 3 TR 상승"
     },
     {
       "id": "base-166",
@@ -2586,14 +2656,20 @@
         "space"
       ],
       "condition": "산소 농도 5% 이상",
-      "text": "조건: 산소 농도 5% 이상 지속: 우주 카드 사용 시, 그 카드의 우주 태그 1개당 추진 비용 2 M€ 할인 승점: 1",
-      "effect": {},
+      "text": "조건: 산소 농도 5% 이상 / 효과: 에너지 생산력 1 감소. 메가크레딧 생산력 2 증가 지속: 우주 카드 사용 시, 그 카드의 우주 태그 1개당 추진 비용 2 M€ 할인 / 승점: 1",
+      "effect": {
+        "production": {
+          "mc": 2,
+          "energy": -1
+        }
+      },
       "vpText": "1",
-      "vp": 0,
+      "vp": 1,
       "expansion": "기본판",
       "cardNumber": "166",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "에너지 생산력 1 감소. 메가크레딧 생산력 2 증가 지속: 우주 카드 사용 시, 그 카드의 우주 태그 1개당 추진 비용 2 M€ 할인"
     },
     {
       "id": "base-167",
@@ -2606,7 +2682,7 @@
         "event"
       ],
       "condition": null,
-      "text": "열 생산력 2 증가",
+      "text": "효과: 열 생산력 2 증가",
       "effect": {
         "production": {
           "heat": 2
@@ -2617,7 +2693,8 @@
       "expansion": "기본판",
       "cardNumber": "167",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "열 생산력 2 증가"
     },
     {
       "id": "base-168",
@@ -2629,18 +2706,19 @@
         "power"
       ],
       "condition": "산소 농도 7% 이상",
-      "text": "조건: 산소 농도 7% 이상 에너지 생산력 1 증가 승점: 1",
+      "text": "조건: 산소 농도 7% 이상 / 효과: 에너지 생산력 1 증가 / 승점: 1",
       "effect": {
         "production": {
           "energy": 1
         }
       },
       "vpText": "1",
-      "vp": 0,
+      "vp": 1,
       "expansion": "기본판",
       "cardNumber": "168",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "에너지 생산력 1 증가"
     },
     {
       "id": "base-169",
@@ -2651,7 +2729,7 @@
         "plant"
       ],
       "condition": "기온 -6℃ 이상",
-      "text": "조건: 기온 -6℃ 이상 식물 생산력 1 증가. 메가크레딧 생산력 2 증가. 식물 자원 1개 획득 승점: 2",
+      "text": "조건: 기온 -6℃ 이상 / 효과: 식물 생산력 1 증가. 메가크레딧 생산력 2 증가. 식물 자원 1개 획득 / 승점: 2",
       "effect": {
         "production": {
           "mc": 2,
@@ -2662,11 +2740,12 @@
         }
       },
       "vpText": "2",
-      "vp": 0,
+      "vp": 2,
       "expansion": "기본판",
       "cardNumber": "169",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "식물 생산력 1 증가. 메가크레딧 생산력 2 증가. 식물 자원 1개 획득"
     },
     {
       "id": "base-170",
@@ -2678,7 +2757,7 @@
         "event"
       ],
       "condition": null,
-      "text": "열 생산력 3 증가. 식물 생산력 1증가. 자신의 다른 카드 1장 위에 미생물 자원 2개 추가",
+      "text": "효과: 열 생산력 3 증가. 식물 생산력 1증가. 자신의 다른 카드 1장 위에 미생물 자원 2개 추가",
       "effect": {
         "production": {
           "plant": 1,
@@ -2690,7 +2769,8 @@
       "expansion": "기본판",
       "cardNumber": "170",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "열 생산력 3 증가. 식물 생산력 1증가. 자신의 다른 카드 1장 위에 미생물 자원 2개 추가"
     },
     {
       "id": "base-171",
@@ -2701,7 +2781,7 @@
         "building"
       ],
       "condition": null,
-      "text": "에너지 생산력 2 감소. 식물 생산력 1 증가. 1 TR 상승",
+      "text": "효과: 에너지 생산력 2 감소. 식물 생산력 1 증가. 1 TR 상승",
       "effect": {
         "production": {
           "plant": 1,
@@ -2713,7 +2793,8 @@
       "expansion": "기본판",
       "cardNumber": "171",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "에너지 생산력 2 감소. 식물 생산력 1 증가. 1 TR 상승"
     },
     {
       "id": "base-172",
@@ -2725,14 +2806,15 @@
         "animal"
       ],
       "condition": null,
-      "text": "지속: 이 카드의 동물 자원은 제거 불가. 아무 도시 타일이 1장 배치될 때마다, 이 카드 위에 동물 자원 승점: 이 카드 위의 동물 자원 2개당 승점 1점",
+      "text": "효과: 이 카드 위에 동물 자원 1개 추가 지속: 이 카드의 동물 자원은 제거 불가. 아무 도시 타일이 1장 배치될 때마다, 이 카드 위에 동물 자원 1개 추가 / 승점: 이 카드 위의 동물 자원 2개당 승점 1점",
       "effect": {},
       "vpText": "이 카드 위의 동물 자원 2개당 승점 1점",
       "vp": 1,
       "expansion": "기본판",
       "cardNumber": "172",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "이 카드 위에 동물 자원 1개 추가 지속: 이 카드의 동물 자원은 제거 불가. 아무 도시 타일이 1장 배치될 때마다, 이 카드 위에 동물 자원 1개 추가"
     },
     {
       "id": "base-174",
@@ -2744,11 +2826,12 @@
         "plant"
       ],
       "condition": null,
-      "text": "메가크레딧 생산력 2 증가. 배치 제한 무시하고 빈 해양 전용 구역 한 곳에 녹지 타일 1장 배치 및",
+      "text": "효과: 메가크레딧 생산력 2 증가. 배치 제한 무시하고 빈 해양 전용 구역 한 곳에 녹지 타일 1장 배치 및 그에 따른 산소 농도 1단계 상승",
       "effect": {
         "production": {
           "mc": 2
         },
+        "oxygen": 1,
         "greenery": 1
       },
       "vpText": null,
@@ -2756,7 +2839,8 @@
       "expansion": "기본판",
       "cardNumber": "174",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "메가크레딧 생산력 2 증가. 배치 제한 무시하고 빈 해양 전용 구역 한 곳에 녹지 타일 1장 배치 및 그에 따른 산소 농도 1단계 상승"
     },
     {
       "id": "base-176",
@@ -2768,7 +2852,7 @@
         "plant"
       ],
       "condition": "기온 -20℃ 이상",
-      "text": "조건: 기온 -20℃ 이상 메가크레딧 생산력 1 증가. 식물 자원 2개 획득 승점: 1",
+      "text": "조건: 기온 -20℃ 이상 / 효과: 메가크레딧 생산력 1 증가. 식물 자원 2개 획득 / 승점: 1",
       "effect": {
         "production": {
           "mc": 1
@@ -2778,11 +2862,12 @@
         }
       },
       "vpText": "1",
-      "vp": 0,
+      "vp": 1,
       "expansion": "기본판",
       "cardNumber": "176",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "메가크레딧 생산력 1 증가. 식물 자원 2개 획득"
     },
     {
       "id": "base-177",
@@ -2793,16 +2878,15 @@
         "building"
       ],
       "condition": "배치된 해양 타일 2장 이상",
-      "text": "조건: 배치된 해양 타일 2장 이상 행동: 에너지 자원 3개를 소비하고, 산소 농도 1단계 상승",
-      "effect": {
-        "oxygen": 1
-      },
+      "text": "조건: 배치된 해양 타일 2장 이상 / 효과: 행동: 에너지 자원 3개를 소비하고, 산소 농도 1단계 상승",
+      "effect": {},
       "vpText": null,
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "177",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "행동: 에너지 자원 3개를 소비하고, 산소 농도 1단계 상승"
     },
     {
       "id": "base-178",
@@ -2814,19 +2898,15 @@
         "power"
       ],
       "condition": null,
-      "text": "아무 1명의 열 생산력 2 감소. 에너지 생산력 1 증가 승점: -1",
-      "effect": {
-        "production": {
-          "energy": 1,
-          "heat": -2
-        }
-      },
+      "text": "효과: 아무 1명의 열 생산력 2 감소. 에너지 생산력 1 증가 / 승점: -1",
+      "effect": {},
       "vpText": "-1",
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "178",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "아무 1명의 열 생산력 2 감소. 에너지 생산력 1 증가"
     },
     {
       "id": "base-179",
@@ -2837,7 +2917,7 @@
         "building"
       ],
       "condition": null,
-      "text": "에너지 생산력 1 감소. 식물 생산력 1 증가 승점: 1",
+      "text": "효과: 에너지 생산력 1 감소. 식물 생산력 1 증가 / 승점: 1",
       "effect": {
         "production": {
           "plant": 1,
@@ -2845,11 +2925,12 @@
         }
       },
       "vpText": "1",
-      "vp": 0,
+      "vp": 1,
       "expansion": "기본판",
       "cardNumber": "179",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "에너지 생산력 1 감소. 식물 생산력 1 증가"
     },
     {
       "id": "base-181",
@@ -2860,7 +2941,7 @@
         "event"
       ],
       "condition": "기온 +2℃ 이상",
-      "text": "조건: 기온 +2℃ 이상 해양 타일 1장 배치",
+      "text": "조건: 기온 +2℃ 이상 / 효과: 해양 타일 1장 배치",
       "effect": {
         "ocean": 1
       },
@@ -2869,7 +2950,8 @@
       "expansion": "기본판",
       "cardNumber": "181",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "해양 타일 1장 배치"
     },
     {
       "id": "base-183",
@@ -2881,19 +2963,15 @@
         "power"
       ],
       "condition": "산소 농도 6% 이상",
-      "text": "조건: 산소 농도 6% 이상 아무 1명의 식물 생산력 1 감소. 에너지 생산력 2 증가 승점: -1",
-      "effect": {
-        "production": {
-          "plant": -1,
-          "energy": 2
-        }
-      },
+      "text": "조건: 산소 농도 6% 이상 / 효과: 아무 1명의 식물 생산력 1 감소. 에너지 생산력 2 증가 / 승점: -1",
+      "effect": {},
       "vpText": "-1",
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "183",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "아무 1명의 식물 생산력 1 감소. 에너지 생산력 2 증가"
     },
     {
       "id": "base-184",
@@ -2904,7 +2982,7 @@
         "animal"
       ],
       "condition": "산소 농도 9% 이상",
-      "text": "조건: 산소 농도 9% 이상 식물 생산력 1 감소. 메가크레딧 생산력 2 증가 승점: 이 카드 위의 동물 자원 1개당 승점 1점",
+      "text": "조건: 산소 농도 9% 이상 / 효과: 식물 생산력 1 감소. 메가크레딧 생산력 2 증가 행동: 이 카드 위에 동물 자원 1개 추가 / 승점: 이 카드 위의 동물 자원 1개당 승점 1점",
       "effect": {
         "production": {
           "mc": 2,
@@ -2916,7 +2994,8 @@
       "expansion": "기본판",
       "cardNumber": "184",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "식물 생산력 1 감소. 메가크레딧 생산력 2 증가 행동: 이 카드 위에 동물 자원 1개 추가"
     },
     {
       "id": "base-187",
@@ -2927,16 +3006,15 @@
         "building"
       ],
       "condition": null,
-      "text": "행동: 8 M€을 소비하고, 해양 타일 1장 배치. 건물 카드를 사용할 때처럼, 여기서 강철 자원도 소비",
-      "effect": {
-        "ocean": 1
-      },
+      "text": "효과: 행동: 8 M€을 소비하고, 해양 타일 1장 배치. 건물 카드를 사용할 때처럼, 여기서 강철 자원도 소비 가능",
+      "effect": {},
       "vpText": null,
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "187",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "행동: 8 M€을 소비하고, 해양 타일 1장 배치. 건물 카드를 사용할 때처럼, 여기서 강철 자원도 소비 가능"
     },
     {
       "id": "base-188",
@@ -2947,7 +3025,7 @@
         "event"
       ],
       "condition": null,
-      "text": "해양 타일 1장 배치. 이 해양 타일에 인접한 다른 타일이 있다면 그 소유주 중 1명에게서 4 M€까지 승점: -1",
+      "text": "효과: 해양 타일 1장 배치. 이 해양 타일에 인접한 다른 타일이 있다면 그 소유주 중 1명에게서 4 M€까지 제거 / 승점: -1",
       "effect": {
         "ocean": 1
       },
@@ -2956,7 +3034,8 @@
       "expansion": "기본판",
       "cardNumber": "188",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "해양 타일 1장 배치. 이 해양 타일에 인접한 다른 타일이 있다면 그 소유주 중 1명에게서 4 M€까지 제거"
     },
     {
       "id": "base-189",
@@ -2967,7 +3046,7 @@
         "power"
       ],
       "condition": null,
-      "text": "현재 배치된 아무 도시 타일 1장당 에너지 생산력 1 증가",
+      "text": "효과: 현재 배치된 아무 도시 타일 1장당 에너지 생산력 1 증가",
       "effect": {
         "production": {
           "energy": 1
@@ -2978,7 +3057,8 @@
       "expansion": "기본판",
       "cardNumber": "189",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "현재 배치된 아무 도시 타일 1장당 에너지 생산력 1 증가"
     },
     {
       "id": "base-190",
@@ -2989,14 +3069,19 @@
         "event"
       ],
       "condition": null,
-      "text": "중 하나 선택",
-      "effect": {},
+      "text": "효과: 열 자원 5개 제거. 다음의 효과 중 하나 선택 1) 식물 자원 4개 획득 2) 자신의 다른 카드 1장 위에 동물 자원 2개 추가",
+      "effect": {
+        "resources": {
+          "heat": -5
+        }
+      },
       "vpText": null,
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "190",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "열 자원 5개 제거. 다음의 효과 중 하나 선택 1) 식물 자원 4개 획득 2) 자신의 다른 카드 1장 위에 동물 자원 2개 추가"
     },
     {
       "id": "base-191",
@@ -3007,7 +3092,7 @@
         "event"
       ],
       "condition": "기온 -8℃ 이상",
-      "text": "조건: 기온 -8℃ 이상 해양 타일 1장 배치",
+      "text": "조건: 기온 -8℃ 이상 / 효과: 해양 타일 1장 배치",
       "effect": {
         "ocean": 1
       },
@@ -3016,7 +3101,8 @@
       "expansion": "기본판",
       "cardNumber": "191",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "해양 타일 1장 배치"
     },
     {
       "id": "base-193",
@@ -3027,7 +3113,7 @@
         "plant"
       ],
       "condition": "보유한 과학 태그 2개 이상",
-      "text": "조건: 보유한 과학 태그 2개 이상 녹지 타일 1장 배치 및 그에 따른 산소 농도 1단계 상승",
+      "text": "조건: 보유한 과학 태그 2개 이상 / 효과: 녹지 타일 1장 배치 및 그에 따른 산소 농도 1단계 상승",
       "effect": {
         "oxygen": 1,
         "greenery": 1
@@ -3037,7 +3123,8 @@
       "expansion": "기본판",
       "cardNumber": "193",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "녹지 타일 1장 배치 및 그에 따른 산소 농도 1단계 상승"
     },
     {
       "id": "base-198",
@@ -3049,7 +3136,7 @@
         "earth"
       ],
       "condition": null,
-      "text": "메가크레딧 생산력 5 증가 승점: 배치된 아무 도시 타일 3장당 승점 1점",
+      "text": "효과: 메가크레딧 생산력 5 증가 / 승점: 배치된 아무 도시 타일 3장당 승점 1점",
       "effect": {
         "production": {
           "mc": 5
@@ -3060,7 +3147,8 @@
       "expansion": "기본판",
       "cardNumber": "198",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "메가크레딧 생산력 5 증가"
     },
     {
       "id": "base-200",
@@ -3072,14 +3160,21 @@
         "building"
       ],
       "condition": null,
-      "text": "지속: 이 카드도 포함해서 아무 도시 타일이 1장 배치될 때마다, 메가크레딧 생산력 1 증가",
-      "effect": {},
+      "text": "효과: 에너지 생산력 1 감소. 메가크레딧 생산력 2감소. 도시 타일 1장 배치 지속: 이 카드도 포함해서 아무 도시 타일이 1장 배치될 때마다, 메가크레딧 생산력 1 증가",
+      "effect": {
+        "production": {
+          "mc": -2,
+          "energy": -1
+        },
+        "city": 1
+      },
       "vpText": "(없음)",
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "200",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "에너지 생산력 1 감소. 메가크레딧 생산력 2감소. 도시 타일 1장 배치 지속: 이 카드도 포함해서 아무 도시 타일이 1장 배치될 때마다, 메가크레딧 생산력 1 증가"
     },
     {
       "id": "base-202",
@@ -3090,14 +3185,15 @@
         "building"
       ],
       "condition": null,
-      "text": "행동: 10 M€을 소비하고, 열 생산력 2 증가",
+      "text": "효과: 행동: 10 M€을 소비하고, 열 생산력 2 증가",
       "effect": {},
       "vpText": "(없음)",
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "202",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "행동: 10 M€을 소비하고, 열 생산력 2 증가"
     },
     {
       "id": "base-203",
@@ -3108,7 +3204,7 @@
         "space"
       ],
       "condition": null,
-      "text": "열 생산력 7 증가",
+      "text": "효과: 열 생산력 7 증가",
       "effect": {
         "production": {
           "heat": 7
@@ -3119,7 +3215,8 @@
       "expansion": "기본판",
       "cardNumber": "203",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "열 생산력 7 증가"
     },
     {
       "id": "base-205",
@@ -3130,7 +3227,7 @@
         "building"
       ],
       "condition": null,
-      "text": "에너지 생산력 1 감소. 2 TR 상승",
+      "text": "효과: 에너지 생산력 1 감소. 2 TR 상승",
       "effect": {
         "production": {
           "energy": -1
@@ -3141,7 +3238,8 @@
       "expansion": "기본판",
       "cardNumber": "205",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "에너지 생산력 1 감소. 2 TR 상승"
     },
     {
       "id": "base-206",
@@ -3153,14 +3251,15 @@
         "event"
       ],
       "condition": null,
-      "text": "이번 세대에 자신이 사용하는 다음번 카드의 추진 조건 중 행성 지표에는 +2단계/-2단계 적용",
+      "text": "효과: 이번 세대에 자신이 사용하는 다음번 카드의 추진 조건 중 행성 지표에는 +2단계/-2단계 적용",
       "effect": {},
       "vpText": "(없음)",
       "vp": 0,
       "expansion": "기본판",
       "cardNumber": "206",
       "source": "첨부 PDF: 테라포밍 마스/프로젝트 카드 - 나무위키",
-      "verifiedAgainstSource": true
+      "verifiedAgainstSource": true,
+      "effectText": "이번 세대에 자신이 사용하는 다음번 카드의 추진 조건 중 행성 지표에는 +2단계/-2단계 적용"
     }
   ]
 }
