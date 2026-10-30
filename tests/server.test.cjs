@@ -33,6 +33,11 @@ test('server: four-player mystery flow, persistence, and Mars save endpoints',as
   async function post(client,route,body={}){
     return call(client,route,'POST',body);
   }
+  const health=await fetch(base+'/healthz');
+  assert.equal(health.status,200,'healthcheck must return 200');
+  assert.deepEqual(await health.json(),{ok:true});
+  assert.equal(health.headers.get('set-cookie'),null,'healthcheck should not allocate a session');
+  assert.equal((await call(clients[0],'/server.js')).status,403,'internal server code must be blocked');
   const catalog=await call(clients[0],'/api/stories');
   assert.equal(catalog.status,200);
   assert.equal(catalog.data.stories[0].players,4);
