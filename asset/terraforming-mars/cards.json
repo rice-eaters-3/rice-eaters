@@ -803,7 +803,9 @@
       ],
       "condition": null,
       "text": "효과: 2 TR 상승",
-      "effect": {},
+      "effect": {
+        "tr": 2
+      },
       "vpText": null,
       "vp": 0,
       "expansion": "기본판",
@@ -827,7 +829,8 @@
         "production": {
           "plant": 4
         },
-        "temperature": 1
+        "temperature": 1,
+        "tr": 2
       },
       "vpText": null,
       "vp": 0,
@@ -2599,7 +2602,8 @@
       "effect": {
         "resources": {
           "plant": 4
-        }
+        },
+        "tr": 1
       },
       "vpText": null,
       "vp": 0,
@@ -2644,7 +2648,8 @@
         "production": {
           "plant": 2,
           "energy": -4
-        }
+        },
+        "tr": 3
       },
       "vpText": null,
       "vp": 0,
@@ -2793,7 +2798,8 @@
         "production": {
           "plant": 1,
           "energy": -2
-        }
+        },
+        "tr": 1
       },
       "vpText": null,
       "vp": 0,
@@ -3238,7 +3244,8 @@
       "effect": {
         "production": {
           "energy": -1
-        }
+        },
+        "tr": 2
       },
       "vpText": "(없음)",
       "vp": 0,
