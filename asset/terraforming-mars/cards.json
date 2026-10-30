@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "note": "검증된 기본판 프로젝트 카드만 게임 풀에 포함한다. 기존 프로토타입 카드 중 공식 카드와 일치하지 않거나 효과를 검증하지 못한 항목은 제거했다. 카드 전체 목록은 아직 구축 중이며, 검증하지 않은 항목을 공식 데이터로 추가하지 않는다.",
+  "note": "문서에서 개별 카드 항목을 확인해 등록한 기본판 카드 35장. 나무위키 문서에 있는 전체 기본판 카드가 모두 포함된 것은 아니며, 아직 확인하지 않은 카드의 데이터는 임의로 생성하지 않는다.",
   "tagTaxonomy": [
     "building",
     "space",
@@ -154,32 +154,548 @@
   ],
   "cards": [
     {
-      "id": "asteroid",
-      "name": "소행성",
-      "type": "project",
-      "projectType": "event",
-      "cost": 14,
+      "id": "base-001",
+      "name": "개척단 훈련소",
+      "cost": 8,
+      "type": "ongoing",
       "tags": [
-        "space",
-        "event"
+        "jovian",
+        "building"
       ],
-      "effect": "온도 1단계 상승. 플레이어 한 명의 식물 자원을 최대 3개 제거.",
+      "condition": "산소 농도 5% 이하",
+      "effect": "승점 2점",
       "expansion": "기본판",
+      "cardNumber": "001",
       "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
       "verifiedAgainstSource": true
     },
     {
-      "id": "comet",
+      "id": "base-003",
+      "name": "심부유정 발열",
+      "cost": 13,
+      "type": "ongoing",
+      "tags": [
+        "power",
+        "building"
+      ],
+      "condition": null,
+      "effect": "에너지 생산력 1 증가. 기온 1단계 상승.",
+      "expansion": "기본판",
+      "cardNumber": "003",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-007",
+      "name": "화성 열차",
+      "cost": 13,
+      "type": "active",
+      "tags": [
+        "building"
+      ],
+      "condition": null,
+      "effect": "행동: 에너지 자원 1개를 소비하고, 화성의 도시 타일 1장당 1 M€ 획득.",
+      "expansion": "기본판",
+      "cardNumber": "007",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-008",
+      "name": "수도",
+      "cost": 26,
+      "type": "ongoing",
+      "tags": [
+        "city",
+        "building"
+      ],
+      "condition": "해양 타일 4장 이상",
+      "effect": "에너지 생산력 2 감소. 메가크레딧 생산력 5 증가. 도시 타일 배치.",
+      "expansion": "기본판",
+      "cardNumber": "008",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-010",
       "name": "혜성",
-      "type": "project",
-      "projectType": "event",
       "cost": 21,
+      "type": "event",
       "tags": [
         "space",
         "event"
       ],
-      "effect": "온도 1단계 상승. 해양 타일 1개 배치. 플레이어 한 명의 식물 자원을 최대 3개 제거.",
+      "condition": null,
+      "effect": "기온 1단계 상승. 해양 타일 1장 배치. 아무 플레이어 1명의 식물 자원을 최대 3개 제거.",
       "expansion": "기본판",
+      "cardNumber": "010",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-011",
+      "name": "대형 소행성",
+      "cost": 27,
+      "type": "event",
+      "tags": [
+        "space",
+        "event"
+      ],
+      "condition": null,
+      "effect": "기온 2단계 상승. 티타늄 자원 4개 획득. 아무 플레이어 1명의 식물 자원을 최대 4개 제거.",
+      "expansion": "기본판",
+      "cardNumber": "011",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-021",
+      "name": "포보스 우주휴게소",
+      "cost": 25,
+      "type": "ongoing",
+      "tags": [
+        "space",
+        "city"
+      ],
+      "condition": null,
+      "effect": "티타늄 생산력 1 증가. 전용 구역에 도시 타일 1장 배치. 승점 3점.",
+      "expansion": "기본판",
+      "cardNumber": "021",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-022",
+      "name": "흑색 분말",
+      "cost": 15,
+      "type": "ongoing",
+      "tags": [],
+      "condition": null,
+      "effect": "해양 타일 1장 배치. 메가크레딧 생산력 2 감소. 열 생산력 3 증가.",
+      "expansion": "기본판",
+      "cardNumber": "022",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-029",
+      "name": "반구형 도시",
+      "cost": 16,
+      "type": "ongoing",
+      "tags": [
+        "city",
+        "building"
+      ],
+      "condition": "산소 농도 9% 이하",
+      "effect": "도시 타일 1장 배치. 에너지 생산력 1 감소. 메가크레딧 생산력 3 증가.",
+      "expansion": "기본판",
+      "cardNumber": "029",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-030",
+      "name": "루나 빔",
+      "cost": 13,
+      "type": "ongoing",
+      "tags": [
+        "earth",
+        "power"
+      ],
+      "condition": null,
+      "effect": "메가크레딧 생산력 2 감소. 열 생산력 2 증가. 에너지 생산력 2 증가.",
+      "expansion": "기본판",
+      "cardNumber": "030",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-031",
+      "name": "첨단 대기권 제동기술",
+      "cost": 7,
+      "type": "active",
+      "tags": [
+        "space"
+      ],
+      "condition": null,
+      "effect": "우주 사건형 카드 사용 시 3 M€과 열 자원 3개 획득.",
+      "expansion": "기본판",
+      "cardNumber": "031",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-032",
+      "name": "지하 도시",
+      "cost": 18,
+      "type": "ongoing",
+      "tags": [
+        "city",
+        "building"
+      ],
+      "condition": null,
+      "effect": "도시 타일 1장 배치. 에너지 생산력 2 감소. 강철 생산력 2 증가.",
+      "expansion": "기본판",
+      "cardNumber": "032",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-035",
+      "name": "개미",
+      "cost": 9,
+      "type": "active",
+      "tags": [
+        "microbe"
+      ],
+      "condition": "산소 농도 4% 이상",
+      "effect": "행동: 아무 카드의 미생물 자원 1개를 제거하고 이 카드에 미생물 자원 1개 추가. 이 카드의 미생물 자원 2개당 승점 1점.",
+      "expansion": "기본판",
+      "cardNumber": "035",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-036",
+      "name": "불활성 기체 분출",
+      "cost": 14,
+      "type": "event",
+      "tags": [
+        "event"
+      ],
+      "condition": null,
+      "effect": "테라포밍 등급 2 상승.",
+      "expansion": "기본판",
+      "cardNumber": "036",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-037",
+      "name": "다질소 소행성",
+      "cost": 31,
+      "type": "event",
+      "tags": [
+        "space",
+        "event"
+      ],
+      "condition": null,
+      "effect": "테라포밍 등급 2 상승. 기온 1단계 상승. 식물 태그가 3개 이상이면 식물 생산력 4 증가, 아니면 1 증가.",
+      "expansion": "기본판",
+      "cardNumber": "037",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-038",
+      "name": "로버 공장",
+      "cost": 8,
+      "type": "active",
+      "tags": [
+        "building"
+      ],
+      "condition": null,
+      "effect": "도시 타일이 배치될 때마다 2 M€ 획득. 승점 1점.",
+      "expansion": "기본판",
+      "cardNumber": "038",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-041",
+      "name": "식량 공장",
+      "cost": 12,
+      "type": "ongoing",
+      "tags": [
+        "building"
+      ],
+      "condition": null,
+      "effect": "식물 생산력 1 감소. 메가크레딧 생산력 4 증가. 승점 1점.",
+      "expansion": "기본판",
+      "cardNumber": "041",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-042",
+      "name": "고세균",
+      "cost": 6,
+      "type": "ongoing",
+      "tags": [
+        "microbe"
+      ],
+      "condition": "기온 -18℃ 이하",
+      "effect": "식물 생산력 1 증가.",
+      "expansion": "기본판",
+      "cardNumber": "042",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-045",
+      "name": "원자력 발전",
+      "cost": 10,
+      "type": "ongoing",
+      "tags": [
+        "power",
+        "building"
+      ],
+      "condition": null,
+      "effect": "메가크레딧 생산력 2 감소. 에너지 생산력 3 증가.",
+      "expansion": "기본판",
+      "cardNumber": "045",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-072",
+      "name": "새",
+      "cost": 10,
+      "type": "active",
+      "tags": [
+        "animal"
+      ],
+      "condition": "산소 농도 13% 이상",
+      "effect": "아무 플레이어의 식물 생산력 2 감소. 행동: 동물 자원 1개 추가. 자원 1개당 승점 1점.",
+      "expansion": "기본판",
+      "cardNumber": "072",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-075",
+      "name": "혜성 견인",
+      "cost": 23,
+      "type": "event",
+      "tags": [
+        "space",
+        "event"
+      ],
+      "condition": null,
+      "effect": "식물 자원 2개 획득. 산소 농도 1단계 상승. 해양 타일 1장 배치.",
+      "expansion": "기본판",
+      "cardNumber": "075",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-078",
+      "name": "얼음형 소행성",
+      "cost": 23,
+      "type": "event",
+      "tags": [
+        "space",
+        "event"
+      ],
+      "condition": null,
+      "effect": "해양 타일 2장 배치.",
+      "expansion": "기본판",
+      "cardNumber": "078",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-080",
+      "name": "거대 얼음형 소행성",
+      "cost": 36,
+      "type": "event",
+      "tags": [
+        "space",
+        "event"
+      ],
+      "condition": null,
+      "effect": "기온 2단계 상승. 해양 타일 2장 배치. 아무 플레이어의 식물 자원을 최대 6개 제거.",
+      "expansion": "기본판",
+      "cardNumber": "080",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-081",
+      "name": "가니메데 정착지",
+      "cost": 20,
+      "type": "ongoing",
+      "tags": [
+        "jovian",
+        "space",
+        "city"
+      ],
+      "condition": null,
+      "effect": "전용 구역에 도시 타일 1장 배치. 보유한 목성 태그 1개당 승점 1점.",
+      "expansion": "기본판",
+      "cardNumber": "081",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-155",
+      "name": "인공 미생물",
+      "cost": 16,
+      "type": "ongoing",
+      "tags": [
+        "science",
+        "microbe"
+      ],
+      "condition": "기온 -14℃ 이하",
+      "effect": "식물 생산력 2 증가.",
+      "expansion": "기본판",
+      "cardNumber": "155",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-158",
+      "name": "공업용 미생물",
+      "cost": 12,
+      "type": "ongoing",
+      "tags": [
+        "microbe",
+        "building"
+      ],
+      "condition": null,
+      "effect": "에너지 생산력 1 증가. 강철 생산력 1 증가.",
+      "expansion": "기본판",
+      "cardNumber": "158",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-159",
+      "name": "지의류",
+      "cost": 7,
+      "type": "ongoing",
+      "tags": [
+        "plant"
+      ],
+      "condition": "기온 -24℃ 이상",
+      "effect": "식물 생산력 1 증가.",
+      "expansion": "기본판",
+      "cardNumber": "159",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-161",
+      "name": "유로파 수송선단",
+      "cost": 15,
+      "type": "event",
+      "tags": [
+        "space",
+        "event"
+      ],
+      "condition": null,
+      "effect": "해양 타일 1장 배치. 카드 1장 획득.",
+      "expansion": "기본판",
+      "cardNumber": "161",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-162",
+      "name": "온실가스 수입",
+      "cost": 7,
+      "type": "event",
+      "tags": [
+        "earth",
+        "space",
+        "event"
+      ],
+      "condition": null,
+      "effect": "열 생산력 1 증가. 열 자원 3개 획득.",
+      "expansion": "기본판",
+      "cardNumber": "162",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-168",
+      "name": "풍차",
+      "cost": 6,
+      "type": "ongoing",
+      "tags": [
+        "power",
+        "building"
+      ],
+      "condition": "산소 농도 7% 이상",
+      "effect": "에너지 생산력 1 증가. 승점 1점.",
+      "expansion": "기본판",
+      "cardNumber": "168",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-169",
+      "name": "툰트라 농경지",
+      "cost": 16,
+      "type": "ongoing",
+      "tags": [
+        "plant"
+      ],
+      "condition": "기온 -6℃ 이상",
+      "effect": "식물 생산력 1 증가. 메가크레딧 생산력 2 증가. 식물 자원 1개 획득. 승점 2점.",
+      "expansion": "기본판",
+      "cardNumber": "169",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-172",
+      "name": "애완동물",
+      "cost": 10,
+      "type": "active",
+      "tags": [
+        "earth",
+        "animal"
+      ],
+      "condition": null,
+      "effect": "동물 자원 1개 추가. 이 카드의 동물 자원은 제거할 수 없음. 도시 타일 배치 시 동물 자원 1개 추가. 동물 자원 2개당 승점 1점.",
+      "expansion": "기본판",
+      "cardNumber": "172",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-188",
+      "name": "홍수",
+      "cost": 7,
+      "type": "event",
+      "tags": [
+        "event"
+      ],
+      "condition": null,
+      "effect": "해양 타일 1장 배치. 인접 타일 소유자 중 한 명의 M€ 최대 4 제거. 승점 -1점.",
+      "expansion": "기본판",
+      "cardNumber": "188",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-189",
+      "name": "에너지 절약",
+      "cost": 15,
+      "type": "ongoing",
+      "tags": [
+        "power"
+      ],
+      "condition": null,
+      "effect": "배치된 도시 타일 1장당 에너지 생산력 1 증가.",
+      "expansion": "기본판",
+      "cardNumber": "189",
+      "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
+      "verifiedAgainstSource": true
+    },
+    {
+      "id": "base-190",
+      "name": "국소적 축열",
+      "cost": 1,
+      "type": "event",
+      "tags": [
+        "event"
+      ],
+      "condition": null,
+      "effect": "열 자원 5개 제거. 식물 자원 4개 획득 또는 다른 카드에 동물 자원 2개 추가.",
+      "expansion": "기본판",
+      "cardNumber": "190",
       "source": "https://m.namu.moe/w/테라포밍_마스/프로젝트_카드",
       "verifiedAgainstSource": true
     }
