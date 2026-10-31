@@ -47,6 +47,16 @@ const readState = () => {
 };
 const db=readState();
 const streams=new Map();
+// Polling presence is required for Cloudflare Quick Tunnels, which do not support SSE.
+// This map is intentionally ephemeral; an online player must have a live connection
+// or have fetched their room recently.
+const recentPresence=new Map();
+const PRESENCE_TTL_MS=30000;
+function touchPresence(room, sid){
+  let members=recentPresence.get(room.id);
+  if(!members){members=new Map();recentPresence.set(room.id,members)}
+  members.set(sid,Date.now());
+}
 const now=()=>new Date().toISOString();
 function persist(){
   const tmp=STATE_FILE+'.'+process.pid+'.tmp';
@@ -98,7 +108,10 @@ function roomOrFail(id){
   if(!room) fail(404,'방을 찾을 수 없습니다.');
   return room;
 }
-function online(room,p){return !!streams.get(room.id)?.get(p.sid)?.size;}
+function online(room,p){
+  return !!streams.get(room.id)?.get(p.sid)?.size ||
+    Date.now()-(recentPresence.get(room.id)?.get(p.sid)||0)<PRESENCE_TTL_MS;
+}
 function publicStory(story){
   return {id:story.id,title:story.title,subtitle:story.subtitle,teaser:story.teaser,genre:story.genre,minutes:story.minutes,players:story.players};
 }
@@ -133,7 +146,9 @@ function subscribe(req,res,room,sid){
   if(!peers){peers=new Map();streams.set(room.id,peers)}
   let own=peers.get(sid);
   if(!own){own=new Set();peers.set(sid,own)}
-  own.add(res);sendState(room);
+  own.add(res);
+  touchPresence(room,sid);
+  sendState(room);
   const ping=setInterval(()=>{try{res.write(': heartbeat\n\n')}catch(e){}},20000);
   res.on('close',()=>{
     clearInterval(ping);
@@ -165,7 +180,18 @@ async function api(req,res,url,sid){
     return subscribe(req,res,room,sid);
   }
   const match=pathname.match(/^\/api\/rooms\/([A-Z2-9]{6})(?:\/(join|start|read|character|leave))?$/);
-  if(req.method==='GET'&&match&&!match[2])return json(res,200,roomView(roomOrFail(match[1]),sid));
+  if(req.method==='GET'&&match&&!match[2]){
+    const room=roomOrFail(match[1]);
+    // A member polling this endpoint also keeps their 'online' presence alive.
+    // Visitors who merely preview an invitation never count as players.
+    if(room.players.some(p=>p.sid===sid)){
+      const player=room.players.find(p=>p.sid===sid);
+      const wasOnline=online(room,player);
+      touchPresence(room,sid);
+      if(!wasOnline)sendState(room);
+    }
+    return json(res,200,roomView(room,sid));
+  }
   if(!['POST','DELETE'].includes(req.method))fail(404,'API를 찾을 수 없습니다.');
   validateOrigin(req);
   const body=req.method==='POST'?await requestBody(req,6*1024*1024):{};
@@ -213,7 +239,11 @@ async function api(req,res,url,sid){
     if(room.phase!=='lobby')fail(409,'게임 시작 후에는 퇴장할 수 없습니다.');
     room.players=room.players.filter(p=>p.sid!==sid);
     if(room.host===sid)room.host=room.players[0]?.sid||null;
-    if(!room.players.length)delete db.rooms[room.id];
+    recentPresence.get(room.id)?.delete(sid);
+    if(!room.players.length){
+      delete db.rooms[room.id];
+      recentPresence.delete(room.id);
+    }
     persist();logActivity('room_left',sid,{room:room.id});
     if(room.players.length)sendState(room);
     return json(res,200,{ok:true});
