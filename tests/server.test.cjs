@@ -72,6 +72,28 @@ test('server: four-player mystery flow, persistence, and Mars save endpoints',as
   }
   const online=await call(clients[0],'/api/rooms/'+code);
   assert.ok(online.data.players.every(p=>p.online),'all four players online');
+  // Cloudflare Quick Tunnels reject SSE. A separate room must work using
+  // ordinary GET requests only, including all-online check and game start.
+  const pollCreated=await post(clients[0],'/api/rooms',{storyId:'midnight-manor',name:'터널 방장'});
+  const pollCode=pollCreated.data.code;
+  for(let i=1;i<4;i++){
+    const joined=await post(clients[i],'/api/rooms/'+pollCode+'/join',{name:'터널 친구 '+i});
+    assert.equal(joined.status,200);
+  }
+  const outsidersView=await call(clients[4],'/api/rooms/'+pollCode);
+  assert.equal(outsidersView.data.players.filter(p=>p.online).length,0,'outsider preview does not set presence');
+  for(let i=0;i<4;i++){
+    assert.equal((await call(clients[i],'/api/rooms/'+pollCode)).status,200);
+  }
+  const pollOnline=await call(clients[0],'/api/rooms/'+pollCode);
+  assert.equal(pollOnline.data.players.filter(p=>p.online).length,4,'four HTTP-only players online');
+  assert.equal((await post(clients[0],'/api/rooms/'+pollCode+'/start')).data.phase,'synopsis','polling-only lobby can start');
+  for(let i=0;i<4;i++){
+    const ack=await post(clients[i],'/api/rooms/'+pollCode+'/read');
+    assert.equal(ack.status,200);
+  }
+  assert.equal((await call(clients[2],'/api/rooms/'+pollCode)).data.phase,'characters','polling-only synopsis advances');
+
   const nonHost=await post(clients[1],'/api/rooms/'+code+'/start');
   assert.equal(nonHost.status,403,'only host may start');
   const start=await post(clients[0],'/api/rooms/'+code+'/start');

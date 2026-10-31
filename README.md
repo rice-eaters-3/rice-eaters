@@ -13,7 +13,9 @@ npm start
 
 브라우저에서 **http://localhost:3000** 으로 접속하세요.
 
-**Railway 무료 플랜 배포:** [DEPLOY_RAILWAY.md](./DEPLOY_RAILWAY.md) — GitHub 연결, `/data` 볼륨, HTTPS 도메인, Healthcheck까지 안내합니다.
+**Cloudflare 무료 외부 접속:** [DEPLOY_CLOUDFLARE.md](./DEPLOY_CLOUDFLARE.md) — PC에 서버를 켜두고 임시 HTTPS 링크를 무료로 공유합니다. 머더 미스터리는 Quick Tunnel에서 HTTP 폴링으로 동기화됩니다.
+
+**Railway 배포 가이드:** [DEPLOY_RAILWAY.md](./DEPLOY_RAILWAY.md) (대안 호스팅)
 
 - 홈: http://localhost:3000/
 - 화성: http://localhost:3000/mars
