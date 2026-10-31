@@ -1,7 +1,8 @@
 'use strict';
 const $=id=>document.getElementById(id);
 const escapeHtml=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const state={stories:[],room:null,busy:false,stream:null,streamRoom:null,connection:'연결 중',name:localStorage.getItem('mystery_display_name')||''};
+const isQuickTunnel=location.hostname.endsWith('.trycloudflare.com');
+const state={stories:[],room:null,busy:false,stream:null,streamRoom:null,pollTimer:null,pollRoom:null,pollBusy:false,connection:'연결 중',name:localStorage.getItem('mystery_display_name')||''};
 const phaseNames=['전체 시놉시스 안내','캐릭터 선택','캐릭터 숙지','1차 조사','1차 토론','2차 조사','2차 토론·최종 결정','행동','결말'];
 function toast(message){
   const box=$('toast');box.textContent=message;box.classList.add('visible');
@@ -21,8 +22,41 @@ function closeStream(){
   if(state.stream){state.stream.close();state.stream=null}
   state.streamRoom=null;
 }
+function stopPolling(){
+  if(state.pollTimer)clearInterval(state.pollTimer);
+  state.pollTimer=null;state.pollRoom=null;
+}
+async function pollRoom(){
+  const code=state.room?.code;
+  if(!code||!state.room?.me||state.pollBusy||state.busy)return;
+  state.pollBusy=true;
+  try{
+    const fresh=await api('/api/rooms/'+code);
+    if(state.room?.code!==code)return;
+    const nextConnection=isQuickTunnel?'자동 동기화 (약 2.5초)':'실시간 동기화 중';
+    const changed=JSON.stringify(state.room)!==JSON.stringify(fresh)||state.connection!==nextConnection;
+    state.room=fresh;state.connection=nextConnection;
+    if(changed)render();
+  }catch(e){
+    if(state.room?.code!==code)return;
+    if(state.connection!=='연결 재시도 중'){
+      state.connection='연결 재시도 중';
+      render();
+    }
+  }finally{state.pollBusy=false}
+}
+function startPolling(){
+  if(!state.room?.me){stopPolling();return}
+  if(state.pollTimer&&state.pollRoom===state.room.code)return;
+  stopPolling();
+  state.pollRoom=state.room.code;
+  // Lightweight presence and state sync; works when intermediaries block SSE.
+  state.pollTimer=setInterval(pollRoom,2500);
+  pollRoom();
+}
 function connectStream(){
-  if(!state.room?.me){closeStream();return}
+  // Cloudflare Quick Tunnels explicitly do not support SSE. Use HTTP polling.
+  if(!state.room?.me||isQuickTunnel){closeStream();return}
   const code=state.room.code;
   if(state.stream&&state.streamRoom===code)return;
   closeStream();
@@ -44,8 +78,8 @@ function connectStream(){
 }
 function setRoom(room){
   state.room=room;
-  if(room){routeRoom(room.code);connectStream()}
-  else{closeStream();history.replaceState(null,'','/mystery')}
+  if(room){routeRoom(room.code);startPolling();connectStream()}
+  else{closeStream();stopPolling();history.replaceState(null,'','/mystery')}
   render();
 }
 function btn(action,label,cls='btn',disabled=false,extra=''){
@@ -236,7 +270,7 @@ $('app').addEventListener('keydown',e=>{
       try{state.room=await api('/api/rooms/'+encodeURIComponent(initialCode.toUpperCase()))}
       catch(err){toast(err.message);history.replaceState(null,'','/mystery')}
     }
-    render();connectStream();
+    render();startPolling();connectStream();
   }catch(err){
     $('app').innerHTML='<div class="surface panel-pad"><h2>서버 연결 실패</h2><p class="muted">'+escapeHtml(err.message)+'</p><p>Node 서버가 실행 중인지 확인해주세요.</p></div>';
   }
