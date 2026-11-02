@@ -468,6 +468,7 @@ async function api(req,res,url,sid){
     if((data.tokens[player.id]||0)<1)fail(409,'조사 토큰이 부족합니다.');
     if(held&&!mine)fail(409,'다른 플레이어가 먼저 선점한 카드입니다.');
     if(action==='reserve'){
+      for(const [otherId,r] of Object.entries(data.reserved))if(r.playerId===player.id)delete data.reserved[otherId];
       data.reserved[card.id]={playerId:player.id,expiresAt:Date.now()+reservationTtl};
       persist();sendState(room);
       return json(res,200,roomView(room,sid));
@@ -491,7 +492,7 @@ async function api(req,res,url,sid){
     if(!['study','investigation1'].includes(room.phase))fail(409,'현재 음성 통화 단계가 아닙니다.');
     const target=room.players.find(p=>p.id===body.to);
     if(!target||target.id===player.id)fail(400,'유효하지 않은 수신자입니다.');
-    if(!['offer','answer','ice'].includes(body.type))fail(400,'유효하지 않은 신호 형식입니다.');
+    if(!['offer','answer','ice','hello','bye'].includes(body.type))fail(400,'유효하지 않은 신호 형식입니다.');
     if(!body.payload||typeof body.payload!=='object'||JSON.stringify(body.payload).length>16000)
       fail(400,'신호 데이터가 잘못되었습니다.');
     const history=signals.get(room.id)||[];
