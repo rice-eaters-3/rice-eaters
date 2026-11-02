@@ -215,7 +215,7 @@ function characters(room){
   '<div class="notice"><strong>'+taken+' / '+room.story.players+'명 선택 완료</strong><p>'+
     (my?.characterId?'선택한 캐릭터를 변경하려면 아직 비어 있는 다른 카드를 누르세요.':'카드를 선택하면 다른 참가자에게 즉시 반영됩니다.')+
     '</p></div><div class="line"></div>'+
-  '<p class="muted small">이번 개발 범위는 캐릭터 선택까지입니다. 캐릭터 개인 정보 및 숙지 시간, 조사, 밀담과 추리 단계는 다음 버전에서 이어집니다.</p></aside></div>'+
+  '<p class="muted small">4명의 캐릭터 선택이 모두 끝나면 각자 자신의 비밀 책자가 공개되는 숙지 단계로 자동 진행됩니다. 이후 조사·밀담·추리 단계는 다음 버전에서 이어집니다.</p></aside></div>'+
   (allDone?'<div class="all-chosen"><div class="eyebrow">ALL ROLES ASSIGNED</div><h2>네 명의 배역이 모두 정해졌습니다.</h2><p class="muted">다음 업데이트에서는 캐릭터별 비밀 문서와 숙지 단계를 이어갑니다.</p></div>':'');
 }
 function preview(room){
