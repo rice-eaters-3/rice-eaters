@@ -100,6 +100,17 @@ test('server: four-player mystery flow, persistence, and Mars save endpoints',as
   assert.equal(start.status,200);
   assert.equal(start.data.phase,'synopsis');
   assert.equal(start.data.synopsis.length,3);
+  assert.ok(start.data.clock.gameStartedAt>0);
+  assert.equal(start.data.clock.phaseMinutes.synopsis,5);
+  assert.equal(start.data.clock.phaseMinutes.characters,5);
+  assert.equal(start.data.clock.phaseMinutes.study,20);
+  assert.equal(start.data.clock.phaseMinutes.investigation1,20);
+  assert.equal(start.data.clock.phaseMinutes.discussion1,15);
+  assert.equal(start.data.clock.phaseMinutes.investigation2,20);
+  assert.equal(start.data.clock.phaseMinutes.discussion2,20);
+  assert.equal(start.data.clock.phaseMinutes.action,10);
+  assert.equal(start.data.clock.phaseMinutes.ending,15);
+  assert.equal(start.data.clock.phaseStartedAt,start.data.clock.gameStartedAt);
   const peekAfterStart=await call(clients[4],'/api/rooms/'+code);
   assert.equal(peekAfterStart.data.synopsis,null,'synopsis is members-only');
   for(let i=0;i<3;i++){
@@ -169,9 +180,45 @@ test('server: four-player mystery flow, persistence, and Mars save endpoints',as
     assert.equal(ack.data.players.filter(p=>p.studyReady).length,i+1);
   }
   const afterReady=await call(clients[0],'/api/rooms/'+code);
-  assert.equal(afterReady.data.phase,'study','phase 4 not yet implemented');
+  assert.equal(afterReady.data.phase,'investigation1','all four ready starts investigation1');
+  assert.equal(afterReady.data.clock.phaseMinutes.investigation1,20);
+  assert.ok(afterReady.data.clock.phaseStartedAt>=start.data.clock.phaseStartedAt);
+  assert.equal(afterReady.data.investigation.tokens,4,'four tokens allocated');
+  assert.ok(afterReady.data.investigation.cards.find(c=>c.id==='desk'));
+  assert.ok(!afterReady.data.investigation.cards.find(c=>c.id==='desk_corner'),'hidden prerequisite card not listed');
+  assert.equal(afterReady.data.investigation.cards.find(c=>c.id==='elena_belongings').excluded,true);
+  assert.equal(afterReady.data.investigation.cards.find(c=>c.id==='archives').locked,true);
+  assert.equal((await post(clients[0],'/api/rooms/'+code+'/study-ready')).status,409,'study stage cannot repeat');
+  assert.equal((await post(clients[0],'/api/rooms/'+code+'/reserve',{cardId:'elena_belongings'})).status,403,'cannot investigate own belongings');
+  const firstReservation=await post(clients[0],'/api/rooms/'+code+'/reserve',{cardId:'desk'});
+  assert.equal(firstReservation.status,200);
+  assert.equal(firstReservation.data.investigation.cards.find(c=>c.id==='desk').reservedBy,final.data.me);
+  assert.equal((await post(clients[1],'/api/rooms/'+code+'/reserve',{cardId:'desk'})).status,409,'server rejects competing reservation');
+  assert.equal((await post(clients[1],'/api/rooms/'+code+'/investigate',{cardId:'desk'})).status,409,'cannot bypass reservation');
+  const revealed=await post(clients[0],'/api/rooms/'+code+'/investigate',{cardId:'desk'});
+  assert.equal(revealed.status,200);
+  assert.equal(revealed.data.investigation.tokens,3,'one token consumed exactly once');
+  assert.equal(revealed.data.investigation.cards.find(c=>c.id==='desk').revealed.length,1,'investigator sees back');
+  assert.ok(revealed.data.investigation.cards.some(c=>c.id==='desk_corner'),'prerequisite unlocks hidden card');
+  const otherCards=(await call(clients[1],'/api/rooms/'+code)).data.investigation.cards;
+  assert.equal(otherCards.find(c=>c.id==='desk').taken,true,'claimed card is greyed out globally');
+  assert.deepEqual(otherCards.find(c=>c.id==='desk').revealed,[],'other player never receives investigation back');
+  assert.equal((await post(clients[1],'/api/rooms/'+code+'/reserve',{cardId:'desk'})).status,409,'duplicate investigation forbidden');
+  const release=await post(clients[1],'/api/rooms/'+code+'/reserve',{cardId:'photo'});
+  assert.equal(release.status,200);
+  assert.equal((await post(clients[1],'/api/rooms/'+code+'/release',{cardId:'photo'})).status,200);
+  assert.equal((await post(clients[2],'/api/rooms/'+code+'/reserve',{cardId:'photo'})).status,200,'released card can be claimed by another');
   assert.equal(afterReady.data.players.filter(p=>p.studyReady).length,4);
-  assert.equal((await post(clients[0],'/api/rooms/'+code+'/study-ready')).data.players.filter(p=>p.studyReady).length,4,'ready is idempotent');
+  assert.equal((await post(clients[0],'/api/rooms/'+code+'/reserve',{cardId:'nonexistent'})).status,404);
+  assert.equal((await post(clients[4],'/api/rooms/'+code+'/reserve',{cardId:'photo'})).status,403,'outsiders cannot reserve cards');
+  assert.equal((await post(clients[0],'/api/rooms/'+code+'/whisper-request')).status,409,'one person alone cannot whisper');
+  assert.equal((await post(clients[0],'/api/rooms/'+code+'/signal',{to:'not-a-member',type:'offer',payload:{sdp:{}}})).status,400);
+  const hello=await post(clients[0],'/api/rooms/'+code+'/signal',{to:afterReady.data.players[1].id,type:'hello',payload:{}});
+  assert.equal(hello.status,200);
+  const signal=await call(clients[1],'/api/rooms/'+code+'/signals?after=0');
+  assert.equal(signal.status,200);
+  assert.equal(signal.data.signals[0].from,afterReady.data.me);
+  assert.equal((await call(clients[4],'/api/rooms/'+code+'/signals?after=0')).status,403);
   // SSE still works: all updates are serialized through each member's own view.
   assert.equal(final.data.booklet.basic.name,'엘레나 블랙우드');
 
@@ -188,11 +235,12 @@ test('server: four-player mystery flow, persistence, and Mars save endpoints',as
   assert.equal((await call(clients[0],'/api/mars/data')).data.progress,null);
   assert.equal((await call(clients[0],'/data/state.json')).status,403,'server state must remain private');
   const diskState=JSON.parse(fs.readFileSync(path.join(directory,'state.json'),'utf8'));
-  assert.equal(diskState.rooms[code].phase,'study');
+  assert.equal(diskState.rooms[code].phase,'investigation1');
+  assert.equal(diskState.rooms[code].investigation.tokens[final.data.me],3);
   assert.equal(diskState.rooms[code].mapPositions[final.data.me].x,1);
   assert.equal(diskState.mars[clients[0].cookie.split('=')[1]].records[0].score,42);
   const log=fs.readFileSync(path.join(directory,'activity.jsonl'),'utf8');
-  for(const action of ['room_created','room_joined','game_started','synopsis_read','character_selected','phase_study','study_ready','mars_records_saved']){
+  for(const action of ['room_created','room_joined','game_started','synopsis_read','character_selected','phase_study','study_ready','phase_investigation1','card_investigated','mars_records_saved']){
     assert.ok(log.includes('"action":"'+action+'"'),'logged event '+action);
   }
 });
