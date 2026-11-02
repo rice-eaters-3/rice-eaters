@@ -2,7 +2,7 @@
 const $=id=>document.getElementById(id);
 const escapeHtml=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const isQuickTunnel=location.hostname.endsWith('.trycloudflare.com');
-const state={stories:[],room:null,busy:false,stream:null,streamRoom:null,pollTimer:null,pollRoom:null,pollBusy:false,pollDelay:0,moving:false,lastMoveAt:0,clockOffset:0,clockAlert:new Set(),connection:'연결 중',name:localStorage.getItem('mystery_display_name')||''};
+const state={stories:[],room:null,busy:false,stream:null,streamRoom:null,pollTimer:null,pollRoom:null,pollBusy:false,pollDelay:0,moving:false,lastMoveAt:0,clockOffset:0,clockAlert:new Set(),connection:'연결 중',selectedStory:null,name:localStorage.getItem('mystery_display_name')||''};
 const phaseNames=['전체 시놉시스 안내','캐릭터 선택','캐릭터 숙지','1차 조사','1차 토론','2차 조사','2차 토론·최종 결정','행동','결말'];
 const phaseOrder=['synopsis','characters','study','investigation1','discussion1','investigation2','discussion2','action','ending'];
 window.MysteryRoomState=state;
@@ -159,14 +159,18 @@ function storyTile(story){
   '<div class="story-meta"><span>♟ '+story.players+'인 전용</span><span>◷ 약 '+story.minutes+'분</span><span>✦ 추리와 비밀</span></div></div>';
 }
 function home(){
-  const story=state.stories[0];
+  const story=state.stories.find(x=>x.id===state.selectedStory)||state.stories[0];
   return '<section class="hero"><div><div class="eyebrow">A NIGHT OF SECRETS · MULTIPLAYER MYSTERY</div>'+
     '<h1>모든 비밀에는<br><span class="highlight">목격자</span>가 있다.</h1>'+
-    '<p class="intro">한 방에 모인 네 사람, 서로 다른 기억, 단 하나의 진실. 방을 만들고 친구를 초대해 사건의 첫 장을 열어보세요.</p>'+
+    '<p class="intro">서로 다른 기억과 하나의 진실. 방을 만들고 친구를 초대해 사건의 첫 장을 열어보세요.</p>'+
     '<span class="tag">실시간 방 동기화</span> <span class="tag">4인용 더미 시나리오</span></div>'+
     '<div class="hero-decor"><div class="orbit"></div><div class="emblem"><span class="emblem-symbol">♠</span><span class="emblem-caption">MURDER MYSTERY</span></div></div></section>'+
     '<div class="section-row"><div><div class="eyebrow">SELECT YOUR CASE</div><h2 style="margin-bottom:0">플레이할 이야기</h2></div><span class="muted small">현재 시나리오 1편 제공</span></div>'+
-    '<div class="story-layout">'+(story?storyTile(story):'<p>시나리오를 불러오지 못했습니다.</p>')+
+    '<div class="story-layout"><div><label class="field-label" for="storySelection">시나리오 선택</label>'+
+    '<select id="storySelection" class="text-field">'+state.stories.map(x=>'<option value="'+escapeHtml(x.id)+'" '+(story?.id===x.id?'selected':'')+'>'+
+      escapeHtml(x.title)+' ('+x.players+'명)</option>').join('')+'</select>'+
+    (story?storyTile(story):'<p>시나리오를 불러오지 못했습니다.</p>')+
+    '<p class="muted small"><a href="/mystery-editor">✎ 머더 미스터리 편집기 · 새 시나리오 만들기</a></p></div>'+
     '<section class="surface form-box"><h3 class="form-title">새로운 방 만들기</h3><p class="subheading">방장이 되어 친구를 초대하세요. 정원 4명이 모두 접속하면 게임을 시작할 수 있습니다.</p>'+
     '<div><label class="field-label" for="displayName">플레이어 표시 이름</label><input class="text-field" id="displayName" maxlength="18" autocomplete="nickname" placeholder="예: 탐정 김" value="'+escapeHtml(state.name)+'"></div>'+
     btn('create','사건의 방 만들기 →','btn btn-primary btn-wide',!story)+
@@ -281,6 +285,17 @@ function nameFromInput(){
 }
 async function perform(action,button){
   if(action==='move'){await moveMyPlayer(button.dataset.direction);return;}
+  if(action==='interact'){
+    try{
+      const payload=button.dataset.kind==='portal'?
+        {kind:'portal',portalIndex:Number(button.dataset.index)}:
+        {kind:'door',doorId:button.dataset.door};
+      const updated=await api('/api/rooms/'+state.room.code+'/interact','POST',payload);
+      updateRoom(updated,state.connection,true);
+      if(payload.kind==='door')toast('문을 열었습니다.');
+    }catch(e){toast(e.message)}
+    return;
+  }
   if(['book-toggle','book-chapter','book-prev','book-next'].includes(action)){
     window.MysteryStudy.navigate(action,button.dataset.chapter);render();return;
   }
@@ -299,8 +314,9 @@ async function perform(action,button){
     const room=state.room,code=room?.code;
     if(action==='create'){
       const name=nameFromInput();
-      if(!state.stories[0])throw Error('스토리를 불러오지 못했습니다.');
-      setRoom(await api('/api/rooms','POST',{storyId:state.stories[0].id,name}));
+      const selected=state.stories.find(x=>x.id===state.selectedStory)||state.stories[0];
+      if(!selected)throw Error('스토리를 불러오지 못했습니다.');
+      setRoom(await api('/api/rooms','POST',{storyId:selected.id,name}));
     } else if(action==='find'){
       const value=($('roomCode')?.value||'').trim().toUpperCase();
       if(!/^[A-HJ-NP-Z2-9]{6}$/.test(value))throw Error('6자리 영문/숫자 방 코드를 입력해주세요.');
@@ -336,6 +352,9 @@ async function perform(action,button){
   }catch(err){toast(err.message)}
   finally{state.busy=false;render()}
 }
+$('app').addEventListener('change',e=>{
+  if(e.target.id==='storySelection'){state.selectedStory=e.target.value;render();}
+});
 $('app').addEventListener('click',e=>{
   const button=e.target.closest('button[data-action]');
   if(button)perform(button.dataset.action,button);
@@ -364,6 +383,7 @@ document.addEventListener('keydown',e=>{
   try{
     const catalog=await api('/api/stories');
     state.stories=catalog.stories;
+    state.selectedStory=state.stories[0]?.id||null;
     const initialCode=new URLSearchParams(location.search).get('room');
     if(initialCode){
       try{state.room=await api('/api/rooms/'+encodeURIComponent(initialCode.toUpperCase()))}
