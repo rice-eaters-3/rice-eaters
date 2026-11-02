@@ -20,7 +20,7 @@ window.MysteryVoice=(function(){
     if(peers.has(id))return peers.get(id);
     const pc=new RTCPeerConnection({iceServers:[{urls:'stun:stun.l.google.com:19302'}]});
     const peer={pc,pending:[]};peers.set(id,peer);
-    for(const track of stream?.getTracks()||[])pc.addTrack(track,stream);
+    for(const track of stream?.getTracks()||[])peer.audioSender=pc.addTrack(track,stream);
     pc.onicecandidate=e=>{if(e.candidate)send(id,'ice',{candidate:e.candidate.toJSON()})};
     pc.ontrack=e=>{
       let node=audio.get(id);
@@ -28,7 +28,7 @@ window.MysteryVoice=(function(){
         document.body.appendChild(node);audio.set(id,node);}
       node.srcObject=e.streams[0]||new MediaStream([e.track]);
       node.play().catch(()=>{});
-      volumes();
+      enforceOutgoingPrivacy();volumes();
     };
     pc.onconnectionstatechange=()=>{if(['failed','closed'].includes(pc.connectionState))closePeer(id)};
     return peer;
@@ -81,6 +81,16 @@ window.MysteryVoice=(function(){
     // If the sender is whispering, their voice is private to that group.
     return !g||g.members.includes(listener);
   }
+  function enforceOutgoingPrivacy(){
+    if(!enabled||!room)return;
+    const audioTrack=stream?.getAudioTracks()[0];
+    if(!audioTrack)return;
+    for(const [peerId,p] of peers){
+      const target=allowedToHear(room.me,peerId)?audioTrack:null;
+      if(p.audioSender&&p.audioSender.track!==target)
+        p.audioSender.replaceTrack(target).catch(e=>console.warn('Private voice routing',e));
+    }
+  }
   function volumes(){
     if(!room?.me)return;
     const self=room.players.find(p=>p.id===room.me),a=self?.position;
@@ -117,7 +127,7 @@ window.MysteryVoice=(function(){
     const previous=room?.code;room=r;
     if(previous&&previous!==r?.code)disable();
     if(!valid()){if(enabled)disable();return}
-    volumes();
+    enforceOutgoingPrivacy();volumes();
   }
   function controls(){
     return '<div class="eyebrow">PROXIMITY VOICE · WEBRTC</div><h3>근접 음성</h3>'+
