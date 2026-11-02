@@ -149,6 +149,7 @@ function render(){el('editorPanel').innerHTML=tab==='story'?storyPanel():tab==='
   for(const b of document.querySelectorAll('[data-tab]'))b.classList.toggle('active',b.dataset.tab===tab);}
 function valueChange(path,value){
   const c=doc.story.characters[selectedChar],b=doc.game.booklets[c.id],card=doc.game.investigation.cards[selectedCard];
+  const oldCharacterId=c.id;
   if(path==='story.synopsis')doc.story.synopsis=splitLines(value);
   else if(path==='role.background')b.background=splitLines(value);
   else if(['role.timeline','role.inventory'].includes(path)){
@@ -168,7 +169,7 @@ function valueChange(path,value){
   else if(path.startsWith('floor.'))setPath('game.floors.'+selectedFloor+'.'+path.slice(6),value);
   else setPath(path,value);
   if(path.startsWith('story.characters.')&&path.endsWith('.id')){const newId=doc.story.characters[selectedChar].id;
-    if(newId!==c.id){doc.game.booklets[newId]=b;delete doc.game.booklets[c.id];doc.spawn[newId]=doc.spawn[c.id];delete doc.spawn[c.id];}}
+    if(newId!==oldCharacterId){doc.game.booklets[newId]=b;delete doc.game.booklets[oldCharacterId];doc.spawn[newId]=doc.spawn[oldCharacterId];delete doc.spawn[oldCharacterId];}}
   save();
 }
 function clickCell(x,y){
