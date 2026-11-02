@@ -187,4 +187,24 @@ const investigation={
   ]
 };
 
+// Regions are designer-owned, visible on every floor as backgrounds and borders.
+floors[0].areas=[
+  {id:'library',name:'도서관',x:1,y:1,width:5,height:5,color:'#657b8b',pattern:'wood'},
+  {id:'study',name:'서재',x:7,y:1,width:9,height:5,color:'#90766a',pattern:'carpet'},
+  {id:'hall',name:'중앙 복도',x:1,y:5,width:15,height:2,color:'#847b65',pattern:'stone'},
+  {id:'dining',name:'식당',x:1,y:7,width:7,height:3,color:'#82865f',pattern:'tile'},
+  {id:'lounge',name:'응접실',x:9,y:7,width:7,height:3,color:'#80708f',pattern:'carpet'}
+];
+floors[0].doors=[
+  {id:'library-door',x:6,y:5,name:'서재 쪽 잠긴 문',requiresItem:'key',locked:true},
+  {id:'dining-door',x:3,y:6,name:'식당 문',locked:false}
+];
+floors[1].areas=[
+  {id:'bedrooms',name:'2층 침실',x:1,y:1,width:7,height:4,color:'#947d7c',pattern:'wood'},
+  {id:'archives',name:'기록실',x:9,y:1,width:7,height:4,color:'#718790',pattern:'tile'},
+  {id:'up-hall',name:'2층 복도',x:1,y:6,width:15,height:3,color:'#847b65',pattern:'stone'}
+];
+floors[1].doors=[
+  {id:'archive-door',x:8,y:4,name:'기록실 비밀문',requiresItem:'sealed-envelope',locked:true}
+];
 module.exports={floorplan,booklets,floors,phaseMinutes,investigation};
