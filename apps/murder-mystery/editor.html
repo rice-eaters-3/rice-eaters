@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>머더 미스터리 제작소 · Rice Eaters</title>
+<link rel="stylesheet" href="/apps/murder-mystery/style.css">
+<link rel="stylesheet" href="/apps/murder-mystery/editor.css">
+<script src="/apps/murder-mystery/editor.js" defer></script>
+</head>
+<body>
+<div class="ambient"></div>
+<header class="site-header"><a class="home-link" href="/">🍚 RICE EATERS</a><span class="head-separator"></span>
+  <span class="brand-name">MYSTERY STUDIO ✦</span>
+  <a class="editor-header-link" href="/mystery">← 게임으로 돌아가기</a></header>
+<main class="shell editor-shell">
+  <section class="editor-hero"><div class="eyebrow">DESIGN YOUR CASE · STORY CREATOR</div>
+    <h1>머더 미스터리 제작소</h1>
+    <p>시나리오 · 배역 비밀 책자 · 조사 카드 · 타일형 층별 지도 · 계단 · 잠긴 문을 구성하고 파일로 내보내세요.</p>
+    <p class="muted small">내보낸 JSON에는 <strong>범인·비밀 책자·카드 뒷면</strong>이 포함됩니다. 플레이어에게 공유하지 마세요.</p></section>
+  <div class="editor-actions">
+    <button id="newStory" class="btn btn-outline">새 시나리오</button>
+    <button id="importFile" class="btn btn-outline">JSON 파일 불러오기</button>
+    <input type="file" id="storyFile" accept=".json,application/json" hidden>
+    <button id="exportFile" class="btn btn-outline">⬇ 미스터리 JSON 저장</button>
+    <button id="publishStory" class="btn btn-primary">▶ 서버에 등록하고 플레이</button>
+  </div>
+  <p id="editorStatus" role="status" aria-live="polite" class="editor-status">변경한 내용은 이 브라우저에 임시 저장됩니다.</p>
+  <nav class="editor-tabs" aria-label="편집 단계">
+    <button data-tab="story" class="active">① 시나리오</button>
+    <button data-tab="characters">② 캐릭터 책자</button>
+    <button data-tab="cards">③ 조사 카드</button>
+    <button data-tab="maps">④ 지도·기믹</button>
+    <button data-tab="json">⑤ 데이터 검토</button>
+  </nav>
+  <div id="editorPanel" class="editor-panel surface"></div>
+  <p class="muted small">서버 등록은 보안을 위해 서버가 실행 중인 PC의 <strong>http://localhost:3000/mystery-editor</strong>에서만 가능합니다. 등록하면 친구들은 Cloudflare 공개 주소에서 게임에 참여할 수 있습니다.</p>
+</main>
+<footer class="site-footer"><span>RICE EATERS · MYSTERY STUDIO</span><span>ORIGINAL JSON STORY PACKAGE V1</span></footer>
+</body></html>
