@@ -126,6 +126,8 @@ window.MysteryStudy=(function(){
     // Re-render controls only when status changes, preserving map scroll when possible.
     const text=document.querySelector('.token-count');
     if(text)text.textContent=room.investigation?.tokens??'—';
+    const ready=document.querySelector('[data-action="study-ready"]');
+    if(ready)ready.disabled=!!room.players.find(p=>p.id===room.me)?.studyReady;
     return true;
   }
   function navigate(action,chapter){
