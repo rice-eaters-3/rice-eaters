@@ -87,7 +87,7 @@ function validate(input){
   }
   const spawn={};
   for(const c of story.characters){
-    const rawSpawn=obj(g.spawn?.[c.id]),floor=floors.find(f=>f.id===rawSpawn.floor)||floors[0];
+    const rawSpawn=obj((p.spawn||g.spawn)?.[c.id]),floor=floors.find(f=>f.id===rawSpawn.floor)||floors[0];
     const x=int(rawSpawn.x,0,floor.tiles[0].length-1,c.name+' 시작 x'),y=int(rawSpawn.y,0,floor.tiles.length-1,c.name+' 시작 y');
     if(floor.tiles[y][x]!=='.')throw Error(c.name+' 시작 칸은 이동 가능해야 합니다.');
     spawn[c.id]={floor:floor.id,x,y};
