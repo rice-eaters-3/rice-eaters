@@ -219,6 +219,51 @@ test('server: four-player mystery flow, persistence, and Mars save endpoints',as
   assert.equal(signal.status,200);
   assert.equal(signal.data.signals[0].from,afterReady.data.me);
   assert.equal((await call(clients[4],'/api/rooms/'+code+'/signals?after=0')).status,403);
+
+  // Simultaneous selections must have exactly one winner.
+  const [raceA,raceB]=await Promise.all([
+    post(clients[0],'/api/rooms/'+code+'/reserve',{cardId:'dining'}),
+    post(clients[1],'/api/rooms/'+code+'/reserve',{cardId:'dining'})
+  ]);
+  assert.deepEqual([raceA.status,raceB.status].sort(),[200,409],
+    'concurrent card race has one winner');
+  await post(clients[raceA.status===200?0:1],'/api/rooms/'+code+'/release',{cardId:'dining'});
+
+  async function walk(i,moves){
+    for(const direction of moves){
+      const result=await post(clients[i],'/api/rooms/'+code+'/move',{direction});
+      assert.equal(result.status,200,'walk '+direction+' succeeds: '+JSON.stringify(result.data));
+      await new Promise(resolve=>setTimeout(resolve,145));
+    }
+  }
+  // Character 1 traverses the stairs from ground to upper floor.
+  await walk(1,['down','down','left','left','left','left']);
+  const upstairs=(await call(clients[1],'/api/rooms/'+code)).data;
+  assert.equal(upstairs.map.floorId,'upper','stepping on stairs changes map floor');
+  assert.equal(upstairs.players.find(p=>p.id===upstairs.me).position.floor,'upper');
+  assert.ok(!((await call(clients[0],'/api/rooms/'+code)).data.map.avatars.some(p=>p.id===upstairs.me)),
+    'different-floor avatars do not appear on ground floor');
+  // Elena and Iris meet on the dining room floor and start a unanimous whisper.
+  await walk(0,['right','down','down','right','down','down','down','down']);
+  await walk(2,['right']);
+  const joinedPos=(await call(clients[0],'/api/rooms/'+code)).data.players;
+  assert.deepEqual(joinedPos.find(p=>p.id===final.data.me).position,
+    {floor:'ground',x:3,y:9});
+  const request=await post(clients[0],'/api/rooms/'+code+'/whisper-request');
+  assert.equal(request.status,200);
+  const proposal=request.data.whispers.proposals[0];
+  assert.equal(proposal.yes.length,1,'requester self-approves');
+  assert.equal(proposal.voters.length,2,'same-tile peers vote');
+  assert.equal((await post(clients[1],'/api/rooms/'+code+'/whisper-vote',
+    {proposalId:proposal.id,accept:true})).status,403,'remote players cannot vote');
+  const voting=await post(clients[2],'/api/rooms/'+code+'/whisper-vote',
+    {proposalId:proposal.id,accept:true});
+  assert.equal(voting.status,200);
+  assert.equal(voting.data.whispers.groups[0].members.length,2,'unanimity creates private group');
+  await walk(0,['left']);
+  assert.equal((await call(clients[2],'/api/rooms/'+code)).data.whispers.groups.length,0,
+    'leaving the shared tile automatically ends one-to-one whisper');
+
   // SSE still works: all updates are serialized through each member's own view.
   assert.equal(final.data.booklet.basic.name,'엘레나 블랙우드');
 
