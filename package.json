@@ -7,6 +7,6 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "test": "node --test tests/server.test.cjs tests/study-render.test.cjs"
+    "test": "node --test tests/server.test.cjs tests/study-render.test.cjs tests/editor.test.cjs"
   }
 }
