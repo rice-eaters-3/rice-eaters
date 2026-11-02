@@ -101,7 +101,10 @@ function pruneWhispers(room){
   }
   ws.groups=ws.groups.filter(g=>g.members.length>=2);
   ws.proposals=ws.proposals.filter(v=>v.expiresAt>Date.now()&&
-    v.voters.every(id=>room.players.some(p=>p.id===id)) );
+    [...new Set([...v.voters,v.candidate])].every(id=>{
+      const p=room.players.find(z=>z.id===id),pos=p&&positionFor(room,p);
+      return pos&&pos.floor===v.floor&&pos.x===v.x&&pos.y===v.y;
+    }));
 }
 function publicWhispers(room,member){
   pruneWhispers(room);
@@ -462,6 +465,48 @@ async function api(req,res,url,sid){
     lastMoves.set(lastKey,Date.now());
     persist();sendState(room);
     return json(res,200,roomView(room,sid));
+  }
+  if(action==='interact'){
+    if(!['study','investigation1'].includes(room.phase))fail(409,'현재 상호작용 가능한 단계가 아닙니다.');
+    const pos=positionFor(room,player),floor=pos&&floorFor(room,pos.floor);
+    if(!floor)fail(409,'플레이어의 지도 위치를 찾을 수 없습니다.');
+    if(body.kind==='portal'){
+      const index=body.portalIndex;
+      if(!Number.isInteger(index)||index<0||index>=(floor.portals||[]).length)
+        fail(400,'유효하지 않은 이동 액션입니다.');
+      const portal=floor.portals[index];
+      if(portal.x!==pos.x||portal.y!==pos.y)
+        fail(409,'이동 타일 위에서만 이 액션을 사용할 수 있습니다.');
+      const dest=floorFor(room,portal.toFloor);
+      const next={floor:portal.toFloor,x:portal.toX,y:portal.toY};
+      if(!dest||dest.tiles[portal.toY]?.[portal.toX]!=='.')
+        fail(409,'목적지 타일로 이동할 수 없습니다.');
+      const door=(dest.doors||[]).find(d=>d.x===next.x&&d.y===next.y);
+      if(door&&door.locked&&!room.openDoors?.[dest.id+':'+door.id])
+        fail(409,'목적지에 잠긴 문이 있습니다.');
+      if(occupantCount(room,next,player.id)>=(gameFor(room).investigation?.maxTileOccupants||3))
+        fail(409,'목적지 타일 정원이 가득 찼습니다.');
+      room.mapPositions[player.id]=next;
+      pruneWhispers(room);persist();sendState(room);
+      logActivity('portal_used',sid,{room:room.id,to:next.floor});
+      return json(res,200,roomView(room,sid));
+    }
+    if(body.kind==='door'){
+      const door=(floor.doors||[]).find(d=>d.id===body.doorId);
+      if(!door)fail(404,'문을 찾을 수 없습니다.');
+      if(Math.abs(door.x-pos.x)+Math.abs(door.y-pos.y)>1)fail(409,'문 옆에서 열기를 시도하세요.');
+      if(!door.locked||room.openDoors?.[floor.id+':'+door.id])
+        return json(res,200,roomView(room,sid));
+      const initial=gameFor(room).booklets?.[player.characterId]?.inventory||[];
+      const collected=room.investigation?.collected?.[player.id]||[];
+      if(door.requiresItem&&![...initial,...collected].some(i=>i.id===door.requiresItem))
+        fail(403,'이 문을 열 열쇠나 필수 아이템이 없습니다.');
+      room.openDoors||={};
+      room.openDoors[floor.id+':'+door.id]=true;
+      persist();sendState(room);logActivity('door_unlocked',sid,{room:room.id,door:door.id});
+      return json(res,200,roomView(room,sid));
+    }
+    fail(400,'지원하지 않는 지도 상호작용입니다.');
   }
   if(action==='reserve'||action==='release'||action==='investigate'){
     if(room.phase!=='investigation1')fail(409,'1차 조사 단계가 아닙니다.');
