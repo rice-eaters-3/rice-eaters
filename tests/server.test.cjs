@@ -282,7 +282,7 @@ test('server: four-player mystery flow, persistence, and Mars save endpoints',as
   const diskState=JSON.parse(fs.readFileSync(path.join(directory,'state.json'),'utf8'));
   assert.equal(diskState.rooms[code].phase,'investigation1');
   assert.equal(diskState.rooms[code].investigation.tokens[final.data.me],3);
-  assert.equal(diskState.rooms[code].mapPositions[final.data.me].x,1);
+  assert.equal(diskState.rooms[code].mapPositions[final.data.me].x,2,'position after leaving whisper tile');
   assert.equal(diskState.mars[clients[0].cookie.split('=')[1]].records[0].score,42);
   const log=fs.readFileSync(path.join(directory,'activity.jsonl'),'utf8');
   for(const action of ['room_created','room_joined','game_started','synopsis_read','character_selected','phase_study','study_ready','phase_investigation1','card_investigated','mars_records_saved']){
