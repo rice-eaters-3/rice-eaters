@@ -83,18 +83,30 @@ window.MysteryStudy=(function(){
         (p.voters.includes(room.me)&&!p.yes.includes(room.me)?btn('whisper-yes','동의','btn btn-primary btn-sm',false,'data-proposal="'+esc(p.id)+'"')+
           btn('whisper-no','거절','btn btn-outline btn-sm',false,'data-proposal="'+esc(p.id)+'"'):'<small>상대방의 응답을 기다리는 중</small>')+'</div>').join('')+'</section>';
   }
+  function tileActions(room){
+    const inv=room.investigation,pos=room.players.find(p=>p.id===room.me)?.position;
+    const here=inv?.cards.filter(c=>c.location?.floor===pos?.floor&&c.location?.x===pos?.x&&c.location?.y===pos?.y&&!c.locked&&!c.taken&&!c.excluded)||[];
+    if(!inv)return '';
+    return '<p class="muted small">이 타일의 조사 정보</p>'+
+      (here.length?here.map(c=>btn('reserve','🔎 '+esc(c.title),'btn btn-outline btn-sm',
+        (!!c.reservedBy&&c.reservedBy!==room.me)||inv.tokens<1,'data-card="'+esc(c.id)+'"')).join(''):
+      '<span class="muted small">현재 타일에 조사할 카드가 없습니다.</span>');
+  }
+  function roster(room){
+    const pos=room.players.find(p=>p.id===room.me)?.position;
+    return (room.players||[]).map(p=>'<span class="roster-chip '+(p.position?.floor!==pos?.floor?'off-floor':'')+'">'+
+      esc(p.name)+' · '+esc(p.position?.floor||'-')+' ('+(p.position?.x??'-')+','+(p.position?.y??'-')+')</span>').join('');
+  }
   function mapView(room){
     const inv=room.investigation;
-    const pos=room.players.find(p=>p.id===room.me)?.position;
-    const here=inv?.cards.filter(c=>c.location?.floor===pos?.floor&&c.location?.x===pos?.x&&c.location?.y===pos?.y&&!c.locked&&!c.taken&&!c.excluded)||[];
     return '<div class="adventure-grid"><section class="surface panel-pad adventure-main"><div class="adventure-heading"><div class="eyebrow">WORLD MAP · '+esc(room.map?.floorId||'')+'</div><h2>'+esc(room.map?.title||'공용 건물')+'</h2>'+
       '<p class="muted small">WASD / 방향키로 이동 · ⇅ 계단 타일로 층 이동 · 타일 최대 '+(room.map?.capacity||3)+'명</p></div>'+
       '<div class="map-scroller big-map" tabindex="0">'+mapHtml(room)+'</div>'+
       '<div class="map-controls"><div class="dpad"><span></span>'+btn2('move','↑','data-direction="up"')+'<span></span>'+
       btn2('move','←','data-direction="left"')+btn2('move','↓','data-direction="down"')+btn2('move','→','data-direction="right"')+'</div>'+
       '<div class="map-action-column">'+btn('book-toggle','📖 책자 확인 (I)','btn btn-outline')+
-      (inv?'<p class="muted small">이 타일의 조사 정보</p>'+ (here.length?here.map(c=>btn('reserve','🔎 '+esc(c.title),'btn btn-outline btn-sm',!!c.reservedBy&&c.reservedBy!==room.me||inv.tokens<1,'data-card="'+esc(c.id)+'"')).join(''):'<span class="muted small">현재 타일에 조사할 카드가 없습니다.</span>'):'')+'</div></div>'+
-      '<div class="map-roster">'+(room.players||[]).map(p=>'<span class="roster-chip '+(p.position?.floor!==pos?.floor?'off-floor':'')+'">'+esc(p.name)+' · '+esc(p.position?.floor||'-')+' ('+(p.position?.x??'-')+','+(p.position?.y??'-')+')</span>').join('')+'</div></section>'+
+      '<div id="tileResearch">'+tileActions(room)+'</div>'+'</div></div>'+
+      '<div class="map-roster" id="mapRoster">'+roster(room)+'</div></section>'+
       '<aside class="adventure-side"><section class="surface panel-pad"><div class="eyebrow">PERSONAL RESOURCES</div>'+
       '<h3>조사 토큰 <span class="token-count">'+(inv?inv.tokens:'—')+'</span></h3>'+
       (inv?'<p class="muted small">조사 카드 선택 → 조사 실행 시 토큰 1개가 소모됩니다.</p>':'<p class="muted small">1차 조사 단계에서 조사 토큰이 지급됩니다.</p>')+'</section>'+
@@ -124,6 +136,10 @@ window.MysteryStudy=(function(){
       if(present&&wrapper.firstElementChild)present.replaceWith(wrapper.firstElementChild);
     }
     // Re-render controls only when status changes, preserving map scroll when possible.
+    const tile=document.getElementById('tileResearch');
+    if(tile)tile.innerHTML=tileActions(room);
+    const rosterEl=document.getElementById('mapRoster');
+    if(rosterEl)rosterEl.innerHTML=roster(room);
     const text=document.querySelector('.token-count');
     if(text)text.textContent=room.investigation?.tokens??'—';
     const ready=document.querySelector('[data-action="study-ready"]');
