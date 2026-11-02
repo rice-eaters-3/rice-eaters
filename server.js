@@ -273,7 +273,7 @@ function localAuthorRequest(req){
   return ['127.0.0.1','::1','::ffff:127.0.0.1'].includes(remote)&&
     /^(localhost|127\.0\.0\.1|\[::1\]):[0-9]{1,5}$/.test(host)&&
     !req.headers['x-forwarded-for']&&!req.headers['cf-connecting-ip']&&
-    !req.headers['x-forwarded-proto'];
+    !req.headers['x-forwarded-proto']&&!req.headers['x-forwarded-host'];
 }
 function validateOrigin(req){
   const origin=req.headers.origin;
