@@ -39,17 +39,31 @@ window.MysteryStudy=(function(){
     const m=room.map;if(!m)return '<p>제공된 맵이 없습니다.</p>';
     const people=new Map(),rooms=new Map((m.rooms||[]).map(t=>[t.x+','+t.y,t]));
     for(const a of m.avatars){const id=a.x+','+a.y;people.set(id,[...(people.get(id)||[]),a]);}
-    const portals=new Map((m.portals||[]).map(t=>[t.x+','+t.y,t]));
+    const portals=new Map();
+    for(const t of (m.portals||[])){const k=t.x+','+t.y;portals.set(k,[...(portals.get(k)||[]),t]);}
+    const doors=new Map((m.doors||[]).map(d=>[d.x+','+d.y,d]));
+    const regions=new Map();
+    for(const a of m.areas||[])for(let y=a.y;y<a.y+a.height;y++)for(let x=a.x;x<a.x+a.width;x++)
+      regions.set(x+','+y,a);
+    const regionAt=(x,y)=>regions.get(x+','+y);
     const research=new Map();
     for(const c of room.investigation?.cards||[])if(c.location?.floor===m.floorId){
       const k=c.location.x+','+c.location.y;research.set(k,[...(research.get(k)||[]),c]);
     }
     return '<div id="mapTiles" class="map-tiles world-tiles" style="--map-width:'+m.tiles[0].length+'" role="img" aria-label="'+esc(m.title)+'">'+
       m.tiles.flatMap((row,y)=>Array.from(row,(tile,x)=>{
-        const k=x+','+y,loc=rooms.get(k),portal=portals.get(k),here=people.get(k)||[],cards=research.get(k)||[];
-        return '<div class="map-tile '+(tile==='#'?'wall':'walk')+(portal?' portal':'')+(cards.length?' investigable':'')+'" title="'+esc(portal?.label||loc?.name||'')+'">'+
+        const k=x+','+y,loc=rooms.get(k),portalsHere=portals.get(k)||[],door=doors.get(k),region=regionAt(x,y),here=people.get(k)||[],cards=research.get(k)||[];
+        const edge=region?['n','e','s','w'].filter((dir,i)=>{
+          const [dx,dy]=[[0,-1],[1,0],[0,1],[-1,0]][i];
+          return regionAt(x+dx,y+dy)?.id!==region.id;
+        }).map(v=>' edge-'+v).join(''):'';
+        return '<div class="map-tile '+(tile==='#'?'wall':'walk')+(portalsHere.length?' portal':'')+(door?' door-tile':'')+
+          (door?.locked?' door-locked':'')+(region?' map-region pattern-'+esc(region.pattern):'')+
+          (cards.length?' investigable':'')+edge+'" style="'+(region?'--region-color:'+esc(region.color)+';':'')+
+          '" title="'+esc(door?.name||portalsHere[0]?.label||loc?.name||region?.name||'')+'">'+
           (loc?'<span class="map-room-name">'+esc(loc.icon)+' '+esc(loc.name)+'</span>':'')+
-          (portal?'<span class="portal-sigil" title="'+esc(portal.label)+'">⇅</span>':'')+
+          (portalsHere.length?'<span class="portal-sigil">⇅</span>':'')+
+          (door?'<span class="door-icon">'+(door.locked?'🔒':'🚪')+'</span>':'')+
           (cards.length?'<span class="tile-spark" title="조사 가능한 장소">✧</span>':'')+
           (here.length?'<div class="map-sprites">'+here.map(a=>'<span class="map-sprite '+(a.id===room.me?'mine':'')+'" style="--sprite:'+esc(a.accent)+'" title="'+esc(a.name)+'">'+esc(a.symbol)+'</span>').join('')+'</div>':'')+
           '</div>';
@@ -76,7 +90,7 @@ window.MysteryStudy=(function(){
     const invites=room.whispers?.proposals||[];
     const pos=room.players.find(p=>p.id===room.me)?.position;
     const mates=room.players.filter(p=>p.id!==room.me&&p.position?.floor===pos?.floor&&p.position?.x===pos?.x&&p.position?.y===pos?.y);
-    return '<section class="surface panel-pad whisper-panel"><div class="eyebrow">VOICE · PRIVATE CONVERSATION</div><h3>밀담</h3>'+
+    return '<section id="whisperPanel" class="surface panel-pad whisper-panel"><div class="eyebrow">VOICE · PRIVATE CONVERSATION</div><h3>밀담</h3>'+
       '<p class="muted small">'+(group?'현재 밀담 중: '+group.members.length+'명. 이 그룹의 음성은 외부인에게 전달되더라도 재생되지 않습니다.':'같은 타일의 사람들과 밀담을 시작하거나 기존 밀담 참여를 요청할 수 있습니다.')+'</p>'+
       (group?btn2('whisper-leave','밀담 나가기'):btn('whisper-request','밀담 요청','btn btn-outline btn-sm',!mates.length))+
       invites.map(p=>'<div class="whisper-invite"><span>'+(p.kind==='join'?'새 멤버 참여 요청':'밀담 시작 동의 요청')+' · '+p.yes.length+'/'+p.voters.length+'</span>'+
@@ -84,13 +98,19 @@ window.MysteryStudy=(function(){
           btn('whisper-no','거절','btn btn-outline btn-sm',false,'data-proposal="'+esc(p.id)+'"'):'<small>상대방의 응답을 기다리는 중</small>')+'</div>').join('')+'</section>';
   }
   function tileActions(room){
-    const inv=room.investigation,pos=room.players.find(p=>p.id===room.me)?.position;
-    const here=inv?.cards.filter(c=>c.location?.floor===pos?.floor&&c.location?.x===pos?.x&&c.location?.y===pos?.y&&!c.locked&&!c.taken&&!c.excluded)||[];
-    if(!inv)return '';
-    return '<p class="muted small">이 타일의 조사 정보</p>'+
+    const inv=room.investigation,pos=room.players.find(p=>p.id===room.me)?.position,m=room.map;
+    if(!pos||!m)return '';
+    const here=inv?.cards.filter(c=>c.location?.floor===pos.floor&&c.location?.x===pos.x&&c.location?.y===pos.y&&!c.locked&&!c.taken&&!c.excluded)||[];
+    const portals=(m.portals||[]).map((p,i)=>({...p,index:i})).filter(p=>p.x===pos.x&&p.y===pos.y);
+    const doors=(m.doors||[]).filter(d=>d.locked&&Math.abs(d.x-pos.x)+Math.abs(d.y-pos.y)<=1);
+    return '<div class="context-actions"><b>⌁ 주변 상호작용</b>'+
+      (portals.length?portals.map(p=>btn('interact','⇅ '+esc(p.label),'btn btn-primary btn-sm',false,'data-kind="portal" data-index="'+p.index+'"')).join(''):'')+
+      (doors.length?doors.map(d=>btn('interact','🔑 '+esc(d.name)+' 열기','btn btn-outline btn-sm',false,'data-kind="door" data-door="'+esc(d.id)+'"')).join(''):'')+
+      (!portals.length&&!doors.length?'<small class="muted">현재 사용할 수 있는 이동·문 액션이 없습니다.</small>':'')+'</div>'+
+      (inv?'<p class="muted small">이 타일의 조사 정보</p>'+
       (here.length?here.map(c=>btn('reserve','🔎 '+esc(c.title),'btn btn-outline btn-sm',
         (!!c.reservedBy&&c.reservedBy!==room.me)||inv.tokens<1,'data-card="'+esc(c.id)+'"')).join(''):
-      '<span class="muted small">현재 타일에 조사할 카드가 없습니다.</span>');
+      '<span class="muted small">현재 타일에 조사할 카드가 없습니다.</span>'):'');
   }
   function roster(room){
     const pos=room.players.find(p=>p.id===room.me)?.position;
@@ -100,7 +120,7 @@ window.MysteryStudy=(function(){
   function mapView(room){
     const inv=room.investigation;
     return '<div class="adventure-grid"><section class="surface panel-pad adventure-main"><div class="adventure-heading"><div class="eyebrow">WORLD MAP · '+esc(room.map?.floorId||'')+'</div><h2>'+esc(room.map?.title||'공용 건물')+'</h2>'+
-      '<p class="muted small">WASD / 방향키로 이동 · ⇅ 계단 타일로 층 이동 · 타일 최대 '+(room.map?.capacity||3)+'명</p></div>'+
+      '<p class="muted small">WASD / 방향키 이동 · 계단 위에서 상호작용 버튼으로 층 이동 · 타일 최대 '+(room.map?.capacity||3)+'명</p></div>'+
       '<div class="map-scroller big-map" tabindex="0">'+mapHtml(room)+'</div>'+
       '<div class="map-controls"><div class="dpad"><span></span>'+btn2('move','↑','data-direction="up"')+'<span></span>'+
       btn2('move','←','data-direction="left"')+btn2('move','↓','data-direction="down"')+btn2('move','→','data-direction="right"')+'</div>'+
@@ -148,6 +168,9 @@ window.MysteryStudy=(function(){
     const inventory=document.querySelector('.collected-items');
     if(inventory)inventory.innerHTML=(room.investigation?.collected?.length?'<b>조사로 획득한 물품</b>':'')+
       (room.investigation?.collected||[]).map(item=>'<p>⌑ '+esc(item.name)+' · '+esc(item.description)+'</p>').join('');
+    const whisperRoot=document.getElementById('whisperPanel');
+    if(whisperRoot){const tmp=document.createElement('div');tmp.innerHTML=whisper(room);
+      if(tmp.firstElementChild)whisperRoot.replaceWith(tmp.firstElementChild);}
     const ready=document.querySelector('[data-action="study-ready"]');
     if(ready)ready.disabled=!!room.players.find(p=>p.id===room.me)?.studyReady;
     return true;
