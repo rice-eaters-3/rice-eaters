@@ -383,7 +383,8 @@ document.addEventListener('keydown',e=>{
   try{
     const catalog=await api('/api/stories');
     state.stories=catalog.stories;
-    state.selectedStory=state.stories[0]?.id||null;
+    const preferred=new URLSearchParams(location.search).get('story');
+    state.selectedStory=state.stories.some(v=>v.id===preferred)?preferred:state.stories[0]?.id||null;
     const initialCode=new URLSearchParams(location.search).get('room');
     if(initialCode){
       try{state.room=await api('/api/rooms/'+encodeURIComponent(initialCode.toUpperCase()))}
