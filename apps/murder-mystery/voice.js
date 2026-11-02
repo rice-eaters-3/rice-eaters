@@ -126,8 +126,9 @@ window.MysteryVoice=(function(){
     muted=!muted;for(const track of stream?.getAudioTracks()||[])track.enabled=!muted;
   }
   function sync(r){
-    const previous=room?.code;room=r;
+    const previous=room?.code;
     if(previous&&previous!==r?.code)disable();
+    room=r;
     if(!valid()){if(enabled)disable();return}
     enforceOutgoingPrivacy();volumes();
   }
