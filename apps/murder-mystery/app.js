@@ -117,6 +117,7 @@ function updateRoom(room,connection,force=false){
   if(!changed)return;
   if(['study','investigation1'].includes(old?.phase)&&old.phase===room?.phase&&old.me===room.me&&
     old.players.find(p=>p.id===room.me)?.characterId===room.players.find(p=>p.id===room.me)?.characterId&&
+    old.map?.floorId===room.map?.floorId&&
     JSON.stringify(old.whispers)===JSON.stringify(room.whispers)){
     if(!window.MysteryStudy.patch(room))render();
   }else render();
