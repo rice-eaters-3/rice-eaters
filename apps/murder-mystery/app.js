@@ -2,8 +2,37 @@
 const $=id=>document.getElementById(id);
 const escapeHtml=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const isQuickTunnel=location.hostname.endsWith('.trycloudflare.com');
-const state={stories:[],room:null,busy:false,stream:null,streamRoom:null,pollTimer:null,pollRoom:null,pollBusy:false,pollDelay:0,moving:false,lastMoveAt:0,connection:'연결 중',name:localStorage.getItem('mystery_display_name')||''};
+const state={stories:[],room:null,busy:false,stream:null,streamRoom:null,pollTimer:null,pollRoom:null,pollBusy:false,pollDelay:0,moving:false,lastMoveAt:0,clockOffset:0,clockAlert:new Set(),connection:'연결 중',name:localStorage.getItem('mystery_display_name')||''};
 const phaseNames=['전체 시놉시스 안내','캐릭터 선택','캐릭터 숙지','1차 조사','1차 토론','2차 조사','2차 토론·최종 결정','행동','결말'];
+const phaseOrder=['synopsis','characters','study','investigation1','discussion1','investigation2','discussion2','action','ending'];
+window.MysteryRoomState=state;
+const clockFmt=seconds=>{const n=Math.max(0,Math.floor(seconds));return [Math.floor(n/3600),Math.floor(n%3600/60),n%60].map(v=>String(v).padStart(2,'0')).join(':')};
+function updateClockDisplay(){
+  const room=state.room,clock=room?.clock;
+  if(!clock)return;
+  const now=Date.now()+state.clockOffset;
+  const game=Math.max(0,(now-clock.gameStartedAt)/1000);
+  const elapsed=Math.max(0,(now-clock.phaseStartedAt)/1000);
+  const recommended=(clock.phaseMinutes[room.phase]||0)*60;
+  const over=recommended>0&&elapsed>=recommended;
+  const total=$('gameClock'),phase=$('phaseClock'),hint=$('phaseClockHint');
+  if(total)total.textContent=clockFmt(game);
+  if(phase){phase.textContent=(over?'+ ':'')+clockFmt(over?elapsed-recommended:recommended-elapsed);
+    phase.classList.toggle('overdue',over)}
+  if(hint)hint.textContent=over?'권장 시간 경과 · 계속 진행 가능':'권장 '+(clock.phaseMinutes[room.phase]||0)+'분';
+  const key=room.code+'-'+room.phase+'-'+clock.phaseStartedAt;
+  if(over&&!state.clockAlert.has(key)){
+    state.clockAlert.add(key);
+    toast('⏰ '+phaseNames[phaseOrder.indexOf(room.phase)]+' 권장 시간이 지났습니다. 계속 진행해도 됩니다.');
+  }
+}
+setInterval(updateClockDisplay,1000);
+function timerBar(room){
+  if(!room.clock)return '';
+  return '<div class="clock-ribbon"><div class="clock-unit"><span>전체 진행 시간</span><strong id="gameClock">00:00:00</strong></div>'+
+    '<div class="clock-unit"><span>'+escapeHtml(phaseNames[phaseOrder.indexOf(room.phase)]||'현재 단계')+' · 남은 권장 시간</span>'+
+    '<strong id="phaseClock">00:00:00</strong><small id="phaseClockHint"></small></div></div>';
+}
 function toast(message){
   const box=$('toast');box.textContent=message;box.classList.add('visible');
   clearTimeout(toast.timer);toast.timer=setTimeout(()=>box.classList.remove('visible'),4200);
@@ -46,7 +75,7 @@ async function pollRoom(){
 }
 function startPolling(){
   if(!state.room?.me){stopPolling();return}
-  const delay=state.room.phase==='study'&&state.room.map?850:2500;
+  const delay=['study','investigation1'].includes(state.room.phase)&&state.room.map?850:2500;
   if(state.pollTimer&&state.pollRoom===state.room.code&&state.pollDelay===delay)return;
   stopPolling();
   state.pollRoom=state.room.code;
@@ -79,20 +108,28 @@ function connectStream(){
 function updateRoom(room,connection,force=false){
   const old=state.room;
   const changed=force||JSON.stringify(old)!==JSON.stringify(room)||state.connection!==connection;
+  if(room.clock)state.clockOffset=room.clock.serverNow-Date.now();
+  if(old?.phase!==room.phase&&room.phase==='investigation1'&&window.MysteryStudy?.currentView()==='book')
+    window.MysteryStudy.navigate('book-toggle');
   state.room=room;
+  window.MysteryVoice?.sync(room);
   if(connection)state.connection=connection;
   if(!changed)return;
-  if(old?.phase==='study'&&room?.phase==='study'&&old.me===room.me&&old.players.find(p=>p.id===room.me)?.characterId===room.players.find(p=>p.id===room.me)?.characterId){
+  if(['study','investigation1'].includes(old?.phase)&&old.phase===room?.phase&&old.me===room.me&&
+    old.players.find(p=>p.id===room.me)?.characterId===room.players.find(p=>p.id===room.me)?.characterId&&
+    old.map?.floorId===room.map?.floorId&&
+    JSON.stringify(old.whispers)===JSON.stringify(room.whispers)){
     if(!window.MysteryStudy.patch(room))render();
   }else render();
+  updateClockDisplay();
   startPolling();
 }
 function setRoom(room){
   if(room){routeRoom(room.code);updateRoom(room,state.connection,true);connectStream()}
-  else{state.room=null;closeStream();stopPolling();history.replaceState(null,'','/mystery');render()}
+  else{window.MysteryVoice?.disable();state.room=null;closeStream();stopPolling();history.replaceState(null,'','/mystery');render()}
 }
 async function moveMyPlayer(direction){
-  if(state.room?.phase!=='study'||!state.room.map||state.moving)return;
+  if(!['study','investigation1'].includes(state.room?.phase)||!state.room.map||state.moving||window.MysteryStudy.currentView()==='book')return;
   if(!['up','down','left','right'].includes(direction))return;
   if(Date.now()-state.lastMoveAt<140)return;
   state.lastMoveAt=Date.now();
@@ -111,7 +148,7 @@ function btn(action,label,cls='btn',disabled=false,extra=''){
 }
 function stepper(room){
   if(room.phase==='lobby')return '';
-  const active=room.phase==='synopsis'?0:room.phase==='characters'?1:2;
+  const active=Math.max(0,phaseOrder.indexOf(room.phase));
   return '<div class="step-track" aria-label="게임 진행 단계">'+phaseNames.map((name,i)=>
     '<div class="step '+(i===active?'active':i<active?'done':'')+'" '+(i===active?'aria-current="step"':'')+'><strong>'+String(i+1).padStart(2,'0')+'</strong>'+escapeHtml(name)+'</div>'
   ).join('')+'</div>';
@@ -139,9 +176,9 @@ function home(){
     '</section></div>';
 }
 function roomHeader(room){
-  return '<div class="room-header surface"><div><div class="eyebrow" style="margin:0 0 6px">CASE FILE 001 / '+(room.phase==='lobby'?'WAITING ROOM':room.phase==='synopsis'?'PROLOGUE':'CASTING')+'</div>'+
+  return '<div class="room-header surface"><div><div class="eyebrow" style="margin:0 0 6px">CASE FILE 001 / '+escapeHtml(room.phase.toUpperCase())+'</div>'+
     '<h1>'+escapeHtml(room.story.title)+'</h1></div><div class="room-head-right"><div class="code-box"><small>ROOM CODE</small><strong>'+escapeHtml(room.code)+'</strong></div>'+
-    btn('copy','초대 링크 복사','btn btn-outline btn-sm')+'</div></div>'+stepper(room);
+    btn('copy','초대 링크 복사','btn btn-outline btn-sm')+'</div></div>'+timerBar(room)+stepper(room);
 }
 function players(room){
   const filled=room.players.map((p,i)=>
@@ -234,6 +271,7 @@ function render(){
   if(!room.me){root.innerHTML=preview(room);return}
   root.innerHTML='<div class="status-strip"><span>◉ '+escapeHtml(state.connection)+' · 참가자별 독립 세션</span><span>새로고침해도 방에 다시 연결됩니다.</span></div>'+
     (room.phase==='lobby'?lobby(room):room.phase==='synopsis'?synopsis(room):room.phase==='characters'?characters(room):window.MysteryStudy.render(room));
+  updateClockDisplay();
 }
 function nameFromInput(){
   const name=($('displayName')?.value||state.name).trim().slice(0,18);
@@ -243,6 +281,17 @@ function nameFromInput(){
 }
 async function perform(action,button){
   if(action==='move'){await moveMyPlayer(button.dataset.direction);return;}
+  if(['book-toggle','book-chapter','book-prev','book-next'].includes(action)){
+    window.MysteryStudy.navigate(action,button.dataset.chapter);render();return;
+  }
+  if(['voice-on','voice-off','voice-mute'].includes(action)){
+    try{
+      if(action==='voice-on')await window.MysteryVoice.enable();
+      if(action==='voice-off')window.MysteryVoice.disable();
+      if(action==='voice-mute')window.MysteryVoice.toggleMute();
+    }catch(e){toast(e.message)}
+    render();return;
+  }
   if(state.busy)return;
   state.busy=true;
   button.disabled=true;
@@ -268,6 +317,17 @@ async function perform(action,button){
     } else if(action==='character'){
       const characterId=button.dataset.character;
       setRoom(await api('/api/rooms/'+code+'/character','POST',{characterId}));
+    } else if(['reserve','release','investigate'].includes(action)){
+      const cardId=button.dataset.card||room?.investigation?.cards.find(c=>c.reservedBy===room.me)?.id;
+      if(!cardId)throw Error('조사할 카드를 선택해주세요.');
+      if(action==='investigate'&&!window.confirm('조사 토큰 1개를 사용해 카드 뒷면을 확인할까요?'))return;
+      const result=await api('/api/rooms/'+code+'/'+action,'POST',{cardId});
+      updateRoom(result,state.connection,true);
+      if(action==='investigate')toast('카드 조사를 완료했습니다. 뒷면이 공개되었습니다.');
+    }else if(['whisper-request','whisper-leave','whisper-yes','whisper-no'].includes(action)){
+      const target=action==='whisper-request'?'whisper-request':action==='whisper-leave'?'whisper-leave':'whisper-vote';
+      const payload=target==='whisper-vote'?{proposalId:button.dataset.proposal,accept:action==='whisper-yes'}:{};
+      updateRoom(await api('/api/rooms/'+code+'/'+target,'POST',payload),state.connection,true);
     } else if(action==='copy'){
       const address=inviteUrl(code);
       if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(address);toast(['localhost','127.0.0.1'].includes(location.hostname)?'링크를 복사했습니다. 다른 기기에서는 localhost를 서버 PC의 LAN IP로 바꿔주세요.':'초대 링크를 복사했습니다.')}
@@ -281,7 +341,13 @@ $('app').addEventListener('click',e=>{
   if(button)perform(button.dataset.action,button);
 });
 document.addEventListener('keydown',e=>{
-  if(state.room?.phase==='study'&&state.room.map&&!e.altKey&&!e.metaKey&&!e.ctrlKey){
+  if(['study','investigation1'].includes(state.room?.phase)&&!e.altKey&&!e.metaKey&&!e.ctrlKey){
+    const tag=e.target?.tagName?.toLowerCase();
+    if(e.key.toLowerCase()==='i'&&!['input','textarea','select'].includes(tag)&&!e.target?.isContentEditable){
+      e.preventDefault();window.MysteryStudy.navigate('book-toggle');render();return;
+    }
+  }
+  if(['study','investigation1'].includes(state.room?.phase)&&state.room.map&&!e.altKey&&!e.metaKey&&!e.ctrlKey){
     const tag=e.target?.tagName?.toLowerCase();
     if(!['input','textarea','select'].includes(tag)&&!e.target?.isContentEditable){
       const direction={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right',
@@ -303,6 +369,7 @@ document.addEventListener('keydown',e=>{
       try{state.room=await api('/api/rooms/'+encodeURIComponent(initialCode.toUpperCase()))}
       catch(err){toast(err.message);history.replaceState(null,'','/mystery')}
     }
+    if(state.room)window.MysteryVoice?.sync(state.room);
     render();startPolling();connectStream();
   }catch(err){
     $('app').innerHTML='<div class="surface panel-pad"><h2>서버 연결 실패</h2><p class="muted">'+escapeHtml(err.message)+'</p><p>Node 서버가 실행 중인지 확인해주세요.</p></div>';

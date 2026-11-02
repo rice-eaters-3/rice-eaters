@@ -100,6 +100,17 @@ test('server: four-player mystery flow, persistence, and Mars save endpoints',as
   assert.equal(start.status,200);
   assert.equal(start.data.phase,'synopsis');
   assert.equal(start.data.synopsis.length,3);
+  assert.ok(start.data.clock.gameStartedAt>0);
+  assert.equal(start.data.clock.phaseMinutes.synopsis,5);
+  assert.equal(start.data.clock.phaseMinutes.characters,5);
+  assert.equal(start.data.clock.phaseMinutes.study,20);
+  assert.equal(start.data.clock.phaseMinutes.investigation1,20);
+  assert.equal(start.data.clock.phaseMinutes.discussion1,15);
+  assert.equal(start.data.clock.phaseMinutes.investigation2,20);
+  assert.equal(start.data.clock.phaseMinutes.discussion2,20);
+  assert.equal(start.data.clock.phaseMinutes.action,10);
+  assert.equal(start.data.clock.phaseMinutes.ending,15);
+  assert.equal(start.data.clock.phaseStartedAt,start.data.clock.gameStartedAt);
   const peekAfterStart=await call(clients[4],'/api/rooms/'+code);
   assert.equal(peekAfterStart.data.synopsis,null,'synopsis is members-only');
   for(let i=0;i<3;i++){
@@ -169,9 +180,91 @@ test('server: four-player mystery flow, persistence, and Mars save endpoints',as
     assert.equal(ack.data.players.filter(p=>p.studyReady).length,i+1);
   }
   const afterReady=await call(clients[0],'/api/rooms/'+code);
-  assert.equal(afterReady.data.phase,'study','phase 4 not yet implemented');
+  assert.equal(afterReady.data.phase,'investigation1','all four ready starts investigation1');
+  assert.equal(afterReady.data.clock.phaseMinutes.investigation1,20);
+  assert.ok(afterReady.data.clock.phaseStartedAt>=start.data.clock.phaseStartedAt);
+  assert.equal(afterReady.data.investigation.tokens,4,'four tokens allocated');
+  assert.ok(afterReady.data.investigation.cards.find(c=>c.id==='desk'));
+  assert.ok(!afterReady.data.investigation.cards.find(c=>c.id==='desk_corner'),'hidden prerequisite card not listed');
+  assert.equal(afterReady.data.investigation.cards.find(c=>c.id==='elena_belongings').excluded,true);
+  assert.equal(afterReady.data.investigation.cards.find(c=>c.id==='archives').locked,true);
+  assert.equal((await post(clients[0],'/api/rooms/'+code+'/study-ready')).status,409,'study stage cannot repeat');
+  assert.equal((await post(clients[0],'/api/rooms/'+code+'/reserve',{cardId:'elena_belongings'})).status,403,'cannot investigate own belongings');
+  const firstReservation=await post(clients[0],'/api/rooms/'+code+'/reserve',{cardId:'desk'});
+  assert.equal(firstReservation.status,200);
+  assert.equal(firstReservation.data.investigation.cards.find(c=>c.id==='desk').reservedBy,final.data.me);
+  assert.equal((await post(clients[1],'/api/rooms/'+code+'/reserve',{cardId:'desk'})).status,409,'server rejects competing reservation');
+  assert.equal((await post(clients[1],'/api/rooms/'+code+'/investigate',{cardId:'desk'})).status,409,'cannot bypass reservation');
+  const revealed=await post(clients[0],'/api/rooms/'+code+'/investigate',{cardId:'desk'});
+  assert.equal(revealed.status,200);
+  assert.equal(revealed.data.investigation.tokens,3,'one token consumed exactly once');
+  assert.equal(revealed.data.investigation.cards.find(c=>c.id==='desk').revealed.length,1,'investigator sees back');
+  assert.equal(revealed.data.investigation.collected[0].name,'검은 봉투','item reward added to inventory');
+  assert.ok(revealed.data.investigation.cards.some(c=>c.id==='desk_corner'),'prerequisite unlocks hidden card');
+  const otherCards=(await call(clients[1],'/api/rooms/'+code)).data.investigation.cards;
+  assert.equal(otherCards.find(c=>c.id==='desk').taken,true,'claimed card is greyed out globally');
+  assert.deepEqual(otherCards.find(c=>c.id==='desk').revealed,[],'other player never receives investigation back');
+  assert.equal((await post(clients[1],'/api/rooms/'+code+'/reserve',{cardId:'desk'})).status,409,'duplicate investigation forbidden');
+  const release=await post(clients[1],'/api/rooms/'+code+'/reserve',{cardId:'photo'});
+  assert.equal(release.status,200);
+  assert.equal((await post(clients[1],'/api/rooms/'+code+'/release',{cardId:'photo'})).status,200);
+  assert.equal((await post(clients[2],'/api/rooms/'+code+'/reserve',{cardId:'photo'})).status,200,'released card can be claimed by another');
   assert.equal(afterReady.data.players.filter(p=>p.studyReady).length,4);
-  assert.equal((await post(clients[0],'/api/rooms/'+code+'/study-ready')).data.players.filter(p=>p.studyReady).length,4,'ready is idempotent');
+  assert.equal((await post(clients[0],'/api/rooms/'+code+'/reserve',{cardId:'nonexistent'})).status,404);
+  assert.equal((await post(clients[4],'/api/rooms/'+code+'/reserve',{cardId:'photo'})).status,403,'outsiders cannot reserve cards');
+  assert.equal((await post(clients[0],'/api/rooms/'+code+'/whisper-request')).status,409,'one person alone cannot whisper');
+  assert.equal((await post(clients[0],'/api/rooms/'+code+'/signal',{to:'not-a-member',type:'offer',payload:{sdp:{}}})).status,400);
+  const hello=await post(clients[0],'/api/rooms/'+code+'/signal',{to:afterReady.data.players[1].id,type:'hello',payload:{}});
+  assert.equal(hello.status,200);
+  const signal=await call(clients[1],'/api/rooms/'+code+'/signals?after=0');
+  assert.equal(signal.status,200);
+  assert.equal(signal.data.signals[0].from,afterReady.data.me);
+  assert.equal((await call(clients[4],'/api/rooms/'+code+'/signals?after=0')).status,403);
+
+  // Simultaneous selections must have exactly one winner.
+  const [raceA,raceB]=await Promise.all([
+    post(clients[0],'/api/rooms/'+code+'/reserve',{cardId:'dining'}),
+    post(clients[1],'/api/rooms/'+code+'/reserve',{cardId:'dining'})
+  ]);
+  assert.deepEqual([raceA.status,raceB.status].sort(),[200,409],
+    'concurrent card race has one winner');
+  await post(clients[raceA.status===200?0:1],'/api/rooms/'+code+'/release',{cardId:'dining'});
+
+  async function walk(i,moves){
+    for(const direction of moves){
+      const result=await post(clients[i],'/api/rooms/'+code+'/move',{direction});
+      assert.equal(result.status,200,'walk '+direction+' succeeds: '+JSON.stringify(result.data));
+      await new Promise(resolve=>setTimeout(resolve,145));
+    }
+  }
+  // Character 1 traverses the stairs from ground to upper floor.
+  await walk(1,['down','down','left','left','left','left']);
+  const upstairs=(await call(clients[1],'/api/rooms/'+code)).data;
+  assert.equal(upstairs.map.floorId,'upper','stepping on stairs changes map floor');
+  assert.equal(upstairs.players.find(p=>p.id===upstairs.me).position.floor,'upper');
+  assert.ok(!((await call(clients[0],'/api/rooms/'+code)).data.map.avatars.some(p=>p.id===upstairs.me)),
+    'different-floor avatars do not appear on ground floor');
+  // Elena and Iris meet on the dining room floor and start a unanimous whisper.
+  await walk(0,['right','down','down','right','down','down','down','down']);
+  await walk(2,['right']);
+  const joinedPos=(await call(clients[0],'/api/rooms/'+code)).data.players;
+  assert.deepEqual(joinedPos.find(p=>p.id===final.data.me).position,
+    {floor:'ground',x:3,y:9});
+  const request=await post(clients[0],'/api/rooms/'+code+'/whisper-request');
+  assert.equal(request.status,200);
+  const proposal=request.data.whispers.proposals[0];
+  assert.equal(proposal.yes.length,1,'requester self-approves');
+  assert.equal(proposal.voters.length,2,'same-tile peers vote');
+  assert.equal((await post(clients[1],'/api/rooms/'+code+'/whisper-vote',
+    {proposalId:proposal.id,accept:true})).status,403,'remote players cannot vote');
+  const voting=await post(clients[2],'/api/rooms/'+code+'/whisper-vote',
+    {proposalId:proposal.id,accept:true});
+  assert.equal(voting.status,200);
+  assert.equal(voting.data.whispers.groups[0].members.length,2,'unanimity creates private group');
+  await walk(0,['left']);
+  assert.equal((await call(clients[2],'/api/rooms/'+code)).data.whispers.groups.length,0,
+    'leaving the shared tile automatically ends one-to-one whisper');
+
   // SSE still works: all updates are serialized through each member's own view.
   assert.equal(final.data.booklet.basic.name,'엘레나 블랙우드');
 
@@ -188,11 +281,12 @@ test('server: four-player mystery flow, persistence, and Mars save endpoints',as
   assert.equal((await call(clients[0],'/api/mars/data')).data.progress,null);
   assert.equal((await call(clients[0],'/data/state.json')).status,403,'server state must remain private');
   const diskState=JSON.parse(fs.readFileSync(path.join(directory,'state.json'),'utf8'));
-  assert.equal(diskState.rooms[code].phase,'study');
-  assert.equal(diskState.rooms[code].mapPositions[final.data.me].x,1);
+  assert.equal(diskState.rooms[code].phase,'investigation1');
+  assert.equal(diskState.rooms[code].investigation.tokens[final.data.me],3);
+  assert.equal(diskState.rooms[code].mapPositions[final.data.me].x,2,'position after leaving whisper tile');
   assert.equal(diskState.mars[clients[0].cookie.split('=')[1]].records[0].score,42);
   const log=fs.readFileSync(path.join(directory,'activity.jsonl'),'utf8');
-  for(const action of ['room_created','room_joined','game_started','synopsis_read','character_selected','phase_study','study_ready','mars_records_saved']){
+  for(const action of ['room_created','room_joined','game_started','synopsis_read','character_selected','phase_study','study_ready','phase_investigation1','card_investigated','mars_records_saved']){
     assert.ok(log.includes('"action":"'+action+'"'),'logged event '+action);
   }
 });

@@ -121,3 +121,66 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(-
 @media(max-width:600px){.book-cover{padding:30px 17px}.book-cover h2{font-size:33px}.book-toc{padding:15px;grid-template-columns:1fr 1fr;gap:6px}.book-toc a{font-size:11px;padding:6px}.book-section{padding:27px 18px}.book-section p{font-size:15px}.book-identity{align-items:start;gap:12px}.book-portrait{flex-basis:55px;height:70px;font-size:32px}.timeline li{grid-template-columns:60px 1fr;gap:5px;padding-left:12px}.study-aside .panel-pad{padding:16px}.map-tiles{grid-template-columns:repeat(var(--map-width),32px);grid-auto-rows:32px}}
 
 .personal-note{margin-top:20px;padding:17px 18px;border-left:3px solid #9a694b;background:#dcc5a3;color:#604532}.personal-note>b{display:block;font-size:13px;margin-bottom:7px}.personal-note p{font-size:14px;margin:0;line-height:1.85}
+
+
+/* Phase clocks: anchored above the phase tracker on every playing screen. */
+.clock-ribbon{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0 15px}
+.clock-unit{display:flex;flex:1;min-width:230px;gap:13px;align-items:center;justify-content:space-between;padding:11px 22px;background:#161f2ddf;border:1px solid #8c6c445b;border-radius:9px;box-shadow:inset 3px 0 #e1b779}
+.clock-unit span{color:#c8ba9e;font-size:12px;font-weight:700}.clock-unit strong{font:700 24px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.055em;color:#f4d39b;font-variant-numeric:tabular-nums}
+.clock-unit small{font-size:10px;color:#a5b7c0}.clock-unit strong.overdue{color:#ffad96}
+
+/* RPG: map takes precedence, dossier is an explicit alternate screen. */
+.adventure-grid{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(310px,.85fr);gap:18px;align-items:start}
+.adventure-main{min-width:0;background:linear-gradient(145deg,#1a2733,#141d28);padding:24px!important}
+.adventure-heading h2{font-size:28px;margin-bottom:5px}.adventure-side{display:grid;gap:15px;min-width:0}
+.adventure-side .panel-pad{padding:20px}.adventure-side h3{font-size:21px;margin:0 0 8px;color:#f5dfb5}
+.big-map{min-height:360px;display:flex;align-items:center;justify-content:center;margin:20px 0 10px;padding:20px;background:radial-gradient(circle at 50% 45%,#584a3d 0%,#1b2330 85%);border:2px solid #ab9069}
+.big-map .map-tiles{grid-template-columns:repeat(var(--map-width),minmax(30px,2.1vw));grid-auto-rows:minmax(30px,2.1vw);max-width:none}
+.big-map .map-tile{min-width:30px;min-height:30px}.map-tile.portal{background:#a48b63!important;box-shadow:inset 0 0 0 2px #d9caa0}
+.map-tile.investigable:after{content:'✦';position:absolute;bottom:-3px;right:0;color:#f5e1a2;text-shadow:0 0 6px #22140e;font-size:13px;z-index:1;pointer-events:none}
+.portal-sigil{position:absolute;bottom:1px;left:2px;font-size:14px;color:#fff3cb;text-shadow:0 1px 3px #503c24}
+.map-controls{display:flex;align-items:center;flex-wrap:wrap;justify-content:space-evenly;gap:16px}
+.map-action-column{display:flex;align-items:flex-start;flex-direction:column;gap:8px;max-width:330px}
+.map-action-column button{white-space:normal;text-align:left}.map-controls .dpad{grid-template-columns:repeat(3,48px)}
+.map-controls .dpad .btn{padding:0;width:48px;height:46px;font-size:18px}
+.roster-chip{display:inline-block;border:1px solid #556779;border-radius:15px;padding:4px 10px;margin:5px;font-size:11px;background:#203244;color:#d6e2ed}
+.roster-chip.off-floor{opacity:.55}.token-count{display:inline-block;border:2px solid #a98956;color:#f2d19a;background:#292738;padding:5px 15px;border-radius:100px;font:800 29px Georgia,serif}
+.voice-status{display:block;margin:9px 0;font-size:12px;color:#89cdae}.adventure-side button{margin:4px 3px 4px 0}
+.whisper-panel{border:1px solid #7d6790}.whisper-invite{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin-top:12px;border:1px solid #6c6282;background:#312b42;padding:10px;border-radius:8px;font-size:12px}
+.whisper-invite small{color:#baaed6}
+
+/* Seven-chapter folio: one page displayed at a time (no infinite booklet scroll). */
+.book-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:15px}
+.book-top h2{font-size:28px;margin:0}.book-layout{display:grid;grid-template-columns:minmax(180px,.27fr) minmax(0,1fr);gap:15px;align-items:start}
+.book-index{display:grid;gap:6px;background:#1a2533;padding:13px;border:1px solid #6d604f;border-radius:9px}
+.index-tab{border:1px solid #414f5c;background:#242e3a;color:#e8d9c2;border-radius:6px;text-align:left;padding:12px 10px;font-size:13px}
+.index-tab:hover,.index-tab.selected{background:#544433;color:#ffebc8;border-color:#dcb67f}
+.folio{background:linear-gradient(135deg,#f3e7d0,#e5d2b1);color:#423326;border:2px solid #c0a57d;box-shadow:0 13px 42px #0005;border-radius:7px;min-height:545px;display:flex;flex-direction:column;padding:22px 32px}
+.folio-top{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid #bba17d;padding-bottom:12px;font:700 11px Georgia,serif;letter-spacing:.16em;color:#94704e}
+.folio-content{flex:1;max-width:790px;width:100%;margin:35px auto 20px}
+.folio-content h3{font:700 38px/1.4 'Gowun Batang',serif;color:#47372b;margin:0 0 26px}
+.folio-content h4{font:700 25px/1.5 'Gowun Batang',serif;color:#5e4836;margin:7px 0 20px}
+.folio-content p{font:19px/2.05 'Gowun Batang',Georgia,serif;word-break:keep-all}
+.folio-content .verdict{max-width:550px}.folio .book-identity{margin-top:18px}
+.folio-bottom{border-top:1px solid #bba17d;padding-top:15px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.folio-bottom small{color:#826951}.folio-bottom .btn{color:#efe6d6;background:#5a4837;border-color:#92704a}
+
+/* Card fronts echo printed mystery-party cards, with optional reverse face. */
+.research-sidebar{min-width:0}.research-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:13px}
+.research-card{padding:7px;background:#9380a3;border-radius:9px;box-shadow:0 4px 14px #0007;transition:opacity .2s,transform .15s}
+.research-card:hover{transform:translateY(-2px)}
+.research-frame{border-radius:5px;border:2px solid #e7dbea;padding:13px 12px;background:linear-gradient(140deg,#f5f0df,#e7e2d6);color:#4c4450;min-height:220px;display:flex;flex-direction:column;text-align:center}
+.research-meta{font:700 9px Georgia,serif;letter-spacing:.1em;color:#8b7896}
+.research-emblem{font-size:46px;color:#8f7d9b;line-height:1.4;margin:8px auto}
+.research-frame h4{font:700 18px 'Gowun Batang',serif;margin:0 0 5px;color:#4b4053;word-break:keep-all}
+.research-frame>p{font-size:11px;line-height:1.5;margin:3px 0 10px;color:#75697c}
+.research-status{font-size:10px;font-weight:700;color:#795d86;margin:auto 0 10px}
+.research-frame .btn{padding:6px 10px;white-space:normal;margin:2px;font-size:11px}
+.research-taken{filter:grayscale(.9);opacity:.65}
+.research-locked{opacity:.7}.research-back{background:#e5d8c4;color:#463a2f;padding:14px 10px;margin:6px 0 11px;border:1px dashed #9d8264;border-radius:5px;text-align:left}
+.research-back b{display:block;font-size:12px}.research-back p{font:13px/1.7 'Gowun Batang',serif}
+.research-buttons{display:flex;flex-wrap:wrap;justify-content:center}
+.time-stamp{font:700 24px ui-monospace,monospace;color:#906d4e;margin-bottom:20px}
+@media(max-width:1000px){.adventure-grid{grid-template-columns:1fr}.adventure-side{grid-template-columns:repeat(2,minmax(0,1fr))}.research-sidebar{grid-column:1/-1}.research-grid{grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}}
+@media(max-width:680px){.adventure-main{padding:15px!important}.adventure-side{grid-template-columns:1fr}.clock-unit{min-width:100%;padding:11px}.big-map{min-height:240px;padding:8px;justify-content:flex-start}.big-map .map-tiles{grid-template-columns:repeat(var(--map-width),30px);grid-auto-rows:30px}
+.book-layout{grid-template-columns:1fr}.book-index{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}.index-tab{font-size:11px;padding:8px}.folio{min-height:490px;padding:17px}.folio-content{margin:23px auto}.folio-content h3{font-size:29px}.folio-content p{font-size:16px}.folio-bottom .btn{font-size:12px;padding:7px}}
