@@ -109,6 +109,8 @@ function updateRoom(room,connection,force=false){
   const old=state.room;
   const changed=force||JSON.stringify(old)!==JSON.stringify(room)||state.connection!==connection;
   if(room.clock)state.clockOffset=room.clock.serverNow-Date.now();
+  if(old?.phase!==room.phase&&room.phase==='investigation1'&&window.MysteryStudy?.currentView()==='book')
+    window.MysteryStudy.navigate('book-toggle');
   state.room=room;
   window.MysteryVoice?.sync(room);
   if(connection)state.connection=connection;
