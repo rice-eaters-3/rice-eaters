@@ -110,8 +110,8 @@ window.MysteryStudy=(function(){
       '<aside class="adventure-side"><section class="surface panel-pad"><div class="eyebrow">PERSONAL RESOURCES</div>'+
       '<h3>조사 토큰 <span class="token-count">'+(inv?inv.tokens:'—')+'</span></h3>'+
       (inv?'<p class="muted small">조사 카드 선택 → 조사 실행 시 토큰 1개가 소모됩니다.</p>'+
-        (inv.collected?.length?'<div class="collected-items"><b>조사로 획득한 물품</b>'+
-          inv.collected.map(item=>'<p>⌑ '+esc(item.name)+' · '+esc(item.description)+'</p>').join('')+'</div>':''):
+        '<div class="collected-items">'+(inv.collected?.length?'<b>조사로 획득한 물품</b>'+
+          inv.collected.map(item=>'<p>⌑ '+esc(item.name)+' · '+esc(item.description)+'</p>').join(''):'')+'</div>':
         '<p class="muted small">1차 조사 단계에서 조사 토큰이 지급됩니다.</p>')+'</section>'+
       '<section class="surface panel-pad">'+(window.MysteryVoice?.controls()||'<p>음성 준비 중</p>')+'</section>'+whisper(room)+
       (room.phase==='study'?'<section class="surface panel-pad"><h3>캐릭터 숙지 확인</h3><p class="small">'+room.players.filter(p=>p.studyReady).length+' / '+room.players.length+'명 확인</p>'+
@@ -146,8 +146,8 @@ window.MysteryStudy=(function(){
     const text=document.querySelector('.token-count');
     if(text)text.textContent=room.investigation?.tokens??'—';
     const inventory=document.querySelector('.collected-items');
-    if(inventory)inventory.innerHTML='<b>조사로 획득한 물품</b>'+ (room.investigation?.collected||[])
-      .map(item=>'<p>⌑ '+esc(item.name)+' · '+esc(item.description)+'</p>').join('');
+    if(inventory)inventory.innerHTML=(room.investigation?.collected?.length?'<b>조사로 획득한 물품</b>':'')+
+      (room.investigation?.collected||[]).map(item=>'<p>⌑ '+esc(item.name)+' · '+esc(item.description)+'</p>').join('');
     const ready=document.querySelector('[data-action="study-ready"]');
     if(ready)ready.disabled=!!room.players.find(p=>p.id===room.me)?.studyReady;
     return true;
