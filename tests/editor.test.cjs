@@ -65,7 +65,7 @@ test('editor JSON import validation, creator-only secrets, room play, manual por
    'Content-Type':'application/json','X-Forwarded-For':'203.0.113.9'
  },body:JSON.stringify({package:scenario()})});
  assert.equal(proxied.status,403,'Cloudflare-style forwarded client must not be able to publish secrets');
- const externalHost=await fetch(base+'/api/editor/own',{headers:{Host:'public.trycloudflare.com'}});
+ const externalHost=await fetch(base+'/api/editor/own',{headers:{'X-Forwarded-Host':'public.trycloudflare.com'}});
  assert.equal(externalHost.status,403,'public tunnel host cannot open local author manuscripts');
  const pkg=scenario();
  const invalid=scenario();invalid.game.floors[0].portals[0].toX=99;
