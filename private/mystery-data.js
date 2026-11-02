@@ -159,7 +159,7 @@ const investigation={
   maxTileOccupants:3,
   cards:[
     {id:'desk',title:'서재의 책상',subtitle:'서재 · 사건 현장',type:'place',location:{floor:'ground',x:11,y:2},
-      back:'책상 아래에 검은 잉크가 묻은 봉투가 있다. 봉투 안에는 에드워드가 미처 끝내지 못한 증언서가 들어 있다.',repeatable:false},
+      back:'책상 아래에 검은 잉크가 묻은 봉투가 있다. 봉투 안에는 에드워드가 미처 끝내지 못한 증언서가 들어 있다.',grant:{id:'sealed-envelope',name:'검은 봉투',description:'에드워드의 마지막 증언이 담긴 봉투'},repeatable:false},
     {id:'desk_corner',title:'책상 속 비밀 서랍',subtitle:'서재 · 숨겨진 수납 공간',type:'place',location:{floor:'ground',x:11,y:2},
       requires:['desk'],visibility:'hidden',
       back:'서랍 안쪽에는 6년 전 화재 보고서와 관리인의 지문이 남은 촛대 사진이 있다.',repeatable:false},
