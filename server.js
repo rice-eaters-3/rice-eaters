@@ -449,6 +449,117 @@ async function api(req,res,url,sid){
     persist();sendState(room);
     return json(res,200,roomView(room,sid));
   }
+  if(action==='reserve'||action==='release'||action==='investigate'){
+    if(room.phase!=='investigation1')fail(409,'1차 조사 단계가 아닙니다.');
+    const spec=gameFor(room).investigation;
+    const card=spec?.cards.find(c=>c.id===body.cardId);
+    if(!card)fail(404,'조사 카드를 찾을 수 없습니다.');
+    const data=room.investigation;
+    const held=activeReservation(room,card.id),mine=held?.playerId===player.id;
+    if(action==='release'){
+      if(mine){delete data.reserved[card.id];persist();sendState(room)}
+      return json(res,200,roomView(room,sid));
+    }
+    if(!cardUnlocked(card,room))fail(409,'해금 조건을 충족하지 않았습니다.');
+    if(card.owner===player.characterId||(card.blockedFor||[]).includes(player.characterId))
+      fail(403,'이 캐릭터는 해당 카드를 조사할 수 없습니다.');
+    if((data.discovered[card.id]||[]).length&&!card.repeatable)
+      fail(409,'이미 다른 플레이어가 조사한 카드입니다.');
+    if((data.tokens[player.id]||0)<1)fail(409,'조사 토큰이 부족합니다.');
+    if(held&&!mine)fail(409,'다른 플레이어가 먼저 선점한 카드입니다.');
+    if(action==='reserve'){
+      data.reserved[card.id]={playerId:player.id,expiresAt:Date.now()+reservationTtl};
+      persist();sendState(room);
+      return json(res,200,roomView(room,sid));
+    }
+    if(!mine)fail(409,'먼저 카드를 선택해 선점해야 합니다.');
+    // Consume the sole reservation and token synchronously before returning.
+    // Node's event loop executes these mutations atomically between awaits.
+    delete data.reserved[card.id];
+    data.tokens[player.id]--;
+    data.discovered[card.id] ||= [];
+    data.discovered[card.id].push({playerId:player.id,at:Date.now()});
+    if(card.grant){
+      data.collected[player.id] ||= [];
+      data.collected[player.id].push(card.grant);
+    }
+    logActivity('card_investigated',sid,{room:room.id,card:card.id});
+    persist();sendState(room);
+    return json(res,200,roomView(room,sid));
+  }
+  if(action==='signal'){
+    if(!['study','investigation1'].includes(room.phase))fail(409,'현재 음성 통화 단계가 아닙니다.');
+    const target=room.players.find(p=>p.id===body.to);
+    if(!target||target.id===player.id)fail(400,'유효하지 않은 수신자입니다.');
+    if(!['offer','answer','ice'].includes(body.type))fail(400,'유효하지 않은 신호 형식입니다.');
+    if(!body.payload||typeof body.payload!=='object'||JSON.stringify(body.payload).length>16000)
+      fail(400,'신호 데이터가 잘못되었습니다.');
+    const history=signals.get(room.id)||[];
+    const seq=(history[history.length-1]?.id||0)+1;
+    history.push({id:seq,from:player.id,to:target.id,type:body.type,payload:body.payload});
+    if(history.length>300)history.splice(0,history.length-300);
+    signals.set(room.id,history);
+    return json(res,200,{ok:true});
+  }
+  if(['whisper-request','whisper-vote','whisper-leave'].includes(action)){
+    if(!['study','investigation1'].includes(room.phase))fail(409,'현재 밀담을 사용할 수 없습니다.');
+    const ws=whisperState(room);pruneWhispers(room);
+    const pos=positionFor(room,player);
+    if(!pos)fail(409,'지도 위치가 없습니다.');
+    const here=g=>g.floor===pos.floor&&g.x===pos.x&&g.y===pos.y;
+    const group=ws.groups.find(g=>g.members.includes(player.id));
+    if(action==='whisper-leave'){
+      if(group)group.members=group.members.filter(id=>id!==player.id);
+      ws.groups=ws.groups.filter(g=>g.members.length>=2);
+      ws.proposals=ws.proposals.filter(p=>p.candidate!==player.id&&!p.voters.includes(player.id));
+      persist();sendState(room);return json(res,200,roomView(room,sid));
+    }
+    if(action==='whisper-request'){
+      if(group)fail(409,'이미 밀담 중입니다.');
+      const active=ws.groups.find(here),playersHere=tilePlayers(room,pos);
+      if(active){
+        if(active.members.length>=(gameFor(room).investigation?.maxTileOccupants||3))
+          fail(409,'밀담 최대 인원에 도달했습니다.');
+        if(ws.proposals.some(p=>p.groupId===active.id))fail(409,'이미 진행 중인 밀담 승인 요청이 있습니다.');
+        ws.proposals.push({id:randomId(5),kind:'join',groupId:active.id,candidate:player.id,
+          floor:pos.floor,x:pos.x,y:pos.y,voters:[...active.members],yes:[],expiresAt:Date.now()+60000});
+      }else{
+        if(playersHere.length<2)fail(409,'같은 타일에 다른 사람이 있어야 밀담을 시작할 수 있습니다.');
+        if(ws.proposals.some(p=>p.kind==='create'&&here(p)))fail(409,'이 타일에는 이미 밀담 요청이 있습니다.');
+        const voters=playersHere.filter(p=>!ws.groups.some(g=>g.members.includes(p.id))).map(p=>p.id);
+        ws.proposals.push({id:randomId(5),kind:'create',candidate:player.id,
+          floor:pos.floor,x:pos.x,y:pos.y,voters,yes:[player.id],expiresAt:Date.now()+60000});
+      }
+    }else{
+      const proposal=ws.proposals.find(p=>p.id===body.proposalId);
+      if(!proposal||!proposal.voters.includes(player.id))fail(403,'밀담 승인 권한이 없습니다.');
+      if(!here(proposal))fail(409,'밀담 타일 밖에서는 승인할 수 없습니다.');
+      if(body.accept!==true){
+        ws.proposals=ws.proposals.filter(p=>p!==proposal);
+      }else{
+        if(!proposal.yes.includes(player.id))proposal.yes.push(player.id);
+        if(proposal.voters.every(id=>proposal.yes.includes(id))){
+          if(proposal.kind==='create'){
+            const members=proposal.voters.filter(id=>tilePlayers(room,pos).some(p=>p.id===id));
+            if(members.length>=2&&members.length<=(gameFor(room).investigation?.maxTileOccupants||3)){
+              ws.groups.push({id:randomId(6),members,floor:pos.floor,x:pos.x,y:pos.y});
+            }
+          }else{
+            const current=ws.groups.find(g=>g.id===proposal.groupId);
+            const candidate=room.players.find(p=>p.id===proposal.candidate);
+            const candidatePos=candidate&&positionFor(room,candidate);
+            if(current&&candidatePos&&here(candidatePos)&&
+                current.members.length<(gameFor(room).investigation?.maxTileOccupants||3))
+              current.members.push(candidate.id);
+          }
+          ws.proposals=ws.proposals.filter(p=>p!==proposal);
+        }
+      }
+    }
+    logActivity('whisper_'+action,sid,{room:room.id});
+    persist();sendState(room);
+    return json(res,200,roomView(room,sid));
+  }
   fail(404,'지원하지 않는 동작입니다.');
 }
 const MIME={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.ico':'image/x-icon','.webp':'image/webp','.woff2':'font/woff2'};
