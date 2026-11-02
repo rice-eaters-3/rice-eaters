@@ -44,7 +44,7 @@ test('browser-independent renderer: seven private book chapters and shared map',
   assert.ok(html.includes('data-direction="up"'),'keyboard/button-compatible map movement');
   assert.ok(html.includes('data-action="study-ready"'),'study ready button');
   const noMap={...room,map:null};
-  assert.ok(view.render(noMap).includes('지도'), 'story with no map still renders booklet');
+  assert.ok(view.render(noMap).includes('건물 약도'), 'story with no map still renders booklet');
   assert.ok(!view.render(noMap).includes('data-direction="up"'),'no map means no movement');
   const noBook={...room,booklet:null};
   assert.ok(view.render(noBook).includes('개인 책자를 찾을 수 없습니다.'));
