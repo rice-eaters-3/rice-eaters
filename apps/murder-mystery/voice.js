@@ -21,6 +21,8 @@ window.MysteryVoice=(function(){
     const pc=new RTCPeerConnection({iceServers:[{urls:'stun:stun.l.google.com:19302'}]});
     const peer={pc,pending:[]};peers.set(id,peer);
     for(const track of stream?.getTracks()||[])peer.audioSender=pc.addTrack(track,stream);
+    if(peer.audioSender&&room&&!allowedToHear(room.me,id))
+      peer.audioSender.replaceTrack(null).catch(()=>{});
     pc.onicecandidate=e=>{if(e.candidate)send(id,'ice',{candidate:e.candidate.toJSON()})};
     pc.ontrack=e=>{
       let node=audio.get(id);
