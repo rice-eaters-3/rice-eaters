@@ -115,6 +115,78 @@ const booklets = {
     notes:'다른 참가자에게 범인임을 알려서는 안 됩니다. 전부 거짓말을 하기보다 확인 가능한 사실과 거짓을 섞는 편이 자연스럽습니다.'
   }
 };
+
+// Engine configuration: each scenario may define its own phase durations,
+// movement occupancy cap, multiple floors, stairs, and card unlock policies.
+const phaseMinutes={
+  synopsis:5,characters:5,study:20,investigation1:20,discussion1:15,
+  investigation2:20,discussion2:20,action:10,ending:15
+};
+const upperFloor={
+  id:'upper',title:'까마귀 저택 · 2층',legend:'중앙 계단에서 1층으로 이동할 수 있습니다.',
+  tiles:[
+    '#################',
+    '#.......#.......#',
+    '#.......#.......#',
+    '#.......#.......#',
+    '#...............#',
+    '###.#####.#######',
+    '#...............#',
+    '#.......#.......#',
+    '#.......#.......#',
+    '#################'
+  ],
+  rooms:[
+    {x:3,y:2,name:'침실',icon:'🛏'},
+    {x:12,y:2,name:'기록실',icon:'🗂'},
+    {x:8,y:6,name:'2층 복도',icon:'⌁'}
+  ]
+};
+// Stairs are triggered by stepping on a portal cell. Their destinations are
+// walkable cells on the other floor, not necessarily the same coordinates.
+const floors=[
+  {...floorplan,id:'ground',portals:[
+    {x:9,y:5,toFloor:'upper',toX:9,toY:6,label:'2층 계단 ↑'}
+  ]},
+  {...upperFloor,portals:[
+    {x:9,y:6,toFloor:'ground',toX:9,toY:5,label:'1층 계단 ↓'}
+  ]}
+];
+// Card backs are private and must never appear in static HTML/JS or generic
+// room JSON for another user. The public list contains only fronts/status.
+const investigation={
+  tokensPerPlayer:4,
+  maxTileOccupants:3,
+  cards:[
+    {id:'desk',title:'서재의 책상',subtitle:'서재 · 사건 현장',type:'place',location:{floor:'ground',x:11,y:2},
+      back:'책상 아래에 검은 잉크가 묻은 봉투가 있다. 봉투 안에는 에드워드가 미처 끝내지 못한 증언서가 들어 있다.',repeatable:false},
+    {id:'desk_corner',title:'책상 속 비밀 서랍',subtitle:'서재 · 숨겨진 수납 공간',type:'place',location:{floor:'ground',x:11,y:2},
+      requires:['desk'],visibility:'hidden',
+      back:'서랍 안쪽에는 6년 전 화재 보고서와 관리인의 지문이 남은 촛대 사진이 있다.',repeatable:false},
+    {id:'library',title:'도서관 서가',subtitle:'도서관 · 낡은 장부',type:'place',location:{floor:'ground',x:2,y:2},
+      back:'사라진 어머니의 이름이 기록된 도서 대출 기록이다. 그날 이후 기록이 누군가에 의해 찢겼다.',repeatable:false},
+    {id:'elena_belongings',title:'엘레나의 소지품',subtitle:'등장인물 · 소지품',type:'belonging',owner:'elena',
+      back:'엘레나는 오래된 가족 편지와 은색 열쇠를 가지고 있다. 편지에는 서재로 향하는 비밀 통로에 대한 단서가 있다.',repeatable:false},
+    {id:'victor_belongings',title:'빅터의 소지품',subtitle:'등장인물 · 소지품',type:'belonging',owner:'victor',
+      back:'빅터의 가방에는 긁힌 약병과 낡은 진료 기록이 있다. 약병의 성분은 아직 확실하지 않다.',repeatable:false},
+    {id:'iris_belongings',title:'아이리스의 소지품',subtitle:'등장인물 · 소지품',type:'belonging',owner:'iris',
+      back:'취재 수첩에는 실종 사건과 이 집에 연결되는 이름이 적혀 있다. 사진 필름통에는 B-6 표식이 있다.',repeatable:false},
+    {id:'noah_belongings',title:'노아의 소지품',subtitle:'등장인물 · 소지품',type:'belonging',owner:'noah',
+      back:'관리인의 열쇠 꾸러미에는 서재 열쇠가 빠져 있다. 낡은 가죽 장갑에는 검은 그을음이 남아 있다.',repeatable:false},
+    {id:'medical',title:'주치의의 기록',subtitle:'인물 관련 문서',type:'information',owner:'victor',
+      back:'진료 기록에는 환자의 사망 당시 맥박과 예상 독성 반응이 기록되어 있다. 처방 시각이 단서다.',repeatable:false},
+    {id:'photo',title:'응접실의 액자',subtitle:'응접실 · 오래된 가족사진',type:'place',location:{floor:'ground',x:12,y:8},
+      back:'액자 뒷면에는 오래된 필름을 끼워두었던 흔적이 남았다. 먼지는 최근에 닦아낸 듯하다.',repeatable:false},
+    {id:'dining',title:'식당의 쟁반',subtitle:'식당 · 흔적',type:'place',location:{floor:'ground',x:3,y:8},
+      back:'쟁반에 남은 유리 가루와 희미한 약품 냄새가 범행 시각을 좁히는 데 도움이 된다.',repeatable:false},
+    {id:'bedroom',title:'2층 침실',subtitle:'2층 · 뒤집힌 서랍',type:'place',location:{floor:'upper',x:3,y:2},
+      back:'침실 서랍에서 찢긴 청구서가 발견된다. 에드워드가 화재 직전 거액을 지불한 기록이 있다.',repeatable:false},
+    {id:'archives',title:'2층 기록실',subtitle:'2층 · 잠긴 기록장',type:'place',location:{floor:'upper',x:12,y:2},
+      requires:['library'],visibility:'locked',
+      back:'사라진 가족의 기록과 비밀 통로의 배치도가 함께 보관되어 있다.',repeatable:false}
+  ]
+};
+
 module.exports={
-  'midnight-manor':{floorplan,booklets}
+  'midnight-manor':{floorplan,booklets,floors,phaseMinutes,investigation}
 };
