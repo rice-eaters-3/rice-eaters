@@ -53,6 +53,86 @@ const streams=new Map();
 // or have fetched their room recently.
 const recentPresence=new Map();
 const lastMoves=new Map(); // per-session movement cooldown; never persisted
+const signals=new Map(); // ephemeral targeted WebRTC signaling; never persisted
+const reservationTtl=90000;
+const phaseDefault={synopsis:5,characters:5,study:20,investigation1:20,discussion1:15,
+  investigation2:20,discussion2:20,action:10,ending:15};
+function gameFor(room){return privateMysteries[room.storyId]||{}}
+function floorsFor(room){const g=gameFor(room);return g.floors|| (g.floorplan?[{...g.floorplan,id:'ground',portals:[]}]:[])}
+function floorFor(room,id){return floorsFor(room).find(f=>f.id===id)}
+function positionFor(room,p){const pos=room.mapPositions?.[p.id];return pos?{floor:pos.floor||'ground',x:pos.x,y:pos.y}:null}
+function occupantCount(room,pos,exceptId){
+  return room.players.filter(p=>p.id!==exceptId&&positionFor(room,p)?.floor===pos.floor
+    &&positionFor(room,p)?.x===pos.x&&positionFor(room,p)?.y===pos.y).length;
+}
+function tilePlayers(room,pos){return room.players.filter(p=>{const q=positionFor(room,p);
+  return q?.floor===pos.floor&&q.x===pos.x&&q.y===pos.y;})}
+function activeReservation(room,id){
+  const r=room.investigation?.reserved?.[id];
+  if(r&&r.expiresAt>Date.now())return r;
+  if(r)delete room.investigation.reserved[id];
+  return null;
+}
+function cardUnlocked(card,room){
+  return (card.requires||[]).every(id=>room.investigation?.discovered?.[id]?.length);
+}
+function investigationView(room,member){
+  if(!member||room.phase!=='investigation1')return null;
+  const data=gameFor(room).investigation;
+  if(!data)return null;
+  const discovered=room.investigation?.discovered||{};
+  return {
+    tokens:room.investigation.tokens[member.id]??0,
+    totalTokens:data.tokensPerPlayer,
+    cards:data.cards.flatMap(card=>{
+      const unlocked=cardUnlocked(card,room);
+      if(!unlocked&&card.visibility==='hidden')return [];
+      const found=discovered[card.id]||[], reservation=activeReservation(room,card.id);
+      const taken=found.length>0&&!card.repeatable;
+      const excluded=card.owner===member.characterId||(card.blockedFor||[]).includes(member.characterId);
+      return [{
+        id:card.id,title:card.title,subtitle:card.subtitle,type:card.type,
+        location:card.location||null,locked:!unlocked,excluded,
+        taken,repeatable:!!card.repeatable,
+        reservedBy:reservation?.playerId||null,
+        acquiredBy:found.map(f=>f.playerId),
+        revealed:found.filter(f=>f.playerId===member.id).map(f=>({at:f.at,back:card.back,grant:card.grant||null}))
+      }];
+    }),
+    collected:room.investigation?.collected?.[member.id]||[]
+  };
+}
+function whisperState(room){
+  room.whispers ||= {groups:[],proposals:[]};
+  return room.whispers;
+}
+function pruneWhispers(room){
+  const ws=whisperState(room);
+  for(const g of ws.groups){
+    g.members=g.members.filter(id=>{
+      const p=room.players.find(v=>v.id===id);
+      const pos=p&&positionFor(room,p);
+      return pos&&pos.floor===g.floor&&pos.x===g.x&&pos.y===g.y;
+    });
+  }
+  ws.groups=ws.groups.filter(g=>g.members.length>=2);
+  ws.proposals=ws.proposals.filter(v=>v.expiresAt>Date.now()&&
+    v.voters.every(id=>room.players.some(p=>p.id===id)) );
+}
+function publicWhispers(room,member){
+  pruneWhispers(room);
+  const ws=whisperState(room);
+  return {
+    groups:ws.groups.map(g=>({id:g.id,members:g.members,floor:g.floor,x:g.x,y:g.y})),
+    proposals:ws.proposals.filter(p=>member&&[...p.voters,p.candidate].includes(member.id))
+      .map(p=>({id:p.id,kind:p.kind,candidate:p.candidate,voters:p.voters,yes:p.yes,
+        floor:p.floor,x:p.x,y:p.y,expiresAt:p.expiresAt}))
+  };
+}
+function phaseChange(room,phase,sid){
+  room.phase=phase;room.phaseStartedAt=Date.now();
+  logActivity('phase_'+phase,sid,{room:room.id});
+}
 const PRESENCE_TTL_MS=30000;
 function touchPresence(room, sid){
   let members=recentPresence.get(room.id);
@@ -118,44 +198,46 @@ function publicStory(story){
   return {id:story.id,title:story.title,subtitle:story.subtitle,teaser:story.teaser,genre:story.genre,minutes:story.minutes,players:story.players};
 }
 function roomView(room,sid){
-  const story=storyById(room.storyId);
-  const member=room.players.find(p=>p.sid===sid);
-  const isMember=!!member;
-  const privateGame=privateMysteries[room.storyId];
+  const story=storyById(room.storyId),game=gameFor(room);
+  const member=room.players.find(p=>p.sid===sid),isMember=!!member;
   const char=member&&story.characters.find(c=>c.id===member.characterId);
-  const roleNotes=(isMember&&room.phase==='study'&&char)?privateGame?.booklets?.[char.id]:null;
-  // Never transmit other players' private booklets, including on SSE updates.
-  const booklet=roleNotes?{
+  const notes=isMember&&['study','investigation1'].includes(room.phase)&&char?game.booklets?.[char.id]:null;
+  const booklet=notes?{
     basic:{name:char.name,role:char.role,hint:char.hint,symbol:char.symbol,accent:char.accent},
-    background:roleNotes.background,
-    timeline:roleNotes.timeline,
-    inventory:roleNotes.inventory,
-    culprit:roleNotes.culprit,
-    objectives:roleNotes.objectives,
-    notes:roleNotes.notes,
+    background:notes.background,timeline:notes.timeline,inventory:notes.inventory,
+    culprit:notes.culprit,objectives:notes.objectives,notes:notes.notes,
     shared:{synopsis:story.synopsis,characters:story.characters}
   }:null;
-  const floorplan=isMember&&room.phase==='study'?privateGame?.floorplan:null;
-  const map=floorplan?{
-    title:floorplan.title,legend:floorplan.legend,tiles:floorplan.tiles,rooms:floorplan.rooms,
-    avatars:room.players.filter(p=>p.characterId&&room.mapPositions?.[p.id]).map(p=>{
+  const myPos=member&&positionFor(room,member);
+  const floor=myPos&&floorFor(room,myPos.floor);
+  const map=floor&&['study','investigation1'].includes(room.phase)?{
+    title:floor.title,legend:floor.legend,tiles:floor.tiles,rooms:floor.rooms,
+    floorId:floor.id,floors:floorsFor(room).map(f=>({id:f.id,title:f.title})),
+    portals:floor.portals||[],capacity:game.investigation?.maxTileOccupants||3,
+    avatars:room.players.filter(p=>p.characterId&&positionFor(room,p)?.floor===floor.id).map(p=>{
       const c=story.characters.find(ch=>ch.id===p.characterId);
       return {id:p.id,name:p.name,characterId:p.characterId,characterName:c.name,
-        symbol:c.symbol,accent:c.accent,...room.mapPositions[p.id]};
+        symbol:c.symbol,accent:c.accent,...positionFor(room,p)};
     })
   }:null;
   return {
-    code:room.id, phase:room.phase, story:publicStory(story),
+    code:room.id,phase:room.phase,story:publicStory(story),
+    clock:room.gameStartedAt?{gameStartedAt:room.gameStartedAt,
+      phaseStartedAt:room.phaseStartedAt||room.gameStartedAt,
+      phaseMinutes:{...phaseDefault,...(game.phaseMinutes||{})},
+      serverNow:Date.now()}:null,
     hostId:room.players.find(p=>p.sid===room.host)?.id||null,
     me:member?.id||null,
     players:room.players.map(p=>({id:p.id,name:p.name,read:!!p.read,
-      studyReady:room.phase==='study'?!!p.studyReady:false,
-      characterId:['characters','study'].includes(room.phase)?p.characterId:null,online:online(room,p)})),
+      studyReady:!!p.studyReady,characterId:!['lobby','synopsis'].includes(room.phase)?p.characterId:null,
+      online:online(room,p),position:isMember?positionFor(room,p):null})),
     synopsis:isMember&&room.phase!=='lobby'?story.synopsis:null,
-    characters:isMember&&['characters','study'].includes(room.phase)?story.characters:null,
-    booklet,map
+    characters:isMember&&!['lobby','synopsis'].includes(room.phase)?story.characters:null,
+    booklet,map,investigation:investigationView(room,member),
+    whispers:isMember&&['study','investigation1'].includes(room.phase)?publicWhispers(room,member):null
   };
 }
+
 function sendState(room){
   const peers=streams.get(room.id);
   if(!peers)return;
@@ -207,7 +289,14 @@ async function api(req,res,url,sid){
     ownedPlayer(room,sid);
     return subscribe(req,res,room,sid);
   }
-  const match=pathname.match(/^\/api\/rooms\/([A-Z2-9]{6})(?:\/(join|start|read|character|leave|study-ready|move))?$/);
+  const match=pathname.match(/^\/api\/rooms\/([A-Z2-9]{6})(?:\/(join|start|read|character|leave|study-ready|move|reserve|release|investigate|whisper-request|whisper-vote|whisper-leave|signal|signals))?$/);
+  if(req.method==='GET'&&match&&match[2]==='signals'){
+    const room=roomOrFail(match[1]),me=ownedPlayer(room,sid);
+    const after=Math.max(0,Number(url.searchParams.get('after'))||0);
+    const queue=signals.get(room.id)||[];
+    return json(res,200,{signals:queue.filter(v=>v.id>after&&v.to===me.id).slice(-60),
+      cursor:queue.length?queue[queue.length-1].id:after});
+  }
   if(req.method==='GET'&&match&&!match[2]){
     const room=roomOrFail(match[1]);
     // A member polling this endpoint also keeps their 'online' presence alive.
@@ -228,7 +317,7 @@ async function api(req,res,url,sid){
     if(!story||!name)fail(400,'스토리와 표시 이름을 확인해주세요.');
     if(Object.keys(db.rooms).length>=200)fail(503,'현재 생성 가능한 방 수를 초과했습니다.');
     const code=roomCode(),player={id:randomId(8),sid,name,read:false,characterId:null};
-    const room={id:code,storyId:story.id,host:sid,phase:'lobby',players:[player],createdAt:now()};
+    const room={id:code,storyId:story.id,host:sid,phase:'lobby',players:[player],createdAt:now(),whispers:{groups:[],proposals:[]}};
     db.rooms[code]=room;persist();logActivity('room_created',sid,{room:code,story:story.id});
     return json(res,201,roomView(room,sid));
   }
@@ -282,7 +371,7 @@ async function api(req,res,url,sid){
     if(room.phase!=='lobby')fail(409,'이미 게임이 시작되었습니다.');
     if(room.players.length!==storyById(room.storyId).players)fail(409,'정원이 모두 모여야 시작할 수 있습니다.');
     if(!room.players.every(p=>online(room,p)))fail(409,'모든 참가자가 온라인이어야 시작할 수 있습니다.');
-    room.phase='synopsis';
+    room.gameStartedAt=Date.now();phaseChange(room,'synopsis',sid);
     room.players.forEach(p=>{p.read=false;p.characterId=null});
     logActivity('game_started',sid,{room:room.id});persist();sendState(room);
     return json(res,200,roomView(room,sid));
@@ -290,7 +379,7 @@ async function api(req,res,url,sid){
   if(action==='read'){
     if(room.phase!=='synopsis')fail(409,'현재 시놉시스 확인 단계가 아닙니다.');
     player.read=true;
-    if(room.players.every(p=>p.read)){room.phase='characters';logActivity('phase_characters',sid,{room:room.id})}
+    if(room.players.every(p=>p.read))phaseChange(room,'characters',sid)
     logActivity('synopsis_read',sid,{room:room.id});persist();sendState(room);
     return json(res,200,roomView(room,sid));
   }
@@ -301,17 +390,17 @@ async function api(req,res,url,sid){
     if(room.players.some(p=>p!==player&&p.characterId===char.id))fail(409,'다른 참가자가 이미 선택한 캐릭터입니다.');
     player.characterId=char.id;
     if(room.players.every(p=>p.characterId)){
-      room.phase='study';
+      phaseChange(room,'study',sid);
       room.players.forEach(p=>p.studyReady=false);
       const game=privateMysteries[room.storyId];
       room.mapPositions={};
       if(game?.floorplan){
         for(const p of room.players){
           const spawn=game.floorplan.spawn[p.characterId];
-          if(spawn)room.mapPositions[p.id]={x:spawn.x,y:spawn.y};
+          if(spawn)room.mapPositions[p.id]={floor:'ground',x:spawn.x,y:spawn.y};
         }
       }
-      logActivity('phase_study',sid,{room:room.id});
+      // phaseChange has already recorded the transition.
     }
     logActivity('character_selected',sid,{room:room.id,character:char.id});
     persist();sendState(room);return json(res,200,roomView(room,sid));
@@ -321,25 +410,41 @@ async function api(req,res,url,sid){
     if(!player.characterId)fail(403,'캐릭터가 배정되지 않았습니다.');
     player.studyReady=true;
     logActivity('study_ready',sid,{room:room.id});
+    if(room.players.every(p=>p.studyReady)){
+      const info=gameFor(room).investigation;
+      room.investigation={tokens:Object.fromEntries(room.players.map(p=>[p.id,info?.tokensPerPlayer||4])),
+        reserved:{},discovered:{},collected:{}};
+      phaseChange(room,'investigation1',sid);
+    }
     persist();sendState(room);
-    // 1차 조사는 아직 미구현. 전원이 완료해도 현재 단계에 유지합니다.
     return json(res,200,roomView(room,sid));
   }
   if(action==='move'){
-    if(room.phase!=='study')fail(409,'현재 지도 이동 단계가 아닙니다.');
+    if(!['study','investigation1'].includes(room.phase))fail(409,'현재 지도 이동 단계가 아닙니다.');
     if(!player.characterId)fail(403,'캐릭터가 배정되지 않았습니다.');
-    const floorplan=privateMysteries[room.storyId]?.floorplan;
-    if(!floorplan||!room.mapPositions?.[player.id])fail(409,'이 시나리오에는 이동 가능한 지도가 없습니다.');
+    const current=positionFor(room,player);
+    const floorplan=current&&floorFor(room,current.floor);
+    if(!floorplan||!current)fail(409,'이 시나리오에는 이동 가능한 지도가 없습니다.');
     const steps={up:[0,-1],down:[0,1],left:[-1,0],right:[1,0]};
     if(typeof body.direction!=='string'||!Object.hasOwn(steps,body.direction))fail(400,'잘못된 이동 방향입니다.');
     const lastKey=room.id+':'+sid;
     if(Date.now()-(lastMoves.get(lastKey)||0)<120)fail(429,'이동 요청이 너무 빠릅니다.');
-    const previous=room.mapPositions[player.id];
+    const previous=current;
     const [dx,dy]=steps[body.direction];
     const x=previous.x+dx,y=previous.y+dy;
     if(y<0||y>=floorplan.tiles.length||x<0||x>=floorplan.tiles[y].length||
       floorplan.tiles[y][x]!=='.')fail(409,'벽이나 지도 밖으로 이동할 수 없습니다.');
-    room.mapPositions[player.id]={x,y};
+    let next={floor:current.floor,x,y};
+    const portal=(floorplan.portals||[]).find(p=>p.x===x&&p.y===y);
+    if(portal){
+      const dest=floorFor(room,portal.toFloor);
+      if(!dest||dest.tiles[portal.toY]?.[portal.toX]!=='.')fail(409,'이동할 수 없는 계단입니다.');
+      next={floor:dest.id,x:portal.toX,y:portal.toY};
+    }
+    if(occupantCount(room,next,player.id)>=(gameFor(room).investigation?.maxTileOccupants||3))
+      fail(409,'해당 타일의 최대 인원을 초과했습니다.');
+    room.mapPositions[player.id]=next;
+    pruneWhispers(room); // leaving the tile also leaves its private voice group
     lastMoves.set(lastKey,Date.now());
     persist();sendState(room);
     return json(res,200,roomView(room,sid));
