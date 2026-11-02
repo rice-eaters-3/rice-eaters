@@ -20,7 +20,7 @@ window.MysteryStudy=(function(){
       '<h4>등장인물 공개 정보</h4><div class="shared-roles">'+(b.shared?.characters||[]).map(characterCard).join('')+'</div>'+
       '<h4>건물 약도</h4><p>'+ (room.map?'오른쪽 「공용 저택 약도」에서 움직임과 다른 참가자의 위치를 확인하세요. 이 책자에서는 약도의 내용만 공동 정보로 다룹니다.':'이 시나리오에는 건물 약도가 제공되지 않았습니다.') +'</p>';
     return '<div class="book-paper"><div class="book-cover"><div class="book-crest">♠</div><p class="book-overline">BLACKWOOD MANOR · PRIVATE CASEFILE</p><h2>당신의 이야기</h2><p>이 책자는 '+esc(b.basic.name)+' 역할을 맡은 플레이어만 열람할 수 있습니다.</p><div class="book-private">CONFIDENTIAL — 본인 외 열람 금지</div></div>'+
-      nav+section(1,names[0],basic)+section(2,names[1],paras(b.background))+
+      nav+section(1,names[0],basic)+section(2,names[1],paras(b.background)+(b.notes?'<div class="personal-note"><b>역할 연기 참고</b><p>'+esc(b.notes)+'</p></div>':''))+
       section(3,names[2],timeline)+section(4,names[3],items)+section(5,names[4],culprit)+
       section(6,names[5],goals)+section(7,names[6],shared)+
       '<div class="book-end">— END OF PRIVATE CASE FILE —</div></div>';
