@@ -163,15 +163,15 @@ function home(){
   return '<section class="hero"><div><div class="eyebrow">A NIGHT OF SECRETS · MULTIPLAYER MYSTERY</div>'+
     '<h1>모든 비밀에는<br><span class="highlight">목격자</span>가 있다.</h1>'+
     '<p class="intro">서로 다른 기억과 하나의 진실. 방을 만들고 친구를 초대해 사건의 첫 장을 열어보세요.</p>'+
-    '<span class="tag">실시간 방 동기화</span> <span class="tag">4인용 더미 시나리오</span></div>'+
+    '<span class="tag">실시간 방 동기화</span> <span class="tag">시나리오별 맞춤 인원</span></div>'+
     '<div class="hero-decor"><div class="orbit"></div><div class="emblem"><span class="emblem-symbol">♠</span><span class="emblem-caption">MURDER MYSTERY</span></div></div></section>'+
-    '<div class="section-row"><div><div class="eyebrow">SELECT YOUR CASE</div><h2 style="margin-bottom:0">플레이할 이야기</h2></div><span class="muted small">현재 시나리오 1편 제공</span></div>'+
+    '<div class="section-row"><div><div class="eyebrow">SELECT YOUR CASE</div><h2 style="margin-bottom:0">플레이할 이야기</h2></div><span class="muted small">등록된 시나리오 선택</span></div>'+
     '<div class="story-layout"><div><label class="field-label" for="storySelection">시나리오 선택</label>'+
     '<select id="storySelection" class="text-field">'+state.stories.map(x=>'<option value="'+escapeHtml(x.id)+'" '+(story?.id===x.id?'selected':'')+'>'+
       escapeHtml(x.title)+' ('+x.players+'명)</option>').join('')+'</select>'+
     (story?storyTile(story):'<p>시나리오를 불러오지 못했습니다.</p>')+
     '<p class="muted small"><a href="/mystery-editor">✎ 머더 미스터리 편집기 · 새 시나리오 만들기</a></p></div>'+
-    '<section class="surface form-box"><h3 class="form-title">새로운 방 만들기</h3><p class="subheading">방장이 되어 친구를 초대하세요. 정원 4명이 모두 접속하면 게임을 시작할 수 있습니다.</p>'+
+    '<section class="surface form-box"><h3 class="form-title">새로운 방 만들기</h3><p class="subheading">방장이 되어 친구를 초대하세요. 선택한 시나리오의 정원이 접속하면 게임을 시작할 수 있습니다.</p>'+
     '<div><label class="field-label" for="displayName">플레이어 표시 이름</label><input class="text-field" id="displayName" maxlength="18" autocomplete="nickname" placeholder="예: 탐정 김" value="'+escapeHtml(state.name)+'"></div>'+
     btn('create','사건의 방 만들기 →','btn btn-primary btn-wide',!story)+
     '<div class="line"></div><label class="field-label" for="roomCode">친구가 보낸 방 코드가 있나요?</label>'+
@@ -207,7 +207,7 @@ function lobby(room){
     '<aside class="surface panel-pad"><div class="eyebrow">GAME SETUP</div><h2>'+escapeHtml(room.story.title)+'</h2>'+
     '<p class="muted">'+escapeHtml(room.story.teaser)+'</p>'+
     '<div class="notice"><strong>'+(isHost?'방장 권한':'참가 완료')+'</strong><p>'+
-      (isHost?'네 명의 플레이어가 모두 모여 온라인 상태가 되면 게임 시작 버튼이 활성화됩니다.':'방장이 게임을 시작하면 모든 참가자에게 시놉시스가 표시됩니다.')+
+      (isHost?'정원 '+room.story.players+'명이 모두 온라인 상태가 되면 게임 시작 버튼이 활성화됩니다.':'방장이 게임을 시작하면 모든 참가자에게 시놉시스가 표시됩니다.')+
       '</p></div><div class="action-stack">'+
       (isHost?btn('start',full&&allOnline?'게임 시작 · 시놉시스 열기 →':'전원 접속 대기 ('+room.players.filter(p=>p.online).length+'/'+room.story.players+')','btn btn-primary btn-wide',!full||!allOnline):'<div class="notice">방장의 시작 신호를 기다리고 있습니다.</div>')+
       btn('leave','대기실 나가기','btn btn-quiet btn-wide')+
@@ -234,7 +234,7 @@ function characters(room){
   const allDone=taken===room.story.players;
   return roomHeader(room)+
   '<div class="section-row"><div><div class="eyebrow">CHAPTER 02 / CASTING</div><h2 style="margin-bottom:0">당신은 누구인가요?</h2>'+
-  '<p class="muted" style="margin:6px 0 0">서로 다른 네 명의 등장인물. 한 명을 선택하세요. 선택은 서버에서 공유되며 중복 선택할 수 없습니다.</p></div><span class="tag">2 / 9 단계</span></div>'+
+  '<p class="muted" style="margin:6px 0 0">서로 다른 '+room.story.players+'명의 등장인물. 한 명을 선택하세요. 선택은 서버에서 공유되며 중복 선택할 수 없습니다.</p></div><span class="tag">2 / 9 단계</span></div>'+
   '<div class="room-grid"><div class="character-grid">'+room.characters.map(c=>{
     const owner=room.players.find(p=>p.characterId===c.id);
     const mine=owner?.id===room.me;
@@ -256,8 +256,8 @@ function characters(room){
   '<div class="notice"><strong>'+taken+' / '+room.story.players+'명 선택 완료</strong><p>'+
     (my?.characterId?'선택한 캐릭터를 변경하려면 아직 비어 있는 다른 카드를 누르세요.':'카드를 선택하면 다른 참가자에게 즉시 반영됩니다.')+
     '</p></div><div class="line"></div>'+
-  '<p class="muted small">4명의 캐릭터 선택이 모두 끝나면 각자 자신의 비밀 책자가 공개되는 숙지 단계로 자동 진행됩니다. 이후 조사·밀담·추리 단계는 다음 버전에서 이어집니다.</p></aside></div>'+
-  (allDone?'<div class="all-chosen"><div class="eyebrow">ALL ROLES ASSIGNED</div><h2>네 명의 배역이 모두 정해졌습니다.</h2><p class="muted">다음 업데이트에서는 캐릭터별 비밀 문서와 숙지 단계를 이어갑니다.</p></div>':'');
+  '<p class="muted small">전원의 캐릭터 선택이 끝나면 각자 자신의 비밀 책자가 공개되는 숙지 단계로 자동 진행됩니다. 이후 조사·밀담·추리 단계는 다음 버전에서 이어집니다.</p></aside></div>'+
+  (allDone?'<div class="all-chosen"><div class="eyebrow">ALL ROLES ASSIGNED</div><h2>모든 배역이 정해졌습니다.</h2><p class="muted">다음 업데이트에서는 캐릭터별 비밀 문서와 숙지 단계를 이어갑니다.</p></div>':'');
 }
 function preview(room){
   return roomHeader(room)+
