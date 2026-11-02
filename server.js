@@ -267,6 +267,14 @@ function roomCode(){
   do{id=Array.from(crypto.randomBytes(6),b=>alphabet[b%alphabet.length]).join('')}while(db.rooms[id]);
   return id;
 }
+function localAuthorRequest(req){
+  const host=String(req.headers.host||'');
+  const remote=req.socket.remoteAddress||'';
+  return ['127.0.0.1','::1','::ffff:127.0.0.1'].includes(remote)&&
+    /^(localhost|127\.0\.0\.1|\[::1\]):[0-9]{1,5}$/.test(host)&&
+    !req.headers['x-forwarded-for']&&!req.headers['cf-connecting-ip']&&
+    !req.headers['x-forwarded-proto'];
+}
 function validateOrigin(req){
   const origin=req.headers.origin;
   if(origin && origin!==('http://'+req.headers.host) && origin!==('https://'+req.headers.host)) fail(403,'다른 출처의 요청은 허용되지 않습니다.');
@@ -278,8 +286,7 @@ async function api(req,res,url,sid){
   if(req.method==='POST'&&pathname==='/api/editor/publish'){
     validateOrigin(req);
     // User-authored secrets must not be writable by anonymous internet visitors.
-    const remote=req.socket.remoteAddress||'';
-    if(!['127.0.0.1','::1','::ffff:127.0.0.1'].includes(remote))fail(403,'시나리오 발행은 로컬 PC에서만 허용됩니다.');
+    if(!localAuthorRequest(req))fail(403,'시나리오 발행은 로컬 PC의 localhost 주소에서만 허용됩니다.');
     const body=await requestBody(req,2*1024*1024);
     if(Object.values(db.customStories).filter(v=>v.owner===sid).length>=20)fail(429,'계정당 시나리오 최대 20편');
     if(Object.keys(db.customStories).length>=80)fail(503,'서버 저장 가능 시나리오가 가득 찼습니다.');
@@ -289,14 +296,12 @@ async function api(req,res,url,sid){
     return json(res,201,{story:publicStory(entry.story),id});
   }
   if(req.method==='GET'&&pathname==='/api/editor/own'){
-    const remote=req.socket.remoteAddress||'';
-    if(!['127.0.0.1','::1','::ffff:127.0.0.1'].includes(remote))fail(403,'로컬에서만 접근할 수 있습니다.');
+    if(!localAuthorRequest(req))fail(403,'localhost 제작자만 원고를 열 수 있습니다.');
     return json(res,200,{stories:Object.entries(db.customStories).filter(([id,v])=>v.owner===sid).map(([id,v])=>({id,title:v.story.title}))});
   }
   const editorId=pathname.match(/^\/api\/editor\/own\/([a-z0-9-]+)$/);
   if(req.method==='GET'&&editorId){
-    const remote=req.socket.remoteAddress||'';
-    if(!['127.0.0.1','::1','::ffff:127.0.0.1'].includes(remote))fail(403,'로컬에서만 접근할 수 있습니다.');
+    if(!localAuthorRequest(req))fail(403,'localhost 제작자만 원고를 열 수 있습니다.');
     const entry=db.customStories[editorId[1]];
     if(!entry||entry.owner!==sid)fail(403,'제작자만 비공개 원고를 열람할 수 있습니다.');
     return json(res,200,{format:'rice-mystery-v1',story:entry.story,game:entry.game,spawn:entry.game.spawn});
