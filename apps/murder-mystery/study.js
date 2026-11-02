@@ -46,6 +46,14 @@ window.MysteryStudy=(function(){
     for(const a of m.areas||[])for(let y=a.y;y<a.y+a.height;y++)for(let x=a.x;x<a.x+a.width;x++)
       regions.set(x+','+y,a);
     const regionAt=(x,y)=>regions.get(x+','+y);
+    const zoneLabels=new Map();
+    for(const a of m.areas||[]){
+      const midX=Math.floor(a.x+a.width/2),midY=Math.floor(a.y+a.height/2);
+      const candidates=[[midX,midY]];
+      for(let yy=a.y;yy<a.y+a.height;yy++)for(let xx=a.x;xx<a.x+a.width;xx++)candidates.push([xx,yy]);
+      const place=candidates.find(([xx,yy])=>m.tiles[yy]?.[xx]==='.'&&regionAt(xx,yy)?.id===a.id);
+      if(place)zoneLabels.set(place[0]+','+place[1],a.name);
+    }
     const research=new Map();
     for(const c of room.investigation?.cards||[])if(c.location?.floor===m.floorId){
       const k=c.location.x+','+c.location.y;research.set(k,[...(research.get(k)||[]),c]);
@@ -61,7 +69,8 @@ window.MysteryStudy=(function(){
           (door?.locked?' door-locked':'')+(region?' map-region pattern-'+esc(region.pattern):'')+
           (cards.length?' investigable':'')+edge+'" style="'+(region?'--region-color:'+esc(region.color)+';':'')+
           '" title="'+esc(door?.name||portalsHere[0]?.label||loc?.name||region?.name||'')+'">'+
-          (loc?'<span class="map-room-name">'+esc(loc.icon)+' '+esc(loc.name)+'</span>':'')+
+          (loc?'<span class="map-room-name">'+esc(loc.icon)+' '+esc(loc.name)+'</span>':
+            zoneLabels.has(k)?'<span class="map-room-name region-name">'+esc(zoneLabels.get(k))+'</span>':'')+
           (portalsHere.length?'<span class="portal-sigil">⇅</span>':'')+
           (door?'<span class="door-icon">'+(door.locked?'🔒':'🚪')+'</span>':'')+
           (cards.length?'<span class="tile-spark" title="조사 가능한 장소">✧</span>':'')+
