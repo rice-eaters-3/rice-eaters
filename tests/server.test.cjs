@@ -138,6 +138,9 @@ test('server: four-player mystery flow, persistence, and Mars save endpoints',as
   assert.equal(final.data.booklet.shared.characters.length,4);
   assert.equal(final.data.map.avatars.length,4);
   assert.equal(final.data.map.tiles.length,11);
+  assert.ok(final.data.map.areas.some(v=>v.name==='식당'),'rooms have author-defined colored regions');
+  assert.ok(final.data.map.doors.some(v=>v.id==='library-door'&&v.locked),'locked doors are visible');
+  assert.equal((await call(clients[0],'/mystery-content/midnight-manor.js')).status,403,'secret story modules cannot be fetched');
   assert.equal(final.data.map.avatars.find(p=>p.id===final.data.me).x,2);
   assert.equal((await call(clients[0],'/private/mystery-data.js')).status,403,'private source must not be served');
   assert.equal((await call(clients[0],'/api/events?room=ZZZZZZ')).status,404,'wrong room cannot stream');
@@ -239,11 +242,20 @@ test('server: four-player mystery flow, persistence, and Mars save endpoints',as
   }
   // Character 1 traverses the stairs from ground to upper floor.
   await walk(1,['down','down','left','left','left','left']);
+  const onStairs=(await call(clients[1],'/api/rooms/'+code)).data;
+  assert.equal(onStairs.map.floorId,'ground','entering a staircase does NOT teleport');
+  assert.equal((await post(clients[0],'/api/rooms/'+code+'/interact',{kind:'portal',portalIndex:0})).status,409,
+    'stair action only allowed on the actual portal tile');
+  const traveled=await post(clients[1],'/api/rooms/'+code+'/interact',{kind:'portal',portalIndex:0});
+  assert.equal(traveled.status,200);
   const upstairs=(await call(clients[1],'/api/rooms/'+code)).data;
-  assert.equal(upstairs.map.floorId,'upper','stepping on stairs changes map floor');
+  assert.equal(upstairs.map.floorId,'upper','explicit stair action changes floor');
   assert.equal(upstairs.players.find(p=>p.id===upstairs.me).position.floor,'upper');
   assert.ok(!((await call(clients[0],'/api/rooms/'+code)).data.map.avatars.some(p=>p.id===upstairs.me)),
     'different-floor avatars do not appear on ground floor');
+  // A locked door cannot be bypassed. The player needs an adjacent tile and a key.
+  assert.equal((await post(clients[1],'/api/rooms/'+code+'/interact',
+    {kind:'door',doorId:'library-door'})).status,404,'door on another floor does not exist');
   // Elena and Iris meet on the dining room floor and start a unanimous whisper.
   await walk(0,['right','down','down','right','down','down','down','down']);
   await walk(2,['right']);

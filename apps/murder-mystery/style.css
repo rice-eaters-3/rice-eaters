@@ -184,3 +184,21 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(-
 @media(max-width:1000px){.adventure-grid{grid-template-columns:1fr}.adventure-side{grid-template-columns:repeat(2,minmax(0,1fr))}.research-sidebar{grid-column:1/-1}.research-grid{grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}}
 @media(max-width:680px){.adventure-main{padding:15px!important}.adventure-side{grid-template-columns:1fr}.clock-unit{min-width:100%;padding:11px}.big-map{min-height:240px;padding:8px;justify-content:flex-start}.big-map .map-tiles{grid-template-columns:repeat(var(--map-width),30px);grid-auto-rows:30px}
 .book-layout{grid-template-columns:1fr}.book-index{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}.index-tab{font-size:11px;padding:8px}.folio{min-height:490px;padding:17px}.folio-content{margin:23px auto}.folio-content h3{font-size:29px}.folio-content p{font-size:16px}.folio-bottom .btn{font-size:12px;padding:7px}}
+
+
+/* Scenario-defined zones: separate rooms by color, texture and bold outlines. */
+.world-tiles .map-tile.map-region.walk{background:var(--region-color,#827762);background-color:var(--region-color,#827762)}
+.world-tiles .map-region.pattern-wood{background-image:repeating-linear-gradient(100deg,#ffffff12 0 3px,transparent 3px 15px)}
+.world-tiles .map-region.pattern-stone{background-image:repeating-linear-gradient(90deg,#ffffff13 0 2px,transparent 2px 16px),repeating-linear-gradient(0deg,#00000015 0 2px,transparent 2px 16px)}
+.world-tiles .map-region.pattern-carpet{background-image:repeating-linear-gradient(45deg,#ffffff16 0 2px,transparent 2px 8px)}
+.world-tiles .map-region.pattern-tile{background-image:linear-gradient(90deg,#ffffff16 1px,transparent 1px),linear-gradient(#ffffff16 1px,transparent 1px);background-size:13px 13px}
+.world-tiles .map-tile.edge-n{border-top:3px solid #f0d4a0}
+.world-tiles .map-tile.edge-s{border-bottom:3px solid #f0d4a0}
+.world-tiles .map-tile.edge-e{border-right:3px solid #f0d4a0}
+.world-tiles .map-tile.edge-w{border-left:3px solid #f0d4a0}
+.world-tiles .door-tile{background:#9a795d!important;box-shadow:inset 0 0 0 2px #d4b68c}
+.world-tiles .door-locked{background:#775247!important;box-shadow:inset 0 0 0 3px #c9936d}
+.door-icon{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;font-size:19px;pointer-events:none;filter:drop-shadow(0 2px 3px #0009)}
+.context-actions{display:flex;flex-wrap:wrap;gap:5px;margin:9px 0 15px;padding:11px;border:1px solid #806843;border-radius:8px;background:#242e3a}
+.context-actions>b{width:100%;font-size:12px;color:#edce9e}
+.context-actions small{font-size:11px}.context-actions button{flex:1;min-width:135px;white-space:normal}
