@@ -61,6 +61,12 @@ test('editor JSON import validation, creator-only secrets, room play, manual por
    return {status:r.status,data:await r.json()};
  }
  const post=(i,route,body={})=>req(i,route,'POST',body);
+ const proxied=await fetch(base+'/api/editor/publish',{method:'POST',headers:{
+   'Content-Type':'application/json','X-Forwarded-For':'203.0.113.9'
+ },body:JSON.stringify({package:scenario()})});
+ assert.equal(proxied.status,403,'Cloudflare-style forwarded client must not be able to publish secrets');
+ const externalHost=await fetch(base+'/api/editor/own',{headers:{Host:'public.trycloudflare.com'}});
+ assert.equal(externalHost.status,403,'public tunnel host cannot open local author manuscripts');
  const pkg=scenario();
  const invalid=scenario();invalid.game.floors[0].portals[0].toX=99;
  assert.equal((await post(0,'/api/editor/publish',{package:invalid})).status,400,'bad portal rejected');
