@@ -119,3 +119,5 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(-
 .study-ready-panel .ready-list{margin:9px 0 20px}
 @media(max-width:1020px){.study-layout{grid-template-columns:1fr}.study-aside{position:static;max-height:none;grid-template-columns:1fr}.map-scroller{max-width:100%}}
 @media(max-width:600px){.book-cover{padding:30px 17px}.book-cover h2{font-size:33px}.book-toc{padding:15px;grid-template-columns:1fr 1fr;gap:6px}.book-toc a{font-size:11px;padding:6px}.book-section{padding:27px 18px}.book-section p{font-size:15px}.book-identity{align-items:start;gap:12px}.book-portrait{flex-basis:55px;height:70px;font-size:32px}.timeline li{grid-template-columns:60px 1fr;gap:5px;padding-left:12px}.study-aside .panel-pad{padding:16px}.map-tiles{grid-template-columns:repeat(var(--map-width),32px);grid-auto-rows:32px}}
+
+.personal-note{margin-top:20px;padding:17px 18px;border-left:3px solid #9a694b;background:#dcc5a3;color:#604532}.personal-note>b{display:block;font-size:13px;margin-bottom:7px}.personal-note p{font-size:14px;margin:0;line-height:1.85}
