@@ -65,6 +65,36 @@ test('RPG screen: map is main, 7-chapter booklet is paged, cards reveal only aut
   assert.ok(invHtml.includes('research-card'));
   assert.ok(invHtml.includes('사진 &lt;증거&gt;'),'investigated back escaped');
   assert.ok(invHtml.includes('data-card="desk"'),'first come selection action');
+  // Whisper button must activate when a second person moves onto our tile.
+  const teammate={id:'p2',name:'친구',characterId:'other',studyReady:false,
+    position:{floor:'ground',x:1,y:1}};
+  const two={...room,players:[...room.players,teammate]};
+  const startIndex=view.render(two).indexOf('data-action="whisper-request"');
+  assert.ok(startIndex>0,'whisper request is present');
+  assert.ok(!view.render(two).slice(startIndex,startIndex+115).includes('disabled'),
+    'two players sharing a tile can request a whisper');
+  const alone={...room,players:[room.players[0],{...teammate,position:{floor:'ground',x:2,y:1}}]};
+  const waiting=view.render(alone);
+  const at=waiting.indexOf('data-action="whisper-request"');
+  assert.ok(waiting.slice(at,at+115).includes('disabled'),'whisper disabled while separate');
+  // The partial UI update must refresh whisper controls, not only sprite locations.
+  let swapped='';
+  const tile={innerHTML:''};
+  const document={
+    getElementById:id=>id==='adventureRoot'?{}:id==='mapTiles'?tile:
+      id==='whisperPanel'?{replaceWith:node=>{swapped=node.innerHTML||node.html||''}}:null,
+    querySelector:()=>null,
+    createElement:()=>({
+      set innerHTML(v){this.firstElementChild={innerHTML:v,html:v};},
+      firstElementChild:null
+    })
+  };
+  sandbox.document=document;
+  assert.equal(view.patch(two),true,'live update handles same-tile arrival');
+  assert.ok(swapped.includes('밀담 요청'),'whisper panel refreshed');
+  assert.ok(!swapped.slice(swapped.indexOf('data-action="whisper-request"'),
+    swapped.indexOf('data-action="whisper-request"')+115).includes('disabled'),
+    'whisper button becomes active after map-only update');
   const noMap={...room,map:null};
   assert.ok(view.render(noMap).includes('제공된 맵이 없습니다.'));
 });
