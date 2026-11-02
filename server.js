@@ -5,6 +5,7 @@ const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
+const privateMysteries = require('./private/mystery-data.js');
 
 const ROOT = __dirname;
 // Railway volumes expose this automatically; DATA_DIR can override for other hosts.
@@ -51,6 +52,7 @@ const streams=new Map();
 // This map is intentionally ephemeral; an online player must have a live connection
 // or have fetched their room recently.
 const recentPresence=new Map();
+const lastMoves=new Map(); // per-session movement cooldown; never persisted
 const PRESENCE_TTL_MS=30000;
 function touchPresence(room, sid){
   let members=recentPresence.get(room.id);
@@ -117,15 +119,41 @@ function publicStory(story){
 }
 function roomView(room,sid){
   const story=storyById(room.storyId);
-  const isMember=room.players.some(p=>p.sid===sid);
+  const member=room.players.find(p=>p.sid===sid);
+  const isMember=!!member;
+  const privateGame=privateMysteries[room.storyId];
+  const char=member&&story.characters.find(c=>c.id===member.characterId);
+  const roleNotes=(isMember&&room.phase==='study'&&char)?privateGame?.booklets?.[char.id]:null;
+  // Never transmit other players' private booklets, including on SSE updates.
+  const booklet=roleNotes?{
+    basic:{name:char.name,role:char.role,hint:char.hint,symbol:char.symbol,accent:char.accent},
+    background:roleNotes.background,
+    timeline:roleNotes.timeline,
+    inventory:roleNotes.inventory,
+    culprit:roleNotes.culprit,
+    objectives:roleNotes.objectives,
+    notes:roleNotes.notes,
+    shared:{synopsis:story.synopsis,characters:story.characters}
+  }:null;
+  const floorplan=isMember&&room.phase==='study'?privateGame?.floorplan:null;
+  const map=floorplan?{
+    title:floorplan.title,legend:floorplan.legend,tiles:floorplan.tiles,rooms:floorplan.rooms,
+    avatars:room.players.filter(p=>p.characterId&&room.mapPositions?.[p.id]).map(p=>{
+      const c=story.characters.find(ch=>ch.id===p.characterId);
+      return {id:p.id,name:p.name,characterId:p.characterId,characterName:c.name,
+        symbol:c.symbol,accent:c.accent,...room.mapPositions[p.id]};
+    })
+  }:null;
   return {
     code:room.id, phase:room.phase, story:publicStory(story),
     hostId:room.players.find(p=>p.sid===room.host)?.id||null,
-    me:room.players.find(p=>p.sid===sid)?.id||null,
+    me:member?.id||null,
     players:room.players.map(p=>({id:p.id,name:p.name,read:!!p.read,
-      characterId:room.phase==='characters'?p.characterId:null,online:online(room,p)})),
+      studyReady:room.phase==='study'?!!p.studyReady:false,
+      characterId:['characters','study'].includes(room.phase)?p.characterId:null,online:online(room,p)})),
     synopsis:isMember&&room.phase!=='lobby'?story.synopsis:null,
-    characters:isMember&&room.phase==='characters'?story.characters:null
+    characters:isMember&&['characters','study'].includes(room.phase)?story.characters:null,
+    booklet,map
   };
 }
 function sendState(room){
@@ -179,7 +207,7 @@ async function api(req,res,url,sid){
     ownedPlayer(room,sid);
     return subscribe(req,res,room,sid);
   }
-  const match=pathname.match(/^\/api\/rooms\/([A-Z2-9]{6})(?:\/(join|start|read|character|leave))?$/);
+  const match=pathname.match(/^\/api\/rooms\/([A-Z2-9]{6})(?:\/(join|start|read|character|leave|study-ready|move))?$/);
   if(req.method==='GET'&&match&&!match[2]){
     const room=roomOrFail(match[1]);
     // A member polling this endpoint also keeps their 'online' presence alive.
@@ -240,6 +268,7 @@ async function api(req,res,url,sid){
     room.players=room.players.filter(p=>p.sid!==sid);
     if(room.host===sid)room.host=room.players[0]?.sid||null;
     recentPresence.get(room.id)?.delete(sid);
+    lastMoves.delete(room.id+':'+sid);
     if(!room.players.length){
       delete db.rooms[room.id];
       recentPresence.delete(room.id);
@@ -271,8 +300,49 @@ async function api(req,res,url,sid){
     if(!char)fail(400,'존재하지 않는 캐릭터입니다.');
     if(room.players.some(p=>p!==player&&p.characterId===char.id))fail(409,'다른 참가자가 이미 선택한 캐릭터입니다.');
     player.characterId=char.id;
+    if(room.players.every(p=>p.characterId)){
+      room.phase='study';
+      room.players.forEach(p=>p.studyReady=false);
+      const game=privateMysteries[room.storyId];
+      room.mapPositions={};
+      if(game?.floorplan){
+        for(const p of room.players){
+          const spawn=game.floorplan.spawn[p.characterId];
+          if(spawn)room.mapPositions[p.id]={x:spawn.x,y:spawn.y};
+        }
+      }
+      logActivity('phase_study',sid,{room:room.id});
+    }
     logActivity('character_selected',sid,{room:room.id,character:char.id});
     persist();sendState(room);return json(res,200,roomView(room,sid));
+  }
+  if(action==='study-ready'){
+    if(room.phase!=='study')fail(409,'캐릭터 숙지 단계가 아닙니다.');
+    if(!player.characterId)fail(403,'캐릭터가 배정되지 않았습니다.');
+    player.studyReady=true;
+    logActivity('study_ready',sid,{room:room.id});
+    persist();sendState(room);
+    // 1차 조사는 아직 미구현. 전원이 완료해도 현재 단계에 유지합니다.
+    return json(res,200,roomView(room,sid));
+  }
+  if(action==='move'){
+    if(room.phase!=='study')fail(409,'현재 지도 이동 단계가 아닙니다.');
+    if(!player.characterId)fail(403,'캐릭터가 배정되지 않았습니다.');
+    const floorplan=privateMysteries[room.storyId]?.floorplan;
+    if(!floorplan||!room.mapPositions?.[player.id])fail(409,'이 시나리오에는 이동 가능한 지도가 없습니다.');
+    const steps={up:[0,-1],down:[0,1],left:[-1,0],right:[1,0]};
+    if(typeof body.direction!=='string'||!Object.hasOwn(steps,body.direction))fail(400,'잘못된 이동 방향입니다.');
+    const lastKey=room.id+':'+sid;
+    if(Date.now()-(lastMoves.get(lastKey)||0)<120)fail(429,'이동 요청이 너무 빠릅니다.');
+    const previous=room.mapPositions[player.id];
+    const [dx,dy]=steps[body.direction];
+    const x=previous.x+dx,y=previous.y+dy;
+    if(y<0||y>=floorplan.tiles.length||x<0||x>=floorplan.tiles[y].length||
+      floorplan.tiles[y][x]!=='.')fail(409,'벽이나 지도 밖으로 이동할 수 없습니다.');
+    room.mapPositions[player.id]={x,y};
+    lastMoves.set(lastKey,Date.now());
+    persist();sendState(room);
+    return json(res,200,roomView(room,sid));
   }
   fail(404,'지원하지 않는 동작입니다.');
 }
@@ -285,7 +355,7 @@ function staticFile(req,res,url,sid){
   if(name==='/mystery'||name==='/mystery/')name='/apps/murder-mystery/index.html';
   if(name.endsWith('/'))name+='index.html';
   const resolved=path.resolve(ROOT,'.'+name);
-  if(!resolved.startsWith(ROOT+path.sep)||name.split('/').some(p=>['data','.git','node_modules','tests','.github'].includes(p))||['/server.js','/package.json','/Dockerfile','/.dockerignore','/.gitignore'].includes(name))fail(403,'접근할 수 없는 경로입니다.');
+  if(!resolved.startsWith(ROOT+path.sep)||name.split('/').some(p=>['data','.git','node_modules','tests','.github','private'].includes(p))||['/server.js','/package.json','/Dockerfile','/.dockerignore','/.gitignore'].includes(name))fail(403,'접근할 수 없는 경로입니다.');
   const ext=path.extname(resolved).toLowerCase();
   if(!MIME[ext])fail(404,'지원하지 않는 파일입니다.');
   let stat;

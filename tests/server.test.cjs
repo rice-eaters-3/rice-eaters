@@ -119,7 +119,61 @@ test('server: four-player mystery flow, persistence, and Mars save endpoints',as
   }
   const final=await call(clients[0],'/api/rooms/'+code);
   assert.equal(final.data.players.filter(p=>p.characterId).length,4);
-  assert.equal(final.data.phase,'characters','next phases are not implemented yet');
+  assert.equal(final.data.phase,'study','all four picks advance automatically');
+  assert.equal(final.data.booklet.basic.name,'엘레나 블랙우드');
+  assert.equal(final.data.booklet.culprit,false);
+  assert.equal(final.data.booklet.timeline.length,4);
+  assert.equal(final.data.booklet.inventory.length,2);
+  assert.equal(final.data.booklet.shared.characters.length,4);
+  assert.equal(final.data.map.avatars.length,4);
+  assert.equal(final.data.map.tiles.length,11);
+  assert.equal(final.data.map.avatars.find(p=>p.id===final.data.me).x,2);
+  assert.equal((await call(clients[0],'/private/mystery-data.js')).status,403,'private source must not be served');
+  assert.equal((await call(clients[0],'/api/events?room=ZZZZZZ')).status,404,'wrong room cannot stream');
+  const stranger=await call(clients[4],'/api/rooms/'+code);
+  assert.equal(stranger.data.booklet,null,'non-members never see a booklet');
+  assert.equal(stranger.data.map,null,'non-members never see the floorplan or positions');
+  assert.equal(stranger.data.characters,null,'non-members cannot request characters');
+  const strangerStream=await call(clients[4],'/api/rooms/'+code+'/move','POST',{direction:'right'});
+  assert.equal(strangerStream.status,403);
+  const strangerReady=await post(clients[4],'/api/rooms/'+code+'/study-ready');
+  assert.equal(strangerReady.status,403);
+  for(const [i,character,culprit] of [[0,'엘레나 블랙우드',false],[1,'빅터 헤일',false],[2,'아이리스 모건',false],[3,'노아 그레이',true]]){
+    const detail=(await call(clients[i],'/api/rooms/'+code)).data;
+    assert.equal(detail.booklet.basic.name,character);
+    assert.equal(detail.booklet.culprit,culprit);
+    assert.equal(detail.booklet.background.length,3);
+    assert.equal(detail.booklet.timeline.length,4);
+    assert.equal(detail.booklet.inventory.length,2);
+    assert.ok(detail.booklet.objectives);
+    assert.ok(detail.booklet.shared.synopsis.length>0);
+    assert.equal(detail.booklet.background.some(t=>t.includes('당신은 이번 사건의 범인입니다')),culprit,'culprit secret is never disclosed to others');
+    assert.equal(detail.map.avatars.length,4,'positions are visible to the room');
+  }
+  const oldPick=await post(clients[1],'/api/rooms/'+code+'/character',{characterId:'elena'});
+  assert.equal(oldPick.status,409,'casting is locked once study starts');
+  assert.equal((await post(clients[0],'/api/rooms/'+code+'/move',{direction:'warp'})).status,400,'invalid direction rejected');
+  const moving=await post(clients[0],'/api/rooms/'+code+'/move',{direction:'left'});
+  assert.equal(moving.status,200);
+  assert.equal(moving.data.map.avatars.find(p=>p.id===moving.data.me).x,1,'move exactly one tile');
+  assert.equal((await call(clients[1],'/api/rooms/'+code)).data.map.avatars.find(p=>p.id===final.data.me).x,1,'other player observes move');
+  const fastMove=await post(clients[0],'/api/rooms/'+code+'/move',{direction:'down'});
+  assert.equal(fastMove.status,429,'movement cooldown enforced');
+  await new Promise(resolve=>setTimeout(resolve,160));
+  const wall=await post(clients[0],'/api/rooms/'+code+'/move',{direction:'left'});
+  assert.equal(wall.status,409,'cannot walk through a wall');
+  assert.equal((await call(clients[0],'/api/rooms/'+code)).data.map.avatars.find(p=>p.id===final.data.me).x,1,'invalid move does not change position');
+  for(let i=0;i<4;i++){
+    const ack=await post(clients[i],'/api/rooms/'+code+'/study-ready');
+    assert.equal(ack.status,200);
+    assert.equal(ack.data.players.filter(p=>p.studyReady).length,i+1);
+  }
+  const afterReady=await call(clients[0],'/api/rooms/'+code);
+  assert.equal(afterReady.data.phase,'study','phase 4 not yet implemented');
+  assert.equal(afterReady.data.players.filter(p=>p.studyReady).length,4);
+  assert.equal((await post(clients[0],'/api/rooms/'+code+'/study-ready')).data.players.filter(p=>p.studyReady).length,4,'ready is idempotent');
+  // SSE still works: all updates are serialized through each member's own view.
+  assert.equal(final.data.booklet.basic.name,'엘레나 블랙우드');
 
   const emptyMars=await call(clients[0],'/api/mars/data');
   assert.deepEqual(emptyMars.data,{progress:null,records:[]});
@@ -134,10 +188,11 @@ test('server: four-player mystery flow, persistence, and Mars save endpoints',as
   assert.equal((await call(clients[0],'/api/mars/data')).data.progress,null);
   assert.equal((await call(clients[0],'/data/state.json')).status,403,'server state must remain private');
   const diskState=JSON.parse(fs.readFileSync(path.join(directory,'state.json'),'utf8'));
-  assert.equal(diskState.rooms[code].phase,'characters');
+  assert.equal(diskState.rooms[code].phase,'study');
+  assert.equal(diskState.rooms[code].mapPositions[final.data.me].x,1);
   assert.equal(diskState.mars[clients[0].cookie.split('=')[1]].records[0].score,42);
   const log=fs.readFileSync(path.join(directory,'activity.jsonl'),'utf8');
-  for(const action of ['room_created','room_joined','game_started','synopsis_read','character_selected','mars_records_saved']){
+  for(const action of ['room_created','room_joined','game_started','synopsis_read','character_selected','phase_study','study_ready','mars_records_saved']){
     assert.ok(log.includes('"action":"'+action+'"'),'logged event '+action);
   }
 });

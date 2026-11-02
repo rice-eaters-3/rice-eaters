@@ -2,7 +2,7 @@
 const $=id=>document.getElementById(id);
 const escapeHtml=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const isQuickTunnel=location.hostname.endsWith('.trycloudflare.com');
-const state={stories:[],room:null,busy:false,stream:null,streamRoom:null,pollTimer:null,pollRoom:null,pollBusy:false,connection:'연결 중',name:localStorage.getItem('mystery_display_name')||''};
+const state={stories:[],room:null,busy:false,stream:null,streamRoom:null,pollTimer:null,pollRoom:null,pollBusy:false,pollDelay:0,moving:false,lastMoveAt:0,connection:'연결 중',name:localStorage.getItem('mystery_display_name')||''};
 const phaseNames=['전체 시놉시스 안내','캐릭터 선택','캐릭터 숙지','1차 조사','1차 토론','2차 조사','2차 토론·최종 결정','행동','결말'];
 function toast(message){
   const box=$('toast');box.textContent=message;box.classList.add('visible');
@@ -35,8 +35,7 @@ async function pollRoom(){
     if(state.room?.code!==code)return;
     const nextConnection=isQuickTunnel?'자동 동기화 (약 2.5초)':'실시간 동기화 중';
     const changed=JSON.stringify(state.room)!==JSON.stringify(fresh)||state.connection!==nextConnection;
-    state.room=fresh;state.connection=nextConnection;
-    if(changed)render();
+    updateRoom(fresh,nextConnection,changed);
   }catch(e){
     if(state.room?.code!==code)return;
     if(state.connection!=='연결 재시도 중'){
@@ -47,11 +46,13 @@ async function pollRoom(){
 }
 function startPolling(){
   if(!state.room?.me){stopPolling();return}
-  if(state.pollTimer&&state.pollRoom===state.room.code)return;
+  const delay=state.room.phase==='study'&&state.room.map?850:2500;
+  if(state.pollTimer&&state.pollRoom===state.room.code&&state.pollDelay===delay)return;
   stopPolling();
   state.pollRoom=state.room.code;
-  // Lightweight presence and state sync; works when intermediaries block SSE.
-  state.pollTimer=setInterval(pollRoom,2500);
+  state.pollDelay=delay;
+  // During shared map movement: refresh several times per second through Cloudflare.
+  state.pollTimer=setInterval(pollRoom,delay);
   pollRoom();
 }
 function connectStream(){
@@ -67,8 +68,7 @@ function connectStream(){
   events.addEventListener('state',event=>{
     if(state.stream!==events)return;
     const room=JSON.parse(event.data);
-    state.room=room;state.connection='실시간 동기화 중';
-    render();
+    updateRoom(room,'실시간 동기화 중');
   });
   events.onerror=()=>{
     if(state.stream!==events)return;
@@ -76,18 +76,42 @@ function connectStream(){
     render();
   };
 }
-function setRoom(room){
+function updateRoom(room,connection,force=false){
+  const old=state.room;
+  const changed=force||JSON.stringify(old)!==JSON.stringify(room)||state.connection!==connection;
   state.room=room;
-  if(room){routeRoom(room.code);startPolling();connectStream()}
-  else{closeStream();stopPolling();history.replaceState(null,'','/mystery')}
-  render();
+  if(connection)state.connection=connection;
+  if(!changed)return;
+  if(old?.phase==='study'&&room?.phase==='study'&&old.me===room.me&&old.players.find(p=>p.id===room.me)?.characterId===room.players.find(p=>p.id===room.me)?.characterId){
+    if(!window.MysteryStudy.patch(room))render();
+  }else render();
+  startPolling();
+}
+function setRoom(room){
+  if(room){routeRoom(room.code);updateRoom(room,state.connection,true);connectStream()}
+  else{state.room=null;closeStream();stopPolling();history.replaceState(null,'','/mystery');render()}
+}
+async function moveMyPlayer(direction){
+  if(state.room?.phase!=='study'||!state.room.map||state.moving)return;
+  if(!['up','down','left','right'].includes(direction))return;
+  if(Date.now()-state.lastMoveAt<140)return;
+  state.lastMoveAt=Date.now();
+  state.moving=true;
+  try{
+    const code=state.room.code;
+    const updated=await api('/api/rooms/'+code+'/move','POST',{direction});
+    if(state.room?.code===code)updateRoom(updated,state.connection);
+  }catch(e){
+    // Walls are an expected interaction: don't show a toast for every blocked step.
+    if(!/벽이나 지도 밖|너무 빠릅니다/.test(e.message))toast(e.message);
+  }finally{state.moving=false}
 }
 function btn(action,label,cls='btn',disabled=false,extra=''){
   return '<button type="button" class="'+cls+'" data-action="'+action+'" '+(disabled?'disabled ':'')+extra+'>'+label+'</button>';
 }
 function stepper(room){
   if(room.phase==='lobby')return '';
-  const active=room.phase==='synopsis'?0:1;
+  const active=room.phase==='synopsis'?0:room.phase==='characters'?1:2;
   return '<div class="step-track" aria-label="게임 진행 단계">'+phaseNames.map((name,i)=>
     '<div class="step '+(i===active?'active':i<active?'done':'')+'" '+(i===active?'aria-current="step"':'')+'><strong>'+String(i+1).padStart(2,'0')+'</strong>'+escapeHtml(name)+'</div>'
   ).join('')+'</div>';
@@ -191,7 +215,7 @@ function characters(room){
   '<div class="notice"><strong>'+taken+' / '+room.story.players+'명 선택 완료</strong><p>'+
     (my?.characterId?'선택한 캐릭터를 변경하려면 아직 비어 있는 다른 카드를 누르세요.':'카드를 선택하면 다른 참가자에게 즉시 반영됩니다.')+
     '</p></div><div class="line"></div>'+
-  '<p class="muted small">이번 개발 범위는 캐릭터 선택까지입니다. 캐릭터 개인 정보 및 숙지 시간, 조사, 밀담과 추리 단계는 다음 버전에서 이어집니다.</p></aside></div>'+
+  '<p class="muted small">4명의 캐릭터 선택이 모두 끝나면 각자 자신의 비밀 책자가 공개되는 숙지 단계로 자동 진행됩니다. 이후 조사·밀담·추리 단계는 다음 버전에서 이어집니다.</p></aside></div>'+
   (allDone?'<div class="all-chosen"><div class="eyebrow">ALL ROLES ASSIGNED</div><h2>네 명의 배역이 모두 정해졌습니다.</h2><p class="muted">다음 업데이트에서는 캐릭터별 비밀 문서와 숙지 단계를 이어갑니다.</p></div>':'');
 }
 function preview(room){
@@ -209,7 +233,7 @@ function render(){
   if(!room){root.innerHTML=home();return}
   if(!room.me){root.innerHTML=preview(room);return}
   root.innerHTML='<div class="status-strip"><span>◉ '+escapeHtml(state.connection)+' · 참가자별 독립 세션</span><span>새로고침해도 방에 다시 연결됩니다.</span></div>'+
-    (room.phase==='lobby'?lobby(room):room.phase==='synopsis'?synopsis(room):characters(room));
+    (room.phase==='lobby'?lobby(room):room.phase==='synopsis'?synopsis(room):room.phase==='characters'?characters(room):window.MysteryStudy.render(room));
 }
 function nameFromInput(){
   const name=($('displayName')?.value||state.name).trim().slice(0,18);
@@ -218,6 +242,7 @@ function nameFromInput(){
   return name;
 }
 async function perform(action,button){
+  if(action==='move'){await moveMyPlayer(button.dataset.direction);return;}
   if(state.busy)return;
   state.busy=true;
   button.disabled=true;
@@ -238,7 +263,7 @@ async function perform(action,button){
     } else if(action==='leave'){
       await api('/api/rooms/'+code+'/leave','POST',{});
       setRoom(null);
-    } else if(action==='start'||action==='read'){
+    } else if(action==='start'||action==='read'||action==='study-ready'){
       setRoom(await api('/api/rooms/'+code+'/'+action,'POST',{}));
     } else if(action==='character'){
       const characterId=button.dataset.character;
@@ -255,7 +280,15 @@ $('app').addEventListener('click',e=>{
   const button=e.target.closest('button[data-action]');
   if(button)perform(button.dataset.action,button);
 });
-$('app').addEventListener('keydown',e=>{
+document.addEventListener('keydown',e=>{
+  if(state.room?.phase==='study'&&state.room.map&&!e.altKey&&!e.metaKey&&!e.ctrlKey){
+    const tag=e.target?.tagName?.toLowerCase();
+    if(!['input','textarea','select'].includes(tag)&&!e.target?.isContentEditable){
+      const direction={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right',
+        w:'up',a:'left',s:'down',d:'right'}[e.key];
+      if(direction){e.preventDefault();moveMyPlayer(direction);return;}
+    }
+  }
   if(e.key==='Enter'&&e.target.id==='roomCode'){
     const button=$('app').querySelector('[data-action="find"]');
     if(button)perform('find',button);
