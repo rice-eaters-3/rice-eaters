@@ -199,6 +199,7 @@ test('server: four-player mystery flow, persistence, and Mars save endpoints',as
   assert.equal(revealed.status,200);
   assert.equal(revealed.data.investigation.tokens,3,'one token consumed exactly once');
   assert.equal(revealed.data.investigation.cards.find(c=>c.id==='desk').revealed.length,1,'investigator sees back');
+  assert.equal(revealed.data.investigation.collected[0].name,'검은 봉투','item reward added to inventory');
   assert.ok(revealed.data.investigation.cards.some(c=>c.id==='desk_corner'),'prerequisite unlocks hidden card');
   const otherCards=(await call(clients[1],'/api/rooms/'+code)).data.investigation.cards;
   assert.equal(otherCards.find(c=>c.id==='desk').taken,true,'claimed card is greyed out globally');
