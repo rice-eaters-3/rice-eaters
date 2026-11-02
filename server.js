@@ -5,7 +5,7 @@ const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
-const privateMysteries = require('./private/mystery-data.js');
+const privateMysteries = {'midnight-manor':require('./mystery-content/midnight-manor.js')};
 
 const ROOT = __dirname;
 // Railway volumes expose this automatically; DATA_DIR can override for other hosts.
@@ -16,33 +16,17 @@ const PORT = Number(process.env.PORT || 3000);
 const HOST = process.env.HOST || '0.0.0.0';
 fs.mkdirSync(DATA_DIR, {recursive: true});
 
-const STORIES = [
-  {
-    id: 'midnight-manor', title: '자정의 저택', subtitle: '폭풍우가 잠든 밤, 닫힌 문 뒤의 진실',
-    genre: '고딕 미스터리', minutes: 90, players: 4,
-    teaser: '유산 공개를 앞둔 저택의 주인이 서재에서 숨진 채 발견되었다. 폭풍우 속에 머물던 네 명의 손님 모두에게는 감추고 싶은 비밀이 있다.',
-    synopsis: [
-      '1928년 10월 31일. 외딴 언덕의 「까마귀 저택」에는 폭풍우가 몰아치고 있습니다. 저택의 주인 에드워드 블랙우드는 네 사람에게 한 통의 편지를 보냈습니다. “오늘 밤, 내 유언과 오래된 사건의 진실을 공개하겠소.”',
-      '밤 11시 47분, 정전과 함께 서재에서 둔탁한 소리가 울렸습니다. 문을 부수고 들어간 사람들은 책상 옆에 쓰러진 에드워드를 발견합니다. 문은 안쪽에서 잠겨 있었고, 열린 창문 밖으로는 빗물에 젖은 발자국이 보입니다.',
-      '전화선은 끊겼고 다리마저 무너졌습니다. 구조대가 아침에 도착하기 전까지 여러분은 이곳을 떠날 수 없습니다. 서로의 이야기를 듣고, 증거를 모으고, 진실을 찾아내십시오. 누군가는 정답을 알고 있을지도 모릅니다.'
-    ],
-    characters: [
-      {id:'elena',name:'엘레나 블랙우드',role:'저택 주인의 조카',hint:'오래된 가족사진을 품은 상속 후보.',symbol:'♜',accent:'#b48bd8'},
-      {id:'victor',name:'빅터 헤일',role:'저택의 주치의',hint:'사망 시각에 대해 남다른 지식을 가진 의사.',symbol:'⚕',accent:'#82b8b4'},
-      {id:'iris',name:'아이리스 모건',role:'취재 기자',hint:'초대받지 않았지만 누구보다 많은 질문을 가진 손님.',symbol:'✒',accent:'#dca772'},
-      {id:'noah',name:'노아 그레이',role:'저택 관리인',hint:'복도와 열쇠에 관해서는 누구보다 잘 아는 인물.',symbol:'⚿',accent:'#98a8ce'}
-    ]
-  }
-];
-const storyById = (id) => STORIES.find(s => s.id === id);
+const STORIES = require('./mystery-content/stories.js');
+const validateMystery = require('./mystery-content/validate.js').validate;
+function storyById(id){return STORIES.find(s=>s.id===id)||db.customStories?.[id]?.story||null;}
 const cleanName = (name) => typeof name === 'string' ? name.trim().replace(/\s+/g,' ').slice(0,18) : '';
 const randomId = (n=20) => crypto.randomBytes(n).toString('hex');
 const readState = () => {
   try {
     const parsed=JSON.parse(fs.readFileSync(STATE_FILE,'utf8'));
-    return {rooms:parsed.rooms||{},sessions:parsed.sessions||{},mars:parsed.mars||{}};
+    return {rooms:parsed.rooms||{},sessions:parsed.sessions||{},mars:parsed.mars||{},customStories:parsed.customStories||{}};
   } catch(e) {
-    if(e.code==='ENOENT') return {rooms:{},sessions:{},mars:{}};
+    if(e.code==='ENOENT') return {rooms:{},sessions:{},mars:{},customStories:{}};
     throw e; // never silently overwrite a corrupted save
   }
 };
@@ -57,7 +41,7 @@ const signals=new Map(); // ephemeral targeted WebRTC signaling; never persisted
 const reservationTtl=90000;
 const phaseDefault={synopsis:5,characters:5,study:20,investigation1:20,discussion1:15,
   investigation2:20,discussion2:20,action:10,ending:15};
-function gameFor(room){return privateMysteries[room.storyId]||{}}
+function gameFor(room){return privateMysteries[room.storyId]||db.customStories?.[room.storyId]?.game||{}}
 function floorsFor(room){const g=gameFor(room);return g.floors|| (g.floorplan?[{...g.floorplan,id:'ground',portals:[]}]:[])}
 function floorFor(room,id){return floorsFor(room).find(f=>f.id===id)}
 function positionFor(room,p){const pos=room.mapPositions?.[p.id];return pos?{floor:pos.floor||'ground',x:pos.x,y:pos.y}:null}
@@ -213,7 +197,13 @@ function roomView(room,sid){
   const map=floor&&['study','investigation1'].includes(room.phase)?{
     title:floor.title,legend:floor.legend,tiles:floor.tiles,rooms:floor.rooms,
     floorId:floor.id,floors:floorsFor(room).map(f=>({id:f.id,title:f.title})),
-    portals:floor.portals||[],capacity:game.investigation?.maxTileOccupants||3,
+    portals:floor.portals||[],areas:floor.areas||[],
+    doors:(floor.doors||[]).map(d=>({
+      id:d.id,name:d.name,x:d.x,y:d.y,
+      locked:!!d.locked&&!room.openDoors?.[floor.id+':'+d.id],
+      requiresItem:d.requiresItem||null
+    })),
+    capacity:game.investigation?.maxTileOccupants||3,
     avatars:room.players.filter(p=>p.characterId&&positionFor(room,p)?.floor===floor.id).map(p=>{
       const c=story.characters.find(ch=>ch.id===p.characterId);
       return {id:p.id,name:p.name,characterId:p.characterId,characterName:c.name,
@@ -280,7 +270,34 @@ function validateOrigin(req){
 }
 async function api(req,res,url,sid){
   const pathname=url.pathname;
-  if(req.method==='GET'&&pathname==='/api/stories')return json(res,200,{stories:STORIES.map(publicStory)});
+  if(req.method==='GET'&&pathname==='/api/stories')
+    return json(res,200,{stories:[...STORIES,...Object.values(db.customStories).map(v=>v.story)].map(publicStory)});
+  if(req.method==='POST'&&pathname==='/api/editor/publish'){
+    validateOrigin(req);
+    // User-authored secrets must not be writable by anonymous internet visitors.
+    const remote=req.socket.remoteAddress||'';
+    if(!['127.0.0.1','::1','::ffff:127.0.0.1'].includes(remote))fail(403,'시나리오 발행은 로컬 PC에서만 허용됩니다.');
+    const body=await requestBody(req,2*1024*1024);
+    if(Object.values(db.customStories).filter(v=>v.owner===sid).length>=20)fail(429,'계정당 시나리오 최대 20편');
+    if(Object.keys(db.customStories).length>=80)fail(503,'서버 저장 가능 시나리오가 가득 찼습니다.');
+    const parsed=(()=>{try{return validateMystery(body.package)}catch(e){fail(400,e.message)}})();
+    const id='custom-'+randomId(5),entry={owner:sid,story:{...parsed.story,id},game:{...parsed.game,spawn:parsed.spawn}};
+    db.customStories[id]=entry;persist();logActivity('scenario_published',sid,{story:id});
+    return json(res,201,{story:publicStory(entry.story),id});
+  }
+  if(req.method==='GET'&&pathname==='/api/editor/own'){
+    const remote=req.socket.remoteAddress||'';
+    if(!['127.0.0.1','::1','::ffff:127.0.0.1'].includes(remote))fail(403,'로컬에서만 접근할 수 있습니다.');
+    return json(res,200,{stories:Object.entries(db.customStories).filter(([id,v])=>v.owner===sid).map(([id,v])=>({id,title:v.story.title}))});
+  }
+  const editorId=pathname.match(/^\/api\/editor\/own\/([a-z0-9-]+)$/);
+  if(req.method==='GET'&&editorId){
+    const remote=req.socket.remoteAddress||'';
+    if(!['127.0.0.1','::1','::ffff:127.0.0.1'].includes(remote))fail(403,'로컬에서만 접근할 수 있습니다.');
+    const entry=db.customStories[editorId[1]];
+    if(!entry||entry.owner!==sid)fail(403,'제작자만 비공개 원고를 열람할 수 있습니다.');
+    return json(res,200,{format:'rice-mystery-v1',story:entry.story,game:entry.game,spawn:entry.game.spawn});
+  }
   if(req.method==='GET'&&pathname==='/api/mars/data'){
     return json(res,200,db.mars[sid]||{progress:null,records:[]});
   }
@@ -289,7 +306,7 @@ async function api(req,res,url,sid){
     ownedPlayer(room,sid);
     return subscribe(req,res,room,sid);
   }
-  const match=pathname.match(/^\/api\/rooms\/([A-Z2-9]{6})(?:\/(join|start|read|character|leave|study-ready|move|reserve|release|investigate|whisper-request|whisper-vote|whisper-leave|signal|signals))?$/);
+  const match=pathname.match(/^\/api\/rooms\/([A-Z2-9]{6})(?:\/(join|start|read|character|leave|study-ready|move|interact|reserve|release|investigate|whisper-request|whisper-vote|whisper-leave|signal|signals))?$/);
   if(req.method==='GET'&&match&&match[2]==='signals'){
     const room=roomOrFail(match[1]),me=ownedPlayer(room,sid);
     const after=Math.max(0,Number(url.searchParams.get('after'))||0);
@@ -392,12 +409,12 @@ async function api(req,res,url,sid){
     if(room.players.every(p=>p.characterId)){
       phaseChange(room,'study',sid);
       room.players.forEach(p=>p.studyReady=false);
-      const game=privateMysteries[room.storyId];
+      const game=gameFor(room);
       room.mapPositions={};
-      if(game?.floorplan){
+      if(game?.floorplan||game?.floors?.length){
         for(const p of room.players){
-          const spawn=game.floorplan.spawn[p.characterId];
-          if(spawn)room.mapPositions[p.id]={floor:'ground',x:spawn.x,y:spawn.y};
+          const spawn=game.spawn?.[p.characterId]||game.floorplan?.spawn?.[p.characterId];
+          if(spawn)room.mapPositions[p.id]={floor:spawn.floor||'ground',x:spawn.x,y:spawn.y};
         }
       }
       // phaseChange has already recorded the transition.
@@ -434,13 +451,10 @@ async function api(req,res,url,sid){
     const x=previous.x+dx,y=previous.y+dy;
     if(y<0||y>=floorplan.tiles.length||x<0||x>=floorplan.tiles[y].length||
       floorplan.tiles[y][x]!=='.')fail(409,'벽이나 지도 밖으로 이동할 수 없습니다.');
-    let next={floor:current.floor,x,y};
-    const portal=(floorplan.portals||[]).find(p=>p.x===x&&p.y===y);
-    if(portal){
-      const dest=floorFor(room,portal.toFloor);
-      if(!dest||dest.tiles[portal.toY]?.[portal.toX]!=='.')fail(409,'이동할 수 없는 계단입니다.');
-      next={floor:dest.id,x:portal.toX,y:portal.toY};
-    }
+    const next={floor:current.floor,x,y};
+    const door=(floorplan.doors||[]).find(d=>d.x===x&&d.y===y);
+    if(door&&door.locked&&!room.openDoors?.[floorplan.id+':'+door.id])
+      fail(409,'잠긴 문입니다. 근처에서 문 열기 액션을 사용하세요.');
     if(occupantCount(room,next,player.id)>=(gameFor(room).investigation?.maxTileOccupants||3))
       fail(409,'해당 타일의 최대 인원을 초과했습니다.');
     room.mapPositions[player.id]=next;
@@ -570,9 +584,10 @@ function staticFile(req,res,url,sid){
   if(name==='/'||name==='/index.html')name='/index.html';
   if(name==='/mars')name='/apps/terraforming-mars/index.html';
   if(name==='/mystery'||name==='/mystery/')name='/apps/murder-mystery/index.html';
+  if(name==='/mystery-editor'||name==='/mystery-editor/')name='/apps/murder-mystery/editor.html';
   if(name.endsWith('/'))name+='index.html';
   const resolved=path.resolve(ROOT,'.'+name);
-  if(!resolved.startsWith(ROOT+path.sep)||name.split('/').some(p=>['data','.git','node_modules','tests','.github','private'].includes(p))||['/server.js','/package.json','/Dockerfile','/.dockerignore','/.gitignore'].includes(name))fail(403,'접근할 수 없는 경로입니다.');
+  if(!resolved.startsWith(ROOT+path.sep)||name.split('/').some(p=>['data','.git','node_modules','tests','.github','private','mystery-content'].includes(p))||['/server.js','/package.json','/Dockerfile','/.dockerignore','/.gitignore'].includes(name))fail(403,'접근할 수 없는 경로입니다.');
   const ext=path.extname(resolved).toLowerCase();
   if(!MIME[ext])fail(404,'지원하지 않는 파일입니다.');
   let stat;
