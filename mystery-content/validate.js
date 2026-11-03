@@ -67,7 +67,7 @@ function validate(input){
     });
     const doors=(Array.isArray(f.doors)?f.doors:[]).slice(0,80).map(d=>({
       id:text(d.id,40),name:text(d.name,80),...location(d,'문'),
-      locked:d.locked===true,requiresItem:text(d.requiresItem,40)
+      locked:d.locked===true,closed:d.closed!==false,requiresItem:text(d.requiresItem,40)
     }));
     unique(doors.map(d=>d.id),'문');
     const portals=(Array.isArray(f.portals)?f.portals:[]).slice(0,80).map(t=>({
