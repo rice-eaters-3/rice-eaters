@@ -77,7 +77,6 @@ test('RPG screen: map is main, 7-chapter booklet is paged, cards reveal only aut
   view.navigate('book-toggle');
   assert.ok(view.render(investigation).includes('folio-content'),'book is accessible from investigation catalog');
   view.navigate('book-toggle');
-  view.navigate('research-toggle');
   // Whisper button must activate when a second person moves onto our tile.
   const teammate={id:'p2',name:'친구',characterId:'other',studyReady:false,
     position:{floor:'ground',x:1,y:1}};
