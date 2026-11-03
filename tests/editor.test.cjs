@@ -90,13 +90,20 @@ test('editor JSON import validation, creator-only secrets, room play, manual por
  const started=await post(0,'/api/rooms/'+code+'/start');
  assert.equal(started.data.phase,'synopsis');
  assert.equal((await post(0,'/api/rooms/'+code+'/read')).data.phase,'synopsis');
- assert.equal((await post(1,'/api/rooms/'+code+'/read')).data.phase,'characters');
+ const secondRead=await post(1,'/api/rooms/'+code+'/read');
+ assert.equal(secondRead.data.phase,'synopsis','both read but host must advance');
+ assert.equal(secondRead.data.progress.canAdvance,true);
+ assert.equal((await post(1,'/api/rooms/'+code+'/advance')).status,403,'guest cannot advance');
+ assert.equal((await post(0,'/api/rooms/'+code+'/advance')).data.phase,'characters');
  await post(0,'/api/rooms/'+code+'/character',{characterId:'alpha'});
- const selected=await post(1,'/api/rooms/'+code+'/character',{characterId:'beta'});
- assert.equal(selected.data.phase,'study');
+ const selectedChar=await post(1,'/api/rooms/'+code+'/character',{characterId:'beta'});
+ assert.equal(selectedChar.data.phase,'characters','completed casting waits for host');
+ assert.equal((await post(0,'/api/rooms/'+code+'/advance')).data.phase,'study');
+ const selected=await req(1,'/api/rooms/'+code);
  assert.equal(selected.data.booklet.background[0],'역할 B만 아는 비밀');
  assert.equal(selected.data.map.areas[0].name,'식당');
  assert.equal(selected.data.map.doors[0].locked,true);
+ assert.equal(selected.data.map.doors[0].open,false);
  assert.equal((await req(2,'/api/rooms/'+code)).data.booklet,null,'non-member sees no secret');
  assert.equal((await req(0,'/api/rooms/'+code)).data.booklet.background[0],'역할 A만 아는 비밀');
  // Walk through a locked door is forbidden even though tile is floor.
@@ -107,13 +114,28 @@ test('editor JSON import validation, creator-only secrets, room play, manual por
  const door=await post(0,'/api/rooms/'+code+'/interact',{kind:'door',doorId:'locked1'});
  assert.equal(door.status,200,'key holder unlocks adjacent door');
  assert.equal(door.data.map.doors[0].locked,false);
+ assert.equal(door.data.map.doors[0].open,true);
  assert.equal((await post(1,'/api/rooms/'+code+'/move',{direction:'left'})).status,200,
-   'unlocked door can be walked through');
+   'open door can be walked through');
+ assert.equal((await post(0,'/api/rooms/'+code+'/interact',
+   {kind:'door',doorId:'locked1',doorAction:'close'})).status,409,
+   'cannot close a door while a player stands on it');
  // Player is on door, must move one step down to the dual-purpose portal.
  await new Promise(resolve=>setTimeout(resolve,145));
  const move=await post(1,'/api/rooms/'+code+'/move',{direction:'down'});
  assert.equal(move.status,200);
  assert.equal(move.data.map.floorId,'ground','entering portal never auto-travels');
+ const closed=await post(0,'/api/rooms/'+code+'/interact',
+   {kind:'door',doorId:'locked1',doorAction:'close'});
+ assert.equal(closed.status,200,'key holder may close an unlocked and open door');
+ assert.equal(closed.data.map.doors[0].locked,false,'closed door remains unlocked');
+ assert.equal(closed.data.map.doors[0].open,false);
+ await new Promise(resolve=>setTimeout(resolve,145));
+ assert.equal((await post(1,'/api/rooms/'+code+'/move',{direction:'up'})).status,409,
+   'closed (unlocked) door blocks movement in either direction');
+ assert.equal((await post(0,'/api/rooms/'+code+'/interact',
+   {kind:'door',doorId:'locked1',doorAction:'open'})).status,200,
+   'unlocked door may be re-opened without spending another key');
  assert.equal(move.data.map.portals.length,2,'both stair choices visible');
  assert.equal((await post(0,'/api/rooms/'+code+'/interact',{kind:'portal',portalIndex:0})).status,409,
    'cannot use stairs remotely');
@@ -123,6 +145,7 @@ test('editor JSON import validation, creator-only secrets, room play, manual por
  const db=JSON.parse(fs.readFileSync(path.join(dir,'state.json'),'utf8'));
  assert.equal(db.customStories[id].owner,people[0].cookie.split('=')[1]);
  assert.equal(db.rooms[code].mapPositions[selected.data.me].floor,'basement');
+ assert.equal(db.rooms[code].doorStates['ground:locked1'].open,true);
 });
 
 test('editor import rejects malformed map, bad character count and missing card prerequisites',()=>{
