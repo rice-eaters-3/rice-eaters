@@ -220,3 +220,16 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(-
 .research-token-bar strong{font:700 23px ui-monospace,monospace;margin:0 4px}
 .research-screen .research-grid{grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px}
 @media(max-width:650px){.research-screen{padding:13px}.host-advance button{width:100%}}
+
+
+/* Independent microphone transmission and speaker playback controls stay visible
+   above both the interactive map and the private dossier / clue catalog. */
+.voice-global{margin:12px 0 18px;padding:14px 20px;border:1px solid #746647;border-radius:10px}
+.voice-global .voice-controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.voice-global .voice-controls h3{font-size:18px;margin:0}
+.voice-global .voice-controls>.eyebrow{width:100%}
+.voice-global .voice-controls>.muted.small{margin:2px 0;flex:1;min-width:180px}
+.voice-toggle-grid{display:flex;gap:8px;flex-wrap:wrap}
+.voice-toggle-grid .btn{margin:0;min-width:145px;font-size:13px;padding:9px 12px;white-space:normal}
+.voice-controls .voice-status{color:#b0dcc6;font-size:12px;margin:0}
+@media(max-width:650px){.voice-global{padding:12px}.voice-toggle-grid{width:100%}.voice-toggle-grid .btn{flex:1;min-width:125px}}
