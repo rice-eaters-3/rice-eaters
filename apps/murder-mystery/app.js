@@ -118,6 +118,7 @@ function updateRoom(room,connection,force=false){
   if(['study','investigation1'].includes(old?.phase)&&old.phase===room?.phase&&old.me===room.me&&
     old.players.find(p=>p.id===room.me)?.characterId===room.players.find(p=>p.id===room.me)?.characterId&&
     old.map?.floorId===room.map?.floorId&&
+    JSON.stringify(old.phaseControl)===JSON.stringify(room.phaseControl)&&
     JSON.stringify(old.whispers)===JSON.stringify(room.whispers)){
     if(!window.MysteryStudy.patch(room))render();
   }else render();
@@ -129,7 +130,7 @@ function setRoom(room){
   else{window.MysteryVoice?.disable();state.room=null;closeStream();stopPolling();history.replaceState(null,'','/mystery');render()}
 }
 async function moveMyPlayer(direction){
-  if(!['study','investigation1'].includes(state.room?.phase)||!state.room.map||state.moving||window.MysteryStudy.currentView()==='book')return;
+  if(!['study','investigation1'].includes(state.room?.phase)||!state.room.map||state.moving||window.MysteryStudy.currentView()!=='map')return;
   if(!['up','down','left','right'].includes(direction))return;
   if(Date.now()-state.lastMoveAt<140)return;
   state.lastMoveAt=Date.now();
@@ -179,10 +180,24 @@ function home(){
     btn('find','코드로 참가하기','btn btn-outline btn-wide')+
     '</section></div>';
 }
+function hostPhaseControl(room){
+  const p=room.phaseControl;
+  if(!p)return '';
+  const next=phaseNames[phaseOrder.indexOf(p.next)]||p.next;
+  const text=p.allReady?'전원 준비 완료 · 방장의 진행을 기다리고 있습니다.':
+    p.readyCount+' / '+p.total+'명 준비 · 모든 참가자 확인 후 진행 가능';
+  return '<section class="host-phase-control surface"><div><div class="eyebrow">PHASE CONTROL</div>'+
+    '<strong>'+escapeHtml(text)+'</strong></div>'+
+    (room.me===room.hostId?
+      btn('advance','방장 · 다음 단계 ('+escapeHtml(next)+') →','btn btn-primary',!p.allReady,
+        'title="'+(p.allReady?'다음 단계로 진행':'전원 준비가 완료되어야 진행할 수 있습니다.')+'"'):
+      '<span class="muted small">방장만 다음 단계를 시작할 수 있습니다.</span>')+
+    '</section>';
+}
 function roomHeader(room){
   return '<div class="room-header surface"><div><div class="eyebrow" style="margin:0 0 6px">CASE FILE 001 / '+escapeHtml(room.phase.toUpperCase())+'</div>'+
     '<h1>'+escapeHtml(room.story.title)+'</h1></div><div class="room-head-right"><div class="code-box"><small>ROOM CODE</small><strong>'+escapeHtml(room.code)+'</strong></div>'+
-    btn('copy','초대 링크 복사','btn btn-outline btn-sm')+'</div></div>'+timerBar(room)+stepper(room);
+    btn('copy','초대 링크 복사','btn btn-outline btn-sm')+'</div></div>'+timerBar(room)+hostPhaseControl(room)+stepper(room);
 }
 function players(room){
   const filled=room.players.map((p,i)=>
@@ -221,7 +236,7 @@ function synopsis(room){
     '<h2>'+escapeHtml(room.story.title)+'</h2>'+room.synopsis.map(p=>'<p>'+escapeHtml(p)+'</p>').join('')+
     '<div class="stamp" style="text-align:right;border:0;margin-top:30px">— END OF PROLOGUE —</div></article>'+
     '<aside class="surface panel-pad reading-sidebar"><div class="eyebrow">READING CONFIRMATION</div><h2>모두 읽으셨나요?</h2>'+
-    '<p class="muted small">각 플레이어가 확인 버튼을 눌러야 캐릭터 선택으로 넘어갑니다. 상태는 모든 참가자에게 실시간으로 반영됩니다.</p>'+
+    '<p class="muted small">각 플레이어가 읽기 확인을 마치면 방장이 캐릭터 선택 단계를 시작합니다. 확인 자체는 자동 진행되지 않습니다.</p>'+
     '<div class="progress" aria-label="읽음 진행률"><div class="progress-fill" style="width:'+Math.round(readCount/room.story.players*100)+'%"></div></div>'+
     '<p class="small">'+readCount+' / '+room.story.players+'명 확인 완료</p>'+
     '<div class="ready-list">'+room.players.map(p=>'<div class="ready-item"><span class="ready-name">'+escapeHtml(p.name)+'</span>'+
@@ -256,8 +271,8 @@ function characters(room){
   '<div class="notice"><strong>'+taken+' / '+room.story.players+'명 선택 완료</strong><p>'+
     (my?.characterId?'선택한 캐릭터를 변경하려면 아직 비어 있는 다른 카드를 누르세요.':'카드를 선택하면 다른 참가자에게 즉시 반영됩니다.')+
     '</p></div><div class="line"></div>'+
-  '<p class="muted small">전원의 캐릭터 선택이 끝나면 각자 자신의 비밀 책자가 공개되는 숙지 단계로 자동 진행됩니다. 이후 조사·밀담·추리 단계는 다음 버전에서 이어집니다.</p></aside></div>'+
-  (allDone?'<div class="all-chosen"><div class="eyebrow">ALL ROLES ASSIGNED</div><h2>모든 배역이 정해졌습니다.</h2><p class="muted">다음 업데이트에서는 캐릭터별 비밀 문서와 숙지 단계를 이어갑니다.</p></div>':'');
+  '<p class="muted small">전원이 캐릭터를 선택하면 방장이 캐릭터 숙지 단계로 진행할 수 있습니다.</p></aside></div>'+
+  (allDone?'<div class="all-chosen"><div class="eyebrow">ALL ROLES ASSIGNED</div><h2>모든 배역이 정해졌습니다.</h2><p class="muted">방장이 위쪽의 「다음 단계」 버튼을 누르면 캐릭터 숙지가 시작됩니다.</p></div>':'');
 }
 function preview(room){
   return roomHeader(room)+
@@ -289,21 +304,20 @@ async function perform(action,button){
     try{
       const payload=button.dataset.kind==='portal'?
         {kind:'portal',portalIndex:Number(button.dataset.index)}:
-        {kind:'door',doorId:button.dataset.door};
+        {kind:'door',doorId:button.dataset.door,mode:button.dataset.mode};
       const updated=await api('/api/rooms/'+state.room.code+'/interact','POST',payload);
       updateRoom(updated,state.connection,true);
-      if(payload.kind==='door')toast('문을 열었습니다.');
+      if(payload.kind==='door')toast(payload.mode==='close'?'문을 닫았습니다.':'문을 열었습니다.');
     }catch(e){toast(e.message)}
     return;
   }
-  if(['book-toggle','book-chapter','book-prev','book-next'].includes(action)){
+  if(['book-toggle','research-toggle','book-chapter','book-prev','book-next'].includes(action)){
     window.MysteryStudy.navigate(action,button.dataset.chapter);render();return;
   }
-  if(['voice-on','voice-off','voice-mute'].includes(action)){
+  if(['voice-mic','voice-speaker'].includes(action)){
     try{
-      if(action==='voice-on')await window.MysteryVoice.enable();
-      if(action==='voice-off')window.MysteryVoice.disable();
-      if(action==='voice-mute')window.MysteryVoice.toggleMute();
+      if(action==='voice-mic')await window.MysteryVoice.setMicrophone(!window.MysteryVoice.micOn);
+      if(action==='voice-speaker')await window.MysteryVoice.setSpeaker(!window.MysteryVoice.speakerOn);
     }catch(e){toast(e.message)}
     render();return;
   }
@@ -328,7 +342,7 @@ async function perform(action,button){
     } else if(action==='leave'){
       await api('/api/rooms/'+code+'/leave','POST',{});
       setRoom(null);
-    } else if(action==='start'||action==='read'||action==='study-ready'){
+    } else if(action==='start'||action==='read'||action==='study-ready'||action==='advance'){
       setRoom(await api('/api/rooms/'+code+'/'+action,'POST',{}));
     } else if(action==='character'){
       const characterId=button.dataset.character;
