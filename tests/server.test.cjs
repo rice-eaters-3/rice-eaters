@@ -92,7 +92,12 @@ test('server: four-player mystery flow, persistence, and Mars save endpoints',as
     const ack=await post(clients[i],'/api/rooms/'+pollCode+'/read');
     assert.equal(ack.status,200);
   }
-  assert.equal((await call(clients[2],'/api/rooms/'+pollCode)).data.phase,'characters','polling-only synopsis advances');
+  const pollAllReady=await call(clients[2],'/api/rooms/'+pollCode);
+  assert.equal(pollAllReady.data.phase,'synopsis','polling-only room waits for host');
+  assert.equal(pollAllReady.data.progress.ready,4);
+  assert.equal(pollAllReady.data.progress.canAdvance,true);
+  assert.equal((await post(clients[1],'/api/rooms/'+pollCode+'/advance')).status,403,'non-host cannot advance polling room');
+  assert.equal((await post(clients[0],'/api/rooms/'+pollCode+'/advance')).data.phase,'characters','host advances polling room');
 
   const nonHost=await post(clients[1],'/api/rooms/'+code+'/start');
   assert.equal(nonHost.status,403,'only host may start');
@@ -119,8 +124,16 @@ test('server: four-player mystery flow, persistence, and Mars save endpoints',as
     assert.equal(ack.data.phase,'synopsis','wait for all acknowledgements');
   }
   const fourth=await post(clients[3],'/api/rooms/'+code+'/read');
-  assert.equal(fourth.data.phase,'characters');
-  assert.equal(fourth.data.characters.length,4);
+  assert.equal(fourth.data.phase,'synopsis','even unanimous reading never auto-advances');
+  assert.equal(fourth.data.progress.ready,4);
+  assert.equal(fourth.data.progress.canAdvance,true);
+  assert.equal((await post(clients[1],'/api/rooms/'+code+'/advance')).status,403,'only host may advance');
+  const advanced=await post(clients[0],'/api/rooms/'+code+'/advance');
+  assert.equal(advanced.status,200);
+  assert.equal(advanced.data.phase,'characters');
+  assert.equal(advanced.data.characters.length,4);
+  assert.equal((await post(clients[0],'/api/rooms/'+code+'/advance')).status,409,
+    'host cannot skip incomplete character selection');
   const firstPick=await post(clients[0],'/api/rooms/'+code+'/character',{characterId:'elena'});
   assert.equal(firstPick.status,200);
   const duplicate=await post(clients[1],'/api/rooms/'+code+'/character',{characterId:'elena'});
@@ -128,9 +141,14 @@ test('server: four-player mystery flow, persistence, and Mars save endpoints',as
   for(const [i,id] of [[1,'victor'],[2,'iris'],[3,'noah']]){
     assert.equal((await post(clients[i],'/api/rooms/'+code+'/character',{characterId:id})).status,200);
   }
+  const allCast=await call(clients[0],'/api/rooms/'+code);
+  assert.equal(allCast.data.players.filter(p=>p.characterId).length,4);
+  assert.equal(allCast.data.phase,'characters','full cast waits for host to advance');
+  assert.equal(allCast.data.progress.canAdvance,true);
+  assert.equal((await post(clients[2],'/api/rooms/'+code+'/advance')).status,403);
+  assert.equal((await post(clients[0],'/api/rooms/'+code+'/advance')).data.phase,'study');
+  assert.equal((await post(clients[0],'/api/rooms/'+code+'/advance')).status,409,'host cannot skip unfinished study');
   const final=await call(clients[0],'/api/rooms/'+code);
-  assert.equal(final.data.players.filter(p=>p.characterId).length,4);
-  assert.equal(final.data.phase,'study','all four picks advance automatically');
   assert.equal(final.data.booklet.basic.name,'엘레나 블랙우드');
   assert.equal(final.data.booklet.culprit,false);
   assert.equal(final.data.booklet.timeline.length,4);
@@ -182,8 +200,14 @@ test('server: four-player mystery flow, persistence, and Mars save endpoints',as
     assert.equal(ack.status,200);
     assert.equal(ack.data.players.filter(p=>p.studyReady).length,i+1);
   }
+  const stillStudy=await call(clients[0],'/api/rooms/'+code);
+  assert.equal(stillStudy.data.phase,'study','everyone ready but awaiting host click');
+  assert.equal(stillStudy.data.progress.canAdvance,true);
+  assert.equal((await post(clients[1],'/api/rooms/'+code+'/advance')).status,403,'only host advances study');
+  const confirmed=await post(clients[0],'/api/rooms/'+code+'/advance');
+  assert.equal(confirmed.status,200);
+  assert.equal(confirmed.data.phase,'investigation1','host advances to investigation');
   const afterReady=await call(clients[0],'/api/rooms/'+code);
-  assert.equal(afterReady.data.phase,'investigation1','all four ready starts investigation1');
   assert.equal(afterReady.data.clock.phaseMinutes.investigation1,20);
   assert.ok(afterReady.data.clock.phaseStartedAt>=start.data.clock.phaseStartedAt);
   assert.equal(afterReady.data.investigation.tokens,4,'four tokens allocated');
@@ -257,7 +281,14 @@ test('server: four-player mystery flow, persistence, and Mars save endpoints',as
   assert.equal((await post(clients[1],'/api/rooms/'+code+'/interact',
     {kind:'door',doorId:'library-door'})).status,404,'door on another floor does not exist');
   // Elena and Iris meet on the dining room floor and start a unanimous whisper.
-  await walk(0,['right','down','down','right','down','down','down','down']);
+  await walk(0,['right','down','down','right']);
+  assert.equal((await post(clients[0],'/api/rooms/'+code+'/move',{direction:'down'})).status,409,
+    'a closed but unlocked dining door still blocks movement');
+  const openDining=await post(clients[0],'/api/rooms/'+code+'/interact',
+    {kind:'door',doorId:'dining-door',doorAction:'open'});
+  assert.equal(openDining.status,200,'any nearby player may open an unlocked door');
+  assert.equal(openDining.data.map.doors.find(d=>d.id==='dining-door').open,true);
+  await walk(0,['down','down','down','down']);
   await walk(2,['right']);
   const joinedPos=(await call(clients[0],'/api/rooms/'+code)).data.players;
   assert.deepEqual(joinedPos.find(p=>p.id===final.data.me).position,
