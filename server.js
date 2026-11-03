@@ -81,30 +81,102 @@ function activeReservation(room,id){
 function cardUnlocked(card,room){
   return (card.requires||[]).every(id=>room.investigation?.discovered?.[id]?.length);
 }
+// Legacy room migration: prior versions stored discovery history, but not card
+// ownership. Create one holding per original discovery, once per saved game.
+function exchangeFor(room){
+  const inv=room.investigation;
+  if(!inv)return null;
+  if(!Array.isArray(inv.holdings)){
+    inv.holdings=Object.entries(inv.discovered||{}).flatMap(([cardId,found])=>
+      (Array.isArray(found)?found:[]).filter(r=>room.players.some(p=>p.id===r.playerId))
+        .map(r=>({id:randomId(8),cardId,ownerId:r.playerId,createdAt:r.at||Date.now()})));
+  }
+  inv.publicCards||={};
+  inv.selectiveShares||=[];
+  inv.offers||=[];
+  inv.tokens||={};
+  inv.collected||={};
+  inv.reserved||={};
+  inv.discovered||={};
+  return inv;
+}
+function sameTile(room,a,b){
+  if(!a||!b||a===b)return false;
+  const x=positionFor(room,a),y=positionFor(room,b);
+  return !!(x&&y&&x.floor===y.floor&&x.x===y.x&&x.y===y.y);
+}
+function pruneExchanges(room){
+  const inv=exchangeFor(room);
+  if(!inv)return;
+  inv.selectiveShares=inv.selectiveShares.filter(x=>{
+    const owner=room.players.find(p=>p.id===x.ownerId);
+    const receiver=room.players.find(p=>p.id===x.toId);
+    const pos=owner&&positionFor(room,owner);
+    return owner&&receiver&&inv.holdings.some(h=>h.id===x.holdingId&&h.ownerId===owner.id)&&
+      sameTile(room,owner,receiver)&&pos.floor===x.floor&&pos.x===x.x&&pos.y===x.y;
+  });
+  inv.offers=inv.offers.filter(o=>{
+    const from=room.players.find(p=>p.id===o.fromId),to=room.players.find(p=>p.id===o.toId);
+    const pos=from&&positionFor(room,from);
+    return from&&to&&o.expiresAt>Date.now()&&sameTile(room,from,to)&&
+      pos.floor===o.floor&&pos.x===o.x&&pos.y===o.y&&
+      (o.type==='card'?inv.holdings.some(h=>h.id===o.holdingId&&h.ownerId===from.id):
+        Number.isInteger(o.amount)&&o.amount>0);
+  });
+}
 function investigationView(room,member){
-  if(!member||room.phase!=='investigation1')return null;
-  const data=gameFor(room).investigation;
-  if(!data)return null;
-  const discovered=room.investigation?.discovered||{};
+  if(!member||!POST_INVESTIGATION_PHASES.includes(room.phase))return null;
+  const spec=gameFor(room).investigation;
+  const data=exchangeFor(room);
+  if(!spec||!data)return null;
+  pruneExchanges(room);
+  const discovered=data.discovered||{};
+  const held=data.holdings.filter(h=>h.ownerId===member.id);
+  const nearby=tilePlayers(room,positionFor(room,member)||{floor:null,x:-1,y:-1})
+    .filter(p=>p.id!==member.id).map(p=>({id:p.id,name:p.name}));
+  const cards=spec.cards.flatMap(card=>{
+    const owned=held.filter(h=>h.cardId===card.id);
+    const shares=data.selectiveShares.filter(x=>x.toId===member.id&&
+      data.holdings.some(h=>h.id===x.holdingId&&h.cardId===card.id));
+    const globallyPublic=!!data.publicCards[card.id];
+    const canRead=owned.length>0||shares.length>0||globallyPublic;
+    const unlocked=cardUnlocked(card,room);
+    if(!unlocked&&card.visibility==='hidden'&&!canRead)return [];
+    const found=discovered[card.id]||[],reservation=activeReservation(room,card.id);
+    return [{
+      id:card.id,title:card.title,subtitle:card.subtitle,type:card.type,
+      location:card.location||null,locked:!unlocked,
+      excluded:card.owner===member.characterId||(card.blockedFor||[]).includes(member.characterId),
+      taken:found.length>0&&!card.repeatable,repeatable:!!card.repeatable,
+      transferable:card.transferable!==false,public:globallyPublic,
+      heldByMe:owned.length,sharedToMe:shares.length>0,
+      reservedBy:reservation?.playerId||null,
+      acquiredBy:found.map(f=>f.playerId),
+      revealed:canRead?[{at:data.publicCards[card.id]?.at||found[0]?.at||Date.now(),
+        back:card.back,grant:card.grant||null}]:[]
+    }];
+  });
+  const myCards=held.flatMap(h=>{
+    const card=spec.cards.find(c=>c.id===h.cardId);
+    return card?[{id:h.id,cardId:h.cardId,title:card.title,subtitle:card.subtitle,
+      back:card.back,transferable:card.transferable!==false,
+      public:!!data.publicCards[card.id],
+      sharedWith:data.selectiveShares.filter(x=>x.holdingId===h.id)
+        .map(x=>({id:x.toId,name:room.players.find(p=>p.id===x.toId)?.name||''}))}]:[];
+  });
   return {
-    tokens:room.investigation.tokens[member.id]??0,
-    totalTokens:data.tokensPerPlayer,
-    cards:data.cards.flatMap(card=>{
-      const unlocked=cardUnlocked(card,room);
-      if(!unlocked&&card.visibility==='hidden')return [];
-      const found=discovered[card.id]||[], reservation=activeReservation(room,card.id);
-      const taken=found.length>0&&!card.repeatable;
-      const excluded=card.owner===member.characterId||(card.blockedFor||[]).includes(member.characterId);
-      return [{
-        id:card.id,title:card.title,subtitle:card.subtitle,type:card.type,
-        location:card.location||null,locked:!unlocked,excluded,
-        taken,repeatable:!!card.repeatable,
-        reservedBy:reservation?.playerId||null,
-        acquiredBy:found.map(f=>f.playerId),
-        revealed:found.filter(f=>f.playerId===member.id).map(f=>({at:f.at,back:card.back,grant:card.grant||null}))
-      }];
+    tokens:data.tokens[member.id]??0,totalTokens:spec.tokensPerPlayer,
+    canInvestigate:INVESTIGATION_PHASES.includes(room.phase),
+    cards,myCards,nearby,
+    incomingOffers:data.offers.filter(o=>o.toId===member.id).map(o=>{
+      const card=o.type==='card'?spec.cards.find(c=>c.id===data.holdings.find(h=>h.id===o.holdingId)?.cardId):null;
+      return {id:o.id,type:o.type,amount:o.amount||null,cardTitle:card?.title||null,
+        fromName:room.players.find(p=>p.id===o.fromId)?.name||'',expiresAt:o.expiresAt};
     }),
-    collected:room.investigation?.collected?.[member.id]||[]
+    outgoingOffers:data.offers.filter(o=>o.fromId===member.id)
+      .map(o=>({id:o.id,type:o.type,toName:room.players.find(p=>p.id===o.toId)?.name||'',
+        amount:o.amount||null,expiresAt:o.expiresAt})),
+    collected:data.collected?.[member.id]||[]
   };
 }
 function whisperState(room){
@@ -516,6 +588,7 @@ async function api(req,res,url,sid){
       fail(409,'해당 타일의 최대 인원을 초과했습니다.');
     room.mapPositions[player.id]=next;
     pruneWhispers(room); // leaving the tile also leaves its private voice group
+    pruneExchanges(room); // tile-only card reveals and pending trades expire immediately
     lastMoves.set(lastKey,Date.now());
     persist();sendState(room);
     return json(res,200,roomView(room,sid));
@@ -541,7 +614,7 @@ async function api(req,res,url,sid){
       if(occupantCount(room,next,player.id)>=(gameFor(room).investigation?.maxTileOccupants||3))
         fail(409,'목적지 타일 정원이 가득 찼습니다.');
       room.mapPositions[player.id]=next;
-      pruneWhispers(room);persist();sendState(room);
+      pruneWhispers(room);pruneExchanges(room);persist();sendState(room);
       logActivity('portal_used',sid,{room:room.id,to:next.floor});
       return json(res,200,roomView(room,sid));
     }
@@ -608,6 +681,8 @@ async function api(req,res,url,sid){
     data.tokens[player.id]--;
     data.discovered[card.id] ||= [];
     data.discovered[card.id].push({playerId:player.id,at:Date.now()});
+    exchangeFor(room).holdings.push({id:randomId(8),cardId:card.id,
+      ownerId:player.id,createdAt:Date.now()});
     if(card.grant){
       data.collected[player.id] ||= [];
       data.collected[player.id].push(card.grant);
