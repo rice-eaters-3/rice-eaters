@@ -92,7 +92,11 @@ test('server: four-player mystery flow, persistence, and Mars save endpoints',as
     const ack=await post(clients[i],'/api/rooms/'+pollCode+'/read');
     assert.equal(ack.status,200);
   }
-  assert.equal((await call(clients[2],'/api/rooms/'+pollCode)).data.phase,'characters','polling-only synopsis advances');
+  assert.equal((await call(clients[2],'/api/rooms/'+pollCode)).data.phase,'synopsis',
+    'polling-only room must wait for host');
+  assert.equal((await post(clients[1],'/api/rooms/'+pollCode+'/advance')).status,403,
+    'nonhost cannot advance polling room');
+  assert.equal((await post(clients[0],'/api/rooms/'+pollCode+'/advance')).data.phase,'characters');
 
   const nonHost=await post(clients[1],'/api/rooms/'+code+'/start');
   assert.equal(nonHost.status,403,'only host may start');
@@ -118,9 +122,16 @@ test('server: four-player mystery flow, persistence, and Mars save endpoints',as
     assert.equal(ack.status,200);
     assert.equal(ack.data.phase,'synopsis','wait for all acknowledgements');
   }
+  assert.equal((await post(clients[0],'/api/rooms/'+code+'/advance')).status,409,
+    'host cannot advance before all ready');
   const fourth=await post(clients[3],'/api/rooms/'+code+'/read');
-  assert.equal(fourth.data.phase,'characters');
-  assert.equal(fourth.data.characters.length,4);
+  assert.equal(fourth.data.phase,'synopsis','readiness never advances automatically');
+  assert.equal(fourth.data.phaseControl.readyCount,4);
+  assert.equal(fourth.data.phaseControl.allReady,true);
+  assert.equal((await post(clients[2],'/api/rooms/'+code+'/advance')).status,403);
+  const cast=await post(clients[0],'/api/rooms/'+code+'/advance');
+  assert.equal(cast.data.phase,'characters');
+  assert.equal(cast.data.characters.length,4);
   const firstPick=await post(clients[0],'/api/rooms/'+code+'/character',{characterId:'elena'});
   assert.equal(firstPick.status,200);
   const duplicate=await post(clients[1],'/api/rooms/'+code+'/character',{characterId:'elena'});
@@ -128,9 +139,15 @@ test('server: four-player mystery flow, persistence, and Mars save endpoints',as
   for(const [i,id] of [[1,'victor'],[2,'iris'],[3,'noah']]){
     assert.equal((await post(clients[i],'/api/rooms/'+code+'/character',{characterId:id})).status,200);
   }
+  const castReady=await call(clients[0],'/api/rooms/'+code);
+  assert.equal(castReady.data.players.filter(p=>p.characterId).length,4);
+  assert.equal(castReady.data.phase,'characters','all picks wait for host action');
+  assert.equal(castReady.data.phaseControl.allReady,true);
+  assert.equal((await post(clients[3],'/api/rooms/'+code+'/advance')).status,403);
+  const movedToStudy=await post(clients[0],'/api/rooms/'+code+'/advance');
+  assert.equal(movedToStudy.status,200);
   const final=await call(clients[0],'/api/rooms/'+code);
-  assert.equal(final.data.players.filter(p=>p.characterId).length,4);
-  assert.equal(final.data.phase,'study','all four picks advance automatically');
+  assert.equal(final.data.phase,'study','host advances to private booklets');
   assert.equal(final.data.booklet.basic.name,'엘레나 블랙우드');
   assert.equal(final.data.booklet.culprit,false);
   assert.equal(final.data.booklet.timeline.length,4);
@@ -182,8 +199,14 @@ test('server: four-player mystery flow, persistence, and Mars save endpoints',as
     assert.equal(ack.status,200);
     assert.equal(ack.data.players.filter(p=>p.studyReady).length,i+1);
   }
+  const waitingReady=await call(clients[0],'/api/rooms/'+code);
+  assert.equal(waitingReady.data.phase,'study','all four study checks wait for host');
+  assert.equal(waitingReady.data.phaseControl.readyCount,4);
+  assert.equal(waitingReady.data.phaseControl.allReady,true);
+  assert.equal((await post(clients[1],'/api/rooms/'+code+'/advance')).status,403);
+  const advanced=await post(clients[0],'/api/rooms/'+code+'/advance');
+  assert.equal(advanced.data.phase,'investigation1');
   const afterReady=await call(clients[0],'/api/rooms/'+code);
-  assert.equal(afterReady.data.phase,'investigation1','all four ready starts investigation1');
   assert.equal(afterReady.data.clock.phaseMinutes.investigation1,20);
   assert.ok(afterReady.data.clock.phaseStartedAt>=start.data.clock.phaseStartedAt);
   assert.equal(afterReady.data.investigation.tokens,4,'four tokens allocated');
