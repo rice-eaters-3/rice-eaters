@@ -45,6 +45,21 @@ function gameFor(room){return privateMysteries[room.storyId]||db.customStories?.
 function floorsFor(room){const g=gameFor(room);return g.floors|| (g.floorplan?[{...g.floorplan,id:'ground',portals:[]}]:[])}
 function floorFor(room,id){return floorsFor(room).find(f=>f.id===id)}
 function positionFor(room,p){const pos=room.mapPositions?.[p.id];return pos?{floor:pos.floor||'ground',x:pos.x,y:pos.y}:null}
+function doorState(room,floor,door){
+  const key=floor.id+':'+door.id;
+  const unlocked=!door.locked||!!room.openDoors?.[key]||!!room.unlockedDoors?.[key];
+  const isOpen=room.doorStates?.[key]?.open??(room.openDoors?.[key]?true:door.closed===false);
+  return {locked:!unlocked,open:unlocked&&!!isOpen};
+}
+const ADVANCE_NEXT={synopsis:'characters',characters:'study',study:'investigation1'};
+function phaseReadiness(room){
+  const next=ADVANCE_NEXT[room.phase]||null;
+  const ready=room.phase==='synopsis'?room.players.filter(p=>p.read).length:
+    room.phase==='characters'?room.players.filter(p=>p.characterId).length:
+    room.phase==='study'?room.players.filter(p=>p.studyReady).length:0;
+  return {next,ready,total:room.players.length,canAdvance:!!next&&
+    room.players.length===storyById(room.storyId).players&&ready===room.players.length};
+}
 function occupantCount(room,pos,exceptId){
   return room.players.filter(p=>p.id!==exceptId&&positionFor(room,p)?.floor===pos.floor
     &&positionFor(room,p)?.x===pos.x&&positionFor(room,p)?.y===pos.y).length;
@@ -203,8 +218,7 @@ function roomView(room,sid){
     portals:floor.portals||[],areas:floor.areas||[],
     doors:(floor.doors||[]).map(d=>({
       id:d.id,name:d.name,x:d.x,y:d.y,
-      locked:!!d.locked&&!room.openDoors?.[floor.id+':'+d.id],
-      requiresItem:d.requiresItem||null
+      ...doorState(room,floor,d),requiresItem:d.requiresItem||null
     })),
     capacity:game.investigation?.maxTileOccupants||3,
     avatars:room.players.filter(p=>p.characterId&&positionFor(room,p)?.floor===floor.id).map(p=>{
@@ -215,6 +229,7 @@ function roomView(room,sid){
   }:null;
   return {
     code:room.id,phase:room.phase,story:publicStory(story),
+    progress:phaseReadiness(room),
     clock:room.gameStartedAt?{gameStartedAt:room.gameStartedAt,
       phaseStartedAt:room.phaseStartedAt||room.gameStartedAt,
       phaseMinutes:{...phaseDefault,...(game.phaseMinutes||{})},
@@ -314,7 +329,7 @@ async function api(req,res,url,sid){
     ownedPlayer(room,sid);
     return subscribe(req,res,room,sid);
   }
-  const match=pathname.match(/^\/api\/rooms\/([A-Z2-9]{6})(?:\/(join|start|read|character|leave|study-ready|move|interact|reserve|release|investigate|whisper-request|whisper-vote|whisper-leave|signal|signals))?$/);
+  const match=pathname.match(/^\/api\/rooms\/([A-Z2-9]{6})(?:\/(join|start|advance|read|character|leave|study-ready|move|interact|reserve|release|investigate|whisper-request|whisper-vote|whisper-leave|signal|signals))?$/);
   if(req.method==='GET'&&match&&match[2]==='signals'){
     const room=roomOrFail(match[1]),me=ownedPlayer(room,sid);
     const after=Math.max(0,Number(url.searchParams.get('after'))||0);
@@ -404,7 +419,6 @@ async function api(req,res,url,sid){
   if(action==='read'){
     if(room.phase!=='synopsis')fail(409,'현재 시놉시스 확인 단계가 아닙니다.');
     player.read=true;
-    if(room.players.every(p=>p.read))phaseChange(room,'characters',sid)
     logActivity('synopsis_read',sid,{room:room.id});persist();sendState(room);
     return json(res,200,roomView(room,sid));
   }
@@ -414,19 +428,7 @@ async function api(req,res,url,sid){
     if(!char)fail(400,'존재하지 않는 캐릭터입니다.');
     if(room.players.some(p=>p!==player&&p.characterId===char.id))fail(409,'다른 참가자가 이미 선택한 캐릭터입니다.');
     player.characterId=char.id;
-    if(room.players.every(p=>p.characterId)){
-      phaseChange(room,'study',sid);
-      room.players.forEach(p=>p.studyReady=false);
-      const game=gameFor(room);
-      room.mapPositions={};
-      if(game?.floorplan||game?.floors?.length){
-        for(const p of room.players){
-          const spawn=game.spawn?.[p.characterId]||game.floorplan?.spawn?.[p.characterId];
-          if(spawn)room.mapPositions[p.id]={floor:spawn.floor||'ground',x:spawn.x,y:spawn.y};
-        }
-      }
-      // phaseChange has already recorded the transition.
-    }
+    // Cast stays in selection until the host presses Next.
     logActivity('character_selected',sid,{room:room.id,character:char.id});
     persist();sendState(room);return json(res,200,roomView(room,sid));
   }
@@ -435,12 +437,31 @@ async function api(req,res,url,sid){
     if(!player.characterId)fail(403,'캐릭터가 배정되지 않았습니다.');
     player.studyReady=true;
     logActivity('study_ready',sid,{room:room.id});
-    if(room.players.every(p=>p.studyReady)){
+    persist();sendState(room);
+    return json(res,200,roomView(room,sid));
+  }
+  if(action==='advance'){
+    if(room.host!==sid)fail(403,'방장만 다음 단계로 진행할 수 있습니다.');
+    const progress=phaseReadiness(room);
+    if(!progress.next)fail(409,'아직 구현되지 않은 다음 단계로 진행할 수 없습니다.');
+    if(!progress.canAdvance)fail(409,'모든 참가자가 현재 단계의 준비를 마쳐야 합니다.');
+    if(progress.next==='study'){
+      const game=gameFor(room);
+      room.players.forEach(p=>p.studyReady=false);
+      room.mapPositions={};
+      if(game?.floorplan||game?.floors?.length){
+        for(const p of room.players){
+          const spawn=game.spawn?.[p.characterId]||game.floorplan?.spawn?.[p.characterId];
+          if(spawn)room.mapPositions[p.id]={floor:spawn.floor||'ground',x:spawn.x,y:spawn.y};
+        }
+      }
+    }
+    if(progress.next==='investigation1'){
       const info=gameFor(room).investigation;
       room.investigation={tokens:Object.fromEntries(room.players.map(p=>[p.id,info?.tokensPerPlayer||4])),
         reserved:{},discovered:{},collected:{}};
-      phaseChange(room,'investigation1',sid);
     }
+    phaseChange(room,progress.next,sid);
     persist();sendState(room);
     return json(res,200,roomView(room,sid));
   }
@@ -461,8 +482,8 @@ async function api(req,res,url,sid){
       floorplan.tiles[y][x]!=='.')fail(409,'벽이나 지도 밖으로 이동할 수 없습니다.');
     const next={floor:current.floor,x,y};
     const door=(floorplan.doors||[]).find(d=>d.x===x&&d.y===y);
-    if(door&&door.locked&&!room.openDoors?.[floorplan.id+':'+door.id])
-      fail(409,'잠긴 문입니다. 근처에서 문 열기 액션을 사용하세요.');
+    if(door&&!doorState(room,floorplan,door).open)
+      fail(409,'닫힌 문입니다. 문 옆에서 열기 액션을 사용하세요.');
     if(occupantCount(room,next,player.id)>=(gameFor(room).investigation?.maxTileOccupants||3))
       fail(409,'해당 타일의 최대 인원을 초과했습니다.');
     room.mapPositions[player.id]=next;
@@ -487,8 +508,8 @@ async function api(req,res,url,sid){
       if(!dest||dest.tiles[portal.toY]?.[portal.toX]!=='.')
         fail(409,'목적지 타일로 이동할 수 없습니다.');
       const door=(dest.doors||[]).find(d=>d.x===next.x&&d.y===next.y);
-      if(door&&door.locked&&!room.openDoors?.[dest.id+':'+door.id])
-        fail(409,'목적지에 잠긴 문이 있습니다.');
+      if(door&&!doorState(room,dest,door).open)
+        fail(409,'목적지의 문이 닫혀 있습니다.');
       if(occupantCount(room,next,player.id)>=(gameFor(room).investigation?.maxTileOccupants||3))
         fail(409,'목적지 타일 정원이 가득 찼습니다.');
       room.mapPositions[player.id]=next;
@@ -499,16 +520,31 @@ async function api(req,res,url,sid){
     if(body.kind==='door'){
       const door=(floor.doors||[]).find(d=>d.id===body.doorId);
       if(!door)fail(404,'문을 찾을 수 없습니다.');
-      if(Math.abs(door.x-pos.x)+Math.abs(door.y-pos.y)>1)fail(409,'문 옆에서 열기를 시도하세요.');
-      if(!door.locked||room.openDoors?.[floor.id+':'+door.id])
-        return json(res,200,roomView(room,sid));
-      const initial=gameFor(room).booklets?.[player.characterId]?.inventory||[];
-      const collected=room.investigation?.collected?.[player.id]||[];
-      if(door.requiresItem&&![...initial,...collected].some(i=>i.id===door.requiresItem))
-        fail(403,'이 문을 열 열쇠나 필수 아이템이 없습니다.');
-      room.openDoors||={};
-      room.openDoors[floor.id+':'+door.id]=true;
-      persist();sendState(room);logActivity('door_unlocked',sid,{room:room.id,door:door.id});
+      if(Math.abs(door.x-pos.x)+Math.abs(door.y-pos.y)>1)fail(409,'문 옆에서 액션을 사용하세요.');
+      const state=doorState(room,floor,door);
+      const operation=body.doorAction||'open';
+      if(!['open','close'].includes(operation))fail(400,'지원하지 않는 문 액션입니다.');
+      if(operation==='open'){
+        if(state.open)return json(res,200,roomView(room,sid));
+        if(state.locked){
+          const initial=gameFor(room).booklets?.[player.characterId]?.inventory||[];
+          const collected=room.investigation?.collected?.[player.id]||[];
+          if(door.requiresItem&&![...initial,...collected].some(i=>i.id===door.requiresItem))
+            fail(403,'이 문을 열 열쇠나 필수 아이템이 없습니다.');
+          room.unlockedDoors||={};
+          room.unlockedDoors[floor.id+':'+door.id]=true;
+        }
+      }else{
+        if(!state.open)return json(res,200,roomView(room,sid));
+        if(room.players.some(p=>{
+          const cur=positionFor(room,p);
+          return cur?.floor===floor.id&&cur.x===door.x&&cur.y===door.y;
+        }))fail(409,'문 타일에 플레이어가 있어 문을 닫을 수 없습니다.');
+      }
+      room.doorStates||={};
+      room.doorStates[floor.id+':'+door.id]={open:operation==='open'};
+      persist();sendState(room);
+      logActivity('door_'+operation,sid,{room:room.id,door:door.id});
       return json(res,200,roomView(room,sid));
     }
     fail(400,'지원하지 않는 지도 상호작용입니다.');
