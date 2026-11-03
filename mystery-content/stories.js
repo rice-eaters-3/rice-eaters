@@ -17,4 +17,5 @@ module.exports=[
       {id:'noah',name:'노아 그레이',role:'저택 관리인',hint:'복도와 열쇠에 관해서는 누구보다 잘 아는 인물.',symbol:'⚿',accent:'#98a8ce'}
     ]
   }
+  ,require('./d1-gaming.case.json').story
 ];

@@ -5,7 +5,11 @@ const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
-const privateMysteries = {'midnight-manor':require('./mystery-content/midnight-manor.js')};
+const d1Case = require('./mystery-content/d1-gaming.case.json');
+const privateMysteries = {
+  'midnight-manor':require('./mystery-content/midnight-manor.js'),
+  'd1-crown-of-ashes':{...d1Case.game,spawn:d1Case.spawn}
+};
 
 const ROOT = __dirname;
 // Railway volumes expose this automatically; DATA_DIR can override for other hosts.
@@ -79,6 +83,8 @@ function activeReservation(room,id){
   return null;
 }
 function cardUnlocked(card,room){
+  if(card.availableFromPhase==='investigation2'&&
+    !['investigation2','discussion2','action','ending'].includes(room.phase))return false;
   return (card.requires||[]).every(id=>room.investigation?.discovered?.[id]?.length);
 }
 // Legacy room migration: prior versions stored discovery history, but not card
@@ -146,6 +152,9 @@ function investigationView(room,member){
     return [{
       id:card.id,title:card.title,subtitle:card.subtitle,type:card.type,
       location:card.location||null,locked:!unlocked,
+      requiresPresence:card.requiresPresence===true,
+      atLocation:!!(card.location&&positionFor(room,member)?.floor===card.location.floor&&
+        positionFor(room,member)?.x===card.location.x&&positionFor(room,member)?.y===card.location.y),
       excluded:card.owner===member.characterId||(card.blockedFor||[]).includes(member.characterId),
       taken:found.length>0&&!card.repeatable,repeatable:!!card.repeatable,
       transferable:card.transferable!==false,public:globallyPublic,
@@ -153,13 +162,15 @@ function investigationView(room,member){
       reservedBy:reservation?.playerId||null,
       acquiredBy:found.map(f=>f.playerId),
       revealed:canRead?[{at:data.publicCards[card.id]?.at||found[0]?.at||Date.now(),
-        back:card.back,grant:card.grant||null}]:[]
+        back:card.back,grant:card.grant||null,
+        insight:card.insights?.[member.characterId]||null}]:[]
     }];
   });
   const myCards=held.flatMap(h=>{
     const card=spec.cards.find(c=>c.id===h.cardId);
     return card?[{id:h.id,cardId:h.cardId,title:card.title,subtitle:card.subtitle,
       back:card.back,transferable:card.transferable!==false,
+      insight:card.insights?.[member.characterId]||null,
       public:!!data.publicCards[card.id],
       sharedWith:data.selectiveShares.filter(x=>x.holdingId===h.id)
         .map(x=>({id:x.toId,name:room.players.find(p=>p.id===x.toId)?.name||''}))}]:[];
@@ -663,6 +674,11 @@ async function api(req,res,url,sid){
       return json(res,200,roomView(room,sid));
     }
     if(!cardUnlocked(card,room))fail(409,'해금 조건을 충족하지 않았습니다.');
+    if(card.requiresPresence===true&&card.location){
+      const loc=positionFor(room,player);
+      if(!loc||loc.floor!==card.location.floor||loc.x!==card.location.x||loc.y!==card.location.y)
+        fail(409,'이 카드는 지정된 현장 타일에 서서 조사해야 합니다.');
+    }
     if(card.owner===player.characterId||(card.blockedFor||[]).includes(player.characterId))
       fail(403,'이 캐릭터는 해당 카드를 조사할 수 없습니다.');
     if((data.discovered[card.id]||[]).length&&!card.repeatable)

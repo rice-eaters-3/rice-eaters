@@ -267,7 +267,7 @@ function characters(room){
     (mine?'<span class="chosen-label">내 캐릭터</span>':owner?'<span class="chosen-label">선택 완료</span>':'')+
     '<div class="char-symbol">'+escapeHtml(c.symbol)+'</div>'+
     '<h3 class="character-name">'+escapeHtml(c.name)+'</h3><div class="character-role">'+escapeHtml(c.role)+'</div>'+
-    '<p class="char-hint">'+escapeHtml(c.hint)+'</p>'+
+    '<p class="char-hint">'+escapeHtml(c.hint)+'</p>'+ (c.startLine?'<p class="char-start">“'+escapeHtml(c.startLine)+'”</p>':'')+
     btn('character',mine?'선택한 캐릭터입니다 ✓':owner?'이미 선택된 캐릭터':'이 캐릭터 선택','btn '+(mine?'btn-outline':'btn-primary'),!!owner,'data-character="'+escapeHtml(c.id)+'"')+
     '</article>';
   }).join('')+'</div>'+

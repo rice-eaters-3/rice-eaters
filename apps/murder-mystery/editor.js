@@ -55,6 +55,7 @@ function charactersPanel(){
     '<div class="editor-fields">'+field('캐릭터 ID (저장 후 변경 비권장)','story.characters.'+selectedChar+'.id',c.id)+
     field('공개 이름','story.characters.'+selectedChar+'.name',c.name)+field('공개 역할','story.characters.'+selectedChar+'.role',c.role)+
     field('공개 한 줄 설명','story.characters.'+selectedChar+'.hint',c.hint,'textarea')+
+    field('캐릭터 시작 대사','story.characters.'+selectedChar+'.startLine',c.startLine||'','textarea')+
     field('맵 표시 기호','story.characters.'+selectedChar+'.symbol',c.symbol)+
     field('표시 색상','story.characters.'+selectedChar+'.accent',c.accent,'color')+
     '</div><h3>비공개 책자 · 7개 항목</h3>'+
@@ -87,6 +88,12 @@ function cardsPanel(){
       selectField('소유 캐릭터: 본인은 조사 불가','game.investigation.cards.'+selectedCard+'.owner',[['','없음'],...doc.story.characters.map(x=>[x.id,x.name])],c.owner||'')+
       field('선행 조사 카드 ID (쉼표 구분)','card.requires',(c.requires||[]).join(', '))+
       selectField('해금 전 표시','game.investigation.cards.'+selectedCard+'.visibility',[['locked','잠금 표시'],['hidden','존재 숨기기']],c.visibility||'locked')+
+      selectField('조사 카드 분류','game.investigation.cards.'+selectedCard+'.clueKind',
+        [['','기본 분류'],['cult','교단 관련'],['timeline','사건 당일 행적'],['trick','범행 도구·증거']],c.clueKind||'')+
+      selectField('조사 가능 단계','game.investigation.cards.'+selectedCard+'.availableFromPhase',
+        [['investigation1','1차 조사부터'],['investigation2','2차 조사부터']],c.availableFromPhase||'investigation1')+
+      field('현장 타일에 있어야만 조사 가능','game.investigation.cards.'+selectedCard+'.requiresPresence',c.requiresPresence===true,'checkbox')+
+      field('인물별 비공개 추가 감응 (JSON 객체)','card.insights',JSON.stringify(c.insights||{},null,2),'textarea')+
       field('중복 조사 허용','game.investigation.cards.'+selectedCard+'.repeatable',!!c.repeatable,'checkbox')+
       field('카드 양도 허용','game.investigation.cards.'+selectedCard+'.transferable',c.transferable!==false,'checkbox')+
       field('조사 불가 캐릭터 ID (쉼표 구분)','card.blockedFor',(c.blockedFor||[]).join(', '))+
@@ -160,6 +167,14 @@ function valueChange(path,value){
     catch(e){status('이 항목은 JSON 배열이어야 합니다: '+e.message,true);return;}
   }else if(path.startsWith('role.'))b[path.slice(5)]=value;
   else if(path==='card.requires')card.requires=value.split(',').map(x=>x.trim()).filter(Boolean);
+  else if(path==='card.insights'){
+    try{
+      const parsed=JSON.parse(value||'{}');
+      if(!parsed||Array.isArray(parsed)||typeof parsed!=='object')
+        throw Error('캐릭터 ID: 감응 텍스트 형태의 JSON 객체여야 합니다.');
+      card.insights=parsed;status('개인 감응 문구를 저장했습니다.');
+    }catch(e){status('감응 JSON 형식 오류: '+e.message,true);return}
+  }
   else if(path==='card.blockedFor')card.blockedFor=value.split(',').map(x=>x.trim()).filter(Boolean);
   else if(path.startsWith('card.')){
     const key=path.slice(5);
@@ -216,7 +231,8 @@ function handleAction(target){
     delete doc.game.booklets[id];delete doc.spawn[id];doc.story.players=doc.story.characters.length;selectedChar=0;
   }else if(action==='add-card'){
     doc.game.investigation.cards.push({id:newid('card'),title:'새 조사 카드',subtitle:'간단한 앞면 정보',type:'place',back:'조사 뒷면에 적을 비밀',
-      owner:null,blockedFor:[],requires:[],visibility:'locked',repeatable:false,transferable:true,grant:null,location:null});
+      owner:null,blockedFor:[],requires:[],visibility:'locked',repeatable:false,transferable:true,
+      availableFromPhase:'investigation1',requiresPresence:false,clueKind:null,insights:{},grant:null,location:null});
     selectedCard=doc.game.investigation.cards.length-1;
   }else if(action==='remove-card'){doc.game.investigation.cards.splice(selectedCard,1);selectedCard=0;}
   else if(action==='add-floor'){if(getFloors().length>=8)return status('층은 최대 8개입니다.',true);

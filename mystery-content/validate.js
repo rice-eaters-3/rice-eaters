@@ -22,7 +22,7 @@ function validate(input){
     c=obj(c);
     if(!id.test(c.id))throw Error('캐릭터 ID는 소문자 영문자로 시작해야 합니다.');
     if(!text(c.name))throw Error('캐릭터 이름이 필요합니다.');
-    return {id:c.id,name:text(c.name,70),role:text(c.role,120),hint:text(c.hint,200),
+    return {id:c.id,name:text(c.name,70),role:text(c.role,120),hint:text(c.hint,200),startLine:text(c.startLine,260),
       symbol:text(c.symbol,4)||'♟',accent:/^#[0-9a-fA-F]{6}$/.test(c.accent)?c.accent:'#8ab1c0'};
   });
   unique(story.characters.map(c=>c.id),'캐릭터');
@@ -111,6 +111,12 @@ function validate(input){
       blockedFor:blockedFor.filter(x=>story.characters.some(v=>v.id===x)),
       location,requires,visibility:c.visibility==='hidden'?'hidden':'locked',
       repeatable:c.repeatable===true,transferable:c.transferable!==false,
+      availableFromPhase:c.availableFromPhase==='investigation2'?'investigation2':'investigation1',
+      requiresPresence:c.requiresPresence===true,
+      clueKind:['cult','timeline','trick'].includes(c.clueKind)?c.clueKind:null,
+      insights:Object.fromEntries(Object.entries(obj(c.insights))
+        .filter(([role])=>story.characters.some(v=>v.id===role))
+        .map(([role,note])=>[role,text(note,2000)])),
       grant:c.grant&&id.test(c.grant.id)?{id:c.grant.id,name:text(c.grant.name,100),description:text(c.grant.description,1000)}:null};
   });
   unique(normalizedCards.map(x=>x.id),'카드');
