@@ -210,7 +210,7 @@ window.MysteryStudy=(function(){
     const phase=room.phase==='investigation2'?'2차 조사':room.phase==='investigation1'?'1차 조사':'사건 기록';
     return '<section class="research-screen" id="investigationScreen">'+
       '<div class="research-toolbar"><div><div class="eyebrow">INVESTIGATION · CARD LIBRARY</div>'+
-      '<h2>'+phase+' · 조사 정보</h2>'+
+      '<h2>'+phase+' · 조사 가능 정보</h2>'+
       '<p class="muted small">'+(inv.canInvestigate?
         '카드를 선점해 조사한 뒤 내가 얻은 정보는 전체 공개·선택 공개·양도할 수 있습니다.':
         '조사 단계가 아닙니다. 기존에 공개된 정보와 보유 카드는 계속 확인할 수 있습니다.')+'</p></div>'+
