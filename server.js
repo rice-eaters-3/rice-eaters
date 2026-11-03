@@ -655,7 +655,7 @@ async function api(req,res,url,sid){
     const spec=gameFor(room).investigation;
     const card=spec?.cards.find(c=>c.id===body.cardId);
     if(!card)fail(404,'조사 카드를 찾을 수 없습니다.');
-    const data=room.investigation;
+    const data=exchangeFor(room);
     const held=activeReservation(room,card.id),mine=held?.playerId===player.id;
     if(action==='release'){
       if(mine){delete data.reserved[card.id];persist();sendState(room)}
@@ -690,6 +690,99 @@ async function api(req,res,url,sid){
     logActivity('card_investigated',sid,{room:room.id,card:card.id});
     persist();sendState(room);
     return json(res,200,roomView(room,sid));
+  }
+  if(['card-public','card-share','card-unshare','exchange-offer','exchange-reply','exchange-cancel'].includes(action)){
+    if(!INVESTIGATION_PHASES.includes(room.phase))
+      fail(409,'카드 공유·양도는 1차/2차 조사 단계에서만 사용할 수 있습니다.');
+    const inv=exchangeFor(room),spec=gameFor(room).investigation;
+    pruneExchanges(room);
+    const holding=inv.holdings.find(h=>h.id===body.holdingId);
+    const mine=holding&&holding.ownerId===player.id;
+    if(['card-public','card-share','card-unshare'].includes(action)){
+      if(!mine)fail(403,'현재 소유한 조사 카드만 공개할 수 있습니다.');
+      const card=spec.cards.find(c=>c.id===holding.cardId);
+      if(!card)fail(404,'카드를 찾지 못했습니다.');
+      if(action==='card-public'){
+        // Irreversible global reveal by card ID. Transfers cannot undo this.
+        if(!inv.publicCards[card.id])
+          inv.publicCards[card.id]={at:Date.now(),by:player.id};
+        logActivity('card_publicized',sid,{room:room.id,card:card.id});
+      }else{
+        const target=room.players.find(p=>p.id===body.toId);
+        if(!target||target.id===player.id)fail(400,'다른 참가자를 선택하세요.');
+        if(action==='card-share'){
+          if(!sameTile(room,player,target))fail(409,'같은 타일에 있는 참가자에게만 선택 공개할 수 있습니다.');
+          const pos=positionFor(room,player);
+          if(!inv.selectiveShares.some(x=>x.holdingId===holding.id&&x.toId===target.id))
+            inv.selectiveShares.push({holdingId:holding.id,ownerId:player.id,toId:target.id,
+              floor:pos.floor,x:pos.x,y:pos.y,at:Date.now()});
+          logActivity('card_shared_nearby',sid,{room:room.id,card:card.id,target:target.id});
+        }else{
+          inv.selectiveShares=inv.selectiveShares.filter(x=>x.holdingId!==holding.id||x.toId!==target.id);
+        }
+      }
+      persist();sendState(room);return json(res,200,roomView(room,sid));
+    }
+    if(action==='exchange-offer'){
+      const target=room.players.find(p=>p.id===body.toId);
+      if(!target||target.id===player.id)fail(400,'양도받을 참가자를 선택하세요.');
+      if(!sameTile(room,player,target))fail(409,'같은 타일에 있어야 양도를 제안할 수 있습니다.');
+      if(!['card','token'].includes(body.type))fail(400,'카드 또는 토큰 양도만 가능합니다.');
+      const pos=positionFor(room,player);
+      const offer={id:randomId(8),type:body.type,fromId:player.id,toId:target.id,
+        floor:pos.floor,x:pos.x,y:pos.y,expiresAt:Date.now()+90000};
+      if(body.type==='card'){
+        if(!mine)fail(403,'보유한 조사 카드만 양도할 수 있습니다.');
+        const card=spec.cards.find(c=>c.id===holding.cardId);
+        if(!card||card.transferable===false)fail(403,'이 조사 카드는 양도할 수 없습니다.');
+        if(inv.offers.some(o=>o.type==='card'&&o.holdingId===holding.id))
+          fail(409,'이미 이 카드에 대한 양도 제안이 진행 중입니다.');
+        offer.holdingId=holding.id;
+      }else{
+        if(!Number.isInteger(body.amount)||body.amount<1||body.amount>100)
+          fail(400,'토큰 양도량은 1~100개 사이의 정수여야 합니다.');
+        if((inv.tokens[player.id]||0)<body.amount)fail(409,'양도할 조사 토큰이 부족합니다.');
+        offer.amount=body.amount;
+      }
+      if(inv.offers.filter(o=>o.fromId===player.id).length>=12)
+        fail(429,'동시에 진행할 수 있는 양도 제안은 최대 12개입니다.');
+      inv.offers.push(offer);
+      logActivity('exchange_offered',sid,{room:room.id,type:offer.type,target:target.id});
+      persist();sendState(room);return json(res,200,roomView(room,sid));
+    }
+    const proposal=inv.offers.find(o=>o.id===body.offerId);
+    if(!proposal)fail(404,'양도 요청이 없거나 만료되었습니다.');
+    if(action==='exchange-cancel'){
+      if(proposal.fromId!==player.id)fail(403,'양도 요청을 보낸 사람만 취소할 수 있습니다.');
+      inv.offers=inv.offers.filter(o=>o!==proposal);
+      persist();sendState(room);return json(res,200,roomView(room,sid));
+    }
+    if(proposal.toId!==player.id)fail(403,'요청받은 참가자만 승인할 수 있습니다.');
+    if(body.accept!==true&&body.accept!==false)fail(400,'승인 또는 거절을 선택하세요.');
+    if(body.accept){
+      const from=room.players.find(p=>p.id===proposal.fromId),to=player;
+      const pos=from&&positionFor(room,from);
+      if(!from||!sameTile(room,from,to)||pos.floor!==proposal.floor||
+        pos.x!==proposal.x||pos.y!==proposal.y)
+        fail(409,'양도 합의에 참여한 두 사람이 같은 타일에 있어야 합니다.');
+      if(proposal.type==='card'){
+        const selected=inv.holdings.find(h=>h.id===proposal.holdingId&&h.ownerId===from.id);
+        const card=selected&&spec.cards.find(c=>c.id===selected.cardId);
+        if(!card||card.transferable===false)fail(409,'해당 카드를 더 이상 양도할 수 없습니다.');
+        selected.ownerId=to.id;
+        // Previous temporary sharing never follows a transferred physical card.
+        inv.selectiveShares=inv.selectiveShares.filter(x=>x.holdingId!==selected.id);
+      }else{
+        if((inv.tokens[from.id]||0)<proposal.amount)fail(409,'보내는 사람의 토큰이 부족합니다.');
+        inv.tokens[from.id]-=proposal.amount;
+        inv.tokens[to.id]=(inv.tokens[to.id]||0)+proposal.amount;
+      }
+      logActivity('exchange_accepted',sid,{room:room.id,type:proposal.type,from:from.id,to:to.id});
+    }else logActivity('exchange_declined',sid,{room:room.id,type:proposal.type});
+    inv.offers=inv.offers.filter(o=>o!==proposal&&
+      !(proposal.type==='card'&&o.type==='card'&&o.holdingId===proposal.holdingId));
+    pruneExchanges(room);
+    persist();sendState(room);return json(res,200,roomView(room,sid));
   }
   if(action==='signal'){
     if(!PLAY_PHASES.includes(room.phase))fail(409,'현재 음성 통화 단계가 아닙니다.');
