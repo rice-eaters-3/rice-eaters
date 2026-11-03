@@ -197,7 +197,7 @@ floors[0].areas=[
 ];
 floors[0].doors=[
   {id:'library-door',x:6,y:5,name:'서재 쪽 잠긴 문',requiresItem:'key',locked:true},
-  {id:'dining-door',x:3,y:6,name:'식당 문',locked:false}
+  {id:'dining-door',x:3,y:6,name:'식당 문',locked:false,open:true}
 ];
 floors[1].areas=[
   {id:'bedrooms',name:'2층 침실',x:1,y:1,width:7,height:4,color:'#947d7c',pattern:'wood'},
