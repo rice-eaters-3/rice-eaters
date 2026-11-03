@@ -233,3 +233,40 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(-
 .voice-toggle-grid .btn{margin:0;min-width:145px;font-size:13px;padding:9px 12px;white-space:normal}
 .voice-controls .voice-status{color:#b0dcc6;font-size:12px;margin:0}
 @media(max-width:650px){.voice-global{padding:12px}.voice-toggle-grid{width:100%}.voice-toggle-grid .btn{flex:1;min-width:125px}}
+
+
+/* Shared clues, temporary in-room disclosure and consensual transfers */
+.exchange-section{display:grid;gap:15px;margin:22px 0 30px}
+.exchange-heading h3,.all-clue-cards h3{font-size:21px;margin:5px 0}
+.owned-clues{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:13px}
+.owned-clue{padding:15px;border:1px solid #9b7f5a;background:linear-gradient(140deg,#2b3343,#202b37);border-radius:11px;min-width:0;display:flex;flex-direction:column;gap:9px}
+.owned-clue-header h4{font-size:18px;color:#f0d7aa;margin:5px 0}
+.owned-clue-header p{margin:0}
+.owned-clue-back{line-height:1.65;font-size:13px;white-space:pre-line;color:#e7dfd2;background:#182434;border:1px solid #566072;border-radius:7px;padding:12px;flex:1}
+.owned-clue .btn{white-space:normal}
+.clue-public{font-size:12px;color:#a6ebc1;font-weight:800}
+.card-trade-tools{display:flex;gap:7px;flex-wrap:wrap}
+.card-trade-tools label{font-size:11px;color:#d1b98e;width:100%}
+.card-trade-tools select,.token-trade-controls select,.token-trade-controls input{
+ background:#142231;color:#f7ebd9;border:1px solid #687789;border-radius:6px;padding:8px;width:100%;font-size:13px}
+.card-trade-tools .btn{flex:1;min-width:100px;font-size:12px}
+.token-trade,.exchange-requests{background:#222e3c;border:1px solid #596477;border-radius:10px;padding:16px}
+.token-trade h4,.exchange-requests h4{font-size:17px;margin:0 0 8px}
+.token-trade-controls{display:flex;align-items:end;gap:10px;flex-wrap:wrap}
+.token-trade-controls label{display:flex;flex-direction:column;gap:6px;flex:1;min-width:150px;color:#d6c4a6;font-size:12px}
+.token-trade-controls label:nth-child(2){flex:0 1 130px}
+.token-trade-controls .btn{white-space:normal}
+.exchange-offer{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:8px 0;padding:11px;border:1px solid #4e6976;border-radius:8px}
+.exchange-offer b{font-size:13px}
+.exchange-offer .btn{margin-right:7px}
+.all-clue-cards{padding:20px 0;border-top:1px solid #677486}
+.all-clue-cards .research-grid{grid-template-columns:repeat(auto-fill,minmax(185px,1fr))}
+.host-advance{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.host-advance>.btn{white-space:normal}
+@media(max-width:630px){
+ .exchange-section{gap:12px}
+ .owned-clues{grid-template-columns:1fr}
+ .token-trade-controls label:nth-child(2){flex:1}
+ .host-advance>.btn{width:100%}
+ .all-clue-cards{padding:12px 0}
+}
