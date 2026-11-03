@@ -66,13 +66,13 @@ window.MysteryStudy=(function(){
           return regionAt(x+dx,y+dy)?.id!==region.id;
         }).map(v=>' edge-'+v).join(''):'';
         return '<div class="map-tile '+(tile==='#'?'wall':'walk')+(portalsHere.length?' portal':'')+(door?' door-tile':'')+
-          (door?.locked?' door-locked':'')+(region?' map-region pattern-'+esc(region.pattern):'')+
+          (door?.locked?' door-locked':door&&!door.open?' door-closed':door?' door-open':'')+(region?' map-region pattern-'+esc(region.pattern):'')+
           (cards.length?' investigable':'')+edge+'" style="'+(region?'--region-color:'+esc(region.color)+';':'')+
           '" title="'+esc(door?.name||portalsHere[0]?.label||loc?.name||region?.name||'')+'">'+
           (loc?'<span class="map-room-name">'+esc(loc.icon)+' '+esc(loc.name)+'</span>':
             zoneLabels.has(k)?'<span class="map-room-name region-name">'+esc(zoneLabels.get(k))+'</span>':'')+
           (portalsHere.length?'<span class="portal-sigil">⇅</span>':'')+
-          (door?'<span class="door-icon">'+(door.locked?'🔒':'🚪')+'</span>':'')+
+          (door?'<span class="door-icon">'+(door.locked?'🔒':door.open?'◫':'🚪')+'</span>':'')+
           (cards.length?'<span class="tile-spark" title="조사 가능한 장소">✧</span>':'')+
           (here.length?'<div class="map-sprites">'+here.map(a=>'<span class="map-sprite '+(a.id===room.me?'mine':'')+'" style="--sprite:'+esc(a.accent)+'" title="'+esc(a.name)+'">'+esc(a.symbol)+'</span>').join('')+'</div>':'')+
           '</div>';
@@ -111,10 +111,13 @@ window.MysteryStudy=(function(){
     if(!pos||!m)return '';
     const here=inv?.cards.filter(c=>c.location?.floor===pos.floor&&c.location?.x===pos.x&&c.location?.y===pos.y&&!c.locked&&!c.taken&&!c.excluded)||[];
     const portals=(m.portals||[]).map((p,i)=>({...p,index:i})).filter(p=>p.x===pos.x&&p.y===pos.y);
-    const doors=(m.doors||[]).filter(d=>d.locked&&Math.abs(d.x-pos.x)+Math.abs(d.y-pos.y)<=1);
+    const doors=(m.doors||[]).filter(d=>Math.abs(d.x-pos.x)+Math.abs(d.y-pos.y)<=1);
     return '<div class="context-actions"><b>⌁ 주변 상호작용</b>'+
       (portals.length?portals.map(p=>btn('interact','⇅ '+esc(p.label),'btn btn-primary btn-sm',false,'data-kind="portal" data-index="'+p.index+'"')).join(''):'')+
-      (doors.length?doors.map(d=>btn('interact','🔑 '+esc(d.name)+' 열기','btn btn-outline btn-sm',false,'data-kind="door" data-door="'+esc(d.id)+'"')).join(''):'')+
+      (doors.length?doors.map(d=>btn('interact',(d.open?'🚪 '+esc(d.name)+' 닫기':
+          d.locked?'🔑 '+esc(d.name)+' 잠금 해제하고 열기':'🚪 '+esc(d.name)+' 열기'),
+          'btn btn-outline btn-sm',false,'data-kind="door" data-door="'+esc(d.id)+
+          '" data-door-action="'+(d.open?'close':'open')+'"')).join(''):'')+
       (!portals.length&&!doors.length?'<small class="muted">현재 사용할 수 있는 이동·문 액션이 없습니다.</small>':'')+'</div>'+
       (inv?'<p class="muted small">이 타일의 조사 정보</p>'+
       (here.length?here.map(c=>btn('reserve','🔎 '+esc(c.title),'btn btn-outline btn-sm',
@@ -134,6 +137,7 @@ window.MysteryStudy=(function(){
       '<div class="map-controls"><div class="dpad"><span></span>'+btn2('move','↑','data-direction="up"')+'<span></span>'+
       btn2('move','←','data-direction="left"')+btn2('move','↓','data-direction="down"')+btn2('move','→','data-direction="right"')+'</div>'+
       '<div class="map-action-column">'+btn('book-toggle','📖 책자 확인 (I)','btn btn-outline')+
+      (inv?btn('research-toggle','🗂 조사 가능 정보 확인 (R)','btn btn-primary'):'')+
       '<div id="tileResearch">'+tileActions(room)+'</div>'+'</div></div>'+
       '<div class="map-roster" id="mapRoster">'+roster(room)+'</div></section>'+
       '<aside class="adventure-side"><section class="surface panel-pad"><div class="eyebrow">PERSONAL RESOURCES</div>'+
@@ -145,20 +149,38 @@ window.MysteryStudy=(function(){
       '<section class="surface panel-pad">'+(window.MysteryVoice?.controls()||'<p>음성 준비 중</p>')+'</section>'+whisper(room)+
       (room.phase==='study'?'<section class="surface panel-pad"><h3>캐릭터 숙지 확인</h3><p class="small">'+room.players.filter(p=>p.studyReady).length+' / '+room.players.length+'명 확인</p>'+
         btn('study-ready','숙지 완료 · 1차 조사 대기','btn btn-primary btn-wide',!!room.players.find(p=>p.id===room.me)?.studyReady)+'</section>':'')+
-      (inv?'<section class="surface panel-pad research-sidebar"><div class="eyebrow">INVESTIGATION · 01</div><h3>조사 가능 정보</h3>'+
-        '<p class="muted small">카드 앞면을 보고 선택한 다음 토큰을 소모해 뒷면을 확인하세요.</p>'+investigationCards(room)+'</section>':'')+
       '</aside></div>';
+  }
+  function researchView(room){
+    const inv=room.investigation;
+    if(!inv)return '<p>조사 단계에서 열람할 수 있습니다.</p>';
+    return '<section class="research-screen" id="investigationScreen">'+
+      '<div class="research-toolbar"><div><div class="eyebrow">INVESTIGATION · CARD LIBRARY</div>'+
+      '<h2>조사 가능 정보</h2><p class="muted small">카드를 선택해 선점한 뒤 조사 토큰 1개를 소모하면 본인에게만 뒷면을 공개합니다.</p></div>'+
+      '<div class="research-switches">'+btn('research-toggle','← 지도로 돌아가기 (R)','btn btn-outline')+
+      btn('book-toggle','📖 개인 책자 (I)','btn btn-outline')+'</div></div>'+
+      '<div class="research-token-bar">내 조사 토큰 <strong id="researchTokens">'+inv.tokens+'</strong> / '+inv.totalTokens+'</div>'+
+      investigationCards(room)+'</section>';
   }
   function render(room){
     return roomHeader(room)+
       '<div class="section-row"><div><div class="eyebrow">'+(room.phase==='study'?'CHAPTER 03 / ROLE STUDY':'CHAPTER 04 / INVESTIGATION')+'</div>'+
       '<h2>'+(room.phase==='study'?'캐릭터 숙지':'1차 조사')+'</h2></div><span class="tag">'+(room.phase==='study'?3:4)+' / 9 단계</span></div>'+
-      '<div id="adventureRoot">'+(ui.view==='book'?book(room):mapView(room))+'</div>';
+      '<div id="adventureRoot">'+(ui.view==='book'?book(room):ui.view==='research'?researchView(room):mapView(room))+'</div>';
   }
   function patch(room){
     // Keep the active book page and focus while other players move.
     if(!document.getElementById('adventureRoot'))return false;
     if(ui.view==='book')return true;
+    if(ui.view==='research'){
+      const grid=document.querySelector('#investigationScreen .research-grid');
+      if(!grid)return false;
+      const tmp=document.createElement('div');tmp.innerHTML=investigationCards(room);
+      if(tmp.firstElementChild)grid.innerHTML=tmp.firstElementChild.innerHTML;
+      const token=document.getElementById('researchTokens');
+      if(token)token.textContent=room.investigation?.tokens??'0';
+      return true;
+    }
     const oldMap=document.getElementById('mapTiles'),oldCards=document.querySelector('.research-sidebar');
     if(!oldMap)return false;
     const temporary=document.createElement('div');temporary.innerHTML=mapHtml(room);
@@ -185,7 +207,12 @@ window.MysteryStudy=(function(){
     return true;
   }
   function navigate(action,chapter){
-    if(action==='book-toggle'){ui.view=ui.view==='map'?'book':'map';return true}
+    if(action==='book-toggle'){ui.view=ui.view==='book'?'map':'book';return true}
+    if(action==='research-toggle'){
+      if(window.MysteryRoomState?.room?.phase==='investigation1')
+        ui.view=ui.view==='research'?'map':'research';
+      return true;
+    }
     const all=pages(window.MysteryRoomState?.room||{});
     if(action==='book-chapter'){const n=all.findIndex(p=>p.chapter===Number(chapter));if(n>=0)ui.page=n;return true}
     if(action==='book-prev'){ui.page=Math.max(0,ui.page-1);return true}
