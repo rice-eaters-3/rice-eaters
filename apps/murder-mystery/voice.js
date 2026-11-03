@@ -2,9 +2,34 @@
 // Opt-in browser-to-browser microphone communication. Cloudflare Tunnel supplies
 // HTTPS/signaling, not an SFU or TURN relay. Public STUN can fail on restrictive NAT.
 window.MysteryVoice=(function(){
-  let stream=null,room=null,timer=null,cursor=0,enabled=false,muted=false,busy=false;
+  let stream=null,room=null,timer=null,cursor=0,enabled=false,muted=false,speakerMuted=false,busy=false;
   const peers=new Map(),audio=new Map();
-  const escape=v=>escapeHtml(v);
+  // Walls and closed doors are acoustic barriers; Manhattan/BFS path length
+  // rather than straight-line distance controls whether sound can travel.
+  function acousticDistance(map,from,to){
+    if(!map||!from||!to||from.floor!==to.floor||map.floorId!==from.floor)
+      return Infinity;
+    const rows=map.tiles||[];
+    const blocked=new Set((map.doors||[]).filter(d=>!d.open).map(d=>d.x+','+d.y));
+    const valid=(x,y)=>rows[y]?.[x]==='.'&&!blocked.has(x+','+y);
+    if(!valid(from.x,from.y)||!valid(to.x,to.y))return Infinity;
+    const start=from.x+','+from.y,visited=new Set([start]);
+    const pending=[{x:from.x,y:from.y,d:0}];
+    for(let i=0;i<pending.length;i++){
+      const p=pending[i];
+      if(p.x===to.x&&p.y===to.y)return p.d;
+      if(p.d>=12)continue; // Beyond the audible range.
+      for(const [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]){
+        const x=p.x+dx,y=p.y+dy,key=x+','+y;
+        if(valid(x,y)&&!visited.has(key)){visited.add(key);pending.push({x,y,d:p.d+1});}
+      }
+    }
+    return Infinity;
+  }
+  function playerPosition(id){return room?.players.find(p=>p.id===id)?.position||null}
+  function soundDistance(from,to){return acousticDistance(room?.map,playerPosition(from),playerPosition(to))}
+  function canTransmit(from,to){return allowedToHear(from,to)&&Number.isFinite(soundDistance(from,to))}
+
   const valid=()=>!!(room?.me&&['study','investigation1'].includes(room.phase));
   async function send(to,type,payload={}){
     if(!room?.code)return;
@@ -21,7 +46,7 @@ window.MysteryVoice=(function(){
     const pc=new RTCPeerConnection({iceServers:[{urls:'stun:stun.l.google.com:19302'}]});
     const peer={pc,pending:[]};peers.set(id,peer);
     for(const track of stream?.getTracks()||[])peer.audioSender=pc.addTrack(track,stream);
-    if(peer.audioSender&&room&&!allowedToHear(room.me,id))
+    if(peer.audioSender&&room&&!canTransmit(room.me,id))
       peer.audioSender.replaceTrack(null).catch(()=>{});
     pc.onicecandidate=e=>{if(e.candidate)send(id,'ice',{candidate:e.candidate.toJSON()})};
     pc.ontrack=e=>{
@@ -88,19 +113,20 @@ window.MysteryVoice=(function(){
     const audioTrack=stream?.getAudioTracks()[0];
     if(!audioTrack)return;
     for(const [peerId,p] of peers){
-      const target=allowedToHear(room.me,peerId)?audioTrack:null;
+      const target=canTransmit(room.me,peerId)?audioTrack:null;
       if(p.audioSender&&p.audioSender.track!==target)
         p.audioSender.replaceTrack(target).catch(e=>console.warn('Private voice routing',e));
     }
   }
   function volumes(){
     if(!room?.me)return;
-    const self=room.players.find(p=>p.id===room.me),a=self?.position;
     for(const [id,node] of audio){
-      const p=room.players.find(p=>p.id===id),b=p?.position;
-      if(!enabled||!a||!b||a.floor!==b.floor||!allowedToHear(id,room.me)){node.volume=0;continue}
-      const distance=Math.hypot(a.x-b.x,a.y-b.y);
-      node.volume=distance>12?0:Math.max(0.035,Math.min(1,1/(1+distance*0.38)));
+      node.muted=speakerMuted;
+      const distance=soundDistance(id,room.me);
+      if(!enabled||speakerMuted||!Number.isFinite(distance)||!allowedToHear(id,room.me)){
+        node.volume=0;continue;
+      }
+      node.volume=Math.max(0.035,Math.min(1,1/(1+distance*0.38)));
     }
   }
   async function enable(){
@@ -123,7 +149,12 @@ window.MysteryVoice=(function(){
   }
   function toggleMute(){
     if(!enabled)return;
-    muted=!muted;for(const track of stream?.getAudioTracks()||[])track.enabled=!muted;
+    muted=!muted;
+    for(const track of stream?.getAudioTracks()||[])track.enabled=!muted;
+  }
+  function toggleSpeaker(){
+    speakerMuted=!speakerMuted;
+    volumes();
   }
   function sync(r){
     const previous=room?.code;
@@ -135,10 +166,16 @@ window.MysteryVoice=(function(){
   function controls(){
     return '<div class="eyebrow">PROXIMITY VOICE · WEBRTC</div><h3>근접 음성</h3>'+
       '<p class="muted small">같은 층에서 가까울수록 크게 들립니다. 마이크 사용은 직접 허용해야 합니다.</p>'+
-      (enabled?'<span class="voice-status">● 음성 연결 활성</span>'+btn('voice-mute',muted?'마이크 켜기':'마이크 음소거','btn btn-outline btn-sm')+
-        btn('voice-off','음성 종료','btn btn-outline btn-sm'):
-        btn('voice-on','🎙 마이크 켜기','btn btn-primary btn-sm'))+
+      (enabled?'<span class="voice-status">● 통화 연결 중</span>':'<span class="voice-status">○ 연결되지 않음</span>')+
+      '<div class="voice-switches">'+
+      (enabled?btn('voice-mute',muted?'🎙 마이크 OFF · 켜기':'🎙 마이크 ON · 끄기','btn btn-outline btn-sm'):
+        btn('voice-on','🎙 마이크 연결하기','btn btn-primary btn-sm'))+
+      btn('speaker-mute',speakerMuted?'🔇 스피커 OFF · 켜기':'🔊 스피커 ON · 끄기',
+        'btn btn-outline btn-sm')+
+      (enabled?btn('voice-off','통화 연결 종료','btn btn-quiet btn-sm'):'')+'</div>'+
+      '<p class="muted small">마이크 OFF여도 다른 사람의 음성은 들을 수 있고, 스피커 OFF여도 내 마이크는 독립적으로 동작합니다.</p>'+
       '<p class="muted small">서로 다른 네트워크에서는 TURN 서버가 없어 연결되지 않을 수 있습니다.</p>';
   }
-  return {enable,disable,toggleMute,sync,controls,get enabled(){return enabled}};
+  return {enable,disable,toggleMute,toggleSpeaker,sync,controls,acousticDistance,
+    get enabled(){return enabled},get micMuted(){return muted},get speakerMuted(){return speakerMuted}};
 })();
