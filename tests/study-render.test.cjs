@@ -28,11 +28,14 @@ test('RPG screen: map is main, 7-chapter booklet is paged, cards reveal only aut
     whispers:{groups:[],proposals:[]},
     map:{title:'저택',legend:'공유 약도',floorId:'ground',capacity:3,
       tiles:['#####','#...#','#####'],rooms:[{x:2,y:1,name:'복도',icon:'⌁'}],portals:[],
+      doors:[{id:'door',name:'복도 문',x:2,y:1,locked:false,open:false}],areas:[],
       avatars:[{id:'p1',name:'나',characterName:'엘레나',characterId:'elena',symbol:'♜',accent:'#aabbcc',x:1,y:1}]}
   };
   sandbox.window.MysteryRoomState={room};
   const map=view.render(room);
   assert.ok(map.includes('mapTiles'),'map is shown first');
+  assert.ok(map.includes('door-closed'),'a closed door has a distinct tile style');
+  assert.ok(map.includes('data-door-action="open"'),'adjacent player may open a closed door');
   assert.ok(!map.includes('PRIVATE DOSSIER'),'book is initially closed');
   assert.ok(map.includes('data-direction="up"'),'directional controls shown');
   assert.ok(map.includes('책자 확인 (I)'),'I key book control');
@@ -53,18 +56,28 @@ test('RPG screen: map is main, 7-chapter booklet is paged, cards reveal only aut
   assert.ok(view.render(room).includes('당신은 범인이 아닙니다.'));
   view.navigate('book-toggle');
   const investigation={...room,phase:'investigation1',
-    investigation:{tokens:4,cards:[
+    investigation:{tokens:4,totalTokens:4,cards:[
       {id:'desk',title:'서재 책상',subtitle:'서재',type:'place',location:{floor:'ground',x:2,y:1},
         locked:false,excluded:false,taken:false,reservedBy:null,revealed:[]},
       {id:'photo',title:'액자',subtitle:'응접실',type:'place',locked:false,excluded:false,
         taken:true,reservedBy:null,revealed:[{back:'사진 <증거>'}]}
     ]}};
+  const mapWithResearch=view.render(investigation);
+  assert.ok(mapWithResearch.includes('조사 토큰'));
+  assert.ok(mapWithResearch.includes('조사 가능 정보 확인 (R)'));
+  assert.ok(!mapWithResearch.includes('research-card'),'map view no longer permanently renders card list');
+  sandbox.window.MysteryRoomState.room=investigation;
+  view.navigate('research-toggle');
   const invHtml=view.render(investigation);
-  assert.ok(invHtml.includes('조사 토큰'));
   assert.ok(invHtml.includes('조사 가능 정보'));
-  assert.ok(invHtml.includes('research-card'));
+  assert.ok(invHtml.includes('research-card'),'card list lives in dedicated view');
   assert.ok(invHtml.includes('사진 &lt;증거&gt;'),'investigated back escaped');
   assert.ok(invHtml.includes('data-card="desk"'),'first come selection action');
+  assert.ok(invHtml.includes('지도로 돌아가기 (R)'),'research catalog has exit button');
+  view.navigate('book-toggle');
+  assert.ok(view.render(investigation).includes('folio-content'),'book is accessible from investigation catalog');
+  view.navigate('book-toggle');
+  view.navigate('research-toggle');
   // Whisper button must activate when a second person moves onto our tile.
   const teammate={id:'p2',name:'친구',characterId:'other',studyReady:false,
     position:{floor:'ground',x:1,y:1}};
@@ -95,6 +108,8 @@ test('RPG screen: map is main, 7-chapter booklet is paged, cards reveal only aut
   assert.ok(!swapped.slice(swapped.indexOf('data-action="whisper-request"'),
     swapped.indexOf('data-action="whisper-request"')+115).includes('disabled'),
     'whisper button becomes active after map-only update');
+  const opened={...room,map:{...room.map,doors:[{id:'door',name:'복도 문',x:2,y:1,locked:false,open:true}]}};
+  assert.ok(view.render(opened).includes('data-door-action="close"'),'open doors show close interaction');
   const noMap={...room,map:null};
   assert.ok(view.render(noMap).includes('제공된 맵이 없습니다.'));
 });
