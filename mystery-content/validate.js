@@ -110,7 +110,7 @@ function validate(input){
       back:text(c.back,4000),owner:story.characters.some(x=>x.id===c.owner)?c.owner:null,
       blockedFor:blockedFor.filter(x=>story.characters.some(v=>v.id===x)),
       location,requires,visibility:c.visibility==='hidden'?'hidden':'locked',
-      repeatable:c.repeatable===true,
+      repeatable:c.repeatable===true,transferable:c.transferable!==false,
       grant:c.grant&&id.test(c.grant.id)?{id:c.grant.id,name:text(c.grant.name,100),description:text(c.grant.description,1000)}:null};
   });
   unique(normalizedCards.map(x=>x.id),'카드');
@@ -119,6 +119,7 @@ function validate(input){
   for(const [k,v] of Object.entries(obj(g.phaseMinutes)))if(['synopsis','characters','study','investigation1','discussion1','investigation2','discussion2','action','ending'].includes(k))phaseMinutes[k]=int(v,1,240,'권장 시간');
   const game={booklets,floors,phaseMinutes,investigation:{
     tokensPerPlayer:int(inv.tokensPerPlayer??4,1,20,'토큰'),
+    tokensPerSecondInvestigation:int(inv.tokensPerSecondInvestigation??4,0,20,'2차 조사 토큰'),
     maxTileOccupants:int(inv.maxTileOccupants??3,2,10,'타일 인원'),cards:normalizedCards
   }};
   return {format:'rice-mystery-v1',story,game,spawn};

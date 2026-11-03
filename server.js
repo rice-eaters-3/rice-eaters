@@ -51,12 +51,18 @@ function doorState(room,floor,door){
   const isOpen=room.doorStates?.[key]?.open??(room.openDoors?.[key]?true:door.closed===false);
   return {locked:!unlocked,open:unlocked&&!!isOpen};
 }
-const ADVANCE_NEXT={synopsis:'characters',characters:'study',study:'investigation1'};
+const ADVANCE_NEXT={synopsis:'characters',characters:'study',study:'investigation1',
+  investigation1:'discussion1',discussion1:'investigation2',
+  investigation2:'discussion2',discussion2:'action',action:'ending'};
+const INVESTIGATION_PHASES=['investigation1','investigation2'];
+const PLAY_PHASES=['study','investigation1','discussion1','investigation2','discussion2','action','ending'];
+const POST_INVESTIGATION_PHASES=['investigation1','discussion1','investigation2','discussion2','action','ending'];
 function phaseReadiness(room){
   const next=ADVANCE_NEXT[room.phase]||null;
   const ready=room.phase==='synopsis'?room.players.filter(p=>p.read).length:
     room.phase==='characters'?room.players.filter(p=>p.characterId).length:
-    room.phase==='study'?room.players.filter(p=>p.studyReady).length:0;
+    room.phase==='study'?room.players.filter(p=>p.studyReady).length:
+    next?room.players.filter(p=>room.advanceVotes?.[p.id]===true).length:0;
   return {next,ready,total:room.players.length,canAdvance:!!next&&
     room.players.length===storyById(room.storyId).players&&ready===room.players.length};
 }
@@ -75,30 +81,102 @@ function activeReservation(room,id){
 function cardUnlocked(card,room){
   return (card.requires||[]).every(id=>room.investigation?.discovered?.[id]?.length);
 }
+// Legacy room migration: prior versions stored discovery history, but not card
+// ownership. Create one holding per original discovery, once per saved game.
+function exchangeFor(room){
+  const inv=room.investigation;
+  if(!inv)return null;
+  if(!Array.isArray(inv.holdings)){
+    inv.holdings=Object.entries(inv.discovered||{}).flatMap(([cardId,found])=>
+      (Array.isArray(found)?found:[]).filter(r=>room.players.some(p=>p.id===r.playerId))
+        .map(r=>({id:randomId(8),cardId,ownerId:r.playerId,createdAt:r.at||Date.now()})));
+  }
+  inv.publicCards||={};
+  inv.selectiveShares||=[];
+  inv.offers||=[];
+  inv.tokens||={};
+  inv.collected||={};
+  inv.reserved||={};
+  inv.discovered||={};
+  return inv;
+}
+function sameTile(room,a,b){
+  if(!a||!b||a===b)return false;
+  const x=positionFor(room,a),y=positionFor(room,b);
+  return !!(x&&y&&x.floor===y.floor&&x.x===y.x&&x.y===y.y);
+}
+function pruneExchanges(room){
+  const inv=exchangeFor(room);
+  if(!inv)return;
+  inv.selectiveShares=inv.selectiveShares.filter(x=>{
+    const owner=room.players.find(p=>p.id===x.ownerId);
+    const receiver=room.players.find(p=>p.id===x.toId);
+    const pos=owner&&positionFor(room,owner);
+    return owner&&receiver&&inv.holdings.some(h=>h.id===x.holdingId&&h.ownerId===owner.id)&&
+      sameTile(room,owner,receiver)&&pos.floor===x.floor&&pos.x===x.x&&pos.y===x.y;
+  });
+  inv.offers=inv.offers.filter(o=>{
+    const from=room.players.find(p=>p.id===o.fromId),to=room.players.find(p=>p.id===o.toId);
+    const pos=from&&positionFor(room,from);
+    return from&&to&&o.expiresAt>Date.now()&&sameTile(room,from,to)&&
+      pos.floor===o.floor&&pos.x===o.x&&pos.y===o.y&&
+      (o.type==='card'?inv.holdings.some(h=>h.id===o.holdingId&&h.ownerId===from.id):
+        Number.isInteger(o.amount)&&o.amount>0);
+  });
+}
 function investigationView(room,member){
-  if(!member||room.phase!=='investigation1')return null;
-  const data=gameFor(room).investigation;
-  if(!data)return null;
-  const discovered=room.investigation?.discovered||{};
+  if(!member||!POST_INVESTIGATION_PHASES.includes(room.phase))return null;
+  const spec=gameFor(room).investigation;
+  const data=exchangeFor(room);
+  if(!spec||!data)return null;
+  pruneExchanges(room);
+  const discovered=data.discovered||{};
+  const held=data.holdings.filter(h=>h.ownerId===member.id);
+  const nearby=tilePlayers(room,positionFor(room,member)||{floor:null,x:-1,y:-1})
+    .filter(p=>p.id!==member.id).map(p=>({id:p.id,name:p.name}));
+  const cards=spec.cards.flatMap(card=>{
+    const owned=held.filter(h=>h.cardId===card.id);
+    const shares=data.selectiveShares.filter(x=>x.toId===member.id&&
+      data.holdings.some(h=>h.id===x.holdingId&&h.cardId===card.id));
+    const globallyPublic=!!data.publicCards[card.id];
+    const canRead=owned.length>0||shares.length>0||globallyPublic;
+    const unlocked=cardUnlocked(card,room);
+    if(!unlocked&&card.visibility==='hidden'&&!canRead)return [];
+    const found=discovered[card.id]||[],reservation=activeReservation(room,card.id);
+    return [{
+      id:card.id,title:card.title,subtitle:card.subtitle,type:card.type,
+      location:card.location||null,locked:!unlocked,
+      excluded:card.owner===member.characterId||(card.blockedFor||[]).includes(member.characterId),
+      taken:found.length>0&&!card.repeatable,repeatable:!!card.repeatable,
+      transferable:card.transferable!==false,public:globallyPublic,
+      heldByMe:owned.length,sharedToMe:shares.length>0,
+      reservedBy:reservation?.playerId||null,
+      acquiredBy:found.map(f=>f.playerId),
+      revealed:canRead?[{at:data.publicCards[card.id]?.at||found[0]?.at||Date.now(),
+        back:card.back,grant:card.grant||null}]:[]
+    }];
+  });
+  const myCards=held.flatMap(h=>{
+    const card=spec.cards.find(c=>c.id===h.cardId);
+    return card?[{id:h.id,cardId:h.cardId,title:card.title,subtitle:card.subtitle,
+      back:card.back,transferable:card.transferable!==false,
+      public:!!data.publicCards[card.id],
+      sharedWith:data.selectiveShares.filter(x=>x.holdingId===h.id)
+        .map(x=>({id:x.toId,name:room.players.find(p=>p.id===x.toId)?.name||''}))}]:[];
+  });
   return {
-    tokens:room.investigation.tokens[member.id]??0,
-    totalTokens:data.tokensPerPlayer,
-    cards:data.cards.flatMap(card=>{
-      const unlocked=cardUnlocked(card,room);
-      if(!unlocked&&card.visibility==='hidden')return [];
-      const found=discovered[card.id]||[], reservation=activeReservation(room,card.id);
-      const taken=found.length>0&&!card.repeatable;
-      const excluded=card.owner===member.characterId||(card.blockedFor||[]).includes(member.characterId);
-      return [{
-        id:card.id,title:card.title,subtitle:card.subtitle,type:card.type,
-        location:card.location||null,locked:!unlocked,excluded,
-        taken,repeatable:!!card.repeatable,
-        reservedBy:reservation?.playerId||null,
-        acquiredBy:found.map(f=>f.playerId),
-        revealed:found.filter(f=>f.playerId===member.id).map(f=>({at:f.at,back:card.back,grant:card.grant||null}))
-      }];
+    tokens:data.tokens[member.id]??0,totalTokens:spec.tokensPerPlayer,
+    canInvestigate:INVESTIGATION_PHASES.includes(room.phase),
+    cards,myCards,nearby,
+    incomingOffers:data.offers.filter(o=>o.toId===member.id).map(o=>{
+      const card=o.type==='card'?spec.cards.find(c=>c.id===data.holdings.find(h=>h.id===o.holdingId)?.cardId):null;
+      return {id:o.id,type:o.type,amount:o.amount||null,cardTitle:card?.title||null,
+        fromName:room.players.find(p=>p.id===o.fromId)?.name||'',expiresAt:o.expiresAt};
     }),
-    collected:room.investigation?.collected?.[member.id]||[]
+    outgoingOffers:data.offers.filter(o=>o.fromId===member.id)
+      .map(o=>({id:o.id,type:o.type,toName:room.players.find(p=>p.id===o.toId)?.name||'',
+        amount:o.amount||null,expiresAt:o.expiresAt})),
+    collected:data.collected?.[member.id]||[]
   };
 }
 function whisperState(room){
@@ -133,6 +211,12 @@ function publicWhispers(room,member){
 }
 function phaseChange(room,phase,sid){
   room.phase=phase;room.phaseStartedAt=Date.now();
+  room.advanceVotes={};
+  if(room.investigation&&!INVESTIGATION_PHASES.includes(phase)){
+    room.investigation.selectiveShares=[];
+    room.investigation.offers=[];
+    room.investigation.reserved={};
+  }
   logActivity('phase_'+phase,sid,{room:room.id});
 }
 const PRESENCE_TTL_MS=30000;
@@ -203,7 +287,7 @@ function roomView(room,sid){
   const story=storyById(room.storyId),game=gameFor(room);
   const member=room.players.find(p=>p.sid===sid),isMember=!!member;
   const char=member&&story.characters.find(c=>c.id===member.characterId);
-  const notes=isMember&&['study','investigation1'].includes(room.phase)&&char?game.booklets?.[char.id]:null;
+  const notes=isMember&&PLAY_PHASES.includes(room.phase)&&char?game.booklets?.[char.id]:null;
   const booklet=notes?{
     basic:{name:char.name,role:char.role,hint:char.hint,symbol:char.symbol,accent:char.accent},
     background:notes.background,timeline:notes.timeline,inventory:notes.inventory,
@@ -212,7 +296,7 @@ function roomView(room,sid){
   }:null;
   const myPos=member&&positionFor(room,member);
   const floor=myPos&&floorFor(room,myPos.floor);
-  const map=floor&&['study','investigation1'].includes(room.phase)?{
+  const map=floor&&PLAY_PHASES.includes(room.phase)?{
     title:floor.title,legend:floor.legend,tiles:floor.tiles,rooms:floor.rooms,
     floorId:floor.id,floors:floorsFor(room).map(f=>({id:f.id,title:f.title})),
     portals:floor.portals||[],areas:floor.areas||[],
@@ -230,6 +314,7 @@ function roomView(room,sid){
   return {
     code:room.id,phase:room.phase,story:publicStory(story),
     progress:phaseReadiness(room),
+    advanceVotes:isMember?Object.fromEntries(room.players.map(p=>[p.id,room.advanceVotes?.[p.id]===true])):null,
     clock:room.gameStartedAt?{gameStartedAt:room.gameStartedAt,
       phaseStartedAt:room.phaseStartedAt||room.gameStartedAt,
       phaseMinutes:{...phaseDefault,...(game.phaseMinutes||{})},
@@ -242,7 +327,7 @@ function roomView(room,sid){
     synopsis:isMember&&room.phase!=='lobby'?story.synopsis:null,
     characters:isMember&&!['lobby','synopsis'].includes(room.phase)?story.characters:null,
     booklet,map,investigation:investigationView(room,member),
-    whispers:isMember&&['study','investigation1'].includes(room.phase)?publicWhispers(room,member):null
+    whispers:isMember&&PLAY_PHASES.includes(room.phase)?publicWhispers(room,member):null
   };
 }
 
@@ -329,7 +414,7 @@ async function api(req,res,url,sid){
     ownedPlayer(room,sid);
     return subscribe(req,res,room,sid);
   }
-  const match=pathname.match(/^\/api\/rooms\/([A-Z2-9]{6})(?:\/(join|start|advance|read|character|leave|study-ready|move|interact|reserve|release|investigate|whisper-request|whisper-vote|whisper-leave|signal|signals))?$/);
+  const match=pathname.match(/^\/api\/rooms\/([A-Z2-9]{6})(?:\/(join|start|advance|advance-vote|advance-unvote|read|character|leave|study-ready|move|interact|reserve|release|investigate|card-public|card-share|card-unshare|exchange-offer|exchange-reply|exchange-cancel|whisper-request|whisper-vote|whisper-leave|signal|signals))?$/);
   if(req.method==='GET'&&match&&match[2]==='signals'){
     const room=roomOrFail(match[1]),me=ownedPlayer(room,sid);
     const after=Math.max(0,Number(url.searchParams.get('after'))||0);
@@ -440,6 +525,14 @@ async function api(req,res,url,sid){
     persist();sendState(room);
     return json(res,200,roomView(room,sid));
   }
+  if(action==='advance-vote'||action==='advance-unvote'){
+    if(!POST_INVESTIGATION_PHASES.includes(room.phase)||!phaseReadiness(room).next)
+      fail(409,'현재 단계에서는 진행 동의를 할 수 없습니다.');
+    room.advanceVotes||={};
+    room.advanceVotes[player.id]=action==='advance-vote';
+    logActivity(action==='advance-vote'?'phase_vote_yes':'phase_vote_removed',sid,{room:room.id,phase:room.phase});
+    persist();sendState(room);return json(res,200,roomView(room,sid));
+  }
   if(action==='advance'){
     if(room.host!==sid)fail(403,'방장만 다음 단계로 진행할 수 있습니다.');
     const progress=phaseReadiness(room);
@@ -458,15 +551,23 @@ async function api(req,res,url,sid){
     }
     if(progress.next==='investigation1'){
       const info=gameFor(room).investigation;
-      room.investigation={tokens:Object.fromEntries(room.players.map(p=>[p.id,info?.tokensPerPlayer||4])),
-        reserved:{},discovered:{},collected:{}};
+      room.investigation={tokens:Object.fromEntries(room.players.map(p=>[p.id,info?.tokensPerPlayer??4])),
+        reserved:{},discovered:{},collected:{},
+        holdings:[],publicCards:{},selectiveShares:[],offers:[]};
+    }
+    if(progress.next==='investigation2'){
+      const spec=gameFor(room).investigation;
+      const inv=exchangeFor(room);
+      for(const p of room.players)
+        inv.tokens[p.id]=(inv.tokens[p.id]||0)+(spec?.tokensPerSecondInvestigation??4);
+      inv.reserved={};
     }
     phaseChange(room,progress.next,sid);
     persist();sendState(room);
     return json(res,200,roomView(room,sid));
   }
   if(action==='move'){
-    if(!['study','investigation1'].includes(room.phase))fail(409,'현재 지도 이동 단계가 아닙니다.');
+    if(!PLAY_PHASES.includes(room.phase))fail(409,'현재 지도 이동 단계가 아닙니다.');
     if(!player.characterId)fail(403,'캐릭터가 배정되지 않았습니다.');
     const current=positionFor(room,player);
     const floorplan=current&&floorFor(room,current.floor);
@@ -488,12 +589,13 @@ async function api(req,res,url,sid){
       fail(409,'해당 타일의 최대 인원을 초과했습니다.');
     room.mapPositions[player.id]=next;
     pruneWhispers(room); // leaving the tile also leaves its private voice group
+    pruneExchanges(room); // tile-only card reveals and pending trades expire immediately
     lastMoves.set(lastKey,Date.now());
     persist();sendState(room);
     return json(res,200,roomView(room,sid));
   }
   if(action==='interact'){
-    if(!['study','investigation1'].includes(room.phase))fail(409,'현재 상호작용 가능한 단계가 아닙니다.');
+    if(!PLAY_PHASES.includes(room.phase))fail(409,'현재 상호작용 가능한 단계가 아닙니다.');
     const pos=positionFor(room,player),floor=pos&&floorFor(room,pos.floor);
     if(!floor)fail(409,'플레이어의 지도 위치를 찾을 수 없습니다.');
     if(body.kind==='portal'){
@@ -513,7 +615,7 @@ async function api(req,res,url,sid){
       if(occupantCount(room,next,player.id)>=(gameFor(room).investigation?.maxTileOccupants||3))
         fail(409,'목적지 타일 정원이 가득 찼습니다.');
       room.mapPositions[player.id]=next;
-      pruneWhispers(room);persist();sendState(room);
+      pruneWhispers(room);pruneExchanges(room);persist();sendState(room);
       logActivity('portal_used',sid,{room:room.id,to:next.floor});
       return json(res,200,roomView(room,sid));
     }
@@ -550,11 +652,11 @@ async function api(req,res,url,sid){
     fail(400,'지원하지 않는 지도 상호작용입니다.');
   }
   if(action==='reserve'||action==='release'||action==='investigate'){
-    if(room.phase!=='investigation1')fail(409,'1차 조사 단계가 아닙니다.');
+    if(!INVESTIGATION_PHASES.includes(room.phase))fail(409,'현재 조사 단계가 아닙니다.');
     const spec=gameFor(room).investigation;
     const card=spec?.cards.find(c=>c.id===body.cardId);
     if(!card)fail(404,'조사 카드를 찾을 수 없습니다.');
-    const data=room.investigation;
+    const data=exchangeFor(room);
     const held=activeReservation(room,card.id),mine=held?.playerId===player.id;
     if(action==='release'){
       if(mine){delete data.reserved[card.id];persist();sendState(room)}
@@ -580,6 +682,8 @@ async function api(req,res,url,sid){
     data.tokens[player.id]--;
     data.discovered[card.id] ||= [];
     data.discovered[card.id].push({playerId:player.id,at:Date.now()});
+    exchangeFor(room).holdings.push({id:randomId(8),cardId:card.id,
+      ownerId:player.id,createdAt:Date.now()});
     if(card.grant){
       data.collected[player.id] ||= [];
       data.collected[player.id].push(card.grant);
@@ -588,8 +692,101 @@ async function api(req,res,url,sid){
     persist();sendState(room);
     return json(res,200,roomView(room,sid));
   }
+  if(['card-public','card-share','card-unshare','exchange-offer','exchange-reply','exchange-cancel'].includes(action)){
+    if(!INVESTIGATION_PHASES.includes(room.phase))
+      fail(409,'카드 공유·양도는 1차/2차 조사 단계에서만 사용할 수 있습니다.');
+    const inv=exchangeFor(room),spec=gameFor(room).investigation;
+    pruneExchanges(room);
+    const holding=inv.holdings.find(h=>h.id===body.holdingId);
+    const mine=holding&&holding.ownerId===player.id;
+    if(['card-public','card-share','card-unshare'].includes(action)){
+      if(!mine)fail(403,'현재 소유한 조사 카드만 공개할 수 있습니다.');
+      const card=spec.cards.find(c=>c.id===holding.cardId);
+      if(!card)fail(404,'카드를 찾지 못했습니다.');
+      if(action==='card-public'){
+        // Irreversible global reveal by card ID. Transfers cannot undo this.
+        if(!inv.publicCards[card.id])
+          inv.publicCards[card.id]={at:Date.now(),by:player.id};
+        logActivity('card_publicized',sid,{room:room.id,card:card.id});
+      }else{
+        const target=room.players.find(p=>p.id===body.toId);
+        if(!target||target.id===player.id)fail(400,'다른 참가자를 선택하세요.');
+        if(action==='card-share'){
+          if(!sameTile(room,player,target))fail(409,'같은 타일에 있는 참가자에게만 선택 공개할 수 있습니다.');
+          const pos=positionFor(room,player);
+          if(!inv.selectiveShares.some(x=>x.holdingId===holding.id&&x.toId===target.id))
+            inv.selectiveShares.push({holdingId:holding.id,ownerId:player.id,toId:target.id,
+              floor:pos.floor,x:pos.x,y:pos.y,at:Date.now()});
+          logActivity('card_shared_nearby',sid,{room:room.id,card:card.id,target:target.id});
+        }else{
+          inv.selectiveShares=inv.selectiveShares.filter(x=>x.holdingId!==holding.id||x.toId!==target.id);
+        }
+      }
+      persist();sendState(room);return json(res,200,roomView(room,sid));
+    }
+    if(action==='exchange-offer'){
+      const target=room.players.find(p=>p.id===body.toId);
+      if(!target||target.id===player.id)fail(400,'양도받을 참가자를 선택하세요.');
+      if(!sameTile(room,player,target))fail(409,'같은 타일에 있어야 양도를 제안할 수 있습니다.');
+      if(!['card','token'].includes(body.type))fail(400,'카드 또는 토큰 양도만 가능합니다.');
+      const pos=positionFor(room,player);
+      const offer={id:randomId(8),type:body.type,fromId:player.id,toId:target.id,
+        floor:pos.floor,x:pos.x,y:pos.y,expiresAt:Date.now()+90000};
+      if(body.type==='card'){
+        if(!mine)fail(403,'보유한 조사 카드만 양도할 수 있습니다.');
+        const card=spec.cards.find(c=>c.id===holding.cardId);
+        if(!card||card.transferable===false)fail(403,'이 조사 카드는 양도할 수 없습니다.');
+        if(inv.offers.some(o=>o.type==='card'&&o.holdingId===holding.id))
+          fail(409,'이미 이 카드에 대한 양도 제안이 진행 중입니다.');
+        offer.holdingId=holding.id;
+      }else{
+        if(!Number.isInteger(body.amount)||body.amount<1||body.amount>100)
+          fail(400,'토큰 양도량은 1~100개 사이의 정수여야 합니다.');
+        if((inv.tokens[player.id]||0)<body.amount)fail(409,'양도할 조사 토큰이 부족합니다.');
+        offer.amount=body.amount;
+      }
+      if(inv.offers.filter(o=>o.fromId===player.id).length>=12)
+        fail(429,'동시에 진행할 수 있는 양도 제안은 최대 12개입니다.');
+      inv.offers.push(offer);
+      logActivity('exchange_offered',sid,{room:room.id,type:offer.type,target:target.id});
+      persist();sendState(room);return json(res,200,roomView(room,sid));
+    }
+    const proposal=inv.offers.find(o=>o.id===body.offerId);
+    if(!proposal)fail(404,'양도 요청이 없거나 만료되었습니다.');
+    if(action==='exchange-cancel'){
+      if(proposal.fromId!==player.id)fail(403,'양도 요청을 보낸 사람만 취소할 수 있습니다.');
+      inv.offers=inv.offers.filter(o=>o!==proposal);
+      persist();sendState(room);return json(res,200,roomView(room,sid));
+    }
+    if(proposal.toId!==player.id)fail(403,'요청받은 참가자만 승인할 수 있습니다.');
+    if(body.accept!==true&&body.accept!==false)fail(400,'승인 또는 거절을 선택하세요.');
+    if(body.accept){
+      const from=room.players.find(p=>p.id===proposal.fromId),to=player;
+      const pos=from&&positionFor(room,from);
+      if(!from||!sameTile(room,from,to)||pos.floor!==proposal.floor||
+        pos.x!==proposal.x||pos.y!==proposal.y)
+        fail(409,'양도 합의에 참여한 두 사람이 같은 타일에 있어야 합니다.');
+      if(proposal.type==='card'){
+        const selected=inv.holdings.find(h=>h.id===proposal.holdingId&&h.ownerId===from.id);
+        const card=selected&&spec.cards.find(c=>c.id===selected.cardId);
+        if(!card||card.transferable===false)fail(409,'해당 카드를 더 이상 양도할 수 없습니다.');
+        selected.ownerId=to.id;
+        // Previous temporary sharing never follows a transferred physical card.
+        inv.selectiveShares=inv.selectiveShares.filter(x=>x.holdingId!==selected.id);
+      }else{
+        if((inv.tokens[from.id]||0)<proposal.amount)fail(409,'보내는 사람의 토큰이 부족합니다.');
+        inv.tokens[from.id]-=proposal.amount;
+        inv.tokens[to.id]=(inv.tokens[to.id]||0)+proposal.amount;
+      }
+      logActivity('exchange_accepted',sid,{room:room.id,type:proposal.type,from:from.id,to:to.id});
+    }else logActivity('exchange_declined',sid,{room:room.id,type:proposal.type});
+    inv.offers=inv.offers.filter(o=>o!==proposal&&
+      !(proposal.type==='card'&&o.type==='card'&&o.holdingId===proposal.holdingId));
+    pruneExchanges(room);
+    persist();sendState(room);return json(res,200,roomView(room,sid));
+  }
   if(action==='signal'){
-    if(!['study','investigation1'].includes(room.phase))fail(409,'현재 음성 통화 단계가 아닙니다.');
+    if(!PLAY_PHASES.includes(room.phase))fail(409,'현재 음성 통화 단계가 아닙니다.');
     const target=room.players.find(p=>p.id===body.to);
     if(!target||target.id===player.id)fail(400,'유효하지 않은 수신자입니다.');
     if(!['offer','answer','ice','hello','bye'].includes(body.type))fail(400,'유효하지 않은 신호 형식입니다.');
@@ -603,7 +800,7 @@ async function api(req,res,url,sid){
     return json(res,200,{ok:true});
   }
   if(['whisper-request','whisper-vote','whisper-leave'].includes(action)){
-    if(!['study','investigation1'].includes(room.phase))fail(409,'현재 밀담을 사용할 수 없습니다.');
+    if(!PLAY_PHASES.includes(room.phase))fail(409,'현재 밀담을 사용할 수 없습니다.');
     const ws=whisperState(room);pruneWhispers(room);
     const pos=positionFor(room,player);
     if(!pos)fail(409,'지도 위치가 없습니다.');
