@@ -129,7 +129,8 @@ function mapsPanel(){
     '</div><div class="editor-map-details"><h3>문 기믹</h3>'+
     (f.doors||[]).map((d,i)=>'<div class="editor-detail-line"><b>'+esc(d.name)+' ('+d.x+','+d.y+')</b>'+
        field('이름','floor.doors.'+i+'.name',d.name)+
-       field('잠긴 문','floor.doors.'+i+'.locked',d.locked,'checkbox')+
+       field('잠금 상태','floor.doors.'+i+'.locked',d.locked,'checkbox')+
+       field('처음부터 열린 문','floor.doors.'+i+'.open',!!d.open,'checkbox')+
        field('필요한 열쇠/아이템 ID','floor.doors.'+i+'.requiresItem',d.requiresItem||'')+
        '<button class="btn btn-quiet btn-sm" data-do="remove-door" data-i="'+i+'">삭제</button></div>').join('')+
     '<h3>계단 / 이동 액션</h3>'+
@@ -177,7 +178,7 @@ function clickCell(x,y){
   if(brush==='floor'||brush==='wall'){
     rows[y][x]=brush==='wall'?'#':'.';f.tiles=rows.map(r=>r.join(''));
   }else if(f.tiles[y][x]!=='#'){
-    if(brush==='door')f.doors.push({id:newid('door'),name:'새 문',x,y,locked:true,requiresItem:''});
+    if(brush==='door')f.doors.push({id:newid('door'),name:'새 문',x,y,locked:false,open:false,requiresItem:''});
     else if(brush==='portal'){
       const dest=getFloors().find(v=>v.id!==f.id)||f;
       f.portals.push({x,y,toFloor:dest.id,toX:1,toY:1,label:'다른 층으로 이동'});
