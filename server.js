@@ -51,12 +51,18 @@ function doorState(room,floor,door){
   const isOpen=room.doorStates?.[key]?.open??(room.openDoors?.[key]?true:door.closed===false);
   return {locked:!unlocked,open:unlocked&&!!isOpen};
 }
-const ADVANCE_NEXT={synopsis:'characters',characters:'study',study:'investigation1'};
+const ADVANCE_NEXT={synopsis:'characters',characters:'study',study:'investigation1',
+  investigation1:'discussion1',discussion1:'investigation2',
+  investigation2:'discussion2',discussion2:'action',action:'ending'};
+const INVESTIGATION_PHASES=['investigation1','investigation2'];
+const PLAY_PHASES=['study','investigation1','discussion1','investigation2','discussion2','action','ending'];
+const POST_INVESTIGATION_PHASES=['investigation1','discussion1','investigation2','discussion2','action','ending'];
 function phaseReadiness(room){
   const next=ADVANCE_NEXT[room.phase]||null;
   const ready=room.phase==='synopsis'?room.players.filter(p=>p.read).length:
     room.phase==='characters'?room.players.filter(p=>p.characterId).length:
-    room.phase==='study'?room.players.filter(p=>p.studyReady).length:0;
+    room.phase==='study'?room.players.filter(p=>p.studyReady).length:
+    next?room.players.filter(p=>room.advanceVotes?.[p.id]===true).length:0;
   return {next,ready,total:room.players.length,canAdvance:!!next&&
     room.players.length===storyById(room.storyId).players&&ready===room.players.length};
 }
@@ -133,6 +139,12 @@ function publicWhispers(room,member){
 }
 function phaseChange(room,phase,sid){
   room.phase=phase;room.phaseStartedAt=Date.now();
+  room.advanceVotes={};
+  if(room.investigation&&!INVESTIGATION_PHASES.includes(phase)){
+    room.investigation.selectiveShares=[];
+    room.investigation.offers=[];
+    room.investigation.reserved={};
+  }
   logActivity('phase_'+phase,sid,{room:room.id});
 }
 const PRESENCE_TTL_MS=30000;
@@ -203,7 +215,7 @@ function roomView(room,sid){
   const story=storyById(room.storyId),game=gameFor(room);
   const member=room.players.find(p=>p.sid===sid),isMember=!!member;
   const char=member&&story.characters.find(c=>c.id===member.characterId);
-  const notes=isMember&&['study','investigation1'].includes(room.phase)&&char?game.booklets?.[char.id]:null;
+  const notes=isMember&&PLAY_PHASES.includes(room.phase)&&char?game.booklets?.[char.id]:null;
   const booklet=notes?{
     basic:{name:char.name,role:char.role,hint:char.hint,symbol:char.symbol,accent:char.accent},
     background:notes.background,timeline:notes.timeline,inventory:notes.inventory,
@@ -212,7 +224,7 @@ function roomView(room,sid){
   }:null;
   const myPos=member&&positionFor(room,member);
   const floor=myPos&&floorFor(room,myPos.floor);
-  const map=floor&&['study','investigation1'].includes(room.phase)?{
+  const map=floor&&PLAY_PHASES.includes(room.phase)?{
     title:floor.title,legend:floor.legend,tiles:floor.tiles,rooms:floor.rooms,
     floorId:floor.id,floors:floorsFor(room).map(f=>({id:f.id,title:f.title})),
     portals:floor.portals||[],areas:floor.areas||[],
@@ -242,7 +254,7 @@ function roomView(room,sid){
     synopsis:isMember&&room.phase!=='lobby'?story.synopsis:null,
     characters:isMember&&!['lobby','synopsis'].includes(room.phase)?story.characters:null,
     booklet,map,investigation:investigationView(room,member),
-    whispers:isMember&&['study','investigation1'].includes(room.phase)?publicWhispers(room,member):null
+    whispers:isMember&&PLAY_PHASES.includes(room.phase)?publicWhispers(room,member):null
   };
 }
 
@@ -329,7 +341,7 @@ async function api(req,res,url,sid){
     ownedPlayer(room,sid);
     return subscribe(req,res,room,sid);
   }
-  const match=pathname.match(/^\/api\/rooms\/([A-Z2-9]{6})(?:\/(join|start|advance|read|character|leave|study-ready|move|interact|reserve|release|investigate|whisper-request|whisper-vote|whisper-leave|signal|signals))?$/);
+  const match=pathname.match(/^\/api\/rooms\/([A-Z2-9]{6})(?:\/(join|start|advance|advance-vote|advance-unvote|read|character|leave|study-ready|move|interact|reserve|release|investigate|card-public|card-share|card-unshare|exchange-offer|exchange-reply|exchange-cancel|whisper-request|whisper-vote|whisper-leave|signal|signals))?$/);
   if(req.method==='GET'&&match&&match[2]==='signals'){
     const room=roomOrFail(match[1]),me=ownedPlayer(room,sid);
     const after=Math.max(0,Number(url.searchParams.get('after'))||0);
@@ -440,6 +452,14 @@ async function api(req,res,url,sid){
     persist();sendState(room);
     return json(res,200,roomView(room,sid));
   }
+  if(action==='advance-vote'||action==='advance-unvote'){
+    if(!POST_INVESTIGATION_PHASES.includes(room.phase)||!phaseReadiness(room).next)
+      fail(409,'현재 단계에서는 진행 동의를 할 수 없습니다.');
+    room.advanceVotes||={};
+    room.advanceVotes[player.id]=action==='advance-vote';
+    logActivity(action==='advance-vote'?'phase_vote_yes':'phase_vote_removed',sid,{room:room.id,phase:room.phase});
+    persist();sendState(room);return json(res,200,roomView(room,sid));
+  }
   if(action==='advance'){
     if(room.host!==sid)fail(403,'방장만 다음 단계로 진행할 수 있습니다.');
     const progress=phaseReadiness(room);
@@ -458,15 +478,23 @@ async function api(req,res,url,sid){
     }
     if(progress.next==='investigation1'){
       const info=gameFor(room).investigation;
-      room.investigation={tokens:Object.fromEntries(room.players.map(p=>[p.id,info?.tokensPerPlayer||4])),
-        reserved:{},discovered:{},collected:{}};
+      room.investigation={tokens:Object.fromEntries(room.players.map(p=>[p.id,info?.tokensPerPlayer??4])),
+        reserved:{},discovered:{},collected:{},
+        holdings:[],publicCards:{},selectiveShares:[],offers:[]};
+    }
+    if(progress.next==='investigation2'){
+      const spec=gameFor(room).investigation;
+      const inv=exchangeFor(room);
+      for(const p of room.players)
+        inv.tokens[p.id]=(inv.tokens[p.id]||0)+(spec?.tokensPerSecondInvestigation??4);
+      inv.reserved={};
     }
     phaseChange(room,progress.next,sid);
     persist();sendState(room);
     return json(res,200,roomView(room,sid));
   }
   if(action==='move'){
-    if(!['study','investigation1'].includes(room.phase))fail(409,'현재 지도 이동 단계가 아닙니다.');
+    if(!PLAY_PHASES.includes(room.phase))fail(409,'현재 지도 이동 단계가 아닙니다.');
     if(!player.characterId)fail(403,'캐릭터가 배정되지 않았습니다.');
     const current=positionFor(room,player);
     const floorplan=current&&floorFor(room,current.floor);
@@ -493,7 +521,7 @@ async function api(req,res,url,sid){
     return json(res,200,roomView(room,sid));
   }
   if(action==='interact'){
-    if(!['study','investigation1'].includes(room.phase))fail(409,'현재 상호작용 가능한 단계가 아닙니다.');
+    if(!PLAY_PHASES.includes(room.phase))fail(409,'현재 상호작용 가능한 단계가 아닙니다.');
     const pos=positionFor(room,player),floor=pos&&floorFor(room,pos.floor);
     if(!floor)fail(409,'플레이어의 지도 위치를 찾을 수 없습니다.');
     if(body.kind==='portal'){
@@ -550,7 +578,7 @@ async function api(req,res,url,sid){
     fail(400,'지원하지 않는 지도 상호작용입니다.');
   }
   if(action==='reserve'||action==='release'||action==='investigate'){
-    if(room.phase!=='investigation1')fail(409,'1차 조사 단계가 아닙니다.');
+    if(!INVESTIGATION_PHASES.includes(room.phase))fail(409,'현재 조사 단계가 아닙니다.');
     const spec=gameFor(room).investigation;
     const card=spec?.cards.find(c=>c.id===body.cardId);
     if(!card)fail(404,'조사 카드를 찾을 수 없습니다.');
@@ -589,7 +617,7 @@ async function api(req,res,url,sid){
     return json(res,200,roomView(room,sid));
   }
   if(action==='signal'){
-    if(!['study','investigation1'].includes(room.phase))fail(409,'현재 음성 통화 단계가 아닙니다.');
+    if(!PLAY_PHASES.includes(room.phase))fail(409,'현재 음성 통화 단계가 아닙니다.');
     const target=room.players.find(p=>p.id===body.to);
     if(!target||target.id===player.id)fail(400,'유효하지 않은 수신자입니다.');
     if(!['offer','answer','ice','hello','bye'].includes(body.type))fail(400,'유효하지 않은 신호 형식입니다.');
@@ -603,7 +631,7 @@ async function api(req,res,url,sid){
     return json(res,200,{ok:true});
   }
   if(['whisper-request','whisper-vote','whisper-leave'].includes(action)){
-    if(!['study','investigation1'].includes(room.phase))fail(409,'현재 밀담을 사용할 수 없습니다.');
+    if(!PLAY_PHASES.includes(room.phase))fail(409,'현재 밀담을 사용할 수 없습니다.');
     const ws=whisperState(room);pruneWhispers(room);
     const pos=positionFor(room,player);
     if(!pos)fail(409,'지도 위치가 없습니다.');
