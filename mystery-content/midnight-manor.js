@@ -156,6 +156,7 @@ const floors=[
 // room JSON for another user. The public list contains only fronts/status.
 const investigation={
   tokensPerPlayer:4,
+  tokensPerSecondInvestigation:4,
   maxTileOccupants:3,
   cards:[
     {id:'desk',title:'서재의 책상',subtitle:'서재 · 사건 현장',type:'place',location:{floor:'ground',x:11,y:2},
@@ -176,7 +177,7 @@ const investigation={
     {id:'medical',title:'주치의의 기록',subtitle:'인물 관련 문서',type:'information',owner:'victor',
       back:'진료 기록에는 환자의 사망 당시 맥박과 예상 독성 반응이 기록되어 있다. 처방 시각이 단서다.',repeatable:false},
     {id:'photo',title:'응접실의 액자',subtitle:'응접실 · 오래된 가족사진',type:'place',location:{floor:'ground',x:12,y:8},
-      back:'액자 뒷면에는 오래된 필름을 끼워두었던 흔적이 남았다. 먼지는 최근에 닦아낸 듯하다.',repeatable:false},
+      back:'액자 뒷면에는 오래된 필름을 끼워두었던 흔적이 남았다. 먼지는 최근에 닦아낸 듯하다.',repeatable:false,transferable:false},
     {id:'dining',title:'식당의 쟁반',subtitle:'식당 · 흔적',type:'place',location:{floor:'ground',x:3,y:8},
       back:'쟁반에 남은 유리 가루와 희미한 약품 냄새가 범행 시각을 좁히는 데 도움이 된다.',repeatable:false},
     {id:'bedroom',title:'2층 침실',subtitle:'2층 · 뒤집힌 서랍',type:'place',location:{floor:'upper',x:3,y:2},
