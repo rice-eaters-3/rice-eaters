@@ -56,7 +56,7 @@ test('RPG screen: map is main, 7-chapter booklet is paged, cards reveal only aut
   assert.ok(view.render(room).includes('당신은 범인이 아닙니다.'));
   view.navigate('book-toggle');
   const investigation={...room,phase:'investigation1',
-    investigation:{tokens:4,totalTokens:4,cards:[
+    investigation:{tokens:4,totalTokens:4,canInvestigate:true,myCards:[],nearby:[],cards:[
       {id:'desk',title:'서재 책상',subtitle:'서재',type:'place',location:{floor:'ground',x:2,y:1},
         locked:false,excluded:false,taken:false,reservedBy:null,revealed:[]},
       {id:'photo',title:'액자',subtitle:'응접실',type:'place',locked:false,excluded:false,
