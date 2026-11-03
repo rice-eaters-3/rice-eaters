@@ -314,6 +314,7 @@ function roomView(room,sid){
   return {
     code:room.id,phase:room.phase,story:publicStory(story),
     progress:phaseReadiness(room),
+    advanceVotes:isMember?Object.fromEntries(room.players.map(p=>[p.id,room.advanceVotes?.[p.id]===true])):null,
     clock:room.gameStartedAt?{gameStartedAt:room.gameStartedAt,
       phaseStartedAt:room.phaseStartedAt||room.gameStartedAt,
       phaseMinutes:{...phaseDefault,...(game.phaseMinutes||{})},
