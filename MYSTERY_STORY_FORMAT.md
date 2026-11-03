@@ -120,3 +120,19 @@ WebRTC 근접 음성은 TURN 서버 없이 NAT 환경에서 실패할 수 있으
 활성 조사 단계는 `investigation1` 및 `investigation2`입니다. 지도·음성·책자 접근은
 1차 토론, 2차 토론, 행동, 결말 단계에도 유지합니다. 카드 소유·전체 공개 상태는 이후
 단계에서도 조회되지만 조사 실행 및 거래는 조사 단계에서만 허용합니다.
+
+## 7인 D1 시나리오에서 추가한 확장 필드
+
+`mystery-content/d1-gaming.case.json`은 일반 편집기와 동일한 **`rice-mystery-v1`** 형식이며 다음 선택적 필드를 활용합니다.
+
+- `story.characters[].startLine`: 캐릭터 선택 카드에 표시할 한 줄 시작 대사
+- `game.investigation.cards[].clueKind`: `cult`(교단), `timeline`(당일 행적), `trick`(살인 증거·도구) 중 한 분류. 조사 카드 제목과는 별도로 제작자가 유형을 관리합니다.
+- `game.investigation.cards[].availableFromPhase`: `investigation1`(기본) 또는 `investigation2`. 2차 전용은 첫 조사 단계에서 선점·조사할 수 없습니다.
+- `game.investigation.cards[].visibility`: 2차 조사까지 존재 자체를 숨기려면 `hidden`, 제목을 남겨두려면 `locked`
+- `game.investigation.cards[].requiresPresence`: true이면 카드에 설정된 `location`과 플레이어의 실제 층·타일이 일치해야 카드 선점·조사할 수 있습니다. 기본은 false(카드 리스트에서 원격 조사 가능).
+- `game.investigation.cards[].insights`: `{ "mayushi": "마유시만 볼 수 있는 사이코메트리 감응" }`처럼 역할 ID별 비공개 추가 서술을 지정합니다. **해당 역할이 카드를 보유하거나 선택 공개받거나 전체 공개되어 뒷면을 읽을 수 있을 때만** 해당 역할에게 감응이 제공됩니다. 다른 역할에는 이 텍스트를 전송하지 않습니다.
+- `creatorGuide`: 제작자만 볼 해설·진범·전체 시간표·해답·오답 엔딩을 담는 최상위 필드. 게임 서버의 공개 API에서는 사용하지 않습니다. 일반 에디터에서 JSON으로 불러오면 원본 필드가 유지됩니다.
+
+이 기능으로 3층 복도에서 2차 조사 전용 `trick_spare_override`를 직접 조사해 **`vault_override`** 키를 획득해야 비로소 4층 봉인 보관실의 문을 열고 특정 단서를 조사할 수 있습니다.
+
+**주의:** 모든 커밋된 원고와 제작자 해설은 저장소 접근 권한이 있는 사람이 읽을 수 있습니다. HTTP 정적 파일 접근을 막아도 GitHub 공개 저장소의 스포일러 노출까지 막지는 못합니다.
