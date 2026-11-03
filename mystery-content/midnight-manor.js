@@ -196,8 +196,8 @@ floors[0].areas=[
   {id:'lounge',name:'응접실',x:9,y:7,width:7,height:3,color:'#80708f',pattern:'carpet'}
 ];
 floors[0].doors=[
-  {id:'library-door',x:6,y:5,name:'서재 쪽 잠긴 문',requiresItem:'key',locked:true},
-  {id:'dining-door',x:3,y:6,name:'식당 문',locked:false}
+  {id:'library-door',x:6,y:5,name:'서재 쪽 잠긴 문',requiresItem:'key',locked:true,closed:true},
+  {id:'dining-door',x:3,y:6,name:'식당 문',locked:false,closed:true}
 ];
 floors[1].areas=[
   {id:'bedrooms',name:'2층 침실',x:1,y:1,width:7,height:4,color:'#947d7c',pattern:'wood'},
@@ -205,6 +205,6 @@ floors[1].areas=[
   {id:'up-hall',name:'2층 복도',x:1,y:6,width:15,height:3,color:'#847b65',pattern:'stone'}
 ];
 floors[1].doors=[
-  {id:'archive-door',x:8,y:4,name:'기록실 비밀문',requiresItem:'sealed-envelope',locked:true}
+  {id:'archive-door',x:8,y:4,name:'기록실 비밀문',requiresItem:'sealed-envelope',locked:true,closed:true}
 ];
 module.exports={floorplan,booklets,floors,phaseMinutes,investigation};
