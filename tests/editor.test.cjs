@@ -90,10 +90,14 @@ test('editor JSON import validation, creator-only secrets, room play, manual por
  const started=await post(0,'/api/rooms/'+code+'/start');
  assert.equal(started.data.phase,'synopsis');
  assert.equal((await post(0,'/api/rooms/'+code+'/read')).data.phase,'synopsis');
- assert.equal((await post(1,'/api/rooms/'+code+'/read')).data.phase,'characters');
+ assert.equal((await post(1,'/api/rooms/'+code+'/read')).data.phase,'synopsis');
+ assert.equal((await post(1,'/api/rooms/'+code+'/advance')).status,403);
+ assert.equal((await post(0,'/api/rooms/'+code+'/advance')).data.phase,'characters');
  await post(0,'/api/rooms/'+code+'/character',{characterId:'alpha'});
- const selected=await post(1,'/api/rooms/'+code+'/character',{characterId:'beta'});
- assert.equal(selected.data.phase,'study');
+ const selectedCast=await post(1,'/api/rooms/'+code+'/character',{characterId:'beta'});
+ assert.equal(selectedCast.data.phase,'characters');
+ assert.equal((await post(0,'/api/rooms/'+code+'/advance')).data.phase,'study');
+ const selected=await req(1,'/api/rooms/'+code);
  assert.equal(selected.data.booklet.background[0],'역할 B만 아는 비밀');
  assert.equal(selected.data.map.areas[0].name,'식당');
  assert.equal(selected.data.map.doors[0].locked,true);
@@ -107,12 +111,25 @@ test('editor JSON import validation, creator-only secrets, room play, manual por
  const door=await post(0,'/api/rooms/'+code+'/interact',{kind:'door',doorId:'locked1'});
  assert.equal(door.status,200,'key holder unlocks adjacent door');
  assert.equal(door.data.map.doors[0].locked,false);
+ assert.equal(door.data.map.doors[0].open,true);
  assert.equal((await post(1,'/api/rooms/'+code+'/move',{direction:'left'})).status,200,
-   'unlocked door can be walked through');
- // Player is on door, must move one step down to the dual-purpose portal.
+   'opened door can be walked through');
+ assert.equal((await post(0,'/api/rooms/'+code+'/interact',{kind:'door',doorId:'locked1',mode:'close'})).status,409,
+   'occupied door cannot close');
+ // Player steps off the door before it can be closed.
  await new Promise(resolve=>setTimeout(resolve,145));
  const move=await post(1,'/api/rooms/'+code+'/move',{direction:'down'});
  assert.equal(move.status,200);
+ const shut=await post(0,'/api/rooms/'+code+'/interact',{kind:'door',doorId:'locked1',mode:'close'});
+ assert.equal(shut.status,200);
+ assert.equal(shut.data.map.doors[0].locked,false);
+ assert.equal(shut.data.map.doors[0].open,false);
+ await new Promise(resolve=>setTimeout(resolve,145));
+ assert.equal((await post(1,'/api/rooms/'+code+'/move',{direction:'up'})).status,409,
+   'an unlocked but closed door still blocks movement');
+ assert.equal((await post(1,'/api/rooms/'+code+'/interact',
+   {kind:'door',doorId:'locked1',mode:'open'})).data.map.doors[0].open,true,
+   'previously unlocked door can reopen without key');
  assert.equal(move.data.map.floorId,'ground','entering portal never auto-travels');
  assert.equal(move.data.map.portals.length,2,'both stair choices visible');
  assert.equal((await post(0,'/api/rooms/'+code+'/interact',{kind:'portal',portalIndex:0})).status,409,
