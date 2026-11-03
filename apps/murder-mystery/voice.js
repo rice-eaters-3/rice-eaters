@@ -5,7 +5,7 @@
 window.MysteryVoice=(function(){
   let stream=null,room=null,timer=null,cursor=0,active=false,micOn=false,speakerOn=false,busy=false;
   const peers=new Map(),audio=new Map();
-  const valid=()=>!!(room?.me&&['study','investigation1'].includes(room.phase));
+  const valid=()=>!!(room?.me&&['study','investigation1','discussion1','investigation2','discussion2','action','ending'].includes(room.phase));
   async function send(to,type,payload={}){
     if(!room?.code)return;
     try{await api('/api/rooms/'+room.code+'/signal','POST',{to,type,payload})}
