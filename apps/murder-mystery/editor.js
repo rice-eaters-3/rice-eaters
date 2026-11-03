@@ -16,7 +16,7 @@ function template(){
   }]));
   return {format:'rice-mystery-v1',story:{title:'새로운 사건',subtitle:'미스터리 부제',genre:'추리',teaser:'사건을 간략하게 소개하세요.',
     minutes:90,players:4,synopsis:['누군가 살해되었습니다. 이 집에 모인 참가자 중 범인이 있습니다.'],characters},
-    game:{booklets,phaseMinutes:{...phases},investigation:{tokensPerPlayer:4,maxTileOccupants:3,cards:[]},
+    game:{booklets,phaseMinutes:{...phases},investigation:{tokensPerPlayer:4,tokensPerSecondInvestigation:4,maxTileOccupants:3,cards:[]},
       floors:[emptyMap('ground','1층')]},
     spawn:Object.fromEntries(characters.map((c,i)=>[c.id,{floor:'ground',x:2+i*2,y:2}]))};
 }
@@ -75,6 +75,7 @@ function cardsPanel(){
   const cards=doc.game.investigation.cards,c=cards[selectedCard];
   return '<div class="editor-subhead"><h2>조사 카드</h2><button data-do="add-card" class="btn btn-primary btn-sm">+ 조사 카드</button></div>'+
     '<div class="editor-fields">'+field('1차 조사 토큰','game.investigation.tokensPerPlayer',doc.game.investigation.tokensPerPlayer,'number')+
+    field('2차 조사 추가 토큰','game.investigation.tokensPerSecondInvestigation',doc.game.investigation.tokensPerSecondInvestigation??4,'number')+
     field('타일당 최대 인원','game.investigation.maxTileOccupants',doc.game.investigation.maxTileOccupants,'number')+'</div>'+
     (cards.length?'<div class="entity-tabs">'+cards.map((v,i)=>'<button data-do="pick-card" data-i="'+i+'" class="'+(i===selectedCard?'active':'')+'">'+esc(v.title)+'</button>').join('')+'</div>':
       '<p class="muted">아직 카드가 없습니다. 위 버튼으로 추가해 보세요.</p>')+
@@ -87,6 +88,7 @@ function cardsPanel(){
       field('선행 조사 카드 ID (쉼표 구분)','card.requires',(c.requires||[]).join(', '))+
       selectField('해금 전 표시','game.investigation.cards.'+selectedCard+'.visibility',[['locked','잠금 표시'],['hidden','존재 숨기기']],c.visibility||'locked')+
       field('중복 조사 허용','game.investigation.cards.'+selectedCard+'.repeatable',!!c.repeatable,'checkbox')+
+      field('카드 양도 허용','game.investigation.cards.'+selectedCard+'.transferable',c.transferable!==false,'checkbox')+
       field('조사 불가 캐릭터 ID (쉼표 구분)','card.blockedFor',(c.blockedFor||[]).join(', '))+
       selectField('맵 조사 위치 층 (빈칸은 위치 없음)','card.locationFloor',[['','위치 연결 없음'],...getFloors().map(x=>[x.id,x.title])],c.location?.floor||'')+
       field('맵 조사 X','card.locationX',c.location?.x??0,'number')+
@@ -214,7 +216,7 @@ function handleAction(target){
     delete doc.game.booklets[id];delete doc.spawn[id];doc.story.players=doc.story.characters.length;selectedChar=0;
   }else if(action==='add-card'){
     doc.game.investigation.cards.push({id:newid('card'),title:'새 조사 카드',subtitle:'간단한 앞면 정보',type:'place',back:'조사 뒷면에 적을 비밀',
-      owner:null,blockedFor:[],requires:[],visibility:'locked',repeatable:false,grant:null,location:null});
+      owner:null,blockedFor:[],requires:[],visibility:'locked',repeatable:false,transferable:true,grant:null,location:null});
     selectedCard=doc.game.investigation.cards.length-1;
   }else if(action==='remove-card'){doc.game.investigation.cards.splice(selectedCard,1);selectedCard=0;}
   else if(action==='add-floor'){if(getFloors().length>=8)return status('층은 최대 8개입니다.',true);
