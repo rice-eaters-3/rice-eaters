@@ -2,6 +2,9 @@
 const $=id=>document.getElementById(id);
 const escapeHtml=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const isQuickTunnel=location.hostname.endsWith('.trycloudflare.com');
+const SOCIAL_PHASES=['study','investigation1','discussion1','investigation2','discussion2','action','ending'];
+const INVESTIGATION_PHASES=['investigation1','investigation2'];
+const AFTER_FIRST_INVESTIGATION=['investigation1','discussion1','investigation2','discussion2','action','ending'];
 const state={stories:[],room:null,busy:false,stream:null,streamRoom:null,pollTimer:null,pollRoom:null,pollBusy:false,pollDelay:0,moving:false,lastMoveAt:0,clockOffset:0,clockAlert:new Set(),connection:'연결 중',selectedStory:null,name:localStorage.getItem('mystery_display_name')||''};
 const phaseNames=['전체 시놉시스 안내','캐릭터 선택','캐릭터 숙지','1차 조사','1차 토론','2차 조사','2차 토론·최종 결정','행동','결말'];
 const phaseOrder=['synopsis','characters','study','investigation1','discussion1','investigation2','discussion2','action','ending'];
@@ -75,7 +78,7 @@ async function pollRoom(){
 }
 function startPolling(){
   if(!state.room?.me){stopPolling();return}
-  const delay=['study','investigation1'].includes(state.room.phase)&&state.room.map?850:2500;
+  const delay=SOCIAL_PHASES.includes(state.room.phase)&&state.room.map?850:2500;
   if(state.pollTimer&&state.pollRoom===state.room.code&&state.pollDelay===delay)return;
   stopPolling();
   state.pollRoom=state.room.code;
@@ -115,7 +118,7 @@ function updateRoom(room,connection,force=false){
   window.MysteryVoice?.sync(room);
   if(connection)state.connection=connection;
   if(!changed)return;
-  if(['study','investigation1'].includes(old?.phase)&&old.phase===room?.phase&&old.me===room.me&&
+  if(SOCIAL_PHASES.includes(old?.phase)&&old.phase===room?.phase&&old.me===room.me&&
     old.players.find(p=>p.id===room.me)?.characterId===room.players.find(p=>p.id===room.me)?.characterId&&
     old.map?.floorId===room.map?.floorId&&
     JSON.stringify(old.whispers)===JSON.stringify(room.whispers)&&
@@ -130,7 +133,7 @@ function setRoom(room){
   else{window.MysteryVoice?.disable();state.room=null;closeStream();stopPolling();history.replaceState(null,'','/mystery');render()}
 }
 async function moveMyPlayer(direction){
-  if(!['study','investigation1'].includes(state.room?.phase)||!state.room.map||state.moving||window.MysteryStudy.currentView()!=='map')return;
+  if(!SOCIAL_PHASES.includes(state.room?.phase)||!state.room.map||state.moving||window.MysteryStudy.currentView()!=='map')return;
   if(!['up','down','left','right'].includes(direction))return;
   if(Date.now()-state.lastMoveAt<140)return;
   state.lastMoveAt=Date.now();
@@ -183,13 +186,21 @@ function home(){
 function nextStageControl(room){
   const p=room.progress;
   if(!p?.next)return '';
-  const name={characters:'캐릭터 선택',study:'캐릭터 숙지',investigation1:'1차 조사'}[p.next]||p.next;
+  const name=phaseNames[phaseOrder.indexOf(p.next)]||p.next;
   const host=room.me===room.hostId;
+  const voting=AFTER_FIRST_INVESTIGATION.includes(room.phase);
+  const consent=room.advanceVotes?.[room.me]===true;
   return '<section class="host-advance surface" aria-label="다음 단계 진행">'+
     '<div><div class="eyebrow">HOST CONTROL · '+p.ready+' / '+p.total+' READY</div>'+
     '<strong>'+escapeHtml(name)+' 단계로 진행</strong>'+
-    '<p class="muted small">'+(p.canAdvance?'전원이 준비되었습니다. 방장이 다음 단계로 진행할 수 있습니다.':
-      '모든 참가자가 준비를 마쳐야 진행할 수 있습니다.')+'</p></div>'+
+    '<p class="muted small">'+(p.canAdvance?'전원이 준비되었습니다. 방장이 다음 단계를 시작할 수 있습니다.':
+      voting?'진행 시간과 관계없이 전원의 다음 단계 이동 동의가 필요합니다.':
+      '모든 참가자가 현재 단계의 준비를 마쳐야 진행할 수 있습니다.')+'</p>'+
+    (voting?'<p class="muted small">참가자 동의: '+room.players.map(x=>
+      escapeHtml(x.name)+(room.advanceVotes?.[x.id]?' ✓':' ◷')).join(' · ')+'</p>':'')+'</div>'+
+    (voting?btn(consent?'advance-unvote':'advance-vote',
+      consent?'↩ 진행 동의 철회':'✓ 다음 단계로 넘어가기 동의',
+      'btn btn-outline',false):'')+
     (host?btn('advance','방장 전용 · 다음 단계로 →','btn btn-primary',!p.canAdvance):
       '<span class="muted small">방장의 진행을 기다리는 중</span>')+'</section>';
 }
@@ -341,11 +352,34 @@ async function perform(action,button){
     } else if(action==='leave'){
       await api('/api/rooms/'+code+'/leave','POST',{});
       setRoom(null);
-    } else if(action==='start'||action==='read'||action==='study-ready'||action==='advance'){
+    } else if(['start','read','study-ready','advance','advance-vote','advance-unvote'].includes(action)){
       setRoom(await api('/api/rooms/'+code+'/'+action,'POST',{}));
     } else if(action==='character'){
       const characterId=button.dataset.character;
       setRoom(await api('/api/rooms/'+code+'/character','POST',{characterId}));
+    } else if(['card-public','card-share','card-unshare','exchange-offer',
+      'exchange-reply','exchange-cancel'].includes(action)){
+      const holdingId=button.dataset.holding||null;
+      const cardPanel=button.closest('[data-holding-card]');
+      const playerPicker=cardPanel?.querySelector('[data-share-target]');
+      const targetId=button.dataset.target||playerPicker?.value||null;
+      const isToken=button.dataset.exchangeType==='token';
+      const amount=isToken?Number(document.getElementById('tokenTransferAmount')?.value):null;
+      const body=action==='card-public'?{holdingId}:
+        action==='card-share'||action==='card-unshare'?{holdingId,toId:targetId}:
+        action==='exchange-offer'?(isToken?
+          {type:'token',toId:document.getElementById('tokenTransferTarget')?.value,amount}:
+          {type:'card',holdingId,toId:targetId}):
+        {offerId:button.dataset.offerId,accept:action==='exchange-reply'&&button.dataset.accept==='true'};
+      if(action==='card-public'&&!window.confirm('이 조사 카드의 뒷면을 모든 참가자에게 영구 공개할까요? 취소할 수 없습니다.'))return;
+      if(action==='exchange-offer'&&!window.confirm(
+        isToken?amount+'개 조사 토큰을 양도 제안할까요?':'이 조사 카드의 양도를 상대방에게 제안할까요?'))return;
+      const result=await api('/api/rooms/'+code+'/'+action,'POST',body);
+      updateRoom(result,state.connection,true);
+      if(action==='card-public')toast('카드가 전체 공개되었습니다. 이 공개는 되돌릴 수 없습니다.');
+      else if(action==='card-share')toast('같은 타일의 플레이어에게 카드가 선택 공개되었습니다.');
+      else if(action==='exchange-offer')toast('양도 요청을 보냈습니다. 상대방의 승인을 기다립니다.');
+      else if(action==='exchange-reply')toast(body.accept?'양도를 수락했습니다.':'양도를 거절했습니다.');
     } else if(['reserve','release','investigate'].includes(action)){
       const cardId=button.dataset.card||room?.investigation?.cards.find(c=>c.reservedBy===room.me)?.id;
       if(!cardId)throw Error('조사할 카드를 선택해주세요.');
@@ -376,13 +410,13 @@ $('app').addEventListener('click',e=>{
   if(button)perform(button.dataset.action,button);
 });
 document.addEventListener('keydown',e=>{
-  if(['study','investigation1'].includes(state.room?.phase)&&!e.altKey&&!e.metaKey&&!e.ctrlKey){
+  if(SOCIAL_PHASES.includes(state.room?.phase)&&!e.altKey&&!e.metaKey&&!e.ctrlKey){
     const tag=e.target?.tagName?.toLowerCase();
     if(['i','r'].includes(e.key.toLowerCase())&&!['input','textarea','select'].includes(tag)&&!e.target?.isContentEditable){
       e.preventDefault();window.MysteryStudy.navigate(e.key.toLowerCase()==='i'?'book-toggle':'research-toggle');render();return;
     }
   }
-  if(['study','investigation1'].includes(state.room?.phase)&&state.room.map&&!e.altKey&&!e.metaKey&&!e.ctrlKey){
+  if(SOCIAL_PHASES.includes(state.room?.phase)&&state.room.map&&!e.altKey&&!e.metaKey&&!e.ctrlKey){
     const tag=e.target?.tagName?.toLowerCase();
     if(!['input','textarea','select'].includes(tag)&&!e.target?.isContentEditable){
       const direction={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right',
