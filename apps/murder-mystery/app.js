@@ -313,12 +313,10 @@ async function perform(action,button){
   if(['book-toggle','book-chapter','book-prev','book-next','research-toggle'].includes(action)){
     window.MysteryStudy.navigate(action,button.dataset.chapter);render();return;
   }
-  if(['voice-on','voice-off','voice-mute','speaker-mute'].includes(action)){
+  if(['voice-mic','voice-speaker'].includes(action)){
     try{
-      if(action==='voice-on')await window.MysteryVoice.enable();
-      if(action==='voice-off')window.MysteryVoice.disable();
-      if(action==='voice-mute')window.MysteryVoice.toggleMute();
-      if(action==='speaker-mute')window.MysteryVoice.toggleSpeaker();
+      if(action==='voice-mic')await window.MysteryVoice.setMicrophone(!window.MysteryVoice.micOn);
+      if(action==='voice-speaker')await window.MysteryVoice.setSpeaker(!window.MysteryVoice.speakerOn);
     }catch(e){toast(e.message)}
     render();return;
   }

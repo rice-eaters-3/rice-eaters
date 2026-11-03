@@ -146,7 +146,7 @@ window.MysteryStudy=(function(){
         '<div class="collected-items">'+(inv.collected?.length?'<b>조사로 획득한 물품</b>'+
           inv.collected.map(item=>'<p>⌑ '+esc(item.name)+' · '+esc(item.description)+'</p>').join(''):'')+'</div>':
         '<p class="muted small">1차 조사 단계에서 조사 토큰이 지급됩니다.</p>')+'</section>'+
-      '<section class="surface panel-pad">'+(window.MysteryVoice?.controls()||'<p>음성 준비 중</p>')+'</section>'+whisper(room)+
+      whisper(room)+
       (room.phase==='study'?'<section class="surface panel-pad"><h3>캐릭터 숙지 확인</h3><p class="small">'+room.players.filter(p=>p.studyReady).length+' / '+room.players.length+'명 확인</p>'+
         btn('study-ready','숙지 완료 · 1차 조사 대기','btn btn-primary btn-wide',!!room.players.find(p=>p.id===room.me)?.studyReady)+'</section>':'')+
       '</aside></div>';
@@ -166,6 +166,7 @@ window.MysteryStudy=(function(){
     return roomHeader(room)+
       '<div class="section-row"><div><div class="eyebrow">'+(room.phase==='study'?'CHAPTER 03 / ROLE STUDY':'CHAPTER 04 / INVESTIGATION')+'</div>'+
       '<h2>'+(room.phase==='study'?'캐릭터 숙지':'1차 조사')+'</h2></div><span class="tag">'+(room.phase==='study'?3:4)+' / 9 단계</span></div>'+
+      '<section class="voice-global surface panel-pad">'+(window.MysteryVoice?.controls()||'<p>음성 준비 중</p>')+'</section>'+
       '<div id="adventureRoot">'+(ui.view==='book'?book(room):ui.view==='research'?researchView(room):mapView(room))+'</div>';
   }
   function patch(room){
