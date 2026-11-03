@@ -118,7 +118,8 @@ function updateRoom(room,connection,force=false){
   if(['study','investigation1'].includes(old?.phase)&&old.phase===room?.phase&&old.me===room.me&&
     old.players.find(p=>p.id===room.me)?.characterId===room.players.find(p=>p.id===room.me)?.characterId&&
     old.map?.floorId===room.map?.floorId&&
-    JSON.stringify(old.whispers)===JSON.stringify(room.whispers)){
+    JSON.stringify(old.whispers)===JSON.stringify(room.whispers)&&
+    old.progress?.ready===room.progress?.ready&&old.progress?.canAdvance===room.progress?.canAdvance){
     if(!window.MysteryStudy.patch(room))render();
   }else render();
   updateClockDisplay();
@@ -129,7 +130,7 @@ function setRoom(room){
   else{window.MysteryVoice?.disable();state.room=null;closeStream();stopPolling();history.replaceState(null,'','/mystery');render()}
 }
 async function moveMyPlayer(direction){
-  if(!['study','investigation1'].includes(state.room?.phase)||!state.room.map||state.moving||window.MysteryStudy.currentView()==='book')return;
+  if(!['study','investigation1'].includes(state.room?.phase)||!state.room.map||state.moving||window.MysteryStudy.currentView()!=='map')return;
   if(!['up','down','left','right'].includes(direction))return;
   if(Date.now()-state.lastMoveAt<140)return;
   state.lastMoveAt=Date.now();
@@ -179,10 +180,23 @@ function home(){
     btn('find','코드로 참가하기','btn btn-outline btn-wide')+
     '</section></div>';
 }
+function nextStageControl(room){
+  const p=room.progress;
+  if(!p?.next)return '';
+  const name={characters:'캐릭터 선택',study:'캐릭터 숙지',investigation1:'1차 조사'}[p.next]||p.next;
+  const host=room.me===room.hostId;
+  return '<section class="host-advance surface" aria-label="다음 단계 진행">'+
+    '<div><div class="eyebrow">HOST CONTROL · '+p.ready+' / '+p.total+' READY</div>'+
+    '<strong>'+escapeHtml(name)+' 단계로 진행</strong>'+
+    '<p class="muted small">'+(p.canAdvance?'전원이 준비되었습니다. 방장이 다음 단계로 진행할 수 있습니다.':
+      '모든 참가자가 준비를 마쳐야 진행할 수 있습니다.')+'</p></div>'+
+    (host?btn('advance','방장 전용 · 다음 단계로 →','btn btn-primary',!p.canAdvance):
+      '<span class="muted small">방장의 진행을 기다리는 중</span>')+'</section>';
+}
 function roomHeader(room){
   return '<div class="room-header surface"><div><div class="eyebrow" style="margin:0 0 6px">CASE FILE 001 / '+escapeHtml(room.phase.toUpperCase())+'</div>'+
     '<h1>'+escapeHtml(room.story.title)+'</h1></div><div class="room-head-right"><div class="code-box"><small>ROOM CODE</small><strong>'+escapeHtml(room.code)+'</strong></div>'+
-    btn('copy','초대 링크 복사','btn btn-outline btn-sm')+'</div></div>'+timerBar(room)+stepper(room);
+    btn('copy','초대 링크 복사','btn btn-outline btn-sm')+'</div></div>'+timerBar(room)+stepper(room)+nextStageControl(room);
 }
 function players(room){
   const filled=room.players.map((p,i)=>
@@ -221,7 +235,7 @@ function synopsis(room){
     '<h2>'+escapeHtml(room.story.title)+'</h2>'+room.synopsis.map(p=>'<p>'+escapeHtml(p)+'</p>').join('')+
     '<div class="stamp" style="text-align:right;border:0;margin-top:30px">— END OF PROLOGUE —</div></article>'+
     '<aside class="surface panel-pad reading-sidebar"><div class="eyebrow">READING CONFIRMATION</div><h2>모두 읽으셨나요?</h2>'+
-    '<p class="muted small">각 플레이어가 확인 버튼을 눌러야 캐릭터 선택으로 넘어갑니다. 상태는 모든 참가자에게 실시간으로 반영됩니다.</p>'+
+    '<p class="muted small">각자 시놉시스를 읽은 뒤 확인해주세요. 전원이 확인하면 방장이 캐릭터 선택 단계로 진행합니다.</p>'+
     '<div class="progress" aria-label="읽음 진행률"><div class="progress-fill" style="width:'+Math.round(readCount/room.story.players*100)+'%"></div></div>'+
     '<p class="small">'+readCount+' / '+room.story.players+'명 확인 완료</p>'+
     '<div class="ready-list">'+room.players.map(p=>'<div class="ready-item"><span class="ready-name">'+escapeHtml(p.name)+'</span>'+
@@ -256,8 +270,8 @@ function characters(room){
   '<div class="notice"><strong>'+taken+' / '+room.story.players+'명 선택 완료</strong><p>'+
     (my?.characterId?'선택한 캐릭터를 변경하려면 아직 비어 있는 다른 카드를 누르세요.':'카드를 선택하면 다른 참가자에게 즉시 반영됩니다.')+
     '</p></div><div class="line"></div>'+
-  '<p class="muted small">전원의 캐릭터 선택이 끝나면 각자 자신의 비밀 책자가 공개되는 숙지 단계로 자동 진행됩니다. 이후 조사·밀담·추리 단계는 다음 버전에서 이어집니다.</p></aside></div>'+
-  (allDone?'<div class="all-chosen"><div class="eyebrow">ALL ROLES ASSIGNED</div><h2>모든 배역이 정해졌습니다.</h2><p class="muted">다음 업데이트에서는 캐릭터별 비밀 문서와 숙지 단계를 이어갑니다.</p></div>':'');
+  '<p class="muted small">전원이 캐릭터를 선택하면 방장이 캐릭터 숙지 단계로 진행할 수 있습니다.</p></aside></div>'+
+  (allDone?'<div class="all-chosen"><div class="eyebrow">ALL ROLES ASSIGNED</div><h2>모든 배역이 정해졌습니다.</h2><p class="muted">전원이 선택을 마쳤습니다. 방장의 다음 단계 진행 버튼을 기다리세요.</p></div>':'');
 }
 function preview(room){
   return roomHeader(room)+
@@ -289,21 +303,22 @@ async function perform(action,button){
     try{
       const payload=button.dataset.kind==='portal'?
         {kind:'portal',portalIndex:Number(button.dataset.index)}:
-        {kind:'door',doorId:button.dataset.door};
+        {kind:'door',doorId:button.dataset.door,doorAction:button.dataset.doorAction||'open'};
       const updated=await api('/api/rooms/'+state.room.code+'/interact','POST',payload);
       updateRoom(updated,state.connection,true);
-      if(payload.kind==='door')toast('문을 열었습니다.');
+      if(payload.kind==='door')toast(payload.doorAction==='close'?'문을 닫았습니다.':'문을 열었습니다.');
     }catch(e){toast(e.message)}
     return;
   }
-  if(['book-toggle','book-chapter','book-prev','book-next'].includes(action)){
+  if(['book-toggle','book-chapter','book-prev','book-next','research-toggle'].includes(action)){
     window.MysteryStudy.navigate(action,button.dataset.chapter);render();return;
   }
-  if(['voice-on','voice-off','voice-mute'].includes(action)){
+  if(['voice-on','voice-off','voice-mute','speaker-mute'].includes(action)){
     try{
       if(action==='voice-on')await window.MysteryVoice.enable();
       if(action==='voice-off')window.MysteryVoice.disable();
       if(action==='voice-mute')window.MysteryVoice.toggleMute();
+      if(action==='speaker-mute')window.MysteryVoice.toggleSpeaker();
     }catch(e){toast(e.message)}
     render();return;
   }
@@ -328,7 +343,7 @@ async function perform(action,button){
     } else if(action==='leave'){
       await api('/api/rooms/'+code+'/leave','POST',{});
       setRoom(null);
-    } else if(action==='start'||action==='read'||action==='study-ready'){
+    } else if(action==='start'||action==='read'||action==='study-ready'||action==='advance'){
       setRoom(await api('/api/rooms/'+code+'/'+action,'POST',{}));
     } else if(action==='character'){
       const characterId=button.dataset.character;
@@ -339,6 +354,9 @@ async function perform(action,button){
       if(action==='investigate'&&!window.confirm('조사 토큰 1개를 사용해 카드 뒷면을 확인할까요?'))return;
       const result=await api('/api/rooms/'+code+'/'+action,'POST',{cardId});
       updateRoom(result,state.connection,true);
+      if(action==='reserve'&&window.MysteryStudy.currentView()==='map'){
+        window.MysteryStudy.navigate('research-toggle');render();
+      }
       if(action==='investigate')toast('카드 조사를 완료했습니다. 뒷면이 공개되었습니다.');
     }else if(['whisper-request','whisper-leave','whisper-yes','whisper-no'].includes(action)){
       const target=action==='whisper-request'?'whisper-request':action==='whisper-leave'?'whisper-leave':'whisper-vote';
@@ -362,8 +380,8 @@ $('app').addEventListener('click',e=>{
 document.addEventListener('keydown',e=>{
   if(['study','investigation1'].includes(state.room?.phase)&&!e.altKey&&!e.metaKey&&!e.ctrlKey){
     const tag=e.target?.tagName?.toLowerCase();
-    if(e.key.toLowerCase()==='i'&&!['input','textarea','select'].includes(tag)&&!e.target?.isContentEditable){
-      e.preventDefault();window.MysteryStudy.navigate('book-toggle');render();return;
+    if(['i','r'].includes(e.key.toLowerCase())&&!['input','textarea','select'].includes(tag)&&!e.target?.isContentEditable){
+      e.preventDefault();window.MysteryStudy.navigate(e.key.toLowerCase()==='i'?'book-toggle':'research-toggle');render();return;
     }
   }
   if(['study','investigation1'].includes(state.room?.phase)&&state.room.map&&!e.altKey&&!e.metaKey&&!e.ctrlKey){
