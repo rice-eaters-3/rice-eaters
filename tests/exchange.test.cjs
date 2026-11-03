@@ -150,6 +150,7 @@ test('private clue sharing, transfer consent, ownership, same-tile expiration an
   const cancelled=await post(0,endpoint+'/exchange-offer',{type:'token',amount:1,toId:b});
   assert.equal(cancelled.status,200);
   offer=cancelled.data.investigation.outgoingOffers[0].id;
+  await new Promise(resolve=>setTimeout(resolve,160));
   assert.equal((await post(1,endpoint+'/move',{direction:'right'})).status,200);
   assert.equal((await post(1,endpoint+'/exchange-reply',{offerId:offer,accept:true})).status,404,
     'leaving the tile voids an unaccepted transfer');
