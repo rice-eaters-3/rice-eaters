@@ -202,3 +202,32 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(-
 .context-actions{display:flex;flex-wrap:wrap;gap:5px;margin:9px 0 15px;padding:11px;border:1px solid #806843;border-radius:8px;background:#242e3a}
 .context-actions>b{width:100%;font-size:12px;color:#edce9e}
 .context-actions small{font-size:11px}.context-actions button{flex:1;min-width:135px;white-space:normal}
+
+
+/* Phase authority and readiness are shared, but only the host may advance. */
+.host-phase-control{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:16px 22px;border:1px solid #907650;margin:12px 0 16px;border-radius:10px;background:linear-gradient(100deg,#2e2b2b,#242b36)}
+.host-phase-control strong{display:block;color:#ebdbbe;font-size:14px}
+.host-phase-control .btn{flex-shrink:0;white-space:normal}
+.host-phase-control .btn:disabled{opacity:.46;cursor:not-allowed}
+.voice-toggle-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:11px 0}
+.voice-toggle-grid .btn{white-space:normal;width:100%;margin:0;padding:9px 8px;line-height:1.45}
+.voice-controls .voice-status{display:block;padding:7px 0;color:#b9ddcd}
+.world-tiles .map-tile.door-closed{background:#876955!important;box-shadow:inset 0 0 0 3px #e2b988}
+.world-tiles .map-tile.door-locked{background:#775247!important;box-shadow:inset 0 0 0 3px #c9936d}
+.research-view{max-width:1250px;margin:0 auto}
+.research-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin:18px 0 22px}
+.research-top h2{margin:4px 0;font-size:32px}
+.research-top-actions{display:flex;align-items:center;gap:13px;flex-wrap:wrap}
+.token-pill{display:inline-block;padding:9px 15px;background:#393346;color:#ffe0ab;border:1px solid #b28d55;border-radius:18px;font-weight:800;font-size:14px}
+.research-full-grid .research-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:17px}
+.research-full-grid .research-frame{min-height:260px}
+.research-full-grid .research-card{max-width:260px;width:100%;justify-self:center}
+.research-full-grid{background:#15212f;border:1px solid #655a51;padding:24px;border-radius:14px;margin-bottom:18px}
+@media(max-width:650px){
+  .host-phase-control{padding:12px}
+  .host-phase-control .btn{width:100%}
+  .research-full-grid{padding:11px}
+  .research-full-grid .research-grid{grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:9px}
+  .research-full-grid .research-frame{padding:10px}
+  .voice-toggle-grid .btn{font-size:12px}
+}
