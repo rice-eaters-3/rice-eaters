@@ -61,10 +61,17 @@ test('RPG screen: map is main, 7-chapter booklet is paged, cards reveal only aut
     ]}};
   const invHtml=view.render(investigation);
   assert.ok(invHtml.includes('조사 토큰'));
-  assert.ok(invHtml.includes('조사 가능 정보'));
-  assert.ok(invHtml.includes('research-card'));
-  assert.ok(invHtml.includes('사진 &lt;증거&gt;'),'investigated back escaped');
-  assert.ok(invHtml.includes('data-card="desk"'),'first come selection action');
+  assert.ok(invHtml.includes('data-action="research-toggle"'),'investigation is a toggle like the book');
+  assert.ok(!invHtml.includes('research-card'),'card gallery stays hidden on main map');
+  view.navigate('research-toggle');
+  const gallery=view.render(investigation);
+  assert.ok(gallery.includes('조사 가능 정보'));
+  assert.ok(gallery.includes('research-card'),'card gallery is opened on dedicated screen');
+  assert.ok(gallery.includes('사진 &lt;증거&gt;'),'investigated back escaped');
+  assert.ok(gallery.includes('data-card="desk"'),'first come selection action');
+  assert.ok(gallery.includes('지도로 돌아가기'));
+  view.navigate('research-toggle');
+  assert.ok(view.render(investigation).includes('mapTiles'),'gallery can return to map');
   // Whisper button must activate when a second person moves onto our tile.
   const teammate={id:'p2',name:'친구',characterId:'other',studyReady:false,
     position:{floor:'ground',x:1,y:1}};
@@ -95,6 +102,14 @@ test('RPG screen: map is main, 7-chapter booklet is paged, cards reveal only aut
   assert.ok(!swapped.slice(swapped.indexOf('data-action="whisper-request"'),
     swapped.indexOf('data-action="whisper-request"')+115).includes('disabled'),
     'whisper button becomes active after map-only update');
+  const withDoor={...room,map:{...room.map,doors:[
+    {id:'door1',x:2,y:1,name:'식당 문',locked:false,open:false}
+  ]}};
+  assert.ok(view.render(withDoor).includes('식당 문 열기'),'unlocked, closed door presents open interaction');
+  const openDoor={...withDoor,map:{...withDoor.map,doors:[
+    {id:'door1',x:2,y:1,name:'식당 문',locked:false,open:true}
+  ]}};
+  assert.ok(view.render(openDoor).includes('식당 문 닫기'),'open door presents closing interaction');
   const noMap={...room,map:null};
   assert.ok(view.render(noMap).includes('제공된 맵이 없습니다.'));
 });
