@@ -9,7 +9,13 @@ const d1Case = require('./mystery-content/d1-gaming.case.json');
 const actionEngine = require('./mystery-content/action-engine.js');
 const privateMysteries = {
   'midnight-manor':require('./mystery-content/midnight-manor.js'),
-  'd1-crown-of-ashes':{...d1Case.game,spawn:d1Case.spawn}
+  'd1-crown-of-ashes':{...d1Case.game,spawn:d1Case.spawn},
+  ...Object.fromEntries([
+    'cruel-heart-island','neon-memory-quarantine','stellar-academy-first-case'
+  ].map(id=>{
+    const pkg=require('./mystery-content/'+id+'.case.json');
+    return [id,{...pkg.game,spawn:pkg.spawn}];
+  }))
 };
 
 const ROOT = __dirname;
