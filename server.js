@@ -305,8 +305,18 @@ function publicStory(story){
 }
 function endingStatus(room){
   const toCharacter=ids=>(ids||[]).map(id=>room.players.find(p=>p.id===id)?.characterId).filter(Boolean);
-  return {dead:toCharacter(room.actions?.dead),
+  const result={dead:toCharacter(room.actions?.dead),
     restrained:toCharacter(room.actions?.restrained),escaped:toCharacter(room.actions?.escaped)};
+  // Authoritative action outcomes remain intact. Host corrections are applied
+  // only to the epilogue snapshot and can be reset to automatic resolution.
+  for(const [id,status] of Object.entries(room.verdict?.statuses||{})){
+    if(!room.players.some(p=>p.characterId===id))continue;
+    for(const list of Object.values(result)){
+      const index=list.indexOf(id);if(index>=0)list.splice(index,1);
+    }
+    if(['dead','restrained','escaped'].includes(status))result[status].push(id);
+  }
+  return result;
 }
 function roomView(room,sid){
   const story=storyById(room.storyId),game=gameFor(room);
@@ -362,7 +372,7 @@ function roomView(room,sid){
       arrestedCharacterId:room.verdict?.arrestedCharacterId||null,
       candidates:room.players.filter(p=>p.characterId).map(p=>({
         id:p.characterId,name:story.characters.find(c=>c.id===p.characterId)?.name||p.name,
-        dead:!!room.actions?.dead?.includes(p.id)}))
+        dead:endingStatus(room).dead.includes(p.characterId)}))
     }:null,
     ending:isMember&&room.phase==='ending'&&char?
       endingEngine.summary(story,game,room.verdict||{},endingStatus(room),char.id,room.host===sid):null,
@@ -484,7 +494,7 @@ async function api(req,res,url,sid){
     ownedPlayer(room,sid);
     return subscribe(req,res,room,sid);
   }
-  const match=pathname.match(/^\/api\/rooms\/([A-Z2-9]{6})(?:\/(join|start|act|advance|advance-vote|advance-unvote|read|character|leave|study-ready|move|interact|reserve|release|investigate|card-public|card-share|card-unshare|exchange-offer|exchange-reply|exchange-cancel|whisper-request|whisper-vote|whisper-leave|verdict-arrest|verdict-goal|signal|signals))?$/);
+  const match=pathname.match(/^\/api\/rooms\/([A-Z2-9]{6})(?:\/(join|start|act|advance|advance-vote|advance-unvote|read|character|leave|study-ready|move|interact|reserve|release|investigate|card-public|card-share|card-unshare|exchange-offer|exchange-reply|exchange-cancel|whisper-request|whisper-vote|whisper-leave|verdict-arrest|verdict-goal|verdict-status|signal|signals))?$/);
   if(req.method==='GET'&&match&&match[2]==='signals'){
     const room=roomOrFail(match[1]),me=ownedPlayer(room,sid);
     const after=Math.max(0,Number(url.searchParams.get('after'))||0);
@@ -638,7 +648,7 @@ async function api(req,res,url,sid){
     persist();sendState(room);
     return json(res,200,roomView(room,sid));
   }
-  if(action==='verdict-arrest'||action==='verdict-goal'){
+  if(['verdict-arrest','verdict-goal','verdict-status'].includes(action)){
     if(room.host!==sid)fail(403,'최종 구속 및 개인 목표 판정은 방장만 지정할 수 있습니다.');
     if(!['discussion2','action','ending'].includes(room.phase))fail(409,'최종 결정 단계 이후에만 사용할 수 있습니다.');
     room.verdict||={arrestedCharacterId:null,goals:{}};
@@ -646,8 +656,19 @@ async function api(req,res,url,sid){
       const id=body.characterId===null||body.characterId===''?null:body.characterId;
       const target=id?room.players.find(p=>p.characterId===id):null;
       if(id&&!target)fail(400,'구속 대상 배역을 찾을 수 없습니다.');
-      if(target&&room.actions?.dead?.includes(target.id))fail(409,'사망한 참가자는 구속할 수 없습니다.');
+      if(target&&endingStatus(room).dead.includes(id))fail(409,'사망한 참가자는 구속할 수 없습니다.');
       room.verdict.arrestedCharacterId=id;
+    }else if(action==='verdict-status'){
+      if(room.phase!=='ending')fail(409,'캐릭터 최종 상태는 결말 단계에서만 정정할 수 있습니다.');
+      if(!storyById(room.storyId).characters.some(c=>c.id===body.characterId))
+        fail(400,'존재하지 않는 캐릭터입니다.');
+      if(!['auto','alive','dead','restrained','escaped'].includes(body.status))
+        fail(400,'최종 상태는 자동·생존·사망·제압·탈출 중 하나여야 합니다.');
+      room.verdict.statuses||={};
+      if(body.status==='auto')delete room.verdict.statuses[body.characterId];
+      else room.verdict.statuses[body.characterId]=body.status;
+      if(endingStatus(room).dead.includes(room.verdict.arrestedCharacterId))
+        room.verdict.arrestedCharacterId=null;
     }else{
       if(!storyById(room.storyId).characters.some(c=>c.id===body.characterId))
         fail(400,'목표를 평가할 캐릭터를 찾을 수 없습니다.');
@@ -656,7 +677,7 @@ async function api(req,res,url,sid){
       room.verdict.goals||={};
       room.verdict.goals[body.characterId]=body.achieved;
     }
-    logActivity(action==='verdict-arrest'?'final_arrest':'final_goal',sid,
+    logActivity(action==='verdict-arrest'?'final_arrest':action==='verdict-status'?'final_status':'final_goal',sid,
       {room:room.id,character:body.characterId,phase:room.phase});
     persist();sendState(room);return json(res,200,roomView(room,sid));
   }
