@@ -12,12 +12,15 @@ function template(){
     background:['이 인물이 가진 과거의 비밀과 동기를 적으세요.'],
     timeline:[{time:'23:00',title:'사건 직전',detail:'그 시각 행동을 기록하세요.'}],
     inventory:[{id:'item'+(i+1),name:'개인 소지품',description:'나만 아는 설명'}],
-    culprit:i===3,objectives:'승리 조건을 서술하세요.',notes:'연기 지침을 적으세요.'
+    culprit:i===3,objectives:'승리 조건을 서술하세요.',notes:'연기 지침을 적으세요.',
+    actionNotes:'행동 단계에서 어떤 선택을 할지 비밀 지침을 적으세요.'
   }]));
   return {format:'rice-mystery-v1',story:{title:'새로운 사건',subtitle:'미스터리 부제',genre:'추리',teaser:'사건을 간략하게 소개하세요.',
     minutes:90,players:4,synopsis:['누군가 살해되었습니다. 이 집에 모인 참가자 중 범인이 있습니다.'],characters},
     game:{booklets,phaseMinutes:{...phases},investigation:{tokensPerPlayer:4,tokensPerSecondInvestigation:4,maxTileOccupants:3,cards:[]},
-      floors:[emptyMap('ground','1층')]},
+      floors:[emptyMap('ground','1층')],
+      action:{order:characters.map(c=>c.id),roles:Object.fromEntries(characters.map(c=>[c.id,[]])),
+        intro:'정해진 순서로 각자 한 번 행동합니다.',endingNotes:'행동 결과와 승점은 수동 판정합니다.'}},
     spawn:Object.fromEntries(characters.map((c,i)=>[c.id,{floor:'ground',x:2+i*2,y:2}]))};
 }
 let doc=template(),tab='story',selectedChar=0,selectedCard=0,selectedFloor=0,brush='floor',selectedArea=null,regionStart=null;
@@ -46,7 +49,13 @@ function storyPanel(){
     field('공용 시놉시스 (문단별 한 줄)','story.synopsis',a.synopsis.join('\n'),'textarea')+
     '</div><h3>페이즈별 권장 시간 (분)</h3><div class="editor-fields">'+
     Object.entries(doc.game.phaseMinutes).map(([key,value])=>field(key,'game.phaseMinutes.'+key,value,'number','min="1" max="240"')).join('')+
-    '</div><p class="muted small">게임 시작부터의 공용 진행 시간 및 권장 타이머는 서버에서 관리합니다.</p>';
+    '</div><h3>행동 단계 · 비밀 순서 및 공통 규칙</h3>'+
+    '<div class="editor-fields">'+
+      field('행동 순서 (캐릭터 ID JSON 배열)','action.order',JSON.stringify(doc.game.action?.order||doc.story.characters.map(c=>c.id),null,2),'textarea')+
+      field('행동 시작 안내','game.action.intro',doc.game.action?.intro||'','textarea')+
+      field('행동 종료·결말 참고','game.action.endingNotes',doc.game.action?.endingNotes||'','textarea')+
+    '</div><p class="muted small">각 캐릭터의 비밀 행동 능력은 캐릭터 책자에서 JSON으로 편집할 수 있습니다. 행동 종류: guard / attack / restrain / reveal / escape.</p>'+
+    '<p class="muted small">게임 시작부터의 공용 진행 시간 및 권장 타이머는 서버에서 관리합니다.</p>';
 }
 function charactersPanel(){
   const c=doc.story.characters[selectedChar],b=doc.game.booklets[c.id];
@@ -64,7 +73,10 @@ function charactersPanel(){
     field('자신의 소지품 (JSON 배열: id / name / description)','role.inventory',JSON.stringify(b.inventory,null,2),'textarea')+
     field('범인 여부','role.culprit',b.culprit,'checkbox')+
     field('개인 승리 목표','role.objectives',b.objectives,'textarea')+
-    field('역할 연기 및 기타 메모','role.notes',b.notes,'textarea')+'</div>'+
+    field('역할 연기 및 기타 메모','role.notes',b.notes,'textarea')+
+    field('개인 행동 순서 해설','role.actionNotes',b.actionNotes||'','textarea')+
+    field('행동 능력 (JSON 배열, id/title/kind/targetMode/description/requiresItem/requiredCard)','role.abilities',
+      JSON.stringify(doc.game.action?.roles?.[c.id]||[],null,2),'textarea')+'</div>'+
     '<h3>캐릭터 시작 위치</h3><p class="muted small">지도 탭에서 「시작 위치」 브러시로 직접 배치할 수도 있습니다.</p>'+
     '<div class="editor-fields">'+
     selectField('시작 층','spawn.'+c.id+'.floor',getFloors().map(f=>[f.id,f.title]),doc.spawn[c.id]?.floor||'ground')+
@@ -162,6 +174,19 @@ function valueChange(path,value){
   const oldCharacterId=c.id;
   if(path==='story.synopsis')doc.story.synopsis=splitLines(value);
   else if(path==='role.background')b.background=splitLines(value);
+  else if(path==='action.order'){
+    try{const arr=JSON.parse(value);if(!Array.isArray(arr))throw Error('JSON 배열이 필요합니다.');
+      doc.game.action||={order:[],roles:{},intro:'',endingNotes:''};
+      doc.game.action.order=arr;status('행동 순서를 갱신했습니다.');
+    }catch(e){status('행동 순서 JSON 오류: '+e.message,true);return}
+  }
+  else if(path==='role.abilities'){
+    try{const arr=JSON.parse(value);if(!Array.isArray(arr))throw Error('JSON 배열이 필요합니다.');
+      doc.game.action||={order:doc.story.characters.map(c=>c.id),roles:{},intro:'',endingNotes:''};
+      doc.game.action.roles||={};doc.game.action.roles[c.id]=arr;
+      status('캐릭터 고유 행동을 반영했습니다.');
+    }catch(e){status('행동 능력 JSON 오류: '+e.message,true);return}
+  }
   else if(['role.timeline','role.inventory'].includes(path)){
     try{const arr=JSON.parse(value);if(!Array.isArray(arr))throw Error('배열이 아닙니다.');b[path.split('.')[1]]=arr;status('JSON 항목이 반영되었습니다.');}
     catch(e){status('이 항목은 JSON 배열이어야 합니다: '+e.message,true);return;}
@@ -187,7 +212,15 @@ function valueChange(path,value){
   else if(path.startsWith('floor.'))setPath('game.floors.'+selectedFloor+'.'+path.slice(6),value);
   else setPath(path,value);
   if(path.startsWith('story.characters.')&&path.endsWith('.id')){const newId=doc.story.characters[selectedChar].id;
-    if(newId!==oldCharacterId){doc.game.booklets[newId]=b;delete doc.game.booklets[oldCharacterId];doc.spawn[newId]=doc.spawn[oldCharacterId];delete doc.spawn[oldCharacterId];}}
+    if(newId!==oldCharacterId){
+      doc.game.booklets[newId]=b;delete doc.game.booklets[oldCharacterId];
+      doc.spawn[newId]=doc.spawn[oldCharacterId];delete doc.spawn[oldCharacterId];
+      if(doc.game.action){
+        doc.game.action.order=(doc.game.action.order||[]).map(id=>id===oldCharacterId?newId:id);
+        doc.game.action.roles||={};doc.game.action.roles[newId]=doc.game.action.roles[oldCharacterId]||[];
+        delete doc.game.action.roles[oldCharacterId];
+      }
+    }}
   save();
 }
 function clickCell(x,y){
@@ -224,11 +257,15 @@ function handleAction(target){
     if(doc.story.characters.length>=10)return status('인물은 최대 10명입니다.',true);
     const id=newid('role');doc.story.characters.push({id,name:'새 캐릭터',role:'역할',hint:'공개 설명',symbol:'♟',accent:'#9aafc5'});
     doc.game.booklets[id]={background:['비밀 서술'],timeline:[],inventory:[],culprit:false,objectives:'승리 목표',notes:''};
-    doc.spawn[id]={floor:getFloors()[0].id,x:1,y:1};doc.story.players=doc.story.characters.length;selectedChar=doc.story.players-1;
+    doc.spawn[id]={floor:getFloors()[0].id,x:1,y:1};
+    if(doc.game.action){doc.game.action.order.push(id);doc.game.action.roles[id]=[];}
+    doc.story.players=doc.story.characters.length;selectedChar=doc.story.players-1;
   }else if(action==='remove-char'){
     if(doc.story.characters.length<=2)return status('인물은 최소 2명입니다.',true);
     const id=doc.story.characters[selectedChar].id;doc.story.characters.splice(selectedChar,1);
-    delete doc.game.booklets[id];delete doc.spawn[id];doc.story.players=doc.story.characters.length;selectedChar=0;
+    delete doc.game.booklets[id];delete doc.spawn[id];
+    if(doc.game.action){doc.game.action.order=doc.game.action.order.filter(x=>x!==id);delete doc.game.action.roles[id];}
+    doc.story.players=doc.story.characters.length;selectedChar=0;
   }else if(action==='add-card'){
     doc.game.investigation.cards.push({id:newid('card'),title:'새 조사 카드',subtitle:'간단한 앞면 정보',type:'place',back:'조사 뒷면에 적을 비밀',
       owner:null,blockedFor:[],requires:[],visibility:'locked',repeatable:false,transferable:true,
