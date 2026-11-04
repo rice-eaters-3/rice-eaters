@@ -9,15 +9,17 @@ window.MysteryStudy=(function(){
   const para=t=>String(t??'').split(/\n\s*\n/).filter(x=>x.trim())
     .map(x=>'<p>'+esc(x.trim())+'</p>').join('');
   const btn2=(act,label,extra='',disabled=false)=>btn(act,label,'btn btn-outline',disabled,extra);
+  const portrait=(c,story,small=false)=>window.MysteryArt?.portrait(c,story,small)||'<span>'+esc(c.symbol||'♟')+'</span>';
+  const art=(c,story)=>window.MysteryArt?.clue(c,story)||'<span>✧</span>';
   const page=(ch,html)=>({chapter:ch,html});
   function pages(room){
     const b=room.booklet;if(!b)return [];
     const result=[];
-    result.push(page(0,'<div class="book-identity"><div class="book-portrait">'+esc(b.basic.symbol)+'</div><div><h4>'+esc(b.basic.name)+'</h4><p>'+esc(b.basic.role)+'</p>'+para(b.basic.hint)+'</div></div>'));
+    result.push(page(0,'<div class="book-identity"><div class="book-portrait illustrated-portrait">'+portrait(b.basic,room.story?.id)+'</div><div><h4>'+esc(b.basic.name)+'</h4><p>'+esc(b.basic.role)+'</p>'+para(b.basic.hint)+'</div></div>'));
     (b.background||[]).forEach(t=>result.push(page(1,para(t))));
     if(b.notes)result.push(page(1,'<h4>연기 참고</h4>'+para(b.notes)));
     (b.timeline||[]).forEach(t=>result.push(page(2,'<div class="time-stamp">'+esc(t.time)+'</div><h4>'+esc(t.title)+'</h4>'+para(t.detail))));
-    (b.inventory||[]).forEach(t=>result.push(page(3,'<div class="item-stamp">POSSESSION</div><h4>'+esc(t.name)+'</h4>'+para(t.description))));
+    (b.inventory||[]).forEach(t=>result.push(page(3,'<div class="item-stamp">POSSESSION</div><div class="book-item-art">'+art({id:t.id,title:t.name,subtitle:t.description},room.story?.id)+'</div><h4>'+esc(t.name)+'</h4>'+para(t.description))));
     result.push(page(4,'<div class="verdict '+(b.culprit?'guilty':'innocent')+'"><span>나의 범인 여부</span><strong>'+(b.culprit?'당신은 범인입니다.':'당신은 범인이 아닙니다.')+'</strong></div>'));
     result.push(page(5,para(b.objectives)+'<p class="book-footnote">승점은 게임 종료 후 수동으로 판정합니다.</p>'));
     (b.shared?.synopsis||[]).forEach(t=>result.push(page(6,'<h4>공용 시놉시스</h4>'+para(t))));
@@ -54,6 +56,8 @@ window.MysteryStudy=(function(){
   function mapHtml(room){
     const m=room.map;if(!m)return '<p>제공된 맵이 없습니다.</p>';
     const people=new Map(),rooms=new Map((m.rooms||[]).map(t=>[t.x+','+t.y,t]));
+    const props=new Map();
+    for(const o of m.objects||[]){const k=o.x+','+o.y;props.set(k,[...(props.get(k)||[]),o]);}
     for(const a of m.avatars){const id=a.x+','+a.y;people.set(id,[...(people.get(id)||[]),a]);}
     const portals=new Map();
     for(const t of (m.portals||[])){const k=t.x+','+t.y;portals.set(k,[...(portals.get(k)||[]),t]);}
@@ -76,18 +80,20 @@ window.MysteryStudy=(function(){
     }
     return '<div id="mapTiles" class="map-tiles world-tiles" style="--map-width:'+m.tiles[0].length+'" role="img" aria-label="'+esc(m.title)+'">'+
       m.tiles.flatMap((row,y)=>Array.from(row,(tile,x)=>{
-        const k=x+','+y,loc=rooms.get(k),portalsHere=portals.get(k)||[],door=doors.get(k),region=regionAt(x,y),here=people.get(k)||[],cards=research.get(k)||[];
+        const k=x+','+y,loc=rooms.get(k),portalsHere=portals.get(k)||[],door=doors.get(k),region=regionAt(x,y),here=people.get(k)||[],cards=research.get(k)||[],furniture=props.get(k)||[];
         const edge=region?['n','e','s','w'].filter((dir,i)=>{
           const [dx,dy]=[[0,-1],[1,0],[0,1],[-1,0]][i];
           return regionAt(x+dx,y+dy)?.id!==region.id;
         }).map(v=>' edge-'+v).join(''):'';
         return '<div class="map-tile '+(tile==='#'?'wall':'walk')+(portalsHere.length?' portal':'')+(door?' door-tile':'')+
           (door?.locked?' door-locked':door&&!door.open?' door-closed':door?' door-open':'')+(region?' map-region pattern-'+esc(region.pattern):'')+
-          (cards.length?' investigable':'')+edge+'" style="'+(region?'--region-color:'+esc(region.color)+';':'')+
-          '" title="'+esc(door?.name||portalsHere[0]?.label||loc?.name||region?.name||'')+'">'+
+          (cards.length?' investigable':'')+(furniture.length?' furnished':'')+edge+'" style="'+(region?'--region-color:'+esc(region.color)+';':'')+
+          '" title="'+esc(door?.name||portalsHere[0]?.label||furniture.map(o=>o.name).join(' · ')||loc?.name||region?.name||'')+'">'+
           (loc?'<span class="map-room-name">'+esc(loc.icon)+' '+esc(loc.name)+'</span>':
             zoneLabels.has(k)?'<span class="map-room-name region-name">'+esc(zoneLabels.get(k))+'</span>':'')+
-          (portalsHere.length?'<span class="portal-sigil">⇅</span>':'')+
+          (furniture.length?'<span class="map-prop" title="'+esc(furniture.map(o=>o.name).join(' · '))+'">'+
+             furniture.map(o=>window.MysteryArt?.object(o)||'<span>✧</span>').join('')+'</span>':'')+
+           (portalsHere.length?'<span class="portal-sigil">⇅</span>':'')+
           (door?'<span class="door-icon">'+(door.locked?'🔒':door.open?'◫':'🚪')+'</span>':'')+
           (cards.length?'<span class="tile-spark" title="조사 가능한 장소">✧</span>':'')+
           (here.length?'<div class="map-sprites">'+here.map(a=>'<span class="map-sprite '+(a.id===room.me?'mine':'')+'" style="--sprite:'+esc(a.accent)+'" title="'+esc(a.name)+'">'+esc(a.symbol)+'</span>').join('')+'</div>':'')+
@@ -106,7 +112,8 @@ window.MysteryStudy=(function(){
         (c.requiresPresence&&!c.atLocation);
       const flipped=c.revealed?.length>0;
       return '<article class="research-card '+(c.taken?'research-taken':'')+(locked?' research-locked':'')+'">'+
-        '<div class="research-frame"><div class="research-meta">MYSTERY · '+esc(c.type.toUpperCase())+'</div><div class="research-emblem">'+(c.type==='belonging'?'♙':c.type==='information'?'♧':'⌂')+'</div>'+
+        '<div class="research-frame"><div class="research-meta">MYSTERY · '+esc(c.type.toUpperCase())+'</div>'+
+         '<div class="research-illustration">'+art(c,room.story?.id)+'</div>'+
         '<h4>'+esc(c.title)+'</h4><p>'+esc(c.subtitle)+'</p><span class="research-status">'+status+'</span>'+
         (flipped?'<div class="research-back"><b>조사한 카드의 뒷면</b>'+c.revealed.map(a=>para(a.back)+(a.insight?'<div class="psychometry-insight">🔮 나에게만 보이는 감응 · '+esc(a.insight)+'</div>':'' )).join('')+'</div>':'')+
         (data.canInvestigate?(mine?'<div class="research-buttons">'+btn('investigate','조사 실행 · 토큰 1개','btn btn-primary btn-sm')+btn2('release','취소')+'</div>':
@@ -184,7 +191,8 @@ window.MysteryStudy=(function(){
       '<article class="owned-clue" data-holding-card="'+esc(c.id)+'">'+
         '<div class="owned-clue-header"><div class="eyebrow">MY EVIDENCE · '+(c.transferable?'양도 가능':'양도 불가')+'</div>'+
         '<h4>'+esc(c.title)+'</h4><p class="muted small">'+esc(c.subtitle)+'</p></div>'+
-        '<p class="owned-clue-back">'+esc(c.back)+'</p>'+ (c.insight?'<p class="psychometry-insight">🔮 개인 감응 · '+esc(c.insight)+'</p>':'')+
+        '<div class="owned-clue-illustration">'+art(c,room.story?.id)+'</div>'+
+         '<p class="owned-clue-back">'+esc(c.back)+'</p>'+ (c.insight?'<p class="psychometry-insight">🔮 개인 감응 · '+esc(c.insight)+'</p>':'')+
         (c.public?'<p class="clue-public">✓ 전체 공개 완료 · 취소할 수 없음</p>':
           active?btn('card-public','📢 전체 공개 · 영구','btn btn-outline btn-sm',false,'data-holding="'+esc(c.id)+'"'):'')+
         (active?'<div class="card-trade-tools">'+choose('같은 타일 참가자')+
