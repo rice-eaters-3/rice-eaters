@@ -30,7 +30,7 @@ test('all four original concept-sheet WebP image files are real binary assets wi
   }
  }
 });
-test('every player, every map prop and every clue in all four scenarios uses the matching illustrated atlas',()=>{
+test('every player, map prop and clue has a case illustration',()=>{
  for(const [filename,id,file,cast,props,clues] of scenarios){
   const data=require('../mystery-content/'+filename);
   assert.equal(data.story.id,id);
@@ -62,9 +62,18 @@ test('every player, every map prop and every clue in all four scenarios uses the
   }
   assert.equal(tally,props);
   assert.equal(data.game.investigation.cards.length,clues);
-  for(const clue of data.game.investigation.cards){
+  for(const [index,clue] of data.game.investigation.cards.entries()){
    const v=art.clue(clue,id);
-   assert.ok(v.includes(file),id+' clue '+clue.id+' must show case-specific painting');
+   const standalone=id==='d1-crown-of-ashes'&&index<10;
+   if(standalone){
+    const name='clues/'+id+'/'+clue.id+'.webp';
+    assert.ok(v.includes(name));
+    assert.ok(!v.includes(file));
+    assert.ok(art.clue({...clue,id:'holding_abc',cardId:clue.id},id).includes(name));
+    assert.ok(art.clue({id:clue.id,name:clue.title},id).includes(name));
+   }else{
+    assert.ok(v.includes(file),id+' clue '+clue.id+' must show case-specific painting');
+   }
   }
   assert.ok(art.cover(id).includes(file),'scenario preview banner needs the matching art');
  }
@@ -115,7 +124,7 @@ test('live game and studio both load artwork module and connect painted props/do
  const studio=fs.readFileSync(path.join(root,'apps/murder-mystery/test-ui.js'),'utf8');
  assert.ok(studio.includes("dataset.story=room.story?.artTheme||room.story?.id"));
 });
-test('local HTTP server serves the actual four original artwork files with image/webp MIME and bytes',async t=>{
+test('local HTTP server serves original and standalone artwork with image/webp MIME and bytes',async t=>{
  const dir=fs.mkdtempSync(path.join(require('node:os').tmpdir(),'illustrated-mystery-'));
  process.env.DATA_DIR=dir;
  const {handler}=require('../server.js');
@@ -127,12 +136,14 @@ test('local HTTP server serves the actual four original artwork files with image
   fs.rmSync(dir,{recursive:true,force:true});
  });
  const base='http://127.0.0.1:'+server.address().port;
- for(const [,id,file] of scenarios){
+ const independent=require('../mystery-content/d1-gaming.case.json').game.investigation.cards.slice(0,10)
+  .map(({id})=>['','d1-crown-of-ashes','clues/d1-crown-of-ashes/'+id+'.webp']);
+ for(const [,id,file] of [...scenarios,...independent]){
   const response=await fetch(base+'/apps/murder-mystery/assets/'+file);
   assert.equal(response.status,200,id+' artwork must be browser-accessible');
   assert.match(response.headers.get('content-type')||'',/image\/webp/);
   const binary=Buffer.from(await response.arrayBuffer());
-  assert.ok(binary.length>100000);
+  assert.ok(binary.length>(file.includes('/')?1000:100000));
   assert.equal(binary.subarray(0,4).toString('ascii'),'RIFF');
  }
 });

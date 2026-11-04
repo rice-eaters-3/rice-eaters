@@ -112,7 +112,14 @@ window.MysteryArt=(function(){
   }
  };
  // Existing library aliases and custom scenario IDs retain a graceful fallback.
- const storyFor=id=>A[id]?id:id==='d1-gaming'?'d1-crown-of-ashes':null;
+ const individualClues={
+  'd1-crown-of-ashes':new Set([
+   'jobi_threat_phone','jobi_stage_mouse','jobi_qualifier_card','jobi_stopwatch',
+   'mayushi_oracle_cards','mayushi_spirit_bell','mayushi_fractured_talisman','mayushi_private_stream',
+   'chajiwoo_mini_gargoyle','chajiwoo_donation_ledger'
+  ])
+ };
+ const storyFor=id=>Object.hasOwn(A,id)?id:id==='d1-gaming'?'d1-crown-of-ashes':null;
  const knownStory=id=>A[storyFor(id)]||null;
  function artCrop(story,rect,css,alt){
   const data=knownStory(story);
@@ -140,8 +147,8 @@ window.MysteryArt=(function(){
    '<image href="'+path+data.file+'" x="'+(-sx)+'" y="'+(-sy)+'" width="'+data.size[0]+
    '" height="'+data.size[1]+'"/></svg>';
  };
- function compose(story,rect,identifier,label,css,type,accent){
-  const data=knownStory(story);if(!data||!rect)return null;
+ function compose(story,rect,identifier,label,css,type,accent,data=knownStory(story)){
+  if(!data||!rect)return null;
   const portraitMode=type==='portrait',w=portraitMode?360:460,h=portraitMode?470:310;
   const seed=hash(story+':'+identifier),name='art'+seed.toString(36);
   const main=shapeColor(accent,data.palette[1]),dark=data.palette[0];
@@ -243,8 +250,15 @@ window.MysteryArt=(function(){
   return null;
  }
  function clue(c,story){
-  const data=knownStory(story),key=clueKind(c,story),rect=data?.clues?.[key];
-  if(rect)return compose(story,rect,c?.id||c?.title||c?.name||key,c?.title||c?.name||'조사 카드',
+  const theme=storyFor(story),data=knownStory(story),label=c?.title||c?.name||'조사 카드';
+  const cardId=c?.cardId||c?.id;
+  if(individualClues[theme]?.has(cardId)){
+   const asset={...data,file:'clues/'+theme+'/'+cardId+'.webp',size:[512,512]};
+   return compose(theme,[0,0,512,512],cardId,label,
+     'mystery-clue-art real-clue-art','evidence',null,asset);
+  }
+  const key=clueKind(c,theme),rect=data?.clues?.[key];
+  if(rect)return compose(story,rect,c?.id||c?.title||c?.name||key,label,
     'mystery-clue-art real-clue-art','evidence',null);
   return '<span class="mystery-unillustrated mystery-clue-placeholder">✧</span>';
  }
