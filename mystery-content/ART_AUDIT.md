@@ -40,6 +40,23 @@
 | `karl_alpaca_receipts` | 털뭉치 노트가 표시되어 구조소 송금 영수증을 구분할 수 없음 | `karl_alpaca_receipts.webp` |
 | `karl_unbroken_promise` | D1 노트가 표시되어 약속을 기념하는 배지가 보이지 않음 | `karl_unbroken_promise.webp` |
 
+## D1 사옥 · 3차 배치
+
+신규 파일 경로의 공통 앞부분은 1차 배치와 같다.
+
+| 카드 ID | 기존 표시와 문제 | 신규 파일 |
+| --- | --- | --- |
+| `hasu_cult_notebook` | 가고일 교리서는 테마가 유사하지만, 사고와 자금 흐름을 추적하는 개인 조사 노트가 보이지 않음 | `hasu_cult_notebook.webp` |
+| `hasu_marvin_voice` | D1 노트가 표시되어 마빈의 음성 메시지임을 알 수 없음 | `hasu_marvin_voice.webp` |
+| `hasu_solo_kill_log` | D1 노트가 표시되어 6:0 스코어가 남은 경기 리플레이가 보이지 않음 | `hasu_solo_kill_log.webp` |
+| `hasu_roof_safety_map` | D1 노트가 표시되어 안전 통로와 지워진 표시가 있는 옥상 약도가 보이지 않음 | `hasu_roof_safety_map.webp` |
+| `mac_tactical_board` | D1 노트가 표시되어 전술 보드와 시간 비교 메모가 보이지 않음 | `mac_tactical_board.webp` |
+| `mac_maintenance_glove` | D1 노트가 표시되어 흰 테이프와 돌가루가 묻은 회색 장갑이 보이지 않음 | `mac_maintenance_glove.webp` |
+| `mac_coach_whistle` | D1 노트가 표시되어 가방 끈에 매달린 호루라기가 보이지 않음 | `mac_coach_whistle.webp` |
+| `mac_rehearsal_schedule` | D1 노트가 표시되어 00:26 일정에 줄을 그은 훈련 시간표가 보이지 않음 | `mac_rehearsal_schedule.webp` |
+| `cult_founder_mask` | 가고일 교리서가 표시되어 인장이 새겨진 금속 가면 안쪽이 보이지 않음 | `cult_founder_mask.webp` |
+| `cult_hero_landing_syllabus` | 가고일 교리서가 표시되어 착지 연기와 안전 경고가 실린 커리큘럼 책자가 보이지 않음 | `cult_hero_landing_syllabus.webp` |
+
 ## 시리즈 배경
 
 신규 배경은 `apps/murder-mystery/assets/backgrounds/`에 있으며, 게임과 테스트 모드의 시놉시스·결말 및 제작소의 시나리오·결말 탭에서 공통으로 불러온다.
@@ -53,4 +70,4 @@
 
 ## 재개 지점
 
-D1 사옥의 21번째 카드 `hasu_cult_notebook`부터 다음 10장을 대조한다. D1 51장, 마지막 하트 56장, 네온 검역국 54장, 성하 영재관 48장이 남아 있다.
+D1 사옥의 31번째 카드 `cult_marvin_bill`부터 다음 10장을 대조한다. D1 41장, 마지막 하트 56장, 네온 검역국 54장, 성하 영재관 48장이 남아 있다.

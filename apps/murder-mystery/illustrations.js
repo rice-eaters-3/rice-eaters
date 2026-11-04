@@ -119,7 +119,11 @@ window.MysteryArt=(function(){
    'chajiwoo_mini_gargoyle','chajiwoo_donation_ledger',
    'chajiwoo_cult_invitation','chajiwoo_unmailed_letter','cloud_tainted_cleaver','cloud_huoguo_ladle',
    'cloud_elephant_eggplant','cloud_oven_receipt','karl_alpaca_notebook','karl_manager_badge',
-   'karl_alpaca_receipts','karl_unbroken_promise'
+   'karl_alpaca_receipts','karl_unbroken_promise',
+   'hasu_cult_notebook','hasu_marvin_voice','hasu_solo_kill_log',
+   'hasu_roof_safety_map','mac_tactical_board','mac_maintenance_glove',
+   'mac_coach_whistle','mac_rehearsal_schedule','cult_founder_mask',
+   'cult_hero_landing_syllabus'
   ])
  };
  const storyFor=id=>Object.hasOwn(A,id)?id:id==='d1-gaming'?'d1-crown-of-ashes':null;
