@@ -178,4 +178,28 @@ test('host advances full six-player academy after all action turns; no role secr
  assert.equal((await post(1,ep+'/advance')).status,403);
  for(let i=0;i<6;i++)await post(i,ep+'/advance-vote');
  assert.equal((await post(0,ep+'/advance')).data.phase,'ending');
+ const murderer=cases[2].story.characters.find(c=>cases[2].game.booklets[c.id].culprit).id;
+ const firstRole=cases[2].story.characters[0].id;
+ // Only the host can set the final prisoner or decide personal goal outcomes.
+ assert.equal((await post(1,ep+'/verdict-arrest',{characterId:murderer})).status,403);
+ assert.equal((await post(1,ep+'/verdict-goal',{characterId:firstRole,achieved:true})).status,403);
+ let wrong=await post(0,ep+'/verdict-arrest',{characterId:firstRole});
+ assert.equal(wrong.status,200);
+ assert.equal(wrong.data.ending.common.captured,false);
+ assert.equal(wrong.data.ending.personal.status,'arrested');
+ let correct=await post(0,ep+'/verdict-arrest',{characterId:murderer});
+ assert.equal(correct.status,200);
+ assert.equal(correct.data.ending.common.captured,true);
+ assert.equal(correct.data.ending.common.arrestedCharacterId,murderer);
+ const achieved=await post(0,ep+'/verdict-goal',{characterId:firstRole,achieved:true});
+ assert.equal(achieved.status,200);
+ assert.equal(achieved.data.ending.personal.goalMet,true);
+ const innocentView=(await call(1,ep)).data;
+ assert.equal(innocentView.ending.common.captured,true);
+ assert.equal(innocentView.ending.editor,undefined);
+ assert.equal(innocentView.ending.personal.goalText,cases[2].game.booklets[cases[2].story.characters[1].id].objectives);
+ assert.notEqual(innocentView.ending.personal.characterId,achieved.data.ending.personal.characterId);
+ const victim=(await call(6,ep)).data;
+ assert.equal(victim.ending,null,'a visitor must never receive private endings');
+ assert.equal((await post(0,ep+'/verdict-arrest',{characterId:'not_a_character'})).status,400);
 });
