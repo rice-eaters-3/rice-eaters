@@ -535,3 +535,14 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(-
  .ending-arrest-row select{width:100%}
  .ending-goal-row .muted{flex:1 1 100%}
 }
+
+/* Finale adjudication: compact, two independent host decisions per role. */
+.ending-goal-row{display:grid;grid-template-columns:minmax(95px,1fr) minmax(95px,1.1fr) minmax(125px,1.1fr) auto minmax(135px,1.2fr) auto;gap:9px;align-items:center}
+.ending-goal-row .muted{flex:initial}
+.ending-goal-row select{width:100%;min-width:0;border:1px solid #746b80;border-radius:7px;background:#121f2e;color:#e9e2f0;padding:8px 9px;font:inherit;font-size:13px}
+.ending-status-select{min-width:140px}
+.composed-mystery-art{width:100%;height:100%;display:block}
+.real-portrait,.real-clue-art{filter:drop-shadow(0 5px 12px rgba(0,0,0,.32))}
+.ending-story .composed-mystery-art{max-height:100%}
+@media(max-width:900px){.ending-goal-row{grid-template-columns:1fr 1fr}.ending-goal-row .muted{grid-column:2}.ending-goal-row .btn{width:100%}}
+@media(max-width:480px){.ending-goal-row{grid-template-columns:1fr}.ending-goal-row .muted{grid-column:auto}}

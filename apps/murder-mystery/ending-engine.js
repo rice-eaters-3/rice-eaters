@@ -14,8 +14,11 @@
   const outcome=(story,game,verdict,body,roleId)=>{
     const roles=story.characters||[],culprit=roles.find(c=>game.booklets?.[c.id]?.culprit);
     const chosen=roles.find(c=>c.id===verdict?.arrestedCharacterId)||null;
-    const caught=!!culprit&&!!chosen&&chosen.id===culprit.id;
     const statuses=body||{},dead=unique(statuses.dead),restrained=unique(statuses.restrained),escaped=unique(statuses.escaped);
+    // A deceased suspect cannot be physically arrested. Treat old room saves
+    // with a stale dead+arrest combination as unresolved, never as a conviction.
+    const caught=!!culprit&&!!chosen&&chosen.id===culprit.id&&!dead.includes(chosen.id);
+    const verdictType=caught?'captured':chosen&&!dead.includes(chosen.id)?'wrongful':'unresolved';
     const cfg=game.ending||{},common=cfg.common||{};
     const shared=caught?common.captured:common.missed;
     const fallback=caught?'사건의 진상을 밝히다':'진범을 놓친 밤';
@@ -23,7 +26,8 @@
       title:text(shared?.title)||fallback,
       paragraphs:(Array.isArray(shared?.paragraphs)?shared.paragraphs:[]).filter(Boolean),
       captured:caught,
-      arrestedCharacterId:chosen?.id||null,
+      verdictType,
+      arrestedCharacterId:dead.includes(chosen?.id)?null:chosen?.id||null,
       arrestedName:chosen?.name||null,
       culpritName:culprit?.name||null
     };
@@ -32,6 +36,11 @@
         chosen?'사람들은 '+chosen.name+'을 구속했지만 그것은 사건의 정답이 아니었다. 진범의 발자국은 여전히 밤 속에 남았다.':
           '아무도 진범을 구속하지 못했다. 모두가 떠나는 발소리 사이로 사건의 의문만 남았다.'
     ];
+    if(verdictType==='wrongful'){
+      global.paragraphs.push(chosen.name+'이(가) 구속되었다. 그러나 구속된 인물과 진범은 달랐다. 진실이 밝혀지는 날까지 억울한 혐의를 바로잡아야 한다.');
+    }else if(verdictType==='unresolved'){
+      global.paragraphs.push('그날 밤 누구도 진범으로 구속되지 않았다. 사건 기록은 미해결이라는 이름으로 봉인되었다.');
+    }
     if(cfg.escape && Array.isArray((escaped.length?cfg.escape.succeeded:cfg.escape.failed)?.paragraphs)){
       global.paragraphs.push(...(escaped.length?cfg.escape.succeeded:cfg.escape.failed).paragraphs);
     }
@@ -43,8 +52,9 @@
     const goal=verdict?.goals?.[cid];
     const goalMet=goal===true?true:goal===false?false:null;
     const isCulprit=!!book.culprit;
-    const theme=caught?(isCulprit?'당신의 범행이 드러났다.':'당신은 진범이 구속되는 장면을 보았다.'):
-      (isCulprit?'진범으로 지목되지 않은 당신은 한순간 안도했다.':'진범은 아직 밝혀지지 않았다.');
+    const theme=text(c[caught?'captured':'missed'])||
+      (caught?(isCulprit?'당신의 범행이 드러났다.':'당신은 진범이 구속되는 장면을 보았다.'):
+        (isCulprit?'진범으로 지목되지 않은 당신은 한순간 안도했다.':'진범은 아직 밝혀지지 않았다.'));
     const statusDefault={
       dead:'당신의 이야기는 그날 밤 중단되었다. 남은 사람들은 당신이 남긴 증언과 선택을 되짚었다.',
       arrested:'구속된 당신은 다른 사람들의 눈앞에서 마지막 진술을 해야 했다.',
@@ -65,7 +75,7 @@
     ].filter(Boolean);
     return {common:global,personal:{
       characterId:cid,name:character.name,title:character.name+'의 마지막 장',
-      status,goalMet,goalText:text(book.objectives),isCulprit,paragraphs
+      status,goalMet,goalText:text(book.objectives),isCulprit,verdictType,paragraphs
     }};
   };
   const summary=(story,game,verdict,body,viewerId,isHost)=>{
@@ -79,7 +89,8 @@
         id:c.id,name:c.name,goalMet:verdict?.goals?.[c.id]===true?true:
           verdict?.goals?.[c.id]===false?false:null,
         dead:(body?.dead||[]).includes(c.id),restrained:(body?.restrained||[]).includes(c.id),
-        escaped:(body?.escaped||[]).includes(c.id)
+        escaped:(body?.escaped||[]).includes(c.id),
+        override:verdict?.statuses?.[c.id]||'auto'
       }))
     };
     return result;

@@ -200,7 +200,7 @@ function validate(input){
   for(const c of story.characters){
     const p=obj(rawEndingRoles[c.id]);
     ending.characters[c.id]={};
-    for(const key of ['intro','goalAchieved','goalFailed','dead','arrested',
+    for(const key of ['intro','captured','missed','goalAchieved','goalFailed','dead','arrested',
       'restrained','escaped','alive','closing'])
       ending.characters[c.id][key]=text(p[key],2500);
   }

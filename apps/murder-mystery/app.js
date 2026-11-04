@@ -393,10 +393,16 @@ async function perform(action,button){
     } else if(action==='verdict-goal'){
       if(room?.me!==room?.hostId)throw Error('방장만 개인 목표를 판정할 수 있습니다.');
       const characterId=button.dataset.character;
-      const value=button.closest('.ending-goal-row')?.querySelector('select')?.value||'';
+      const value=button.closest('.ending-goal-row')?.querySelector('.ending-goal-select')?.value||'';
       const achieved=value==='yes'?true:value==='no'?false:null;
       updateRoom(await api('/api/rooms/'+code+'/verdict-goal','POST',{characterId,achieved}),state.connection,true);
       toast('개인 목표 결과가 저장되었습니다.');
+    } else if(action==='verdict-status'){
+      if(room?.me!==room?.hostId)throw Error('방장만 최종 상태를 정정할 수 있습니다.');
+      const characterId=button.dataset.character;
+      const status=button.closest('.ending-goal-row')?.querySelector('.ending-status-select')?.value||'auto';
+      updateRoom(await api('/api/rooms/'+code+'/verdict-status','POST',{characterId,status}),state.connection,true);
+      toast('최종 상태가 반영되었습니다. 개인 결말을 확인하세요.');
     } else if(action==='act'){
       if(!room?.action?.myTurn)throw Error('아직 나의 행동 차례가 아닙니다.');
       const abilityId=button.dataset.ability||'pass';

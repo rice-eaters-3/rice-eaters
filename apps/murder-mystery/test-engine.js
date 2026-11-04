@@ -291,8 +291,9 @@
   }
   function setStatus(state,roleId,status){
     if(!roleOf(state,roleId))error('존재하지 않는 캐릭터입니다.');
-    if(!['alive','dead','restrained','escaped'].includes(status))error('상태 값이 올바르지 않습니다.');
-    state.statusOverrides[roleId]=status;
+    if(!['auto','alive','dead','restrained','escaped'].includes(status))error('상태 값이 올바르지 않습니다.');
+    if(status==='auto')delete state.statusOverrides[roleId];
+    else state.statusOverrides[roleId]=status;
     if(status==='dead'&&state.verdict.arrestedCharacterId===roleId)state.verdict.arrestedCharacterId=null;
     return state;
   }
@@ -374,7 +375,7 @@
     return {code:'TEST',phase,story:s,me:member(role.id),players,hostId:member(role.id),
       progress:{ready:s.players,total:s.players,canAdvance:true},
       clock:null,advanceVotes:{},booklet,map,investigation,verdict,
-      ending:phase==='ending'&&Ending?Ending.summary(s,g,state.verdict,statuses,role.id,true):null,
+      ending:phase==='ending'&&Ending?Ending.summary(s,g,{...state.verdict,statuses:state.statusOverrides},statuses,role.id,true):null,
       whispers:{groups:[],proposals:[]},action:phase==='action'||phase==='ending'?actionView(state):null};
   }
   return {PHASES,PHASE_NAMES,create,reset,switchRole,switchPhase,move,interact,unlocked,
