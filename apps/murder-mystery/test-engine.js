@@ -2,10 +2,12 @@
 // Isolated in-browser test run for mystery scenario authors.
 // Never writes to room APIs or the scenario JSON. This module has no network I/O.
 (function(root,factory){
-  const api=factory();
+  const Ending=root?.MysteryEnding||
+    (typeof require==='function'?require('./ending-engine.js'):null);
+  const api=factory(Ending);
   if(typeof module!=='undefined'&&module.exports)module.exports=api;
   if(root)root.MysteryTestEngine=api;
-})(typeof window!=='undefined'?window:null,function(){
+})(typeof window!=='undefined'?window:null,function(Ending){
   const PHASES=['synopsis','characters','study','investigation1','discussion1','investigation2','discussion2','action','ending'];
   const PHASE_NAMES=['시놉시스','캐릭터 선택','캐릭터 숙지','1차 조사','1차 토론','2차 조사','2차 토론·최종 결정','행동 단계','결말'];
   const deep=value=>JSON.parse(JSON.stringify(value));
@@ -31,7 +33,7 @@
     const state={pkg:normalized,phase:'synopsis',roleId:cast[0].id,positions,
       selected:{},tokens:Object.fromEntries(cast.map(c=>[c.id,0])),granted:{},discovered:{},
       holdings:[],collected:{},publicCards:{},selectiveShares:[],offers:[],reservations:{},
-      doorStates:{},action:null,serial:1,notes:[],studyReady:{}};
+      doorStates:{},action:null,verdict:{arrestedCharacterId:null,goals:{}},statusOverrides:{},serial:1,notes:[],studyReady:{}};
     stateError(state);return state;
   }
   const phaseIndex=phase=>PHASES.indexOf(phase);
@@ -275,6 +277,36 @@
       abilities:now===state.roleId&&!a.done?availableActions(state,state.roleId):[],
       targets:state.pkg.story.characters.filter(c=>!a.dead.includes(c.id)).map(c=>({id:id(c.id),name:c.name,characterId:c.id}))};
   }
+
+  function setArrest(state,roleId){
+    if(roleId!==null&&!roleOf(state,roleId))error('구속 대상을 찾을 수 없습니다.');
+    if(roleId&&combinedEndingStatus(state).dead.includes(roleId))
+      error('사망한 캐릭터를 구속할 수 없습니다.');
+    state.verdict.arrestedCharacterId=roleId;return state;
+  }
+  function setGoal(state,roleId,achieved){
+    if(!roleOf(state,roleId))error('존재하지 않는 캐릭터입니다.');
+    if(achieved!==true&&achieved!==false&&achieved!==null)error('목표 결과 값이 올바르지 않습니다.');
+    state.verdict.goals[roleId]=achieved;return state;
+  }
+  function setStatus(state,roleId,status){
+    if(!roleOf(state,roleId))error('존재하지 않는 캐릭터입니다.');
+    if(!['alive','dead','restrained','escaped'].includes(status))error('상태 값이 올바르지 않습니다.');
+    state.statusOverrides[roleId]=status;
+    if(status==='dead'&&state.verdict.arrestedCharacterId===roleId)state.verdict.arrestedCharacterId=null;
+    return state;
+  }
+  function combinedEndingStatus(state){
+    const action=state.action||{},override=state.statusOverrides||{};
+    const out={dead:[...(action.dead||[])],restrained:[...(action.restrained||[])],escaped:[...(action.escaped||[])]};
+    for(const [rid,status] of Object.entries(override)){
+      for(const list of Object.values(out)){
+        const idx=list.indexOf(rid);if(idx>=0)list.splice(idx,1);
+      }
+      if(out[status])out[status].push(rid);
+    }
+    return out;
+  }
   function roomView(state){
     const s=state.pkg.story,g=state.pkg.game,role=player(state),phase=state.phase;
     const member=rid=>id(rid),yourPos=position(state),floor=floorOf(state,yourPos);
@@ -335,12 +367,17 @@
         id:o.id,type:o.type,amount:o.amount||null,toName:roleOf(state,o.to).name})),
       collected:state.collected[role.id]||[]
     }:null;
-    return {code:'TEST',phase,story:s,me:member(role.id),players,hostId:member(s.characters[0].id),
+    const statuses=combinedEndingStatus(state);
+    const verdict=['discussion2','action','ending'].includes(phase)?{
+      isHost:true,arrestedCharacterId:state.verdict.arrestedCharacterId,
+      candidates:s.characters.map(c=>({id:c.id,name:c.name,dead:statuses.dead.includes(c.id)}))}:null;
+    return {code:'TEST',phase,story:s,me:member(role.id),players,hostId:member(role.id),
       progress:{ready:s.players,total:s.players,canAdvance:true},
-      clock:null,advanceVotes:{},booklet,map,investigation,
+      clock:null,advanceVotes:{},booklet,map,investigation,verdict,
+      ending:phase==='ending'&&Ending?Ending.summary(s,g,state.verdict,statuses,role.id,true):null,
       whispers:{groups:[],proposals:[]},action:phase==='action'||phase==='ending'?actionView(state):null};
   }
   return {PHASES,PHASE_NAMES,create,reset,switchRole,switchPhase,move,interact,unlocked,
     reserve,release,investigate,holdings,makeOffer,replyOffer,share,unshare,publicShare,act,
-    roomView,near,position};
+    roomView,near,position,setArrest,setGoal,setStatus,combinedEndingStatus};
 });
