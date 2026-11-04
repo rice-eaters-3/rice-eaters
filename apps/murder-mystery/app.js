@@ -299,7 +299,7 @@ function preview(room){
 }
 function render(){
   const root=$('app'),room=state.room;
-  root.dataset.story=room?.story?.id||state.selectedStory||'';
+  root.dataset.story=room?.story?.artTheme||room?.story?.id||state.selectedStory||'';
   if(!room){root.innerHTML=home();return}
   if(!room.me){root.innerHTML=preview(room);return}
   root.innerHTML='<div class="status-strip"><span>◉ '+escapeHtml(state.connection)+' · 참가자별 독립 세션</span><span>새로고침해도 방에 다시 연결됩니다.</span></div>'+
