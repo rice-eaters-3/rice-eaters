@@ -430,6 +430,14 @@ async function api(req,res,url,sid){
     return json(res,200,{format:'rice-mystery-v1',story:entry.story,
       game:entry.game,spawn:entry.game.spawn||{}});
   }
+  if(req.method==='POST'&&pathname==='/api/editor/test-validate'){
+    validateOrigin(req);
+    if(!localAuthorRequest(req))fail(403,'시나리오 사전 검증은 localhost 제작자만 사용할 수 있습니다.');
+    const payload=await requestBody(req,2*1024*1024);
+    const pkg=(()=>{try{return validateMystery(payload.package)}catch(e){fail(400,e.message)}})();
+    // Return the validated temporary copy for preview only: do not publish or persist.
+    return json(res,200,{format:'rice-mystery-v1',story:pkg.story,game:pkg.game,spawn:pkg.spawn});
+  }
   if(req.method==='POST'&&pathname==='/api/editor/publish'){
     validateOrigin(req);
     // User-authored secrets must not be writable by anonymous internet visitors.
