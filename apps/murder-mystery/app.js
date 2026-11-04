@@ -159,6 +159,7 @@ function stepper(room){
 }
 function storyTile(story){
   return '<div class="story-card"><div class="eyebrow">CASE FILE 001 · '+escapeHtml(story.genre)+'</div>'+
+  '<div class="story-illustration">'+(window.MysteryArt?.cover(story.id)||'')+'</div>'+
   '<h3 class="story-title">'+escapeHtml(story.title)+'</h3><p>'+escapeHtml(story.teaser)+'</p>'+
   '<div class="story-meta"><span>♟ '+story.players+'인 전용</span><span>◷ 약 '+story.minutes+'분</span><span>✦ 추리와 비밀</span></div></div>';
 }
@@ -296,6 +297,7 @@ function preview(room){
 }
 function render(){
   const root=$('app'),room=state.room;
+  root.dataset.story=room?.story?.id||state.selectedStory||'';
   if(!room){root.innerHTML=home();return}
   if(!room.me){root.innerHTML=preview(room);return}
   root.innerHTML='<div class="status-strip"><span>◉ '+escapeHtml(state.connection)+' · 참가자별 독립 세션</span><span>새로고침해도 방에 다시 연결됩니다.</span></div>'+
