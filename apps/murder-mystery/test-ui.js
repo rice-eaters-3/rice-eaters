@@ -43,6 +43,15 @@ async function load(){
       const saved=localStorage.getItem(key);
       if(!saved)throw Error('먼저 제작소에서 시나리오를 편집하거나 JSON을 불러오세요.');
       pkg=JSON.parse(saved);sourceName='현재 편집 원고';
+      if(['localhost','127.0.0.1','[::1]'].includes(location.hostname)){
+        const validation=await fetch('/api/editor/test-validate',{
+          method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({package:pkg})
+        });
+        const result=await validation.json();
+        if(!validation.ok)throw Error('원고 검증 실패: '+(result.error||validation.status));
+        pkg=result;
+      }
     }else{
       const id=chosen.slice('server:'.length);
       if(!/^[a-z0-9-]+$/.test(id))throw Error('잘못된 시나리오 ID입니다.');
