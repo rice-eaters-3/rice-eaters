@@ -89,7 +89,8 @@
         id:c.id,name:c.name,goalMet:verdict?.goals?.[c.id]===true?true:
           verdict?.goals?.[c.id]===false?false:null,
         dead:(body?.dead||[]).includes(c.id),restrained:(body?.restrained||[]).includes(c.id),
-        escaped:(body?.escaped||[]).includes(c.id)
+        escaped:(body?.escaped||[]).includes(c.id),
+        override:verdict?.statuses?.[c.id]||'auto'
       }))
     };
     return result;
