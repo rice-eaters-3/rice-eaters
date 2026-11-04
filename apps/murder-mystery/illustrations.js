@@ -201,6 +201,15 @@ window.MysteryArt=(function(){
   const key=down?'down':'up';
   return artCrop(story,data.stairs[key],'mystery-stair-art',portal?.label||'층 이동');
  }
+ function cover(story){
+  const rect={
+    'd1-crown-of-ashes':[0,13,1122,594],
+    'cruel-heart-island':[0,90,1122,324],
+    'neon-memory-quarantine':[0,75,1122,310],
+    'stellar-academy-first-case':[0,164,1448,270]
+  }[storyFor(story)];
+  return rect?artCrop(story,rect,'mystery-story-cover','시나리오 등장인물 콘셉트 아트'):null;
+ }
  function avatar(c,story){
   const data=knownStory(story);
   const rect=data?.portraits?.[c?.characterId];
@@ -210,5 +219,5 @@ window.MysteryArt=(function(){
   const face=[x+Math.round(w*.2),y+Math.round(h*.13),Math.round(w*.62),Math.round(h*.59)];
   return artCrop(story,face,'mystery-avatar-art',c.name+' 미니 아바타');
  }
- return {portrait,clue,object,door,stairs,avatar,clueKind,artCrop,atlas:A};
+ return {portrait,clue,object,door,stairs,avatar,cover,clueKind,artCrop,atlas:A};
 })();
