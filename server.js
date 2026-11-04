@@ -7,6 +7,7 @@ const path = require('node:path');
 const crypto = require('node:crypto');
 const d1Case = require('./mystery-content/d1-gaming.case.json');
 const actionEngine = require('./mystery-content/action-engine.js');
+const endingEngine = require('./apps/murder-mystery/ending-engine.js');
 const privateMysteries = {
   'midnight-manor':require('./mystery-content/midnight-manor.js'),
   'd1-crown-of-ashes':{...d1Case.game,spawn:d1Case.spawn},
@@ -300,7 +301,12 @@ function online(room,p){
     Date.now()-(recentPresence.get(room.id)?.get(p.sid)||0)<PRESENCE_TTL_MS;
 }
 function publicStory(story){
-  return {id:story.id,title:story.title,subtitle:story.subtitle,teaser:story.teaser,genre:story.genre,minutes:story.minutes,players:story.players};
+  return {id:story.id,artTheme:story.artTheme||'',title:story.title,subtitle:story.subtitle,teaser:story.teaser,genre:story.genre,minutes:story.minutes,players:story.players};
+}
+function endingStatus(room){
+  const toCharacter=ids=>(ids||[]).map(id=>room.players.find(p=>p.id===id)?.characterId).filter(Boolean);
+  return {dead:toCharacter(room.actions?.dead),
+    restrained:toCharacter(room.actions?.restrained),escaped:toCharacter(room.actions?.escaped)};
 }
 function roomView(room,sid){
   const story=storyById(room.storyId),game=gameFor(room);
@@ -351,6 +357,15 @@ function roomView(room,sid){
     booklet,map,investigation:investigationView(room,member),
     action:isMember&&['action','ending'].includes(room.phase)&&room.actions?
       actionEngine.view(room,member,game):null,
+    verdict:isMember&&['discussion2','action','ending'].includes(room.phase)?{
+      isHost:room.host===sid,
+      arrestedCharacterId:room.verdict?.arrestedCharacterId||null,
+      candidates:room.players.filter(p=>p.characterId).map(p=>({
+        id:p.characterId,name:story.characters.find(c=>c.id===p.characterId)?.name||p.name,
+        dead:!!room.actions?.dead?.includes(p.id)}))
+    }:null,
+    ending:isMember&&room.phase==='ending'&&char?
+      endingEngine.summary(story,game,room.verdict||{},endingStatus(room),char.id,room.host===sid):null,
     whispers:isMember&&PLAY_PHASES.includes(room.phase)?publicWhispers(room,member):null
   };
 }
@@ -469,7 +484,7 @@ async function api(req,res,url,sid){
     ownedPlayer(room,sid);
     return subscribe(req,res,room,sid);
   }
-  const match=pathname.match(/^\/api\/rooms\/([A-Z2-9]{6})(?:\/(join|start|act|advance|advance-vote|advance-unvote|read|character|leave|study-ready|move|interact|reserve|release|investigate|card-public|card-share|card-unshare|exchange-offer|exchange-reply|exchange-cancel|whisper-request|whisper-vote|whisper-leave|signal|signals))?$/);
+  const match=pathname.match(/^\/api\/rooms\/([A-Z2-9]{6})(?:\/(join|start|act|advance|advance-vote|advance-unvote|read|character|leave|study-ready|move|interact|reserve|release|investigate|card-public|card-share|card-unshare|exchange-offer|exchange-reply|exchange-cancel|whisper-request|whisper-vote|whisper-leave|verdict-arrest|verdict-goal|signal|signals))?$/);
   if(req.method==='GET'&&match&&match[2]==='signals'){
     const room=roomOrFail(match[1]),me=ownedPlayer(room,sid);
     const after=Math.max(0,Number(url.searchParams.get('after'))||0);
@@ -622,6 +637,28 @@ async function api(req,res,url,sid){
     phaseChange(room,progress.next,sid);
     persist();sendState(room);
     return json(res,200,roomView(room,sid));
+  }
+  if(action==='verdict-arrest'||action==='verdict-goal'){
+    if(room.host!==sid)fail(403,'최종 구속 및 개인 목표 판정은 방장만 지정할 수 있습니다.');
+    if(!['discussion2','action','ending'].includes(room.phase))fail(409,'최종 결정 단계 이후에만 사용할 수 있습니다.');
+    room.verdict||={arrestedCharacterId:null,goals:{}};
+    if(action==='verdict-arrest'){
+      const id=body.characterId===null||body.characterId===''?null:body.characterId;
+      const target=id?room.players.find(p=>p.characterId===id):null;
+      if(id&&!target)fail(400,'구속 대상 배역을 찾을 수 없습니다.');
+      if(target&&room.actions?.dead?.includes(target.id))fail(409,'사망한 참가자는 구속할 수 없습니다.');
+      room.verdict.arrestedCharacterId=id;
+    }else{
+      if(!storyById(room.storyId).characters.some(c=>c.id===body.characterId))
+        fail(400,'목표를 평가할 캐릭터를 찾을 수 없습니다.');
+      if(body.achieved!==true&&body.achieved!==false&&body.achieved!==null)
+        fail(400,'목표 결과는 달성·실패·미판정 중 하나여야 합니다.');
+      room.verdict.goals||={};
+      room.verdict.goals[body.characterId]=body.achieved;
+    }
+    logActivity(action==='verdict-arrest'?'final_arrest':'final_goal',sid,
+      {room:room.id,character:body.characterId,phase:room.phase});
+    persist();sendState(room);return json(res,200,roomView(room,sid));
   }
   if(action==='act'){
     if(room.phase!=='action'||!gameFor(room).action)
