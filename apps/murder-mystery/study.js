@@ -300,7 +300,7 @@ window.MysteryStudy=(function(){
         (c.dead?' · 사망':'')+'</option>').join('');
     const names=room.ending?.editor?.characters||[];
     const adjudications=room.phase==='ending'?
-      '<h4>캐릭터별 개인 목표 판정 (방장 전용)</h4><p class="muted small">서술형 목표이므로 실제 게임에서는 방장이 대화·카드 증거를 확인해 수동으로 판정합니다.</p>'+
+      '<h4>캐릭터별 목표 및 최종 상태 판정 (방장 전용)</h4><p class="muted small">목표는 증거와 행동 기록을 확인해 달성/실패로 판정합니다. 행동 결과가 잘못 반영된 경우 상태를 정정할 수 있습니다.</p>'+
       '<div class="ending-goal-grid">'+names.map(c=>
         '<div class="ending-goal-row"><b>'+esc(c.name)+'</b><span class="muted small">'+
          (c.dead?'사망 · ':'')+(c.restrained?'제압 · ':'')+(c.escaped?'탈출 · ':'')+
@@ -309,7 +309,12 @@ window.MysteryStudy=(function(){
         [['','미판정'],['yes','달성'],['no','실패']].map(([value,label])=>
          '<option value="'+value+'"'+((c.goalMet===true&&value==='yes')||
          (c.goalMet===false&&value==='no')||(c.goalMet==null&&value==='')?' selected':'')+'>'+label+'</option>').join('')+
-        '</select>'+btn('verdict-goal','적용','btn btn-outline btn-sm',false,
+        '</select>'+btn('verdict-goal','목표 저장','btn btn-outline btn-sm',false,
+         'data-character="'+esc(c.id)+'"')+
+        '<select class="ending-status-select" aria-label="'+esc(c.name)+' 최종 상태 정정">'+
+          [['auto','행동 결과 그대로'],['alive','생존'],['dead','사망'],['restrained','제압'],['escaped','탈출']].map(([value,label])=>
+            '<option value="'+value+'"'+((c.override||'auto')===value?' selected':'')+'>'+label+'</option>').join('')+
+        '</select>'+btn('verdict-status','상태 저장','btn btn-outline btn-sm',false,
          'data-character="'+esc(c.id)+'"')+'</div>').join('')+'</div>':'';
     return '<section class="ending-control surface panel-pad"><div class="eyebrow">HOST CONTROL · FINAL VERDICT</div>'+
       '<h3>'+ (room.phase==='ending'?'최종 구속 및 승리 목표 판정':'최종 구속 대상 결정')+'</h3>'+
@@ -328,7 +333,8 @@ window.MysteryStudy=(function(){
       '<section class="ending-common surface panel-pad">'+
       '<div class="eyebrow">EPILOGUE · COMMON ENDING</div>'+
       '<div class="ending-cover">'+caseCover+'</div>'+
-      '<p class="ending-verdict">'+(global.captured?'진범 구속 성공':'진범 구속 실패')+
+      '<p class="ending-verdict">'+(global.verdictType==='captured'?'진범 구속 성공':
+        global.verdictType==='wrongful'?'오인 구속 · 진범 미검거':'진범 미구속')+
         ' · '+(global.arrestedName?esc(global.arrestedName)+' 구속':'구속된 인물 없음')+'</p>'+
       '<h2>'+esc(global.title)+'</h2>'+
       (global.paragraphs||[]).map(t=>para(t)).join('')+'</section>'+
@@ -341,6 +347,7 @@ window.MysteryStudy=(function(){
           '<span class="ending-status">'+(personal.goalMet===true?'개인 목표 달성':
             personal.goalMet===false?'개인 목표 실패':'개인 목표 미판정')+'</span></p></div></div>'+
         (personal.paragraphs||[]).map(t=>para(t)).join('')+
+        (personal.goalMet==null?'<p class="muted small">개인 목표 결과는 아직 진행자가 판정하지 않았습니다. 결말 내용은 판정 후 자동으로 갱신됩니다.</p>':'')+
         (personal.goalText?'<details class="ending-objective"><summary>나의 원래 승리 목표 다시 보기</summary>'+para(personal.goalText)+'</details>':'')+
         '</section>':'')+'</div>';
   }
