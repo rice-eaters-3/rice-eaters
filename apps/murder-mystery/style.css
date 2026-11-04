@@ -335,3 +335,91 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(-
  .book-identity .book-portrait.illustrated-portrait{flex:0 1 150px;min-height:165px}
  .map-prop-icon{font-size:19px}
 }
+
+
+/* ── Original illustrated mystery-case artwork ──────────────────────────────
+   All real-portrait, real-clue-art and real-map-object SVGs embed linked WebP
+   images clipped from the author's committed concept sheets. No generated
+   geometric cartoon characters are used in any of the four story editions.
+   ──────────────────────────────────────────────────────────────────────── */
+.character-card{overflow:hidden;transition:box-shadow .2s ease,border-color .2s ease,transform .2s ease}
+.character-card:hover{transform:translateY(-3px)}
+.character-card .char-symbol.char-illustration{
+ display:flex;position:relative;align-items:end;justify-content:center;
+ width:calc(100% + 2px);max-width:none;height:275px;
+ margin:-1px -1px 20px;box-sizing:border-box;
+ background:linear-gradient(160deg,#323146,#222b40 55%,#191f31);
+ border:1px solid #c5a5796b;border-radius:10px 10px 7px 7px;
+ padding:0;overflow:hidden;isolation:isolate
+}
+.char-illustration:before{
+ content:"";position:absolute;inset:0;background:
+ radial-gradient(circle at 65% 18%,#d8b88f24,transparent 46%),
+ linear-gradient(180deg,transparent 55%,#0e132033);
+ pointer-events:none;z-index:1
+}
+.char-illustration .real-portrait{
+ position:relative;width:100%;height:100%;
+ max-width:100%;display:block;z-index:0;
+ filter:drop-shadow(0 5px 10px #07081155)
+}
+.char-illustration .mystery-unillustrated{font-size:86px;margin:auto}
+.character-card.selected .char-illustration{border-color:#e8cc8b;box-shadow:0 0 0 2px #c49e504b}
+.character-card .character-name{font-size:22px}
+.book-identity .book-portrait.illustrated-portrait{
+ background:linear-gradient(150deg,#473d50,#1b2837);border:1px solid #c9aa7e;
+ flex:0 0 min(210px,43%);height:244px;min-height:0;
+ padding:0;display:flex;align-items:end;justify-content:center
+}
+.book-identity .book-portrait.illustrated-portrait .real-portrait{
+ width:100%;height:100%;display:block;filter:drop-shadow(0 2px 7px #1118)
+}
+.book-cast-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px}
+.book-cast-person{
+ min-width:0;display:flex;flex-direction:column;gap:6px;padding:10px;
+ border:1px solid #c5ae88;border-radius:8px;background:#fff8e8
+}
+.book-cast-portrait{height:158px;display:flex;justify-content:center;align-items:end;
+ overflow:hidden;background:linear-gradient(130deg,#4b5264,#313245);border-radius:7px}
+.book-cast-portrait .real-portrait{width:100%;height:100%;display:block}
+.book-cast-person p{line-height:1.55;font-size:12px;margin:0}
+.book-cast-person small{font-weight:600;display:block;color:#89755e;margin:5px 0}
+.book-item-art{width:min(100%,300px);max-width:none;margin:7px auto 17px;min-height:172px;
+ background:radial-gradient(circle,#574451,#232f42);display:grid;place-items:center}
+.book-item-art svg.real-clue-art{width:100%;height:200px;display:block}
+.research-illustration{
+ background:radial-gradient(ellipse at 45% 45%,#394257,#1c2739);
+ border-color:#c5a879;min-height:168px;
+ display:flex;align-items:center;justify-content:center
+}
+.research-illustration svg.real-clue-art{width:100%;height:176px;max-height:none;display:block}
+.owned-clue-illustration{width:min(100%,300px);max-width:100%;min-height:160px;
+ background:radial-gradient(circle at center,#453c52,#212635);margin:13px auto}
+.owned-clue-illustration svg.real-clue-art{width:100%;height:185px;max-height:none;display:block}
+.map-prop:has(svg.real-map-object){display:flex;align-items:center;justify-content:center;
+ position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.95}
+.map-prop .real-map-object{width:100%;height:100%;min-width:0;min-height:0;
+ display:block;filter:drop-shadow(0 1px 1px #12151e)}
+.world-tiles .map-tile.furnished{background-image:
+ linear-gradient(135deg,#ffffff12,transparent 65%)}
+.map-tile .door-icon:has(.mystery-door-art){
+ width:100%;height:100%;max-width:100%;display:grid;place-items:center;
+ z-index:2;left:0;top:0;transform:none;filter:none
+}
+.map-tile .door-icon svg.mystery-door-art{width:100%;height:100%;display:block}
+.map-tile .portal-sigil:has(.mystery-stair-art){
+ width:100%;height:100%;left:0;bottom:0;opacity:.85;z-index:2;
+ pointer-events:none;filter:drop-shadow(0 1px 2px #141827)
+}
+.portal-sigil svg.mystery-stair-art{width:100%;height:100%;display:block}
+.map-sprite{overflow:hidden;padding:0;min-width:19px;width:20px;height:23px;
+ border-radius:5px;background:#263447}
+.map-sprite .mystery-avatar-art{width:100%;height:100%;display:block}
+.map-sprite.mine{z-index:6}
+@media(max-width:750px){
+ .character-card .char-symbol.char-illustration{height:220px}
+ .book-identity .book-portrait.illustrated-portrait{flex-basis:160px;height:200px}
+ .book-cast-gallery{grid-template-columns:1fr}
+ .book-cast-portrait{height:180px}
+ .map-sprite{width:17px;min-width:17px;height:19px}
+}
