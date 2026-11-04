@@ -652,6 +652,40 @@
             "toY": 5,
             "label": "아랫층으로 내려가기"
           }
+        ],
+        "objects": [
+          {
+            "id": "prop_bed_1",
+            "kind": "bed",
+            "x": 3,
+            "y": 2,
+            "name": "기숙사 침대",
+            "solid": false
+          },
+          {
+            "id": "prop_shelf_2",
+            "kind": "shelf",
+            "x": 14,
+            "y": 2,
+            "name": "연호의 책이 있는 서가",
+            "solid": false
+          },
+          {
+            "id": "prop_cabinet_3",
+            "kind": "cabinet",
+            "x": 3,
+            "y": 8,
+            "name": "안전 훈련 장비함",
+            "solid": false
+          },
+          {
+            "id": "prop_desk_4",
+            "kind": "desk",
+            "x": 14,
+            "y": 8,
+            "name": "태원의 공연 준비 탁자",
+            "solid": false
+          }
         ]
       },
       {
@@ -804,6 +838,48 @@
             "toY": 5,
             "label": "아랫층으로 내려가기"
           }
+        ],
+        "objects": [
+          {
+            "id": "prop_telescope_1",
+            "kind": "telescope",
+            "x": 3,
+            "y": 2,
+            "name": "천체 관측 망원경",
+            "solid": false
+          },
+          {
+            "id": "prop_projector_2",
+            "kind": "projector",
+            "x": 5,
+            "y": 2,
+            "name": "플라네타륨 투영기",
+            "solid": false
+          },
+          {
+            "id": "prop_terminal_3",
+            "kind": "terminal",
+            "x": 14,
+            "y": 2,
+            "name": "별빛 영상 제어기",
+            "solid": false
+          },
+          {
+            "id": "prop_shelf_4",
+            "kind": "shelf",
+            "x": 3,
+            "y": 8,
+            "name": "지하 암호 자료",
+            "solid": false
+          },
+          {
+            "id": "prop_cabinet_5",
+            "kind": "cabinet",
+            "x": 14,
+            "y": 8,
+            "name": "관측관 음성 방송장비",
+            "solid": false
+          }
         ]
       },
       {
@@ -947,6 +1023,48 @@
             "toX": 9,
             "toY": 5,
             "label": "윗층으로 올라가기"
+          }
+        ],
+        "objects": [
+          {
+            "id": "prop_medical_1",
+            "kind": "medical",
+            "x": 3,
+            "y": 2,
+            "name": "실험용 검사 침대",
+            "solid": false
+          },
+          {
+            "id": "prop_door_2",
+            "kind": "door",
+            "x": 14,
+            "y": 2,
+            "name": "막힌 가짜 출구 표지",
+            "solid": false
+          },
+          {
+            "id": "prop_generator_3",
+            "kind": "generator",
+            "x": 3,
+            "y": 8,
+            "name": "지하 냉각 시설",
+            "solid": false
+          },
+          {
+            "id": "prop_cabinet_4",
+            "kind": "cabinet",
+            "x": 14,
+            "y": 8,
+            "name": "운영자 봉인 원고함",
+            "solid": false
+          },
+          {
+            "id": "prop_terminal_5",
+            "kind": "terminal",
+            "x": 16,
+            "y": 8,
+            "name": "탈출 인증서 보관 터미널",
+            "solid": false
           }
         ]
       }
