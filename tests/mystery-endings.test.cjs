@@ -100,6 +100,16 @@ test('Scenario editor visual theme persists through validation for custom story 
  data.story.artTheme='https://evil.example/fake.webp';
  assert.equal(validate(data).story.artTheme,'','the validator must not permit external asset URLs');
 });
+test('automatic artwork theme survives validation of imported built-in drafts',()=>{
+ for(const [filename] of cases){
+  const data=require('../mystery-content/'+filename);
+  const story=validate(data).story;
+  assert.equal(story.id,'','publication still assigns a new story ID');
+  assert.equal(story.artTheme,data.story.id);
+ }
+ const data=require('../mystery-content/d1-gaming.case.json');
+ assert.equal(validate({...data,story:{...data.story,id:'d1-gaming'}}).story.artTheme,'d1-crown-of-ashes');
+});
 test('Common and private ending renderer is shared by real game and test lab, not a placeholder',()=>{
  const html=['test.html','editor.html','index.html'].map(name=>fs.readFileSync(path.join(__dirname,'../apps/murder-mystery/'+name),'utf8'));
  assert.match(html[0],/ending-engine\.js/);
