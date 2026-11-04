@@ -809,6 +809,40 @@
             "toY": 5,
             "label": "위 구역으로 이동"
           }
+        ],
+        "objects": [
+          {
+            "id": "prop_boat_1",
+            "kind": "boat",
+            "x": 3,
+            "y": 2,
+            "name": "섬 선착장 소형 보트",
+            "solid": false
+          },
+          {
+            "id": "prop_cabinet_2",
+            "kind": "cabinet",
+            "x": 14,
+            "y": 2,
+            "name": "촬영용 구명장비 보관함",
+            "solid": false
+          },
+          {
+            "id": "prop_plant_3",
+            "kind": "plant",
+            "x": 4,
+            "y": 8,
+            "name": "해변의 소나무",
+            "solid": false
+          },
+          {
+            "id": "prop_fireplace_4",
+            "kind": "fireplace",
+            "x": 15,
+            "y": 8,
+            "name": "촬영용 모닥불 장식",
+            "solid": false
+          }
         ]
       },
       {
@@ -958,6 +992,56 @@
             "toY": 5,
             "label": "위 구역으로 이동"
           }
+        ],
+        "objects": [
+          {
+            "id": "prop_camera_1",
+            "kind": "camera",
+            "x": 3,
+            "y": 2,
+            "name": "고백 인터뷰 카메라",
+            "solid": false
+          },
+          {
+            "id": "prop_terminal_2",
+            "kind": "terminal",
+            "x": 14,
+            "y": 2,
+            "name": "13분 지연 송출 장비",
+            "solid": false
+          },
+          {
+            "id": "prop_sofa_3",
+            "kind": "sofa",
+            "x": 3,
+            "y": 8,
+            "name": "연애의 집 라운지 소파",
+            "solid": false
+          },
+          {
+            "id": "prop_table_4",
+            "kind": "table",
+            "x": 5,
+            "y": 8,
+            "name": "하트 투표 탁자",
+            "solid": false
+          },
+          {
+            "id": "prop_wardrobe_5",
+            "kind": "wardrobe",
+            "x": 14,
+            "y": 8,
+            "name": "분장실 화장대",
+            "solid": false
+          },
+          {
+            "id": "prop_fridge_6",
+            "kind": "fridge",
+            "x": 16,
+            "y": 8,
+            "name": "빌라 주방 냉장고",
+            "solid": false
+          }
         ]
       },
       {
@@ -1098,6 +1182,48 @@
             "toX": 9,
             "toY": 5,
             "label": "아래 구역으로 이동"
+          }
+        ],
+        "objects": [
+          {
+            "id": "prop_terminal_1",
+            "kind": "terminal",
+            "x": 3,
+            "y": 2,
+            "name": "조수 관측 콘솔",
+            "solid": false
+          },
+          {
+            "id": "prop_generator_2",
+            "kind": "generator",
+            "x": 5,
+            "y": 2,
+            "name": "수위 경보 제어함",
+            "solid": false
+          },
+          {
+            "id": "prop_camera_3",
+            "kind": "camera",
+            "x": 14,
+            "y": 2,
+            "name": "등대 감시 카메라",
+            "solid": false
+          },
+          {
+            "id": "prop_shelf_4",
+            "kind": "shelf",
+            "x": 3,
+            "y": 8,
+            "name": "선박 기록 서가",
+            "solid": false
+          },
+          {
+            "id": "prop_server_5",
+            "kind": "server",
+            "x": 14,
+            "y": 8,
+            "name": "봉인된 방송 로그 서버",
+            "solid": false
           }
         ]
       }
