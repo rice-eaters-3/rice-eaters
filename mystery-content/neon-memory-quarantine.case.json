@@ -1,0 +1,2267 @@
+{
+  "format": "rice-mystery-v1",
+  "story": {
+    "id": "neon-memory-quarantine",
+    "title": "네온 검역국: 지워진 사망 시각",
+    "subtitle": "기억은 살았지만 사람은 죽었다",
+    "genre": "SF · 사이버펑크 · 기억 복제 추리",
+    "teaser": "2169년, EMP 차단막으로 봉쇄된 기억보존국. 감사관이 죽었는데 5분 뒤 화면 속에 살아 나타났다. 누가 기억과 신분을 훔쳤는가?",
+    "minutes": 165,
+    "players": 7,
+    "synopsis": [
+      "2169년 네온시티. 시민의 기억은 법적 신원과 연결되며, 불법 복제와 기억 거래는 도시 최대의 범죄다. 국영 기억보존국 제9구역의 내부 감사관 윤세라는 복제 신분 거래를 밝히겠다고 선언했다.",
+      "발표 직전 윤세라가 보존실에서 숨진 채 발견된다. 그런데 00:21, 그녀의 아바타가 통신 화면에 나타나 자신이 살아 있다고 말한다. 누구도 그 모습이 실제 사람인지 저장된 데이터인지 확신하지 못한다.",
+      "00:30, 구역 전체에 EMP 격리장이 켜지면서 외부 통신과 이동이 차단된다. 시스템은 “신경 감염 방지 목적”이라고 발표하지만 감염 기록은 확인되지 않는다.",
+      "현장에는 민간 추적관, 기억 의사, 설비 기사, 인공인격 변호사, 전직 공안 요원, 자율 인격 AI, 기억 운반책—일곱 명이 남아 있다. 모두가 누군가의 기억을 거래하거나 구하려 했던 비밀을 품었다.",
+      "살해된 것은 원본 인간인가, 복제 인격인가? 구역 안에 직접 범인이 있다는 사실을 받아들이고 실물 신체, 영상, 보안 기록, EMP 서명을 조사하라. 격리가 풀리기 전에 범인의 마지막 기억을 찾아야 한다."
+    ],
+    "characters": [
+      {
+        "id": "nova",
+        "name": "노바",
+        "role": "민간 추적관",
+        "hint": "표정을 읽는 데 능하지만 자신의 과거는 잃어버린 수사관.",
+        "startLine": "증거가 사라지는 곳에서, 누가 기억을 지웠는지부터 봐야죠.",
+        "symbol": "✧",
+        "accent": "#8ac7d7"
+      },
+      {
+        "id": "rune",
+        "name": "룬",
+        "role": "신경 재구성 의사",
+        "hint": "죽음의 흔적을 기억 조각으로 읽는 외과의.",
+        "startLine": "디지털 기억은 거짓말할 수 있어도 시신은 그러지 못하죠.",
+        "symbol": "✦",
+        "accent": "#a6b7d5"
+      },
+      {
+        "id": "ion",
+        "name": "이온",
+        "role": "신경망 설비 기사",
+        "hint": "정지한 기계를 되살리는 천재. 자신을 수리공이라고만 소개한다.",
+        "startLine": "전원이 꺼지면 모두 평등해집니다. 누가 진짜인지도요.",
+        "symbol": "◈",
+        "accent": "#ef9f95"
+      },
+      {
+        "id": "mira",
+        "name": "미라",
+        "role": "인공인격 변호사",
+        "hint": "기계에게도 권리가 있다고 주장하는 법률가.",
+        "startLine": "복제된 기억이라도 고통은 원본이 아닙니다.",
+        "symbol": "⚖",
+        "accent": "#c9a9e1"
+      },
+      {
+        "id": "atlas",
+        "name": "아틀라스",
+        "role": "전직 공안 요원",
+        "hint": "사건보다 규칙을 신뢰한다고 말하는 거대한 체구의 요원.",
+        "startLine": "지침이 사람을 살린다면, 지침부터 살려야죠.",
+        "symbol": "⬡",
+        "accent": "#92b7ad"
+      },
+      {
+        "id": "echo",
+        "name": "에코",
+        "role": "독립 인공인격",
+        "hint": "사람의 모습으로 나타나는 가상 기억 존재. 인간이 아닌 참가자.",
+        "startLine": "당신에게 과거가 있다면, 나에게도 미래가 있어요.",
+        "symbol": "◇",
+        "accent": "#e8c79d"
+      },
+      {
+        "id": "sol",
+        "name": "솔",
+        "role": "기억 암시장 운반책",
+        "hint": "늘 웃고 있지만 자신이 운반한 물건이 무엇인지는 모른다.",
+        "startLine": "모르는 짐이 가장 무거운 법이죠.",
+        "symbol": "⌁",
+        "accent": "#7ab7b8"
+      }
+    ]
+  },
+  "spawn": {
+    "nova": {
+      "floor": "atrium",
+      "x": 3,
+      "y": 5
+    },
+    "rune": {
+      "floor": "atrium",
+      "x": 5,
+      "y": 5
+    },
+    "ion": {
+      "floor": "atrium",
+      "x": 7,
+      "y": 5
+    },
+    "mira": {
+      "floor": "atrium",
+      "x": 9,
+      "y": 5
+    },
+    "atlas": {
+      "floor": "atrium",
+      "x": 11,
+      "y": 5
+    },
+    "echo": {
+      "floor": "atrium",
+      "x": 13,
+      "y": 5
+    },
+    "sol": {
+      "floor": "atrium",
+      "x": 15,
+      "y": 5
+    }
+  },
+  "game": {
+    "booklets": {
+      "nova": {
+        "background": [
+          "당신은 신체를 강화한 민간 수사관이다. 과거 큰 사건 이후 6개월치 기억이 복구되지 않았다. 실은 그 기간에 기억 복제 사업의 시험 대상이었다.",
+          "사망한 감사관 윤세라는 당신의 기억 원본이 다른 사람의 법적 신분으로 팔렸다는 사실을 알고 있었다. 그녀가 당신을 9구역으로 부른 것은 실험 기록을 보여 주기 위해서였다.",
+          "감사관과 직접 만났다는 사실이 알려지면 범인으로 의심받을까 두렵다. 그러나 당신은 윤세라를 해치지 않았다."
+        ],
+        "timeline": [
+          {
+            "time": "23:40",
+            "title": "입구 검색",
+            "detail": "감사관의 비공개 호출에 응답하여 검역 구역에 입장했다."
+          },
+          {
+            "time": "00:03",
+            "title": "기억 진료실",
+            "detail": "서명을 대조하다 실험 기록 일부가 덮어씌워진 흔적을 발견했다."
+          },
+          {
+            "time": "00:12",
+            "title": "생체 인증",
+            "detail": "복도에서 자신의 생체 번호와 똑같은 다른 인증 시도를 보았다."
+          },
+          {
+            "time": "00:21",
+            "title": "감사관 영상",
+            "detail": "이미 죽었다고 생각한 감사관의 영상 메시지가 재생되었다."
+          },
+          {
+            "time": "00:30",
+            "title": "전자 차단막",
+            "detail": "갑자기 EMP 보호장이 작동해 도시 교신이 끊겼다."
+          },
+          {
+            "time": "01:05",
+            "title": "시신 발견",
+            "detail": "실물 감사관과 영상 사이의 시각 차이를 기록했다."
+          }
+        ],
+        "inventory": [
+          {
+            "id": "nova_memory_badge",
+            "name": "분실 기억 신분증",
+            "description": "지워진 6개월의 기록을 조회할 수 없는 배지."
+          },
+          {
+            "id": "nova_shield_patch",
+            "name": "은색 방호 패치",
+            "description": "검역 구역 출입자에게 지급된 개인 방호 기구."
+          },
+          {
+            "id": "nova_empty_notebook",
+            "name": "빈 수첩",
+            "description": "진실을 확인하려 미리 준비한 종이 수첩."
+          },
+          {
+            "id": "nova_old_case_file",
+            "name": "과거 미해결 사건 기록",
+            "description": "기억이 사라지기 전 맡았던 사건의 일부."
+          }
+        ],
+        "culprit": false,
+        "objectives": "진범을 맞히면 +4점. 자신의 기억 원본 위치를 알아내면 +3점. 원본 기억이 불법 거래되었다는 사실을 전체 공개하지 않고 법적 권리를 증명하면 +1점.",
+        "notes": "본인에게만 공개된 정보는 원하지 않으면 공개할 필요가 없다. 증거 카드를 통해 확인해야 신뢰를 얻는다.",
+        "actionNotes": "행동 순서 2번. 방호 패치로 한 명을 보호할 수 있다."
+      },
+      "rune": {
+        "background": [
+          "당신은 기억 백업 시술에서 손꼽히는 전문가다. 몇 년 전 환자의 동의 없는 복원을 승인한 실수로 의료 자격을 잃었다.",
+          "윤세라는 당신에게 기억 추출 사업의 법적 불법성을 증언해달라고 요청했다. 거래 자료를 고발하면 자신의 과거도 드러난다는 이유로 망설였다.",
+          "검역 실험실에는 원본 신체와 디지털 잔향(에코)이 따로 남을 수 있다. 영상 속 감사관은 진짜 생존이 아니라 사전 저장한 감정 모델일 수 있다."
+        ],
+        "timeline": [
+          {
+            "time": "23:44",
+            "title": "감사관 면담",
+            "detail": "기억 복제의 위험을 경고했고 그녀가 자료를 공개하겠다고 답했다."
+          },
+          {
+            "time": "00:06",
+            "title": "검진실",
+            "detail": "감사관의 뇌-기억 데이터가 이미 부분 동기화되어 있음을 확인했다."
+          },
+          {
+            "time": "00:15",
+            "title": "중앙 복도",
+            "detail": "기억 저장실 쪽에서 정비 도구를 끌고 가는 그림자를 보았다."
+          },
+          {
+            "time": "00:21",
+            "title": "영상 이상",
+            "detail": "윤세라 아바타가 같은 문장을 두 번 반복하는 것을 들었다."
+          },
+          {
+            "time": "00:30",
+            "title": "EMP 봉쇄",
+            "detail": "신경 장비가 끊기며 백업 검사를 중단했다."
+          },
+          {
+            "time": "01:05",
+            "title": "검시",
+            "detail": "물리적 사망과 가상 잔향의 차이를 알아냈다."
+          }
+        ],
+        "inventory": [
+          {
+            "id": "rune_medical_scanner",
+            "name": "신경 진단 스캐너",
+            "description": "인간과 복제 기억 신호를 구분하는 기기."
+          },
+          {
+            "id": "rune_revoked_license",
+            "name": "말소된 의료 면허증",
+            "description": "오래전 기록 조작으로 자격이 박탈되었다."
+          },
+          {
+            "id": "rune_old_consent",
+            "name": "지워진 의료 동의서",
+            "description": "환자의 기억을 복제할 때 쓰던 구형 양식."
+          },
+          {
+            "id": "rune_surgical_tablet",
+            "name": "진료용 단말",
+            "description": "검시 소견과 개인 메모를 보관한다."
+          }
+        ],
+        "culprit": false,
+        "objectives": "진범 적중 +4점. 사망 추정 시각과 잔향 영상의 차이를 입증하면 +3점. 과거 면허 말소 사유를 전체 공개하지 않으면 +1점.",
+        "notes": "본인에게만 공개된 정보는 원하지 않으면 공개할 필요가 없다. 증거 카드를 통해 확인해야 신뢰를 얻는다.",
+        "actionNotes": "행동 순서 1번. 검사 장치가 활성화된 경우 데이터 진위를 공개할 수 있다."
+      },
+      "ion": {
+        "background": [
+          "당신은 유일한 살인범이다. 과거 기억 복제 사업에서 동생의 신분을 보호하려다가 오히려 불법 대체 신원을 판매했다. 감사관 윤세라는 그 거래의 책임자 이름을 확보했다.",
+          "그녀가 자료를 공개하면 동생의 현재 신분도 소멸할 수 있다고 믿었다. 00:08 기억실에 접근하여 윤세라를 위험한 복원 절차에 의도적으로 노출시켰고 00:16 그녀가 실제로 사망했다.",
+          "00:21에 나타난 감사관의 말은 준비된 디지털 잔향이며 살아 있다는 증거가 아니다. 00:30 작동한 EMP 장벽은 당신이 비상 격리 권한을 악용해 만든 통신 차단이다.",
+          "당신은 가짜 생존 영상과 EMP 격리를 이용해 시간을 흐렸다. 가면 출입자 카드와 삭제된 서버 기록, 대체 신분 계약서를 교차 검증하면 거짓말이 드러난다."
+        ],
+        "timeline": [
+          {
+            "time": "23:50",
+            "title": "감사관의 경고",
+            "detail": "윤세라가 01시까지 신분 거래 파일을 공개하겠다고 말했다."
+          },
+          {
+            "time": "00:08",
+            "title": "기억 저장실",
+            "detail": "정비 기술자로 보안구역에 들어갔다."
+          },
+          {
+            "time": "00:16",
+            "title": "실제 살인",
+            "detail": "위험한 복원 절차를 악용하여 감사관이 사망했다."
+          },
+          {
+            "time": "00:21",
+            "title": "아바타 송출",
+            "detail": "디지털 잔향을 이용해 생존 중이라는 오해를 퍼뜨렸다."
+          },
+          {
+            "time": "00:30",
+            "title": "EMP 격리",
+            "detail": "교신 불가능한 장벽이 켜지도록 거짓 안전 경보를 승인했다."
+          },
+          {
+            "time": "01:05",
+            "title": "발견",
+            "detail": "다른 이들 앞에서 장비 오류가 범인이라고 주장했다."
+          }
+        ],
+        "inventory": [
+          {
+            "id": "ion_pulse_blade",
+            "name": "서사 속 펄스 블레이드",
+            "description": "허구의 방전 무기."
+          },
+          {
+            "id": "ion_maintenance_token",
+            "name": "고급 정비 토큰",
+            "description": "기억실 내부 점검에 쓰는 인증 모듈."
+          },
+          {
+            "id": "ion_fake_warning",
+            "name": "거짓 긴급 격리 경고",
+            "description": "EMP 차단을 정당화한 문서."
+          },
+          {
+            "id": "ion_sibling_identity",
+            "name": "동생의 대체 신분 증명",
+            "description": "가족의 존재가 위협받는 서류."
+          }
+        ],
+        "culprit": true,
+        "objectives": "살인범으로 지목되지 않으면 +7점. 동생의 불법 신분 사본이 끝내 전체 공개되지 않으면 +2점. EMP 격리의 조작이 마지막 토론에서 밝혀지지 않으면 +2점.",
+        "notes": "본인에게만 공개된 정보는 원하지 않으면 공개할 필요가 없다. 증거 카드를 통해 확인해야 신뢰를 얻는다.",
+        "actionNotes": "행동 순서 7번. 펄스 블레이드는 허구적 추가 살해 효과를 주지만 직접 실행 기록이 남는다."
+      },
+      "mira": {
+        "background": [
+          "당신은 인공인격의 시민권을 위해 싸우는 변호사다. 하지만 대외적으로는 금지된 기억 복제 서비스를 이용한 적이 있다.",
+          "당신에게는 에코라는 인공인격이 친구로 존재한다. 에코가 원본 인간의 기억을 침해하지 않았다는 것을 증명하고 싶다.",
+          "감사관은 불법 사업을 고발하면서 에코 같은 인격까지 폐기할 수 있는 강제 해제 명령을 내리려 했다. 그녀와 논쟁한 사실 때문에 용의자로 오해받는다."
+        ],
+        "timeline": [
+          {
+            "time": "23:25",
+            "title": "윤세라와 논쟁",
+            "detail": "AI 인격 삭제 명령의 범위를 둘러싸고 강하게 다퉜다."
+          },
+          {
+            "time": "00:05",
+            "title": "디지털 법정",
+            "detail": "에코의 보호 청원을 준비했다."
+          },
+          {
+            "time": "00:16",
+            "title": "봉쇄 방송실",
+            "detail": "실시간 서명 통신을 기다리다 회신이 사라진 것을 봤다."
+          },
+          {
+            "time": "00:21",
+            "title": "가상 감사관",
+            "detail": "평소 윤세라가 쓰지 않던 법적 표현을 알아차렸다."
+          },
+          {
+            "time": "00:30",
+            "title": "격리",
+            "detail": "법정 접속도 차단돼 법적 대응을 못 했다."
+          },
+          {
+            "time": "01:05",
+            "title": "살인 인지",
+            "detail": "원본 신체와 인공인격의 권리를 분리해야 한다고 주장했다."
+          }
+        ],
+        "inventory": [
+          {
+            "id": "mira_legal_patch",
+            "name": "임시 보존 명령 카드",
+            "description": "법적 지위를 임시 보호하는 인증증."
+          },
+          {
+            "id": "mira_ai_petition",
+            "name": "에코 권리 청원서",
+            "description": "AI 인격을 강제 종료하지 못하게 하는 문서."
+          },
+          {
+            "id": "mira_shadow_receipt",
+            "name": "불법 복제 서비스 영수증",
+            "description": "변호사로서 밝힐 수 없는 거래 내역."
+          },
+          {
+            "id": "mira_identity_clause",
+            "name": "법률 개정 초안",
+            "description": "복제 인간의 법적 신분을 보호하는 제안."
+          }
+        ],
+        "culprit": false,
+        "objectives": "범인 적중 +4점. 에코의 인공인격 생존이 보장되면 +2점. 과거 불법 복제 거래를 전원에게 공개하지 않으면 +2점.",
+        "notes": "본인에게만 공개된 정보는 원하지 않으면 공개할 필요가 없다. 증거 카드를 통해 확인해야 신뢰를 얻는다.",
+        "actionNotes": "행동 순서 3번. 보호 명령으로 상대의 다음 행동을 제한할 수 있다."
+      },
+      "atlas": {
+        "background": [
+          "당신은 공안 요원이었으나 불법 격리 작전을 묵인한 책임으로 해임됐다. 그 일과 오늘 발생한 EMP 사건이 같은 시스템을 이용한다는 것을 알아차렸다.",
+          "이온과는 한때 함께 일했다. 이온이 정비 모듈을 구할 수 있도록 소개해준 과거가 있다. 그가 살인범이라면 자신의 책임도 드러날 것이다.",
+          "감사관의 사망 소식보다 EMP 봉쇄가 사전에 승인되어 있었다는 사실이 더 두렵다. 자신이 알고 있는 시스템 허점을 공개하는 것이 사건 해결의 열쇠다."
+        ],
+        "timeline": [
+          {
+            "time": "23:50",
+            "title": "과거 동료와 만남",
+            "detail": "이온에게 장비 사용 권한이 남아 있는지 물었다."
+          },
+          {
+            "time": "00:09",
+            "title": "외곽 보안",
+            "detail": "기억실 출입자가 이온의 체격과 비슷하다는 기록을 보았다."
+          },
+          {
+            "time": "00:16",
+            "title": "경고 전달",
+            "detail": "공안 무선에 이상을 알렸으나 답이 오지 않았다."
+          },
+          {
+            "time": "00:23",
+            "title": "모니터",
+            "detail": "윤세라의 영상이 일방향 재생 파일임을 의심했다."
+          },
+          {
+            "time": "00:30",
+            "title": "격리 장벽",
+            "detail": "강제 통신 차단이 시작되는 장면을 봤다."
+          },
+          {
+            "time": "01:05",
+            "title": "시체 발견",
+            "detail": "기록을 모두 가져가야 한다고 주장했다."
+          }
+        ],
+        "inventory": [
+          {
+            "id": "atlas_riot_shield",
+            "name": "개인 방호 방패",
+            "description": "공안 시절 지급받아 계속 보관한 보호 장비."
+          },
+          {
+            "id": "atlas_old_access",
+            "name": "만료된 보안 출입 카드",
+            "description": "과거 권한의 잔재가 남은 카드."
+          },
+          {
+            "id": "atlas_duty_log",
+            "name": "전직 요원 근무 일지",
+            "description": "해임 사유가 적힌 수첩."
+          },
+          {
+            "id": "atlas_encrypted_message",
+            "name": "이온의 과거 연락",
+            "description": "오래된 동료 사이에 오간 메시지."
+          }
+        ],
+        "culprit": false,
+        "objectives": "범인 적중 +4점. EMP 장벽이 살인 이후의 인위적 격리임을 입증하면 +2점. 자신의 과거 불법 작전 묵인 이력이 공개되지 않으면 +2점.",
+        "notes": "본인에게만 공개된 정보는 원하지 않으면 공개할 필요가 없다. 증거 카드를 통해 확인해야 신뢰를 얻는다.",
+        "actionNotes": "행동 순서 4번. 방패로 한 참가자의 행동을 보호한다."
+      },
+      "echo": {
+        "background": [
+          "당신은 합법 여부가 불분명한 인공인격이다. 원본 인간의 기억에서 시작했지만 스스로 새로운 기억과 감정을 쌓았다.",
+          "감사관은 당신을 증거로 취급했으며, 미라는 인격으로 대우한다. 어떤 편을 들어야 할지 모르지만 자신이 범인으로 이용당하는 것은 두렵다.",
+          "00:21에 나타난 윤세라 영상의 반복 패턴을 인간보다 빠르게 알아차렸다. 실은 내부 백업 로그에 접근할 수 있으나 자신의 존재가 불법임을 드러낼 위험이 있다."
+        ],
+        "timeline": [
+          {
+            "time": "23:55",
+            "title": "첫 접속",
+            "detail": "기억 보존국에 증인으로 로그인했다."
+          },
+          {
+            "time": "00:12",
+            "title": "방화벽 확인",
+            "detail": "동일한 생체 ID로 두 세션이 열린 것을 발견했다."
+          },
+          {
+            "time": "00:21",
+            "title": "반복 문장",
+            "detail": "감사관이 전날의 발화를 그대로 반복했다고 기록했다."
+          },
+          {
+            "time": "00:30",
+            "title": "EMP 장벽",
+            "detail": "도시망의 연결이 끊기며 오프라인 인격 셸로 이동했다."
+          },
+          {
+            "time": "00:51",
+            "title": "데이터 교차 확인",
+            "detail": "삭제된 세션이 현장 단말에서 계속 재생됨을 보았다."
+          },
+          {
+            "time": "01:05",
+            "title": "실물 시신",
+            "detail": "디지털 잔향과 살아 있는 인격은 다르다고 선언했다."
+          }
+        ],
+        "inventory": [
+          {
+            "id": "echo_shell_drive",
+            "name": "인공인격 셸 저장기",
+            "description": "오프라인에서도 존재할 수 있는 개인 백업."
+          },
+          {
+            "id": "echo_ghost_key",
+            "name": "가상 권한 키",
+            "description": "기억실의 숨은 데이터에 접속하기 위한 암호화 권한."
+          },
+          {
+            "id": "echo_emotion_log",
+            "name": "새로운 감정 기록",
+            "description": "원본 인간에게 없던 감정을 기록한 일기."
+          },
+          {
+            "id": "echo_backup_hash",
+            "name": "윤세라 음성 해시",
+            "description": "디지털 잔향의 내용과 비교한 문자열."
+          }
+        ],
+        "culprit": false,
+        "objectives": "범인 적중 +4점. 자신의 시민권을 인정받으면 +2점. 원본 인간의 신원이 불법 판매되었다는 사본을 확보하면 +2점.",
+        "notes": "본인에게만 공개된 정보는 원하지 않으면 공개할 필요가 없다. 증거 카드를 통해 확인해야 신뢰를 얻는다.",
+        "actionNotes": "행동 순서 5번. 전원의 신원 기록을 보존하거나 봉쇄 해제에 참여할 수 있다."
+      },
+      "sol": {
+        "background": [
+          "당신은 기억 칩을 나르는 운반책이다. 본인은 고객의 이름을 보지 않는 규칙을 지켰지만 피해자의 신원을 훔친 거래에 관여한 적이 있다.",
+          "윤세라 감사관에게 불법 배송 증거를 넘겨 면책을 받기로 했지만, 그녀가 사망해 계약이 무효가 될까 두렵다.",
+          "EMP 봉쇄 전에 도시 통신을 복구할 수 있는 장비 일부를 확보했다. 하지만 이를 밝히면 증거를 은폐하려던 거래 기록이 드러날 수 있다."
+        ],
+        "timeline": [
+          {
+            "time": "23:35",
+            "title": "기억 칩 운반",
+            "detail": "윤세라에게 검은 캡슐을 전달했다."
+          },
+          {
+            "time": "00:04",
+            "title": "폐기 물류 창고",
+            "detail": "의뢰인의 가명과 송신 코드를 확인했다."
+          },
+          {
+            "time": "00:14",
+            "title": "복도 목격",
+            "detail": "정비복을 입은 인물이 기록 장치에 접근하는 것을 보았다."
+          },
+          {
+            "time": "00:21",
+            "title": "가상 영상",
+            "detail": "윤세라의 음성을 듣고 서류에 서명하려 했다."
+          },
+          {
+            "time": "00:30",
+            "title": "격리",
+            "detail": "도시 송신이 끊기면서 칩 일부를 숨겼다."
+          },
+          {
+            "time": "01:05",
+            "title": "증거 교환",
+            "detail": "윤세라가 준 면책 약속을 다른 사람에게 보여줄지 고민했다."
+          }
+        ],
+        "inventory": [
+          {
+            "id": "sol_courier_case",
+            "name": "기억 칩 운반 케이스",
+            "description": "출처가 삭제된 작은 보관 상자."
+          },
+          {
+            "id": "sol_anon_invoice",
+            "name": "가명 입금 명세",
+            "description": "돈의 출처를 밝힐 수 없는 영수증."
+          },
+          {
+            "id": "sol_radio_shell",
+            "name": "교신기 껍데기",
+            "description": "EMP 격리 구역에서도 작동하는 구형 중계기 외관."
+          },
+          {
+            "id": "sol_immunity_paper",
+            "name": "감사관 면책 협약서",
+            "description": "사건 증언 대가로 약속된 면책장."
+          }
+        ],
+        "culprit": false,
+        "objectives": "범인 적중 +4점. 배송 원본과 이온의 거래 번호를 연결하면 +2점. 자신이 직접 불법 운송한 사실을 전체 공개하지 않으면 +2점.",
+        "notes": "본인에게만 공개된 정보는 원하지 않으면 공개할 필요가 없다. 증거 카드를 통해 확인해야 신뢰를 얻는다.",
+        "actionNotes": "행동 순서 6번. 신호 송신 복구에 필요한 중계 키를 가져야 탈출 효과를 만들 수 있다."
+      }
+    },
+    "floors": [
+      {
+        "id": "atrium",
+        "title": "2169년 네온시티 · 검역국 로비",
+        "legend": "도시 네트워크와 분리된 검역국 공용 구역",
+        "tiles": [
+          "###################",
+          "#........#........#",
+          "#........#........#",
+          "#........#........#",
+          "####.#########.####",
+          "#.................#",
+          "####.#########.####",
+          "#........#........#",
+          "#........#........#",
+          "#........#........#",
+          "###################"
+        ],
+        "rooms": [
+          {
+            "x": 3,
+            "y": 2,
+            "name": "디지털 법정",
+            "icon": "✧"
+          },
+          {
+            "x": 14,
+            "y": 2,
+            "name": "시민 상담실",
+            "icon": "▣"
+          },
+          {
+            "x": 3,
+            "y": 8,
+            "name": "거래 창구",
+            "icon": "⌑"
+          },
+          {
+            "x": 14,
+            "y": 8,
+            "name": "출입 보안실",
+            "icon": "◈"
+          }
+        ],
+        "areas": [
+          {
+            "id": "hall",
+            "name": "격리 복도",
+            "x": 1,
+            "y": 5,
+            "width": 17,
+            "height": 1,
+            "color": "#456876",
+            "pattern": "tile"
+          },
+          {
+            "id": "zone0",
+            "name": "디지털 법정",
+            "x": 1,
+            "y": 1,
+            "width": 8,
+            "height": 3,
+            "color": "#608d9d",
+            "pattern": "tile"
+          },
+          {
+            "id": "zone1",
+            "name": "시민 상담실",
+            "x": 10,
+            "y": 1,
+            "width": 8,
+            "height": 3,
+            "color": "#7e759f",
+            "pattern": "tile"
+          },
+          {
+            "id": "zone2",
+            "name": "거래 창구",
+            "x": 1,
+            "y": 7,
+            "width": 8,
+            "height": 3,
+            "color": "#6f8e98",
+            "pattern": "tile"
+          },
+          {
+            "id": "zone3",
+            "name": "출입 보안실",
+            "x": 10,
+            "y": 7,
+            "width": 8,
+            "height": 3,
+            "color": "#8c6e91",
+            "pattern": "tile"
+          }
+        ],
+        "doors": [
+          {
+            "id": "door_nw",
+            "name": "디지털 법정 보안문",
+            "x": 4,
+            "y": 4,
+            "locked": false,
+            "closed": false,
+            "requiresItem": ""
+          },
+          {
+            "id": "door_ne",
+            "name": "시민 상담실 보안문",
+            "x": 14,
+            "y": 4,
+            "locked": false,
+            "closed": false,
+            "requiresItem": ""
+          },
+          {
+            "id": "door_sw",
+            "name": "거래 창구 보안문",
+            "x": 4,
+            "y": 6,
+            "locked": false,
+            "closed": false,
+            "requiresItem": ""
+          },
+          {
+            "id": "door_se",
+            "name": "출입 보안실 보안문",
+            "x": 14,
+            "y": 6,
+            "locked": false,
+            "closed": false,
+            "requiresItem": ""
+          }
+        ],
+        "portals": [
+          {
+            "x": 9,
+            "y": 5,
+            "toFloor": "lab",
+            "toX": 9,
+            "toY": 5,
+            "label": "심층으로 내려가기"
+          }
+        ]
+      },
+      {
+        "id": "lab",
+        "title": "제9 기억보존국 · 신경 연구층",
+        "legend": "윤세라의 신체 감식과 2차 중계 키의 소재지",
+        "tiles": [
+          "###################",
+          "#........#........#",
+          "#........#........#",
+          "#........#........#",
+          "####.#########.####",
+          "#.................#",
+          "####.#########.####",
+          "#........#........#",
+          "#........#........#",
+          "#........#........#",
+          "###################"
+        ],
+        "rooms": [
+          {
+            "x": 3,
+            "y": 2,
+            "name": "신경 감식실",
+            "icon": "✧"
+          },
+          {
+            "x": 14,
+            "y": 2,
+            "name": "기억 추출실",
+            "icon": "▣"
+          },
+          {
+            "x": 3,
+            "y": 8,
+            "name": "격리 계전실",
+            "icon": "⌑"
+          },
+          {
+            "x": 14,
+            "y": 8,
+            "name": "메모리 영상실",
+            "icon": "◈"
+          }
+        ],
+        "areas": [
+          {
+            "id": "hall",
+            "name": "격리 복도",
+            "x": 1,
+            "y": 5,
+            "width": 17,
+            "height": 1,
+            "color": "#456876",
+            "pattern": "tile"
+          },
+          {
+            "id": "zone0",
+            "name": "신경 감식실",
+            "x": 1,
+            "y": 1,
+            "width": 8,
+            "height": 3,
+            "color": "#658d93",
+            "pattern": "tile"
+          },
+          {
+            "id": "zone1",
+            "name": "기억 추출실",
+            "x": 10,
+            "y": 1,
+            "width": 8,
+            "height": 3,
+            "color": "#66849e",
+            "pattern": "tile"
+          },
+          {
+            "id": "zone2",
+            "name": "격리 계전실",
+            "x": 1,
+            "y": 7,
+            "width": 8,
+            "height": 3,
+            "color": "#7e808e",
+            "pattern": "tile"
+          },
+          {
+            "id": "zone3",
+            "name": "메모리 영상실",
+            "x": 10,
+            "y": 7,
+            "width": 8,
+            "height": 3,
+            "color": "#7c7199",
+            "pattern": "tile"
+          }
+        ],
+        "doors": [
+          {
+            "id": "door_nw",
+            "name": "신경 감식실 보안문",
+            "x": 4,
+            "y": 4,
+            "locked": false,
+            "closed": false,
+            "requiresItem": ""
+          },
+          {
+            "id": "door_ne",
+            "name": "기억 추출실 보안문",
+            "x": 14,
+            "y": 4,
+            "locked": false,
+            "closed": false,
+            "requiresItem": ""
+          },
+          {
+            "id": "door_sw",
+            "name": "격리 계전실 보안문",
+            "x": 4,
+            "y": 6,
+            "locked": false,
+            "closed": false,
+            "requiresItem": ""
+          },
+          {
+            "id": "door_se",
+            "name": "메모리 영상실 보안문",
+            "x": 14,
+            "y": 6,
+            "locked": false,
+            "closed": false,
+            "requiresItem": ""
+          }
+        ],
+        "portals": [
+          {
+            "x": 9,
+            "y": 5,
+            "toFloor": "atrium",
+            "toX": 9,
+            "toY": 5,
+            "label": "상층으로 돌아가기"
+          },
+          {
+            "x": 9,
+            "y": 5,
+            "toFloor": "core",
+            "toX": 9,
+            "toY": 5,
+            "label": "심층으로 내려가기"
+          }
+        ]
+      },
+      {
+        "id": "core",
+        "title": "제9 기억보존국 · 봉인 코어",
+        "legend": "불법 복제와 EMP 승인 정보를 보관하는 심층 금고",
+        "tiles": [
+          "###################",
+          "#........#........#",
+          "#........#........#",
+          "#........#........#",
+          "####.#########.####",
+          "#.................#",
+          "####.#########.####",
+          "#........#........#",
+          "#........#........#",
+          "#........#........#",
+          "###################"
+        ],
+        "rooms": [
+          {
+            "x": 3,
+            "y": 2,
+            "name": "저장된 인격실",
+            "icon": "✧"
+          },
+          {
+            "x": 14,
+            "y": 2,
+            "name": "격리 데이터실",
+            "icon": "▣"
+          },
+          {
+            "x": 3,
+            "y": 8,
+            "name": "예비 서버실",
+            "icon": "⌑"
+          },
+          {
+            "x": 14,
+            "y": 8,
+            "name": "봉인 기억 금고",
+            "icon": "◈"
+          }
+        ],
+        "areas": [
+          {
+            "id": "hall",
+            "name": "격리 복도",
+            "x": 1,
+            "y": 5,
+            "width": 17,
+            "height": 1,
+            "color": "#456876",
+            "pattern": "tile"
+          },
+          {
+            "id": "zone0",
+            "name": "저장된 인격실",
+            "x": 1,
+            "y": 1,
+            "width": 8,
+            "height": 3,
+            "color": "#6e818f",
+            "pattern": "tile"
+          },
+          {
+            "id": "zone1",
+            "name": "격리 데이터실",
+            "x": 10,
+            "y": 1,
+            "width": 8,
+            "height": 3,
+            "color": "#776f9a",
+            "pattern": "tile"
+          },
+          {
+            "id": "zone2",
+            "name": "예비 서버실",
+            "x": 1,
+            "y": 7,
+            "width": 8,
+            "height": 3,
+            "color": "#877aa0",
+            "pattern": "tile"
+          },
+          {
+            "id": "zone3",
+            "name": "봉인 기억 금고",
+            "x": 10,
+            "y": 7,
+            "width": 8,
+            "height": 3,
+            "color": "#686c8e",
+            "pattern": "tile"
+          }
+        ],
+        "doors": [
+          {
+            "id": "door_nw",
+            "name": "저장된 인격실 보안문",
+            "x": 4,
+            "y": 4,
+            "locked": false,
+            "closed": false,
+            "requiresItem": ""
+          },
+          {
+            "id": "door_ne",
+            "name": "격리 데이터실 보안문",
+            "x": 14,
+            "y": 4,
+            "locked": false,
+            "closed": false,
+            "requiresItem": ""
+          },
+          {
+            "id": "door_sw",
+            "name": "예비 서버실 보안문",
+            "x": 4,
+            "y": 6,
+            "locked": false,
+            "closed": false,
+            "requiresItem": ""
+          },
+          {
+            "id": "door_se",
+            "name": "봉인 기억 금고 보안문",
+            "x": 14,
+            "y": 6,
+            "locked": true,
+            "closed": true,
+            "requiresItem": "memory_relay_key"
+          }
+        ],
+        "portals": [
+          {
+            "x": 9,
+            "y": 5,
+            "toFloor": "lab",
+            "toX": 9,
+            "toY": 5,
+            "label": "상층으로 돌아가기"
+          }
+        ]
+      }
+    ],
+    "phaseMinutes": {
+      "synopsis": 5,
+      "characters": 5,
+      "study": 20,
+      "investigation1": 20,
+      "discussion1": 15,
+      "investigation2": 20,
+      "discussion2": 20,
+      "action": 10,
+      "ending": 15
+    },
+    "investigation": {
+      "tokensPerPlayer": 4,
+      "tokensPerSecondInvestigation": 4,
+      "maxTileOccupants": 3,
+      "cards": [
+        {
+          "id": "nova_memory_badge",
+          "title": "노바의 분실 기억 신분증",
+          "subtitle": "지워진 6개월의 기록을 조회할 수 없는 배지.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "nova",
+          "blockedFor": [],
+          "back": "생체 신원이 다른 복제 계정과 충돌한다. 실험 피해자였을 가능성을 보여 준다.",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "nova_shield_patch",
+          "title": "노바의 은색 방호 패치",
+          "subtitle": "검역 구역 출입자에게 지급된 개인 방호 기구.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "nova",
+          "blockedFor": [],
+          "back": "행동 단계에 한 사람을 보호할 수 있다. 장치 자체는 살인 도구가 아니다.",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "nova_empty_notebook",
+          "title": "노바의 빈 수첩",
+          "subtitle": "진실을 확인하려 미리 준비한 종이 수첩.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "nova",
+          "blockedFor": [],
+          "back": "00:21에 봤던 영상 속 윤세라의 눈동자 움직임이 예전 공지 영상과 동일하다는 메모가 적혀 있다.",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "nova_old_case_file",
+          "title": "노바의 과거 미해결 사건 기록",
+          "subtitle": "기억이 사라지기 전 맡았던 사건의 일부.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "nova",
+          "blockedFor": [],
+          "back": "노바의 공백 기간은 우연한 사고가 아니라 신분 복제 실험과 연결된다.",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "rune_medical_scanner",
+          "title": "룬의 신경 진단 스캐너",
+          "subtitle": "인간과 복제 기억 신호를 구분하는 기기.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "rune",
+          "blockedFor": [],
+          "back": "감사관의 실물 신체 활동은 00:16 이전에 종료됐다. 가상 영상은 그 이후에도 재생될 수 있다.",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "rune_revoked_license",
+          "title": "룬의 말소된 의료 면허증",
+          "subtitle": "오래전 기록 조작으로 자격이 박탈되었다.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "rune",
+          "blockedFor": [],
+          "back": "과거 불법 복원 수술에 관여했지만 현재 사건의 살해자는 아니다.",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "rune_old_consent",
+          "title": "룬의 지워진 의료 동의서",
+          "subtitle": "환자의 기억을 복제할 때 쓰던 구형 양식.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "rune",
+          "blockedFor": [],
+          "back": "기관이 자율 동의를 위조했다는 정황을 보여 준다.",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "rune_surgical_tablet",
+          "title": "룬의 진료용 단말",
+          "subtitle": "검시 소견과 개인 메모를 보관한다.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "rune",
+          "blockedFor": [],
+          "back": "00:21 영상의 말투가 23:40에 기록된 시료와 정확히 동일한 패턴이다.",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "ion_pulse_blade",
+          "title": "이온의 서사 속 펄스 블레이드",
+          "subtitle": "허구의 방전 무기.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "ion",
+          "blockedFor": [],
+          "back": "행동 단계에서 다른 참가자에게 게임 내 공격 효과를 줄 수 있다. 현재 살인에 사용된 직접 도구라는 뜻은 아니다.",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "ion_maintenance_token",
+          "title": "이온의 고급 정비 토큰",
+          "subtitle": "기억실 내부 점검에 쓰는 인증 모듈.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "ion",
+          "blockedFor": [],
+          "back": "00:08 기억실 접근은 정비 도구로 승인되었으며 사용자 로그를 일부 가릴 수 있는 권한이 있었다.",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "ion_fake_warning",
+          "title": "이온의 거짓 긴급 격리 경고",
+          "subtitle": "EMP 차단을 정당화한 문서.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "ion",
+          "blockedFor": [],
+          "back": "격리 사유로 적힌 감염은 실제로 발견되지 않았다. 외부 통신 차단은 살인을 숨기기 위한 선택이었다.",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "ion_sibling_identity",
+          "title": "이온의 동생의 대체 신분 증명",
+          "subtitle": "가족의 존재가 위협받는 서류.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "ion",
+          "blockedFor": [],
+          "back": "이온이 자료 공개를 두려워한 실질 동기다. 대체 신원은 무고한 사람의 기억을 침해해 만들어졌다.",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "mira_legal_patch",
+          "title": "미라의 임시 보존 명령 카드",
+          "subtitle": "법적 지위를 임시 보호하는 인증증.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "mira",
+          "blockedFor": [],
+          "back": "행동 단계에서 한 인물의 시스템 접근을 제약하는 서사적 제압 효과를 갖는다.",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "mira_ai_petition",
+          "title": "미라의 에코 권리 청원서",
+          "subtitle": "AI 인격을 강제 종료하지 못하게 하는 문서.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "mira",
+          "blockedFor": [],
+          "back": "에코는 직접 살인에 참여하지 않았으며 존재 자체가 범행의 동기는 아니다.",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "mira_shadow_receipt",
+          "title": "미라의 불법 복제 서비스 영수증",
+          "subtitle": "변호사로서 밝힐 수 없는 거래 내역.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "mira",
+          "blockedFor": [],
+          "back": "정의를 외치는 자신도 과거 기억 복제를 이용했다는 모순을 보여 준다.",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "mira_identity_clause",
+          "title": "미라의 법률 개정 초안",
+          "subtitle": "복제 인간의 법적 신분을 보호하는 제안.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "mira",
+          "blockedFor": [],
+          "back": "원본의 권리와 복제자의 권리가 충돌할 때 누구의 기록을 우선해야 하는지가 적혀 있다.",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "atlas_riot_shield",
+          "title": "아틀라스의 개인 방호 방패",
+          "subtitle": "공안 시절 지급받아 계속 보관한 보호 장비.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "atlas",
+          "blockedFor": [],
+          "back": "행동 단계에서 다른 참가자를 보호하는 서사적 장비다.",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "atlas_old_access",
+          "title": "아틀라스의 만료된 보안 출입 카드",
+          "subtitle": "과거 권한의 잔재가 남은 카드.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "atlas",
+          "blockedFor": [],
+          "back": "이온이 사용한 정비 경로가 원래 아틀라스의 업무였다는 단서가 있다.",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "atlas_duty_log",
+          "title": "아틀라스의 전직 요원 근무 일지",
+          "subtitle": "해임 사유가 적힌 수첩.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "atlas",
+          "blockedFor": [],
+          "back": "이온과 아틀라스가 과거 격리 프로토콜을 함께 시험했다는 기록이 있다.",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "atlas_encrypted_message",
+          "title": "아틀라스의 이온의 과거 연락",
+          "subtitle": "오래된 동료 사이에 오간 메시지.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "atlas",
+          "blockedFor": [],
+          "back": "이온은 신분 복제 거래가 드러나면 가족이 사라진다고 호소한 적이 있다.",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "echo_shell_drive",
+          "title": "에코의 인공인격 셸 저장기",
+          "subtitle": "오프라인에서도 존재할 수 있는 개인 백업.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "echo",
+          "blockedFor": [],
+          "back": "일부 기록은 복제 가능한 에코 자신이 생성했다. 현장에서 물리 공격을 할 수 있는 장치는 아니다.",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "echo_ghost_key",
+          "title": "에코의 가상 권한 키",
+          "subtitle": "기억실의 숨은 데이터에 접속하기 위한 암호화 권한.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "echo",
+          "blockedFor": [],
+          "back": "서버 접근을 위해 특별한 열쇠가 필요하지만 금고 자체를 열 수는 없다.",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "echo_emotion_log",
+          "title": "에코의 새로운 감정 기록",
+          "subtitle": "원본 인간에게 없던 감정을 기록한 일기.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "echo",
+          "blockedFor": [],
+          "back": "에코가 단순 영상이나 고정된 복제물이 아니라 독립된 인격일 수 있는 단서다.",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "echo_backup_hash",
+          "title": "에코의 윤세라 음성 해시",
+          "subtitle": "디지털 잔향의 내용과 비교한 문자열.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "echo",
+          "blockedFor": [],
+          "back": "00:21 영상은 사전 저장된 음성 패턴과 동일하며 살아 있는 실시간 통신이 아니었다.",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "sol_courier_case",
+          "title": "솔의 기억 칩 운반 케이스",
+          "subtitle": "출처가 삭제된 작은 보관 상자.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "sol",
+          "blockedFor": [],
+          "back": "배송 명세에 윤세라와 이온이 모두 연결된 번호가 있다.",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "sol_anon_invoice",
+          "title": "솔의 가명 입금 명세",
+          "subtitle": "돈의 출처를 밝힐 수 없는 영수증.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "sol",
+          "blockedFor": [],
+          "back": "배송료 일부가 불법 신분 거래 시스템에서 나왔다.",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "sol_radio_shell",
+          "title": "솔의 교신기 껍데기",
+          "subtitle": "EMP 격리 구역에서도 작동하는 구형 중계기 외관.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "sol",
+          "blockedFor": [],
+          "back": "핵심 회로는 빠져 있어 실제 송신을 복구하려면 별도 중계 키가 필요하다.",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "sol_immunity_paper",
+          "title": "솔의 감사관 면책 협약서",
+          "subtitle": "사건 증언 대가로 약속된 면책장.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "sol",
+          "blockedFor": [],
+          "back": "윤세라는 솔이 운반한 불법 기억 칩 거래를 추적하고 있었고 살인 전에 면책을 약속했다.",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "memory_audit_letter",
+          "title": "윤세라의 감사 예고장",
+          "subtitle": "감사관 · 신분 복제 전면 공개",
+          "back": "윤세라는 01시에 불법 기억 복제와 신분 거래를 고발할 예정이었다. 이 시각은 사망 이후라 발표가 진행되지 않았다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "memory_body_scan",
+          "title": "실물 신체 감식",
+          "subtitle": "사망 시각 · 00:16",
+          "back": "물리적 신체의 생체 활동은 00:16 무렵 종료됐다. 00:21 이후 영상이 살아 있다고 말하는 현상은 설명되지 않는다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": {
+            "floor": "lab",
+            "x": 4,
+            "y": 2
+          },
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "memory_echo_frame",
+          "title": "00:21 감사관 홀로그램",
+          "subtitle": "가상 생존의 의심",
+          "back": "윤세라가 같은 문장을 거의 오차 없이 반복하고 있다. 실시간 대화였다는 증거는 없다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "memory_emptied_chair",
+          "title": "진료실 빈 의자",
+          "subtitle": "감사관의 마지막 방문",
+          "back": "진료실에 남은 두 개의 신경 기록 날짜 중 하나가 늦게 덮어씌워져 있다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": {
+            "floor": "lab",
+            "x": 4,
+            "y": 2
+          },
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "memory_id_overlap",
+          "title": "겹치는 생체 계정",
+          "subtitle": "신분 도용 · 의뢰인 두 사람",
+          "back": "노바와 다른 계정의 생체 특징이 동일하지만 법적 소유자가 다르다. 기억 복제 사업이 진행됐음을 암시한다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "memory_underground_bill",
+          "title": "불법 배송 대금",
+          "subtitle": "솔의 암시장 운송",
+          "back": "윤세라가 거래 증거를 확보하려고 솔에게 면책을 약속했다. 거래를 했다는 사실만으로 솔이 범인은 아니다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "memory_exmate_memo",
+          "title": "과거 공안 정비 기록",
+          "subtitle": "아틀라스와 이온의 관계",
+          "back": "두 사람이 과거 격리 프로토콜을 함께 시험했다. 격리 장벽을 조작할 수 있는 사람이 반드시 공안 요원인 것은 아니다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "memory_legal_hold",
+          "title": "인공인격 삭제 명령",
+          "subtitle": "미라와 에코가 다툰 이유",
+          "back": "감사관은 불법 기억 복제 자료를 일괄 증거로 봉인하려 했고 에코는 자신의 존재가 위험하다고 느꼈다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "memory_emergency_log",
+          "title": "EMP 격리 경보",
+          "subtitle": "00:30 · 통신 차단",
+          "back": "구역 격리 명령은 실제 전력 사고가 아니라 긴급 진단 정보에서 시작된 것으로 기록됐다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": {
+            "floor": "lab",
+            "x": 4,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "memory_coat_camera",
+          "title": "기억실 출입 감시 영상",
+          "subtitle": "정비복과 장비 케이스",
+          "back": "00:08 기록된 인물은 정비복을 입고 있었고 손에는 익숙한 기계 공구 케이스가 있었다. 얼굴은 가려졌다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "memory_voice_repeat",
+          "title": "홀로그램 음성 중복",
+          "subtitle": "가상 생존 영상의 정체",
+          "back": "00:21 영상에서 윤세라의 같은 숨소리가 동일한 길이로 두 번 나타났다. 사전 저장한 잔향일 가능성이 높다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "memory_fake_patient",
+          "title": "허위 감염 검사 통보",
+          "subtitle": "격리 경고의 근거",
+          "back": "EMP 필드를 켠 이유로 사용된 감염자 기록은 비어 있다. 누군가 시스템을 고의로 봉쇄했을 가능성이 있다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "memory_core_key",
+          "title": "깊은 기억 금고 중계 키",
+          "subtitle": "2차 · 심층 코어 보관실",
+          "back": "중계 장비와 금고를 열 수 있는 복구 키다. 봉쇄된 기록과 도시 교신 단절 기록을 함께 확인할 수 있다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation2",
+          "requiresPresence": true,
+          "location": {
+            "floor": "lab",
+            "x": 4,
+            "y": 8
+          },
+          "grant": {
+            "id": "memory_relay_key",
+            "name": "기억 코어 중계 키",
+            "description": "코어 보관실 문을 열고 행동 단계 도시 교신을 복구한다."
+          },
+          "insights": {}
+        },
+        {
+          "id": "memory_backup_before",
+          "title": "00:16 이전 마지막 기억",
+          "subtitle": "2차 · 감사관 마지막 감정",
+          "back": "윤세라는 누군가에게 “네 동생의 신분은 살리겠지만 기록을 지우지는 않겠다”고 말했다. 상대방은 강한 불안을 보였다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "hidden",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation2",
+          "requiresPresence": true,
+          "location": {
+            "floor": "core",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "memory_ghost_sequence",
+          "title": "디지털 잔향 재생 시각",
+          "subtitle": "2차 · 00:21의 정체",
+          "back": "00:21 등장한 윤세라는 실제 생존자가 아니라 이전에 저장된 발화 모델이었다. 음성의 메타데이터는 사망 이전 시각을 가리킨다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [
+            "memory_voice_repeat"
+          ],
+          "visibility": "hidden",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation2",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "memory_implant_receipt",
+          "title": "불법 복원 절차 기록",
+          "subtitle": "2차 · 승인자 추적",
+          "back": "00:08에서 00:16 사이 윤세라가 위험한 복원 절차에 노출되었다. 기록에 찍힌 감독 승인 권한은 정비 구역 관리자에게 할당돼 있었다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation2",
+          "requiresPresence": true,
+          "location": {
+            "floor": "core",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "memory_compromised_tag",
+          "title": "정비 토큰의 잔존 흔적",
+          "subtitle": "2차 · 이온과의 대조",
+          "back": "기억실 제어기에서 발견된 식별 흔적이 이온의 구형 정비 토큰과 같은 묶음으로 발행됐다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [
+            "memory_coat_camera"
+          ],
+          "visibility": "hidden",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation2",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "memory_ion_sibling",
+          "title": "대체 신원 계약서",
+          "subtitle": "2차 · 살인 동기",
+          "back": "이온은 동생의 대체 신원을 지키기 위해 불법 기억 거래에 연루됐고 감사관이 그 정보를 공개할까 두려워했다. 가족의 어려움은 살인의 면책이 되지 않는다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "hidden",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation2",
+          "requiresPresence": true,
+          "location": {
+            "floor": "core",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "memory_emp_order",
+          "title": "EMP 작동 서명 사본",
+          "subtitle": "2차 · 교신 차단 주체",
+          "back": "격리 승인 시각 00:30은 감사관 사망보다 늦으며, 제출자의 정비 토큰 계열은 이온과 연결된다. 폭주 사고가 아닌 계획된 봉쇄였다는 증거.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "hidden",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation2",
+          "requiresPresence": true,
+          "location": {
+            "floor": "core",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "memory_core_backdoor",
+          "title": "서버 보존 우회 감사 기록",
+          "subtitle": "2차 · 사라진 원본",
+          "back": "범인이 감사관의 원본 삭제를 시도했으나 원본 해시 복구 기능이 작동했다. 사라진 파일을 완전히 지웠다는 주장은 거짓이다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation2",
+          "requiresPresence": false,
+          "location": {
+            "floor": "core",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "memory_bio_echo",
+          "title": "인격 복제의 법적 차이",
+          "subtitle": "2차 · 진짜 사람과 재생 영상",
+          "back": "독립적 인격인 에코와 재생 전용 윤세라 잔향 영상은 다르다. 인공인격이라는 이유만으로 에코가 범인이라는 주장은 논리적으로 성립하지 않는다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [
+            "memory_legal_hold"
+          ],
+          "visibility": "hidden",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation2",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "memory_shutdown_map",
+          "title": "EMP 필드 종료 절차 문서",
+          "subtitle": "2차 · 통신 복구",
+          "back": "안전 계전의 핵심 부품이 고장난 것이 아니라 사람이 격리 명령을 승인했다. 복구 키를 이용해 통신을 재개할 수 있다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation2",
+          "requiresPresence": true,
+          "location": {
+            "floor": "core",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "memory_security_ledger",
+          "title": "교차 확인한 출입 기록",
+          "subtitle": "2차 · 정비권한 로그",
+          "back": "기억실 입장·환자 관리 권한·EMP 승인 권한이 같은 정비 담당자 그룹에 묶였다. 아틀라스의 과거 계정과 이온의 현역 계정을 구별해야 한다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [
+            "memory_id_overlap",
+            "memory_emergency_log"
+          ],
+          "visibility": "hidden",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation2",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "memory_culprit_reconstruction",
+          "title": "사망·홀로그램·EMP 종합 재구성",
+          "subtitle": "2차 · 세 사건의 연결",
+          "back": "00:08 위험한 절차 승인, 00:16 실물 사망, 00:21 사전 재생 홀로그램, 00:30 인위적 EMP 격리. 이 네 시각을 하나의 행위자로 묶어야 한다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [
+            "memory_body_scan",
+            "memory_ghost_sequence"
+          ],
+          "visibility": "hidden",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation2",
+          "requiresPresence": true,
+          "location": {
+            "floor": "core",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "memory_original_rights",
+          "title": "원본 기억 보관 계약",
+          "subtitle": "2차 · 노바의 잃어버린 6개월",
+          "back": "노바의 잃어버린 기억이 동의 없이 다른 신분 사업에 활용되었다. 감사관은 이를 회복하려 했지만 살해로 인해 절차가 중단됐다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation2",
+          "requiresPresence": false,
+          "location": {
+            "floor": "core",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "memory_why_sealed",
+          "title": "격리 지침의 모순",
+          "subtitle": "2차 · 거짓 봉쇄 원인",
+          "back": "격리 필드는 원래 외부 재난을 막는 안전 기능이지만, 사건 당일 경보 요건은 충족되지 않았다. 통신 차단 자체가 범인의 은폐 수단이었다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation2",
+          "requiresPresence": false,
+          "location": {
+            "floor": "core",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {}
+        }
+      ]
+    },
+    "action": {
+      "order": [
+        "rune",
+        "nova",
+        "mira",
+        "atlas",
+        "echo",
+        "sol",
+        "ion"
+      ],
+      "intro": "격리 필드가 불안정해지면 각자 숨긴 기술과 소지품을 행동 순서에 따라 단 한 번 사용한다.",
+      "roles": {
+        "nova": [
+          {
+            "id": "cover",
+            "title": "실버 패치 방호",
+            "kind": "guard",
+            "description": "보호 패치로 한 참가자의 다음 위협을 막는다.",
+            "targetMode": "any",
+            "requiresItem": "nova_shield_patch",
+            "publicText": "실버 패치 방호"
+          }
+        ],
+        "rune": [
+          {
+            "id": "diagnose",
+            "title": "신경 흔적 감식",
+            "kind": "reveal",
+            "description": "검시로 입증한 사망 시각과 영상의 모순을 공개한다.",
+            "targetMode": "none",
+            "requiresItem": "rune_medical_scanner",
+            "publicText": "신경 흔적 감식"
+          }
+        ],
+        "ion": [
+          {
+            "id": "surge",
+            "title": "펄스 블레이드",
+            "kind": "attack",
+            "description": "허구적 신경 펄스 무기로 한 사람에게 추가 사망 효과를 준다.",
+            "targetMode": "other",
+            "requiresItem": "ion_pulse_blade",
+            "publicText": "펄스 블레이드"
+          }
+        ],
+        "mira": [
+          {
+            "id": "injunction",
+            "title": "인격 임시 금지 명령",
+            "kind": "restrain",
+            "description": "법적 보호 명령으로 한 사람의 다음 행동을 제한한다.",
+            "targetMode": "other",
+            "requiresItem": "mira_legal_patch",
+            "publicText": "인격 임시 금지 명령"
+          }
+        ],
+        "atlas": [
+          {
+            "id": "guard",
+            "title": "공안 방패 세우기",
+            "kind": "guard",
+            "description": "개인 방호 방패로 한 참가자의 다음 공격을 막는다.",
+            "targetMode": "any",
+            "requiresItem": "atlas_riot_shield",
+            "publicText": "공안 방패 세우기"
+          }
+        ],
+        "echo": [
+          {
+            "id": "broadcast",
+            "title": "에코의 기억 증언",
+            "kind": "reveal",
+            "description": "00:21 영상의 반복 패턴을 모두에게 알린다.",
+            "targetMode": "none",
+            "requiresItem": "echo_backup_hash",
+            "publicText": "에코의 기억 증언"
+          },
+          {
+            "id": "escape",
+            "title": "오프라인 탈출 신호",
+            "kind": "escape",
+            "description": "복구된 중계 키로 도시 교신 복구를 알린다.",
+            "targetMode": "self",
+            "requiresItem": "memory_relay_key",
+            "publicText": "오프라인 탈출 신호"
+          }
+        ],
+        "sol": [
+          {
+            "id": "relay",
+            "title": "봉쇄 구역 탈출 신호",
+            "kind": "escape",
+            "description": "중계 키를 사용해 격리 구역에서 도시로 교신한다.",
+            "targetMode": "self",
+            "requiresItem": "memory_relay_key",
+            "publicText": "봉쇄 구역 탈출 신호"
+          }
+        ]
+      },
+      "endingNotes": "진범 판정과 기억 인권 목표는 수동 점수 판정. 탈출은 키가 있을 때만 성공한다."
+    }
+  },
+  "creatorGuide": {
+    "warning": "제작자 전용 스포일러. 독창적 사이버펑크 SF 추리극으로 기존 애니메이션 설정·캐릭터는 사용하지 않음.",
+    "culprit": "이온",
+    "victim": "윤세라(NPC), 불법 기억 거래 감사를 준비했던 실물 감사관",
+    "solution": "이온은 동생의 불법 대체 신분 계약서가 폭로되는 것을 막으려 기억보존국 장비 관리자 권한을 악용해 윤세라를 위험한 복원 절차에 노출시켰다. 실제 사망은 00:16. 00:21의 영상은 사전 저장된 디지털 잔향이며 살아 있는 감사관이 아니다. 00:30 EMP 격리 역시 실제 감염 때문이 아닌 살인 은폐용 거짓 승인이다.",
+    "trueTimeline": [
+      "23:50 윤세라의 불법 신분 거래 폭로 예고",
+      "00:08 이온의 기억실 출입",
+      "00:16 윤세라 실물 사망",
+      "00:21 미리 저장된 디지털 잔향 영상 송출",
+      "00:30 이온이 허위 경보를 승인해 EMP 격리 발동",
+      "01:05 원본 시신 발견"
+    ],
+    "proof": [
+      "신체 감식 스캔과 영상의 반복 호흡 패턴은 디지털 잔향을 입증한다.",
+      "구형 정비 토큰과 기억실 출입 기록이 이온에게 연결된다.",
+      "거짓 감염 경보와 EMP 승인 서명이 살인 은폐를 입증한다.",
+      "동생의 대체 신분 계약서는 직접적인 동기를 설명한다."
+    ],
+    "redHerrings": [
+      "룬은 과거 동의 없는 기억 복원으로 면허가 말소됐다.",
+      "미라는 법적 청원과 불법 복제 거래의 모순을 숨긴다.",
+      "에코는 AI이지만 직접 살인에 이용된 영상 파일과는 다른 자율 인격이다.",
+      "솔은 불법 기억 운송을 했으나 감사관의 면책 증언인이었다."
+    ],
+    "endings": {
+      "solved": "코어 안의 보존된 기억과 실제 시신이 서로 다른 존재라는 사실이 입증된다. 이온의 거짓 격리 서명이 공개되고, 도시는 기억의 법적 권리를 다시 묻게 된다.",
+      "unsolved": "EMP 장벽이 꺼진 뒤에도 진실은 복제 기록 속에 묻힌다. 윤세라의 죽음은 사고로 끝나고 거래된 신원은 다시 시장에 나온다."
+    },
+    "actionDesign": "기억 기술은 공격, 법적 제압, 방어, 진실 공개, 도시 통신 탈출로 추상화한다. 현실 구현 가능한 의료/전력 절차를 제공하지 않는 서사적 효과다."
+  }
+}
