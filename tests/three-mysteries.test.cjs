@@ -199,6 +199,22 @@ test('host advances full six-player academy after all action turns; no role secr
  assert.equal(innocentView.ending.editor,undefined);
  assert.equal(innocentView.ending.personal.goalText,cases[2].game.booklets[cases[2].story.characters[1].id].objectives);
  assert.notEqual(innocentView.ending.personal.characterId,achieved.data.ending.personal.characterId);
+ const secondRole=cases[2].story.characters[1].id;
+ assert.equal((await post(1,ep+'/verdict-status',{characterId:secondRole,status:'dead'})).status,403);
+ assert.equal((await post(0,ep+'/verdict-goal',{characterId:secondRole,achieved:false})).status,200);
+ for(const [override,expected] of [['restrained','restrained'],['escaped','escaped'],['dead','dead'],['auto','alive']]){
+  assert.equal((await post(0,ep+'/verdict-status',{characterId:secondRole,status:override})).status,200);
+  const {ending}= (await call(1,ep)).data;
+  assert.equal(ending.common.captured,true);
+  assert.equal(ending.personal.status,expected);
+  assert.equal(ending.personal.goalMet,false);
+  assert.ok(ending.personal.paragraphs.includes(cases[2].game.ending.characters[secondRole][expected]));
+ }
+ assert.equal((await post(0,ep+'/verdict-status',{characterId:murderer,status:'dead'})).status,200);
+ const missed=(await call(1,ep)).data.ending.common;
+ assert.equal(missed.verdictType,'unresolved');
+ assert.equal(missed.arrestedName,null);
+ assert.equal((await post(0,ep+'/verdict-arrest',{characterId:murderer})).status,409);
  const victim=(await call(6,ep)).data;
  assert.equal(victim.ending,null,'a visitor must never receive private endings');
  assert.equal((await post(0,ep+'/verdict-arrest',{characterId:'not_a_character'})).status,400);
