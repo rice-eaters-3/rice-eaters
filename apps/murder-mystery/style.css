@@ -423,3 +423,75 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(-
  .book-cast-portrait{height:180px}
  .map-sprite{width:17px;min-width:17px;height:19px}
 }
+
+
+/* Per-story color direction follows the corresponding original art board. */
+#app[data-story="d1-crown-of-ashes"],#testStage[data-story="d1-crown-of-ashes"]{
+ --case-accent:#d9b477;--case-dark:#302334;--case-halo:#b07a632b;--case-card:#392b36;
+ --case-paper:#efe3cb;--case-ink:#392c2b
+}
+#app[data-story="cruel-heart-island"],#testStage[data-story="cruel-heart-island"]{
+ --case-accent:#e9a2bd;--case-dark:#493148;--case-halo:#f299c33d;--case-card:#483043;
+ --case-paper:#fff0f4;--case-ink:#6d3b57
+}
+#app[data-story="neon-memory-quarantine"],#testStage[data-story="neon-memory-quarantine"]{
+ --case-accent:#6ee4f2;--case-dark:#14273c;--case-halo:#26aed93f;--case-card:#172940;
+ --case-paper:#dbeaf1;--case-ink:#24334f
+}
+#app[data-story="stellar-academy-first-case"],#testStage[data-story="stellar-academy-first-case"]{
+ --case-accent:#e6cd97;--case-dark:#26324b;--case-halo:#9f99df30;--case-card:#2b344e;
+ --case-paper:#f4edde;--case-ink:#344057
+}
+#app[data-story] .character-card,#testStage[data-story] .character-card{
+ background:linear-gradient(155deg,var(--case-card,#293448),var(--case-dark,#1c293a));
+ border-color:color-mix(in srgb,var(--case-accent,#ad8f73) 53%,transparent)
+}
+#app[data-story] .char-illustration,#testStage[data-story] .char-illustration{
+ background:radial-gradient(circle at 55% 25%,var(--case-halo,#a38b9b29),
+ var(--case-dark,#222c3b) 77%);
+ border-color:color-mix(in srgb,var(--case-accent,#b9a28e) 65%,transparent)
+}
+#app[data-story] .character-card:hover,#testStage[data-story] .character-card:hover{
+ box-shadow:0 9px 28px color-mix(in srgb,var(--case-accent,#e6b87a) 20%,transparent);
+ border-color:var(--case-accent,#e6b87a)
+}
+#app[data-story] .room-header,#testStage[data-story] .test-game-head{
+ background:linear-gradient(110deg,var(--case-dark,#222e41) 10%,#182334 92%);
+ border-color:var(--case-accent,#8e95a3)
+}
+#app[data-story] .room-header .eyebrow,#testStage[data-story] .eyebrow{
+ color:var(--case-accent,#f3d1a4)
+}
+#app[data-story] .research-card,#testStage[data-story] .research-card{
+ background:var(--case-dark,#4d405a);
+ border:1px solid color-mix(in srgb,var(--case-accent,#ad90a3) 70%,transparent);
+ box-shadow:0 5px 18px #10121b77
+}
+#app[data-story] .research-frame,#testStage[data-story] .research-frame{
+ background:linear-gradient(150deg,var(--case-paper,#f4efdf),#ebe4db);
+ color:var(--case-ink,#433b42);
+ border-color:var(--case-accent,#ddceba)
+}
+#app[data-story] .research-meta,#testStage[data-story] .research-meta{
+ color:var(--case-ink,#433b42)
+}
+#app[data-story] .research-illustration,#testStage[data-story] .research-illustration{
+ border-color:var(--case-accent,#bda477)
+}
+#app[data-story] .book-portrait.illustrated-portrait,
+#testStage[data-story] .book-portrait.illustrated-portrait{
+ border-color:var(--case-accent,#bea478)
+}
+#app[data-story] .folio,#testStage[data-story] .folio{
+ border-color:var(--case-accent,#bb9b78)
+}
+.story-illustration{
+ width:100%;height:215px;display:grid;place-items:center;overflow:hidden;
+ background:radial-gradient(ellipse at 50% 25%,#46435b,#202337);
+ margin:15px 0 20px;border-radius:11px;
+ border:1px solid #b19873a6;box-shadow:inset 0 0 24px #0d11203f
+}
+.story-illustration svg.mystery-story-cover{width:100%;height:100%;display:block;object-fit:contain}
+@media(max-width:750px){
+ .story-illustration{height:145px}
+}
