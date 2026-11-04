@@ -6,6 +6,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
 const d1Case = require('./mystery-content/d1-gaming.case.json');
+const actionEngine = require('./mystery-content/action-engine.js');
 const privateMysteries = {
   'midnight-manor':require('./mystery-content/midnight-manor.js'),
   'd1-crown-of-ashes':{...d1Case.game,spawn:d1Case.spawn}
@@ -68,7 +69,8 @@ function phaseReadiness(room){
     room.phase==='study'?room.players.filter(p=>p.studyReady).length:
     next?room.players.filter(p=>room.advanceVotes?.[p.id]===true).length:0;
   return {next,ready,total:room.players.length,canAdvance:!!next&&
-    room.players.length===storyById(room.storyId).players&&ready===room.players.length};
+    room.players.length===storyById(room.storyId).players&&ready===room.players.length&&
+    (room.phase!=='action'||!gameFor(room).action||room.actions?.done===true)};
 }
 function occupantCount(room,pos,exceptId){
   return room.players.filter(p=>p.id!==exceptId&&positionFor(room,p)?.floor===pos.floor
@@ -303,6 +305,9 @@ function roomView(room,sid){
     basic:{name:char.name,role:char.role,hint:char.hint,symbol:char.symbol,accent:char.accent},
     background:notes.background,timeline:notes.timeline,inventory:notes.inventory,
     culprit:notes.culprit,objectives:notes.objectives,notes:notes.notes,
+    actionOrder:game.action?.order?.indexOf(char.id)+1||null,
+    actionNotes:notes.actionNotes||null,
+    actionAbilities:game.action?.roles?.[char.id]||[],
     shared:{synopsis:story.synopsis,characters:story.characters}
   }:null;
   const myPos=member&&positionFor(room,member);
@@ -338,6 +343,8 @@ function roomView(room,sid){
     synopsis:isMember&&room.phase!=='lobby'?story.synopsis:null,
     characters:isMember&&!['lobby','synopsis'].includes(room.phase)?story.characters:null,
     booklet,map,investigation:investigationView(room,member),
+    action:isMember&&['action','ending'].includes(room.phase)&&room.actions?
+      actionEngine.view(room,member,game):null,
     whispers:isMember&&PLAY_PHASES.includes(room.phase)?publicWhispers(room,member):null
   };
 }
@@ -425,7 +432,7 @@ async function api(req,res,url,sid){
     ownedPlayer(room,sid);
     return subscribe(req,res,room,sid);
   }
-  const match=pathname.match(/^\/api\/rooms\/([A-Z2-9]{6})(?:\/(join|start|advance|advance-vote|advance-unvote|read|character|leave|study-ready|move|interact|reserve|release|investigate|card-public|card-share|card-unshare|exchange-offer|exchange-reply|exchange-cancel|whisper-request|whisper-vote|whisper-leave|signal|signals))?$/);
+  const match=pathname.match(/^\/api\/rooms\/([A-Z2-9]{6})(?:\/(join|start|act|advance|advance-vote|advance-unvote|read|character|leave|study-ready|move|interact|reserve|release|investigate|card-public|card-share|card-unshare|exchange-offer|exchange-reply|exchange-cancel|whisper-request|whisper-vote|whisper-leave|signal|signals))?$/);
   if(req.method==='GET'&&match&&match[2]==='signals'){
     const room=roomOrFail(match[1]),me=ownedPlayer(room,sid);
     const after=Math.max(0,Number(url.searchParams.get('after'))||0);
@@ -573,9 +580,19 @@ async function api(req,res,url,sid){
         inv.tokens[p.id]=(inv.tokens[p.id]||0)+(spec?.tokensPerSecondInvestigation??4);
       inv.reserved={};
     }
+    if(progress.next==='action'&&gameFor(room).action)
+      actionEngine.init(room,gameFor(room));
     phaseChange(room,progress.next,sid);
     persist();sendState(room);
     return json(res,200,roomView(room,sid));
+  }
+  if(action==='act'){
+    if(room.phase!=='action'||!gameFor(room).action)
+      fail(409,'현재 행동을 사용할 수 있는 단계가 아닙니다.');
+    actionEngine.submit(room,player,gameFor(room),body);
+    logActivity('role_action',sid,{room:room.id,turn:room.actions.cursor,
+      done:room.actions.done});
+    persist();sendState(room);return json(res,200,roomView(room,sid));
   }
   if(action==='move'){
     if(!PLAY_PHASES.includes(room.phase))fail(409,'현재 지도 이동 단계가 아닙니다.');
