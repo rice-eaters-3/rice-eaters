@@ -17,6 +17,10 @@ window.MysteryStudy=(function(){
     (b.inventory||[]).forEach(t=>result.push(page(3,'<div class="item-stamp">POSSESSION</div><h4>'+esc(t.name)+'</h4>'+para(t.description))));
     result.push(page(4,'<div class="verdict '+(b.culprit?'guilty':'innocent')+'"><span>나의 범인 여부</span><strong>'+(b.culprit?'당신은 범인입니다.':'당신은 범인이 아닙니다.')+'</strong></div>'));
     result.push(page(5,para(b.objectives)+'<p class="book-footnote">승점은 게임 종료 후 수동으로 판정합니다.</p>'));
+    (b.shared?.synopsis||[]).forEach(t=>result.push(page(6,'<h4>공용 시놉시스</h4>'+para(t))));
+    const chars=b.shared?.characters||[];
+    for(let i=0;i<chars.length;i+=2)result.push(page(6,'<h4>등장인물의 공개 정보</h4>'+chars.slice(i,i+2).map(c=>'<p><b>'+esc(c.name)+'</b> — '+esc(c.role)+'<br>'+esc(c.hint)+'</p>').join('')));
+    result.push(page(6,'<h4>건물 약도</h4><p>지도 화면에서 I 키 또는 「지도 돌아가기」를 누르면 건물의 구조와 플레이어 위치를 확인할 수 있습니다.</p>'));
     if(b.actionOrder){
       const abilityText=(b.actionAbilities||[]).map(a=>
         '<h4>'+esc(a.title)+'</h4>'+para(a.description)+
@@ -28,10 +32,7 @@ window.MysteryStudy=(function(){
         '<p class="book-footnote">행동 단계에서 내 차례가 되면 아래 행동 중 하나를 선택할 수 있습니다. 일단 선택하면 되돌릴 수 없습니다.</p>'+
         (abilityText||'<p>캐릭터 고유 행동이 지정되지 않았습니다.</p>')));
     }
-    (b.shared?.synopsis||[]).forEach(t=>result.push(page(6,'<h4>공용 시놉시스</h4>'+para(t))));
-    const chars=b.shared?.characters||[];
-    for(let i=0;i<chars.length;i+=2)result.push(page(6,'<h4>등장인물의 공개 정보</h4>'+chars.slice(i,i+2).map(c=>'<p><b>'+esc(c.name)+'</b> — '+esc(c.role)+'<br>'+esc(c.hint)+'</p>').join('')));
-    result.push(page(6,'<h4>건물 약도</h4><p>지도 화면에서 I 키 또는 「지도 돌아가기」를 누르면 건물의 구조와 플레이어 위치를 확인할 수 있습니다.</p>'));
+
     return result;
   }
   function book(room){
