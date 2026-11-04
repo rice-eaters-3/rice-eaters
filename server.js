@@ -423,7 +423,7 @@ async function api(req,res,url,sid){
     if(story){
       const game=privateMysteries[storyId];
       if(!game)fail(404,'시나리오 테스트 파일이 없습니다.');
-      return json(res,200,{format:'rice-mystery-v1',story,game,spawn:game.spawn||{}});
+      return json(res,200,{format:'rice-mystery-v1',story,game,spawn:game.spawn||game.floorplan?.spawn||{}});
     }
     const entry=db.customStories[storyId];
     if(!entry||entry.owner!==sid)fail(403,'자신이 등록한 시나리오만 테스트할 수 있습니다.');
