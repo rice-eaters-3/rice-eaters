@@ -727,6 +727,40 @@
             "toY": 5,
             "label": "심층으로 내려가기"
           }
+        ],
+        "objects": [
+          {
+            "id": "prop_terminal_1",
+            "kind": "terminal",
+            "x": 3,
+            "y": 2,
+            "name": "시민권 법정 홀로그램",
+            "solid": false
+          },
+          {
+            "id": "prop_sofa_2",
+            "kind": "sofa",
+            "x": 14,
+            "y": 2,
+            "name": "시민 대기 소파",
+            "solid": false
+          },
+          {
+            "id": "prop_cabinet_3",
+            "kind": "cabinet",
+            "x": 3,
+            "y": 8,
+            "name": "기억 칩 거래 창구",
+            "solid": false
+          },
+          {
+            "id": "prop_camera_4",
+            "kind": "camera",
+            "x": 14,
+            "y": 8,
+            "name": "신원 확인 게이트",
+            "solid": false
+          }
         ]
       },
       {
@@ -879,6 +913,48 @@
             "toY": 5,
             "label": "심층으로 내려가기"
           }
+        ],
+        "objects": [
+          {
+            "id": "prop_medical_1",
+            "kind": "medical",
+            "x": 3,
+            "y": 2,
+            "name": "신경 의료 침대",
+            "solid": false
+          },
+          {
+            "id": "prop_pod_2",
+            "kind": "pod",
+            "x": 14,
+            "y": 2,
+            "name": "기억 추출 포드",
+            "solid": false
+          },
+          {
+            "id": "prop_generator_3",
+            "kind": "generator",
+            "x": 3,
+            "y": 8,
+            "name": "EMP 계전 패널",
+            "solid": false
+          },
+          {
+            "id": "prop_terminal_4",
+            "kind": "terminal",
+            "x": 14,
+            "y": 8,
+            "name": "기억 영상 재생기",
+            "solid": false
+          },
+          {
+            "id": "prop_cabinet_5",
+            "kind": "cabinet",
+            "x": 16,
+            "y": 8,
+            "name": "의료 기록 보관함",
+            "solid": false
+          }
         ]
       },
       {
@@ -1022,6 +1098,48 @@
             "toX": 9,
             "toY": 5,
             "label": "상층으로 돌아가기"
+          }
+        ],
+        "objects": [
+          {
+            "id": "prop_pod_1",
+            "kind": "pod",
+            "x": 3,
+            "y": 2,
+            "name": "인격 보존 셸",
+            "solid": false
+          },
+          {
+            "id": "prop_server_2",
+            "kind": "server",
+            "x": 14,
+            "y": 2,
+            "name": "데이터 격리 서버",
+            "solid": false
+          },
+          {
+            "id": "prop_server_3",
+            "kind": "server",
+            "x": 3,
+            "y": 8,
+            "name": "원본 백업 랙",
+            "solid": false
+          },
+          {
+            "id": "prop_cabinet_4",
+            "kind": "cabinet",
+            "x": 14,
+            "y": 8,
+            "name": "봉인 기억 금고",
+            "solid": false
+          },
+          {
+            "id": "prop_terminal_5",
+            "kind": "terminal",
+            "x": 16,
+            "y": 8,
+            "name": "감사 승인 터미널",
+            "solid": false
           }
         ]
       }

@@ -308,7 +308,7 @@ function roomView(room,sid){
   const char=member&&story.characters.find(c=>c.id===member.characterId);
   const notes=isMember&&PLAY_PHASES.includes(room.phase)&&char?game.booklets?.[char.id]:null;
   const booklet=notes?{
-    basic:{name:char.name,role:char.role,hint:char.hint,symbol:char.symbol,accent:char.accent},
+    basic:{id:char.id,name:char.name,role:char.role,hint:char.hint,symbol:char.symbol,accent:char.accent},
     background:notes.background,timeline:notes.timeline,inventory:notes.inventory,
     culprit:notes.culprit,objectives:notes.objectives,notes:notes.notes,
     actionOrder:game.action?.order?.indexOf(char.id)+1||null,
@@ -319,7 +319,7 @@ function roomView(room,sid){
   const myPos=member&&positionFor(room,member);
   const floor=myPos&&floorFor(room,myPos.floor);
   const map=floor&&PLAY_PHASES.includes(room.phase)?{
-    title:floor.title,legend:floor.legend,tiles:floor.tiles,rooms:floor.rooms,
+    title:floor.title,legend:floor.legend,tiles:floor.tiles,rooms:floor.rooms,objects:floor.objects||[],
     floorId:floor.id,floors:floorsFor(room).map(f=>({id:f.id,title:f.title})),
     portals:floor.portals||[],areas:floor.areas||[],
     doors:(floor.doors||[]).map(d=>({
@@ -615,6 +615,8 @@ async function api(req,res,url,sid){
     const x=previous.x+dx,y=previous.y+dy;
     if(y<0||y>=floorplan.tiles.length||x<0||x>=floorplan.tiles[y].length||
       floorplan.tiles[y][x]!=='.')fail(409,'벽이나 지도 밖으로 이동할 수 없습니다.');
+    if((floorplan.objects||[]).some(o=>o.solid&&o.x===x&&o.y===y))
+      fail(409,'가구나 오브젝트가 놓인 칸으로 이동할 수 없습니다.');
     const next={floor:current.floor,x,y};
     const door=(floorplan.doors||[]).find(d=>d.x===x&&d.y===y);
     if(door&&!doorState(room,floorplan,door).open)

@@ -2404,6 +2404,56 @@
             "toY": 6,
             "label": "위층 올라가기"
           }
+        ],
+        "objects": [
+          {
+            "id": "prop_sink_1",
+            "kind": "sink",
+            "x": 3,
+            "y": 9,
+            "name": "클라우드의 주방 싱크대",
+            "solid": false
+          },
+          {
+            "id": "prop_fridge_2",
+            "kind": "fridge",
+            "x": 7,
+            "y": 9,
+            "name": "업소용 대형 냉장고",
+            "solid": false
+          },
+          {
+            "id": "prop_stove_3",
+            "kind": "stove",
+            "x": 3,
+            "y": 10,
+            "name": "훠궈 조리대",
+            "solid": false
+          },
+          {
+            "id": "prop_table_4",
+            "kind": "table",
+            "x": 15,
+            "y": 3,
+            "name": "8인용 식탁",
+            "solid": false
+          },
+          {
+            "id": "prop_camera_5",
+            "kind": "camera",
+            "x": 14,
+            "y": 10,
+            "name": "D1 방송 카메라",
+            "solid": false
+          },
+          {
+            "id": "prop_plant_6",
+            "kind": "plant",
+            "x": 3,
+            "y": 2,
+            "name": "로비 장식 화분",
+            "solid": false
+          }
         ]
       },
       {
@@ -2553,6 +2603,56 @@
             "toX": 10,
             "toY": 6,
             "label": "위층 올라가기"
+          }
+        ],
+        "objects": [
+          {
+            "id": "prop_pc_1",
+            "kind": "pc",
+            "x": 3,
+            "y": 3,
+            "name": "프로게이머 연습용 컴퓨터",
+            "solid": false
+          },
+          {
+            "id": "prop_pc_2",
+            "kind": "pc",
+            "x": 7,
+            "y": 3,
+            "name": "D1 고성능 PC",
+            "solid": false
+          },
+          {
+            "id": "prop_desk_3",
+            "kind": "desk",
+            "x": 15,
+            "y": 3,
+            "name": "강의실 강사석",
+            "solid": false
+          },
+          {
+            "id": "prop_bed_4",
+            "kind": "bed",
+            "x": 3,
+            "y": 9,
+            "name": "합숙생 침대",
+            "solid": false
+          },
+          {
+            "id": "prop_bed_5",
+            "kind": "bed",
+            "x": 7,
+            "y": 9,
+            "name": "예비 침대",
+            "solid": false
+          },
+          {
+            "id": "prop_cabinet_6",
+            "kind": "cabinet",
+            "x": 15,
+            "y": 9,
+            "name": "카알의 사물함",
+            "solid": false
           }
         ]
       },
@@ -2706,6 +2806,48 @@
             "toY": 6,
             "label": "위층 올라가기"
           }
+        ],
+        "objects": [
+          {
+            "id": "prop_terminal_1",
+            "kind": "terminal",
+            "x": 4,
+            "y": 3,
+            "name": "보안 감시 모니터",
+            "solid": false
+          },
+          {
+            "id": "prop_server_2",
+            "kind": "server",
+            "x": 14,
+            "y": 3,
+            "name": "후원 기록 서버",
+            "solid": false
+          },
+          {
+            "id": "prop_server_3",
+            "kind": "server",
+            "x": 17,
+            "y": 3,
+            "name": "보조 서버 랙",
+            "solid": false
+          },
+          {
+            "id": "prop_generator_4",
+            "kind": "generator",
+            "x": 4,
+            "y": 9,
+            "name": "비상 통제 제어판",
+            "solid": false
+          },
+          {
+            "id": "prop_cabinet_5",
+            "kind": "cabinet",
+            "x": 14,
+            "y": 9,
+            "name": "무대 장비 보관함",
+            "solid": false
+          }
         ]
       },
       {
@@ -2848,6 +2990,48 @@
             "toX": 10,
             "toY": 6,
             "label": "아래층 내려가기"
+          }
+        ],
+        "objects": [
+          {
+            "id": "prop_throne_1",
+            "kind": "throne",
+            "x": 4,
+            "y": 3,
+            "name": "배익호의 왕좌",
+            "solid": false
+          },
+          {
+            "id": "prop_gargoyle_2",
+            "kind": "gargoyle",
+            "x": 15,
+            "y": 3,
+            "name": "가고일 전시 석상",
+            "solid": false
+          },
+          {
+            "id": "prop_statue_3",
+            "kind": "statue",
+            "x": 18,
+            "y": 3,
+            "name": "가고일 교단 장식물",
+            "solid": false
+          },
+          {
+            "id": "prop_camera_4",
+            "kind": "camera",
+            "x": 4,
+            "y": 9,
+            "name": "왕좌 복도 감시 장비",
+            "solid": false
+          },
+          {
+            "id": "prop_cabinet_5",
+            "kind": "cabinet",
+            "x": 15,
+            "y": 9,
+            "name": "봉인된 교단 기록 보관함",
+            "solid": false
           }
         ]
       }
