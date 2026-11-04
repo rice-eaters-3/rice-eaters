@@ -63,6 +63,7 @@ function storyPanel(){
     field('소개 문구','story.teaser',a.teaser,'textarea')+
     selectField('게임 일러스트 스타일 (기존 아트 이미지)','story.artTheme',artChoices,a.artTheme||'')+
     '<div class="studio-art-preview">'+(window.MysteryArt?.cover(visualStory())||'<p>시나리오 아트 스타일을 선택하면 실제 이미지가 여기에 표시됩니다.</p>')+'</div>'+
+    (window.MysteryArt?.victim(a)||'')+
     field('공용 시놉시스 (문단별 한 줄)','story.synopsis',a.synopsis.join('\n'),'textarea')+
     '</div><h3>페이즈별 권장 시간 (분)</h3><div class="editor-fields">'+
     Object.entries(doc.game.phaseMinutes).map(([key,value])=>field(key,'game.phaseMinutes.'+key,value,'number','min="1" max="240"')).join('')+

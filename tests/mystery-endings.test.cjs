@@ -124,5 +124,5 @@ test('Common and private ending renderer is shared by real game and test lab, no
  assert.match(testUi,/engine\.setGoal/);
  const art=fs.readFileSync(path.join(__dirname,'../apps/murder-mystery/illustrations.js'),'utf8');
  const win={};vm.runInNewContext(art,{window:win});
- assert.ok(win.MysteryArt.portrait({id:'jobi',name:'조비'},'d1-crown-of-ashes').includes('d1.webp'));
+ assert.ok(win.MysteryArt.portrait({id:'jobi',name:'조비'},'d1-crown-of-ashes').includes('portraits/d1-crown-of-ashes/jobi.webp'));
 });

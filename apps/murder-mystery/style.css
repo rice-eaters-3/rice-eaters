@@ -492,6 +492,9 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(-
  border:1px solid #b19873a6;box-shadow:inset 0 0 24px #0d11203f
 }
 .story-illustration svg.mystery-story-cover{width:100%;height:100%;display:block;object-fit:contain}
+.mystery-victim{display:flex;align-items:center;gap:12px;margin:12px 0 18px}
+.mystery-victim .real-portrait{width:92px;height:120px;flex:none}
+.mystery-victim small{display:block;margin-bottom:4px}
 @media(max-width:750px){
  .story-illustration{height:145px}
 }

@@ -35,15 +35,21 @@ test('every player, map prop and clue has a case illustration',()=>{
   const data=require('../mystery-content/'+filename);
   assert.equal(data.story.id,id);
   assert.equal(data.story.characters.length,cast);
+  if(data.story.victim){
+   const victim=art.victim(data.story);
+   assert.ok(victim.includes('portraits/'+id+'/'+data.story.victim.id+'.webp'));
+   assert.ok(victim.includes(data.story.victim.name));
+  }
   let tally=0;
   for(const character of data.story.characters){
    const visual=art.portrait(character,id);
    assert.match(visual,/<svg/);
-   assert.ok(visual.includes(file),character.id+' should use its own case artwork');
-   assert.ok(visual.includes('<image '),'player image must be clipped original art, not generated strokes');
+   const portraitFile=id==='d1-crown-of-ashes'?'portraits/'+id+'/'+character.id+'.webp':file;
+   assert.ok(visual.includes(portraitFile),character.id+' should use its own case artwork');
+   assert.ok(visual.includes('<image '),'player illustration should link a raster asset');
    assert.doesNotMatch(visual,/<path(?:\s|>)/,'no geometric cartoon portrait substitution');
    const avatar=art.avatar({characterId:character.id,name:character.name},id);
-   assert.ok(avatar.includes(file),'map avatar must use case artwork too');
+   assert.ok(avatar.includes(portraitFile),'map avatar must use case artwork too');
   }
   for(const floor of data.game.floors){
    for(const o of floor.objects||[]){
@@ -97,7 +103,7 @@ test('malicious labels are escaped in the real-art markup, and other scenarios f
  const v=art.portrait({id:'jobi',name:'조비 <img onerror=alert(1)>'},'d1-crown-of-ashes');
  assert.match(v,/&lt;img onerror=alert\(1\)&gt;/);
  assert.doesNotMatch(v,/<img /);
- assert.match(v,/<image href="\/apps\/murder-mystery\/assets\/d1\.webp"/);
+ assert.match(v,/<image href="\/apps\/murder-mystery\/assets\/portraits\/d1-crown-of-ashes\/jobi\.webp"/);
  // An attribute-like string inside escaped aria-label text must never
  // appear as an injected HTML element or executable handler.
  assert.doesNotMatch(v,/<img\s/i);
@@ -142,7 +148,9 @@ test('local HTTP server serves original and standalone artwork with image/webp M
  const independent=require('../mystery-content/d1-gaming.case.json').game.investigation.cards.slice(0,30)
   .map(({id})=>['','d1-crown-of-ashes','clues/d1-crown-of-ashes/'+id+'.webp']);
  const backgrounds=scenarios.map(([filename,id,file])=>[filename,id,'backgrounds/'+file.replace('.webp','-background.webp')]);
- for(const [,id,file] of [...scenarios,...independent,...backgrounds]){
+ const d1=require('../mystery-content/d1-gaming.case.json').story;
+ const portraits=[...d1.characters,d1.victim].map(({id})=>['',d1.id,'portraits/'+d1.id+'/'+id+'.webp']);
+ for(const [,id,file] of [...scenarios,...independent,...backgrounds,...portraits]){
   const response=await fetch(base+'/apps/murder-mystery/assets/'+file);
   assert.equal(response.status,200,id+' artwork must be browser-accessible');
   assert.match(response.headers.get('content-type')||'',/image\/webp/);

@@ -18,6 +18,9 @@ function validate(input){
   const story={id:'',title:text(raw.title,100),subtitle:text(raw.subtitle),genre:text(raw.genre,70),
     teaser:text(raw.teaser,700),minutes:int(raw.minutes||90,1,600,'예상 플레이 시간'),
     players,artTheme:artThemes.has(theme)?theme:'',synopsis:[],characters:[]};
+  const victim=obj(raw.victim);
+  if(typeof victim.id==='string'&&id.test(victim.id)&&text(victim.name,70))
+    story.victim={id:victim.id,name:text(victim.name,70)};
   if(!story.title)throw Error('스토리 제목을 입력하세요.');
   if(!Array.isArray(raw.synopsis)||!raw.synopsis.length||raw.synopsis.length>25)throw Error('시놉시스 문단이 필요합니다.');
   story.synopsis=raw.synopsis.map(x=>text(x,3000));

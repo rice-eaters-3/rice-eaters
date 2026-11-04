@@ -305,7 +305,7 @@ function online(room,p){
     Date.now()-(recentPresence.get(room.id)?.get(p.sid)||0)<PRESENCE_TTL_MS;
 }
 function publicStory(story){
-  return {id:story.id,artTheme:story.artTheme||'',title:story.title,subtitle:story.subtitle,teaser:story.teaser,genre:story.genre,minutes:story.minutes,players:story.players};
+  return {id:story.id,victim:story.victim,artTheme:story.artTheme||'',title:story.title,subtitle:story.subtitle,teaser:story.teaser,genre:story.genre,minutes:story.minutes,players:story.players};
 }
 function endingStatus(room){
   const toCharacter=ids=>(ids||[]).map(id=>room.players.find(p=>p.id===id)?.characterId).filter(Boolean);

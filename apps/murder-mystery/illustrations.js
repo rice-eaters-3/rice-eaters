@@ -128,8 +128,12 @@ window.MysteryArt=(function(){
  };
  const storyFor=id=>Object.hasOwn(A,id)?id:id==='d1-gaming'?'d1-crown-of-ashes':null;
  const knownStory=id=>A[storyFor(id)]||null;
- function artCrop(story,rect,css,alt){
-  const data=knownStory(story);
+ function standalonePortrait(story,id){
+  const theme=storyFor(story),data=knownStory(story);
+  if(theme!=='d1-crown-of-ashes'||!Object.hasOwn(data.portraits,id))return null;
+  return {...data,file:'portraits/'+theme+'/'+id+'.webp',size:[432,576]};
+ }
+ function artCrop(story,rect,css,alt,data=knownStory(story)){
   if(!data||!rect)return null;
   const [x,y,w,h]=rect, [width,height]=data.size;
   // All geometry is from our internal atlas manifest, never raw user fields.
@@ -208,6 +212,9 @@ window.MysteryArt=(function(){
    (portraitMode?12:13)+'" font-weight="600">'+(portraitMode?title:initials)+'</text></svg>';
  }
  function portrait(c,story,small=false){
+  const asset=standalonePortrait(story,c?.id);
+  const css='mystery-portrait real-portrait'+(small?' portrait-compact':'');
+  if(asset)return compose(story,[0,0,...asset.size],c.id,c.name+' 캐릭터 초상화',css,'portrait',c.accent,asset);
   const data=knownStory(story);
   const rect=data?.portraits?.[c?.id];
   // The dating and neon reference sheets present seven/eight figures in a
@@ -216,7 +223,7 @@ window.MysteryArt=(function(){
   const focused=rect&&['cruel-heart-island','neon-memory-quarantine'].includes(story)
     ?[rect[0],rect[1]+10,rect[2],Math.min(rect[3]-10,204)]:rect;
   if(focused)return compose(story,focused,c.id,c.name+' 캐릭터 초상화',
-   'mystery-portrait real-portrait'+(small?' portrait-compact':''),'portrait',c.accent);
+   css,'portrait',c.accent);
   return '<span class="mystery-unillustrated">'+escape(c?.symbol||'♟')+'</span>';
  }
  function clueKind(card,story){
@@ -298,6 +305,8 @@ window.MysteryArt=(function(){
     '<image href="'+path+'backgrounds/'+file+'" width="1024" height="440" preserveAspectRatio="xMidYMid slice"/></svg>';
  }
  function avatar(c,story){
+  const asset=standalonePortrait(story,c?.characterId);
+  if(asset)return artCrop(story,[86,38,270,270],'mystery-avatar-art',c.name+' 미니 아바타',asset);
   const data=knownStory(story);
   const rect=data?.portraits?.[c?.characterId];
   if(!rect)return null;
@@ -306,5 +315,11 @@ window.MysteryArt=(function(){
   const face=[x+Math.round(w*.2),y+Math.round(h*.13),Math.round(w*.62),Math.round(h*.59)];
   return artCrop(story,face,'mystery-avatar-art',c.name+' 미니 아바타');
  }
- return {portrait,clue,object,door,stairs,avatar,cover,clueKind,artCrop,atlas:A};
+ function victim(story){
+  const c=story?.victim,theme=story?.artTheme||story?.id;
+  if(!c||!Object.hasOwn(knownStory(theme)?.portraits||{},c.id))return '';
+  return '<figure class="mystery-victim">'+portrait(c,theme,true)+
+   '<figcaption><small>피해자 · NPC</small><b>'+escape(c.name)+'</b></figcaption></figure>';
+ }
+ return {portrait,victim,clue,object,door,stairs,avatar,cover,clueKind,artCrop,atlas:A};
 })();
