@@ -154,6 +154,7 @@ function render(){
   if(phase==='ending')body='<section class="test-ending surface panel-pad"><h3>결말 안내 · 진행자 검토</h3>'+
     '<p>이 시점에서는 행동 단계 결과와 확보한 증거를 확인하며 결말을 수동 판정합니다. 진범·개인 승점의 자동 계산은 현재 게임에 포함되지 않습니다.</p>'+
     '<p class="muted small">캐릭터 책자의 승리 목표를 비교하거나 다른 인물 시점으로 전환해 검토할 수 있습니다.</p></section>'+body;
+  $('testStage').dataset.story=room.story?.id||'';
   $('testStage').innerHTML=body;
   updateClock();
 }

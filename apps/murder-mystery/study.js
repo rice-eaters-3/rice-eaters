@@ -24,7 +24,10 @@ window.MysteryStudy=(function(){
     result.push(page(5,para(b.objectives)+'<p class="book-footnote">승점은 게임 종료 후 수동으로 판정합니다.</p>'));
     (b.shared?.synopsis||[]).forEach(t=>result.push(page(6,'<h4>공용 시놉시스</h4>'+para(t))));
     const chars=b.shared?.characters||[];
-    for(let i=0;i<chars.length;i+=2)result.push(page(6,'<h4>등장인물의 공개 정보</h4>'+chars.slice(i,i+2).map(c=>'<p><b>'+esc(c.name)+'</b> — '+esc(c.role)+'<br>'+esc(c.hint)+'</p>').join('')));
+    for(let i=0;i<chars.length;i+=2)result.push(page(6,'<h4>등장인물의 공개 정보</h4>'+
+      '<div class="book-cast-gallery">'+chars.slice(i,i+2).map(c=>
+        '<div class="book-cast-person"><div class="book-cast-portrait">'+portrait(c,room.story?.id,true)+'</div>'+
+        '<p><b>'+esc(c.name)+'</b><small>'+esc(c.role)+'</small>'+esc(c.hint)+'</p></div>').join('')+'</div>'));
     result.push(page(6,'<h4>건물 약도</h4><p>지도 화면에서 I 키 또는 「지도 돌아가기」를 누르면 건물의 구조와 플레이어 위치를 확인할 수 있습니다.</p>'));
     if(b.actionOrder){
       const abilityText=(b.actionAbilities||[]).map(a=>
@@ -92,11 +95,12 @@ window.MysteryStudy=(function(){
           (loc?'<span class="map-room-name">'+esc(loc.icon)+' '+esc(loc.name)+'</span>':
             zoneLabels.has(k)?'<span class="map-room-name region-name">'+esc(zoneLabels.get(k))+'</span>':'')+
           (furniture.length?'<span class="map-prop" title="'+esc(furniture.map(o=>o.name).join(' · '))+'">'+
-             furniture.map(o=>window.MysteryArt?.object(o)||'<span>✧</span>').join('')+'</span>':'')+
-           (portalsHere.length?'<span class="portal-sigil">⇅</span>':'')+
-          (door?'<span class="door-icon">'+(door.locked?'🔒':door.open?'◫':'🚪')+'</span>':'')+
+             furniture.map(o=>window.MysteryArt?.object(o,room.story?.id)||'<span>✧</span>').join('')+'</span>':'')+
+           (portalsHere.length?'<span class="portal-sigil">'+(window.MysteryArt?.stairs(portalsHere[0],room.story?.id)||'⇅')+'</span>':'')+
+          (door?'<span class="door-icon">'+(window.MysteryArt?.door(door,room.story?.id)||(door.locked?'🔒':door.open?'◫':'🚪'))+'</span>':'')+
           (cards.length?'<span class="tile-spark" title="조사 가능한 장소">✧</span>':'')+
-          (here.length?'<div class="map-sprites">'+here.map(a=>'<span class="map-sprite '+(a.id===room.me?'mine':'')+'" style="--sprite:'+esc(a.accent)+'" title="'+esc(a.name)+'">'+esc(a.symbol)+'</span>').join('')+'</div>':'')+
+          (here.length?'<div class="map-sprites">'+here.map(a=>'<span class="map-sprite '+(a.id===room.me?'mine':'')+'" style="--sprite:'+esc(a.accent)+'" title="'+esc(a.name)+'">'+
+              (window.MysteryArt?.avatar(a,room.story?.id)||esc(a.symbol))+'</span>').join('')+'</div>':'')+
           '</div>';
       })).join('')+'</div>';
   }
