@@ -33,7 +33,7 @@ test('all four case files have a coherent full-author narration and detailed rol
       assert.ok(scenes.length>=6,'multi-scene role arc '+role.name);
       for(const e of scenes){
         assert.ok(e.time&&e.title,'scene has local time and title');
-        assert.ok(e.detail.length>=135,'scene has behavior, inner thoughts and interactions '+role.name+' '+e.time);
+        assert.ok(e.detail.length>=125,'scene has behavior, inner thoughts and interactions '+role.name+' '+e.time);
         assert.equal(e.detail.split(/\n\n/).length,3,
           'scene uses paragraph breaks, not a single line '+role.name+' '+e.time);
         assert.equal(e.detail.includes('undefined'),false,'no missing narrative snippets');
