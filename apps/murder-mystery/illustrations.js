@@ -131,7 +131,12 @@ window.MysteryArt=(function(){
  function portrait(c,story,small=false){
   const data=knownStory(story);
   const rect=data?.portraits?.[c?.id];
-  if(rect)return artCrop(story,rect,'mystery-portrait real-portrait'+(small?' portrait-compact':''),c.name+' 캐릭터 초상화');
+  // The dating and neon reference sheets present seven/eight figures in a
+  // narrow single row. Zoom to their illustrated heads and shoulders, not
+  // the empty lower part of each full sheet cell.
+  const focused=rect&&['cruel-heart-island','neon-memory-quarantine'].includes(story)
+    ?[rect[0],rect[1]+10,rect[2],Math.min(rect[3]-10,204)]:rect;
+  if(focused)return artCrop(story,focused,'mystery-portrait real-portrait'+(small?' portrait-compact':''),c.name+' 캐릭터 초상화');
   return '<span class="mystery-unillustrated">'+escape(c?.symbol||'♟')+'</span>';
  }
  function clueKind(card,story){
