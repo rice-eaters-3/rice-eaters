@@ -30,10 +30,13 @@ test('Illustration renderer draws portraits and evidence art with HTML escaping'
  const p=art.portrait({id:'jobi',name:'조비 <img src=x>',accent:'#123456'},'d1-crown-of-ashes');
  assert.match(p,/<svg/);assert.match(p,/&lt;img/);assert.doesNotMatch(p,/<img/);
  const c=art.clue({id:'knife',title:'오염된 대형 식칼'},'d1-crown-of-ashes');
- assert.match(c,/<svg/);assert.match(c,/🔪/);
- assert.match(art.object({kind:'gargoyle'}),/🗿/);
+ assert.match(c,/<svg/);assert.match(c,/d1\.webp/);
+ assert.equal(art.clueKind({id:'cloud_tainted_cleaver',title:'오염된 대형 식칼'},'d1-crown-of-ashes'),'knife');
+ assert.match(art.object({kind:'gargoyle',name:'가고일 전시 조각상'},'d1-crown-of-ashes'),/d1\.webp/);
+ assert.match(p,/d1\.webp/);
+ assert.doesNotMatch(p,/<path/,'the portrait must be real artwork, not a geometric drawing');
 });
-test('Frontend loads vector art before book, and map/card/portrait UI are wired',()=>{
+test('Frontend loads committed concept artwork before book, and map/card/portrait UI are wired',()=>{
  const html=fs.readFileSync(path.join(__dirname,'../apps/murder-mystery/index.html'),'utf8');
  assert.ok(html.indexOf('illustrations.js')<html.indexOf('study.js'));
  const ui=fs.readFileSync(path.join(__dirname,'../apps/murder-mystery/study.js'),'utf8');
