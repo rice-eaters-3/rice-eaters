@@ -170,7 +170,7 @@ function mapsPanel(){
       const spawn=Object.entries(doc.spawn).filter(([id,p])=>p.floor===f.id&&p.x===x&&p.y===y).map(([id])=>id);
       return '<button type="button" class="editor-cell '+(c==='#'?'wall':'walk')+'" data-x="'+x+'" data-y="'+y+'" title="('+x+','+y+') '+esc(region?.name||'')+'" '+
         'style="'+(region?'--region-color:'+esc(region.color)+';':'')+'">'+
-        (door?'🚪':portals.length?'⇅':spawn.length?'♟':furniture?esc(furniture.icon||objectGlyph[furniture.kind]||'✧'):region?esc(region.name[0]||''):'')+'</button>';
+        (door?(window.MysteryArt?.door(door,visualStory())||'🚪'):portals.length?(window.MysteryArt?.stairs(portals[0],visualStory())||'⇅'):spawn.length?'♟':furniture?(window.MysteryArt?.object(furniture,visualStory())||esc(furniture.icon||objectGlyph[furniture.kind]||'✧')):region?esc(region.name[0]||''):'')+'</button>';
     })).join('')+'</div></div>'+
     '<div class="editor-fields">'+
       selectField('시작점 설정 캐릭터','editor.spawnChar',doc.story.characters.map(c=>[c.id,c.name]),window.editorSpawnChar||doc.story.characters[0].id)+
