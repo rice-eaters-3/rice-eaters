@@ -188,9 +188,15 @@ function runAction(button){
     engine.setArrest(state,$('endingArrestTarget')?.value||null);
     note('최종 구속 대상이 변경되었습니다. 공통 결말을 다시 확인해 주세요.');render();return;
   }
+  if(action==='verdict-status'){
+    const characterId=button.dataset.character;
+    const status=button.closest('.ending-goal-row')?.querySelector('.ending-status-select')?.value||'auto';
+    engine.setStatus(state,characterId,status);
+    note('캐릭터 최종 상태가 결말에 반영되었습니다.');render();return;
+  }
   if(action==='verdict-goal'){
     const characterId=button.dataset.character;
-    const value=button.closest('.ending-goal-row')?.querySelector('select')?.value||'';
+    const value=button.closest('.ending-goal-row')?.querySelector('.ending-goal-select')?.value||'';
     engine.setGoal(state,characterId,value==='yes'?true:value==='no'?false:null);
     note('개인 목표 판정이 반영되었습니다.');render();return;
   }
