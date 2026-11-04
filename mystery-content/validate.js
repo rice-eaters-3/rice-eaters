@@ -39,7 +39,8 @@ function validate(input){
         if(!id.test(x.id))throw Error('아이템 ID는 소문자 영문자로 시작해야 합니다.');
         return {id:x.id,name:text(x.name,100),description:text(x.description,1500)};
       }),
-      culprit:b.culprit===true,objectives:text(b.objectives,3000),notes:text(b.notes,1000)
+      culprit:b.culprit===true,objectives:text(b.objectives,3000),notes:text(b.notes,1000),
+      actionNotes:text(b.actionNotes,2000)
     };
     unique(booklets[c.id].inventory.map(x=>x.id),'개인 아이템');
   }
@@ -123,11 +124,54 @@ function validate(input){
   for(const c of normalizedCards)for(const x of c.requires)if(!normalizedCards.some(v=>v.id===x)||x===c.id)throw Error('선행 카드 ID가 잘못되었습니다: '+x);
   const phaseMinutes={};
   for(const [k,v] of Object.entries(obj(g.phaseMinutes)))if(['synopsis','characters','study','investigation1','discussion1','investigation2','discussion2','action','ending'].includes(k))phaseMinutes[k]=int(v,1,240,'권장 시간');
+  // The action stage is optional for older stories. When present, every player
+  // must have one explicit secret turn position, with bounded validated effects.
+  const rawAction=obj(g.action);
+  let action=null;
+  if(Array.isArray(rawAction.order)){
+    if(rawAction.order.length!==players)throw Error('행동 순서의 인원 수가 다릅니다.');
+    unique(rawAction.order,'행동 순서');
+    if(rawAction.order.some(v=>!story.characters.some(c=>c.id===v)))
+      throw Error('행동 순서에 존재하지 않는 캐릭터가 있습니다.');
+    const roles={};
+    const inventoryIds=new Set(Object.values(booklets).flatMap(b=>b.inventory.map(i=>i.id)));
+    const grantedIds=new Set(normalizedCards.filter(c=>c.grant).map(c=>c.grant.id));
+    for(const c of story.characters){
+      const abilities=rawAction.roles?.[c.id]||[];
+      if(!Array.isArray(abilities)||abilities.length>8)
+        throw Error(c.name+' 행동 능력 수가 유효하지 않습니다.');
+      roles[c.id]=abilities.map(a=>{
+        a=obj(a);
+        if(!id.test(a.id)||a.id==='pass')throw Error('행동 능력 ID 오류');
+        if(!['guard','attack','restrain','reveal','escape'].includes(a.kind))
+          throw Error('지원하지 않는 행동 효과입니다: '+a.kind);
+        if(!['none','self','other','any'].includes(a.targetMode))
+          throw Error('행동 대상 지정 방식 오류');
+        if(['guard','attack','restrain'].includes(a.kind)&&a.targetMode==='none')
+          throw Error('보호·공격·제압은 대상 지정이 필요합니다.');
+        if(a.kind==='escape'&&a.targetMode!=='self'&&a.targetMode!=='none')
+          throw Error('탈출은 자기 자신의 행동이어야 합니다.');
+        const item=a.requiresItem||null,cardId=a.requiresCard||null;
+        if(item&&!inventoryIds.has(item)&&!grantedIds.has(item))
+          throw Error('없는 행동 아이템: '+item);
+        if(cardId&&!normalizedCards.some(v=>v.id===cardId))
+          throw Error('없는 행동 카드: '+cardId);
+        return {id:a.id,title:text(a.title,100)||a.id,description:text(a.description,1500),
+          kind:a.kind,targetMode:a.targetMode,range:a.range==='tile'?'tile':'anywhere',
+          publicText:text(a.publicText,260)||text(a.title,100)||'행동을 실행했다.',
+          requiresItem:item,requiresCard:cardId,consumesItem:a.consumesItem!==false};
+      });
+      unique(roles[c.id].map(a=>a.id),'능력');
+    }
+    action={order:rawAction.order,roles,intro:text(rawAction.intro,1400),
+      endingNotes:text(rawAction.endingNotes,2000)};
+  }
   const game={booklets,floors,phaseMinutes,investigation:{
     tokensPerPlayer:int(inv.tokensPerPlayer??4,1,20,'토큰'),
     tokensPerSecondInvestigation:int(inv.tokensPerSecondInvestigation??4,0,20,'2차 조사 토큰'),
     maxTileOccupants:int(inv.maxTileOccupants??3,2,10,'타일 인원'),cards:normalizedCards
   }};
+  if(action)game.action=action;
   return {format:'rice-mystery-v1',story,game,spawn};
 }
 module.exports={validate};
