@@ -5,7 +5,7 @@ const newid=prefix=>prefix+'_'+Math.random().toString(36).slice(2,8);
 const phases={synopsis:5,characters:5,study:20,investigation1:20,discussion1:15,investigation2:20,discussion2:20,action:10,ending:15};
 const emptyMap=(id,title)=>({id,title,legend:'방을 돌아다니며 다른 사람과 대화하세요.',
   tiles:['#############',...Array.from({length:9},()=> '#...........#'),'#############'],
-  rooms:[],areas:[],doors:[],portals:[]});
+  rooms:[],areas:[],doors:[],portals:[],objects:[]});
 function template(){
   const characters=Array.from({length:4},(_,i)=>({id:'role'+(i+1),name:'인물 '+(i+1),role:'비밀을 가진 방문객',hint:'사건과 관련 있는 등장인물',symbol:'♟',accent:['#ae87c6','#7db9bc','#cfa071','#93a6cd'][i]}));
   const booklets=Object.fromEntries(characters.map((c,i)=>[c.id,{
@@ -118,7 +118,16 @@ function cardsPanel(){
       '</div><button data-do="remove-card" class="btn btn-quiet btn-sm">현재 카드 삭제</button>')+
     '<p class="muted small">앞면은 전체 공개, 뒷면은 본인 조사 확정 후만 공개합니다. 맵에서 현재 타일을 선택해 조사 카드 위치를 지정할 수도 있습니다.</p>';
 }
-const brushOptions=[['floor','통로'],['wall','벽'],['door','문'],['portal','계단'],['region','방 구역 (두 점)'],['spawn','배역 시작점'],['card','카드 조사점']];
+const brushOptions=[['floor','통로'],['wall','벽'],['door','문'],['portal','계단'],['region','방 구역 (두 점)'],['spawn','배역 시작점'],['card','카드 조사점'],['object','가구·장식 오브젝트']];
+const objectTypes=[['sink','싱크대'],['fridge','냉장고'],['pc','컴퓨터'],['gargoyle','가고일 석상'],
+ ['throne','왕좌'],['bed','침대'],['shelf','책장'],['sofa','소파'],['camera','카메라'],['terminal','터미널'],
+ ['server','서버 랙'],['stove','조리대'],['table','책상'],['telescope','망원경'],['projector','투영기'],
+ ['generator','발전기'],['cabinet','수납장'],['medical','의료 침대'],['pod','메모리 포드'],['boat','보트'],
+ ['plant','화분'],['wardrobe','화장대'],['fireplace','모닥불'],['other','기타']];
+const objectGlyph={sink:'🚰',fridge:'🧊',pc:'🖥️',gargoyle:'🗿',throne:'👑',bed:'🛏️',
+ shelf:'📚',sofa:'🛋️',camera:'📷',terminal:'🖥️',server:'🖧',stove:'🍳',table:'🪑',
+ telescope:'🔭',projector:'🌌',generator:'⚡',cabinet:'🗄️',medical:'🩺',
+ pod:'⚗️',boat:'⛵',plant:'🪴',wardrobe:'🪞',fireplace:'🔥',other:'✧'};
 function areaEditor(f){
   return '<div class="editor-subhead"><h3>방 구역 디자인</h3><button data-do="add-area" class="btn btn-outline btn-sm">+ 구역 추가</button></div>'+
     '<p class="muted small">구역은 직사각형으로 경계를 지정합니다. 맵에서 「방 구역」 브러시로 시작점·끝점을 차례로 눌러도 됩니다.</p>'+
@@ -138,15 +147,15 @@ function mapsPanel(){
     '<div class="map-editor-toolbar"><span>브러시:</span>'+brushOptions.map(([id,name])=>'<button data-do="brush" data-brush="'+id+'" class="btn btn-sm '+(brush===id?'btn-primary':'btn-outline')+'">'+name+'</button>').join('')+'</div>'+
     '<p class="muted small">도구를 선택한 뒤 아래 격자 칸을 클릭하세요. 「방 구역」은 구역을 선택하고 두 모서리를 클릭합니다.</p>'+
     '<div class="editor-map-wrap"><div class="editor-map" style="--columns:'+width+'">'+f.tiles.flatMap((row,y)=>Array.from(row,(c,x)=>{
-      const region=areasAt(x,y),door=(f.doors||[]).find(d=>d.x===x&&d.y===y),portals=(f.portals||[]).filter(p=>p.x===x&&p.y===y);
+      const region=areasAt(x,y),door=(f.doors||[]).find(d=>d.x===x&&d.y===y),portals=(f.portals||[]).filter(p=>p.x===x&&p.y===y),furniture=(f.objects||[]).find(o=>o.x===x&&o.y===y);
       const spawn=Object.entries(doc.spawn).filter(([id,p])=>p.floor===f.id&&p.x===x&&p.y===y).map(([id])=>id);
       return '<button type="button" class="editor-cell '+(c==='#'?'wall':'walk')+'" data-x="'+x+'" data-y="'+y+'" title="('+x+','+y+') '+esc(region?.name||'')+'" '+
         'style="'+(region?'--region-color:'+esc(region.color)+';':'')+'">'+
-        (door?'🚪':portals.length?'⇅':spawn.length?'♟':region?esc(region.name[0]||''):'')+'</button>';
+        (door?'🚪':portals.length?'⇅':spawn.length?'♟':furniture?esc(furniture.icon||objectGlyph[furniture.kind]||'✧'):region?esc(region.name[0]||''):'')+'</button>';
     })).join('')+'</div></div>'+
     '<div class="editor-fields">'+
       selectField('시작점 설정 캐릭터','editor.spawnChar',doc.story.characters.map(c=>[c.id,c.name]),window.editorSpawnChar||doc.story.characters[0].id)+
-      selectField('카드 조사점 설정','editor.mapCard',[['','선택 안 함'],...doc.game.investigation.cards.map(c=>[c.id,c.title])],window.editorMapCard||'')+
+      selectField('카드 조사점 설정','editor.mapCard',[['','선택 안 함'],...doc.game.investigation.cards.map(c=>[c.id,c.title])],window.editorMapCard||'')+selectField('배치할 가구 종류','editor.objectKind',objectTypes,window.editorObjectKind||'pc')+
     '</div><div class="editor-map-details"><h3>문 기믹</h3>'+
     (f.doors||[]).map((d,i)=>'<div class="editor-detail-line"><b>'+esc(d.name)+' ('+d.x+','+d.y+')</b>'+
        field('이름','floor.doors.'+i+'.name',d.name)+
@@ -161,7 +170,7 @@ function mapsPanel(){
       field('도착 X','floor.portals.'+i+'.toX',p.toX,'number')+
       field('도착 Y','floor.portals.'+i+'.toY',p.toY,'number')+
       '<button class="btn btn-quiet btn-sm" data-do="remove-portal" data-i="'+i+'">삭제</button></div>').join('')+
-    areaEditor(f)+'</div>';
+    '<h3>가구·장식 오브젝트</h3><p class="muted small">가구 브러시로 배치하고 이름이나 통과 여부를 수정하세요.</p>'+ (f.objects||[]).map((o,i)=>'<div class="editor-detail-line"><b>('+o.x+','+o.y+')</b>'+field('이름','floor.objects.'+i+'.name',o.name)+selectField('종류','floor.objects.'+i+'.kind',objectTypes,o.kind)+field('아이콘(선택)','floor.objects.'+i+'.icon',o.icon||'')+field('통과 불가','floor.objects.'+i+'.solid',o.solid===true,'checkbox')+'<button data-do="remove-object" data-i="'+i+'" class="btn btn-quiet btn-sm">삭제</button></div>').join('')+areaEditor(f)+'</div>';
 }
 function jsonPanel(){
   return '<h2>게임 파일 구성 확인</h2><p class="muted small">이 JSON에는 카드 뒷면과 캐릭터 비밀이 모두 포함됩니다. 제작자만 보관하세요.</p>'+
@@ -209,6 +218,7 @@ function valueChange(path,value){
     if(key.startsWith('grant')){card.grant ||= {id:'',name:'',description:''};card.grant[key.slice(5,6).toLowerCase()+key.slice(6)]=value;if(!card.grant.id)card.grant=null;}
   }else if(path==='editor.spawnChar')window.editorSpawnChar=value;
   else if(path==='editor.mapCard')window.editorMapCard=value;
+  else if(path==='editor.objectKind')window.editorObjectKind=value;
   else if(path.startsWith('floor.'))setPath('game.floors.'+selectedFloor+'.'+path.slice(6),value);
   else setPath(path,value);
   if(path.startsWith('story.characters.')&&path.endsWith('.id')){const newId=doc.story.characters[selectedChar].id;
@@ -237,6 +247,11 @@ function clickCell(x,y){
     }else if(brush==='card'){
       const card=doc.game.investigation.cards.find(v=>v.id===window.editorMapCard);if(card)card.location={floor:f.id,x,y};
       else status('먼저 카드 탭에서 조사를 만들고, 카드 조사점 선택에서 카드를 선택하세요.',true);
+    }else if(brush==='object'){
+      f.objects||=[];const kind=window.editorObjectKind||'pc',name=objectTypes.find(v=>v[0]===kind)?.[1]||'장식';
+      const previous=f.objects.find(o=>o.x===x&&o.y===y);
+      if(previous){previous.kind=kind;previous.name=name;}
+      else f.objects.push({id:newid('prop'),kind,x,y,name,icon:'',solid:false});
     }else if(brush==='region'){
       if(selectedArea===null||!f.areas[selectedArea]){status('먼저 구역 추가 후 구역을 선택하세요.',true);return;}
       if(!regionStart){regionStart=loc;status('반대쪽 모서리를 클릭하세요.');return;}
@@ -278,6 +293,7 @@ function handleAction(target){
   else if(action==='remove-area'){f.areas.splice(i,1);selectedArea=null;}
   else if(action==='remove-door'){f.doors.splice(i,1);}
   else if(action==='remove-portal'){f.portals.splice(i,1);}
+  else if(action==='remove-object'){(f.objects||[]).splice(i,1);}
   save();render();
 }
 function download(){
