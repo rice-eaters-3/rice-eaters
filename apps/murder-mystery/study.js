@@ -4,7 +4,10 @@ window.MysteryStudy=(function(){
   const esc=v=>escapeHtml(v);
   const ui={view:'map',page:0,lastResearchSignature:null};
   const names=['기본 정보','중요 정보','사건에 대한 정보','나의 소지품','범인 여부','승리 목표','기타 정보'];
-  const para=t=>'<p>'+esc(t)+'</p>';
+  // Render multi-paragraph fiction as separate folio paragraphs while escaping
+  // every fragment; never treat author-supplied scene prose as markup.
+  const para=t=>String(t??'').split(/\n\s*\n/).filter(x=>x.trim())
+    .map(x=>'<p>'+esc(x.trim())+'</p>').join('');
   const btn2=(act,label,extra='',disabled=false)=>btn(act,label,'btn btn-outline',disabled,extra);
   const page=(ch,html)=>({chapter:ch,html});
   function pages(room){
