@@ -1,12 +1,9 @@
 'use strict';
 /*
- * Scenario artwork from the ORIGINAL illustrated concept sheets.
- * Unlike the former procedural SVG placeholders, these crop real WebP art
- * committed under /apps/murder-mystery/assets/. No client-side generation.
- *
- * Each rectangle is [left, top, width, height] within the source art sheet.
- * SVG viewBox clips the original sheet without distortion and preserves
- * transparent edges; source files are same-origin static assets.
+ * Browser-rendered compositions using the four licensed project illustration
+ * sheets as visual source material. Individual characters and clues receive
+ * layered backgrounds, borders, light and distinct evidence marks; map sprites
+ * remain compact crops so 36px tiles stay legible.
  */
 window.MysteryArt=(function(){
  const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({
@@ -128,6 +125,74 @@ window.MysteryArt=(function(){
     '" height="'+height+'" preserveAspectRatio="none"/>'+
     '</svg>';
  }
+
+ // Rebuild each portrait / evidence card as an original UI composition:
+ // illustrated source as the subject, plus newly rendered stage, light, frame,
+ // insignia and an item-specific evidence seal. This deliberately does not
+ // present a naked crop of the concept sheet as the finished artwork.
+ const hash=value=>{let h=2166136261;for(const ch of String(value)){
+  h=Math.imul(h^ch.charCodeAt(0),16777619);}return h>>>0;};
+ const shapeColor=(color,fallback)=>/^#[0-9a-fA-F]{6}$/.test(color||'')?color:fallback;
+ const sourceImage=(data,rect,x,y,w,h)=>{
+  const [sx,sy,sw,sh]=rect;
+  return '<svg x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+
+   '" viewBox="0 0 '+sw+' '+sh+'" preserveAspectRatio="xMidYMid slice" overflow="hidden">'+
+   '<image href="'+path+data.file+'" x="'+(-sx)+'" y="'+(-sy)+'" width="'+data.size[0]+
+   '" height="'+data.size[1]+'"/></svg>';
+ };
+ function compose(story,rect,identifier,label,css,type,accent){
+  const data=knownStory(story);if(!data||!rect)return null;
+  const portraitMode=type==='portrait',w=portraitMode?360:460,h=portraitMode?470:310;
+  const seed=hash(story+':'+identifier),name='art'+seed.toString(36);
+  const main=shapeColor(accent,data.palette[1]),dark=data.palette[0];
+  const ix=portraitMode?32:75,iy=portraitMode?26:25;
+  const iw=portraitMode?296:310,ih=portraitMode?390:246;
+  const initials=escape(String(identifier||'ART').toUpperCase().replace(/[^A-Z0-9_\\-]/g,'').slice(0,17));
+  const title=escape(String(label||'UNKNOWN').slice(0,18));
+  const rings=Array.from({length:7},(_,i)=>{
+   const x=18+((seed>>((i%4)*7))%320),y=28+(i*61)%h;
+   return '<circle cx="'+x+'" cy="'+y+'" r="'+(2+i%3)+'" fill="'+main+'" opacity=".32"/>';
+  }).join('');
+  const ruled=Array.from({length:portraitMode?11:7},(_,i)=>{
+   const x=12+i*33,y=h-31-(i%3)*4;
+   return '<rect x="'+x+'" y="'+y+'" width="'+(12+i%4*4)+'" height="1" fill="'+main+'" opacity=".38"/>';
+  }).join('');
+  return '<svg class="'+css+' composed-mystery-art" data-asset="'+escape(String(identifier))+
+   '" viewBox="0 0 '+w+' '+h+'" role="img" aria-label="'+escape(label)+'"'+
+   ' xmlns="http://www.w3.org/2000/svg" overflow="hidden">'+
+   '<defs><linearGradient id="'+name+'bg" x2="1" y2="1"><stop stop-color="'+dark+
+   '"/><stop offset=".5" stop-color="#20223c"/><stop offset="1" stop-color="'+dark+'"/></linearGradient>'+
+   '<radialGradient id="'+name+'gl"><stop stop-color="'+main+'" stop-opacity=".65"/>'+
+   '<stop offset="1" stop-color="'+main+'" stop-opacity="0"/></radialGradient>'+
+   '<linearGradient id="'+name+'veil" x1="0" y1="0" x2="0" y2="1">'+
+   '<stop offset="0" stop-color="'+dark+'" stop-opacity="0"/>'+
+   '<stop offset=".7" stop-color="'+dark+'" stop-opacity=".08"/>'+
+   '<stop offset="1" stop-color="'+dark+'" stop-opacity=".97"/></linearGradient>'+
+   '<clipPath id="'+name+'clip"><rect x="'+ix+'" y="'+iy+'" width="'+iw+'" height="'+ih+'" rx="'+
+   (portraitMode?22:16)+'"/></clipPath></defs>'+
+   '<rect width="'+w+'" height="'+h+'" rx="18" fill="url(#'+name+'bg)"/>'+
+   '<circle cx="'+(seed%w)+'" cy="'+(seed%h)+'" r="'+(portraitMode?260:210)+
+   '" fill="url(#'+name+'gl)"/>'+
+   '<g opacity=".2" transform="translate(-65,-40)">'+sourceImage(data,rect,0,0,w+130,h+90)+'</g>'+
+   '<g clip-path="url(#'+name+'clip)">'+
+   '<rect x="'+ix+'" y="'+iy+'" width="'+iw+'" height="'+ih+'" fill="'+dark+'"/>'+
+   sourceImage(data,rect,ix,iy,iw,ih)+
+   '<rect x="'+ix+'" y="'+iy+'" width="'+iw+'" height="'+ih+'" fill="url(#'+name+'veil)"/></g>'+
+   '<rect x="'+ix+'" y="'+iy+'" width="'+iw+'" height="'+ih+'" rx="'+(portraitMode?22:16)+
+   '" fill="none" stroke="'+main+'" stroke-opacity=".75" stroke-width="2"/>'+
+   '<rect x="9" y="9" width="'+(w-18)+'" height="'+(h-18)+
+   '" rx="15" fill="none" stroke="'+main+'" stroke-opacity=".45"/>'+
+   '<circle cx="'+(w-33)+'" cy="32" r="12" fill="none" stroke="'+main+'" stroke-width="1.2"/>'+
+   '<circle cx="'+(w-33)+'" cy="32" r="4" fill="'+main+'"/>'+
+   rings+ruled+
+   '<rect x="24" y="'+(h-65)+'" width="'+(w-48)+'" height="43" rx="8" fill="'+dark+
+   '" fill-opacity=".9" stroke="'+main+'" stroke-opacity=".58"/>'+
+   '<text x="36" y="'+(h-46)+'" fill="'+main+
+   '" font-family="sans-serif" font-size="10" letter-spacing="2">'+
+   (portraitMode?'PERSONNEL DOSSIER':'EVIDENCE RECORD')+' · '+String(seed%99).padStart(2,'0')+'</text>'+
+   '<text x="36" y="'+(h-32)+'" fill="#f2e8df" font-family="sans-serif" font-size="'+
+   (portraitMode?12:13)+'" font-weight="600">'+(portraitMode?title:initials)+'</text></svg>';
+ }
  function portrait(c,story,small=false){
   const data=knownStory(story);
   const rect=data?.portraits?.[c?.id];
@@ -136,7 +201,8 @@ window.MysteryArt=(function(){
   // the empty lower part of each full sheet cell.
   const focused=rect&&['cruel-heart-island','neon-memory-quarantine'].includes(story)
     ?[rect[0],rect[1]+10,rect[2],Math.min(rect[3]-10,204)]:rect;
-  if(focused)return artCrop(story,focused,'mystery-portrait real-portrait'+(small?' portrait-compact':''),c.name+' 캐릭터 초상화');
+  if(focused)return compose(story,focused,c.id,c.name+' 캐릭터 초상화',
+   'mystery-portrait real-portrait'+(small?' portrait-compact':''),'portrait',c.accent);
   return '<span class="mystery-unillustrated">'+escape(c?.symbol||'♟')+'</span>';
  }
  function clueKind(card,story){
@@ -178,7 +244,8 @@ window.MysteryArt=(function(){
  }
  function clue(c,story){
   const data=knownStory(story),key=clueKind(c,story),rect=data?.clues?.[key];
-  if(rect)return artCrop(story,rect,'mystery-clue-art real-clue-art',c?.title||c?.name||'조사 카드');
+  if(rect)return compose(story,rect,c?.id||c?.title||c?.name||key,c?.title||c?.name||'조사 카드',
+    'mystery-clue-art real-clue-art','evidence',null);
   return '<span class="mystery-unillustrated mystery-clue-placeholder">✧</span>';
  }
  function object(o,story){
@@ -208,7 +275,8 @@ window.MysteryArt=(function(){
     'neon-memory-quarantine':[0,75,1122,310],
     'stellar-academy-first-case':[0,164,1448,270]
   }[storyFor(story)];
-  return rect?artCrop(story,rect,'mystery-story-cover','시나리오 등장인물 콘셉트 아트'):null;
+  return rect?compose(story,rect,'case-cover', '시나리오 등장인물 콘셉트 아트',
+    'mystery-story-cover','evidence',null):null;
  }
  function avatar(c,story){
   const data=knownStory(story);
