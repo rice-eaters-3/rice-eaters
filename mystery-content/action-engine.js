@@ -58,7 +58,7 @@ function view(room,player,game){
     myTurn:!!current&&current.id===player.id,
     myChoice:state.choices[player.id]||null,
     abilities:current?.id===player.id?available(room,player,game):[],
-    targets:room.players.filter(p=>p.id!==player.id&&!state.dead.includes(p.id))
+    targets:room.players.filter(p=>!state.dead.includes(p.id))
       .map(p=>({id:p.id,name:p.name,characterId:p.characterId}))
   };
 }
