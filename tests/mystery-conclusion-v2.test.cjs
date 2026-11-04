@@ -69,7 +69,7 @@ test('all four case visuals are composed per asset instead of returning a plain 
  const art=w.MysteryArt;
  for(const file of ids){
   const {story,game}=require('../mystery-content/'+file+'.case.json');
-  const storyId=story.artTheme;
+  const storyId=story.artTheme||story.id;
   const portraits=story.characters.map(c=>art.portrait(c,storyId));
   assert.equal(new Set(portraits).size,portraits.length);
   for(const p of portraits){
