@@ -23,6 +23,23 @@
 
 정확한 시각, 대사, 문구의 원문은 카드 뒷면에 있다. 일러스트는 카드 전면에서 증거물의 형태와 성격을 보여준다.
 
+## D1 사옥 · 2차 배치
+
+신규 파일 경로의 공통 앞부분은 1차 배치와 같다.
+
+| 카드 ID | 기존 표시와 문제 | 신규 파일 |
+| --- | --- | --- |
+| `chajiwoo_cult_invitation` | 가고일 교리서가 표시되어 예배 초대장을 구분할 수 없음 | `chajiwoo_cult_invitation.webp` |
+| `chajiwoo_unmailed_letter` | D1 노트가 표시되어 편지와 손으로 그린 전시실 배치도가 보이지 않음 | `chajiwoo_unmailed_letter.webp` |
+| `cloud_tainted_cleaver` | 대형 식칼은 일치함. 얼룩을 비트·고추 소스 등 식재료로 묘사한 독립 컷으로 교체 | `cloud_tainted_cleaver.webp` |
+| `cloud_huoguo_ladle` | D1 노트가 표시되어 손잡이에 각인이 있는 훠궈 국자가 보이지 않음 | `cloud_huoguo_ladle.webp` |
+| `cloud_elephant_eggplant` | D1 노트가 표시되어 가지와 비트 소스 레시피를 구분할 수 없음 | `cloud_elephant_eggplant.webp` |
+| `cloud_oven_receipt` | D1 노트가 표시되어 오븐 타이머 출력지가 보이지 않음 | `cloud_oven_receipt.webp` |
+| `karl_alpaca_notebook` | 털뭉치 노트는 일치함. 알파카 그림과 구조소 기록이 담긴 독립 컷으로 교체 | `karl_alpaca_notebook.webp` |
+| `karl_manager_badge` | 출입 태그는 일치함. 카알의 소지품을 독립 컷으로 교체 | `karl_manager_badge.webp` |
+| `karl_alpaca_receipts` | 털뭉치 노트가 표시되어 구조소 송금 영수증을 구분할 수 없음 | `karl_alpaca_receipts.webp` |
+| `karl_unbroken_promise` | D1 노트가 표시되어 약속을 기념하는 배지가 보이지 않음 | `karl_unbroken_promise.webp` |
+
 ## 재개 지점
 
-D1 사옥의 11번째 카드 `chajiwoo_cult_invitation`부터 다음 10장을 대조한다. D1 61장, 마지막 하트 56장, 네온 검역국 54장, 성하 영재관 48장이 남아 있다.
+D1 사옥의 21번째 카드 `hasu_cult_notebook`부터 다음 10장을 대조한다. D1 51장, 마지막 하트 56장, 네온 검역국 54장, 성하 영재관 48장이 남아 있다.

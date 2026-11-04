@@ -64,7 +64,7 @@ test('every player, map prop and clue has a case illustration',()=>{
   assert.equal(data.game.investigation.cards.length,clues);
   for(const [index,clue] of data.game.investigation.cards.entries()){
    const v=art.clue(clue,id);
-   const standalone=id==='d1-crown-of-ashes'&&index<10;
+   const standalone=id==='d1-crown-of-ashes'&&index<20;
    if(standalone){
     const name='clues/'+id+'/'+clue.id+'.webp';
     assert.ok(v.includes(name));
@@ -136,7 +136,7 @@ test('local HTTP server serves original and standalone artwork with image/webp M
   fs.rmSync(dir,{recursive:true,force:true});
  });
  const base='http://127.0.0.1:'+server.address().port;
- const independent=require('../mystery-content/d1-gaming.case.json').game.investigation.cards.slice(0,10)
+ const independent=require('../mystery-content/d1-gaming.case.json').game.investigation.cards.slice(0,20)
   .map(({id})=>['','d1-crown-of-ashes','clues/d1-crown-of-ashes/'+id+'.webp']);
  for(const [,id,file] of [...scenarios,...independent]){
   const response=await fetch(base+'/apps/murder-mystery/assets/'+file);

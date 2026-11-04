@@ -116,7 +116,10 @@ window.MysteryArt=(function(){
   'd1-crown-of-ashes':new Set([
    'jobi_threat_phone','jobi_stage_mouse','jobi_qualifier_card','jobi_stopwatch',
    'mayushi_oracle_cards','mayushi_spirit_bell','mayushi_fractured_talisman','mayushi_private_stream',
-   'chajiwoo_mini_gargoyle','chajiwoo_donation_ledger'
+   'chajiwoo_mini_gargoyle','chajiwoo_donation_ledger',
+   'chajiwoo_cult_invitation','chajiwoo_unmailed_letter','cloud_tainted_cleaver','cloud_huoguo_ladle',
+   'cloud_elephant_eggplant','cloud_oven_receipt','karl_alpaca_notebook','karl_manager_badge',
+   'karl_alpaca_receipts','karl_unbroken_promise'
   ])
  };
  const storyFor=id=>Object.hasOwn(A,id)?id:id==='d1-gaming'?'d1-crown-of-ashes':null;
