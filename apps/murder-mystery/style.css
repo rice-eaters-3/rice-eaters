@@ -270,3 +270,35 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(-
  .host-advance>.btn{width:100%}
  .all-clue-cards{padding:12px 0}
 }
+
+
+/* Action stage: each secret role turn is executed and logged by the server. */
+.action-stage{padding:18px 22px;margin:14px 0 20px;border:1px solid #8b7756;border-radius:12px;
+ background:linear-gradient(140deg,#252e41,#272d35)}
+.action-stage>h3{margin:6px 0;font-size:23px;color:#f1deae}
+.action-stage .muted{line-height:1.5}
+.action-order{display:flex;gap:7px;flex-wrap:wrap;margin:13px 0}
+.action-order-chip{font-size:12px;padding:7px 10px;border-radius:20px;
+ border:1px solid #887150;color:#f2e8d0;background:#354052}
+.action-order-chip.complete{opacity:.6;text-decoration:line-through}
+.action-options{padding:14px;margin:13px 0;border:1px solid #607a89;border-radius:10px;background:#1c2b3a}
+.action-options>h4{font-size:17px;margin:4px 0}
+.action-option{display:flex;align-items:center;justify-content:space-between;gap:16px;
+ padding:12px 0;border-top:1px solid #475d71;flex-wrap:wrap}
+.action-option strong{color:#f3e2c1}
+.action-option p{max-width:650px;font-size:13px;line-height:1.5;margin:6px 0}
+.action-option small{font-size:12px;color:#bec7cd}
+.action-option-controls{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.action-option-controls select{background:#14212f;color:#f0e6d4;border:1px solid #73879a;
+ padding:9px 12px;border-radius:7px;min-width:150px}
+.action-option-controls .btn{white-space:normal}
+.action-log{border-top:1px solid #4e6274;margin-top:14px;padding-top:12px}
+.action-log>h4{font-size:16px;color:#f4d89d}
+.action-log-entry{padding:9px 0;border-bottom:1px solid #465b6d;font-size:13px}
+.psychometry-insight{padding:9px 12px;border-radius:7px;background:#41344d;color:#edc8fa;
+ margin:12px 0;line-height:1.6}
+.char-start{font-size:13px;color:#ecd6ad;font-style:italic;margin-top:10px}
+@media(max-width:640px){
+ .action-stage{padding:13px 12px}
+ .action-option-controls,.action-option-controls select,.action-option-controls .btn{width:100%}
+}
