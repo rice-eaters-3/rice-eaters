@@ -265,7 +265,7 @@ function characters(room){
     const mine=owner?.id===room.me;
     return '<article class="character-card '+(mine?'selected':owner?'taken':'')+'" style="--accent:'+escapeHtml(c.accent)+'">'+
     (mine?'<span class="chosen-label">내 캐릭터</span>':owner?'<span class="chosen-label">선택 완료</span>':'')+
-    '<div class="char-symbol">'+escapeHtml(c.symbol)+'</div>'+
+    '<div class="char-symbol char-illustration">'+(window.MysteryArt?.portrait(c,room.story?.id)||escapeHtml(c.symbol))+'</div>'+
     '<h3 class="character-name">'+escapeHtml(c.name)+'</h3><div class="character-role">'+escapeHtml(c.role)+'</div>'+
     '<p class="char-hint">'+escapeHtml(c.hint)+'</p>'+ (c.startLine?'<p class="char-start">“'+escapeHtml(c.startLine)+'”</p>':'')+
     btn('character',mine?'선택한 캐릭터입니다 ✓':owner?'이미 선택된 캐릭터':'이 캐릭터 선택','btn '+(mine?'btn-outline':'btn-primary'),!!owner,'data-character="'+escapeHtml(c.id)+'"')+
