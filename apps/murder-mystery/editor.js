@@ -325,6 +325,11 @@ el('editorPanel').addEventListener('change',e=>{
 });
 el('newStory').addEventListener('click',()=>{if(!confirm('현재 편집 내용을 초기화할까요? 저장하지 않은 내용은 사라집니다.'))return;doc=template();selectedChar=selectedCard=selectedFloor=0;tab='story';save();render()});
 el('exportFile').addEventListener('click',download);
+el('testStory').addEventListener('click',()=>{
+  save();
+  window.open('/mystery-test','_blank','noopener');
+  status('테스트 모드를 새 탭에서 실행했습니다. 팝업 차단 시 /mystery-test 경로를 직접 열 수 있습니다.');
+});
 el('publishStory').addEventListener('click',publish);
 el('importFile').addEventListener('click',()=>el('storyFile').click());
 el('storyFile').addEventListener('change',async e=>{

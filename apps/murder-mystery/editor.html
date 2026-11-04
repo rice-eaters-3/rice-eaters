@@ -22,6 +22,7 @@
     <button id="importFile" class="btn btn-outline">JSON 파일 불러오기</button>
     <input type="file" id="storyFile" accept=".json,application/json" hidden>
     <button id="exportFile" class="btn btn-outline">⬇ 미스터리 JSON 저장</button>
+    <button id="testStory" class="btn btn-primary">🧪 테스트 모드 · 9단계 미리 보기</button>
     <button id="publishStory" class="btn btn-primary">▶ 서버에 등록하고 플레이</button>
   </div>
   <p id="editorStatus" role="status" aria-live="polite" class="editor-status">변경한 내용은 이 브라우저에 임시 저장됩니다.</p>
@@ -33,6 +34,7 @@
     <button data-tab="json">⑤ 데이터 검토</button>
   </nav>
   <div id="editorPanel" class="editor-panel surface"></div>
+  <p class="muted small">「테스트 모드」는 새 탭에서 열리고 현재 편집 중인 시나리오 또는 기본/등록 시나리오를 선택할 수 있습니다. 배역별 책자, 조사 카드, 지도, 행동 단계를 실제 방과 분리하여 확인합니다.</p>
   <p class="muted small">서버 등록은 보안을 위해 서버가 실행 중인 PC의 <strong>http://localhost:3000/mystery-editor</strong>에서만 가능합니다. 등록하면 친구들은 Cloudflare 공개 주소에서 게임에 참여할 수 있습니다.</p>
 </main>
 <footer class="site-footer"><span>RICE EATERS · MYSTERY STUDIO</span><span>ORIGINAL JSON STORY PACKAGE V1</span></footer>
