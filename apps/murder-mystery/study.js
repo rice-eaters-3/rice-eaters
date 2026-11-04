@@ -11,7 +11,7 @@ window.MysteryStudy=(function(){
   const btn2=(act,label,extra='',disabled=false)=>btn(act,label,'btn btn-outline',disabled,extra);
   const portrait=(c,story,small=false)=>window.MysteryArt?.portrait(c,story,small)||'<span>'+esc(c.symbol||'♟')+'</span>';
   const art=(c,story)=>window.MysteryArt?.clue(c,story)||'<span>✧</span>';
-  const theme=room=>room.story?.artTheme||theme(room);
+  const theme=room=>room.story?.artTheme||room.story?.id;
   const page=(ch,html)=>({chapter:ch,html});
   function pages(room){
     const b=room.booklet;if(!b)return [];
