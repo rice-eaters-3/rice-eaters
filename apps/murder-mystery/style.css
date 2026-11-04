@@ -302,3 +302,36 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(-
  .action-stage{padding:13px 12px}
  .action-option-controls,.action-option-controls select,.action-option-controls .btn{width:100%}
 }
+
+
+/* Mystery visual edition: portrait plates, card art, and miniature furniture. */
+.char-illustration{width:100%;max-width:245px;height:200px;display:block;margin:2px auto 14px;overflow:hidden;
+ border-radius:12px;border:1px solid #d8b98b66;background:#202d3c;}
+.char-illustration svg{height:100%;width:100%;display:block;object-fit:cover}
+.book-identity:has(.illustrated-portrait){align-items:start;gap:22px}
+.book-identity .book-portrait.illustrated-portrait{display:block;flex:0 0 min(195px,42%);height:auto;
+ min-height:210px;border:1px solid #c4a77a;border-radius:12px;overflow:hidden;background:#324357;}
+.book-portrait.illustrated-portrait svg{width:100%;height:auto;display:block}
+.book-item-art,.research-illustration,.owned-clue-illustration{border-radius:10px;overflow:hidden;
+ border:1px solid #ad967066;background:#202b3a}
+.book-item-art{max-width:330px;margin:6px auto 15px}
+.book-item-art svg,.research-illustration svg,.owned-clue-illustration svg{display:block;width:100%;height:auto}
+.research-illustration{margin:12px 0}
+.research-illustration svg{max-height:168px}
+.owned-clue-illustration{max-width:235px;margin:8px 0}
+.map-tile.furnished{background-image:linear-gradient(145deg,#ffffff09,transparent)}
+.map-prop{position:absolute;display:flex;justify-content:center;align-items:center;
+ inset:0;pointer-events:none;z-index:1;filter:drop-shadow(0 2px 2px #14202b99)}
+.map-prop-icon{display:flex;align-items:center;justify-content:center;border-radius:5px;
+ font-size:22px;line-height:1;max-width:98%;max-height:96%;
+ background:#1d283544;border:1px solid #e0ca9744}
+.map-sprites{z-index:4;position:relative}
+.map-room-name{z-index:2;position:relative;pointer-events:none}
+.map-prop:has(+ .portal-sigil){opacity:.5}
+.world-tiles .map-tile.furnished:hover{box-shadow:inset 0 0 0 2px #f3d8a7}
+@media(max-width:740px){
+ .char-illustration{height:170px}
+ .book-identity:has(.illustrated-portrait){flex-wrap:wrap}
+ .book-identity .book-portrait.illustrated-portrait{flex:0 1 150px;min-height:165px}
+ .map-prop-icon{font-size:19px}
+}
