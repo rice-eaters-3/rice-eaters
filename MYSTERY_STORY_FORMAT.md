@@ -136,3 +136,60 @@ WebRTC 근접 음성은 TURN 서버 없이 NAT 환경에서 실패할 수 있으
 이 기능으로 3층 복도에서 2차 조사 전용 `trick_spare_override`를 직접 조사해 **`vault_override`** 키를 획득해야 비로소 4층 봉인 보관실의 문을 열고 특정 단서를 조사할 수 있습니다.
 
 **주의:** 모든 커밋된 원고와 제작자 해설은 저장소 접근 권한이 있는 사람이 읽을 수 있습니다. HTTP 정적 파일 접근을 막아도 GitHub 공개 저장소의 스포일러 노출까지 막지는 못합니다.
+
+## 2026년 추가: 역할별 순서가 있는 행동 단계
+
+필요한 경우 시나리오의 `game` 안에 `action`을 정의합니다. 기존 시나리오는 없어도 정상 작동하며, 있을 경우 서버가 순서대로 각자 한 번씩 역할 행동을 처리합니다.
+
+```json
+{
+  "game": {
+    "booklets": {
+      "alpha": {
+        "actionNotes": "두 번째 행동 순서입니다. 누구를 지킬지 신중히 결정하세요."
+      }
+    },
+    "action": {
+      "intro": "정해진 순서대로 각자 한 번 행동합니다.",
+      "order": ["beta", "alpha"],
+      "endingNotes": "최종 결과 및 개인 승점은 수동 판정합니다.",
+      "roles": {
+        "alpha": [
+          {
+            "id": "shield",
+            "title": "비상 방어",
+            "description": "한 사람의 다음 위협을 막습니다.",
+            "kind": "guard",
+            "targetMode": "any",
+            "requiresItem": "small_key",
+            "requiresCard": null,
+            "consumesItem": true,
+            "publicText": "방어 준비를 마쳤습니다."
+          }
+        ],
+        "beta": []
+      }
+    }
+  }
+}
+```
+
+- `order`: 캐릭터 ID를 **중복 없이 전원 한 번씩** 나열합니다. 개인 책자에 순서 번호가 비공개로 제시됩니다.
+- `roles.<캐릭터ID>[]`: 역할 고유 능력 목록. 자신의 책자에서만 볼 수 있고 자기 차례에만 사용 버튼이 활성화됩니다.
+- `kind`: `guard`(보호), `attack`(게임 내 추가 사망), `restrain`(제압·차례 건너뛰기), `reveal`(정보 공개), `escape`(개별/공동 탈출 기록) 중 하나.
+- `targetMode`: `none`, `self`, `other`, `any` 중 하나. `range: "tile"` 옵션이 있으면 같은 층·타일의 대상만 유효합니다.
+- `requiresItem`: **개인 초기 소지품 ID 또는 조사 카드 `grant.id`**가 일치할 때만 실행 가능. 아이템 소비 여부는 `consumesItem`으로 제어합니다.
+- `requiresCard`: 현재 자신이 보유한 조사 카드 ID가 있어야 실행 가능한 능력. 카드를 다른 사람에게 양도하면 사용 권한도 달라집니다.
+- 모든 역할이 행동하지 않는 선택(`pass`)을 기본으로 가집니다.
+- 서버는 행동을 즉시 순서대로 기록하고, 후순위 플레이어가 탈락/제압된 경우 자동 건너뛰며, `guard`는 위협을 1회 막습니다.
+- 행동을 모두 실행해야 다음 단계가 활성화되고, **전원 진행 동의 + 방장의 클릭**이 필요합니다.
+- `/mystery-editor`에서 시나리오 JSON을 불러온 후 **사건 개요 → 행동 순서**, **캐릭터 책자 → 고유 능력 JSON**으로 편집할 수 있습니다.
+
+### 창작 시나리오 원본 파일
+
+- `mystery-content/cruel-heart-island.case.json`: 8명(남4·여4), 연애 프로그램 섬 살인
+- `mystery-content/neon-memory-quarantine.case.json`: 7명, SF 기억 복제·EMP 고립
+- `mystery-content/stellar-academy-first-case.case.json`: 6명, 별개 범인/학교 탈출 목표
+- `mystery-content/THREE_NEW_CASES_AUTHOR_GUIDE.md`: **제작자 전용 전체 스포일러**
+
+새 원고는 기존 `rice-mystery-v1` 형식으로 작성되었으며, 시나리오별 정답·엔딩·검토용 주석은 최상위 `creatorGuide`에 포함됩니다. 원본 GitHub 공개 범위에 각별히 주의하세요.

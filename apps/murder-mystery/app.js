@@ -380,6 +380,18 @@ async function perform(action,button){
       else if(action==='card-share')toast('같은 타일의 플레이어에게 카드가 선택 공개되었습니다.');
       else if(action==='exchange-offer')toast('양도 요청을 보냈습니다. 상대방의 승인을 기다립니다.');
       else if(action==='exchange-reply')toast(body.accept?'양도를 수락했습니다.':'양도를 거절했습니다.');
+    } else if(action==='act'){
+      if(!room?.action?.myTurn)throw Error('아직 나의 행동 차례가 아닙니다.');
+      const abilityId=button.dataset.ability||'pass';
+      const selector=document.getElementById('action-target-'+abilityId);
+      const targetId=selector?.value||null;
+      if(selector&&!targetId)throw Error('행동할 대상을 먼저 선택하세요.');
+      if(!window.confirm(abilityId==='pass'?
+        '이번 차례에 아무 행동도 하지 않을까요?':
+        '이 행동을 확정할까요? 실행된 행동은 되돌릴 수 없습니다.'))return;
+      const changed=await api('/api/rooms/'+code+'/act','POST',{abilityId,targetId});
+      updateRoom(changed,state.connection,true);
+      toast('행동이 처리되었습니다. 다음 순서로 진행합니다.');
     } else if(['reserve','release','investigate'].includes(action)){
       const cardId=button.dataset.card||room?.investigation?.cards.find(c=>c.reservedBy===room.me)?.id;
       if(!cardId)throw Error('조사할 카드를 선택해주세요.');

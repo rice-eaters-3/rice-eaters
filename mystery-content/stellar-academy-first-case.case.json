@@ -1,0 +1,2089 @@
+{
+  "format": "rice-mystery-v1",
+  "story": {
+    "id": "stellar-academy-first-case",
+    "title": "성하 영재관: 첫 번째 거짓 별",
+    "subtitle": "범인을 찾아도 문은 열리지 않는다",
+    "genre": "폐쇄 영재학원 · 재능 미스터리 · 이중 목표",
+    "teaser": "독보적인 재능의 여섯 학생이 고립된 영재관. 일곱 번째 학생 연호가 첫 희생자가 된다. 범인을 가리는 것과 학교를 탈출하는 것은 별개의 문제다.",
+    "players": 6,
+    "minutes": 170,
+    "synopsis": [
+      "별과 미래를 연구한다는 「성하 영재관」은 남다른 재능을 가진 학생 일곱 명을 선발했다. 모두 무료 장학금과 최첨단 연구 시설을 약속받았다. 그러나 입교 날 밤, 외부 출입문이 봉쇄되고 연락망이 끊겼다.",
+      "학원의 방송은 이것이 “신뢰를 측정하는 첫 번째 공동 실험”이라고 밝혔다. 학생들은 장난이라고 생각했지만, 날이 바뀌어도 구조 요청은 도착하지 않았다.",
+      "새벽 01시 10분, 방송에서 일곱 번째 학생 장연호가 “모두 플라네타륨에 모여”라고 말했다. 2분 뒤 학생들이 도착했을 때 연호는 이미 숨져 있었다. 관측관의 별빛은 아직 움직이고 있었다.",
+      "여섯 학생 중 누군가는 사건을 조작했고, 모두가 제각기 위험한 비밀을 숨기고 있다. 연호가 남긴 이상한 암호는 범인뿐 아니라 건물의 실제 탈출 경로를 가리키는 것 같다.",
+      "이번 사건에서 반드시 풀어야 할 질문은 둘이다. 누가 첫 살인을 저질렀는가? 그리고 이 학교의 밖으로 나가는 진짜 길은 어디인가? 한 질문을 맞혀도 다른 질문은 자동으로 해결되지 않는다."
+    ],
+    "characters": [
+      {
+        "id": "seoha",
+        "name": "남서하",
+        "role": "입체 퍼즐 제작자",
+        "hint": "어떤 건물이든 공간의 숨겨진 규칙부터 찾는다.",
+        "startLine": "닫힌 문은 정답이 아니라 질문이에요.",
+        "symbol": "⌘",
+        "accent": "#94b7d4"
+      },
+      {
+        "id": "taewon",
+        "name": "이태원",
+        "role": "무대 환영술사",
+        "hint": "작은 사물을 숨기는 손기술이 뛰어난 학생.",
+        "startLine": "사라지는 건 물건만이어야 해요. 사람이 아니고.",
+        "symbol": "♧",
+        "accent": "#c4a0da"
+      },
+      {
+        "id": "yeonju",
+        "name": "천연주",
+        "role": "천체 관측 수재",
+        "hint": "별자리를 보고 시각을 맞히는 냉정한 학생.",
+        "startLine": "밤하늘은 재방송할 수 없어요.",
+        "symbol": "✧",
+        "accent": "#9ac9d6"
+      },
+      {
+        "id": "jinwoo",
+        "name": "백진우",
+        "role": "재난 구조 청소년 대표",
+        "hint": "평소에 누구보다 먼저 달려가지만 자신은 구하지 못했다.",
+        "startLine": "누구 하나 두고 나가는 탈출은 인정 못 해요.",
+        "symbol": "✚",
+        "accent": "#a0c0a4"
+      },
+      {
+        "id": "rion",
+        "name": "차리온",
+        "role": "고문서 언어 해독가",
+        "hint": "아무도 읽지 못하는 문자를 해독하는 학생.",
+        "startLine": "문은 암호로 닫지만, 단서는 언어로 남기죠.",
+        "symbol": "✑",
+        "accent": "#d5ba90"
+      },
+      {
+        "id": "gabin",
+        "name": "유가빈",
+        "role": "무대 음성 연기자",
+        "hint": "누구의 목소리든 모사할 수 있는 타고난 연기 천재.",
+        "startLine": "같은 목소리라도 말한 마음까지 같지는 않죠.",
+        "symbol": "♢",
+        "accent": "#e0a1a9"
+      }
+    ]
+  },
+  "spawn": {
+    "seoha": {
+      "floor": "dorm",
+      "x": 3,
+      "y": 5
+    },
+    "taewon": {
+      "floor": "dorm",
+      "x": 5,
+      "y": 5
+    },
+    "yeonju": {
+      "floor": "dorm",
+      "x": 7,
+      "y": 5
+    },
+    "jinwoo": {
+      "floor": "dorm",
+      "x": 9,
+      "y": 5
+    },
+    "rion": {
+      "floor": "dorm",
+      "x": 11,
+      "y": 5
+    },
+    "gabin": {
+      "floor": "dorm",
+      "x": 13,
+      "y": 5
+    }
+  },
+  "game": {
+    "booklets": {
+      "seoha": {
+        "background": [
+          "당신은 전국 청소년 퍼즐 경연에서 독창적인 입체 탈출 문제를 출제한 경력이 있다. 학교가 장학생 선발을 조건으로 당신에게 비밀 설계 의뢰를 했던 적이 있다.",
+          "비밀 연구관의 문이 외부에서 잠긴 것이 아니라 내부에서 반복되는 회로라는 사실을 의심한다. 그러나 당신이 만든 첫 번째 암호 구간이 실제 봉쇄에 사용되었다는 사실은 숨기고 싶다.",
+          "사망한 연호는 당신에게 지하 연구동에 또 다른 통로가 있다고 말했다. 자신이 그를 도와주지 못한 이유는 탈출 구조와 살인 사건의 연결을 몰랐기 때문이다."
+        ],
+        "timeline": [
+          {
+            "time": "입교일 20:00",
+            "title": "연호와 협력",
+            "detail": "탈출 미로가 교육 프로그램이 아니라 진짜 봉쇄 장치라는 의심을 공유했다."
+          },
+          {
+            "time": "22:10",
+            "title": "입체 지도 점검",
+            "detail": "교내 건물 도면의 복도 일부가 접힌 종이 위에서만 맞아떨어진다고 알았다."
+          },
+          {
+            "time": "23:50",
+            "title": "암호 게시판",
+            "detail": "누군가 자신의 오래된 퍼즐 표식을 복사한 것을 발견했다."
+          },
+          {
+            "time": "00:38",
+            "title": "관측실 옆",
+            "detail": "연호가 “곧 진실을 말할게”라는 쪽지를 건넸다."
+          },
+          {
+            "time": "00:42",
+            "title": "생활동 회의",
+            "detail": "사건 시각과 다른 곳에 있었지만 혼자였다."
+          },
+          {
+            "time": "01:12",
+            "title": "사망 발견",
+            "detail": "관측실의 봉인 방식이 자신이 만든 것과 다르다는 것을 알아차렸다."
+          }
+        ],
+        "inventory": [
+          {
+            "id": "seoha_folded_map",
+            "name": "접는 입체 약도",
+            "description": "복도를 겹쳐야 보이는 지하 경로."
+          },
+          {
+            "id": "seoha_puzzle_ring",
+            "name": "암호 고리",
+            "description": "본인이 만든 원통 모양 퍼즐."
+          },
+          {
+            "id": "seoha_safe_marker",
+            "name": "미로 표시 펜",
+            "description": "통로 바닥에 화살표를 그리는 펜."
+          },
+          {
+            "id": "seoha_rescue_token",
+            "name": "퍼즐 구조 토큰",
+            "description": "학교가 지급한 안전 확인 장치."
+          }
+        ],
+        "culprit": false,
+        "objectives": "기본: 진범 지목 +4점. 별개 목표: 지하 연구동의 실제 탈출 경로를 찾아 동료에게 제시하면 +3점. 자신이 봉쇄 미로의 일부를 설계했다는 사실이 전체 공개되지 않으면 +1점.",
+        "notes": "자신의 비밀을 공개할지 선택할 수 있다. 범인 지목과 학교 탈출은 서로 다른 목표다.",
+        "actionNotes": "행동 순서 2번. 지도를 이용해 동료를 보호하거나, 탈출 패스를 얻었다면 경로를 열 수 있다."
+      },
+      "taewon": {
+        "background": [
+          "당신은 관객을 놀라게 하는 마술을 잘하지만, 과거 공연에서 안전 검사를 생략한 실수로 동료가 다친 적이 있다. 사고 소문을 피하려 이 학교에 왔다.",
+          "연호가 죽기 전날 당신에게 관측실 무대 소품을 가져갔다. 그가 다시 돌려주지 않아 자신의 물건이 범행 도구로 오해받을까 두렵다.",
+          "01:10 들린 연호의 목소리에 자신이 만든 음성 연출 소프트웨어를 떠올렸다. 가빈이 당신에게 녹음용 소품을 빌려 간 적 있다는 사실을 떠올리지만, 공개하면 마술 장비를 빌려준 책임을 지게 된다."
+        ],
+        "timeline": [
+          {
+            "time": "20:20",
+            "title": "첫 마술 쇼",
+            "detail": "연호에게 자동 환영 장치 작동법을 보여 줬다."
+          },
+          {
+            "time": "22:30",
+            "title": "관측실 장비 대여",
+            "detail": "가빈이 리허설용 소품 상자를 잠시 빌렸다."
+          },
+          {
+            "time": "00:10",
+            "title": "마술창고 정리",
+            "detail": "돌아오지 않은 소품이 있는지 확인했다."
+          },
+          {
+            "time": "00:41",
+            "title": "무대 대기실",
+            "detail": "관측실에서 짧은 금속 마찰음을 들었다."
+          },
+          {
+            "time": "01:10",
+            "title": "방송 목소리",
+            "detail": "연호가 아직 살아 있다고 믿고 대기실에 남았다."
+          },
+          {
+            "time": "01:12",
+            "title": "시신 발견",
+            "detail": "본인의 음성 편집 장비가 발견될까 두려워했다."
+          }
+        ],
+        "inventory": [
+          {
+            "id": "taewon_mirror_box",
+            "name": "거울 마술 상자",
+            "description": "안에서 소리가 울리는 공연 소품."
+          },
+          {
+            "id": "taewon_stage_rope",
+            "name": "무대용 안전 로프",
+            "description": "탈착할 수 있는 공연용 고리 줄."
+          },
+          {
+            "id": "taewon_voice_filter",
+            "name": "마술용 음성 필터",
+            "description": "목소리 변조용 저전력 공연 기기."
+          },
+          {
+            "id": "taewon_rented_prop",
+            "name": "반환받지 못한 장비 대여표",
+            "description": "빌려준 장치가 적힌 종이."
+          }
+        ],
+        "culprit": false,
+        "objectives": "진범 지목 +4점. 음성 연출 소품이 오해의 핵심임을 입증하면 +2점. 과거 공연 안전사고 사실을 공개 선언하지 않으면 +2점.",
+        "notes": "자신의 비밀을 공개할지 선택할 수 있다. 범인 지목과 학교 탈출은 서로 다른 목표다.",
+        "actionNotes": "행동 순서 4번. 로프로 상대의 다음 행동을 제한할 수 있다."
+      },
+      "yeonju": {
+        "background": [
+          "당신은 별자리 궤적만 보고 관측 시각을 추정하는 천체 관측자다. 입교 전 온라인에서 익명의 사람과 천문 관측 일지를 공유했다. 그 사람이 죽은 연호였다는 것을 나중에 알았다.",
+          "학교의 플라네타륨은 가짜 밤하늘을 투사하지만, 광학 관측창으로 들어오는 진짜 별의 위치는 달랐다. 연호의 방송이 재생된 01:10에 그는 실제로 대화하고 있지 않았다는 의혹을 품었다.",
+          "자신이 연호의 비밀 파트너였음을 숨기려 관측 일지를 쉽게 공개하지 않는다. 하지만 진실을 위해 마지막 별자리 계산을 할 수 있다."
+        ],
+        "timeline": [
+          {
+            "time": "19:50",
+            "title": "밤하늘 관측",
+            "detail": "연호에게 오래된 별자리 노트를 보냈다."
+          },
+          {
+            "time": "22:40",
+            "title": "광학실",
+            "detail": "플라네타륨 하늘이 실제 밤하늘보다 한 시간 뒤진 것을 발견했다."
+          },
+          {
+            "time": "00:30",
+            "title": "망원경 조절",
+            "detail": "관측창의 별 위치를 별자리 시각표와 대조했다."
+          },
+          {
+            "time": "00:43",
+            "title": "실제 별의 위치",
+            "detail": "연호가 이미 답장을 보내지 않는다는 사실을 이상하게 여겼다."
+          },
+          {
+            "time": "01:10",
+            "title": "방송 재생",
+            "detail": "연호의 목소리는 들렸지만 화면 속 별은 00:20대의 상태였다."
+          },
+          {
+            "time": "01:12",
+            "title": "시체 발견",
+            "detail": "자신의 익명 채팅 기록을 숨겼다."
+          }
+        ],
+        "inventory": [
+          {
+            "id": "yeonju_star_almanac",
+            "name": "종이 별자리 연감",
+            "description": "천문 관측 시각이 기록된 달력."
+          },
+          {
+            "id": "yeonju_anonymous_chat",
+            "name": "연호와의 익명 채팅",
+            "description": "공개하지 않은 비밀 온라인 관계."
+          },
+          {
+            "id": "yeonju_micro_scope",
+            "name": "휴대 광학 렌즈",
+            "description": "조명과 별자리 투사 장치를 구분한다."
+          },
+          {
+            "id": "yeonju_sky_photo",
+            "name": "하늘의 장시간 노출 사진",
+            "description": "원본 촬영 시각이 있는 사진."
+          }
+        ],
+        "culprit": false,
+        "objectives": "진범 지목 +4점. 01:10의 연호 목소리가 녹음이라는 사실을 독립 증거로 밝혀내면 +2점. 연호와 비밀 연락 관계를 끝까지 비공개로 지키면 +2점.",
+        "notes": "자신의 비밀을 공개할지 선택할 수 있다. 범인 지목과 학교 탈출은 서로 다른 목표다.",
+        "actionNotes": "행동 순서 1번. 종이 별자리 연감으로 시간의 모순을 공개할 수 있다."
+      },
+      "jinwoo": {
+        "background": [
+          "당신은 청소년 재난 구조 프로젝트를 이끌었던 학생이다. 그러나 과거 모의 구조에서 탈락자를 버린 판단을 내린 일이 있고 그 사실이 자신을 괴롭힌다.",
+          "연호는 너에게 학원 지하 통로로 나가려면 누군가 남아서 전기를 복구해야 한다고 말했다. 모두를 살릴 방법이 있다고 믿고 연구관에 남았다.",
+          "01:12에 사망이 확인되자 가장 먼저 뛰어들었지만 이미 늦었다. 자신의 과거 실수와 현재의 무력감을 숨기며 모두를 지키려 한다."
+        ],
+        "timeline": [
+          {
+            "time": "20:00",
+            "title": "안전 훈련",
+            "detail": "학교 측 봉쇄 훈련이 지나치게 실전 같다고 항의했다."
+          },
+          {
+            "time": "23:20",
+            "title": "비상 통로 시험",
+            "detail": "지하 비상구가 전기 잠금으로 봉인된 것을 확인했다."
+          },
+          {
+            "time": "00:40",
+            "title": "생활동 순찰",
+            "detail": "상처가 난 공연 의상을 입은 가빈을 보았다."
+          },
+          {
+            "time": "00:45",
+            "title": "경보 대기",
+            "detail": "관측실에서 경고음이 들렸으나 안전 방송이라고 착각했다."
+          },
+          {
+            "time": "01:10",
+            "title": "연호의 목소리",
+            "detail": "살아 있다고 믿었기에 현장에 늦게 갔다."
+          },
+          {
+            "time": "01:12",
+            "title": "시신 발견",
+            "detail": "도움이 필요했던 사람을 또 지키지 못했다는 죄책감을 느꼈다."
+          }
+        ],
+        "inventory": [
+          {
+            "id": "jinwoo_rescue_helmet",
+            "name": "개인 구조 헬멧",
+            "description": "현장 안전을 위해 직접 만든 장비."
+          },
+          {
+            "id": "jinwoo_floor_plan",
+            "name": "안전 훈련 구역 도면",
+            "description": "지하 통로의 존재가 지워진 도면."
+          },
+          {
+            "id": "jinwoo_failure_report",
+            "name": "과거 구조 실패 기록",
+            "description": "본인이 감추고 싶은 판단 기록."
+          },
+          {
+            "id": "jinwoo_emergency_radio",
+            "name": "단거리 비상 무전기",
+            "description": "건물 안 통신은 되지만 외부로는 나가지 않는다."
+          }
+        ],
+        "culprit": false,
+        "objectives": "진범 지목 +4점. 단체 탈출 계획을 실제로 성립시키면 +3점. 과거 구조 실패 사유를 전체 공개하지 않으면 +1점.",
+        "notes": "자신의 비밀을 공개할지 선택할 수 있다. 범인 지목과 학교 탈출은 서로 다른 목표다.",
+        "actionNotes": "행동 순서 3번. 구조 헬멧으로 한 사람을 지키거나 출구 패스 확보 시 탈출 경로를 확보한다."
+      },
+      "rion": {
+        "background": [
+          "당신은 사라진 언어를 연구하는 중고등 통합과정 학생이다. 학교가 오래된 건물을 현대적 실험 시설로 개조하면서 남긴 암호 기호를 먼저 발견했다.",
+          "연호는 진우와 함께 당신에게 지하 출구의 비밀 문장을 보냈다. 언어를 해독하면 학교 밖으로 나갈 수 있지만 그 기록에 학교 운영자의 이름도 포함되어 있음을 알았다.",
+          "비밀 학교를 만든 운영자가 자신을 후원해왔다는 사실을 숨기고 싶다. 감사한 후원자가 불법 감금 실험을 진행했다는 진실이 두렵다."
+        ],
+        "timeline": [
+          {
+            "time": "19:20",
+            "title": "입교 기록",
+            "detail": "고문서 연구 후원자가 학교 운영자라는 것을 알았다."
+          },
+          {
+            "time": "22:15",
+            "title": "옛 건물 도면",
+            "detail": "지하 계단의 암호 표식을 해독했다."
+          },
+          {
+            "time": "23:40",
+            "title": "연호에게 회신",
+            "detail": "출구 열쇠가 학원 내부에 남아 있다는 사실을 알려줬다."
+          },
+          {
+            "time": "00:39",
+            "title": "언어 연구실",
+            "detail": "가빈이 관측실의 방송 문구를 외우는 모습을 보았다."
+          },
+          {
+            "time": "01:10",
+            "title": "방송 비교",
+            "detail": "연호가 평소 쓰지 않는 고어 표현이 섞여 있음을 알아챘다."
+          },
+          {
+            "time": "01:12",
+            "title": "사건 발생",
+            "detail": "범인 추리와 출구 해독 중 무엇을 먼저 할지 갈등했다."
+          }
+        ],
+        "inventory": [
+          {
+            "id": "rion_cipher_ledger",
+            "name": "지하 암호 해독 수첩",
+            "description": "낡은 건물 출입 암호를 해석했다."
+          },
+          {
+            "id": "rion_patron_letter",
+            "name": "익명의 후원자 편지",
+            "description": "학교 운영자와의 개인적 관계."
+          },
+          {
+            "id": "rion_golden_dictionary",
+            "name": "금빛 어휘 사전",
+            "description": "알 수 없는 표식을 언어로 바꾼 사전."
+          },
+          {
+            "id": "rion_sealed_note",
+            "name": "연호의 암호 쪽지",
+            "description": "죽은 학생이 남긴 마지막 부탁."
+          }
+        ],
+        "culprit": false,
+        "objectives": "진범 지목 +4점. 출구 암호와 실제 탈출 통로의 위치를 입증하면 +3점. 자신이 학교 운영자의 후원을 받았다는 사실을 공개 선언하지 않으면 +1점.",
+        "notes": "자신의 비밀을 공개할지 선택할 수 있다. 범인 지목과 학교 탈출은 서로 다른 목표다.",
+        "actionNotes": "행동 순서 5번. 지하 출구 패스를 획득한 사람은 암호 해독과 함께 탈출을 시도할 수 있다."
+      },
+      "gabin": {
+        "background": [
+          "당신은 첫 살인사건의 유일한 범인이다. 목소리의 미세한 떨림까지 재현할 수 있다는 재능으로 학교에 들어왔지만, 실제로는 불법 심리 실험에 연루된 운영자의 딸이다.",
+          "연호는 학교가 학생들의 가족 정보와 불안을 이용해 감금 실험을 진행한다는 기록을 확보했고, 당신이 내부자로서 실험 결과를 전달한 사실까지 알게 되었다. 당신은 자신의 가족을 지키겠다는 명분으로 그를 막으려 했다.",
+          "00:42경 플라네타륨에서 연호를 살해했다. 구체적인 물리적 방법은 사건 해설의 판정으로 처리하며, 현실에서 따라 할 수 있는 절차는 다루지 않는다. 01:10에는 미리 준비한 연호의 음성 모사를 방송으로 내보내 사건의 사망 시각을 늦게 보이게 했다.",
+          "너는 01:10 당시 생활동에서 다른 학생과 있었기 때문에 알리바이가 완벽하다고 믿는다. 그러나 별자리 영상의 시각, 방송 음성의 잘못된 말버릇, 연호의 마지막 쪽지, 00:42 현장 기록은 범행을 드러낸다."
+        ],
+        "timeline": [
+          {
+            "time": "20:30",
+            "title": "학교 운영자 통화",
+            "detail": "가족의 실험 관련 서류를 공개하지 말라는 지시를 들었다."
+          },
+          {
+            "time": "22:30",
+            "title": "마술 소품 대여",
+            "detail": "태원에게 목소리 연출 기기를 빌렸다."
+          },
+          {
+            "time": "00:38",
+            "title": "연호와 대화",
+            "detail": "연호가 운영자의 이름을 공개하겠다고 말해 두려웠다."
+          },
+          {
+            "time": "00:42",
+            "title": "실제 살인",
+            "detail": "플라네타륨에서 연호의 생명을 빼앗았다."
+          },
+          {
+            "time": "00:45",
+            "title": "생활동 복귀",
+            "detail": "진우에게 무대 의상이 긁힌 모습을 보였다."
+          },
+          {
+            "time": "01:10",
+            "title": "음성 모사 방송",
+            "detail": "이미 숨진 연호가 살아 있는 것처럼 목소리를 송출했다."
+          },
+          {
+            "time": "01:12",
+            "title": "시신 발견",
+            "detail": "운영자를 탓하며 울었지만 본인이 범인임을 알고 있었다."
+          }
+        ],
+        "inventory": [
+          {
+            "id": "gabin_voice_script",
+            "name": "연호 음성 모사 대본",
+            "description": "방송용 말투와 대사 강세가 적힌 메모."
+          },
+          {
+            "id": "gabin_stage_dart",
+            "name": "연극용 그림자 화살",
+            "description": "위험하지 않은 무대 소품처럼 보인다."
+          },
+          {
+            "id": "gabin_family_badge",
+            "name": "운영자 가족 출입 배지",
+            "description": "학생에게는 불필요한 고급 출입 권한."
+          },
+          {
+            "id": "gabin_red_fiber",
+            "name": "찢어진 무대 의상",
+            "description": "깊은 붉은색 천 조각."
+          }
+        ],
+        "culprit": true,
+        "objectives": "범인으로 지목되지 않으면 +7점. 학교 운영자와 가족이라는 사실이 마지막 토론까지 전체 공개되지 않으면 +2점. 음성 모사와 실제 사망 시각의 연결이 증명되지 않으면 +2점.",
+        "notes": "자신의 비밀을 공개할지 선택할 수 있다. 범인 지목과 학교 탈출은 서로 다른 목표다.",
+        "actionNotes": "행동 순서 6번. 그림자 화살의 추가 공격 효과는 게임 안에서만 적용된다. 행동 결과는 공개된다."
+      }
+    },
+    "floors": [
+      {
+        "id": "dorm",
+        "title": "성하 영재관 · 생활동",
+        "legend": "기숙사, 연구도서관, 안전실, 강당",
+        "tiles": [
+          "###################",
+          "#........#........#",
+          "#........#........#",
+          "#........#........#",
+          "####.#########.####",
+          "#.................#",
+          "####.#########.####",
+          "#........#........#",
+          "#........#........#",
+          "#........#........#",
+          "###################"
+        ],
+        "rooms": [
+          {
+            "x": 3,
+            "y": 2,
+            "name": "공동 기숙사",
+            "icon": "✧"
+          },
+          {
+            "x": 14,
+            "y": 2,
+            "name": "연구 도서관",
+            "icon": "☷"
+          },
+          {
+            "x": 3,
+            "y": 8,
+            "name": "안전 훈련실",
+            "icon": "⌁"
+          },
+          {
+            "x": 14,
+            "y": 8,
+            "name": "공연 대기실",
+            "icon": "◇"
+          }
+        ],
+        "areas": [
+          {
+            "id": "hall",
+            "name": "학교 복도",
+            "x": 1,
+            "y": 5,
+            "width": 17,
+            "height": 1,
+            "color": "#737e88",
+            "pattern": "stone"
+          },
+          {
+            "id": "block_0",
+            "x": 1,
+            "y": 1,
+            "width": 8,
+            "height": 3,
+            "name": "공동 기숙사",
+            "color": "#847ba3",
+            "pattern": "wood"
+          },
+          {
+            "id": "block_1",
+            "x": 10,
+            "y": 1,
+            "width": 8,
+            "height": 3,
+            "name": "연구 도서관",
+            "color": "#7a8a9b",
+            "pattern": "tile"
+          },
+          {
+            "id": "block_2",
+            "x": 1,
+            "y": 7,
+            "width": 8,
+            "height": 3,
+            "name": "안전 훈련실",
+            "color": "#907e78",
+            "pattern": "stone"
+          },
+          {
+            "id": "block_3",
+            "x": 10,
+            "y": 7,
+            "width": 8,
+            "height": 3,
+            "name": "공연 대기실",
+            "color": "#aa8e8d",
+            "pattern": "carpet"
+          }
+        ],
+        "doors": [
+          {
+            "id": "door_nw",
+            "x": 4,
+            "y": 4,
+            "name": "공동 기숙사 문",
+            "locked": false,
+            "closed": false,
+            "requiresItem": ""
+          },
+          {
+            "id": "door_ne",
+            "x": 14,
+            "y": 4,
+            "name": "연구 도서관 문",
+            "locked": false,
+            "closed": false,
+            "requiresItem": ""
+          },
+          {
+            "id": "door_sw",
+            "x": 4,
+            "y": 6,
+            "name": "안전 훈련실 문",
+            "locked": false,
+            "closed": false,
+            "requiresItem": ""
+          },
+          {
+            "id": "door_se",
+            "x": 14,
+            "y": 6,
+            "name": "공연 대기실 문",
+            "locked": false,
+            "closed": false,
+            "requiresItem": ""
+          }
+        ],
+        "portals": [
+          {
+            "x": 9,
+            "y": 5,
+            "toFloor": "observatory",
+            "toX": 9,
+            "toY": 5,
+            "label": "아랫층으로 내려가기"
+          }
+        ]
+      },
+      {
+        "id": "observatory",
+        "title": "성하 영재관 · 플라네타륨",
+        "legend": "첫 살인 발생 장소와 목소리 예약 방송실",
+        "tiles": [
+          "###################",
+          "#........#........#",
+          "#........#........#",
+          "#........#........#",
+          "####.#########.####",
+          "#.................#",
+          "####.#########.####",
+          "#........#........#",
+          "#........#........#",
+          "#........#........#",
+          "###################"
+        ],
+        "rooms": [
+          {
+            "x": 3,
+            "y": 2,
+            "name": "별빛 관측관",
+            "icon": "✧"
+          },
+          {
+            "x": 14,
+            "y": 2,
+            "name": "천체 제어실",
+            "icon": "☷"
+          },
+          {
+            "x": 3,
+            "y": 8,
+            "name": "지하 출입 복도",
+            "icon": "⌁"
+          },
+          {
+            "x": 14,
+            "y": 8,
+            "name": "보안 장비실",
+            "icon": "◇"
+          }
+        ],
+        "areas": [
+          {
+            "id": "hall",
+            "name": "학교 복도",
+            "x": 1,
+            "y": 5,
+            "width": 17,
+            "height": 1,
+            "color": "#737e88",
+            "pattern": "stone"
+          },
+          {
+            "id": "block_0",
+            "x": 1,
+            "y": 1,
+            "width": 8,
+            "height": 3,
+            "name": "별빛 관측관",
+            "color": "#62799d",
+            "pattern": "wood"
+          },
+          {
+            "id": "block_1",
+            "x": 10,
+            "y": 1,
+            "width": 8,
+            "height": 3,
+            "name": "천체 제어실",
+            "color": "#8b7798",
+            "pattern": "tile"
+          },
+          {
+            "id": "block_2",
+            "x": 1,
+            "y": 7,
+            "width": 8,
+            "height": 3,
+            "name": "지하 출입 복도",
+            "color": "#7b8b8d",
+            "pattern": "stone"
+          },
+          {
+            "id": "block_3",
+            "x": 10,
+            "y": 7,
+            "width": 8,
+            "height": 3,
+            "name": "보안 장비실",
+            "color": "#858493",
+            "pattern": "carpet"
+          }
+        ],
+        "doors": [
+          {
+            "id": "door_nw",
+            "x": 4,
+            "y": 4,
+            "name": "별빛 관측관 문",
+            "locked": false,
+            "closed": false,
+            "requiresItem": ""
+          },
+          {
+            "id": "door_ne",
+            "x": 14,
+            "y": 4,
+            "name": "천체 제어실 문",
+            "locked": false,
+            "closed": false,
+            "requiresItem": ""
+          },
+          {
+            "id": "door_sw",
+            "x": 4,
+            "y": 6,
+            "name": "지하 출입 복도 문",
+            "locked": false,
+            "closed": false,
+            "requiresItem": ""
+          },
+          {
+            "id": "door_se",
+            "x": 14,
+            "y": 6,
+            "name": "보안 장비실 문",
+            "locked": false,
+            "closed": false,
+            "requiresItem": ""
+          }
+        ],
+        "portals": [
+          {
+            "x": 9,
+            "y": 5,
+            "toFloor": "dorm",
+            "toX": 9,
+            "toY": 5,
+            "label": "윗층으로 올라가기"
+          },
+          {
+            "x": 9,
+            "y": 5,
+            "toFloor": "basement",
+            "toX": 9,
+            "toY": 5,
+            "label": "아랫층으로 내려가기"
+          }
+        ]
+      },
+      {
+        "id": "basement",
+        "title": "성하 영재관 · 지하 연구동",
+        "legend": "실험 원고와 진짜 탈출 통로, 봉인 문",
+        "tiles": [
+          "###################",
+          "#........#........#",
+          "#........#........#",
+          "#........#........#",
+          "####.#########.####",
+          "#.................#",
+          "####.#########.####",
+          "#........#........#",
+          "#........#........#",
+          "#........#........#",
+          "###################"
+        ],
+        "rooms": [
+          {
+            "x": 3,
+            "y": 2,
+            "name": "봉쇄 실험실",
+            "icon": "✧"
+          },
+          {
+            "x": 14,
+            "y": 2,
+            "name": "작동하지 않는 가짜 출구",
+            "icon": "☷"
+          },
+          {
+            "x": 3,
+            "y": 8,
+            "name": "지하 냉각 통로",
+            "icon": "⌁"
+          },
+          {
+            "x": 14,
+            "y": 8,
+            "name": "봉인 원고 보관실",
+            "icon": "◇"
+          }
+        ],
+        "areas": [
+          {
+            "id": "hall",
+            "name": "학교 복도",
+            "x": 1,
+            "y": 5,
+            "width": 17,
+            "height": 1,
+            "color": "#737e88",
+            "pattern": "stone"
+          },
+          {
+            "id": "block_0",
+            "x": 1,
+            "y": 1,
+            "width": 8,
+            "height": 3,
+            "name": "봉쇄 실험실",
+            "color": "#697990",
+            "pattern": "wood"
+          },
+          {
+            "id": "block_1",
+            "x": 10,
+            "y": 1,
+            "width": 8,
+            "height": 3,
+            "name": "작동하지 않는 가짜 출구",
+            "color": "#8c7e9a",
+            "pattern": "tile"
+          },
+          {
+            "id": "block_2",
+            "x": 1,
+            "y": 7,
+            "width": 8,
+            "height": 3,
+            "name": "지하 냉각 통로",
+            "color": "#6d918b",
+            "pattern": "stone"
+          },
+          {
+            "id": "block_3",
+            "x": 10,
+            "y": 7,
+            "width": 8,
+            "height": 3,
+            "name": "봉인 원고 보관실",
+            "color": "#96777b",
+            "pattern": "carpet"
+          }
+        ],
+        "doors": [
+          {
+            "id": "door_nw",
+            "x": 4,
+            "y": 4,
+            "name": "봉쇄 실험실 문",
+            "locked": false,
+            "closed": false,
+            "requiresItem": ""
+          },
+          {
+            "id": "door_ne",
+            "x": 14,
+            "y": 4,
+            "name": "작동하지 않는 가짜 출구 문",
+            "locked": false,
+            "closed": false,
+            "requiresItem": ""
+          },
+          {
+            "id": "door_sw",
+            "x": 4,
+            "y": 6,
+            "name": "지하 냉각 통로 문",
+            "locked": false,
+            "closed": false,
+            "requiresItem": ""
+          },
+          {
+            "id": "door_se",
+            "x": 14,
+            "y": 6,
+            "name": "봉인 원고 보관실 문",
+            "locked": true,
+            "closed": true,
+            "requiresItem": "academy_seal_key"
+          }
+        ],
+        "portals": [
+          {
+            "x": 9,
+            "y": 5,
+            "toFloor": "observatory",
+            "toX": 9,
+            "toY": 5,
+            "label": "윗층으로 올라가기"
+          }
+        ]
+      }
+    ],
+    "phaseMinutes": {
+      "synopsis": 5,
+      "characters": 5,
+      "study": 20,
+      "investigation1": 20,
+      "discussion1": 15,
+      "investigation2": 20,
+      "discussion2": 20,
+      "action": 10,
+      "ending": 15
+    },
+    "investigation": {
+      "tokensPerPlayer": 4,
+      "tokensPerSecondInvestigation": 4,
+      "maxTileOccupants": 3,
+      "cards": [
+        {
+          "id": "seoha_folded_map",
+          "title": "남서하의 접는 입체 약도",
+          "subtitle": "복도를 겹쳐야 보이는 지하 경로.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "seoha",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "시설이 탈출 불가능해 보이지만 일부 통로는 위치 정보를 겹치면 나타난다."
+        },
+        {
+          "id": "seoha_puzzle_ring",
+          "title": "남서하의 암호 고리",
+          "subtitle": "본인이 만든 원통 모양 퍼즐.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "seoha",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "관측실 봉인 번호와 비슷하지만 숫자 방향이 정반대다. 범인이 이 고리를 복제했을 수 있다."
+        },
+        {
+          "id": "seoha_safe_marker",
+          "title": "남서하의 미로 표시 펜",
+          "subtitle": "통로 바닥에 화살표를 그리는 펜.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "seoha",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "연호가 마지막으로 표시한 별표 근처에 지하 전기실 위치가 적혀 있다."
+        },
+        {
+          "id": "seoha_rescue_token",
+          "title": "남서하의 퍼즐 구조 토큰",
+          "subtitle": "학교가 지급한 안전 확인 장치.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "seoha",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "행동 단계에서 한 참가자의 위험을 막는 보호 도구로 쓸 수 있다."
+        },
+        {
+          "id": "taewon_mirror_box",
+          "title": "이태원의 거울 마술 상자",
+          "subtitle": "안에서 소리가 울리는 공연 소품.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "taewon",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "여러 각도에서 공간이 달라 보이는 착시용 도구다. 시신을 운반하는 데 사용되지 않았다."
+        },
+        {
+          "id": "taewon_stage_rope",
+          "title": "이태원의 무대용 안전 로프",
+          "subtitle": "탈착할 수 있는 공연용 고리 줄.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "taewon",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "행동 단계에서 일시적으로 한 참가자의 움직임을 제한하는 서사적 소품이다."
+        },
+        {
+          "id": "taewon_voice_filter",
+          "title": "이태원의 마술용 음성 필터",
+          "subtitle": "목소리 변조용 저전력 공연 기기.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "taewon",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "연호의 목소리를 흉내 내기 어렵지는 않지만 장비는 태원이 소지 중이었다. 대여 기록이 따로 존재한다."
+        },
+        {
+          "id": "taewon_rented_prop",
+          "title": "이태원의 반환받지 못한 장비 대여표",
+          "subtitle": "빌려준 장치가 적힌 종이.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "taewon",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "가빈이 22:30에 소품 케이스를 빌려 간 사실이 적혀 있다. 그녀가 범행에 어떻게 이용했는지는 알 수 없다."
+        },
+        {
+          "id": "yeonju_star_almanac",
+          "title": "천연주의 종이 별자리 연감",
+          "subtitle": "천문 관측 시각이 기록된 달력.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "yeonju",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "01:10 화면에 나온 별자리는 실제 01:10 하늘과 맞지 않아 미리 만든 영상임을 보여 준다."
+        },
+        {
+          "id": "yeonju_anonymous_chat",
+          "title": "천연주의 연호와의 익명 채팅",
+          "subtitle": "공개하지 않은 비밀 온라인 관계.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "yeonju",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "둘은 비밀 연구관의 탈출 길과 학원의 거짓 실험을 함께 조사했다."
+        },
+        {
+          "id": "yeonju_micro_scope",
+          "title": "천연주의 휴대 광학 렌즈",
+          "subtitle": "조명과 별자리 투사 장치를 구분한다.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "yeonju",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "관측실 화면은 실제 천체 영상이 아니라 예약된 시뮬레이션 영상이었다."
+        },
+        {
+          "id": "yeonju_sky_photo",
+          "title": "천연주의 하늘의 장시간 노출 사진",
+          "subtitle": "원본 촬영 시각이 있는 사진.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "yeonju",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "00:42경 별자리 배치와 관측실 녹화본의 하늘을 비교할 수 있다."
+        },
+        {
+          "id": "jinwoo_rescue_helmet",
+          "title": "백진우의 개인 구조 헬멧",
+          "subtitle": "현장 안전을 위해 직접 만든 장비.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "jinwoo",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "행동 단계에서 한 사람의 생존을 보호하는 데 활용할 수 있다."
+        },
+        {
+          "id": "jinwoo_floor_plan",
+          "title": "백진우의 안전 훈련 구역 도면",
+          "subtitle": "지하 통로의 존재가 지워진 도면.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "jinwoo",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "기존 도면의 빈 칸이 실제 봉인된 지하 출구에 대응한다."
+        },
+        {
+          "id": "jinwoo_failure_report",
+          "title": "백진우의 과거 구조 실패 기록",
+          "subtitle": "본인이 감추고 싶은 판단 기록.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "jinwoo",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "모의 구조 중 한 사람을 포기한 선택을 했지만 실제 살인 경험은 없다."
+        },
+        {
+          "id": "jinwoo_emergency_radio",
+          "title": "백진우의 단거리 비상 무전기",
+          "subtitle": "건물 안 통신은 되지만 외부로는 나가지 않는다.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "jinwoo",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "다른 학생이 구조 요청을 보냈는지 확인할 수 있다."
+        },
+        {
+          "id": "rion_cipher_ledger",
+          "title": "차리온의 지하 암호 해독 수첩",
+          "subtitle": "낡은 건물 출입 암호를 해석했다.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "rion",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "학원의 실제 탈출문은 지하 냉각 통로와 이어지며 상층 출입문은 미끼라는 뜻이 담겨 있다."
+        },
+        {
+          "id": "rion_patron_letter",
+          "title": "차리온의 익명의 후원자 편지",
+          "subtitle": "학교 운영자와의 개인적 관계.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "rion",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "운영자가 학생들을 재능 실험으로 분류하고 학교를 폐쇄 실험실로 이용했다는 암시가 있다."
+        },
+        {
+          "id": "rion_golden_dictionary",
+          "title": "차리온의 금빛 어휘 사전",
+          "subtitle": "알 수 없는 표식을 언어로 바꾼 사전.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "rion",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "“별이 사라지는 층의 왼쪽 길”이라는 탈출 단서가 해독된다."
+        },
+        {
+          "id": "rion_sealed_note",
+          "title": "차리온의 연호의 암호 쪽지",
+          "subtitle": "죽은 학생이 남긴 마지막 부탁.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "rion",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "연호는 특정 동료가 고의로 대화를 오도하고 있음을 의심했고 그 이름을 암호로 숨겼다."
+        },
+        {
+          "id": "gabin_voice_script",
+          "title": "유가빈의 연호 음성 모사 대본",
+          "subtitle": "방송용 말투와 대사 강세가 적힌 메모.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "gabin",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "연호가 실제로 쓰지 않는 문장을 가빈이 공연용 대본에 적어 놓았다. 01:10 방송의 어색한 표현과 일치한다."
+        },
+        {
+          "id": "gabin_stage_dart",
+          "title": "유가빈의 연극용 그림자 화살",
+          "subtitle": "위험하지 않은 무대 소품처럼 보인다.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "gabin",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "행동 단계에서만 허구적 추가 사망 효과를 주는 아이템. 현재 연호의 살인 수법과는 별개의 연출 도구다."
+        },
+        {
+          "id": "gabin_family_badge",
+          "title": "유가빈의 운영자 가족 출입 배지",
+          "subtitle": "학생에게는 불필요한 고급 출입 권한.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "gabin",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "학원 운영자와 가빈이 가족 관계임을 암시한다. 플라네타륨 관리실 접근 기록이 남아 있다."
+        },
+        {
+          "id": "gabin_red_fiber",
+          "title": "유가빈의 찢어진 무대 의상",
+          "subtitle": "깊은 붉은색 천 조각.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "gabin",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "플라네타륨 출입문 뒤에 남은 붉은 섬유와 소재가 비슷하다. 유일한 증거는 아니다."
+        },
+        {
+          "id": "academy_first_body",
+          "title": "플라네타륨 첫 시신 기록",
+          "subtitle": "관측관 · 01:12",
+          "back": "연호는 플라네타륨 안쪽에서 숨진 채 발견됐다. 무대 주변엔 간단한 소품 흔적과 별빛 영상이 남아 있다. 추정 사망 시각과 방송 시각은 아직 구별되지 않는다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "locked",
+          "availableFromPhase": "investigation1",
+          "requiresPresence": true,
+          "location": {
+            "floor": "observatory",
+            "x": 4,
+            "y": 2
+          },
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "academy_fake_sky",
+          "title": "01:10 천체 영상의 별자리",
+          "subtitle": "시간표 · 실제 하늘과 다름",
+          "back": "방송에서 재생된 플라네타륨 별 위치는 실제 01:10 하늘과 맞지 않는다. 연주의 연감과 대조하면 녹화 영상임을 알 수 있다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "locked",
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "academy_voice_witness",
+          "title": "연호의 마지막 목소리",
+          "subtitle": "01:10 · 어색한 발음",
+          "back": "모두가 들은 연호의 대사에는 평소 사용하지 않던 고어 표현이 있다. 누구라도 따라 할 수 있는 짧은 문장이지만 발음과 말버릇이 일치하지 않는다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "locked",
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "academy_corridor_log",
+          "title": "관측관 출입 기록",
+          "subtitle": "00:38–00:45 · 혼자였나?",
+          "back": "연호와 익명 고급 배지 소지자가 00:38 무렵 같은 구역에 들어갔다. 00:45에는 고급 배지만 빠져나왔다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "locked",
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "academy_stage_loan",
+          "title": "마술 장비 대여표",
+          "subtitle": "22:30 · 목소리 재생 소품",
+          "back": "태원이 가빈에게 음성 연출 기기를 빌려줬다는 대여 기록. 태원은 장비가 범죄에 쓰일 것을 몰랐다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "locked",
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "academy_old_tunnel",
+          "title": "학교 구형 탈출 약도",
+          "subtitle": "지하 · 통로의 비밀",
+          "back": "폐쇄된 학원에는 지하 냉각 통로가 있고, 현재 출입문은 기존 통로를 가리기 위한 장식일 수 있다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "locked",
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "academy_message",
+          "title": "연호의 봉인 쪽지",
+          "subtitle": "00:38 · 마지막 경고",
+          "back": "연호는 “내부자의 목소리가 거짓 진술을 만들 거야”라고 적었다. 누가 내부자인지는 고어 암호로 쓰여 있다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "locked",
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "academy_support_funds",
+          "title": "영재 선발 실험 예산표",
+          "subtitle": "장학생 · 감금 실험",
+          "back": "이 학교는 재능 향상보다 폐쇄된 환경에서 학생들의 의사결정을 관찰하는 실험을 위해 만들어졌다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "locked",
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "academy_red_thread",
+          "title": "관측실 문틈의 붉은 섬유",
+          "subtitle": "현장 · 소품 의상",
+          "back": "출입구에 붉은 무대 의상 실밥이 끼어 있다. 가빈이 찢어진 의상을 갖고 있지만 다른 연출 소품도 비슷한 색이다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "locked",
+          "availableFromPhase": "investigation1",
+          "requiresPresence": true,
+          "location": {
+            "floor": "observatory",
+            "x": 4,
+            "y": 2
+          },
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "academy_secret_fund",
+          "title": "익명 운영자의 후원 계약",
+          "subtitle": "운영자 · 가족 간의 비밀",
+          "back": "학교 운영자는 일부 학생의 가족 정보를 후원 조건으로 요구했고 진실을 폭로하려던 연호를 압박했다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "locked",
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "academy_safety_repeat",
+          "title": "안전 방송 반복 횟수",
+          "subtitle": "방송 예약의 흔적",
+          "back": "연호가 살아 있다고 오해하게 만든 01:10 방송은 실시간 대화가 아니라 예약 재생이었다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "locked",
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "academy_mock_exit",
+          "title": "옥상 가짜 비상구 도면",
+          "subtitle": "탈출 · 첫 번째 함정",
+          "back": "학생들에게 보이는 출입문은 실물 구조 통로로 연결되지 않는다. 잘못된 탈출 방향으로 시간을 낭비하게 하는 가짜 설계다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "locked",
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "academy_autopsy_time",
+          "title": "연호의 실제 사망 시각",
+          "subtitle": "2차 · 00:42 추정",
+          "back": "학교 의료 기록의 독립 시간표는 연호가 00:42 무렵 이미 사망했음을 나타낸다. 01:10에 들린 목소리와 정면으로 모순된다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "hidden",
+          "availableFromPhase": "investigation2",
+          "requiresPresence": true,
+          "location": {
+            "floor": "observatory",
+            "x": 4,
+            "y": 2
+          },
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "academy_voice_match",
+          "title": "연호와 가빈의 발음 파형",
+          "subtitle": "2차 · 말버릇 비교",
+          "back": "01:10 방송의 작은 숨 멈춤과 특정 단어의 강세가 가빈의 리허설 대본과 일치한다. 태원이 빌려준 장비는 단순 재생용이었다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [
+            "academy_voice_witness"
+          ],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "locked",
+          "availableFromPhase": "investigation2",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "academy_high_badge",
+          "title": "고급 출입 배지 소유자",
+          "subtitle": "2차 · 운영자 가족",
+          "back": "00:38 관측관에 입장한 배지의 소유자는 가빈이다. 이는 단순히 가까이 있었다는 것 이상으로 운영자와의 관계를 드러낸다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [
+            "academy_corridor_log"
+          ],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "hidden",
+          "availableFromPhase": "investigation2",
+          "requiresPresence": false,
+          "location": {
+            "floor": "observatory",
+            "x": 14,
+            "y": 2
+          },
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "academy_deleted_phrase",
+          "title": "연호가 남긴 미전송 원본",
+          "subtitle": "2차 · 방송과 다른 마지막 말",
+          "back": "연호는 자신이 관측관으로 들어가기 직전 “가빈이 운영자와 연결돼 있다”고 기록했다. 기록에는 범인이라고 단정한 말은 없다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "hidden",
+          "availableFromPhase": "investigation2",
+          "requiresPresence": true,
+          "location": {
+            "floor": "observatory",
+            "x": 14,
+            "y": 2
+          },
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "academy_projection_backup",
+          "title": "플라네타륨 투사기 백업",
+          "subtitle": "2차 · 별의 움직임",
+          "back": "영상은 00:20대에 제작된 파일이며 01:10 재생되었다. 천문 데이터와 오디오 데이터의 동일 예약 장치에서 나온 기록이다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "locked",
+          "availableFromPhase": "investigation2",
+          "requiresPresence": true,
+          "location": {
+            "floor": "observatory",
+            "x": 14,
+            "y": 2
+          },
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "academy_early_signal",
+          "title": "지하 복도에서 발견한 암호",
+          "subtitle": "2차 · 진짜 비상구",
+          "back": "바닥의 낡은 표식이 리온의 고어 사전에 있는 “그늘에서 별을 거꾸로 읽어라”와 일치한다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "locked",
+          "availableFromPhase": "investigation2",
+          "requiresPresence": false,
+          "location": {
+            "floor": "basement",
+            "x": 4,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "academy_lock_token",
+          "title": "지하 기술실 봉인 해제표",
+          "subtitle": "2차 · 연구동 잠금 해제",
+          "back": "학원 지하 보관실의 문과 탈출 보관함을 여는 비상 해제 토큰이다. 토큰을 얻어야만 핵심 출구 자료를 볼 수 있다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "locked",
+          "availableFromPhase": "investigation2",
+          "requiresPresence": true,
+          "location": {
+            "floor": "observatory",
+            "x": 4,
+            "y": 8
+          },
+          "grant": {
+            "id": "academy_seal_key",
+            "name": "지하 보관실 해제표",
+            "description": "학교 지하 봉인 보관실 문을 열 수 있다."
+          },
+          "insights": {}
+        },
+        {
+          "id": "academy_escape_pass_card",
+          "title": "탈출 통로 최종 인증서",
+          "subtitle": "2차 · 공동 탈출의 조건",
+          "back": "연호가 생전에 남긴 출구 사용 승인서다. 단 한 명이라도 행동 단계에서 이를 실행하면 모두가 진짜 탈출로를 알 수 있다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [
+            "academy_early_signal"
+          ],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "hidden",
+          "availableFromPhase": "investigation2",
+          "requiresPresence": true,
+          "location": {
+            "floor": "basement",
+            "x": 14,
+            "y": 8
+          },
+          "grant": {
+            "id": "academy_escape_pass",
+            "name": "공동 탈출 인증서",
+            "description": "행동 단계에서 진짜 학교 탈출 경로를 여는 데 필요한 패스."
+          },
+          "insights": {}
+        },
+        {
+          "id": "academy_admin_original",
+          "title": "운영자의 비밀 연구 원본",
+          "subtitle": "2차 · 감금의 이유",
+          "back": "학생은 순수한 교육 대상이 아니라 외부 연락이 불가능한 환경에서 재능과 신뢰를 시험하는 피실험자로 분류돼 있었다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "hidden",
+          "availableFromPhase": "investigation2",
+          "requiresPresence": true,
+          "location": {
+            "floor": "basement",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "academy_lost_student",
+          "title": "이전 기수의 탈출 기록",
+          "subtitle": "2차 · 탈출 실패의 교훈",
+          "back": "이전 기수는 옥상에 있는 모형 비상구로 가려다 실패했다. 지하 냉각 통로의 공기 순환 표식이 진짜 출구로 연결된다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "locked",
+          "availableFromPhase": "investigation2",
+          "requiresPresence": false,
+          "location": {
+            "floor": "basement",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "academy_culprit_chain",
+          "title": "첫 번째 살인 종합 재구성",
+          "subtitle": "2차 · 알리바이의 붕괴",
+          "back": "00:38 만남 → 00:42 실제 사망 → 00:45 고급 배지 이탈 → 01:10 음성 모사 방송 → 01:12 시신 발견. 가빈의 가족 비밀과 음성 대여 기록을 함께 해석해야 한다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [
+            "academy_autopsy_time",
+            "academy_voice_match"
+          ],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "hidden",
+          "availableFromPhase": "investigation2",
+          "requiresPresence": true,
+          "location": {
+            "floor": "basement",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "academy_second_exit",
+          "title": "지하 최종 탈출 구획",
+          "subtitle": "2차 · 진실 이후의 결단",
+          "back": "범인을 밝혀도 자동으로 문이 열리지는 않는다. 진짜 출구의 위치와 보관함의 인증서를 찾아 행동 단계에서 탈출 능력을 사용해야 한다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "locked",
+          "availableFromPhase": "investigation2",
+          "requiresPresence": true,
+          "location": {
+            "floor": "basement",
+            "x": 4,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {}
+        }
+      ]
+    },
+    "action": {
+      "order": [
+        "yeonju",
+        "seoha",
+        "jinwoo",
+        "taewon",
+        "rion",
+        "gabin"
+      ],
+      "intro": "범인 지목과 탈출 문제는 따로 남아 있다. 각자는 정해진 순서에 한 번의 보호·제압·증언·추가 공격·탈출 중 한 가지 행동을 선택한다.",
+      "roles": {
+        "seoha": [
+          {
+            "id": "shield",
+            "title": "퍼즐 출구 봉인",
+            "kind": "guard",
+            "description": "안전한 퇴로를 설계해 한 참가자를 보호한다.",
+            "targetMode": "any",
+            "requiresItem": "seoha_rescue_token",
+            "publicText": "퍼즐 출구 봉인"
+          },
+          {
+            "id": "escape",
+            "title": "접힌 지도의 탈출로",
+            "kind": "escape",
+            "description": "탈출 패스를 사용해 학교의 비상구 경로를 연다.",
+            "targetMode": "self",
+            "requiresItem": "academy_escape_pass",
+            "publicText": "접힌 지도의 탈출로"
+          }
+        ],
+        "taewon": [
+          {
+            "id": "trap",
+            "title": "무대 커튼 속박",
+            "kind": "restrain",
+            "description": "무대용 안전 로프로 한 참가자의 후속 행동을 제약한다.",
+            "targetMode": "other",
+            "requiresItem": "taewon_stage_rope",
+            "publicText": "무대 커튼 속박"
+          }
+        ],
+        "yeonju": [
+          {
+            "id": "stars",
+            "title": "별자리 시간 증언",
+            "kind": "reveal",
+            "description": "01:10 방송 영상이 실제 그 시각의 하늘이 아니라는 사실을 공개한다.",
+            "targetMode": "none",
+            "requiresItem": "yeonju_star_almanac",
+            "publicText": "별자리 시간 증언"
+          }
+        ],
+        "jinwoo": [
+          {
+            "id": "rescue",
+            "title": "최후의 안전 확보",
+            "kind": "guard",
+            "description": "한 학생을 안전하게 보호한다.",
+            "targetMode": "any",
+            "requiresItem": "jinwoo_rescue_helmet",
+            "publicText": "최후의 안전 확보"
+          },
+          {
+            "id": "escape",
+            "title": "단체 비상구 개방",
+            "kind": "escape",
+            "description": "출구 패스를 사용해 지하 통로를 연다.",
+            "targetMode": "self",
+            "requiresItem": "academy_escape_pass",
+            "publicText": "단체 비상구 개방"
+          }
+        ],
+        "rion": [
+          {
+            "id": "decode",
+            "title": "비밀 통로 해독",
+            "kind": "reveal",
+            "description": "미끼 출입구가 아니라 지하 냉각 통로가 진짜 탈출로임을 공개한다.",
+            "targetMode": "none",
+            "requiresItem": "rion_cipher_ledger",
+            "publicText": "비밀 통로 해독"
+          },
+          {
+            "id": "escape",
+            "title": "옛 언어로 출구 열기",
+            "kind": "escape",
+            "description": "비상구 패스로 실제 출구 문을 연다.",
+            "targetMode": "self",
+            "requiresItem": "academy_escape_pass",
+            "publicText": "옛 언어로 출구 열기"
+          }
+        ],
+        "gabin": [
+          {
+            "id": "shadow",
+            "title": "마지막 그림자 연극",
+            "kind": "attack",
+            "description": "공연 소품을 이용해 한 사람에게 추상적인 추가 사망 효과를 준다.",
+            "targetMode": "other",
+            "requiresItem": "gabin_stage_dart",
+            "publicText": "마지막 그림자 연극"
+          }
+        ]
+      },
+      "endingNotes": "범인 지목과 탈출 성공 여부를 분리해 수동 판정한다. 탈출 인증서를 실제 획득한 사람의 행동만 탈출에 성공한다."
+    }
+  },
+  "creatorGuide": {
+    "warning": "창작 학원 미스터리. 기존 작품 고유 명칭·인물·상징·특수 규칙을 옮기지 않고 독립적인 세계관을 사용.",
+    "culprit": "유가빈",
+    "victim": "장연호(NPC), 학교 실험과 출구 경로를 고발하려던 일곱 번째 학생",
+    "solution": "가빈은 학교 운영자의 딸로서 가문의 감금 실험 비밀이 공개되는 것을 두려워하여 00:42 플라네타륨에서 연호를 살해했다. 이후 01:10 음성 연기와 예약 방송을 이용해 그가 살아 있는 것처럼 보이게 했다. 관측실 별자리와 사망 기록의 시각이 모순되고, 가빈의 고급 배지와 연호 음성의 특징이 범행을 증명한다.",
+    "trueTimeline": [
+      "00:38 연호가 고급 출입 배지를 가진 가빈과 관측관으로 들어감",
+      "00:42 연호의 실제 사망",
+      "00:45 가빈이 관측관에서 빠져나와 생활동으로 이동",
+      "01:10 예약된 연호 목소리가 방송됨",
+      "01:12 여섯 명이 시신 발견"
+    ],
+    "proof": [
+      "연주의 실제 천문 시각과 관측관 영상이 다르다.",
+      "태원의 무대 소품 대여표와 리온의 음성 대사 분석으로 가빈의 흉내를 확인한다.",
+      "00:38–00:45 출입 기록과 가빈의 운영자 가족 배지가 연결된다.",
+      "진우의 00:40대 목격담과 플라네타륨의 붉은 섬유를 대조한다."
+    ],
+    "escapeSolution": "지하 보관실을 열기 위해 2차 조사에서 academy_lock_token을 조사해 academy_seal_key를 얻는다. 지하 냉각 통로와 암호 쪽지의 연결을 확인하고 academy_escape_pass_card에서 academy_escape_pass를 얻는다. 행동 단계에서 패스를 가진 학생이 탈출 행동을 선택해야 성공한다. 단순 범인 지목만으로 탈출하지 않는다.",
+    "redHerrings": [
+      "서하는 학원 봉쇄 퍼즐 일부를 과거 설계했다.",
+      "태원은 범죄에 이용된 음성 연출 장치를 빌려주었다.",
+      "연주는 죽은 학생과 익명으로 연락했다.",
+      "진우는 과거 구조에서 누군가를 포기한 기억이 있다.",
+      "리온은 학원 운영자에게 후원을 받았다."
+    ],
+    "endings": {
+      "both": "범인과 학교 출구를 모두 확인하면 진실을 밝히고 시설에서 탈출한다. 밖의 밤하늘은 플라네타륨과 다르게 빛난다.",
+      "onlyCulprit": "범인은 밝혀졌으나 탈출 암호를 풀지 못했다. 여섯 사람은 학교 안에서 다음 구조 기회를 기다린다.",
+      "onlyEscape": "학교 밖으로 나왔으나 연호를 죽인 진범은 드러나지 않았다. 자유와 정의 사이의 씁쓸한 결과가 남는다.",
+      "neither": "연호의 첫 죽음은 연구 기록 속에 묻히고, 학교의 문은 여전히 닫혀 있다."
+    },
+    "actionDesign": "행동 단계에서 범인 지목과 출구 개방을 따로 판정한다. 공격·방어·제압 등은 추상적 게임 효과로만 처리한다."
+  }
+}
