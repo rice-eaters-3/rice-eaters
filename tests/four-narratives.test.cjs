@@ -62,6 +62,7 @@ test('booklet HTML splits prose into escaped paragraphs rather than flattening o
       detail:'첫 번째 문장 <스포일러>.\n\n두 번째 감정.\n\n세 번째 행동 & 결과.'}],
     inventory:[],culprit:false,objectives:'목표',shared:{synopsis:[],characters:[]}},map:null};
   sandbox.window.MysteryRoomState={room};
+  ui.navigate('book-toggle');
   ui.navigate('book-chapter',2);
   const html=ui.render(room);
   assert.ok(html.includes('첫 번째 문장 &lt;스포일러&gt;.'));
