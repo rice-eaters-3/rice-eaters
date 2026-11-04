@@ -79,7 +79,23 @@ function validate(input){
     const rooms=(Array.isArray(f.rooms)?f.rooms:[]).slice(0,80).map(r=>({
       ...location(r,'표지'),name:text(r.name,80),icon:text(r.icon,4)
     }));
-    return {id:f.id,title:text(f.title,100)||f.id,legend:text(f.legend,250),tiles,rooms,areas,doors,portals};
+    // Objects are decoration by default. Solid props are kept distinct from the
+    // existing wall/door logic, so author maps and collisions stay predictable.
+    const objects=(Array.isArray(f.objects)?f.objects:[]);
+    if(objects.length>100)throw Error('층별 오브젝트는 100개 이하로 배치하세요.');
+    const cleaned=objects.map(o=>{
+      o=obj(o);if(!id.test(o.id))throw Error('지도 오브젝트 ID 오류');
+      return {id:o.id,...location(o,'오브젝트'),name:text(o.name,80)||o.id,
+        kind:text(o.kind,32)||'other',icon:text(o.icon,4),solid:o.solid===true};
+    });
+    unique(cleaned.map(o=>o.id),'지도 오브젝트');
+    for(const o of cleaned){
+      if(o.solid&&(doors.some(d=>d.x===o.x&&d.y===o.y)||
+          portals.some(p=>p.x===o.x&&p.y===o.y)))
+        throw Error('문 또는 계단 위에 통과 불가 오브젝트를 배치할 수 없습니다.');
+    }
+    return {id:f.id,title:text(f.title,100)||f.id,legend:text(f.legend,250),
+      tiles,rooms,areas,doors,portals,objects:cleaned};
   });
   unique(floors.map(f=>f.id),'층');
   for(const f of floors)for(const t of f.portals){
