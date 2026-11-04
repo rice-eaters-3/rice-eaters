@@ -327,9 +327,8 @@ el('newStory').addEventListener('click',()=>{if(!confirm('현재 편집 내용�
 el('exportFile').addEventListener('click',download);
 el('testStory').addEventListener('click',()=>{
   save();
-  const opened=window.open('/mystery-test','_blank','noopener');
-  if(!opened)status('테스트 페이지가 열리지 않았다면 http://localhost:3000/mystery-test 에서 직접 열어주세요.');
-  else status('테스트 모드를 새 탭에서 열었습니다. 현재 편집 원고는 그대로 유지됩니다.');
+  window.open('/mystery-test','_blank','noopener');
+  status('테스트 모드를 새 탭에서 실행했습니다. 팝업 차단 시 /mystery-test 경로를 직접 열 수 있습니다.');
 });
 el('publishStory').addEventListener('click',publish);
 el('importFile').addEventListener('click',()=>el('storyFile').click());
