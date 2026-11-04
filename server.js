@@ -407,6 +407,29 @@ async function api(req,res,url,sid){
   const pathname=url.pathname;
   if(req.method==='GET'&&pathname==='/api/stories')
     return json(res,200,{stories:[...STORIES,...Object.values(db.customStories).map(v=>v.story)].map(publicStory)});
+  // Preview sources contain every character secret and clue back. Expose them
+  // only to the author on loopback; never to public Cloudflare visitors.
+  if(req.method==='GET'&&pathname==='/api/editor/test-library'){
+    if(!localAuthorRequest(req))fail(403,'테스트용 비밀 원고는 localhost에서만 열 수 있습니다.');
+    const builtins=STORIES.map(s=>({id:s.id,title:s.title,players:s.players,source:'built-in'}));
+    const own=Object.entries(db.customStories).filter(([,v])=>v.owner===sid)
+      .map(([id,v])=>({id,title:v.story.title,players:v.story.players,source:'published'}));
+    return json(res,200,{stories:[...builtins,...own]});
+  }
+  const testCase=pathname.match(/^\/api\/editor\/test-case\/([a-z0-9-]+)$/);
+  if(req.method==='GET'&&testCase){
+    if(!localAuthorRequest(req))fail(403,'테스트용 비밀 원고는 localhost에서만 열 수 있습니다.');
+    const storyId=testCase[1],story=STORIES.find(s=>s.id===storyId);
+    if(story){
+      const game=privateMysteries[storyId];
+      if(!game)fail(404,'시나리오 테스트 파일이 없습니다.');
+      return json(res,200,{format:'rice-mystery-v1',story,game,spawn:game.spawn||{}});
+    }
+    const entry=db.customStories[storyId];
+    if(!entry||entry.owner!==sid)fail(403,'자신이 등록한 시나리오만 테스트할 수 있습니다.');
+    return json(res,200,{format:'rice-mystery-v1',story:entry.story,
+      game:entry.game,spawn:entry.game.spawn||{}});
+  }
   if(req.method==='POST'&&pathname==='/api/editor/publish'){
     validateOrigin(req);
     // User-authored secrets must not be writable by anonymous internet visitors.
@@ -909,6 +932,7 @@ function staticFile(req,res,url,sid){
   if(name==='/mars')name='/apps/terraforming-mars/index.html';
   if(name==='/mystery'||name==='/mystery/')name='/apps/murder-mystery/index.html';
   if(name==='/mystery-editor'||name==='/mystery-editor/')name='/apps/murder-mystery/editor.html';
+  if(name==='/mystery-test'||name==='/mystery-test/')name='/apps/murder-mystery/test.html';
   if(name.endsWith('/'))name+='index.html';
   const resolved=path.resolve(ROOT,'.'+name);
   if(!resolved.startsWith(ROOT+path.sep)||name.split('/').some(p=>['data','.git','node_modules','tests','.github','private','mystery-content'].includes(p))||['/server.js','/package.json','/Dockerfile','/.dockerignore','/.gitignore'].includes(name))fail(403,'접근할 수 없는 경로입니다.');
