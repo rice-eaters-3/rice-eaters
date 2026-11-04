@@ -17,6 +17,17 @@ window.MysteryStudy=(function(){
     (b.inventory||[]).forEach(t=>result.push(page(3,'<div class="item-stamp">POSSESSION</div><h4>'+esc(t.name)+'</h4>'+para(t.description))));
     result.push(page(4,'<div class="verdict '+(b.culprit?'guilty':'innocent')+'"><span>나의 범인 여부</span><strong>'+(b.culprit?'당신은 범인입니다.':'당신은 범인이 아닙니다.')+'</strong></div>'));
     result.push(page(5,para(b.objectives)+'<p class="book-footnote">승점은 게임 종료 후 수동으로 판정합니다.</p>'));
+    if(b.actionOrder){
+      const abilityText=(b.actionAbilities||[]).map(a=>
+        '<h4>'+esc(a.title)+'</h4>'+para(a.description)+
+        '<p class="muted small">분류: '+esc(a.kind)+
+        (a.requiresItem?' · 필요 아이템: '+esc(a.requiresItem):'')+
+        (a.requiresCard?' · 필요 조사 카드: '+esc(a.requiresCard):'')+'</p>').join('');
+      result.push(page(7,'<h4>나의 행동 순서: '+b.actionOrder+'번째</h4>'+
+        (b.actionNotes?para(b.actionNotes):'')+
+        '<p class="book-footnote">행동 단계에서 내 차례가 되면 아래 행동 중 하나를 선택할 수 있습니다. 일단 선택하면 되돌릴 수 없습니다.</p>'+
+        (abilityText||'<p>캐릭터 고유 행동이 지정되지 않았습니다.</p>')));
+    }
     (b.shared?.synopsis||[]).forEach(t=>result.push(page(6,'<h4>공용 시놉시스</h4>'+para(t))));
     const chars=b.shared?.characters||[];
     for(let i=0;i<chars.length;i+=2)result.push(page(6,'<h4>등장인물의 공개 정보</h4>'+chars.slice(i,i+2).map(c=>'<p><b>'+esc(c.name)+'</b> — '+esc(c.role)+'<br>'+esc(c.hint)+'</p>').join('')));
@@ -28,11 +39,12 @@ window.MysteryStudy=(function(){
     if(!all.length)return '<p>이 캐릭터의 책자가 없습니다.</p>';
     const current=all[n],within=all.slice(0,n+1).filter(p=>p.chapter===current.chapter).length,
       total=all.filter(p=>p.chapter===current.chapter).length;
+    const chapters=room.booklet?.actionOrder?[...names,'행동 단계']:names;
     return '<div class="book-top"><div><span class="eyebrow">PRIVATE DOSSIER · PERSONAL ONLY</span><h2>나의 캐릭터 책자</h2></div>'+btn2('book-toggle','✕ 책자 닫기')+'</div>'+
-      '<div class="book-layout"><nav class="book-index" aria-label="책자 목차">'+names.map((name,i)=>
+      '<div class="book-layout"><nav class="book-index" aria-label="책자 목차">'+chapters.map((name,i)=>
         '<button class="index-tab '+(current.chapter===i?'selected':'')+'" data-action="book-chapter" data-chapter="'+i+'">'+String(i+1).padStart(2,'0')+' · '+name+'</button>').join('')+'</nav>'+
       '<article class="folio"><div class="folio-top">'+esc(room.story?.title||'MYSTERY CASE')+' · CONFIDENTIAL <span>'+String(n+1).padStart(2,'0')+' / '+all.length+'</span></div>'+
-      '<div class="folio-content"><span class="eyebrow">CHAPTER '+String(current.chapter+1).padStart(2,'0')+'</span><h3>'+esc(names[current.chapter])+'</h3>'+current.html+'</div>'+
+      '<div class="folio-content"><span class="eyebrow">CHAPTER '+String(current.chapter+1).padStart(2,'0')+'</span><h3>'+esc(chapters[current.chapter])+'</h3>'+current.html+'</div>'+
       '<div class="folio-bottom"><small>해당 장 '+within+' / '+total+'</small><div>'+btn2('book-prev','← 이전 장','',n===0)+' '+btn2('book-next','다음 장 →','',n===all.length-1)+'</div></div></article></div>';
   }
   function mapHtml(room){
@@ -224,6 +236,41 @@ window.MysteryStudy=(function(){
       '<section class="all-clue-cards"><h3>전체 조사 정보 목록</h3><p class="muted small">전체 공개한 카드의 뒷면은 모두에게 영구히 표시됩니다. 선택 공개한 정보는 같은 타일을 벗어나면 사라집니다.</p>'+
       investigationCards(room)+'</section></section>';
   }
+  function actionStage(room){
+    if(room.phase!=='action'&&room.phase!=='ending')return '';
+    const a=room.action;
+    if(!a)return '';
+    const rows=(a.order||[]).map(o=>'<span class="action-order-chip '+(o.done?'complete':'')+'">'+
+      o.index+'. '+esc(o.name)+(o.done?' ✓':'')+'</span>').join('');
+    const logs=(a.log||[]).map(o=>'<div class="action-log-entry"><strong>'+
+      esc(o.actor)+'</strong> · '+esc(o.text)+'</div>').join('');
+    const choices=(a.myTurn&&!a.done?'<div class="action-options"><h4>나의 행동 선택</h4>'+
+      '<p class="muted small">캐릭터 책자의 행동 순서와 능력을 확인하세요. 아이템·조사카드 조건은 서버가 검증합니다.</p>'+
+      (a.abilities||[]).map(opt=>{
+        const picker=['other','any'].includes(opt.targetMode)?
+          '<select id="action-target-'+esc(opt.id)+'" aria-label="'+esc(opt.title)+' 대상 선택">'+
+          '<option value="">대상 선택</option>'+
+          (a.targets||[]).map(t=>'<option value="'+esc(t.id)+'">'+esc(t.name)+'</option>').join('')+
+          '</select>':'';
+        return '<div class="action-option"><div><strong>'+esc(opt.title)+'</strong>'+
+          '<p>'+esc(opt.description)+'</p>'+
+          (opt.requiresItem?'<small>필요 아이템: '+esc(opt.requiresItem)+'</small>':'')+
+          (opt.requiresCard?'<small> · 필요 증거 카드: '+esc(opt.requiresCard)+'</small>':'')+
+          '</div><div class="action-option-controls">'+picker+
+          btn('act','행동 사용','btn btn-primary btn-sm',!opt.usable,
+            'data-ability="'+esc(opt.id)+'"')+'</div></div>';
+      }).join('')+btn('act','이번 차례 행동하지 않기','btn btn-outline',false,
+        'data-ability="pass"')+'</div>':
+      a.done?'<p class="muted small">모든 행동이 끝났습니다. 전원 동의 후 방장이 결말로 진행할 수 있습니다.</p>':
+      '<p class="muted small">현재 행동할 캐릭터를 기다리고 있습니다.</p>');
+    return '<section id="actionStageRoot" class="surface action-stage"><div class="eyebrow">PRIVATE ACTION PHASE</div>'+
+      '<h3>행동 단계 · '+(a.done?'모두 완료':'순서 '+a.turn+' / '+a.total)+'</h3>'+
+      '<p class="muted small">현재 차례: '+esc(a.currentActor?.name||'종료')+
+      ' · 행동 결과는 서버에서 순서대로 판정됩니다.</p>'+
+      '<div class="action-order">'+rows+'</div>'+
+      choices+'<div class="action-log"><h4>행동 결과 기록</h4>'+
+      (logs||'<p class="muted small">아직 실행된 행동이 없습니다.</p>')+'</div></section>';
+  }
   function render(room){
     return roomHeader(room)+
       '<div class="section-row"><div><div class="eyebrow">MYSTERY PHASE · '+esc(room.phase.toUpperCase())+'</div>'+
@@ -231,11 +278,24 @@ window.MysteryStudy=(function(){
         discussion2:'2차 토론·최종 결정',action:'행동',ending:'결말'})[room.phase]||room.phase)+
       '</h2></div><span class="tag">'+({study:3,investigation1:4,discussion1:5,investigation2:6,discussion2:7,action:8,ending:9}[room.phase]||3)+' / 9 단계</span></div>'+
       '<section class="voice-global surface panel-pad">'+(window.MysteryVoice?.controls()||'<p>음성 준비 중</p>')+'</section>'+
+      actionStage(room)+
       '<div id="adventureRoot">'+(ui.view==='book'?book(room):ui.view==='research'?researchView(room):mapView(room))+'</div>';
   }
   function patch(room){
     // Keep the active book page and focus while other players move.
     if(!document.getElementById('adventureRoot'))return false;
+    if(room.phase==='action'||room.phase==='ending'){
+      const root=document.getElementById('actionStageRoot');
+      if(room.action&&root){
+        const temporary=document.createElement('div');
+        temporary.innerHTML=actionStage(room);
+        const replacement=temporary.firstElementChild;
+        if(replacement&&JSON.stringify(room.action)!==root.dataset.actionSignature){
+          replacement.dataset.actionSignature=JSON.stringify(room.action);
+          root.replaceWith(replacement);
+        }
+      }
+    }
     if(ui.view==='book')return true;
     if(ui.view==='research'){
       const root=document.getElementById('investigationScreen');
