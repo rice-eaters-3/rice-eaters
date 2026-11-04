@@ -308,7 +308,7 @@ function roomView(room,sid){
   const char=member&&story.characters.find(c=>c.id===member.characterId);
   const notes=isMember&&PLAY_PHASES.includes(room.phase)&&char?game.booklets?.[char.id]:null;
   const booklet=notes?{
-    basic:{name:char.name,role:char.role,hint:char.hint,symbol:char.symbol,accent:char.accent},
+    basic:{id:char.id,name:char.name,role:char.role,hint:char.hint,symbol:char.symbol,accent:char.accent},
     background:notes.background,timeline:notes.timeline,inventory:notes.inventory,
     culprit:notes.culprit,objectives:notes.objectives,notes:notes.notes,
     actionOrder:game.action?.order?.indexOf(char.id)+1||null,
