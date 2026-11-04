@@ -115,8 +115,8 @@ test('secret action turns, defense against fictional attack, restraint skips, an
  }
 });
 
-test('host advances full six-player academy after all action turns; no role secrets in public APIs',async t=>{
- const dir=fs.mkdtempSync(path.join(os.tmpdir(),'academy-stage-'));
+test('all four multiplayer rooms expose shared endings and each player’s own result',async t=>{
+ const dir=fs.mkdtempSync(path.join(os.tmpdir(),'mystery-ending-'));
  process.env.DATA_DIR=dir;
  const {handler}=require('../server.js');
  const srv=http.createServer(handler);
@@ -124,7 +124,7 @@ test('host advances full six-player academy after all action turns; no role secr
  t.after(async()=>{srv.closeAllConnections();await new Promise(ok=>srv.close(ok));
    fs.rmSync(dir,{force:true,recursive:true})});
  const base='http://127.0.0.1:'+srv.address().port;
- const people=Array.from({length:7},()=>({cookie:''}));
+ const people=Array.from({length:9},()=>({cookie:''}));
  async function call(i,url,method='GET',body){
   const headers={};if(people[i].cookie)headers.Cookie=people[i].cookie;
   if(body!==undefined)headers['Content-Type']='application/json';
@@ -138,84 +138,95 @@ test('host advances full six-player academy after all action turns; no role secr
  assert.ok(!JSON.stringify(catalog).includes('유가빈은'),'public catalog hides murderer details');
  assert.equal((await call(6,'/mystery-content/stellar-academy-first-case.case.json')).status,403,
    'spoiler-packed case file must not be available as a static URL');
- const room=await post(0,'/api/rooms',{storyId:'stellar-academy-first-case',name:'Host'});
- assert.equal(room.status,201);
- const ep='/api/rooms/'+room.data.code;
- for(let i=1;i<6;i++)assert.equal((await post(i,ep+'/join',{name:'Friend'+i})).status,200);
- for(let i=0;i<6;i++)await call(i,ep);
- assert.equal((await post(0,ep+'/start')).status,200);
- for(let i=0;i<6;i++)await post(i,ep+'/read');
- await post(0,ep+'/advance');
- for(let i=0;i<6;i++)await post(i,ep+'/character',{characterId:cases[2].story.characters[i].id});
- await post(0,ep+'/advance');
- const booklet=(await call(0,ep)).data.booklet;
- assert.equal(booklet.actionOrder,2,'player private booklet includes assigned position');
- assert.equal(booklet.actionAbilities.length,2);
- assert.equal((await call(6,ep)).data.booklet,null,'visitor cannot access role private action plan');
- for(let i=0;i<6;i++)await post(i,ep+'/study-ready');
- await post(0,ep+'/advance');
- for(const phase of ['discussion1','investigation2','discussion2','action']){
-  for(let i=0;i<6;i++)assert.equal((await post(i,ep+'/advance-vote')).status,200);
-  const result=await post(0,ep+'/advance');
-  assert.equal(result.data.phase,phase);
+ for(const {story,game} of [...cases,require('../mystery-content/d1-gaming.case.json')]){
+  const count=story.characters.length;
+  await t.test(story.id,async()=>{
+   const room=await post(0,'/api/rooms',{storyId:story.id,name:'Host'});
+   assert.equal(room.status,201);
+   const ep='/api/rooms/'+room.data.code;
+   for(let i=1;i<count;i++)assert.equal((await post(i,ep+'/join',{name:'Friend'+i})).status,200);
+   for(let i=0;i<count;i++)await call(i,ep);
+   assert.equal((await post(0,ep+'/start')).status,200);
+   for(let i=0;i<count;i++)await post(i,ep+'/read');
+   await post(0,ep+'/advance');
+   for(let i=0;i<count;i++)await post(i,ep+'/character',{characterId:story.characters[i].id});
+   await post(0,ep+'/advance');
+   const booklet=(await call(0,ep)).data.booklet;
+   if(game.action){
+    assert.equal(booklet.actionOrder,game.action.order.indexOf(story.characters[0].id)+1);
+    assert.equal(booklet.actionAbilities.length,game.action.roles[story.characters[0].id].length);
+   }
+   assert.equal((await call(count,ep)).data.booklet,null,'visitor cannot access role private action plan');
+   for(let i=0;i<count;i++)await post(i,ep+'/study-ready');
+   await post(0,ep+'/advance');
+   for(const phase of ['discussion1','investigation2','discussion2','action']){
+    for(let i=0;i<count;i++)assert.equal((await post(i,ep+'/advance-vote')).status,200);
+    const result=await post(0,ep+'/advance');
+    assert.equal(result.data.phase,phase);
+   }
+   if(game.action){
+    assert.equal((await post(0,ep+'/advance')).status,409,'host cannot skip unfinished action stage');
+    const members=(await call(0,ep)).data.players;
+    const firstActor=members.findIndex(p=>p.characterId===game.action.order[0]);
+    assert.ok(firstActor>=0);
+    const waiting=(firstActor+1)%count;
+    const start=(await call(waiting,ep)).data.action;
+    assert.equal(start.myTurn,false);
+    assert.equal(start.abilities.length,0,'only the actor sees active choices');
+    assert.equal((await post(waiting,ep+'/act',{abilityId:'pass'})).status,403);
+    for(let turn=0;turn<count;turn++){
+     const state=(await call(0,ep)).data.action;
+     const idx=members.findIndex(p=>p.id===state.currentActor?.id);
+     assert.ok(idx>=0);
+     assert.equal((await post(idx,ep+'/act',{abilityId:'pass'})).status,200);
+    }
+    const done=(await call(0,ep)).data.action;
+    assert.equal(done.done,true);
+    assert.equal(done.log.length,count);
+   }
+   assert.equal((await post(1,ep+'/advance')).status,403);
+   for(let i=0;i<count;i++)await post(i,ep+'/advance-vote');
+   assert.equal((await post(0,ep+'/advance')).data.phase,'ending');
+   const murderer=story.characters.find(c=>game.booklets[c.id].culprit).id;
+   const firstRole=story.characters[0].id;
+   // Only the host can set the final prisoner or decide personal goal outcomes.
+   assert.equal((await post(1,ep+'/verdict-arrest',{characterId:murderer})).status,403);
+   assert.equal((await post(1,ep+'/verdict-goal',{characterId:firstRole,achieved:true})).status,403);
+   let wrong=await post(0,ep+'/verdict-arrest',{characterId:firstRole});
+   assert.equal(wrong.status,200);
+   assert.equal(wrong.data.ending.common.captured,false);
+   assert.equal(wrong.data.ending.personal.status,'arrested');
+   let correct=await post(0,ep+'/verdict-arrest',{characterId:murderer});
+   assert.equal(correct.status,200);
+   assert.equal(correct.data.ending.common.captured,true);
+   assert.equal(correct.data.ending.common.arrestedCharacterId,murderer);
+   const achieved=await post(0,ep+'/verdict-goal',{characterId:firstRole,achieved:true});
+   assert.equal(achieved.status,200);
+   assert.equal(achieved.data.ending.personal.goalMet,true);
+   const innocentView=(await call(1,ep)).data;
+   assert.equal(innocentView.ending.common.captured,true);
+   assert.equal(innocentView.ending.editor,undefined);
+   assert.equal(innocentView.ending.personal.goalText,game.booklets[story.characters[1].id].objectives);
+   assert.notEqual(innocentView.ending.personal.characterId,achieved.data.ending.personal.characterId);
+   const secondRole=story.characters[1].id;
+   assert.equal((await post(1,ep+'/verdict-status',{characterId:secondRole,status:'dead'})).status,403);
+   assert.equal((await post(0,ep+'/verdict-goal',{characterId:secondRole,achieved:false})).status,200);
+   for(const [override,expected] of [['restrained','restrained'],['escaped','escaped'],['dead','dead'],['auto','alive']]){
+    assert.equal((await post(0,ep+'/verdict-status',{characterId:secondRole,status:override})).status,200);
+    const {ending}=(await call(1,ep)).data;
+    assert.equal(ending.common.captured,true);
+    assert.equal(ending.personal.status,expected);
+    assert.equal(ending.personal.goalMet,false);
+    assert.ok(ending.personal.paragraphs.includes(game.ending.characters[secondRole][expected]));
+   }
+   assert.equal((await post(0,ep+'/verdict-status',{characterId:murderer,status:'dead'})).status,200);
+   const missed=(await call(1,ep)).data.ending.common;
+   assert.equal(missed.verdictType,'unresolved');
+   assert.equal(missed.arrestedName,null);
+   assert.equal((await post(0,ep+'/verdict-arrest',{characterId:murderer})).status,409);
+   const victim=(await call(count,ep)).data;
+   assert.equal(victim.ending,null,'a visitor must never receive private endings');
+   assert.equal((await post(0,ep+'/verdict-arrest',{characterId:'not_a_character'})).status,400);
+  });
  }
- assert.equal((await post(0,ep+'/advance')).status,409,'host cannot skip unfinished action stage');
- const start=(await call(1,ep)).data;
- assert.equal(start.action.myTurn,false);
- assert.equal(start.action.abilities.length,0,'not current turn has no active choices');
- assert.equal((await post(1,ep+'/act',{abilityId:'shield'})).status,403,
-   'out-of-turn secret action rejected');
- const participantIds=(await call(0,ep)).data.players.map(p=>p.id);
- for(let turn=0;turn<6;turn++){
-   const state=(await call(0,ep)).data.action;
-   const idx=participantIds.indexOf(state.currentActor?.id);
-   assert.ok(idx>=0,'turn owner is one of six members');
-   assert.equal((await post(idx,ep+'/act',{abilityId:'pass'})).status,200);
- }
- const done=(await call(0,ep)).data.action;
- assert.equal(done.done,true);
- assert.equal(done.log.length,6);
- assert.equal((await post(1,ep+'/advance')).status,403);
- for(let i=0;i<6;i++)await post(i,ep+'/advance-vote');
- assert.equal((await post(0,ep+'/advance')).data.phase,'ending');
- const murderer=cases[2].story.characters.find(c=>cases[2].game.booklets[c.id].culprit).id;
- const firstRole=cases[2].story.characters[0].id;
- // Only the host can set the final prisoner or decide personal goal outcomes.
- assert.equal((await post(1,ep+'/verdict-arrest',{characterId:murderer})).status,403);
- assert.equal((await post(1,ep+'/verdict-goal',{characterId:firstRole,achieved:true})).status,403);
- let wrong=await post(0,ep+'/verdict-arrest',{characterId:firstRole});
- assert.equal(wrong.status,200);
- assert.equal(wrong.data.ending.common.captured,false);
- assert.equal(wrong.data.ending.personal.status,'arrested');
- let correct=await post(0,ep+'/verdict-arrest',{characterId:murderer});
- assert.equal(correct.status,200);
- assert.equal(correct.data.ending.common.captured,true);
- assert.equal(correct.data.ending.common.arrestedCharacterId,murderer);
- const achieved=await post(0,ep+'/verdict-goal',{characterId:firstRole,achieved:true});
- assert.equal(achieved.status,200);
- assert.equal(achieved.data.ending.personal.goalMet,true);
- const innocentView=(await call(1,ep)).data;
- assert.equal(innocentView.ending.common.captured,true);
- assert.equal(innocentView.ending.editor,undefined);
- assert.equal(innocentView.ending.personal.goalText,cases[2].game.booklets[cases[2].story.characters[1].id].objectives);
- assert.notEqual(innocentView.ending.personal.characterId,achieved.data.ending.personal.characterId);
- const secondRole=cases[2].story.characters[1].id;
- assert.equal((await post(1,ep+'/verdict-status',{characterId:secondRole,status:'dead'})).status,403);
- assert.equal((await post(0,ep+'/verdict-goal',{characterId:secondRole,achieved:false})).status,200);
- for(const [override,expected] of [['restrained','restrained'],['escaped','escaped'],['dead','dead'],['auto','alive']]){
-  assert.equal((await post(0,ep+'/verdict-status',{characterId:secondRole,status:override})).status,200);
-  const {ending}= (await call(1,ep)).data;
-  assert.equal(ending.common.captured,true);
-  assert.equal(ending.personal.status,expected);
-  assert.equal(ending.personal.goalMet,false);
-  assert.ok(ending.personal.paragraphs.includes(cases[2].game.ending.characters[secondRole][expected]));
- }
- assert.equal((await post(0,ep+'/verdict-status',{characterId:murderer,status:'dead'})).status,200);
- const missed=(await call(1,ep)).data.ending.common;
- assert.equal(missed.verdictType,'unresolved');
- assert.equal(missed.arrestedName,null);
- assert.equal((await post(0,ep+'/verdict-arrest',{characterId:murderer})).status,409);
- const victim=(await call(6,ep)).data;
- assert.equal(victim.ending,null,'a visitor must never receive private endings');
- assert.equal((await post(0,ep+'/verdict-arrest',{characterId:'not_a_character'})).status,400);
 });
