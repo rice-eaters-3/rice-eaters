@@ -12,6 +12,7 @@ const scenarios=[
  ['neon-memory-quarantine.case.json','neon-memory-quarantine','neon.webp',7,14,54],
  ['stellar-academy-first-case.case.json','stellar-academy-first-case','academy.webp',6,14,48]
 ];
+const newD1Props=['sink','fridge','pc','gargoyle','throne'];
 const imagePath=name=>path.join(root,'apps/murder-mystery/assets',name);
 test('all four original concept-sheet WebP image files are real binary assets with a RIFF/WEBP header',()=>{
  for(const [,id,file] of scenarios){
@@ -54,7 +55,8 @@ test('every player, map prop and clue has a case illustration',()=>{
   for(const floor of data.game.floors){
    for(const o of floor.objects||[]){
     const v=art.object(o,id);
-    assert.ok(v.includes(file),id+' object '+o.kind+' has no original art');
+    const expected=id==='d1-crown-of-ashes'&&newD1Props.includes(o.kind)?'props/'+id+'/'+o.kind+'.webp':file;
+    assert.ok(v.includes(expected),id+' object '+o.kind+' has no matching art');
     tally++;
    }
    for(const door of floor.doors||[]){
@@ -150,7 +152,8 @@ test('local HTTP server serves original and standalone artwork with image/webp M
  const backgrounds=scenarios.map(([filename,id,file])=>[filename,id,'backgrounds/'+file.replace('.webp','-background.webp')]);
  const d1=require('../mystery-content/d1-gaming.case.json').story;
  const portraits=[...d1.characters,d1.victim].map(({id})=>['',d1.id,'portraits/'+d1.id+'/'+id+'.webp']);
- for(const [,id,file] of [...scenarios,...independent,...backgrounds,...portraits]){
+ const props=newD1Props.map(kind=>['',d1.id,'props/'+d1.id+'/'+kind+'.webp']);
+ for(const [,id,file] of [...scenarios,...independent,...backgrounds,...portraits,...props]){
   const response=await fetch(base+'/apps/murder-mystery/assets/'+file);
   assert.equal(response.status,200,id+' artwork must be browser-accessible');
   assert.match(response.headers.get('content-type')||'',/image\/webp/);

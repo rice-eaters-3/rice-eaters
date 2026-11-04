@@ -1,9 +1,8 @@
 'use strict';
 /*
- * Browser-rendered compositions using the four licensed project illustration
- * sheets as visual source material. Individual characters and clues receive
- * layered backgrounds, borders, light and distinct evidence marks; map sprites
- * remain compact crops so 36px tiles stay legible.
+ * Browser-rendered artwork shared by the game and both studio screens.
+ * Standalone assets replace matching concept-sheet entries as they are reviewed.
+ * Existing sheet entries remain available for the rest of the built-in art.
  */
 window.MysteryArt=(function(){
  const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({
@@ -126,6 +125,7 @@ window.MysteryArt=(function(){
    'cult_hero_landing_syllabus'
   ])
  };
+ const standaloneD1Props=new Set(['sink','fridge','pc','gargoyle','throne']);
  const storyFor=id=>Object.hasOwn(A,id)?id:id==='d1-gaming'?'d1-crown-of-ashes':null;
  const knownStory=id=>A[storyFor(id)]||null;
  function standalonePortrait(story,id){
@@ -277,7 +277,11 @@ window.MysteryArt=(function(){
   return '<span class="mystery-unillustrated mystery-clue-placeholder">✧</span>';
  }
  function object(o,story){
-  const data=knownStory(story);
+  const theme=storyFor(story),data=knownStory(story);
+  if(theme==='d1-crown-of-ashes'&&standaloneD1Props.has(o?.kind)){
+   const asset={...data,file:'props/'+theme+'/'+o.kind+'.webp',size:[384,384]};
+   return artCrop(theme,[0,0,...asset.size],'mystery-map-object real-map-object',o.name||o.kind,asset);
+  }
   const rect=data?.objects?.[o?.kind];
   if(rect)return artCrop(story,rect,'mystery-map-object real-map-object',o?.name||o?.kind||'장식');
   // For custom/legacy maps whose authors entered an emoji, display that.

@@ -338,9 +338,7 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(-
 
 
 /* ── Original illustrated mystery-case artwork ──────────────────────────────
-   All real-portrait, real-clue-art and real-map-object SVGs embed linked WebP
-   images clipped from the author's committed concept sheets. No generated
-   geometric cartoon characters are used in any of the four story editions.
+   Portrait, evidence and map-object SVGs embed linked WebP illustrations.
    ──────────────────────────────────────────────────────────────────────── */
 .character-card{overflow:hidden;transition:box-shadow .2s ease,border-color .2s ease,transform .2s ease}
 .character-card:hover{transform:translateY(-3px)}
