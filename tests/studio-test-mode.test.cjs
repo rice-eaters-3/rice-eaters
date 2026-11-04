@@ -80,7 +80,13 @@ test('clue ownership, prerequisites, two rounds, reservations and secrecy work a
  E.share(s,E.holdings(s,'beta')[0].id,'alpha');
  E.switchRole(s,'alpha');
  assert.equal(E.roomView(s).investigation.cards.find(c=>c.id==='alpha_note').revealed.length,1);
- E.move(s,'right'); // blocked by closed door before moving away
+ E.switchRole(s,'beta');
+ E.reserve(s,'key_card');E.investigate(s,'key_card');
+ E.interact(s,'door','vault','open');
+ E.move(s,'right');
+ E.switchRole(s,'alpha');
+ assert.equal(E.roomView(s).investigation.cards.find(c=>c.id==='alpha_note').revealed.length,0,
+   'selective reveal expires when the owner leaves the tile');
 });
 test('case item unlock and one-shot investigation reservation work independently for each role',()=>{
  const s=E.create(makeCase());E.switchPhase(s,'investigation1');
