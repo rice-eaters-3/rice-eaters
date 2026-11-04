@@ -40,6 +40,17 @@
 | `karl_alpaca_receipts` | 털뭉치 노트가 표시되어 구조소 송금 영수증을 구분할 수 없음 | `karl_alpaca_receipts.webp` |
 | `karl_unbroken_promise` | D1 노트가 표시되어 약속을 기념하는 배지가 보이지 않음 | `karl_unbroken_promise.webp` |
 
+## 시리즈 배경
+
+신규 배경은 `apps/murder-mystery/assets/backgrounds/`에 있으며, 게임과 테스트 모드의 시놉시스·결말 및 제작소의 시나리오·결말 탭에서 공통으로 불러온다.
+
+| 시리즈 | 신규 파일 | 제작 방향 |
+| --- | --- | --- |
+| D1 사옥 | `d1-background.webp` | 비 내리는 자정의 e스포츠 사옥, 자줏빛과 황동 조명, 가고일 실루엣 |
+| 마지막 하트 | `island-background.webp` | 분홍빛 노을과 폭풍이 겹치는 섬의 촬영 빌라 및 선착장 |
+| 네온 검역국 | `neon-background.webp` | 청록과 자홍색 네온이 번지는 미래 도시의 기억 검역 시설 |
+| 성하 영재관 | `academy-background.webp` | 한밤의 별자리와 금빛 창문이 보이는 천문대와 교정 |
+
 ## 재개 지점
 
 D1 사옥의 21번째 카드 `hasu_cult_notebook`부터 다음 10장을 대조한다. D1 51장, 마지막 하트 56장, 네온 검역국 54장, 성하 영재관 48장이 남아 있다.

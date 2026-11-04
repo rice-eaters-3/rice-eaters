@@ -75,7 +75,7 @@ test('every player, map prop and clue has a case illustration',()=>{
     assert.ok(v.includes(file),id+' clue '+clue.id+' must show case-specific painting');
    }
   }
-  assert.ok(art.cover(id).includes(file),'scenario preview banner needs the matching art');
+  assert.ok(art.cover(id).includes('backgrounds/'+file.replace('.webp','-background.webp')),'scenario preview banner needs the matching art');
  }
 });
 test('illustrated evidence picker chooses specific character and case clues, not a single generic image',()=>{
@@ -118,11 +118,14 @@ test('live game and studio both load artwork module and connect painted props/do
  const game=fs.readFileSync(path.join(root,'apps/murder-mystery/app.js'),'utf8');
  assert.ok(game.includes('MysteryArt?.cover(story.artTheme||story.id)'));
  assert.ok(game.includes('MysteryArt?.portrait(c,room.story?.artTheme||room.story?.id)'));
+ assert.ok(game.includes('MysteryArt?.cover(room.story.artTheme||room.story.id)'));
  const editor=fs.readFileSync(path.join(root,'apps/murder-mystery/editor.js'),'utf8');
  assert.ok(editor.includes('MysteryArt?.portrait(c,visualStory())'));
  assert.ok(editor.includes('MysteryArt?.object(furniture,visualStory())'));
+ assert.ok(editor.includes('MysteryArt?.cover(visualStory())'));
  const studio=fs.readFileSync(path.join(root,'apps/murder-mystery/test-ui.js'),'utf8');
  assert.ok(studio.includes("dataset.story=room.story?.artTheme||room.story?.id"));
+ assert.ok(studio.includes('MysteryArt?.cover(s.artTheme||s.id)'));
 });
 test('local HTTP server serves original and standalone artwork with image/webp MIME and bytes',async t=>{
  const dir=fs.mkdtempSync(path.join(require('node:os').tmpdir(),'illustrated-mystery-'));
@@ -138,7 +141,8 @@ test('local HTTP server serves original and standalone artwork with image/webp M
  const base='http://127.0.0.1:'+server.address().port;
  const independent=require('../mystery-content/d1-gaming.case.json').game.investigation.cards.slice(0,20)
   .map(({id})=>['','d1-crown-of-ashes','clues/d1-crown-of-ashes/'+id+'.webp']);
- for(const [,id,file] of [...scenarios,...independent]){
+ const backgrounds=scenarios.map(([filename,id,file])=>[filename,id,'backgrounds/'+file.replace('.webp','-background.webp')]);
+ for(const [,id,file] of [...scenarios,...independent,...backgrounds]){
   const response=await fetch(base+'/apps/murder-mystery/assets/'+file);
   assert.equal(response.status,200,id+' artwork must be browser-accessible');
   assert.match(response.headers.get('content-type')||'',/image\/webp/);

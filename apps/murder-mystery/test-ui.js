@@ -116,8 +116,10 @@ function meta(){
 }
 function synopsis(){
   const s=state.pkg.story;
+  const cover=window.MysteryArt?.cover(s.artTheme||s.id);
   return roomHeader(window.MysteryRoomState.room)+
     '<div class="reading-layout"><article class="paper"><div class="stamp">STORY PREVIEW · PUBLIC PROLOGUE</div>'+
+    (cover?'<div class="story-illustration">'+cover+'</div>':'')+
     '<h2>'+escapeHtml(s.title)+'</h2>'+(s.synopsis||[]).map(v=>'<p>'+escapeHtml(v)+'</p>').join('')+
     '</article><aside class="surface panel-pad"><h3>1단계 · 시놉시스 확인</h3>'+
     '<p>모든 플레이어가 공동으로 읽는 이야기야. 개인 비밀은 여기에 보이지 않아야 해.</p>'+

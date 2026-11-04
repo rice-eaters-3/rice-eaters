@@ -286,14 +286,12 @@ window.MysteryArt=(function(){
   return artCrop(story,data.stairs[key],'mystery-stair-art',portal?.label||'층 이동');
  }
  function cover(story){
-  const rect={
-    'd1-crown-of-ashes':[0,13,1122,594],
-    'cruel-heart-island':[0,90,1122,324],
-    'neon-memory-quarantine':[0,75,1122,310],
-    'stellar-academy-first-case':[0,164,1448,270]
-  }[storyFor(story)];
-  return rect?compose(story,rect,'case-cover', '시나리오 등장인물 콘셉트 아트',
-    'mystery-story-cover','evidence',null):null;
+  const data=knownStory(story);
+  if(!data)return null;
+  const file=data.file.replace('.webp','-background.webp');
+  return '<svg class="mystery-story-cover" viewBox="0 0 1024 440" role="img" aria-label="시나리오 배경 일러스트"'+
+    ' preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">'+
+    '<image href="'+path+'backgrounds/'+file+'" width="1024" height="440" preserveAspectRatio="xMidYMid slice"/></svg>';
  }
  function avatar(c,story){
   const data=knownStory(story);
