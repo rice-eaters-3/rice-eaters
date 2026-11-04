@@ -1,0 +1,2386 @@
+{
+  "format": "rice-mystery-v1",
+  "story": {
+    "id": "cruel-heart-island",
+    "title": "잔혹한 연애프로그램: 마지막 하트",
+    "subtitle": "우리 중 한 명이 사랑보다 살인을 선택했다",
+    "genre": "고립 섬 · 연애 리얼리티 · 살인 추리",
+    "teaser": "여자 네 명, 남자 네 명. 외딴 섬에서 마지막 하트 투표를 앞두고 PD가 조수 관측실에서 죽었다. 카메라가 보여 준 사랑은 사실이었을까?",
+    "players": 8,
+    "minutes": 180,
+    "synopsis": [
+      "외딴 노을섬에서 새로운 연애 리얼리티 프로그램 「마지막 하트」가 시작됐다. 여자 네 명과 남자 네 명이 합숙하며 매일 서로에게 익명의 하트를 보낸다. 연인이 되면 거액의 광고 계약이 기다린다.",
+      "촬영 넷째 날, 거센 폭풍으로 섬과 육지 사이의 배편이 끊겼다. 대부분의 제작진은 기상 악화 전에 촬영 바지선으로 떠났고, 총괄 PD 신원재와 여덟 출연자만 섬에 남았다.",
+      "마지막 밤 01시 10분. 등대 아래 조수 관측실에서 신원재 PD가 숨진 채 발견됐다. 문은 닫혀 있었고 모니터에는 그가 조금 전까지 살아 있는 듯한 영상이 재생 중이었다. 구조선은 다음 날까지 오지 못한다.",
+      "남은 여덟 명은 서로를 바라본다. 과거 연인, 위장 계약, 광고 조작, 사적인 상담 기록, 감춰진 출연 목적. 진심으로 시작한 관계는 얼마나 될까? 한 사람은 이미 범행을 알고 있다.",
+      "이번 방송에는 하트 투표보다 중요한 마지막 질문이 있다. 누가 PD를 죽였으며, 왜 카메라가 보여 준 시간은 서로 다를까? 당신의 사랑과 비밀을 지키면서 사건을 풀어라."
+    ],
+    "characters": [
+      {
+        "id": "minjae",
+        "name": "강민재",
+        "role": "응급구조사 · 1번 남자",
+        "hint": "남 · 누구에게나 친절하지만 본인의 과거 연애는 말하지 않는다.",
+        "startLine": "먼저 안전한 곳으로 갑시다. 지금은 호감도보다 생존이에요.",
+        "symbol": "♠",
+        "accent": "#8eafe1"
+      },
+      {
+        "id": "doyun",
+        "name": "정도윤",
+        "role": "라이브커머스 CEO · 2번 남자",
+        "hint": "남 · 과장된 자신감과 화려한 언변, 완벽한 연애 이미지.",
+        "startLine": "제 마음은 늘 솔직합니다. 카메라는 더 솔직하죠.",
+        "symbol": "♠",
+        "accent": "#8eafe1"
+      },
+      {
+        "id": "seojun",
+        "name": "이서준",
+        "role": "해양연구원 · 3번 남자",
+        "hint": "남 · 섬 환경 데이터를 분석하러 왔다며 모두와 거리를 둔다.",
+        "startLine": "바다는 거짓말하지 않습니다. 시간표가 거짓말하죠.",
+        "symbol": "♠",
+        "accent": "#8eafe1"
+      },
+      {
+        "id": "taehan",
+        "name": "차태한",
+        "role": "전직 형사 · 4번 남자",
+        "hint": "남 · 표현은 서툴지만 작은 거짓말도 놓치지 않는 관찰자.",
+        "startLine": "연애는 어렵지만 거짓말은 알아볼 수 있어요.",
+        "symbol": "♠",
+        "accent": "#8eafe1"
+      },
+      {
+        "id": "harin",
+        "name": "서하린",
+        "role": "영상 편집자 · 1번 여자",
+        "hint": "여 · 말수가 적은 영상 편집자. 누구보다 카메라가 어디를 보는지 잘 안다.",
+        "startLine": "편집된 마음이라도 마음이긴 하잖아요.",
+        "symbol": "♥",
+        "accent": "#e3a1b1"
+      },
+      {
+        "id": "yura",
+        "name": "오유라",
+        "role": "무용수 · 2번 여자",
+        "hint": "여 · 표정이 풍부하지만 민재와는 이상할 정도로 거리를 둔다.",
+        "startLine": "다른 사람을 사랑하기 전에 나부터 믿어야죠.",
+        "symbol": "♥",
+        "accent": "#e3a1b1"
+      },
+      {
+        "id": "nayeon",
+        "name": "백나연",
+        "role": "데이터 분석가 · 3번 여자",
+        "hint": "여 · 질문보다 표를 좋아하지만 개인에게는 무척 다정하다.",
+        "startLine": "호감도도 데이터지만, 마음은 평균이 아니죠.",
+        "symbol": "♥",
+        "accent": "#e3a1b1"
+      },
+      {
+        "id": "somi",
+        "name": "한소미",
+        "role": "신인 배우 · 4번 여자",
+        "hint": "여 · 언제나 밝게 웃지만 카메라가 꺼지면 표정이 달라진다.",
+        "startLine": "이번에는 연기 말고 진짜로 사랑하고 싶어요.",
+        "symbol": "♥",
+        "accent": "#e3a1b1"
+      }
+    ]
+  },
+  "spawn": {
+    "minjae": {
+      "floor": "villa",
+      "x": 2,
+      "y": 5
+    },
+    "doyun": {
+      "floor": "villa",
+      "x": 4,
+      "y": 5
+    },
+    "seojun": {
+      "floor": "villa",
+      "x": 6,
+      "y": 5
+    },
+    "taehan": {
+      "floor": "villa",
+      "x": 8,
+      "y": 5
+    },
+    "harin": {
+      "floor": "villa",
+      "x": 10,
+      "y": 5
+    },
+    "yura": {
+      "floor": "villa",
+      "x": 12,
+      "y": 5
+    },
+    "nayeon": {
+      "floor": "villa",
+      "x": 14,
+      "y": 5
+    },
+    "somi": {
+      "floor": "villa",
+      "x": 16,
+      "y": 5
+    }
+  },
+  "game": {
+    "booklets": {
+      "minjae": {
+        "background": [
+          "과거 해양 구조 실패 경험 때문에 누군가 위험해 보이면 무작정 뛰어드는 버릇이 있다. 신원재 PD와는 방송 사고 피해자의 유가족 문제로 오래전부터 연락했다.",
+          "유라는 과거에 함께 살다 헤어진 연인이었다. 두 사람은 새 프로그램에 참여하는 서로를 몰랐다고 거짓말하기로 했다.",
+          "지난밤 조수 관측실 경고등의 색이 바뀐 것을 보았지만, 이전의 사고 기억 때문에 그곳에 들어가지 못했다. 누군가 자신을 비겁하다고 비난할까 걱정한다."
+        ],
+        "timeline": [
+          {
+            "time": "18:40",
+            "title": "첫 만남",
+            "detail": "유라를 본 순간 얼굴이 굳었다. 다른 이들에게는 초면이라고 말했다."
+          },
+          {
+            "time": "20:10",
+            "title": "안전 점검",
+            "detail": "PD에게 섬의 조수 경보기가 오래되었다고 경고했다."
+          },
+          {
+            "time": "22:35",
+            "title": "구명 장비 확인",
+            "detail": "방송용 구명 장비를 거주동 옆에 두었다."
+          },
+          {
+            "time": "23:08",
+            "title": "선착장",
+            "detail": "폭풍 때문에 배가 모두 떠날 수 없다는 것을 확인했다."
+          },
+          {
+            "time": "23:18",
+            "title": "저 멀리 관측실",
+            "detail": "조수 관측실의 파란 등이 꺼지는 것을 보았으나 부상자를 직접 보지는 못했다."
+          },
+          {
+            "time": "01:10",
+            "title": "시신 발견",
+            "detail": "모두와 함께 관측실 문을 열었다."
+          }
+        ],
+        "inventory": [
+          {
+            "id": "minjae_rescue_ring",
+            "name": "노란 구명환",
+            "description": "사건 전에도 사용했던 구조용 구명환."
+          },
+          {
+            "id": "minjae_first_aid",
+            "name": "방수 응급가방",
+            "description": "의약품·구조용 비품이 들어 있다."
+          },
+          {
+            "id": "minjae_old_photo",
+            "name": "유라와 함께 찍은 사진",
+            "description": "두 사람이 연인이었다는 증거."
+          },
+          {
+            "id": "minjae_tide_chart",
+            "name": "수기 물때표",
+            "description": "구조사가 직접 표시한 수위 예상표."
+          }
+        ],
+        "culprit": false,
+        "objectives": "범인을 정확히 지목하면 +4점. 유라와의 과거 연애를 마지막 토론까지 비밀로 지키면 +2점. 구조 기록을 확보해 사망이 단순 사고가 아니라는 사실을 밝히면 +2점.",
+        "notes": "사건 중 공개 프로필 외의 사연은 다른 참가자에게 직접 밝히기 전까지 비밀이다.",
+        "actionNotes": "행동 순서 4번. 생존자를 지키려는 행동에 우선한다. 본인의 구명환은 한 번 보호 행동에 사용할 수 있다."
+      },
+      "doyun": {
+        "background": [
+          "신원재 PD와 사전에 상업적 가짜 커플 계약을 맺었다. 계약 상대는 소미였으나, 도윤은 실제로 나연에게 마음이 갔다.",
+          "그가 수주한 브랜드 광고가 방송 시청자 투표 결과를 조작하여 노출을 구매하는 구조라는 사실을 안다. 이 사실이 공개되면 사업을 잃는다.",
+          "촬영용 드론으로 23:00대 선착장 위를 촬영했다. 화면에는 관측실로 가는 하린과 PD의 그림자가 있으나 드론을 띄운 사실 자체가 방송 규정 위반이다."
+        ],
+        "timeline": [
+          {
+            "time": "18:55",
+            "title": "첫 선택",
+            "detail": "계약 상대 소미에게 공개 호감을 보였다."
+          },
+          {
+            "time": "20:30",
+            "title": "비밀 거래",
+            "detail": "PD에게 우승 커플 발표만 약속대로 해 달라고 요구했다."
+          },
+          {
+            "time": "22:22",
+            "title": "선착장 드론 촬영",
+            "detail": "폭풍 속에서도 촬영을 강행했고 노이즈 섞인 영상이 남았다."
+          },
+          {
+            "time": "23:04",
+            "title": "편집실 앞",
+            "detail": "하린이 편집실에서 나오는 것을 보았다고 주장하지만 정확한 시각은 불확실하다."
+          },
+          {
+            "time": "23:20",
+            "title": "숙소",
+            "detail": "나연에게 실제 호감을 고백했다."
+          },
+          {
+            "time": "01:10",
+            "title": "관측실",
+            "detail": "다른 사람들 뒤에서 영상을 삭제할지 고민했다."
+          }
+        ],
+        "inventory": [
+          {
+            "id": "doyun_sponsor_contract",
+            "name": "비밀 커플 광고 계약서",
+            "description": "수상한 수익 배분 조항이 있다."
+          },
+          {
+            "id": "doyun_drone_clip",
+            "name": "드론 촬영 메모리",
+            "description": "바람 속에서 찍은 불안정한 영상."
+          },
+          {
+            "id": "doyun_luxury_watch",
+            "name": "협찬 손목시계",
+            "description": "바닷물에도 견딘다는 제품."
+          },
+          {
+            "id": "doyun_brand_badge",
+            "name": "브랜드 VIP 배지",
+            "description": "시청자에게는 신분증처럼 보인다."
+          }
+        ],
+        "culprit": false,
+        "objectives": "범인을 맞히면 +4점. 협찬 계약이 전원에게 공개되지 않으면 +2점. 드론 원본과 방송 송출본이 서로 어긋난다는 점을 입증하면 +2점.",
+        "notes": "사건 중 공개 프로필 외의 사연은 다른 참가자에게 직접 밝히기 전까지 비밀이다.",
+        "actionNotes": "행동 순서 7번. 시청자 투표 시스템에 잠긴 계약 사실을 말할 수 있으나 자기 기만도 인정해야 한다."
+      },
+      "seojun": {
+        "background": [
+          "원래 출연자가 아닌 프로그램의 섬 안전 자문 위원이었다. PD의 안전 예산 삭감을 고발하려고 출연자로 위장했다.",
+          "하린의 동생이 과거 방송 편집 영상 때문에 크게 상처받은 사건을 알고 있다. 하린이 그녀를 보호하기 위해 지원했다는 점도 의심한다.",
+          "조수 관측실의 경보 기록에 수위와 잠금 시각이 서로 맞지 않는 점을 파악했지만, 연구소 기밀 데이터를 외부에 가져온 사실 때문에 선뜻 말할 수 없다."
+        ],
+        "timeline": [
+          {
+            "time": "19:12",
+            "title": "하린과 조우",
+            "detail": "그녀가 해양 관측 장비 이름을 알고 있어 놀랐다."
+          },
+          {
+            "time": "20:45",
+            "title": "안전 경고",
+            "detail": "PD에게 파도 대응 계획을 문의했으나 무시당했다."
+          },
+          {
+            "time": "22:48",
+            "title": "관측실 수위 기록",
+            "detail": "물때 예측과 안전 기록을 비교했다."
+          },
+          {
+            "time": "23:15",
+            "title": "숙소 앞",
+            "detail": "하린의 젖은 신발을 잠깐 보았다."
+          },
+          {
+            "time": "23:30",
+            "title": "연구 노트 숨김",
+            "detail": "섬 자료 사본을 가방 깊이 넣었다."
+          },
+          {
+            "time": "01:10",
+            "title": "현장 감식",
+            "detail": "문잠금과 수위 사이의 모순을 발견했다."
+          }
+        ],
+        "inventory": [
+          {
+            "id": "seojun_wave_meter",
+            "name": "휴대 수위 기록계",
+            "description": "소형 수위 측정 도구."
+          },
+          {
+            "id": "seojun_research_badge",
+            "name": "해양연구소 출입증",
+            "description": "출연자 신분과 맞지 않는 배지."
+          },
+          {
+            "id": "seojun_old_report",
+            "name": "과거 촬영 사고 보고서",
+            "description": "방송국이 보류 처리한 안전 자문 서류."
+          },
+          {
+            "id": "seojun_dry_notebook",
+            "name": "비를 피한 연구 노트",
+            "description": "방수 종이에 기록한 섬 관측 수치."
+          }
+        ],
+        "culprit": false,
+        "objectives": "범인 적중 +4점. 안전 예산 삭감의 증거를 확보하면 +3점. 연구소 기밀을 무단 반출한 사실이 전체 공개되지 않으면 +1점.",
+        "notes": "사건 중 공개 프로필 외의 사연은 다른 참가자에게 직접 밝히기 전까지 비밀이다.",
+        "actionNotes": "행동 순서 2번. 해양 경보 신호를 읽어 상대를 방어할 수 있지만 최종 결론은 다른 기록이 필요하다."
+      },
+      "taehan": {
+        "background": [
+          "방송에 출연한 이유는 연애가 아니라 과거 동료의 실종 기록을 조사하기 위해서다. 신원재 PD는 실종된 촬영 조연출의 마지막 근무를 관리했다.",
+          "사람들이 자신을 경찰로 착각할까 봐 전직을 숨기고 있다. 현재는 어느 기관에도 소속되어 있지 않다.",
+          "23:17보다 이른 시각에 PD가 혼자 들어간 줄 알았으나 사실 같이 간 사람이 있었다. 혼자서 추적하려다 현장 기록을 훼손할 뻔한 점을 숨긴다."
+        ],
+        "timeline": [
+          {
+            "time": "18:42",
+            "title": "첫 소개",
+            "detail": "자신의 직업을 상담가라고 소개했다."
+          },
+          {
+            "time": "21:15",
+            "title": "오래된 실종 문의",
+            "detail": "PD가 질문에 대답하지 않고 떠났다."
+          },
+          {
+            "time": "22:55",
+            "title": "숙소 기록",
+            "detail": "출연진들의 방 출입 시간을 수첩에 적었다."
+          },
+          {
+            "time": "23:11",
+            "title": "관측실 길목",
+            "detail": "두 발소리를 들었지만 얼굴은 보지 못했다."
+          },
+          {
+            "time": "00:05",
+            "title": "기록 검토",
+            "detail": "방송 화면과 실시간 CCTV의 자막이 다르다는 것을 알아차렸다."
+          },
+          {
+            "time": "01:10",
+            "title": "현장 접근",
+            "detail": "손가락 자국을 보존하려고 모두에게 멈추라고 외쳤다."
+          }
+        ],
+        "inventory": [
+          {
+            "id": "taehan_old_warrant",
+            "name": "실종 조연출의 조사 자료",
+            "description": "공식 사건 종결 전 기록 사본."
+          },
+          {
+            "id": "taehan_black_gloves",
+            "name": "검은 면장갑",
+            "description": "증거를 훼손하지 않으려 준비한 장갑."
+          },
+          {
+            "id": "taehan_shoe_sketch",
+            "name": "신발 자국 스케치",
+            "description": "두 사람의 이동 동선을 그린 종이."
+          },
+          {
+            "id": "taehan_handcuffs",
+            "name": "연출용 제압 띠",
+            "description": "방송에서 쓰던 안전용 제압 도구."
+          }
+        ],
+        "culprit": false,
+        "objectives": "범인 적중 +4점. 실종 조연출 사건과 이번 범행의 연결을 밝혀내면 +2점. 자신의 전직과 사적인 수사를 전원에게 밝히지 않으면 +2점.",
+        "notes": "사건 중 공개 프로필 외의 사연은 다른 참가자에게 직접 밝히기 전까지 비밀이다.",
+        "actionNotes": "행동 순서 3번. 제압 띠는 실제 경찰 장비가 아니라 게임 안에서 한 사람의 행동을 막는 소품이다."
+      },
+      "harin": {
+        "background": [
+          "당신은 이 사건의 유일한 범인이다. 과거 이 프로그램의 하청 편집자로 일했고 신원재 PD가 여동생의 상담 기록과 방송용 비밀 인터뷰를 동의 없이 공개하도록 압박한 것을 기억한다.",
+          "섬에 출연한 것은 연애 때문만은 아니다. PD를 협박하여 원본 데이터를 되찾고 싶었다. 그러나 PD는 과거 데이터를 다음 날 방송에서 공개하겠다며 웃었다.",
+          "촬영 송출 화면이 실제 촬영보다 13분 늦게 재생된다는 사실을 알고 있었다. 이를 이용해 본인이 숙소에서 인터뷰하는 것처럼 보이는 자료를 남겼다. PD를 조수 관측실에 유인해 고의로 위험에 빠뜨렸고, 구명 요청을 무시해 그가 사망하도록 만들었다.",
+          "본인의 행동을 정당화하지 말라. 동생의 사생활을 지키려다 돌이킬 수 없는 살인을 저질렀다. 카메라의 시간차, 관측실 마지막 인터폰 기록, 편집실 자동 송출 설정, 신발 흔적이 결합되면 거짓말이 드러난다."
+        ],
+        "timeline": [
+          {
+            "time": "18:50",
+            "title": "출연자 소개",
+            "detail": "PD를 처음 본 척했다."
+          },
+          {
+            "time": "20:00",
+            "title": "편집실 출입",
+            "detail": "방송 영상의 지연 송출 구조를 확인했다."
+          },
+          {
+            "time": "22:45",
+            "title": "PD와 마지막 협상",
+            "detail": "비밀 인터뷰 원본 삭제를 요구했지만 거절당했다."
+          },
+          {
+            "time": "23:04",
+            "title": "관측실 앞",
+            "detail": "PD를 관측실로 오게 했고 현장을 떠났다."
+          },
+          {
+            "time": "23:17",
+            "title": "사망 시각",
+            "detail": "PD가 위험에 처했음을 알았지만 의도적으로 구조를 요청하지 않았다."
+          },
+          {
+            "time": "23:30",
+            "title": "숙소 인터뷰 방송",
+            "detail": "시청자 화면에는 하린이 숙소에 있는 것처럼 재생되었다. 이것은 13분 늦은 영상이다."
+          },
+          {
+            "time": "01:10",
+            "title": "시신 발견",
+            "detail": "놀란 연기를 하며 자료가 발견되지 않도록 주변인을 살폈다."
+          }
+        ],
+        "inventory": [
+          {
+            "id": "harin_editor_pass",
+            "name": "구형 편집실 출입 카드",
+            "description": "섬 방송 서버의 옛 보조 출입권한."
+          },
+          {
+            "id": "harin_violet_ribbon",
+            "name": "보라색 머리끈",
+            "description": "동생이 건네준 오래된 머리끈."
+          },
+          {
+            "id": "harin_voice_draft",
+            "name": "지워진 인터뷰 초안",
+            "description": "매우 사적인 상담 내용이 포함된 스크립트."
+          },
+          {
+            "id": "harin_signal_flare",
+            "name": "방송용 비상 신호탄",
+            "description": "제작진이 지급한 비상용 소품."
+          }
+        ],
+        "culprit": true,
+        "objectives": "범인으로 지목되지 않으면 +7점. 방송 원본이 전체 공개되지 않으면 +2점. 여동생의 신상이 공개되지 않으면 +2점. 당신은 살인을 저질렀다는 사실을 알고 있다.",
+        "notes": "사건 중 공개 프로필 외의 사연은 다른 참가자에게 직접 밝히기 전까지 비밀이다.",
+        "actionNotes": "행동 순서 8번. 진실을 은폐하기 위해 무모한 행동을 할 수 있으나, 공격을 하면 행동 기록에 남는다."
+      },
+      "yura": {
+        "background": [
+          "민재와는 과거 연인이었지만 다툼 끝에 헤어졌다. 자신은 이번 출연으로 새 출발을 원했으나 PD는 과거 관계를 알고 있었다.",
+          "PD가 자신과 민재를 강제로 재결합시키는 서사를 만들려고 사적인 사진을 편집했다는 사실을 알았다. 도윤의 스폰서 계약을 본 것도 숨기고 있다.",
+          "방송 편집실의 송출 지연을 우연히 알았으며, 23:17 실제 시각보다 늦게 나가는 출연자 인터뷰가 알리바이를 만들어 주는 위험을 깨달았다."
+        ],
+        "timeline": [
+          {
+            "time": "19:10",
+            "title": "첫 데이트",
+            "detail": "민재를 모르는 척하며 도윤과 대화했다."
+          },
+          {
+            "time": "20:25",
+            "title": "편집본 확인",
+            "detail": "자신의 인터뷰에 민재 이야기가 추가된 것을 보고 항의했다."
+          },
+          {
+            "time": "22:50",
+            "title": "방송실 앞",
+            "detail": "PD와 다투는 하린의 목소리를 들었다."
+          },
+          {
+            "time": "23:12",
+            "title": "숙소 촬영",
+            "detail": "카메라가 꺼진 줄 알고 긴 독백을 했다."
+          },
+          {
+            "time": "23:28",
+            "title": "모니터 재생",
+            "detail": "같은 독백이 13분 뒤에 방송되는 것을 발견했다."
+          },
+          {
+            "time": "01:10",
+            "title": "사건 인지",
+            "detail": "민재가 해양 구조 기록을 밝히지 않을까 불안했다."
+          }
+        ],
+        "inventory": [
+          {
+            "id": "yura_dance_shoes",
+            "name": "젖은 무용화",
+            "description": "새벽에 물가로 걸어갔다고 오해받는 신발."
+          },
+          {
+            "id": "yura_couple_photo",
+            "name": "옛 커플 사진",
+            "description": "민재와의 연애를 증명하는 사진."
+          },
+          {
+            "id": "yura_diary",
+            "name": "비밀 감정 일기",
+            "description": "새 출발에 대한 기대와 불안이 적혀 있다."
+          },
+          {
+            "id": "yura_monitor_note",
+            "name": "방송 시차 메모",
+            "description": "독백 방송의 시각을 손으로 적은 노트."
+          }
+        ],
+        "culprit": false,
+        "objectives": "범인 적중 +4점. 민재와 이전 연인이었다는 사실을 공개 선언하지 않으면 +2점. 지연 방송 사실을 다른 증거와 대조하면 +2점.",
+        "notes": "사건 중 공개 프로필 외의 사연은 다른 참가자에게 직접 밝히기 전까지 비밀이다.",
+        "actionNotes": "행동 순서 5번. 누구를 믿는지 밝히는 행위가 자신에게 손해가 될 수도 있다."
+      },
+      "nayeon": {
+        "background": [
+          "방송국의 추천 알고리즘을 외주 개발한 사람이었다. 알고리즘이 실제 성향 대신 제작진의 원하는 커플을 밀어준다는 것을 알고 있다.",
+          "프로그램이 출연자의 정신건강 설문과 비밀 채팅을 광고 타깃에 활용한 정황을 발견해 자료를 따로 모으고 있었다.",
+          "도윤과 실제로 가까워졌으나 그가 소미와 가짜 커플 계약을 맺었다는 사실도 알고 있다. 모두에게 알리면 자신도 알고리즘 설계 책임을 피할 수 없다."
+        ],
+        "timeline": [
+          {
+            "time": "18:20",
+            "title": "첫 매칭",
+            "detail": "자신의 알고리즘이 실제로 사용되고 있어 놀랐다."
+          },
+          {
+            "time": "20:15",
+            "title": "제작진과 통화",
+            "detail": "PD에게 데이터 삭제를 요구했지만 무시당했다."
+          },
+          {
+            "time": "22:30",
+            "title": "서버 기록 분석",
+            "detail": "송출 시각과 현장 시각이 다르게 저장된 것을 발견했다."
+          },
+          {
+            "time": "23:05",
+            "title": "숙소 데이터 정리",
+            "detail": "도윤이 드론을 띄운 것을 들었다."
+          },
+          {
+            "time": "00:15",
+            "title": "저장장치 숨김",
+            "detail": "프로그램 계약이 공개될 것을 두려워 데이터 사본을 숨겼다."
+          },
+          {
+            "time": "01:10",
+            "title": "진범 찾기",
+            "detail": "실제 시각 열을 공개할지 고민했다."
+          }
+        ],
+        "inventory": [
+          {
+            "id": "nayeon_match_table",
+            "name": "커플 매칭 원표",
+            "description": "시청자 투표와 추천 순위가 다른 표."
+          },
+          {
+            "id": "nayeon_usb_backup",
+            "name": "데이터베이스 백업 USB",
+            "description": "촬영 원본과 송출 시각이 분리된 기록."
+          },
+          {
+            "id": "nayeon_contract_copy",
+            "name": "데이터 이용 동의서",
+            "description": "작은 글씨가 가득한 계약서."
+          },
+          {
+            "id": "nayeon_heart_chip",
+            "name": "하트 투표 배지",
+            "description": "전자 하트가 켜지는 소형 배지."
+          }
+        ],
+        "culprit": false,
+        "objectives": "범인 적중 +4점. 알고리즘 조작 증거 2장을 수집하면 +2점. 본인이 알고리즘 개발자임을 전체 공개하지 않으면 +2점.",
+        "notes": "사건 중 공개 프로필 외의 사연은 다른 참가자에게 직접 밝히기 전까지 비밀이다.",
+        "actionNotes": "행동 순서 1번. 사전에 데이터를 살필 수 있으나 다른 사람의 진심을 강요하지 않는다."
+      },
+      "somi": {
+        "background": [
+          "도윤과 가짜 커플 계약을 맺었으며, 방송 후 정식 광고 모델로 데뷔하기로 되어 있다. 그러나 방송 중 진짜로 태한을 좋아하게 되었다.",
+          "PD는 계약 파기를 막으려고 소미의 가족 부채와 과거 오디션 실패를 압박했다. 그가 죽으면 계약이 무효가 될 거라는 생각을 한 적이 있다.",
+          "촬영용 구난 그물을 보관하던 보트 창고에 갔다가 관측실 옆에서 낡은 구조 신호기를 발견했다. 누가 소유했는지 알 수 없다."
+        ],
+        "timeline": [
+          {
+            "time": "18:55",
+            "title": "첫 인사",
+            "detail": "도윤에게 방송용 친밀감을 연출했다."
+          },
+          {
+            "time": "20:42",
+            "title": "감독의 압박",
+            "detail": "PD에게 계약 조항 변경을 요구했지만 거절당했다."
+          },
+          {
+            "time": "22:35",
+            "title": "태한과 대화",
+            "detail": "실제 자신의 마음을 조금 드러냈다."
+          },
+          {
+            "time": "23:10",
+            "title": "보트 창고",
+            "detail": "비상 장비를 확인하고 돌아왔다."
+          },
+          {
+            "time": "23:30",
+            "title": "침실",
+            "detail": "카메라 밖에서 계약 파기 편지를 작성했다."
+          },
+          {
+            "time": "01:10",
+            "title": "섬 봉쇄",
+            "detail": "태한에게 전직이 무엇인지 물었다."
+          }
+        ],
+        "inventory": [
+          {
+            "id": "somi_scripted_dates",
+            "name": "가짜 데이트 대본",
+            "description": "도윤과 맞출 질문과 답변이 적혀 있다."
+          },
+          {
+            "id": "somi_rescue_net",
+            "name": "촬영용 안전 그물",
+            "description": "해양 스포츠 연출에 쓰던 구난 소품."
+          },
+          {
+            "id": "somi_family_letter",
+            "name": "가족 채무 편지",
+            "description": "한소미가 방송 출연을 거절하기 어려운 이유."
+          },
+          {
+            "id": "somi_parting_note",
+            "name": "미발송 계약 파기 편지",
+            "description": "사랑을 돈으로 거래하지 않겠다는 결심."
+          }
+        ],
+        "culprit": false,
+        "objectives": "범인 적중 +4점. 가짜 커플 계약을 공개 선언하지 않으면서 최종 선택을 자율적으로 하면 +2점. 계약 파기 편지를 확보하면 +2점.",
+        "notes": "사건 중 공개 프로필 외의 사연은 다른 참가자에게 직접 밝히기 전까지 비밀이다.",
+        "actionNotes": "행동 순서 6번. 긴급 상황에 도구를 쓸 수 있지만, 그 순간의 감정을 숨길지 선택해야 한다."
+      }
+    },
+    "floors": [
+      {
+        "id": "shore",
+        "title": "노을섬 · 해안",
+        "legend": "선착장과 보트 창고, 출연자 숙소 바깥의 길",
+        "tiles": [
+          "###################",
+          "#........#........#",
+          "#........#........#",
+          "#........#........#",
+          "####.#########.####",
+          "#.................#",
+          "####.#########.####",
+          "#........#........#",
+          "#........#........#",
+          "#........#........#",
+          "###################"
+        ],
+        "rooms": [
+          {
+            "x": 3,
+            "y": 2,
+            "name": "선착장 대기실",
+            "icon": "⌂"
+          },
+          {
+            "x": 14,
+            "y": 2,
+            "name": "보트 창고",
+            "icon": "♧"
+          },
+          {
+            "x": 3,
+            "y": 8,
+            "name": "소나무 산책길",
+            "icon": "✦"
+          },
+          {
+            "x": 14,
+            "y": 8,
+            "name": "촬영용 해변 데크",
+            "icon": "⌁"
+          }
+        ],
+        "areas": [
+          {
+            "id": "hall",
+            "name": "중앙 복도",
+            "x": 1,
+            "y": 5,
+            "width": 17,
+            "height": 1,
+            "color": "#777a86",
+            "pattern": "stone"
+          },
+          {
+            "id": "area_0",
+            "name": "선착장 대기실",
+            "x": 1,
+            "y": 1,
+            "width": 8,
+            "height": 3,
+            "color": "#557c89",
+            "pattern": "wood"
+          },
+          {
+            "id": "area_1",
+            "name": "보트 창고",
+            "x": 10,
+            "y": 1,
+            "width": 8,
+            "height": 3,
+            "color": "#80908b",
+            "pattern": "tile"
+          },
+          {
+            "id": "area_2",
+            "name": "소나무 산책길",
+            "x": 1,
+            "y": 7,
+            "width": 8,
+            "height": 3,
+            "color": "#ad8d65",
+            "pattern": "carpet"
+          },
+          {
+            "id": "area_3",
+            "name": "촬영용 해변 데크",
+            "x": 10,
+            "y": 7,
+            "width": 8,
+            "height": 3,
+            "color": "#6d90ab",
+            "pattern": "stone"
+          }
+        ],
+        "doors": [
+          {
+            "id": "door_nw",
+            "name": "선착장 대기실 문",
+            "x": 4,
+            "y": 4,
+            "locked": false,
+            "closed": false
+          },
+          {
+            "id": "door_ne",
+            "name": "보트 창고 문",
+            "x": 14,
+            "y": 4,
+            "locked": false,
+            "closed": false
+          },
+          {
+            "id": "door_sw",
+            "name": "소나무 산책길 문",
+            "x": 4,
+            "y": 6,
+            "locked": false,
+            "closed": false
+          },
+          {
+            "id": "door_se",
+            "name": "촬영용 해변 데크 문",
+            "x": 14,
+            "y": 6,
+            "locked": false,
+            "closed": false,
+            "requiresItem": ""
+          }
+        ],
+        "portals": [
+          {
+            "x": 9,
+            "y": 5,
+            "toFloor": "villa",
+            "toX": 9,
+            "toY": 5,
+            "label": "위 구역으로 이동"
+          }
+        ]
+      },
+      {
+        "id": "villa",
+        "title": "노을섬 · 연애의 집",
+        "legend": "거짓 고백이 녹화되던 합숙 숙소와 편집실",
+        "tiles": [
+          "###################",
+          "#........#........#",
+          "#........#........#",
+          "#........#........#",
+          "####.#########.####",
+          "#.................#",
+          "####.#########.####",
+          "#........#........#",
+          "#........#........#",
+          "#........#........#",
+          "###################"
+        ],
+        "rooms": [
+          {
+            "x": 3,
+            "y": 2,
+            "name": "밤의 인터뷰실",
+            "icon": "⌂"
+          },
+          {
+            "x": 14,
+            "y": 2,
+            "name": "편집·송출실",
+            "icon": "♧"
+          },
+          {
+            "x": 3,
+            "y": 8,
+            "name": "공동 거실",
+            "icon": "✦"
+          },
+          {
+            "x": 14,
+            "y": 8,
+            "name": "비밀 고백방",
+            "icon": "⌁"
+          }
+        ],
+        "areas": [
+          {
+            "id": "hall",
+            "name": "중앙 복도",
+            "x": 1,
+            "y": 5,
+            "width": 17,
+            "height": 1,
+            "color": "#777a86",
+            "pattern": "stone"
+          },
+          {
+            "id": "area_0",
+            "name": "밤의 인터뷰실",
+            "x": 1,
+            "y": 1,
+            "width": 8,
+            "height": 3,
+            "color": "#946f89",
+            "pattern": "wood"
+          },
+          {
+            "id": "area_1",
+            "name": "편집·송출실",
+            "x": 10,
+            "y": 1,
+            "width": 8,
+            "height": 3,
+            "color": "#587985",
+            "pattern": "tile"
+          },
+          {
+            "id": "area_2",
+            "name": "공동 거실",
+            "x": 1,
+            "y": 7,
+            "width": 8,
+            "height": 3,
+            "color": "#ab846c",
+            "pattern": "carpet"
+          },
+          {
+            "id": "area_3",
+            "name": "비밀 고백방",
+            "x": 10,
+            "y": 7,
+            "width": 8,
+            "height": 3,
+            "color": "#8273a0",
+            "pattern": "stone"
+          }
+        ],
+        "doors": [
+          {
+            "id": "door_nw",
+            "name": "밤의 인터뷰실 문",
+            "x": 4,
+            "y": 4,
+            "locked": false,
+            "closed": false
+          },
+          {
+            "id": "door_ne",
+            "name": "편집·송출실 문",
+            "x": 14,
+            "y": 4,
+            "locked": false,
+            "closed": false
+          },
+          {
+            "id": "door_sw",
+            "name": "공동 거실 문",
+            "x": 4,
+            "y": 6,
+            "locked": false,
+            "closed": false
+          },
+          {
+            "id": "door_se",
+            "name": "비밀 고백방 문",
+            "x": 14,
+            "y": 6,
+            "locked": false,
+            "closed": false,
+            "requiresItem": ""
+          }
+        ],
+        "portals": [
+          {
+            "x": 9,
+            "y": 5,
+            "toFloor": "shore",
+            "toX": 9,
+            "toY": 5,
+            "label": "아래 구역으로 이동"
+          },
+          {
+            "x": 9,
+            "y": 5,
+            "toFloor": "lighthouse",
+            "toX": 9,
+            "toY": 5,
+            "label": "위 구역으로 이동"
+          }
+        ]
+      },
+      {
+        "id": "lighthouse",
+        "title": "노을섬 · 등대 시설",
+        "legend": "시신이 발견된 조수 관측실과 방송 로그 보관실",
+        "tiles": [
+          "###################",
+          "#........#........#",
+          "#........#........#",
+          "#........#........#",
+          "####.#########.####",
+          "#.................#",
+          "####.#########.####",
+          "#........#........#",
+          "#........#........#",
+          "#........#........#",
+          "###################"
+        ],
+        "rooms": [
+          {
+            "x": 3,
+            "y": 2,
+            "name": "조수 관측실",
+            "icon": "⌂"
+          },
+          {
+            "x": 14,
+            "y": 2,
+            "name": "등대 관제실",
+            "icon": "♧"
+          },
+          {
+            "x": 3,
+            "y": 8,
+            "name": "옛 선박 기록실",
+            "icon": "✦"
+          },
+          {
+            "x": 14,
+            "y": 8,
+            "name": "봉인된 중계 로그실",
+            "icon": "⌁"
+          }
+        ],
+        "areas": [
+          {
+            "id": "hall",
+            "name": "중앙 복도",
+            "x": 1,
+            "y": 5,
+            "width": 17,
+            "height": 1,
+            "color": "#777a86",
+            "pattern": "stone"
+          },
+          {
+            "id": "area_0",
+            "name": "조수 관측실",
+            "x": 1,
+            "y": 1,
+            "width": 8,
+            "height": 3,
+            "color": "#7f9b9f",
+            "pattern": "wood"
+          },
+          {
+            "id": "area_1",
+            "name": "등대 관제실",
+            "x": 10,
+            "y": 1,
+            "width": 8,
+            "height": 3,
+            "color": "#728fb0",
+            "pattern": "tile"
+          },
+          {
+            "id": "area_2",
+            "name": "옛 선박 기록실",
+            "x": 1,
+            "y": 7,
+            "width": 8,
+            "height": 3,
+            "color": "#6e8e89",
+            "pattern": "carpet"
+          },
+          {
+            "id": "area_3",
+            "name": "봉인된 중계 로그실",
+            "x": 10,
+            "y": 7,
+            "width": 8,
+            "height": 3,
+            "color": "#95798c",
+            "pattern": "stone"
+          }
+        ],
+        "doors": [
+          {
+            "id": "door_nw",
+            "name": "조수 관측실 문",
+            "x": 4,
+            "y": 4,
+            "locked": false,
+            "closed": false
+          },
+          {
+            "id": "door_ne",
+            "name": "등대 관제실 문",
+            "x": 14,
+            "y": 4,
+            "locked": false,
+            "closed": false
+          },
+          {
+            "id": "door_sw",
+            "name": "옛 선박 기록실 문",
+            "x": 4,
+            "y": 6,
+            "locked": false,
+            "closed": false
+          },
+          {
+            "id": "door_se",
+            "name": "봉인된 중계 로그실 문",
+            "x": 14,
+            "y": 6,
+            "locked": true,
+            "closed": true,
+            "requiresItem": "island_relay_key"
+          }
+        ],
+        "portals": [
+          {
+            "x": 9,
+            "y": 5,
+            "toFloor": "villa",
+            "toX": 9,
+            "toY": 5,
+            "label": "아래 구역으로 이동"
+          }
+        ]
+      }
+    ],
+    "phaseMinutes": {
+      "synopsis": 5,
+      "characters": 5,
+      "study": 20,
+      "investigation1": 20,
+      "discussion1": 15,
+      "investigation2": 20,
+      "discussion2": 20,
+      "action": 10,
+      "ending": 15
+    },
+    "investigation": {
+      "tokensPerPlayer": 4,
+      "tokensPerSecondInvestigation": 4,
+      "maxTileOccupants": 3,
+      "cards": [
+        {
+          "id": "minjae_rescue_ring",
+          "title": "강민재의 노란 구명환",
+          "subtitle": "사건 전에도 사용했던 구조용 구명환.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "신원재가 구명 장비 회수 지시를 내려 한때 사라졌던 기록이 붙어 있다.",
+          "owner": "minjae",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "minjae_first_aid",
+          "title": "강민재의 방수 응급가방",
+          "subtitle": "의약품·구조용 비품이 들어 있다.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "관측실 사망 추정 시각에 사용한 흔적은 없다. 민재는 위험을 인지하고도 들어가지 않았다는 죄책감을 느낀다.",
+          "owner": "minjae",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "minjae_old_photo",
+          "title": "강민재의 유라와 함께 찍은 사진",
+          "subtitle": "두 사람이 연인이었다는 증거.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "날짜는 3년 전. 민재와 유라는 제작진에게 이전 연인 관계를 감췄다.",
+          "owner": "minjae",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "minjae_tide_chart",
+          "title": "강민재의 수기 물때표",
+          "subtitle": "구조사가 직접 표시한 수위 예상표.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "23시 이후 관측실은 안전하지 않다는 경고가 있다. 23:17 전후 수위 변동이 특히 크다.",
+          "owner": "minjae",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "doyun_sponsor_contract",
+          "title": "정도윤의 비밀 커플 광고 계약서",
+          "subtitle": "수상한 수익 배분 조항이 있다.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "도윤·소미가 가짜 커플 역할을 맡고 결과에 따라 대가를 받는 계약이다.",
+          "owner": "doyun",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "doyun_drone_clip",
+          "title": "정도윤의 드론 촬영 메모리",
+          "subtitle": "바람 속에서 찍은 불안정한 영상.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "23:00 전후 방송 송출 시각과 맞지 않는 관측실 출입 동선이 보인다. 원본 시각은 드론 내부 시계 기준이다.",
+          "owner": "doyun",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "doyun_luxury_watch",
+          "title": "정도윤의 협찬 손목시계",
+          "subtitle": "바닷물에도 견딘다는 제품.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "손목시계는 섬 네트워크와 동기화되어 있지 않아 제작진 영상의 지연 시간 검증에 쓸 수 있다.",
+          "owner": "doyun",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "doyun_brand_badge",
+          "title": "정도윤의 브랜드 VIP 배지",
+          "subtitle": "시청자에게는 신분증처럼 보인다.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "본래 촬영장 곳곳에 들어갈 수 있지만 해양 관측실의 구형 문을 열 권한은 없다.",
+          "owner": "doyun",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "seojun_wave_meter",
+          "title": "이서준의 휴대 수위 기록계",
+          "subtitle": "소형 수위 측정 도구.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "23:17 관측실 수위가 급격하게 바뀐 사실과 안전 경보 지연이 확인된다.",
+          "owner": "seojun",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "seojun_research_badge",
+          "title": "이서준의 해양연구소 출입증",
+          "subtitle": "출연자 신분과 맞지 않는 배지.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "출연 목적이 연애가 아니라 방송 안전 비리 조사였음을 시사한다.",
+          "owner": "seojun",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "seojun_old_report",
+          "title": "이서준의 과거 촬영 사고 보고서",
+          "subtitle": "방송국이 보류 처리한 안전 자문 서류.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "신원재 PD가 섬 구조 비용을 여러 차례 축소했음을 기록한다.",
+          "owner": "seojun",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "seojun_dry_notebook",
+          "title": "이서준의 비를 피한 연구 노트",
+          "subtitle": "방수 종이에 기록한 섬 관측 수치.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "23:17 현장이 위험하다는 예측과 영상의 23:30 자막이 동시에 적혀 있다.",
+          "owner": "seojun",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "taehan_old_warrant",
+          "title": "차태한의 실종 조연출의 조사 자료",
+          "subtitle": "공식 사건 종결 전 기록 사본.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "실종 조연출은 프로그램의 개인정보 이용 계약을 고발하려 했다.",
+          "owner": "taehan",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "taehan_black_gloves",
+          "title": "차태한의 검은 면장갑",
+          "subtitle": "증거를 훼손하지 않으려 준비한 장갑.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "오염 흔적은 없지만 밤중 관측실에서 목격되었다는 오해를 부른다.",
+          "owner": "taehan",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "taehan_shoe_sketch",
+          "title": "차태한의 신발 자국 스케치",
+          "subtitle": "두 사람의 이동 동선을 그린 종이.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "23:11에 서로 다른 두 신발 자국이 관측실 입구 쪽으로 이어졌음을 보여 준다.",
+          "owner": "taehan",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "taehan_handcuffs",
+          "title": "차태한의 연출용 제압 띠",
+          "subtitle": "방송에서 쓰던 안전용 제압 도구.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "당시 실제 수갑이 아니라 탈착 가능한 방송용 장비다. 행동 단계에서 한 사람의 움직임을 막는 데 사용 가능하다.",
+          "owner": "taehan",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "harin_editor_pass",
+          "title": "서하린의 구형 편집실 출입 카드",
+          "subtitle": "섬 방송 서버의 옛 보조 출입권한.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "신원재의 허락 없이 편집실 지연 송출 설정을 읽을 수 있었다. 편집실에 들어간 것을 숨길 수 없다.",
+          "owner": "harin",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "harin_violet_ribbon",
+          "title": "서하린의 보라색 머리끈",
+          "subtitle": "동생이 건네준 오래된 머리끈.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "관측실 난간에서 발견된 천 조각과 같은 염색 시리즈다. 직접 범인을 확정하지는 않지만 이동을 입증한다.",
+          "owner": "harin",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "harin_voice_draft",
+          "title": "서하린의 지워진 인터뷰 초안",
+          "subtitle": "매우 사적인 상담 내용이 포함된 스크립트.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "PD가 동의를 받지 않고 가족의 비밀을 시청률 자극 소재로 사용하려 했음을 보여 준다.",
+          "owner": "harin",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "harin_signal_flare",
+          "title": "서하린의 방송용 비상 신호탄",
+          "subtitle": "제작진이 지급한 비상용 소품.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "실제 구조 신호로 사용될 수 있으나 행동 단계에서는 게임 안의 공격 아이템으로 취급된다. 흔적이 남아 쉽게 오해를 부른다.",
+          "owner": "harin",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "yura_dance_shoes",
+          "title": "오유라의 젖은 무용화",
+          "subtitle": "새벽에 물가로 걸어갔다고 오해받는 신발.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "실제로는 야외 데크에서 연습한 흔적이며 관측실의 모래 입자와 다르다.",
+          "owner": "yura",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "yura_couple_photo",
+          "title": "오유라의 옛 커플 사진",
+          "subtitle": "민재와의 연애를 증명하는 사진.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "PD가 몰래 사전 설문에서 수집해 방송 연출에 사용했다.",
+          "owner": "yura",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "yura_diary",
+          "title": "오유라의 비밀 감정 일기",
+          "subtitle": "새 출발에 대한 기대와 불안이 적혀 있다.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "진심으로 도윤에게 마음이 생겼지만 그가 광고 계약으로 출연했다는 사실을 들었다.",
+          "owner": "yura",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "yura_monitor_note",
+          "title": "오유라의 방송 시차 메모",
+          "subtitle": "독백 방송의 시각을 손으로 적은 노트.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "실제 촬영 23:15가 23:28로 나갔다. 다른 인터뷰에도 같은 13분 편차를 적용해 보아야 한다.",
+          "owner": "yura",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "nayeon_match_table",
+          "title": "백나연의 커플 매칭 원표",
+          "subtitle": "시청자 투표와 추천 순위가 다른 표.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "광고비가 큰 출연 조합을 우선시키는 숨은 규칙이 있다.",
+          "owner": "nayeon",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "nayeon_usb_backup",
+          "title": "백나연의 데이터베이스 백업 USB",
+          "subtitle": "촬영 원본과 송출 시각이 분리된 기록.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "하린의 숙소 인터뷰는 실제 촬영 23:17 이전, 방송 시각 23:30. 원본의 안전 기록과 대조하면 알리바이가 무너진다.",
+          "owner": "nayeon",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "nayeon_contract_copy",
+          "title": "백나연의 데이터 이용 동의서",
+          "subtitle": "작은 글씨가 가득한 계약서.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "출연자의 의료·심리 설문을 광고 소재로 이용하는 데 적법한 동의가 없다는 허점이 드러난다.",
+          "owner": "nayeon",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "nayeon_heart_chip",
+          "title": "백나연의 하트 투표 배지",
+          "subtitle": "전자 하트가 켜지는 소형 배지.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "감정 수치가 아니라 제작진이 지정한 화면 연출값을 표시한다. 누가 누구를 좋아하는지 확정할 수 없다.",
+          "owner": "nayeon",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "somi_scripted_dates",
+          "title": "한소미의 가짜 데이트 대본",
+          "subtitle": "도윤과 맞출 질문과 답변이 적혀 있다.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "두 사람의 감정이 아니라 광고 계약으로 만든 대화다. 소미는 이를 공개하기 어렵다.",
+          "owner": "somi",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "somi_rescue_net",
+          "title": "한소미의 촬영용 안전 그물",
+          "subtitle": "해양 스포츠 연출에 쓰던 구난 소품.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "사건 당일 살인과 관계 없지만 행동 단계에서 한 사람을 제압하는 도구로 사용할 수 있다.",
+          "owner": "somi",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "somi_family_letter",
+          "title": "한소미의 가족 채무 편지",
+          "subtitle": "한소미가 방송 출연을 거절하기 어려운 이유.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "PD가 가족 채무를 이유로 소미를 압박했고, 도윤도 이를 전부 알지는 못했다.",
+          "owner": "somi",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "somi_parting_note",
+          "title": "한소미의 미발송 계약 파기 편지",
+          "subtitle": "사랑을 돈으로 거래하지 않겠다는 결심.",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "23:30에 작성된 원본으로, PD가 사망했다는 사실을 아직 모른 채 썼다.",
+          "owner": "somi",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {}
+        },
+        {
+          "id": "island_welcome",
+          "title": "첫날 호감도 공개 표",
+          "subtitle": "제작진 · 매칭 순서",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "민재와 유라는 처음부터 높은 관련 점수였지만 제작진이 알고리즘 결과를 수정했다. 출연자가 전 연인 관계임을 제작진이 알고 있었음을 의미한다.",
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": false,
+          "owner": null,
+          "blockedFor": [],
+          "location": null,
+          "grant": null
+        },
+        {
+          "id": "island_cast_contract",
+          "title": "비밀 출연 계약",
+          "subtitle": "연프 · 가짜 커플 의혹",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "도윤과 소미에게 짜여진 커플 연출을 요구하는 부속 합의서. 두 사람에게 살해 동기는 있지만 직접 행동의 증거는 없다.",
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": false,
+          "owner": null,
+          "blockedFor": [],
+          "location": null,
+          "grant": null
+        },
+        {
+          "id": "island_tide_warn",
+          "title": "해양 안전 경고서",
+          "subtitle": "관측실 · 위험한 수위",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "방송용 조수 관측실이 위험해질 수 있어 야간 출입 금지가 권고되었다. 신원재 PD가 촬영 편의를 이유로 경고를 무시했다.",
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": false,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "lighthouse",
+            "x": 4,
+            "y": 2
+          },
+          "grant": null
+        },
+        {
+          "id": "island_sponsor_bill",
+          "title": "감정 광고 정산표",
+          "subtitle": "후원금 · 시청률 조작",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "연애 감정 데이터에 따라 노출 광고비가 다르게 책정된다. 단순 연애 프로그램이 아니라 사람의 사생활을 거래하는 시스템이다.",
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": false,
+          "owner": null,
+          "blockedFor": [],
+          "location": null,
+          "grant": null
+        },
+        {
+          "id": "island_shoe_marks",
+          "title": "관측실 주변 발자국",
+          "subtitle": "현장 · 두 사람의 그림자",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "신원재 외에 가벼운 운동화 한 사람이 관측실에 함께 접근했다. 비슷한 신발은 여러 명이 갖고 있다.",
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": true,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "lighthouse",
+            "x": 4,
+            "y": 2
+          },
+          "grant": null
+        },
+        {
+          "id": "island_edit_room",
+          "title": "편집실 야간 출입표",
+          "subtitle": "방송실 · 무단 방문",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "23시 전후 구형 보조 출입카드가 사용됐다. 사용자의 이름이 삭제되었으나 카드 일련번호는 남아 있다.",
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": false,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "villa",
+            "x": 14,
+            "y": 2
+          },
+          "grant": null
+        },
+        {
+          "id": "island_camera_lag",
+          "title": "13분 늦은 방송 화면",
+          "subtitle": "방송 · 녹화와 송출의 어긋남",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "제작진의 송출 서버는 사전 제작 인터뷰를 실제보다 13분 늦게 방송한다. 영상 속의 출연자가 표시 시각에 실제 그 장소에 있다는 보장은 없다.",
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": false,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "villa",
+            "x": 4,
+            "y": 2
+          },
+          "grant": null
+        },
+        {
+          "id": "island_early_message",
+          "title": "PD가 남긴 마지막 대화",
+          "subtitle": "관측실 · 원본 인터폰",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "PD는 관측실로 누군가를 만나러 가며 “협상이 끝나면 파일을 돌려주겠다”고 말했다. 누구와 협상하는지는 지워졌다.",
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": false,
+          "owner": null,
+          "blockedFor": [],
+          "location": null,
+          "grant": null
+        },
+        {
+          "id": "island_doctor_note",
+          "title": "출연자 설문 동의서",
+          "subtitle": "비밀 · 상담 기록",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "상담 내용을 방송 소재로 사용할 수 있다는 조항이 실제 동의 없이 삽입되었다. PD는 누군가의 가족 비밀을 이용해 압박하고 있었다.",
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": false,
+          "owner": null,
+          "blockedFor": [],
+          "location": null,
+          "grant": null
+        },
+        {
+          "id": "island_drone_master",
+          "title": "드론 원본 영상",
+          "subtitle": "서해안 · 편집 전 프레임",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "영상에는 편집 시간표와 다른 관측실 입구의 움직임이 보인다. 시간이 맞지 않는 인터뷰 영상과 대조하면 특정 인물의 알리바이가 흔들린다.",
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [
+            "island_camera_lag"
+          ],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": false,
+          "owner": null,
+          "blockedFor": [],
+          "location": null,
+          "grant": null
+        },
+        {
+          "id": "island_net_box",
+          "title": "보트 창고의 잠금된 캐비닛",
+          "subtitle": "선착장 · 구조 장비",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "촬영용 안전 그물과 예비 조끼가 보관되어 있다. 실제 살인에 사용된 장비는 없다는 확인 기록이 있다.",
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": false,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "shore",
+            "x": 4,
+            "y": 8
+          },
+          "grant": null
+        },
+        {
+          "id": "island_sound_test",
+          "title": "신원재의 마지막 보이스 테스트",
+          "subtitle": "방송 · “컷” 신호",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "PD가 생전에 예약한 리허설 메시지가 사건 이후 송출되었다. 나중에 들렸다는 PD 목소리는 생존 증거가 아니다.",
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": false,
+          "owner": null,
+          "blockedFor": [],
+          "location": null,
+          "grant": null
+        },
+        {
+          "id": "island_tide_gate",
+          "title": "관측실 잠금 기록 원본",
+          "subtitle": "2차 조사 · 실제 잠금 시각",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "프로그램의 조수 관측실 안전 차단이 23:17 무렵 작동했고, PD가 위험 상태에 빠졌다. 강제 개방 권한은 제작진과 옛 보조 편집 카드 소지자에게 있었다.",
+          "availableFromPhase": "investigation2",
+          "visibility": "hidden",
+          "requires": [
+            "island_tide_warn"
+          ],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": true,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "lighthouse",
+            "x": 4,
+            "y": 2
+          },
+          "grant": null
+        },
+        {
+          "id": "island_duplicate_badge",
+          "title": "구형 편집 출입카드 사용 내역",
+          "subtitle": "2차 조사 · 카드 ID 대조",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "23시대 편집실에 사용된 보조 카드의 번호가 하린의 오래된 편집증과 같았다. PD가 누군가를 만나러 나간 직후 사용됐다.",
+          "availableFromPhase": "investigation2",
+          "visibility": "locked",
+          "requires": [
+            "island_edit_room"
+          ],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": false,
+          "owner": null,
+          "blockedFor": [],
+          "location": null,
+          "grant": null
+        },
+        {
+          "id": "island_tide_autopsy",
+          "title": "관측실 감식 종합표",
+          "subtitle": "2차 조사 · 단순 사고 아님",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "신원재는 외부 공격보다 위험이 예견된 관측실에 고립되어 사망했다. 현장 경보를 무시하거나 구조 신호를 차단하지 않았다면 결과가 달라질 수 있었다.",
+          "availableFromPhase": "investigation2",
+          "visibility": "hidden",
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": true,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "lighthouse",
+            "x": 4,
+            "y": 2
+          },
+          "grant": null
+        },
+        {
+          "id": "island_last_intercom",
+          "title": "삭제된 인터폰 뒷부분",
+          "subtitle": "2차 조사 · 마지막 요청",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "“약속했잖아, 편집 원본을 주겠다고. 내보내 줘.”라고 PD가 말한다. 편집 경험이 있는 사람이 이 내용을 숨기고 있었음을 시사한다.",
+          "availableFromPhase": "investigation2",
+          "visibility": "hidden",
+          "requires": [
+            "island_early_message"
+          ],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": false,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "lighthouse",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null
+        },
+        {
+          "id": "island_interview_raw",
+          "title": "숙소 인터뷰 촬영 원본",
+          "subtitle": "2차 조사 · 하린 23:17?",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "방송에서는 23:30 하린이 숙소에서 말하는 것처럼 보였지만 원본 메타데이터에는 훨씬 이른 촬영 시각이 적혀 있다. 방송 알리바이는 성립하지 않는다.",
+          "availableFromPhase": "investigation2",
+          "visibility": "hidden",
+          "requires": [
+            "island_camera_lag"
+          ],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": false,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "villa",
+            "x": 14,
+            "y": 2
+          },
+          "grant": null
+        },
+        {
+          "id": "island_relay_key",
+          "title": "송출 중계실 출입 표식",
+          "subtitle": "2차 조사 · 봉인실 개방용",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "비상 송출 중계실의 잠금을 해제할 수 있는 출입 토큰이 들어 있다. 관계자의 편집 기록을 확인할 수 있게 된다.",
+          "availableFromPhase": "investigation2",
+          "visibility": "locked",
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": true,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "shore",
+            "x": 4,
+            "y": 8
+          },
+          "grant": {
+            "id": "island_relay_key",
+            "name": "중계실 비상 출입 표식",
+            "description": "봉인된 해상 방송 로그 보관실 잠금을 해제한다."
+          }
+        },
+        {
+          "id": "island_sponsor_real",
+          "title": "제작진의 심리 프로파일",
+          "subtitle": "2차 조사 · 출연자의 약점",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "신원재는 모든 출연자의 비밀을 시청률 소재로 만들 계획이었다. 누군가의 가족 상담 기록을 다음 생방송의 반전으로 공개하려 했다.",
+          "availableFromPhase": "investigation2",
+          "visibility": "hidden",
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": true,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "lighthouse",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null
+        },
+        {
+          "id": "island_tide_recheck",
+          "title": "제작진의 구조 호출 표",
+          "subtitle": "2차 조사 · 없었던 구조 요청",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "현장 경보가 발생한 뒤 공식 구조 요청이 발송되지 않았다. 경보를 확인할 수 있었던 사람과 실제 섬 출입 기록을 비교해야 한다.",
+          "availableFromPhase": "investigation2",
+          "visibility": "locked",
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": false,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "lighthouse",
+            "x": 4,
+            "y": 2
+          },
+          "grant": null
+        },
+        {
+          "id": "island_ribbon_thread",
+          "title": "발자국 옆 보라색 섬유",
+          "subtitle": "2차 조사 · 소지품 대조",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "관측실 구형 문 근처의 보라색 실밥이 하린의 머리끈 염색 성분과 비슷하다. 단독 증거는 아니지만 인터폰 기록과 겹친다.",
+          "availableFromPhase": "investigation2",
+          "visibility": "hidden",
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": true,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "lighthouse",
+            "x": 4,
+            "y": 2
+          },
+          "grant": null
+        },
+        {
+          "id": "island_truth_contract",
+          "title": "프로그램 비밀 원본 계약",
+          "subtitle": "2차 조사 · 연프가 아닌 사회 실험",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "감정 반응을 수집하고 불안한 관계를 의도적으로 배치하여 광고 수익을 높이는 프로젝트였다. 출연자의 과거 의료 정보가 승인 없이 이용됐다.",
+          "availableFromPhase": "investigation2",
+          "visibility": "hidden",
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": true,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "lighthouse",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null
+        },
+        {
+          "id": "island_final_cut",
+          "title": "마지막 편집 타임라인",
+          "subtitle": "2차 조사 · 네 자료의 충돌",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "23:04 관측실 동행 → 23:17 경보 → 13분 지연된 인터뷰 → 예약 PD 음성이라는 순서로 합쳐야 동선을 설명할 수 있다. 누가 보조 카드와 보라색 실밥을 가졌는지 판단하라.",
+          "availableFromPhase": "investigation2",
+          "visibility": "hidden",
+          "requires": [
+            "island_duplicate_badge",
+            "island_camera_lag"
+          ],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": true,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "lighthouse",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null
+        },
+        {
+          "id": "island_escape_beacon",
+          "title": "구조 신호기 작동 확인서",
+          "subtitle": "2차 조사 · 섬 탈출 조건",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "폭풍이 잦아들면 신호기를 켜 구조선을 호출할 수 있다. 신호 장치는 선착장 창고에 보관돼 있고 출연자에게 열쇠가 필요하다.",
+          "availableFromPhase": "investigation2",
+          "visibility": "locked",
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": false,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "shore",
+            "x": 4,
+            "y": 8
+          },
+          "grant": {
+            "id": "island_beacon",
+            "name": "구조 신호기",
+            "description": "행동 단계에서 섬 구조 요청을 성립시키는 비상 아이템."
+          }
+        }
+      ]
+    },
+    "action": {
+      "order": [
+        "nayeon",
+        "seojun",
+        "taehan",
+        "minjae",
+        "yura",
+        "somi",
+        "doyun",
+        "harin"
+      ],
+      "intro": "두 번째 토론이 끝나면 폭풍 속 최후의 구조·대립·고백이 행동 순서에 따라 벌어진다. 행동 결과는 되돌릴 수 없다.",
+      "roles": {
+        "minjae": [
+          {
+            "id": "rescue",
+            "title": "구조사의 마지막 보호",
+            "kind": "guard",
+            "description": "구명환으로 한 사람의 다음 치명적 행동을 방어한다.",
+            "targetMode": "any",
+            "requiresItem": "minjae_rescue_ring",
+            "publicText": "구조사의 마지막 보호"
+          }
+        ],
+        "doyun": [
+          {
+            "id": "broadcast",
+            "title": "도윤의 긴급 라이브",
+            "kind": "reveal",
+            "description": "편집되지 않은 개인 영상을 모두에게 공개하겠다고 선언한다.",
+            "targetMode": "none",
+            "requiresItem": null,
+            "publicText": "도윤의 긴급 라이브",
+            "requiresCard": "island_drone_master"
+          }
+        ],
+        "seojun": [
+          {
+            "id": "forecast",
+            "title": "파도 예보 경고",
+            "kind": "guard",
+            "description": "해양 경보를 근거로 한 명의 위험을 미리 막는다.",
+            "targetMode": "any",
+            "requiresItem": "seojun_wave_meter",
+            "publicText": "파도 예보 경고"
+          }
+        ],
+        "taehan": [
+          {
+            "id": "hold",
+            "title": "현장 통제",
+            "kind": "restrain",
+            "description": "연출용 제압 띠로 한 사람의 다음 행동을 제한한다.",
+            "targetMode": "other",
+            "requiresItem": "taehan_handcuffs",
+            "publicText": "현장 통제"
+          }
+        ],
+        "harin": [
+          {
+            "id": "last_flash",
+            "title": "마지막 신호탄",
+            "kind": "attack",
+            "description": "비상 신호탄을 사용해 한 참가자에게 추가 사망 효과를 일으킨다.",
+            "targetMode": "other",
+            "requiresItem": "harin_signal_flare",
+            "publicText": "마지막 신호탄"
+          }
+        ],
+        "yura": [
+          {
+            "id": "confess",
+            "title": "편집되지 않은 고백",
+            "kind": "reveal",
+            "description": "편집 전 감정 기록을 자신의 목소리로 공개한다.",
+            "targetMode": "none",
+            "requiresItem": null,
+            "publicText": "편집되지 않은 고백"
+          }
+        ],
+        "nayeon": [
+          {
+            "id": "protect",
+            "title": "기록 보존 스위치",
+            "kind": "guard",
+            "description": "중요한 한 사람의 행동을 보안 아카이브가 보호한다.",
+            "targetMode": "any",
+            "requiresItem": "nayeon_usb_backup",
+            "publicText": "기록 보존 스위치"
+          }
+        ],
+        "somi": [
+          {
+            "id": "net",
+            "title": "마지막 구조 장면",
+            "kind": "restrain",
+            "description": "안전 그물로 한 참가자의 후속 행동을 제한한다.",
+            "targetMode": "other",
+            "requiresItem": "somi_rescue_net",
+            "publicText": "마지막 구조 장면"
+          },
+          {
+            "id": "beacon",
+            "title": "섬에서 구조 요청",
+            "kind": "escape",
+            "description": "2차 조사에서 획득한 구조 신호기로 구조선을 부른다.",
+            "targetMode": "self",
+            "requiresItem": "island_beacon",
+            "publicText": "섬에서 구조 요청"
+          }
+        ]
+      },
+      "endingNotes": "범인 정확도와 숨겨진 관계·방송 계약 목표를 수동 판정한다. 구조 신호의 성공은 플레이어 행동과 획득 아이템에 달려 있다."
+    }
+  },
+  "creatorGuide": {
+    "warning": "제작자 전용 범인·증거 스포일러. 실제 TV 프로그램 및 방송인과 무관한 독창적인 픽션.",
+    "victim": "신원재, 프로그램 총괄 PD(NPC). 여덟 출연자의 성비는 남4·여4로 유지한다.",
+    "culprit": "서하린",
+    "fullExplanation": "하린은 과거 편집자로서 신원재가 여동생의 심리 상담 정보를 동의 없이 방송에 사용하려 했음을 알고 있었다. 그녀는 원본을 돌려받으려 신원재를 관측실로 유도했고, 위험을 인지한 후에도 구조 요청을 하지 않아 그의 사망을 의도적으로 초래했다. 방송 송출 영상은 실제 촬영보다 13분 늦기 때문에 숙소 인터뷰는 알리바이가 되지 않는다.",
+    "timeline": [
+      "20:30 폭풍으로 제작진 바지선 철수",
+      "22:45 하린이 PD에게 상담 원본 삭제를 요구",
+      "23:04 PD가 하린과 관측실 쪽으로 이동",
+      "23:17 조수 관측실 안전 경보 및 실제 사망 시각",
+      "23:30 과거 촬영된 하린 인터뷰 지연 송출",
+      "01:10 모두가 시신 발견"
+    ],
+    "proof": [
+      "섬 물때표와 조수 관측실 경고 기록을 먼저 대조한다.",
+      "13분 송출 지연을 알아낸 후 숙소 알리바이를 다시 계산한다.",
+      "보조 편집실 출입카드 번호와 하린의 물건이 연결된다.",
+      "관측실 인터폰의 삭제된 후반부와 구조 호출 기록의 공백이 의도를 입증한다."
+    ],
+    "redHerrings": [
+      "민재는 과거 구조 실패를 숨긴다.",
+      "도윤과 소미는 광고용 가짜 연애 계약을 했다.",
+      "태한은 전직 형사로 몰래 실종 사건을 조사 중이다.",
+      "유라와 민재는 이전 연인이었으며 하린처럼 방송에 불만을 품었다."
+    ],
+    "endings": {
+      "correct": "편집되지 않은 영상이 마침내 재생되고, 하린은 여동생의 비밀을 지키려다 다른 생명을 빼앗은 자신의 선택을 인정한다. 폭풍이 걷히고 구조선이 도착한다.",
+      "wrong": "방송은 완벽한 러브라인만 남긴 채 마지막 투표를 끝낸다. 신원재의 죽음은 사고로 남고, 여덟 사람의 진실은 편집본과 함께 사라진다."
+    },
+    "actionDesign": "하트 투표 이후 모든 참가자가 순서대로 단 한 번 행동한다. 신호탄 공격·구명환 방어·연출용 제압 그물·구조 신호기는 이야기 속 아이템으로 처리한다. 실제 승점은 수동 판정."
+  }
+}
