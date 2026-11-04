@@ -250,7 +250,8 @@ window.MysteryStudy=(function(){
         const picker=['other','any'].includes(opt.targetMode)?
           '<select id="action-target-'+esc(opt.id)+'" aria-label="'+esc(opt.title)+' 대상 선택">'+
           '<option value="">대상 선택</option>'+
-          (a.targets||[]).map(t=>'<option value="'+esc(t.id)+'">'+esc(t.name)+'</option>').join('')+
+          (a.targets||[]).filter(t=>opt.targetMode==='any'||t.id!==room.me)
+            .map(t=>'<option value="'+esc(t.id)+'">'+esc(t.name)+(t.id===room.me?' (나)':'')+'</option>').join('')+
           '</select>':'';
         return '<div class="action-option"><div><strong>'+esc(opt.title)+'</strong>'+
           '<p>'+esc(opt.description)+'</p>'+
