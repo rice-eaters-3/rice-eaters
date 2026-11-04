@@ -131,7 +131,7 @@ function casting(){
     '<p class="muted small">카드를 눌러 배역을 바꾸면 나머지 단계의 책자·보유 정보도 해당 인물 기준으로 보여.</p></div></div>'+
     '<div class="character-grid">'+s.characters.map(c=>
       '<article class="character-card '+(c.id===state.roleId?'selected':'')+'" style="--accent:'+escapeHtml(c.accent)+'">'+
-      '<div class="char-symbol char-illustration">'+(window.MysteryArt?.portrait(c,s.id)||escapeHtml(c.symbol))+'</div>'+
+      '<div class="char-symbol char-illustration">'+(window.MysteryArt?.portrait(c,s.artTheme||s.id)||escapeHtml(c.symbol))+'</div>'+
       '<h3 class="character-name">'+escapeHtml(c.name)+'</h3><div class="character-role">'+escapeHtml(c.role)+'</div>'+
       '<p class="char-hint">'+escapeHtml(c.hint)+'</p>'+
       (c.startLine?'<p class="char-start">“'+escapeHtml(c.startLine)+'”</p>':'')+
@@ -151,10 +151,19 @@ function render(){
     body='<section class="notice">이 화면을 그리지 못했습니다: '+escapeHtml(e.message)+'</section>';
     note('렌더링 오류: '+e.message,true);
   }
-  if(phase==='ending')body='<section class="test-ending surface panel-pad"><h3>결말 안내 · 진행자 검토</h3>'+
-    '<p>이 시점에서는 행동 단계 결과와 확보한 증거를 확인하며 결말을 수동 판정합니다. 진범·개인 승점의 자동 계산은 현재 게임에 포함되지 않습니다.</p>'+
-    '<p class="muted small">캐릭터 책자의 승리 목표를 비교하거나 다른 인물 시점으로 전환해 검토할 수 있습니다.</p></section>'+body;
-  $('testStage').dataset.story=room.story?.id||'';
+  if(phase==='ending'){
+    const status=state.statusOverrides[state.roleId]||(
+      state.action?.dead?.includes(state.roleId)?'dead':
+      state.action?.restrained?.includes(state.roleId)?'restrained':
+      state.action?.escaped?.includes(state.roleId)?'escaped':'alive');
+    body='<section class="test-ending surface panel-pad"><h3>🧪 캐릭터 상태를 바꿔 개인 결말 확인</h3>'+
+      '<p class="muted small">테스트 모드에서만 생존·사망·제압·탈출 상태를 직접 지정할 수 있습니다. 실제 게임에서는 행동 결과가 적용됩니다.</p>'+
+      '<div class="ending-arrest-row"><select id="testEndingStatus">'+
+      [['alive','생존'],['dead','사망'],['restrained','제압'],['escaped','탈출']].map(([key,label])=>
+        '<option value="'+key+'"'+(status===key?' selected':'')+'>'+label+'</option>').join('')+
+      '</select>'+btn('test-set-status','이 캐릭터 상태 적용','btn btn-outline')+'</div></section>'+body;
+  }
+  $('testStage').dataset.story=room.story?.artTheme||room.story?.id||'';
   $('testStage').innerHTML=body;
   updateClock();
 }
@@ -171,6 +180,20 @@ function runAction(button){
   const action=button.dataset.action;
   if(action==='test-stage-next'){phaseTo('characters');return;}
   if(action==='test-role'){roleTo(button.dataset.role);return;}
+  if(action==='test-set-status'){
+    engine.setStatus(state,state.roleId,$('testEndingStatus')?.value||'alive');
+    note('선택한 캐릭터 상태가 결말 시뮬레이션에 적용되었습니다.');render();return;
+  }
+  if(action==='verdict-arrest'){
+    engine.setArrest(state,$('endingArrestTarget')?.value||null);
+    note('최종 구속 대상이 변경되었습니다. 공통 결말을 다시 확인해 주세요.');render();return;
+  }
+  if(action==='verdict-goal'){
+    const characterId=button.dataset.character;
+    const value=button.closest('.ending-goal-row')?.querySelector('select')?.value||'';
+    engine.setGoal(state,characterId,value==='yes'?true:value==='no'?false:null);
+    note('개인 목표 판정이 반영되었습니다.');render();return;
+  }
   if(['book-toggle','research-toggle','book-prev','book-next','book-chapter'].includes(action)){
     window.MysteryStudy.navigate(action,button.dataset.chapter);render();return;
   }
