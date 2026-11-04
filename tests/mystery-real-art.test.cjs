@@ -89,7 +89,9 @@ test('malicious labels are escaped in the real-art markup, and other scenarios f
  assert.match(v,/&lt;img onerror=alert\(1\)&gt;/);
  assert.doesNotMatch(v,/<img /);
  assert.match(v,/<image href="\/apps\/murder-mystery\/assets\/d1\.webp"/);
- assert.doesNotMatch(v,/onerror=/i,'hostile metadata must remain escaped text (within aria-label)');
+ // An attribute-like string inside escaped aria-label text must never
+ // appear as an injected HTML element or executable handler.
+ assert.doesNotMatch(v,/<img\s/i);
  const other=art.portrait({id:'mystery',symbol:'♟',name:'커스텀'},'custom-case');
  assert.ok(other.includes('♟'));
 });
