@@ -165,17 +165,12 @@ test('host advances full six-player academy after all action turns; no role secr
  assert.equal(start.action.abilities.length,0,'not current turn has no active choices');
  assert.equal((await post(1,ep+'/act',{abilityId:'shield'})).status,403,
    'out-of-turn secret action rejected');
- for(let i=0;i<6;i++){
-  const actor=(await call(i,ep)).data;
-  if(actor.action.myTurn){
-   const result=await post(i,ep+'/act',{abilityId:'pass'});
-   assert.equal(result.status,200);
-  }else{
-   const nextId=actor.action.currentActor?.id;
-   const idx=room.data.players.findIndex(p=>p.id===nextId);
+ const participantIds=(await call(0,ep)).data.players.map(p=>p.id);
+ for(let turn=0;turn<6;turn++){
+   const state=(await call(0,ep)).data.action;
+   const idx=participantIds.indexOf(state.currentActor?.id);
    assert.ok(idx>=0,'turn owner is one of six members');
    assert.equal((await post(idx,ep+'/act',{abilityId:'pass'})).status,200);
-  }
  }
  const done=(await call(0,ep)).data.action;
  assert.equal(done.done,true);
