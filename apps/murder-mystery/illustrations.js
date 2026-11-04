@@ -122,7 +122,11 @@ window.MysteryArt=(function(){
    'hasu_cult_notebook','hasu_marvin_voice','hasu_solo_kill_log',
    'hasu_roof_safety_map','mac_tactical_board','mac_maintenance_glove',
    'mac_coach_whistle','mac_rehearsal_schedule','cult_founder_mask',
-   'cult_hero_landing_syllabus'
+   'cult_hero_landing_syllabus',
+   'cult_marvin_bill','cult_fund_account','cult_gargoyle_poster',
+   'cult_donation_anchor','cult_old_team_photo','cult_unsafe_meeting',
+   'cult_founder_signature','cult_mac_scape_plan','cult_member_exit',
+   'cult_hidden_fund'
   ])
  };
  const standaloneD1Props=new Set(['sink','fridge','pc','gargoyle','throne']);

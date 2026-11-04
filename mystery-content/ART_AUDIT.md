@@ -57,6 +57,23 @@
 | `cult_founder_mask` | 가고일 교리서가 표시되어 인장이 새겨진 금속 가면 안쪽이 보이지 않음 | `cult_founder_mask.webp` |
 | `cult_hero_landing_syllabus` | 가고일 교리서가 표시되어 착지 연기와 안전 경고가 실린 커리큘럼 책자가 보이지 않음 | `cult_hero_landing_syllabus.webp` |
 
+## D1 사옥 · 4차 배치
+
+신규 파일 경로의 공통 앞부분은 1차 배치와 같다.
+
+| 카드 ID | 기존 표시와 문제 | 신규 파일 |
+| --- | --- | --- |
+| `cult_marvin_bill` | 가고일 교리서가 표시되어 여러 해에 걸쳐 발행된 마빈의 재활비 영수증이 그림에 없음 | `cult_marvin_bill.webp` |
+| `cult_fund_account` | 가고일 교리서가 표시되어 반복 후원 거래와 행사 예산 코드가 남은 은행 명세서이 그림에 없음 | `cult_fund_account.webp` |
+| `cult_gargoyle_poster` | 가고일 교리서가 표시되어 착지대 위의 거대한 돌가고일을 그린 행사 포스터이 그림에 없음 | `cult_gargoyle_poster.webp` |
+| `cult_donation_anchor` | 가고일 교리서가 표시되어 가명 B.IGO가 표시된 후원자 명단이 그림에 없음 | `cult_donation_anchor.webp` |
+| `cult_old_team_photo` | 가고일 교리서가 표시되어 배익호·카알·맥이 함께 찍힌 초기 D1 단체 사진이 그림에 없음 | `cult_old_team_photo.webp` |
+| `cult_unsafe_meeting` | 가고일 교리서가 표시되어 두 차례의 안전 경고와 잘린 서명이 남은 회의록이 그림에 없음 | `cult_unsafe_meeting.webp` |
+| `cult_founder_signature` | 가고일 교리서가 표시되어 창립자 서명란과 후원 결재 문서가 포함된 초기 정관이 그림에 없음 | `cult_founder_signature.webp` |
+| `cult_mac_scape_plan` | 가고일 교리서가 표시되어 안전 보고서와 발표용 수정 각서이 그림에 없음 | `cult_mac_scape_plan.webp` |
+| `cult_member_exit` | 가고일 교리서가 표시되어 교단을 떠나려 했던 신도의 진술서이 그림에 없음 | `cult_member_exit.webp` |
+| `cult_hidden_fund` | 가고일 교리서가 표시되어 승인·현장 안전·송금 업무를 나눈 후원 총괄표이 그림에 없음 | `cult_hidden_fund.webp` |
+
 ## 시리즈 배경
 
 신규 배경은 `apps/murder-mystery/assets/backgrounds/`에 있으며, 게임과 테스트 모드의 시놉시스·결말 및 제작소의 시나리오·결말 탭에서 공통으로 불러온다.
@@ -78,4 +95,4 @@
 
 ## 재개 지점
 
-D1 사옥의 31번째 카드 `cult_marvin_bill`부터 다음 10장을 대조한다. D1 41장, 마지막 하트 56장, 네온 검역국 54장, 성하 영재관 48장이 남아 있다.
+D1 사옥의 41번째 카드 `time_dinner_receipt`부터 다음 10장을 대조한다. D1 31장, 마지막 하트 56장, 네온 검역국 54장, 성하 영재관 48장이 남아 있다.
