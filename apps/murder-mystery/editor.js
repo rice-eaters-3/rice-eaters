@@ -3,6 +3,21 @@ const el=id=>document.getElementById(id);
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const newid=prefix=>prefix+'_'+Math.random().toString(36).slice(2,8);
 const phases={synopsis:5,characters:5,study:20,investigation1:20,discussion1:15,investigation2:20,discussion2:20,action:10,ending:15};
+const artChoices=[['','자동 (시나리오 ID)'],['d1-crown-of-ashes','D1 사옥 · 어두운 금빛'],['cruel-heart-island','마지막 하트 · 핑크'],['neon-memory-quarantine','네온 검역국 · 사이버펑크'],['stellar-academy-first-case','성하 영재관 · 별빛']];
+const endingFields=[['intro','인물 결말 도입'],['goalAchieved','개인 승리 목표 달성'],['goalFailed','개인 승리 목표 실패'],['alive','생존'],['dead','사망'],['restrained','제압'],['arrested','구속'],['escaped','탈출'],['closing','개인 결말 마무리']];
+const visualStory=()=>doc.story.artTheme||doc.story.id;
+function ensureEndings(){
+  doc.game.ending||={};
+  doc.game.ending.common||={};
+  for(const k of ['captured','missed']){
+    doc.game.ending.common[k]||={title:k==='captured'?'진범 구속 성공':'진범 구속 실패',paragraphs:[]};
+    doc.game.ending.common[k].paragraphs||=[];
+  }
+  doc.game.ending.characters||={};
+  for(const c of doc.story.characters)doc.game.ending.characters[c.id]||={};
+  doc.game.ending.escape||={succeeded:{title:'탈출 성공',paragraphs:[]},failed:{title:'탈출 실패',paragraphs:[]}};
+  for(const k of ['succeeded','failed'])doc.game.ending.escape[k]||={title:'',paragraphs:[]};
+}
 const emptyMap=(id,title)=>({id,title,legend:'방을 돌아다니며 다른 사람과 대화하세요.',
   tiles:['#############',...Array.from({length:9},()=> '#...........#'),'#############'],
   rooms:[],areas:[],doors:[],portals:[],objects:[]});
@@ -46,6 +61,8 @@ function storyPanel(){
     field('시나리오 이름','story.title',a.title)+field('부제','story.subtitle',a.subtitle)+
     field('장르','story.genre',a.genre)+field('예상 플레이 시간 (분)','story.minutes',a.minutes,'number','min="1" max="600"')+
     field('소개 문구','story.teaser',a.teaser,'textarea')+
+    selectField('게임 일러스트 스타일 (기존 아트 이미지)','story.artTheme',artChoices,a.artTheme||'')+
+    '<div class="studio-art-preview">'+(window.MysteryArt?.cover(visualStory())||'<p>시나리오 아트 스타일을 선택하면 실제 이미지가 여기에 표시됩니다.</p>')+'</div>'+
     field('공용 시놉시스 (문단별 한 줄)','story.synopsis',a.synopsis.join('\n'),'textarea')+
     '</div><h3>페이즈별 권장 시간 (분)</h3><div class="editor-fields">'+
     Object.entries(doc.game.phaseMinutes).map(([key,value])=>field(key,'game.phaseMinutes.'+key,value,'number','min="1" max="240"')).join('')+
@@ -67,7 +84,9 @@ function charactersPanel(){
     field('캐릭터 시작 대사','story.characters.'+selectedChar+'.startLine',c.startLine||'','textarea')+
     field('맵 표시 기호','story.characters.'+selectedChar+'.symbol',c.symbol)+
     field('표시 색상','story.characters.'+selectedChar+'.accent',c.accent,'color')+
-    '</div><h3>비공개 책자 · 7개 항목</h3>'+
+    '</div><h3>기존 원화로 보는 캐릭터 미리보기</h3>'+
+    '<div class="studio-portrait-preview">'+(window.MysteryArt?.portrait(c,visualStory())||esc(c.symbol))+'</div>'+
+    '<h3>비공개 책자 · 7개 항목</h3>'+
     '<div class="editor-fields">'+field('중요 정보 (문단별 한 줄)','role.background',b.background.join('\n'),'textarea')+
     field('사건 시간대별 행적 (JSON 배열: time / title / detail)','role.timeline',JSON.stringify(b.timeline,null,2),'textarea')+
     field('자신의 소지품 (JSON 배열: id / name / description)','role.inventory',JSON.stringify(b.inventory,null,2),'textarea')+
@@ -92,7 +111,7 @@ function cardsPanel(){
     field('타일당 최대 인원','game.investigation.maxTileOccupants',doc.game.investigation.maxTileOccupants,'number')+'</div>'+
     (cards.length?'<div class="entity-tabs">'+cards.map((v,i)=>'<button data-do="pick-card" data-i="'+i+'" class="'+(i===selectedCard?'active':'')+'">'+esc(v.title)+'</button>').join('')+'</div>':
       '<p class="muted">아직 카드가 없습니다. 위 버튼으로 추가해 보세요.</p>')+
-    (!c?'':'<div class="editor-fields">'+field('카드 ID','game.investigation.cards.'+selectedCard+'.id',c.id)+
+    (!c?'':'<div class="studio-clue-preview">'+(window.MysteryArt?.clue(c,visualStory())||'✧')+'</div><div class="editor-fields">'+field('카드 ID','game.investigation.cards.'+selectedCard+'.id',c.id)+
       field('앞면 제목','game.investigation.cards.'+selectedCard+'.title',c.title)+
       field('앞면 한 줄 정보','game.investigation.cards.'+selectedCard+'.subtitle',c.subtitle)+
       selectField('유형','game.investigation.cards.'+selectedCard+'.type',[['place','장소'],['belonging','소지품'],['information','정보']],c.type)+
@@ -172,16 +191,48 @@ function mapsPanel(){
       '<button class="btn btn-quiet btn-sm" data-do="remove-portal" data-i="'+i+'">삭제</button></div>').join('')+
     '<h3>가구·장식 오브젝트</h3><p class="muted small">가구 브러시로 배치하고 이름이나 통과 여부를 수정하세요.</p>'+ (f.objects||[]).map((o,i)=>'<div class="editor-detail-line"><b>('+o.x+','+o.y+')</b>'+field('이름','floor.objects.'+i+'.name',o.name)+selectField('종류','floor.objects.'+i+'.kind',objectTypes,o.kind)+field('아이콘(선택)','floor.objects.'+i+'.icon',o.icon||'')+field('통과 불가','floor.objects.'+i+'.solid',o.solid===true,'checkbox')+'<button data-do="remove-object" data-i="'+i+'" class="btn btn-quiet btn-sm">삭제</button></div>').join('')+areaEditor(f)+'</div>';
 }
+
+function endingPanel(){
+  ensureEndings();
+  const cfg=doc.game.ending,ch=doc.story.characters[selectedChar],c=cfg.characters[ch.id];
+  const part=(key,label)=>{
+    const x=cfg.common[key];
+    return '<h3>'+esc(label)+'</h3><div class="editor-fields">'+
+      field('결말 제목','game.ending.common.'+key+'.title',x.title||'')+
+      field('전체 결말 본문 (빈 줄로 문단 구분)','ending-paragraphs.common.'+key,(x.paragraphs||[]).join('\n\n'),'textarea')+'</div>';
+  };
+  return '<h2>결말 단계 · 시나리오 작가 모드</h2>'+
+    '<p class="muted small">진범 구속 여부로 전체 공통 결말을 선택합니다. 실제 플레이 중 구속 대상은 방장이 지정하고, 개인 승리 목표 달성 여부는 각 인물별로 수동 판정합니다.</p>'+
+    '<div class="studio-art-preview">'+(window.MysteryArt?.cover(visualStory())||'')+'</div>'+
+    part('captured','진범이 구속된 공통 결말')+part('missed','진범을 놓친 공통 결말')+
+    '<h3>개인별 결말 편집</h3><div class="entity-tabs">'+doc.story.characters.map((v,i)=>
+      '<button data-do="pick-char" data-i="'+i+'" class="'+(i===selectedChar?'active':'')+'">'+esc(v.name)+'</button>').join('')+'</div>'+
+    '<div class="studio-character-ending">'+(window.MysteryArt?.portrait(ch,visualStory())||'')+
+    '<p><b>'+esc(ch.name)+'</b><br>'+esc(doc.game.booklets[ch.id]?.objectives||'')+'</p></div>'+
+    '<p class="muted small">게임에서는 개인 결말 도입 → 구속 성공 여부에 따른 상황 → 사망/구속/제압/탈출/생존 → 개인 목표 달성 또는 실패 → 마무리 순서로 표시됩니다.</p>'+
+    '<div class="editor-fields">'+endingFields.map(([k,label])=>
+      field(label,'game.ending.characters.'+ch.id+'.'+k,c[k]||'','textarea')).join('')+'</div>'+
+    '<h3>추가 서사 · 탈출 성공 여부</h3><p class="muted small">탈출이 등장하지 않는 작품이면 비워 두어도 됩니다.</p>'+
+    '<div class="editor-fields">'+
+     field('탈출 성공 공통 추가 문단','ending-paragraphs.escape.succeeded',(cfg.escape.succeeded.paragraphs||[]).join('\n\n'),'textarea')+
+     field('탈출 실패 공통 추가 문단','ending-paragraphs.escape.failed',(cfg.escape.failed.paragraphs||[]).join('\n\n'),'textarea')+
+    '</div>';
+}
 function jsonPanel(){
   return '<h2>게임 파일 구성 확인</h2><p class="muted small">이 JSON에는 카드 뒷면과 캐릭터 비밀이 모두 포함됩니다. 제작자만 보관하세요.</p>'+
     '<pre class="json-preview">'+esc(JSON.stringify(doc,null,2))+'</pre>';
 }
-function render(){el('editorPanel').innerHTML=tab==='story'?storyPanel():tab==='characters'?charactersPanel():tab==='cards'?cardsPanel():tab==='maps'?mapsPanel():jsonPanel();
+function render(){ensureEndings();el('editorPanel').innerHTML=tab==='story'?storyPanel():tab==='characters'?charactersPanel():tab==='cards'?cardsPanel():tab==='maps'?mapsPanel():tab==='ending'?endingPanel():jsonPanel();
   for(const b of document.querySelectorAll('[data-tab]'))b.classList.toggle('active',b.dataset.tab===tab);}
 function valueChange(path,value){
   const c=doc.story.characters[selectedChar],b=doc.game.booklets[c.id],card=doc.game.investigation.cards[selectedCard];
   const oldCharacterId=c.id;
-  if(path==='story.synopsis')doc.story.synopsis=splitLines(value);
+  if(path.startsWith('ending-paragraphs.')){
+    const parts=path.split('.'),kind=parts[1],stage=parts[2],holder=kind==='common'?
+      doc.game.ending.common[stage]:doc.game.ending.escape[stage];
+    holder.paragraphs=String(value).split(/\n\s*\n/).map(p=>p.trim()).filter(Boolean).slice(0,12);
+  }
+  else if(path==='story.synopsis')doc.story.synopsis=splitLines(value);
   else if(path==='role.background')b.background=splitLines(value);
   else if(path==='action.order'){
     try{const arr=JSON.parse(value);if(!Array.isArray(arr))throw Error('JSON 배열이 필요합니다.');
@@ -224,6 +275,7 @@ function valueChange(path,value){
   if(path.startsWith('story.characters.')&&path.endsWith('.id')){const newId=doc.story.characters[selectedChar].id;
     if(newId!==oldCharacterId){
       doc.game.booklets[newId]=b;delete doc.game.booklets[oldCharacterId];
+      ensureEndings();doc.game.ending.characters[newId]=doc.game.ending.characters[oldCharacterId]||{};delete doc.game.ending.characters[oldCharacterId];
       doc.spawn[newId]=doc.spawn[oldCharacterId];delete doc.spawn[oldCharacterId];
       if(doc.game.action){
         doc.game.action.order=(doc.game.action.order||[]).map(id=>id===oldCharacterId?newId:id);
@@ -274,11 +326,13 @@ function handleAction(target){
     doc.game.booklets[id]={background:['비밀 서술'],timeline:[],inventory:[],culprit:false,objectives:'승리 목표',notes:''};
     doc.spawn[id]={floor:getFloors()[0].id,x:1,y:1};
     if(doc.game.action){doc.game.action.order.push(id);doc.game.action.roles[id]=[];}
+    ensureEndings();doc.game.ending.characters[id]={};
     doc.story.players=doc.story.characters.length;selectedChar=doc.story.players-1;
   }else if(action==='remove-char'){
     if(doc.story.characters.length<=2)return status('인물은 최소 2명입니다.',true);
     const id=doc.story.characters[selectedChar].id;doc.story.characters.splice(selectedChar,1);
     delete doc.game.booklets[id];delete doc.spawn[id];
+    ensureEndings();delete doc.game.ending.characters[id];
     if(doc.game.action){doc.game.action.order=doc.game.action.order.filter(x=>x!==id);delete doc.game.action.roles[id];}
     doc.story.players=doc.story.characters.length;selectedChar=0;
   }else if(action==='add-card'){
