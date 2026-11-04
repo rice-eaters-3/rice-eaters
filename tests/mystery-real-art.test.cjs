@@ -96,20 +96,24 @@ test('malicious labels are escaped in the real-art markup, and other scenarios f
  assert.ok(other.includes('♟'));
 });
 test('live game and studio both load artwork module and connect painted props/doors to real map',()=>{
- for(const entry of ['index.html','test.html']){
+ for(const entry of ['index.html','test.html','editor.html']){
   const html=fs.readFileSync(path.join(root,'apps/murder-mystery',entry),'utf8');
   assert.ok(html.includes('illustrations.js'));
-  assert.ok(html.indexOf('illustrations.js')<html.indexOf('study.js'));
+  if(entry!=='editor.html')assert.ok(html.indexOf('illustrations.js')<html.indexOf('study.js'));
+  else assert.ok(html.indexOf('illustrations.js')<html.indexOf('editor.js'));
  }
  const screen=fs.readFileSync(path.join(root,'apps/murder-mystery/study.js'),'utf8');
- for(const token of ['MysteryArt?.object(o,room.story?.id)','MysteryArt?.door(door,room.story?.id)',
-  'MysteryArt?.stairs(portalsHere[0],room.story?.id)','MysteryArt?.avatar(a,room.story?.id)',
-  'portrait(b.basic','art(c,room.story?.id)'])assert.ok(screen.includes(token),token);
+ for(const token of ['MysteryArt?.object(o,theme(room))','MysteryArt?.door(door,theme(room))',
+  'MysteryArt?.stairs(portalsHere[0],theme(room))','MysteryArt?.avatar(a,theme(room))',
+  'portrait(b.basic','art(c,theme(room))'])assert.ok(screen.includes(token),token);
  const game=fs.readFileSync(path.join(root,'apps/murder-mystery/app.js'),'utf8');
- assert.ok(game.includes('MysteryArt?.cover(story.id)'));
- assert.ok(game.includes('MysteryArt?.portrait(c,room.story?.id)'));
+ assert.ok(game.includes('MysteryArt?.cover(story.artTheme||story.id)'));
+ assert.ok(game.includes('MysteryArt?.portrait(c,room.story?.artTheme||room.story?.id)'));
+ const editor=fs.readFileSync(path.join(root,'apps/murder-mystery/editor.js'),'utf8');
+ assert.ok(editor.includes('MysteryArt?.portrait(c,visualStory())'));
+ assert.ok(editor.includes('MysteryArt?.object(furniture,visualStory())'));
  const studio=fs.readFileSync(path.join(root,'apps/murder-mystery/test-ui.js'),'utf8');
- assert.ok(studio.includes("dataset.story=room.story?.id"));
+ assert.ok(studio.includes("dataset.story=room.story?.artTheme||room.story?.id"));
 });
 test('local HTTP server serves the actual four original artwork files with image/webp MIME and bytes',async t=>{
  const dir=fs.mkdtempSync(path.join(require('node:os').tmpdir(),'illustrated-mystery-'));

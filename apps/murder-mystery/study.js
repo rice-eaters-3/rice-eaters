@@ -11,22 +11,23 @@ window.MysteryStudy=(function(){
   const btn2=(act,label,extra='',disabled=false)=>btn(act,label,'btn btn-outline',disabled,extra);
   const portrait=(c,story,small=false)=>window.MysteryArt?.portrait(c,story,small)||'<span>'+esc(c.symbol||'♟')+'</span>';
   const art=(c,story)=>window.MysteryArt?.clue(c,story)||'<span>✧</span>';
+  const theme=room=>room.story?.artTheme||room.story?.id;
   const page=(ch,html)=>({chapter:ch,html});
   function pages(room){
     const b=room.booklet;if(!b)return [];
     const result=[];
-    result.push(page(0,'<div class="book-identity"><div class="book-portrait illustrated-portrait">'+portrait(b.basic,room.story?.id)+'</div><div><h4>'+esc(b.basic.name)+'</h4><p>'+esc(b.basic.role)+'</p>'+para(b.basic.hint)+'</div></div>'));
+    result.push(page(0,'<div class="book-identity"><div class="book-portrait illustrated-portrait">'+portrait(b.basic,theme(room))+'</div><div><h4>'+esc(b.basic.name)+'</h4><p>'+esc(b.basic.role)+'</p>'+para(b.basic.hint)+'</div></div>'));
     (b.background||[]).forEach(t=>result.push(page(1,para(t))));
     if(b.notes)result.push(page(1,'<h4>연기 참고</h4>'+para(b.notes)));
     (b.timeline||[]).forEach(t=>result.push(page(2,'<div class="time-stamp">'+esc(t.time)+'</div><h4>'+esc(t.title)+'</h4>'+para(t.detail))));
-    (b.inventory||[]).forEach(t=>result.push(page(3,'<div class="item-stamp">POSSESSION</div><div class="book-item-art">'+art({id:t.id,title:t.name,subtitle:t.description},room.story?.id)+'</div><h4>'+esc(t.name)+'</h4>'+para(t.description))));
+    (b.inventory||[]).forEach(t=>result.push(page(3,'<div class="item-stamp">POSSESSION</div><div class="book-item-art">'+art({id:t.id,title:t.name,subtitle:t.description},theme(room))+'</div><h4>'+esc(t.name)+'</h4>'+para(t.description))));
     result.push(page(4,'<div class="verdict '+(b.culprit?'guilty':'innocent')+'"><span>나의 범인 여부</span><strong>'+(b.culprit?'당신은 범인입니다.':'당신은 범인이 아닙니다.')+'</strong></div>'));
     result.push(page(5,para(b.objectives)+'<p class="book-footnote">승점은 게임 종료 후 수동으로 판정합니다.</p>'));
     (b.shared?.synopsis||[]).forEach(t=>result.push(page(6,'<h4>공용 시놉시스</h4>'+para(t))));
     const chars=b.shared?.characters||[];
     for(let i=0;i<chars.length;i+=2)result.push(page(6,'<h4>등장인물의 공개 정보</h4>'+
       '<div class="book-cast-gallery">'+chars.slice(i,i+2).map(c=>
-        '<div class="book-cast-person"><div class="book-cast-portrait">'+portrait(c,room.story?.id,true)+'</div>'+
+        '<div class="book-cast-person"><div class="book-cast-portrait">'+portrait(c,theme(room),true)+'</div>'+
         '<p><b>'+esc(c.name)+'</b><small>'+esc(c.role)+'</small>'+esc(c.hint)+'</p></div>').join('')+'</div>'));
     result.push(page(6,'<h4>건물 약도</h4><p>지도 화면에서 I 키 또는 「지도 돌아가기」를 누르면 건물의 구조와 플레이어 위치를 확인할 수 있습니다.</p>'));
     if(b.actionOrder){
@@ -95,12 +96,12 @@ window.MysteryStudy=(function(){
           (loc?'<span class="map-room-name">'+esc(loc.icon)+' '+esc(loc.name)+'</span>':
             zoneLabels.has(k)?'<span class="map-room-name region-name">'+esc(zoneLabels.get(k))+'</span>':'')+
           (furniture.length?'<span class="map-prop" title="'+esc(furniture.map(o=>o.name).join(' · '))+'">'+
-             furniture.map(o=>window.MysteryArt?.object(o,room.story?.id)||'<span>✧</span>').join('')+'</span>':'')+
-           (portalsHere.length?'<span class="portal-sigil">'+(window.MysteryArt?.stairs(portalsHere[0],room.story?.id)||'⇅')+'</span>':'')+
-          (door?'<span class="door-icon">'+(window.MysteryArt?.door(door,room.story?.id)||(door.locked?'🔒':door.open?'◫':'🚪'))+'</span>':'')+
+             furniture.map(o=>window.MysteryArt?.object(o,theme(room))||'<span>✧</span>').join('')+'</span>':'')+
+           (portalsHere.length?'<span class="portal-sigil">'+(window.MysteryArt?.stairs(portalsHere[0],theme(room))||'⇅')+'</span>':'')+
+          (door?'<span class="door-icon">'+(window.MysteryArt?.door(door,theme(room))||(door.locked?'🔒':door.open?'◫':'🚪'))+'</span>':'')+
           (cards.length?'<span class="tile-spark" title="조사 가능한 장소">✧</span>':'')+
           (here.length?'<div class="map-sprites">'+here.map(a=>'<span class="map-sprite '+(a.id===room.me?'mine':'')+'" style="--sprite:'+esc(a.accent)+'" title="'+esc(a.name)+'">'+
-              (window.MysteryArt?.avatar(a,room.story?.id)||esc(a.symbol))+'</span>').join('')+'</div>':'')+
+              (window.MysteryArt?.avatar(a,theme(room))||esc(a.symbol))+'</span>').join('')+'</div>':'')+
           '</div>';
       })).join('')+'</div>';
   }
@@ -117,7 +118,7 @@ window.MysteryStudy=(function(){
       const flipped=c.revealed?.length>0;
       return '<article class="research-card '+(c.taken?'research-taken':'')+(locked?' research-locked':'')+'">'+
         '<div class="research-frame"><div class="research-meta">MYSTERY · '+esc(c.type.toUpperCase())+'</div>'+
-         '<div class="research-illustration">'+art(c,room.story?.id)+'</div>'+
+         '<div class="research-illustration">'+art(c,theme(room))+'</div>'+
         '<h4>'+esc(c.title)+'</h4><p>'+esc(c.subtitle)+'</p><span class="research-status">'+status+'</span>'+
         (flipped?'<div class="research-back"><b>조사한 카드의 뒷면</b>'+c.revealed.map(a=>para(a.back)+(a.insight?'<div class="psychometry-insight">🔮 나에게만 보이는 감응 · '+esc(a.insight)+'</div>':'' )).join('')+'</div>':'')+
         (data.canInvestigate?(mine?'<div class="research-buttons">'+btn('investigate','조사 실행 · 토큰 1개','btn btn-primary btn-sm')+btn2('release','취소')+'</div>':
@@ -195,7 +196,7 @@ window.MysteryStudy=(function(){
       '<article class="owned-clue" data-holding-card="'+esc(c.id)+'">'+
         '<div class="owned-clue-header"><div class="eyebrow">MY EVIDENCE · '+(c.transferable?'양도 가능':'양도 불가')+'</div>'+
         '<h4>'+esc(c.title)+'</h4><p class="muted small">'+esc(c.subtitle)+'</p></div>'+
-        '<div class="owned-clue-illustration">'+art(c,room.story?.id)+'</div>'+
+        '<div class="owned-clue-illustration">'+art(c,theme(room))+'</div>'+
          '<p class="owned-clue-back">'+esc(c.back)+'</p>'+ (c.insight?'<p class="psychometry-insight">🔮 개인 감응 · '+esc(c.insight)+'</p>':'')+
         (c.public?'<p class="clue-public">✓ 전체 공개 완료 · 취소할 수 없음</p>':
           active?btn('card-public','📢 전체 공개 · 영구','btn btn-outline btn-sm',false,'data-holding="'+esc(c.id)+'"'):'')+
@@ -288,6 +289,61 @@ window.MysteryStudy=(function(){
       choices+'<div class="action-log"><h4>행동 결과 기록</h4>'+
       (logs||'<p class="muted small">아직 실행된 행동이 없습니다.</p>')+'</div></section>';
   }
+
+  function verdictPanel(room){
+    const v=room.verdict;
+    if(!v||!v.isHost)return '';
+    const selected=v.arrestedCharacterId||'';
+    const options='<option value="">아무도 구속하지 않음</option>'+
+      (v.candidates||[]).map(c=>'<option value="'+esc(c.id)+'"'+
+        (selected===c.id?' selected':'')+(c.dead?' disabled':'')+'>'+esc(c.name)+
+        (c.dead?' · 사망':'')+'</option>').join('');
+    const names=room.ending?.editor?.characters||[];
+    const adjudications=room.phase==='ending'?
+      '<h4>캐릭터별 개인 목표 판정 (방장 전용)</h4><p class="muted small">서술형 목표이므로 실제 게임에서는 방장이 대화·카드 증거를 확인해 수동으로 판정합니다.</p>'+
+      '<div class="ending-goal-grid">'+names.map(c=>
+        '<div class="ending-goal-row"><b>'+esc(c.name)+'</b><span class="muted small">'+
+         (c.dead?'사망 · ':'')+(c.restrained?'제압 · ':'')+(c.escaped?'탈출 · ':'')+
+         (selected===c.id?'구속 · ':'')+'</span>'+
+        '<select class="ending-goal-select" data-character="'+esc(c.id)+'" aria-label="'+esc(c.name)+' 목표 달성 상태">'+
+        [['','미판정'],['yes','달성'],['no','실패']].map(([value,label])=>
+         '<option value="'+value+'"'+((c.goalMet===true&&value==='yes')||
+         (c.goalMet===false&&value==='no')||(c.goalMet==null&&value==='')?' selected':'')+'>'+label+'</option>').join('')+
+        '</select>'+btn('verdict-goal','적용','btn btn-outline btn-sm',false,
+         'data-character="'+esc(c.id)+'"')+'</div>').join('')+'</div>':'';
+    return '<section class="ending-control surface panel-pad"><div class="eyebrow">HOST CONTROL · FINAL VERDICT</div>'+
+      '<h3>'+ (room.phase==='ending'?'최종 구속 및 승리 목표 판정':'최종 구속 대상 결정')+'</h3>'+
+      '<p class="muted small">구속 대상을 지목하면 결말 단계에서 진범 여부에 따라 공통 이야기가 선택됩니다. 진범은 결말 단계까지 미공개입니다.</p>'+
+      '<div class="ending-arrest-row"><select id="endingArrestTarget" aria-label="구속할 플레이어">'+options+'</select>'+
+      btn('verdict-arrest','구속 대상 확정','btn btn-primary')+'</div>'+
+      adjudications+'</section>';
+  }
+  function endingStage(room){
+    const ending=room.ending;
+    if(!ending)return '<section class="surface panel-pad"><h3>결말 확인 대기</h3><p>진행자가 결말 단계를 열면 결과가 표시됩니다.</p></section>';
+    const global=ending.common,personal=ending.personal;
+    const caseCover=window.MysteryArt?.cover(theme(room))||'';
+    const statusName={dead:'사망',arrested:'구속',restrained:'제압',escaped:'탈출',alive:'생존'};
+    return '<div class="ending-story">'+
+      '<section class="ending-common surface panel-pad">'+
+      '<div class="eyebrow">EPILOGUE · COMMON ENDING</div>'+
+      '<div class="ending-cover">'+caseCover+'</div>'+
+      '<p class="ending-verdict">'+(global.captured?'진범 구속 성공':'진범 구속 실패')+
+        ' · '+(global.arrestedName?esc(global.arrestedName)+' 구속':'구속된 인물 없음')+'</p>'+
+      '<h2>'+esc(global.title)+'</h2>'+
+      (global.paragraphs||[]).map(t=>para(t)).join('')+'</section>'+
+      (personal?'<section class="ending-personal surface panel-pad">'+
+        '<div class="eyebrow">PERSONAL EPILOGUE · YOUR OWN STORY</div>'+
+        '<div class="ending-character"><div class="ending-portrait">'+portrait({
+          id:personal.characterId,name:personal.name},theme(room))+'</div><div>'+
+          '<h2>'+esc(personal.title)+'</h2><p>'+
+          '<span class="ending-status">'+esc(statusName[personal.status]||personal.status)+'</span>'+
+          '<span class="ending-status">'+(personal.goalMet===true?'개인 목표 달성':
+            personal.goalMet===false?'개인 목표 실패':'개인 목표 미판정')+'</span></p></div></div>'+
+        (personal.paragraphs||[]).map(t=>para(t)).join('')+
+        (personal.goalText?'<details class="ending-objective"><summary>나의 원래 승리 목표 다시 보기</summary>'+para(personal.goalText)+'</details>':'')+
+        '</section>':'')+'</div>';
+  }
   function render(room){
     return roomHeader(room)+
       '<div class="section-row"><div><div class="eyebrow">MYSTERY PHASE · '+esc(room.phase.toUpperCase())+'</div>'+
@@ -295,8 +351,9 @@ window.MysteryStudy=(function(){
         discussion2:'2차 토론·최종 결정',action:'행동',ending:'결말'})[room.phase]||room.phase)+
       '</h2></div><span class="tag">'+({study:3,investigation1:4,discussion1:5,investigation2:6,discussion2:7,action:8,ending:9}[room.phase]||3)+' / 9 단계</span></div>'+
       '<section class="voice-global surface panel-pad">'+(window.MysteryVoice?.controls()||'<p>음성 준비 중</p>')+'</section>'+
-      actionStage(room)+
-      '<div id="adventureRoot">'+(ui.view==='book'?book(room):ui.view==='research'?researchView(room):mapView(room))+'</div>';
+      verdictPanel(room)+
+      (room.phase==='ending'?endingStage(room):actionStage(room)+
+      '<div id="adventureRoot">'+(ui.view==='book'?book(room):ui.view==='research'?researchView(room):mapView(room))+'</div>');
   }
   function patch(room){
     // Keep the active book page and focus while other players move.

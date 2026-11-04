@@ -118,7 +118,9 @@ function updateRoom(room,connection,force=false){
   window.MysteryVoice?.sync(room);
   if(connection)state.connection=connection;
   if(!changed)return;
-  if(SOCIAL_PHASES.includes(old?.phase)&&old.phase===room?.phase&&old.me===room.me&&
+  if(room.phase==='ending'||JSON.stringify(old?.verdict)!==JSON.stringify(room.verdict)){
+    render();
+  }else if(SOCIAL_PHASES.includes(old?.phase)&&old.phase===room?.phase&&old.me===room.me&&
     old.players.find(p=>p.id===room.me)?.characterId===room.players.find(p=>p.id===room.me)?.characterId&&
     old.map?.floorId===room.map?.floorId&&
     JSON.stringify(old.whispers)===JSON.stringify(room.whispers)&&
@@ -159,7 +161,7 @@ function stepper(room){
 }
 function storyTile(story){
   return '<div class="story-card"><div class="eyebrow">CASE FILE 001 · '+escapeHtml(story.genre)+'</div>'+
-  '<div class="story-illustration">'+(window.MysteryArt?.cover(story.id)||'')+'</div>'+
+  '<div class="story-illustration">'+(window.MysteryArt?.cover(story.artTheme||story.id)||'')+'</div>'+
   '<h3 class="story-title">'+escapeHtml(story.title)+'</h3><p>'+escapeHtml(story.teaser)+'</p>'+
   '<div class="story-meta"><span>♟ '+story.players+'인 전용</span><span>◷ 약 '+story.minutes+'분</span><span>✦ 추리와 비밀</span></div></div>';
 }
@@ -266,7 +268,7 @@ function characters(room){
     const mine=owner?.id===room.me;
     return '<article class="character-card '+(mine?'selected':owner?'taken':'')+'" style="--accent:'+escapeHtml(c.accent)+'">'+
     (mine?'<span class="chosen-label">내 캐릭터</span>':owner?'<span class="chosen-label">선택 완료</span>':'')+
-    '<div class="char-symbol char-illustration">'+(window.MysteryArt?.portrait(c,room.story?.id)||escapeHtml(c.symbol))+'</div>'+
+    '<div class="char-symbol char-illustration">'+(window.MysteryArt?.portrait(c,room.story?.artTheme||room.story?.id)||escapeHtml(c.symbol))+'</div>'+
     '<h3 class="character-name">'+escapeHtml(c.name)+'</h3><div class="character-role">'+escapeHtml(c.role)+'</div>'+
     '<p class="char-hint">'+escapeHtml(c.hint)+'</p>'+ (c.startLine?'<p class="char-start">“'+escapeHtml(c.startLine)+'”</p>':'')+
     btn('character',mine?'선택한 캐릭터입니다 ✓':owner?'이미 선택된 캐릭터':'이 캐릭터 선택','btn '+(mine?'btn-outline':'btn-primary'),!!owner,'data-character="'+escapeHtml(c.id)+'"')+
@@ -297,7 +299,7 @@ function preview(room){
 }
 function render(){
   const root=$('app'),room=state.room;
-  root.dataset.story=room?.story?.id||state.selectedStory||'';
+  root.dataset.story=room?.story?.artTheme||room?.story?.id||state.selectedStory||'';
   if(!room){root.innerHTML=home();return}
   if(!room.me){root.innerHTML=preview(room);return}
   root.innerHTML='<div class="status-strip"><span>◉ '+escapeHtml(state.connection)+' · 참가자별 독립 세션</span><span>새로고침해도 방에 다시 연결됩니다.</span></div>'+
@@ -382,6 +384,19 @@ async function perform(action,button){
       else if(action==='card-share')toast('같은 타일의 플레이어에게 카드가 선택 공개되었습니다.');
       else if(action==='exchange-offer')toast('양도 요청을 보냈습니다. 상대방의 승인을 기다립니다.');
       else if(action==='exchange-reply')toast(body.accept?'양도를 수락했습니다.':'양도를 거절했습니다.');
+    } else if(action==='verdict-arrest'){
+      if(room?.me!==room?.hostId)throw Error('방장만 구속 대상을 지정할 수 있습니다.');
+      const characterId=document.getElementById('endingArrestTarget')?.value||null;
+      if(!window.confirm(characterId?'이 캐릭터를 최종 구속 대상으로 지정할까요?':'아무도 구속하지 않는 것으로 확정할까요?'))return;
+      updateRoom(await api('/api/rooms/'+code+'/verdict-arrest','POST',{characterId}),state.connection,true);
+      toast('최종 구속 대상이 설정되었습니다.');
+    } else if(action==='verdict-goal'){
+      if(room?.me!==room?.hostId)throw Error('방장만 개인 목표를 판정할 수 있습니다.');
+      const characterId=button.dataset.character;
+      const value=button.closest('.ending-goal-row')?.querySelector('select')?.value||'';
+      const achieved=value==='yes'?true:value==='no'?false:null;
+      updateRoom(await api('/api/rooms/'+code+'/verdict-goal','POST',{characterId,achieved}),state.connection,true);
+      toast('개인 목표 결과가 저장되었습니다.');
     } else if(action==='act'){
       if(!room?.action?.myTurn)throw Error('아직 나의 행동 차례가 아닙니다.');
       const abilityId=button.dataset.ability||'pass';

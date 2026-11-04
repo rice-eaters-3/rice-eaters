@@ -14,7 +14,7 @@ function validate(input){
   if(!Array.isArray(raw.characters)||raw.characters.length!==players)throw Error('등장인물 수가 플레이어 수와 달라요.');
   const story={id:'',title:text(raw.title,100),subtitle:text(raw.subtitle),genre:text(raw.genre,70),
     teaser:text(raw.teaser,700),minutes:int(raw.minutes||90,1,600,'예상 플레이 시간'),
-    players,synopsis:[],characters:[]};
+    players,artTheme:['d1-crown-of-ashes','cruel-heart-island','neon-memory-quarantine','stellar-academy-first-case'].includes(raw.artTheme)?raw.artTheme:'',synopsis:[],characters:[]};
   if(!story.title)throw Error('스토리 제목을 입력하세요.');
   if(!Array.isArray(raw.synopsis)||!raw.synopsis.length||raw.synopsis.length>25)throw Error('시놉시스 문단이 필요합니다.');
   story.synopsis=raw.synopsis.map(x=>text(x,3000));
@@ -182,12 +182,35 @@ function validate(input){
     action={order:rawAction.order,roles,intro:text(rawAction.intro,1400),
       endingNotes:text(rawAction.endingNotes,2000)};
   }
+  // Endings are public only AFTER the conclusion stage. Private author-only
+  // creatorGuide remains entirely outside the normalized game payload.
+  const rawEnding=obj(g.ending);
+  const paragraphs=(input)=>Array.isArray(input)?input.slice(0,12).map(v=>text(v,3000)).filter(Boolean):[];
+  const normalizeChapter=(input)=>({title:text(obj(input).title,110),
+    paragraphs:paragraphs(obj(input).paragraphs)});
+  const commonEnding=obj(rawEnding.common),rawEndingRoles=obj(rawEnding.characters);
+  const ending={
+    common:{captured:normalizeChapter(commonEnding.captured),
+      missed:normalizeChapter(commonEnding.missed)},
+    characters:{},escape:{
+      succeeded:normalizeChapter(obj(rawEnding.escape).succeeded),
+      failed:normalizeChapter(obj(rawEnding.escape).failed)
+    }
+  };
+  for(const c of story.characters){
+    const p=obj(rawEndingRoles[c.id]);
+    ending.characters[c.id]={};
+    for(const key of ['intro','goalAchieved','goalFailed','dead','arrested',
+      'restrained','escaped','alive','closing'])
+      ending.characters[c.id][key]=text(p[key],2500);
+  }
   const game={booklets,floors,phaseMinutes,investigation:{
     tokensPerPlayer:int(inv.tokensPerPlayer??4,1,20,'토큰'),
     tokensPerSecondInvestigation:int(inv.tokensPerSecondInvestigation??4,0,20,'2차 조사 토큰'),
     maxTileOccupants:int(inv.maxTileOccupants??3,2,10,'타일 인원'),cards:normalizedCards
   }};
   if(action)game.action=action;
+  game.ending=ending;
   return {format:'rice-mystery-v1',story,game,spawn};
 }
 module.exports={validate};
