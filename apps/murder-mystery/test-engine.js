@@ -4,10 +4,12 @@
 (function(root,factory){
   const Ending=root?.MysteryEnding||
     (typeof require==='function'?require('./ending-engine.js'):null);
-  const api=factory(Ending);
+  const ClueFront=root?.MysteryClueFront||
+    (typeof require==='function'?require('./clue-front.js'):null);
+  const api=factory(Ending,ClueFront);
   if(typeof module!=='undefined'&&module.exports)module.exports=api;
   if(root)root.MysteryTestEngine=api;
-})(typeof window!=='undefined'?window:null,function(Ending){
+})(typeof window!=='undefined'?window:null,function(Ending,ClueFront){
   const PHASES=['synopsis','characters','study','investigation1','discussion1','investigation2','discussion2','action','ending'];
   const PHASE_NAMES=['시놉시스','캐릭터 선택','캐릭터 숙지','1차 조사','1차 토론','2차 조사','2차 토론·최종 결정','행동 단계','결말'];
   const deep=value=>JSON.parse(JSON.stringify(value));
@@ -331,6 +333,7 @@
         .map(c=>({id:member(c.id),name:c.name,characterId:c.id,characterName:c.name,
           symbol:c.symbol,accent:c.accent,...state.positions[c.id]}))}:null;
     const canInvestigate=investigationPhases.includes(phase);
+    const frontTitles=ClueFront.labels(cards(state),s.characters,g.floors);
     const investigation=afterFirst.includes(phase)?{
       tokens:state.tokens[role.id]||0,totalTokens:g.investigation?.tokensPerPlayer||4,canInvestigate,
       cards:cards(state).flatMap(c=>{
@@ -341,7 +344,9 @@
         if(locked&&c.visibility==='hidden'&&!visible)return [];
         const at=c.location&&yourPos.floor===c.location.floor&&yourPos.x===c.location.x&&yourPos.y===c.location.y;
         const prior=state.discovered[c.id]||[];
-        return [{id:c.id,title:c.title,subtitle:c.subtitle,type:c.type,location:c.location||null,
+        return [{id:c.id,frontTitle:frontTitles[c.id],
+          title:visible?c.title:null,subtitle:visible?c.subtitle:null,
+          type:c.type,location:c.location||null,
           locked,requiresPresence:!!c.requiresPresence,atLocation:!!at,
           excluded:c.owner===role.id||(c.blockedFor||[]).includes(role.id),
           taken:prior.length>0&&!c.repeatable,repeatable:!!c.repeatable,transferable:c.transferable!==false,
@@ -362,7 +367,7 @@
       nearby:s.characters.filter(c=>c.id!==role.id&&near(state,c.id)).map(c=>({id:member(c.id),name:c.name})),
       incomingOffers:state.offers.filter(o=>o.to===role.id).map(o=>({
         id:o.id,type:o.type,amount:o.amount||null,
-        cardTitle:cards(state).find(c=>c.id===state.holdings.find(h=>h.id===o.holdingId)?.cardId)?.title||'',
+        cardTitle:frontTitles[state.holdings.find(h=>h.id===o.holdingId)?.cardId]||'',
         fromName:roleOf(state,o.from).name})),
       outgoingOffers:state.offers.filter(o=>o.from===role.id).map(o=>({
         id:o.id,type:o.type,amount:o.amount||null,toName:roleOf(state,o.to).name})),
