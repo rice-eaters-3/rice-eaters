@@ -95,7 +95,7 @@
 
 ## 재개 지점
 
-D1 사옥의 51번째 카드 `time_practice_live`부터 다음 10장을 대조한다. D1 21장, 마지막 하트 56장, 네온 검역국 54장, 성하 영재관 48장이 남아 있다.
+D1 사옥의 61번째 카드 `trick_spare_override`부터 다음 10장을 대조한다. D1 11장, 마지막 하트 56장, 네온 검역국 54장, 성하 영재관 48장이 남아 있다.
 
 ## 추가 디자인 지정
 
@@ -117,3 +117,18 @@ D1 사옥의 51번째 카드 `time_practice_live`부터 다음 10장을 대조�
 | `time_key_returns` | 관리자 태그의 공용 컷으로 ‘대여 출입 태그의 반환 흔적’의 증거 대상이 표현되지 않음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/time_key_returns.webp` |
 
 생성본 추가 검수: 관리자 로그의 잘못된 녹음기 대여 문구, 하수 단말과 오븐 기록의 불필요한 인물을 발견하여 새로 생성했다. 카드 설명을 근거로 각 증거물을 개별 제작했으며, 기존 컨셉아트 크롭은 사용하지 않았다.
+
+## D1 사옥 · 6차 배치
+
+| 카드 ID | 기존 문제 / 교체 이유 | 신규 이미지 경로 |
+| --- | --- | --- |
+| `time_practice_live` | 공용 D1 노트로 2층 연습 리플레이의 진실의 증거물이 표현되지 않음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/time_practice_live.webp` |
+| `time_chef_service` | 공용 D1 노트로 야식 카트 출입 기록의 증거물이 표현되지 않음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/time_chef_service.webp` |
+| `trick_throne_scene` | 공용 D1 노트로 왕좌실 현장 감식의 증거물이 표현되지 않음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_throne_scene.webp` |
+| `trick_stage_outline` | 공용 D1 노트로 가짜 죽음 연출 설명서의 증거물이 표현되지 않음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_stage_outline.webp` |
+| `trick_showroom_slot` | 공용 D1 노트로 전시실의 빈 소품 받침의 증거물이 표현되지 않음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_showroom_slot.webp` |
+| `trick_alarm_script` | 공용 D1 노트로 D1 긴급 봉쇄 방송 대본의 증거물이 표현되지 않음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_alarm_script.webp` |
+| `trick_baetho_note_1` | 공용 D1 노트는 소재가 유사하지만 각 노트의 고유 내용을 구분할 수 없음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_baetho_note_1.webp` |
+| `trick_baetho_note_2` | 공용 D1 노트는 소재가 유사하지만 각 노트의 고유 내용을 구분할 수 없음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_baetho_note_2.webp` |
+| `trick_baetho_note_3` | 공용 D1 노트는 소재가 유사하지만 각 노트의 고유 내용을 구분할 수 없음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_baetho_note_3.webp` |
+| `trick_baetho_note_4` | 공용 D1 노트는 소재가 유사하지만 각 노트의 고유 내용을 구분할 수 없음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_baetho_note_4.webp` |

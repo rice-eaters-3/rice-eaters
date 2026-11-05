@@ -136,7 +136,17 @@ window.MysteryArt=(function(){
    'time_karl_badge',
    'time_mac_roof',
    'time_baetho_last_msg',
-   'time_key_returns'
+   'time_key_returns',
+   'time_practice_live',
+   'time_chef_service',
+   'trick_throne_scene',
+   'trick_stage_outline',
+   'trick_showroom_slot',
+   'trick_alarm_script',
+   'trick_baetho_note_1',
+   'trick_baetho_note_2',
+   'trick_baetho_note_3',
+   'trick_baetho_note_4'
   ])
  };
  const standaloneD1Props=new Set(['sink','fridge','pc','gargoyle','throne']);
