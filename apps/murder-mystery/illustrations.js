@@ -146,7 +146,17 @@ window.MysteryArt=(function(){
    'trick_baetho_note_1',
    'trick_baetho_note_2',
    'trick_baetho_note_3',
-   'trick_baetho_note_4'
+   'trick_baetho_note_4',
+   'trick_spare_override',
+   'trick_clock_offset',
+   'trick_voice_recording',
+   'trick_stage_maintenance',
+   'trick_tape_trace',
+   'trick_camera_reflection',
+   'trick_rehearsal_diary',
+   'trick_safety_report',
+   'trick_prop_invoice',
+   'trick_reconstruction'
   ])
  };
  const standaloneD1Props=new Set(['sink','fridge','pc','gargoyle','throne']);

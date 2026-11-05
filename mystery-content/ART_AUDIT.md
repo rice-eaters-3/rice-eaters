@@ -95,7 +95,7 @@
 
 ## 재개 지점
 
-D1 사옥의 61번째 카드 `trick_spare_override`부터 다음 10장을 대조한다. D1 11장, 마지막 하트 56장, 네온 검역국 54장, 성하 영재관 48장이 남아 있다.
+D1 사옥의 71번째 카드 `trick_evacuation_truth`부터 다음 10장을 대조한다. D1 1장, 마지막 하트 56장, 네온 검역국 54장, 성하 영재관 48장이 남아 있다.
 
 ## 추가 디자인 지정
 
@@ -132,3 +132,18 @@ D1 사옥의 61번째 카드 `trick_spare_override`부터 다음 10장을 대조
 | `trick_baetho_note_2` | 공용 D1 노트는 소재가 유사하지만 각 노트의 고유 내용을 구분할 수 없음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_baetho_note_2.webp` |
 | `trick_baetho_note_3` | 공용 D1 노트는 소재가 유사하지만 각 노트의 고유 내용을 구분할 수 없음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_baetho_note_3.webp` |
 | `trick_baetho_note_4` | 공용 D1 노트는 소재가 유사하지만 각 노트의 고유 내용을 구분할 수 없음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_baetho_note_4.webp` |
+
+## D1 사옥 · 7차 배치
+
+| 카드 ID | 기존 문제 / 교체 이유 | 신규 이미지 경로 |
+| --- | --- | --- |
+| `trick_spare_override` | 공용 D1 노트로 ‘비상 보관실 열쇠 케이스’의 개별 증거를 구분할 수 없음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_spare_override.webp` |
+| `trick_clock_offset` | 공용 D1 노트로 ‘서버·오븐 시계 대조표’의 개별 증거를 구분할 수 없음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_clock_offset.webp` |
+| `trick_voice_recording` | 공용 D1 노트로 ‘「살았죠?」 미리 녹음한 음성’의 개별 증거를 구분할 수 없음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_voice_recording.webp` |
+| `trick_stage_maintenance` | 공용 D1 노트로 ‘무대 안전 기능 점검 보고서’의 개별 증거를 구분할 수 없음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_stage_maintenance.webp` |
+| `trick_tape_trace` | 공용 D1 노트로 ‘왕좌 봉인 스티커의 접착 흔적’의 개별 증거를 구분할 수 없음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_tape_trace.webp` |
+| `trick_camera_reflection` | 공용 D1 노트로 ‘장비실 거울 카메라 반사 화면’의 개별 증거를 구분할 수 없음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_camera_reflection.webp` |
+| `trick_rehearsal_diary` | 공용 D1 노트로 ‘배익호의 개인 연출 일지’의 개별 증거를 구분할 수 없음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_rehearsal_diary.webp` |
+| `trick_safety_report` | 공용 D1 노트로 ‘보관실 최종 안전 사고 분석’의 개별 증거를 구분할 수 없음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_safety_report.webp` |
+| `trick_prop_invoice` | 공용 D1 노트로 ‘가고일 기념물 이동 내역’의 개별 증거를 구분할 수 없음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_prop_invoice.webp` |
+| `trick_reconstruction` | 공용 D1 노트로 ‘왕좌 사건 합동 재구성 도식’의 개별 증거를 구분할 수 없음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_reconstruction.webp` |
