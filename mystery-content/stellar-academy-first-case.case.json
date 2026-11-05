@@ -1121,7 +1121,7 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "관측실 봉인 번호와 비슷하지만 숫자 방향이 정반대다. 범인이 이 고리를 복제했을 수 있다."
+          "back": "관측실 봉인 번호와 비슷한 숫자가 새겨져 있다. 종이에 찍어 보면 숫자의 방향이 정반대로 나타나며, 고리 안쪽에는 최근 손댄 듯한 금속 마모가 있다."
         },
         {
           "id": "seoha_safe_marker",
@@ -1235,7 +1235,7 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "가빈이 22:30에 소품 케이스를 빌려 간 사실이 적혀 있다. 그녀가 범행에 어떻게 이용했는지는 알 수 없다."
+          "back": "22:30 소품 케이스를 가빈에게 빌려줬다는 대여 기록이다. 반환 예정 시간과 실제 반환 체크 표시가 서로 다른 색의 펜으로 적혀 있다."
         },
         {
           "id": "yeonju_star_almanac",
@@ -1368,7 +1368,7 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "모의 구조 중 한 사람을 포기한 선택을 했지만 실제 살인 경험은 없다."
+          "back": "모의 구조 훈련에서 한 사람을 먼저 대피시키기로 판단한 기록이 있다. 평가서에는 ‘판단을 보류한 이유를 설명하지 못함’이라는 감독관 메모가 붙어 있다."
         },
         {
           "id": "jinwoo_emergency_radio",
@@ -1539,7 +1539,7 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "플라네타륨 출입문 뒤에 남은 붉은 섬유와 소재가 비슷하다. 유일한 증거는 아니다."
+          "back": "무대 의상의 붉은 섬유는 플라네타륨 출입문 뒤에 남은 천 조각과 소재가 비슷하다. 같은 소재를 사용한 공연 의상은 여러 벌이다."
         },
         {
           "id": "academy_first_body",
@@ -1579,7 +1579,11 @@
           "visibility": "locked",
           "availableFromPhase": "investigation1",
           "requiresPresence": false,
-          "location": null,
+          "location": {
+            "floor": "observatory",
+            "x": 14,
+            "y": 2
+          },
           "grant": null,
           "insights": {}
         },
@@ -1598,7 +1602,11 @@
           "visibility": "locked",
           "availableFromPhase": "investigation1",
           "requiresPresence": false,
-          "location": null,
+          "location": {
+            "floor": "observatory",
+            "x": 3,
+            "y": 2
+          },
           "grant": null,
           "insights": {}
         },
@@ -1617,7 +1625,11 @@
           "visibility": "locked",
           "availableFromPhase": "investigation1",
           "requiresPresence": false,
-          "location": null,
+          "location": {
+            "floor": "observatory",
+            "x": 14,
+            "y": 8
+          },
           "grant": null,
           "insights": {}
         },
@@ -1625,7 +1637,7 @@
           "id": "academy_stage_loan",
           "title": "마술 장비 대여표",
           "subtitle": "22:30 · 목소리 재생 소품",
-          "back": "태원이 가빈에게 음성 연출 기기를 빌려줬다는 대여 기록. 태원은 장비가 범죄에 쓰일 것을 몰랐다.",
+          "back": "공연용 음성 장치의 대여표에는 22:30에 가빈이 수령한 서명이 있다. 반납란은 비어 있으며 장치의 마지막 재생 로그는 따로 보관돼 있다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -1636,7 +1648,11 @@
           "visibility": "locked",
           "availableFromPhase": "investigation1",
           "requiresPresence": false,
-          "location": null,
+          "location": {
+            "floor": "dorm",
+            "x": 14,
+            "y": 8
+          },
           "grant": null,
           "insights": {}
         },
@@ -1655,7 +1671,11 @@
           "visibility": "locked",
           "availableFromPhase": "investigation1",
           "requiresPresence": false,
-          "location": null,
+          "location": {
+            "floor": "basement",
+            "x": 3,
+            "y": 8
+          },
           "grant": null,
           "insights": {}
         },
@@ -1674,7 +1694,11 @@
           "visibility": "locked",
           "availableFromPhase": "investigation1",
           "requiresPresence": false,
-          "location": null,
+          "location": {
+            "floor": "observatory",
+            "x": 3,
+            "y": 2
+          },
           "grant": null,
           "insights": {}
         },
@@ -1693,7 +1717,11 @@
           "visibility": "locked",
           "availableFromPhase": "investigation1",
           "requiresPresence": false,
-          "location": null,
+          "location": {
+            "floor": "dorm",
+            "x": 14,
+            "y": 2
+          },
           "grant": null,
           "insights": {}
         },
@@ -1735,7 +1763,11 @@
           "visibility": "locked",
           "availableFromPhase": "investigation1",
           "requiresPresence": false,
-          "location": null,
+          "location": {
+            "floor": "dorm",
+            "x": 14,
+            "y": 2
+          },
           "grant": null,
           "insights": {}
         },
@@ -1743,7 +1775,7 @@
           "id": "academy_safety_repeat",
           "title": "안전 방송 반복 횟수",
           "subtitle": "방송 예약의 흔적",
-          "back": "연호가 살아 있다고 오해하게 만든 01:10 방송은 실시간 대화가 아니라 예약 재생이었다.",
+          "back": "안전 방송 장치에는 01:10 자동 재생 예약과 같은 문장을 반복한 기록이 남아 있다. 누가 예약을 설정했는지 사용자 정보는 저장되지 않았다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -1754,7 +1786,11 @@
           "visibility": "locked",
           "availableFromPhase": "investigation1",
           "requiresPresence": false,
-          "location": null,
+          "location": {
+            "floor": "observatory",
+            "x": 14,
+            "y": 2
+          },
           "grant": null,
           "insights": {}
         },
@@ -1773,7 +1809,11 @@
           "visibility": "locked",
           "availableFromPhase": "investigation1",
           "requiresPresence": false,
-          "location": null,
+          "location": {
+            "floor": "basement",
+            "x": 14,
+            "y": 2
+          },
           "grant": null,
           "insights": {}
         },
@@ -1804,7 +1844,7 @@
           "id": "academy_voice_match",
           "title": "연호와 가빈의 발음 파형",
           "subtitle": "2차 · 말버릇 비교",
-          "back": "01:10 방송의 작은 숨 멈춤과 특정 단어의 강세가 가빈의 리허설 대본과 일치한다. 태원이 빌려준 장비는 단순 재생용이었다.",
+          "back": "01:10 방송에서 특정 단어의 강세와 숨 멈춤이 리허설 대본 한 부분과 비슷하게 나타난다. 방송 파일은 원본 녹음과 음성 변조기 출력을 모두 거친 것으로 보인다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -1817,7 +1857,11 @@
           "visibility": "locked",
           "availableFromPhase": "investigation2",
           "requiresPresence": false,
-          "location": null,
+          "location": {
+            "floor": "observatory",
+            "x": 14,
+            "y": 2
+          },
           "grant": null,
           "insights": {}
         },
@@ -1850,7 +1894,7 @@
           "id": "academy_deleted_phrase",
           "title": "연호가 남긴 미전송 원본",
           "subtitle": "2차 · 방송과 다른 마지막 말",
-          "back": "연호는 자신이 관측관으로 들어가기 직전 “가빈이 운영자와 연결돼 있다”고 기록했다. 기록에는 범인이라고 단정한 말은 없다.",
+          "back": "연호의 메모에는 관측관에 들어가기 전 ‘운영자 가족 명단’과 ‘가빈’이라는 이름이 나란히 적혀 있다. 마지막 문장은 지워져 읽을 수 없다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -2021,7 +2065,7 @@
           "id": "academy_culprit_chain",
           "title": "첫 번째 살인 종합 재구성",
           "subtitle": "2차 · 알리바이의 붕괴",
-          "back": "00:38 만남 → 00:42 실제 사망 → 00:45 고급 배지 이탈 → 01:10 음성 모사 방송 → 01:12 시신 발견. 가빈의 가족 비밀과 음성 대여 기록을 함께 해석해야 한다.",
+          "back": "00:38 동시 입장 기록, 00:42 전후의 신체 감식 시각, 00:45 고급 배지 출입, 01:10 방송 기록, 01:12 발견 시각이 하나의 도식에 정리되어 있다. 출입자 신원과 방송 출처는 별도의 원본 자료 번호로 표시돼 있다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -2047,7 +2091,7 @@
           "id": "academy_second_exit",
           "title": "지하 최종 탈출 구획",
           "subtitle": "2차 · 진실 이후의 결단",
-          "back": "범인을 밝혀도 자동으로 문이 열리지는 않는다. 진짜 출구의 위치와 보관함의 인증서를 찾아 행동 단계에서 탈출 능력을 사용해야 한다.",
+          "back": "현재 열려 있는 출입문은 외부 통로와 이어지지 않는다. 보관함에 기록된 다른 통로 번호와 인증 장치를 대조해야 한다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
