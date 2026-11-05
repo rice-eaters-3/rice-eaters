@@ -112,11 +112,17 @@ function cardsPanel(){
     field('타일당 최대 인원','game.investigation.maxTileOccupants',doc.game.investigation.maxTileOccupants,'number')+'</div>'+
     (cards.length?'<div class="entity-tabs">'+cards.map((v,i)=>'<button data-do="pick-card" data-i="'+i+'" class="'+(i===selectedCard?'active':'')+'">'+esc(v.title)+'</button>').join('')+'</div>':
       '<p class="muted">아직 카드가 없습니다. 위 버튼으로 추가해 보세요.</p>')+
-    (!c?'':'<div class="studio-clue-preview">'+(window.MysteryArt?.clue(c,visualStory())||'✧')+'</div><div class="editor-fields">'+field('카드 ID','game.investigation.cards.'+selectedCard+'.id',c.id)+
-      field('앞면 제목','game.investigation.cards.'+selectedCard+'.title',c.title)+
-      field('앞면 한 줄 정보','game.investigation.cards.'+selectedCard+'.subtitle',c.subtitle)+
+    (!c?'':'<div class="studio-clue-preview">'+
+      '<div class="studio-clue-face studio-clue-front"><small>플레이어에게 보이는 앞면</small><span class="studio-clue-seal">✦</span><strong>'+
+      esc(window.MysteryClueFront?.labels(cards,doc.story.characters,getFloors())?.[c.id]||'조사 카드')+
+      '</strong><p>조사 전에는 단서와 그림이 보이지 않습니다.</p></div>'+
+      '<div class="studio-clue-face studio-clue-back"><small>조사 후 공개되는 뒷면</small>'+
+      (window.MysteryArt?.clue(c,visualStory())||'✧')+'<strong>'+esc(c.title)+'</strong></div></div><div class="editor-fields">'+field('카드 ID','game.investigation.cards.'+selectedCard+'.id',c.id)+
+      field('실제 카드 제목 (조사 후 뒷면)','game.investigation.cards.'+selectedCard+'.title',c.title)+
+      field('실제 카드 부제 (조사 후 뒷면)','game.investigation.cards.'+selectedCard+'.subtitle',c.subtitle)+
       selectField('유형','game.investigation.cards.'+selectedCard+'.type',[['place','장소'],['belonging','소지품'],['information','정보']],c.type)+
       field('뒷면 상세 정보 (조사한 플레이어에게만 공개)','game.investigation.cards.'+selectedCard+'.back',c.back,'textarea')+
+      field('앞면 장소명 직접 지정 (지도 위치가 없는 카드용)','game.investigation.cards.'+selectedCard+'.frontPlace',c.frontPlace||'')+
       selectField('소유 캐릭터: 본인은 조사 불가','game.investigation.cards.'+selectedCard+'.owner',[['','없음'],...doc.story.characters.map(x=>[x.id,x.name])],c.owner||'')+
       field('선행 조사 카드 ID (쉼표 구분)','card.requires',(c.requires||[]).join(', '))+
       selectField('해금 전 표시','game.investigation.cards.'+selectedCard+'.visibility',[['locked','잠금 표시'],['hidden','존재 숨기기']],c.visibility||'locked')+
@@ -136,7 +142,7 @@ function cardsPanel(){
       field('획득 아이템 이름','card.grantName',c.grant?.name||'')+
       field('획득 아이템 설명','card.grantDescription',c.grant?.description||'','textarea')+
       '</div><button data-do="remove-card" class="btn btn-quiet btn-sm">현재 카드 삭제</button>')+
-    '<p class="muted small">앞면은 전체 공개, 뒷면은 본인 조사 확정 후만 공개합니다. 맵에서 현재 타일을 선택해 조사 카드 위치를 지정할 수도 있습니다.</p>';
+    '<p class="muted small">실제 제목·부제·일러스트는 뒷면에만 나옵니다. 앞면은 소지품 소유자 또는 지도 장소를 기준으로 자동 번호가 붙습니다. 장소가 없는 카드는 위의 앞면 장소명 항목으로 지정할 수 있습니다.</p>';
 }
 const brushOptions=[['floor','통로'],['wall','벽'],['door','문'],['portal','계단'],['region','방 구역 (두 점)'],['spawn','배역 시작점'],['card','카드 조사점'],['object','가구·장식 오브젝트']];
 const objectTypes=[['sink','싱크대'],['fridge','냉장고'],['pc','컴퓨터'],['gargoyle','가고일 석상'],
