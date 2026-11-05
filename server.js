@@ -69,6 +69,27 @@ const ADVANCE_NEXT={synopsis:'characters',characters:'study',study:'investigatio
 const INVESTIGATION_PHASES=['investigation1','investigation2'];
 const PLAY_PHASES=['study','investigation1','discussion1','investigation2','discussion2','action','ending'];
 const POST_INVESTIGATION_PHASES=['investigation1','discussion1','investigation2','discussion2','action','ending'];
+function accusationState(room){
+  if(!room.accusation)return null;
+  const a=room.accusation;
+  if(!a.finished&&Date.now()>=a.deadline)finishAccusation(room);
+  return a;
+}
+function finishAccusation(room){
+  const a=room.accusation;
+  if(!a||a.finished)return;
+  const counts=Object.fromEntries(room.players.filter(p=>p.characterId).map(p=>[p.characterId,0]));
+  for(const id of Object.values(a.ballots))if(Object.hasOwn(counts,id))counts[id]++;
+  const maximum=Math.max(0,...Object.values(counts));
+  const leaders=Object.keys(counts).filter(id=>maximum>0&&counts[id]===maximum);
+  a.finished=true;a.finishedAt=Date.now();a.counts=counts;
+  a.winner=leaders.length===1?leaders[0]:null;
+  a.tied=leaders.length>1;
+  room.verdict||={arrestedCharacterId:null,goals:{}};
+  if(a.winner&&!endingStatus(room).dead.includes(a.winner))
+    room.verdict.arrestedCharacterId=a.winner;
+  persist();
+}
 function phaseReadiness(room){
   const next=ADVANCE_NEXT[room.phase]||null;
   const ready=room.phase==='synopsis'?room.players.filter(p=>p.read).length:
@@ -77,7 +98,8 @@ function phaseReadiness(room){
     next?room.players.filter(p=>room.advanceVotes?.[p.id]===true).length:0;
   return {next,ready,total:room.players.length,canAdvance:!!next&&
     room.players.length===storyById(room.storyId).players&&ready===room.players.length&&
-    (room.phase!=='action'||!gameFor(room).action||room.actions?.done===true)};
+    (room.phase!=='action'||!gameFor(room).action||room.actions?.done===true)&&
+    (room.phase!=='discussion2'||!!accusationState(room)?.finished)};
 }
 function occupantCount(room,pos,exceptId){
   return room.players.filter(p=>p.id!==exceptId&&positionFor(room,p)?.floor===pos.floor
@@ -232,6 +254,10 @@ function publicWhispers(room,member){
 function phaseChange(room,phase,sid){
   room.phase=phase;room.phaseStartedAt=Date.now();
   room.advanceVotes={};
+  if(phase==='discussion2'){
+    const minutes=gameFor(room).phaseMinutes?.discussion2??phaseDefault.discussion2;
+    room.accusation={ballots:{},deadline:room.phaseStartedAt+Math.max(1,minutes)*60000,finished:false};
+  }
   if(room.investigation&&!INVESTIGATION_PHASES.includes(phase)){
     room.investigation.selectiveShares=[];
     room.investigation.offers=[];
@@ -367,6 +393,12 @@ function roomView(room,sid){
     booklet,map,investigation:investigationView(room,member),
     action:isMember&&['action','ending'].includes(room.phase)&&room.actions?
       actionEngine.view(room,member,game):null,
+    accusation:isMember&&['discussion2','action','ending'].includes(room.phase)&&room.accusation?(()=>{
+      const a=accusationState(room);
+      return {finished:a.finished,deadline:a.deadline,voted:!!a.ballots[member.id],
+        submitted:Object.keys(a.ballots).length,total:room.players.length,
+        counts:a.finished?a.counts:null,winner:a.finished?a.winner:null,tied:!!a.tied};
+    })():null,
     verdict:isMember&&['discussion2','action','ending'].includes(room.phase)?{
       isHost:room.host===sid,
       arrestedCharacterId:room.verdict?.arrestedCharacterId||null,
@@ -605,6 +637,18 @@ async function api(req,res,url,sid){
     persist();sendState(room);
     return json(res,200,roomView(room,sid));
   }
+  if(action==='accusation-vote'){
+    if(room.phase!=='discussion2')fail(409,'최종 지목 투표 단계가 아닙니다.');
+    const a=accusationState(room);
+    if(!a||a.finished)fail(409,'투표가 마감되었습니다.');
+    if(a.ballots[player.id])fail(409,'이미 투표를 완료했습니다.');
+    if(!room.players.some(p=>p.characterId===body.characterId))
+      fail(400,'유효한 지목 대상이 아닙니다.');
+    a.ballots[player.id]=body.characterId;
+    if(Object.keys(a.ballots).length===room.players.length)finishAccusation(room);
+    logActivity('accusation_vote',sid,{room:room.id,phase:room.phase});
+    persist();sendState(room);return json(res,200,roomView(room,sid));
+  }
   if(action==='advance-vote'||action==='advance-unvote'){
     if(!POST_INVESTIGATION_PHASES.includes(room.phase)||!phaseReadiness(room).next)
       fail(409,'현재 단계에서는 진행 동의를 할 수 없습니다.');
@@ -650,6 +694,8 @@ async function api(req,res,url,sid){
   }
   if(['verdict-arrest','verdict-goal','verdict-status'].includes(action)){
     if(room.host!==sid)fail(403,'최종 구속 및 개인 목표 판정은 방장만 지정할 수 있습니다.');
+    if(action==='verdict-arrest'&&room.phase==='discussion2'&&!accusationState(room)?.finished)
+      fail(409,'투표가 마감된 후 구속 대상을 정할 수 있습니다.');
     if(!['discussion2','action','ending'].includes(room.phase))fail(409,'최종 결정 단계 이후에만 사용할 수 있습니다.');
     room.verdict||={arrestedCharacterId:null,goals:{}};
     if(action==='verdict-arrest'){
