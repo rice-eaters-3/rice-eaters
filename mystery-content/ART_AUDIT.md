@@ -95,8 +95,25 @@
 
 ## 재개 지점
 
-D1 사옥의 41번째 카드 `time_dinner_receipt`부터 다음 10장을 대조한다. D1 31장, 마지막 하트 56장, 네온 검역국 54장, 성하 영재관 48장이 남아 있다.
+D1 사옥의 51번째 카드 `time_practice_live`부터 다음 10장을 대조한다. D1 21장, 마지막 하트 56장, 네온 검역국 54장, 성하 영재관 48장이 남아 있다.
 
 ## 추가 디자인 지정
 
 거대한 전시 석상, 차지우의 미니어처, 돌가고일 포스터를 리그 오브 레전드 기본 갈리오의 흰 석재 몸체와 금빛 날개 구조로 새로 제작했다. 맥은 반문, 구체적 가정, 게임 비유를 사용하는 창작 대사와 연기 지침을 개인 책자에 추가했다.
+
+## D1 사옥 · 5차 배치
+
+| 카드 ID | 기존 문제 | 신규 이미지 경로 |
+| --- | --- | --- |
+| `time_dinner_receipt` | 배익호 노트의 공용 컷으로 ‘마지막 훠궈 식사 명단’의 증거 대상이 표현되지 않음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/time_dinner_receipt.webp` |
+| `time_kitchen_oven` | 배익호 노트의 공용 컷으로 ‘주방 독립 시계 기록’의 증거 대상이 표현되지 않음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/time_kitchen_oven.webp` |
+| `time_jobi_stair` | 관리자 태그의 공용 컷으로 ‘4층 계단 복도 출입 영상’의 증거 대상이 표현되지 않음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/time_jobi_stair.webp` |
+| `time_chajiwoo_photo` | 배익호 노트의 공용 컷으로 ‘회랑 셀카의 그림자’의 증거 대상이 표현되지 않음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/time_chajiwoo_photo.webp` |
+| `time_mayushi_warning` | 배익호 노트의 공용 컷으로 ‘마유시의 미전달 경고문’의 증거 대상이 표현되지 않음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/time_mayushi_warning.webp` |
+| `time_hasu_terminal` | 배익호 노트의 공용 컷으로 ‘하수의 서버 검색 기록’의 증거 대상이 표현되지 않음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/time_hasu_terminal.webp` |
+| `time_karl_badge` | 관리자 태그의 공용 컷으로 ‘관리자 출입 태그 복사 로그’의 증거 대상이 표현되지 않음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/time_karl_badge.webp` |
+| `time_mac_roof` | 관리자 태그의 공용 컷으로 ‘옥상 출입 기록’의 증거 대상이 표현되지 않음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/time_mac_roof.webp` |
+| `time_baetho_last_msg` | 배익호 노트의 공용 컷으로 ‘배익호가 남긴 마지막 문자’의 증거 대상이 표현되지 않음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/time_baetho_last_msg.webp` |
+| `time_key_returns` | 관리자 태그의 공용 컷으로 ‘대여 출입 태그의 반환 흔적’의 증거 대상이 표현되지 않음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/time_key_returns.webp` |
+
+생성본 추가 검수: 관리자 로그의 잘못된 녹음기 대여 문구, 하수 단말과 오븐 기록의 불필요한 인물을 발견하여 새로 생성했다. 카드 설명을 근거로 각 증거물을 개별 제작했으며, 기존 컨셉아트 크롭은 사용하지 않았다.

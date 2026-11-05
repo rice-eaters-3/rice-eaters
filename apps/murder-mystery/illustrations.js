@@ -126,7 +126,17 @@ window.MysteryArt=(function(){
    'cult_marvin_bill','cult_fund_account','cult_gargoyle_poster',
    'cult_donation_anchor','cult_old_team_photo','cult_unsafe_meeting',
    'cult_founder_signature','cult_mac_scape_plan','cult_member_exit',
-   'cult_hidden_fund'
+   'cult_hidden_fund',
+   'time_dinner_receipt',
+   'time_kitchen_oven',
+   'time_jobi_stair',
+   'time_chajiwoo_photo',
+   'time_mayushi_warning',
+   'time_hasu_terminal',
+   'time_karl_badge',
+   'time_mac_roof',
+   'time_baetho_last_msg',
+   'time_key_returns'
   ])
  };
  const standaloneD1Props=new Set(['sink','fridge','pc','gargoyle','throne']);
