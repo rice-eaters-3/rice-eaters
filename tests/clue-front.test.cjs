@@ -10,7 +10,7 @@ test('unrevealed cards have stable, sequential owner and location labels',()=>{
   assert.equal(labels.jobi_threat_phone,'조비의 소지품 1');
   assert.equal(labels.jobi_stage_mouse,'조비의 소지품 2');
   assert.equal(labels.jobi_qualifier_card,'조비의 소지품 3');
-  assert.equal(labels.jobi_timer,'조비의 소지품 4');
+  assert.equal(labels.jobi_stopwatch,'조비의 소지품 4');
   const throne=cards.filter(c=>c.location?.floor==='penthouse'&&
     c.location.x>=1&&c.location.x<10&&c.location.y>=1&&c.location.y<6);
   assert.ok(throne.length>=2);
