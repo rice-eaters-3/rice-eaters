@@ -116,11 +116,18 @@ window.MysteryStudy=(function(){
       const unavailable=!data.canInvestigate||locked||c.taken||c.excluded||!!held||data.tokens<1||
         (c.requiresPresence&&!c.atLocation);
       const flipped=c.revealed?.length>0;
-      return '<article class="research-card '+(c.taken?'research-taken':'')+(locked?' research-locked':'')+'">'+
-        '<div class="research-frame"><div class="research-meta">MYSTERY · '+esc(c.type.toUpperCase())+'</div>'+
-         '<div class="research-illustration">'+art(c,theme(room))+'</div>'+
-        '<h4>'+esc(c.title)+'</h4><p>'+esc(c.subtitle)+'</p><span class="research-status">'+status+'</span>'+
-        (flipped?'<div class="research-back"><b>조사한 카드의 뒷면</b>'+c.revealed.map(a=>para(a.back)+(a.insight?'<div class="psychometry-insight">🔮 나에게만 보이는 감응 · '+esc(a.insight)+'</div>':'' )).join('')+'</div>':'')+
+      return '<article class="research-card '+(c.taken?'research-taken':'')+(locked?' research-locked':'')+
+        (flipped?' research-revealed':'')+'">'+
+        '<div class="research-frame"><div class="research-meta">MYSTERY · SEALED EVIDENCE</div>'+
+        '<div class="research-seal" aria-hidden="true">✦</div>'+
+        '<h4>'+esc(c.frontTitle||c.title||'조사 카드')+'</h4>'+
+        '<p>조사 후 뒷면의 내용을 확인할 수 있습니다.</p><span class="research-status">'+status+'</span>'+
+        (flipped?'<div class="research-back"><b>조사한 카드의 뒷면</b>'+
+          '<div class="research-illustration">'+art(c,theme(room))+'</div>'+
+          '<h4 class="research-back-title">'+esc(c.title||'조사 단서')+'</h4>'+
+          (c.subtitle?'<p>'+esc(c.subtitle)+'</p>':'')+
+          c.revealed.map(a=>para(a.back)+(a.insight?'<div class="psychometry-insight">🔮 나에게만 보이는 감응 · '+esc(a.insight)+'</div>':'' )).join('')+
+          '</div>':'')+
         (data.canInvestigate?(mine?'<div class="research-buttons">'+btn('investigate','조사 실행 · 토큰 1개','btn btn-primary btn-sm')+btn2('release','취소')+'</div>':
           btn('reserve','카드 선택','btn btn-outline btn-sm',unavailable,'data-card="'+esc(c.id)+'"')):'<small class="muted">조사 실행은 조사 단계에서만 가능합니다.</small>')+
         '</div></article>';

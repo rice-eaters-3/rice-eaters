@@ -547,3 +547,9 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(-
 .ending-story .composed-mystery-art{max-height:100%}
 @media(max-width:900px){.ending-goal-row{grid-template-columns:1fr 1fr}.ending-goal-row .muted{grid-column:2}.ending-goal-row .btn{width:100%}}
 @media(max-width:480px){.ending-goal-row{grid-template-columns:1fr}.ending-goal-row .muted{grid-column:auto}}
+
+/* Uninvestigated evidence has a neutral front; real artwork only appears on the reverse. */
+.research-seal{display:flex;align-items:center;justify-content:center;height:115px;
+ margin:13px auto;color:#897594;font:normal 55px Georgia,serif;opacity:.9}
+.research-back-title{margin-top:8px!important;margin-bottom:6px!important}
+.research-back .research-illustration{margin:12px 0}

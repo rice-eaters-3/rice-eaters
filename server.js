@@ -8,6 +8,7 @@ const crypto = require('node:crypto');
 const d1Case = require('./mystery-content/d1-gaming.case.json');
 const actionEngine = require('./mystery-content/action-engine.js');
 const endingEngine = require('./apps/murder-mystery/ending-engine.js');
+const clueFront = require('./apps/murder-mystery/clue-front.js');
 const privateMysteries = {
   'midnight-manor':require('./mystery-content/midnight-manor.js'),
   'd1-crown-of-ashes':{...d1Case.game,spawn:d1Case.spawn},
@@ -145,6 +146,7 @@ function investigationView(room,member){
   const data=exchangeFor(room);
   if(!spec||!data)return null;
   pruneExchanges(room);
+  const frontTitles=clueFront.labels(spec.cards,storyById(room.storyId).characters,floorsFor(room));
   const discovered=data.discovered||{};
   const held=data.holdings.filter(h=>h.ownerId===member.id);
   const nearby=tilePlayers(room,positionFor(room,member)||{floor:null,x:-1,y:-1})
@@ -159,7 +161,8 @@ function investigationView(room,member){
     if(!unlocked&&card.visibility==='hidden'&&!canRead)return [];
     const found=discovered[card.id]||[],reservation=activeReservation(room,card.id);
     return [{
-      id:card.id,title:card.title,subtitle:card.subtitle,type:card.type,
+      id:card.id,frontTitle:frontTitles[card.id],
+      title:canRead?card.title:null,subtitle:canRead?card.subtitle:null,type:card.type,
       location:card.location||null,locked:!unlocked,
       requiresPresence:card.requiresPresence===true,
       atLocation:!!(card.location&&positionFor(room,member)?.floor===card.location.floor&&
@@ -190,7 +193,7 @@ function investigationView(room,member){
     cards,myCards,nearby,
     incomingOffers:data.offers.filter(o=>o.toId===member.id).map(o=>{
       const card=o.type==='card'?spec.cards.find(c=>c.id===data.holdings.find(h=>h.id===o.holdingId)?.cardId):null;
-      return {id:o.id,type:o.type,amount:o.amount||null,cardTitle:card?.title||null,
+      return {id:o.id,type:o.type,amount:o.amount||null,cardTitle:card?frontTitles[card.id]:null,
         fromName:room.players.find(p=>p.id===o.fromId)?.name||'',expiresAt:o.expiresAt};
     }),
     outgoingOffers:data.offers.filter(o=>o.fromId===member.id)

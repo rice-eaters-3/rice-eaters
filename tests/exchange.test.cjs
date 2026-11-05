@@ -70,6 +70,9 @@ test('private clue sharing, transfer consent, ownership, same-tile expiration an
   assert.equal(phase1.data.phase,'investigation1');
   assert.equal(phase1.data.investigation.tokens,7);
   assert.equal(phase1.data.investigation.myCards.length,0);
+  assert.equal(phase1.data.investigation.cards.find(c=>c.id==='private').title,null,
+    'secret evidence titles are not shipped before a player discovers the card');
+  assert.equal(phase1.data.investigation.cards.find(c=>c.id==='private').subtitle,null);
   assert.equal((await req(2,endpoint)).data.investigation,null,'nonmember never gets clue content');
   const investigate=async cardId=>{
     assert.equal((await post(0,endpoint+'/reserve',{cardId})).status,200);
@@ -112,7 +115,11 @@ test('private clue sharing, transfer consent, ownership, same-tile expiration an
     {type:'card',holdingId:secret.id,toId:b});
   assert.equal(proposed.status,200);
   let offer=proposed.data.investigation.outgoingOffers[0].id;
-  assert.equal((await req(1,endpoint)).data.investigation.incomingOffers[0].cardTitle,'비공개 편지');
+  const recipientView=(await req(1,endpoint)).data.investigation;
+  assert.equal(recipientView.incomingOffers[0].cardTitle,
+    recipientView.cards.find(c=>c.id==='private').frontTitle,
+    'an offer shows only the anonymous front, never the private evidence title');
+  assert.notEqual(recipientView.incomingOffers[0].cardTitle,'비공개 편지');
   assert.equal((await post(0,endpoint+'/exchange-reply',{offerId:offer,accept:true})).status,403,
     'sender cannot self-accept');
   assert.equal((await req(1,endpoint)).data.investigation.cards.find(c=>c.id==='private').revealed.length,0,
