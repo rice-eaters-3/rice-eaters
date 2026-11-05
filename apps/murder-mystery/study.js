@@ -290,6 +290,23 @@ window.MysteryStudy=(function(){
       (logs||'<p class="muted small">아직 실행된 행동이 없습니다.</p>')+'</div></section>';
   }
 
+  function accusationPanel(room){
+    const a=room.accusation;
+    if(!a)return '';
+    const candidates=room.verdict?.candidates||[];
+    const result=a.finished?
+      '<h3>최종 투표 결과</h3>'+
+      '<p>'+(a.winner?'최다 득표: '+esc(candidates.find(c=>c.id===a.winner)?.name||a.winner)+' · 구속 대상 지정':
+        a.tied?'공동 최다 득표 · 동률로 구속 대상 없음':'득표 없음 · 구속 대상 없음')+'</p>'+
+      candidates.map(c=>'<p>'+esc(c.name)+' — '+(a.counts?.[c.id]||0)+'표</p>').join(''):
+      '<h3>범인 최종 지목</h3><p class="muted small">한 사람에게 한 표를 행사합니다. 투표는 변경할 수 없으며 전원 투표 또는 제한 시간 종료 시 공개됩니다.</p>'+
+      '<p>'+a.submitted+' / '+a.total+'명 투표 완료 · 종료 시각 '+new Date(a.deadline).toLocaleTimeString('ko-KR')+'</p>'+
+      (a.voted?'<p>✓ 투표 완료 · 결과 집계 대기 중</p>':
+        '<div class="ending-arrest-row"><select id="accusationTarget" aria-label="범인 지목 대상">'+
+        '<option value="">지목 대상 선택</option>'+candidates.map(c=>'<option value="'+esc(c.id)+'">'+esc(c.name)+'</option>').join('')+
+        '</select>'+btn('accusation-vote','범인 지목 확정','btn btn-primary')+'</div>');
+    return '<section id="accusationPanel" class="surface panel-pad"><div class="eyebrow">FINAL ACCUSATION · SECRET BALLOT</div>'+result+'</section>';
+  }
   function verdictPanel(room){
     const v=room.verdict;
     if(!v||!v.isHost)return '';
@@ -358,7 +375,7 @@ window.MysteryStudy=(function(){
         discussion2:'2차 토론·최종 결정',action:'행동',ending:'결말'})[room.phase]||room.phase)+
       '</h2></div><span class="tag">'+({study:3,investigation1:4,discussion1:5,investigation2:6,discussion2:7,action:8,ending:9}[room.phase]||3)+' / 9 단계</span></div>'+
       '<section class="voice-global surface panel-pad">'+(window.MysteryVoice?.controls()||'<p>음성 준비 중</p>')+'</section>'+
-      verdictPanel(room)+
+      accusationPanel(room)+verdictPanel(room)+
       (room.phase==='ending'?endingStage(room):actionStage(room)+
       '<div id="adventureRoot">'+(ui.view==='book'?book(room):ui.view==='research'?researchView(room):mapView(room))+'</div>');
   }
@@ -376,6 +393,11 @@ window.MysteryStudy=(function(){
           root.replaceWith(replacement);
         }
       }
+    }
+    const ballot=document.getElementById('accusationPanel');
+    if(ballot&&room.accusation){
+      const temporary=document.createElement('div');temporary.innerHTML=accusationPanel(room);
+      if(temporary.firstElementChild)ballot.replaceWith(temporary.firstElementChild);
     }
     if(ui.view==='book')return true;
     if(ui.view==='research'){
