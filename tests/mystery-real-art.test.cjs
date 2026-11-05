@@ -12,6 +12,7 @@ const scenarios=[
  ['neon-memory-quarantine.case.json','neon-memory-quarantine','neon.webp',7,14,54],
  ['stellar-academy-first-case.case.json','stellar-academy-first-case','academy.webp',6,14,48]
 ];
+const reviewedClueCounts={'d1-crown-of-ashes':71,'cruel-heart-island':10};
 const newD1Props=['sink','fridge','pc','gargoyle','throne'];
 const imagePath=name=>path.join(root,'apps/murder-mystery/assets',name);
 test('all four original concept-sheet WebP image files are real binary assets with a RIFF/WEBP header',()=>{
@@ -72,7 +73,7 @@ test('every player, map prop and clue has a case illustration',()=>{
   assert.equal(data.game.investigation.cards.length,clues);
   for(const [index,clue] of data.game.investigation.cards.entries()){
    const v=art.clue(clue,id);
-   const standalone=id==='d1-crown-of-ashes'&&index<71;
+   const standalone=index<(reviewedClueCounts[id]||0);
    if(standalone){
     const name='clues/'+id+'/'+clue.id+'.webp';
     assert.ok(v.includes(name));
@@ -149,8 +150,9 @@ test('local HTTP server serves original and standalone artwork with image/webp M
   fs.rmSync(dir,{recursive:true,force:true});
  });
  const base='http://127.0.0.1:'+server.address().port;
- const independent=require('../mystery-content/d1-gaming.case.json').game.investigation.cards.slice(0,71)
-  .map(({id})=>['','d1-crown-of-ashes','clues/d1-crown-of-ashes/'+id+'.webp']);
+ const independent=scenarios.flatMap(([filename,theme])=>
+  require('../mystery-content/'+filename).game.investigation.cards.slice(0,reviewedClueCounts[theme]||0)
+   .map(({id})=>['',theme,'clues/'+theme+'/'+id+'.webp']));
  const backgrounds=scenarios.map(([filename,id,file])=>[filename,id,'backgrounds/'+file.replace('.webp','-background.webp')]);
  const d1=require('../mystery-content/d1-gaming.case.json').story;
  const portraits=[...d1.characters,d1.victim].map(({id})=>['',d1.id,'portraits/'+d1.id+'/'+id+'.webp']);

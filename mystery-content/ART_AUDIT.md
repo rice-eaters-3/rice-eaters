@@ -95,7 +95,7 @@
 
 ## 재개 지점
 
-D1 71장 교체 완료. 마지막 하트의 첫 카드 `minjae_rescue_ring`부터 이어간다. 마지막 하트 56장, 네온 검역국 54장, 성하 영재관 48장이 남아 있다.
+D1 71장 교체 완료. 마지막 하트의 11번째 카드 `seojun_old_report`부터 이어간다. 마지막 하트 46장, 네온 검역국 54장, 성하 영재관 48장이 남아 있다.
 
 ## 추가 디자인 지정
 
@@ -157,3 +157,18 @@ D1 71장 교체 완료. 마지막 하트의 첫 카드 `minjae_rescue_ring`부�
 | 카드 ID | 기존 문제 | 신규 이미지 경로 |
 | --- | --- | --- |
 | `trick_evacuation_truth` | 공용 노트로 허구 경보와 실제 봉쇄를 구분할 수 없음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_evacuation_truth.webp` |
+
+## 마지막 하트 · 1차 배치
+
+| 카드 ID | 기존 문제 / 교체 이유 | 신규 이미지 경로 |
+| --- | --- | --- |
+| `minjae_rescue_ring` | 공용 계약서 그림이 개별 소지품의 형태와 설명을 표현하지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/minjae_rescue_ring.webp` |
+| `minjae_first_aid` | 공용 계약서 그림이 개별 소지품의 형태와 설명을 표현하지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/minjae_first_aid.webp` |
+| `minjae_old_photo` | 공용 계약서 그림이 개별 소지품의 형태와 설명을 표현하지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/minjae_old_photo.webp` |
+| `minjae_tide_chart` | 공용 계약서 그림이 개별 소지품의 형태와 설명을 표현하지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/minjae_tide_chart.webp` |
+| `doyun_sponsor_contract` | 공용 계약서 그림이 개별 소지품의 형태와 설명을 표현하지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/doyun_sponsor_contract.webp` |
+| `doyun_drone_clip` | 드론 공용 컷은 유사하지만 개인 촬영 메모리의 독립 그림이 아님 | `apps/murder-mystery/assets/clues/cruel-heart-island/doyun_drone_clip.webp` |
+| `doyun_luxury_watch` | 공용 계약서 그림이 개별 소지품의 형태와 설명을 표현하지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/doyun_luxury_watch.webp` |
+| `doyun_brand_badge` | 공용 계약서 그림이 개별 소지품의 형태와 설명을 표현하지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/doyun_brand_badge.webp` |
+| `seojun_wave_meter` | 공용 관측 패널 그림으로 휴대용 수위 기록계를 구분할 수 없음 | `apps/murder-mystery/assets/clues/cruel-heart-island/seojun_wave_meter.webp` |
+| `seojun_research_badge` | 공용 계약서 그림이 개별 소지품의 형태와 설명을 표현하지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/seojun_research_badge.webp` |

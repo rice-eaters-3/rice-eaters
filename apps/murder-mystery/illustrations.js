@@ -158,6 +158,18 @@ window.MysteryArt=(function(){
    'trick_prop_invoice',
    'trick_reconstruction',
    'trick_evacuation_truth'
+  ]),
+  'cruel-heart-island':new Set([
+   'minjae_rescue_ring',
+   'minjae_first_aid',
+   'minjae_old_photo',
+   'minjae_tide_chart',
+   'doyun_sponsor_contract',
+   'doyun_drone_clip',
+   'doyun_luxury_watch',
+   'doyun_brand_badge',
+   'seojun_wave_meter',
+   'seojun_research_badge'
   ])
  };
  const standaloneD1Props=new Set(['sink','fridge','pc','gargoyle','throne']);
