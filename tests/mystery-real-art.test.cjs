@@ -12,6 +12,8 @@ const scenarios=[
  ['neon-memory-quarantine.case.json','neon-memory-quarantine','neon.webp',7,14,54],
  ['stellar-academy-first-case.case.json','stellar-academy-first-case','academy.webp',6,14,48]
 ];
+const reviewedClueCounts={'d1-crown-of-ashes':71,'cruel-heart-island':10};
+const newD1Props=['sink','fridge','pc','gargoyle','throne'];
 const imagePath=name=>path.join(root,'apps/murder-mystery/assets',name);
 test('all four original concept-sheet WebP image files are real binary assets with a RIFF/WEBP header',()=>{
  for(const [,id,file] of scenarios){
@@ -30,25 +32,32 @@ test('all four original concept-sheet WebP image files are real binary assets wi
   }
  }
 });
-test('every player, every map prop and every clue in all four scenarios uses the matching illustrated atlas',()=>{
+test('every player, map prop and clue has a case illustration',()=>{
  for(const [filename,id,file,cast,props,clues] of scenarios){
   const data=require('../mystery-content/'+filename);
   assert.equal(data.story.id,id);
   assert.equal(data.story.characters.length,cast);
+  if(data.story.victim){
+   const victim=art.victim(data.story);
+   assert.ok(victim.includes('portraits/'+id+'/'+data.story.victim.id+'.webp'));
+   assert.ok(victim.includes(data.story.victim.name));
+  }
   let tally=0;
   for(const character of data.story.characters){
    const visual=art.portrait(character,id);
    assert.match(visual,/<svg/);
-   assert.ok(visual.includes(file),character.id+' should use its own case artwork');
-   assert.ok(visual.includes('<image '),'player image must be clipped original art, not generated strokes');
+   const portraitFile=id==='d1-crown-of-ashes'?'portraits/'+id+'/'+character.id+'.webp':file;
+   assert.ok(visual.includes(portraitFile),character.id+' should use its own case artwork');
+   assert.ok(visual.includes('<image '),'player illustration should link a raster asset');
    assert.doesNotMatch(visual,/<path(?:\s|>)/,'no geometric cartoon portrait substitution');
    const avatar=art.avatar({characterId:character.id,name:character.name},id);
-   assert.ok(avatar.includes(file),'map avatar must use case artwork too');
+   assert.ok(avatar.includes(portraitFile),'map avatar must use case artwork too');
   }
   for(const floor of data.game.floors){
    for(const o of floor.objects||[]){
     const v=art.object(o,id);
-    assert.ok(v.includes(file),id+' object '+o.kind+' has no original art');
+    const expected=id==='d1-crown-of-ashes'&&newD1Props.includes(o.kind)?'props/'+id+'/'+o.kind+'.webp':file;
+    assert.ok(v.includes(expected),id+' object '+o.kind+' has no matching art');
     tally++;
    }
    for(const door of floor.doors||[]){
@@ -62,11 +71,22 @@ test('every player, every map prop and every clue in all four scenarios uses the
   }
   assert.equal(tally,props);
   assert.equal(data.game.investigation.cards.length,clues);
-  for(const clue of data.game.investigation.cards){
+  for(const [index,clue] of data.game.investigation.cards.entries()){
    const v=art.clue(clue,id);
-   assert.ok(v.includes(file),id+' clue '+clue.id+' must show case-specific painting');
+   const standalone=index<(reviewedClueCounts[id]||0);
+   if(standalone){
+    const name='clues/'+id+'/'+clue.id+'.webp';
+    assert.ok(v.includes(name));
+    assert.match(v,/preserveAspectRatio="xMidYMid meet"/);
+    assert.doesNotMatch(v,/<clipPath|<text|slice/,'standalone evidence must not crop or cover clues');
+    assert.ok(!v.includes(file));
+    assert.ok(art.clue({...clue,id:'holding_abc',cardId:clue.id},id).includes(name));
+    assert.ok(art.clue({id:clue.id,name:clue.title},id).includes(name));
+   }else{
+    assert.ok(v.includes(file),id+' clue '+clue.id+' must show case-specific painting');
+   }
   }
-  assert.ok(art.cover(id).includes(file),'scenario preview banner needs the matching art');
+  assert.ok(art.cover(id).includes('backgrounds/'+file.replace('.webp','-background.webp')),'scenario preview banner needs the matching art');
  }
 });
 test('illustrated evidence picker chooses specific character and case clues, not a single generic image',()=>{
@@ -88,7 +108,7 @@ test('malicious labels are escaped in the real-art markup, and other scenarios f
  const v=art.portrait({id:'jobi',name:'조비 <img onerror=alert(1)>'},'d1-crown-of-ashes');
  assert.match(v,/&lt;img onerror=alert\(1\)&gt;/);
  assert.doesNotMatch(v,/<img /);
- assert.match(v,/<image href="\/apps\/murder-mystery\/assets\/d1\.webp"/);
+ assert.match(v,/<image href="\/apps\/murder-mystery\/assets\/portraits\/d1-crown-of-ashes\/jobi\.webp"/);
  // An attribute-like string inside escaped aria-label text must never
  // appear as an injected HTML element or executable handler.
  assert.doesNotMatch(v,/<img\s/i);
@@ -109,13 +129,16 @@ test('live game and studio both load artwork module and connect painted props/do
  const game=fs.readFileSync(path.join(root,'apps/murder-mystery/app.js'),'utf8');
  assert.ok(game.includes('MysteryArt?.cover(story.artTheme||story.id)'));
  assert.ok(game.includes('MysteryArt?.portrait(c,room.story?.artTheme||room.story?.id)'));
+ assert.ok(game.includes('MysteryArt?.cover(room.story.artTheme||room.story.id)'));
  const editor=fs.readFileSync(path.join(root,'apps/murder-mystery/editor.js'),'utf8');
  assert.ok(editor.includes('MysteryArt?.portrait(c,visualStory())'));
  assert.ok(editor.includes('MysteryArt?.object(furniture,visualStory())'));
+ assert.ok(editor.includes('MysteryArt?.cover(visualStory())'));
  const studio=fs.readFileSync(path.join(root,'apps/murder-mystery/test-ui.js'),'utf8');
  assert.ok(studio.includes("dataset.story=room.story?.artTheme||room.story?.id"));
+ assert.ok(studio.includes('MysteryArt?.cover(s.artTheme||s.id)'));
 });
-test('local HTTP server serves the actual four original artwork files with image/webp MIME and bytes',async t=>{
+test('local HTTP server serves original and standalone artwork with image/webp MIME and bytes',async t=>{
  const dir=fs.mkdtempSync(path.join(require('node:os').tmpdir(),'illustrated-mystery-'));
  process.env.DATA_DIR=dir;
  const {handler}=require('../server.js');
@@ -127,12 +150,19 @@ test('local HTTP server serves the actual four original artwork files with image
   fs.rmSync(dir,{recursive:true,force:true});
  });
  const base='http://127.0.0.1:'+server.address().port;
- for(const [,id,file] of scenarios){
+ const independent=scenarios.flatMap(([filename,theme])=>
+  require('../mystery-content/'+filename).game.investigation.cards.slice(0,reviewedClueCounts[theme]||0)
+   .map(({id})=>['',theme,'clues/'+theme+'/'+id+'.webp']));
+ const backgrounds=scenarios.map(([filename,id,file])=>[filename,id,'backgrounds/'+file.replace('.webp','-background.webp')]);
+ const d1=require('../mystery-content/d1-gaming.case.json').story;
+ const portraits=[...d1.characters,d1.victim].map(({id})=>['',d1.id,'portraits/'+d1.id+'/'+id+'.webp']);
+ const props=newD1Props.map(kind=>['',d1.id,'props/'+d1.id+'/'+kind+'.webp']);
+ for(const [,id,file] of [...scenarios,...independent,...backgrounds,...portraits,...props]){
   const response=await fetch(base+'/apps/murder-mystery/assets/'+file);
   assert.equal(response.status,200,id+' artwork must be browser-accessible');
   assert.match(response.headers.get('content-type')||'',/image\/webp/);
   const binary=Buffer.from(await response.arrayBuffer());
-  assert.ok(binary.length>100000);
+  assert.ok(binary.length>(file.includes('/')?1000:100000));
   assert.equal(binary.subarray(0,4).toString('ascii'),'RIFF');
  }
 });

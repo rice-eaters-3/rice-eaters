@@ -1,6 +1,7 @@
 'use strict';
 // Strict JSON import boundary: no eval, HTML, executable scripts, external URLs,
 // unsafe file paths or prototype-dependent keys. Metadata is copied to plain objects.
+const artThemes=new Set(['d1-crown-of-ashes','cruel-heart-island','neon-memory-quarantine','stellar-academy-first-case']);
 const id=/^[a-z][a-z0-9_-]{0,35}$/;
 const text=(s,max=160)=>typeof s==='string'?s.trim().slice(0,max):'';
 const obj=x=>x&&typeof x==='object'&&!Array.isArray(x)?x:{};
@@ -12,9 +13,14 @@ function validate(input){
   if(p.format!=='rice-mystery-v1')throw Error('지원하지 않는 시나리오 파일 버전입니다.');
   const players=int(raw.players,2,10,'플레이어');
   if(!Array.isArray(raw.characters)||raw.characters.length!==players)throw Error('등장인물 수가 플레이어 수와 달라요.');
+  const autoTheme=raw.id==='d1-gaming'?'d1-crown-of-ashes':raw.id;
+  const theme=raw.artTheme||autoTheme;
   const story={id:'',title:text(raw.title,100),subtitle:text(raw.subtitle),genre:text(raw.genre,70),
     teaser:text(raw.teaser,700),minutes:int(raw.minutes||90,1,600,'예상 플레이 시간'),
-    players,artTheme:['d1-crown-of-ashes','cruel-heart-island','neon-memory-quarantine','stellar-academy-first-case'].includes(raw.artTheme)?raw.artTheme:'',synopsis:[],characters:[]};
+    players,artTheme:artThemes.has(theme)?theme:'',synopsis:[],characters:[]};
+  const victim=obj(raw.victim);
+  if(typeof victim.id==='string'&&id.test(victim.id)&&text(victim.name,70))
+    story.victim={id:victim.id,name:text(victim.name,70)};
   if(!story.title)throw Error('스토리 제목을 입력하세요.');
   if(!Array.isArray(raw.synopsis)||!raw.synopsis.length||raw.synopsis.length>25)throw Error('시놉시스 문단이 필요합니다.');
   story.synopsis=raw.synopsis.map(x=>text(x,3000));

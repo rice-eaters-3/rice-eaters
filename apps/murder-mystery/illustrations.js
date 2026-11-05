@@ -1,9 +1,8 @@
 'use strict';
 /*
- * Browser-rendered compositions using the four licensed project illustration
- * sheets as visual source material. Individual characters and clues receive
- * layered backgrounds, borders, light and distinct evidence marks; map sprites
- * remain compact crops so 36px tiles stay legible.
+ * Browser-rendered artwork shared by the game and both studio screens.
+ * Standalone assets replace matching concept-sheet entries as they are reviewed.
+ * Existing sheet entries remain available for the rest of the built-in art.
  */
 window.MysteryArt=(function(){
  const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({
@@ -112,10 +111,76 @@ window.MysteryArt=(function(){
   }
  };
  // Existing library aliases and custom scenario IDs retain a graceful fallback.
- const storyFor=id=>A[id]?id:id==='d1-gaming'?'d1-crown-of-ashes':null;
+ const individualClues={
+  'd1-crown-of-ashes':new Set([
+   'jobi_threat_phone','jobi_stage_mouse','jobi_qualifier_card','jobi_stopwatch',
+   'mayushi_oracle_cards','mayushi_spirit_bell','mayushi_fractured_talisman','mayushi_private_stream',
+   'chajiwoo_mini_gargoyle','chajiwoo_donation_ledger',
+   'chajiwoo_cult_invitation','chajiwoo_unmailed_letter','cloud_tainted_cleaver','cloud_huoguo_ladle',
+   'cloud_elephant_eggplant','cloud_oven_receipt','karl_alpaca_notebook','karl_manager_badge',
+   'karl_alpaca_receipts','karl_unbroken_promise',
+   'hasu_cult_notebook','hasu_marvin_voice','hasu_solo_kill_log',
+   'hasu_roof_safety_map','mac_tactical_board','mac_maintenance_glove',
+   'mac_coach_whistle','mac_rehearsal_schedule','cult_founder_mask',
+   'cult_hero_landing_syllabus',
+   'cult_marvin_bill','cult_fund_account','cult_gargoyle_poster',
+   'cult_donation_anchor','cult_old_team_photo','cult_unsafe_meeting',
+   'cult_founder_signature','cult_mac_scape_plan','cult_member_exit',
+   'cult_hidden_fund',
+   'time_dinner_receipt',
+   'time_kitchen_oven',
+   'time_jobi_stair',
+   'time_chajiwoo_photo',
+   'time_mayushi_warning',
+   'time_hasu_terminal',
+   'time_karl_badge',
+   'time_mac_roof',
+   'time_baetho_last_msg',
+   'time_key_returns',
+   'time_practice_live',
+   'time_chef_service',
+   'trick_throne_scene',
+   'trick_stage_outline',
+   'trick_showroom_slot',
+   'trick_alarm_script',
+   'trick_baetho_note_1',
+   'trick_baetho_note_2',
+   'trick_baetho_note_3',
+   'trick_baetho_note_4',
+   'trick_spare_override',
+   'trick_clock_offset',
+   'trick_voice_recording',
+   'trick_stage_maintenance',
+   'trick_tape_trace',
+   'trick_camera_reflection',
+   'trick_rehearsal_diary',
+   'trick_safety_report',
+   'trick_prop_invoice',
+   'trick_reconstruction',
+   'trick_evacuation_truth'
+  ]),
+  'cruel-heart-island':new Set([
+   'minjae_rescue_ring',
+   'minjae_first_aid',
+   'minjae_old_photo',
+   'minjae_tide_chart',
+   'doyun_sponsor_contract',
+   'doyun_drone_clip',
+   'doyun_luxury_watch',
+   'doyun_brand_badge',
+   'seojun_wave_meter',
+   'seojun_research_badge'
+  ])
+ };
+ const standaloneD1Props=new Set(['sink','fridge','pc','gargoyle','throne']);
+ const storyFor=id=>Object.hasOwn(A,id)?id:id==='d1-gaming'?'d1-crown-of-ashes':null;
  const knownStory=id=>A[storyFor(id)]||null;
- function artCrop(story,rect,css,alt){
-  const data=knownStory(story);
+ function standalonePortrait(story,id){
+  const theme=storyFor(story),data=knownStory(story);
+  if(theme!=='d1-crown-of-ashes'||!Object.hasOwn(data.portraits,id))return null;
+  return {...data,file:'portraits/'+theme+'/'+id+'.webp',size:[432,576]};
+ }
+ function artCrop(story,rect,css,alt,data=knownStory(story)){
   if(!data||!rect)return null;
   const [x,y,w,h]=rect, [width,height]=data.size;
   // All geometry is from our internal atlas manifest, never raw user fields.
@@ -140,8 +205,8 @@ window.MysteryArt=(function(){
    '<image href="'+path+data.file+'" x="'+(-sx)+'" y="'+(-sy)+'" width="'+data.size[0]+
    '" height="'+data.size[1]+'"/></svg>';
  };
- function compose(story,rect,identifier,label,css,type,accent){
-  const data=knownStory(story);if(!data||!rect)return null;
+ function compose(story,rect,identifier,label,css,type,accent,data=knownStory(story)){
+  if(!data||!rect)return null;
   const portraitMode=type==='portrait',w=portraitMode?360:460,h=portraitMode?470:310;
   const seed=hash(story+':'+identifier),name='art'+seed.toString(36);
   const main=shapeColor(accent,data.palette[1]),dark=data.palette[0];
@@ -194,6 +259,9 @@ window.MysteryArt=(function(){
    (portraitMode?12:13)+'" font-weight="600">'+(portraitMode?title:initials)+'</text></svg>';
  }
  function portrait(c,story,small=false){
+  const asset=standalonePortrait(story,c?.id);
+  const css='mystery-portrait real-portrait'+(small?' portrait-compact':'');
+  if(asset)return compose(story,[0,0,...asset.size],c.id,c.name+' 캐릭터 초상화',css,'portrait',c.accent,asset);
   const data=knownStory(story);
   const rect=data?.portraits?.[c?.id];
   // The dating and neon reference sheets present seven/eight figures in a
@@ -202,7 +270,7 @@ window.MysteryArt=(function(){
   const focused=rect&&['cruel-heart-island','neon-memory-quarantine'].includes(story)
     ?[rect[0],rect[1]+10,rect[2],Math.min(rect[3]-10,204)]:rect;
   if(focused)return compose(story,focused,c.id,c.name+' 캐릭터 초상화',
-   'mystery-portrait real-portrait'+(small?' portrait-compact':''),'portrait',c.accent);
+   css,'portrait',c.accent);
   return '<span class="mystery-unillustrated">'+escape(c?.symbol||'♟')+'</span>';
  }
  function clueKind(card,story){
@@ -243,13 +311,29 @@ window.MysteryArt=(function(){
   return null;
  }
  function clue(c,story){
-  const data=knownStory(story),key=clueKind(c,story),rect=data?.clues?.[key];
-  if(rect)return compose(story,rect,c?.id||c?.title||c?.name||key,c?.title||c?.name||'조사 카드',
+  const theme=storyFor(story),data=knownStory(story),label=c?.title||c?.name||'조사 카드';
+  const cardId=c?.cardId||c?.id;
+  if(individualClues[theme]?.has(cardId)){
+   const asset={...data,file:'clues/'+theme+'/'+cardId+'.webp',size:[512,512]};
+   // Evidence details at the edges must remain visible in every UI size.
+   return '<svg class="mystery-clue-art real-clue-art standalone-evidence"'+
+    ' data-asset="'+escape(cardId)+'" viewBox="0 0 512 512"'+
+    ' preserveAspectRatio="xMidYMid meet" role="img" aria-label="'+escape(label)+'"'+
+    ' xmlns="http://www.w3.org/2000/svg"><desc>EVIDENCE RECORD</desc>'+
+    '<image href="'+path+asset.file+'" width="512" height="512"'+
+    ' preserveAspectRatio="xMidYMid meet"/></svg>';
+  }
+  const key=clueKind(c,theme),rect=data?.clues?.[key];
+  if(rect)return compose(story,rect,c?.id||c?.title||c?.name||key,label,
     'mystery-clue-art real-clue-art','evidence',null);
   return '<span class="mystery-unillustrated mystery-clue-placeholder">✧</span>';
  }
  function object(o,story){
-  const data=knownStory(story);
+  const theme=storyFor(story),data=knownStory(story);
+  if(theme==='d1-crown-of-ashes'&&standaloneD1Props.has(o?.kind)){
+   const asset={...data,file:'props/'+theme+'/'+o.kind+'.webp',size:[384,384]};
+   return artCrop(theme,[0,0,...asset.size],'mystery-map-object real-map-object',o.name||o.kind,asset);
+  }
   const rect=data?.objects?.[o?.kind];
   if(rect)return artCrop(story,rect,'mystery-map-object real-map-object',o?.name||o?.kind||'장식');
   // For custom/legacy maps whose authors entered an emoji, display that.
@@ -269,16 +353,16 @@ window.MysteryArt=(function(){
   return artCrop(story,data.stairs[key],'mystery-stair-art',portal?.label||'층 이동');
  }
  function cover(story){
-  const rect={
-    'd1-crown-of-ashes':[0,13,1122,594],
-    'cruel-heart-island':[0,90,1122,324],
-    'neon-memory-quarantine':[0,75,1122,310],
-    'stellar-academy-first-case':[0,164,1448,270]
-  }[storyFor(story)];
-  return rect?compose(story,rect,'case-cover', '시나리오 등장인물 콘셉트 아트',
-    'mystery-story-cover','evidence',null):null;
+  const data=knownStory(story);
+  if(!data)return null;
+  const file=data.file.replace('.webp','-background.webp');
+  return '<svg class="mystery-story-cover" viewBox="0 0 1024 440" role="img" aria-label="시나리오 배경 일러스트"'+
+    ' preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">'+
+    '<image href="'+path+'backgrounds/'+file+'" width="1024" height="440" preserveAspectRatio="xMidYMid slice"/></svg>';
  }
  function avatar(c,story){
+  const asset=standalonePortrait(story,c?.characterId);
+  if(asset)return artCrop(story,[86,38,270,270],'mystery-avatar-art',c.name+' 미니 아바타',asset);
   const data=knownStory(story);
   const rect=data?.portraits?.[c?.characterId];
   if(!rect)return null;
@@ -287,5 +371,11 @@ window.MysteryArt=(function(){
   const face=[x+Math.round(w*.2),y+Math.round(h*.13),Math.round(w*.62),Math.round(h*.59)];
   return artCrop(story,face,'mystery-avatar-art',c.name+' 미니 아바타');
  }
- return {portrait,clue,object,door,stairs,avatar,cover,clueKind,artCrop,atlas:A};
+ function victim(story){
+  const c=story?.victim,theme=story?.artTheme||story?.id;
+  if(!c||!Object.hasOwn(knownStory(theme)?.portraits||{},c.id))return '';
+  return '<figure class="mystery-victim">'+portrait(c,theme,true)+
+   '<figcaption><small>피해자 · NPC</small><b>'+escape(c.name)+'</b></figcaption></figure>';
+ }
+ return {portrait,victim,clue,object,door,stairs,avatar,cover,clueKind,artCrop,atlas:A};
 })();

@@ -116,8 +116,11 @@ function meta(){
 }
 function synopsis(){
   const s=state.pkg.story;
+  const cover=window.MysteryArt?.cover(s.artTheme||s.id);
   return roomHeader(window.MysteryRoomState.room)+
     '<div class="reading-layout"><article class="paper"><div class="stamp">STORY PREVIEW · PUBLIC PROLOGUE</div>'+
+    (cover?'<div class="story-illustration">'+cover+'</div>':'')+
+    (window.MysteryArt?.victim(s)||'')+
     '<h2>'+escapeHtml(s.title)+'</h2>'+(s.synopsis||[]).map(v=>'<p>'+escapeHtml(v)+'</p>').join('')+
     '</article><aside class="surface panel-pad"><h3>1단계 · 시놉시스 확인</h3>'+
     '<p>모든 플레이어가 공동으로 읽는 이야기야. 개인 비밀은 여기에 보이지 않아야 해.</p>'+
@@ -152,14 +155,11 @@ function render(){
     note('렌더링 오류: '+e.message,true);
   }
   if(phase==='ending'){
-    const status=state.statusOverrides[state.roleId]||(
-      state.action?.dead?.includes(state.roleId)?'dead':
-      state.action?.restrained?.includes(state.roleId)?'restrained':
-      state.action?.escaped?.includes(state.roleId)?'escaped':'alive');
+    const status=state.statusOverrides[state.roleId]||'auto';
     body='<section class="test-ending surface panel-pad"><h3>🧪 캐릭터 상태를 바꿔 개인 결말 확인</h3>'+
       '<p class="muted small">테스트 모드에서만 생존·사망·제압·탈출 상태를 직접 지정할 수 있습니다. 실제 게임에서는 행동 결과가 적용됩니다.</p>'+
       '<div class="ending-arrest-row"><select id="testEndingStatus">'+
-      [['alive','생존'],['dead','사망'],['restrained','제압'],['escaped','탈출']].map(([key,label])=>
+      [['auto','행동 결과 그대로'],['alive','생존'],['dead','사망'],['restrained','제압'],['escaped','탈출']].map(([key,label])=>
         '<option value="'+key+'"'+(status===key?' selected':'')+'>'+label+'</option>').join('')+
       '</select>'+btn('test-set-status','이 캐릭터 상태 적용','btn btn-outline')+'</div></section>'+body;
   }
@@ -181,7 +181,7 @@ function runAction(button){
   if(action==='test-stage-next'){phaseTo('characters');return;}
   if(action==='test-role'){roleTo(button.dataset.role);return;}
   if(action==='test-set-status'){
-    engine.setStatus(state,state.roleId,$('testEndingStatus')?.value||'alive');
+    engine.setStatus(state,state.roleId,$('testEndingStatus')?.value||'auto');
     note('선택한 캐릭터 상태가 결말 시뮬레이션에 적용되었습니다.');render();return;
   }
   if(action==='verdict-arrest'){

@@ -1,0 +1,102 @@
+{
+  "method": "Built-in image generation, independent image per card",
+  "style": "Korean visual novel, plum and brass, D1 esports headquarters",
+  "cards": [
+    {
+      "id": "time_kitchen_oven",
+      "prompt": "Independent kitchen oven clock evidence. Close view oven digital clock 00:26, beside it thermal event printout with exactly 00:26 and 00:29 and a small voltage spike chart. No people.",
+      "source": "exec-3f4e630c-d501-4a61-88df-13c69e98a55e.png",
+      "asset": "apps/murder-mystery/assets/clues/d1-crown-of-ashes/time_kitchen_oven.webp"
+    },
+    {
+      "id": "time_hasu_terminal",
+      "prompt": "Server search terminal used by Hasu. No people. Monitor shows abstract search results about donations and signatures; read-only lock icon, no control settings. Nearby separate analog clock. Do not write dates or legible invented facts.",
+      "source": "exec-39904b3e-8f3e-4df6-80b5-90db1637d8e9.png",
+      "asset": "apps/murder-mystery/assets/clues/d1-crown-of-ashes/time_hasu_terminal.webp"
+    },
+    {
+      "id": "time_karl_badge",
+      "prompt": "Administrator access audit terminal and D1 access badge on desk. Only readable log text: '22:14 장비실 출입', '22:02 태그 대여'. No recorder, no invented location or identity. Purple brass equipment room.",
+      "source": "exec-354a503c-3d5f-4493-b005-45558cf68169.png",
+      "asset": "apps/murder-mystery/assets/clues/d1-crown-of-ashes/time_karl_badge.webp"
+    },
+    {
+      "id": "time_mac_roof",
+      "prompt": "CCTV monitor with two equal recorded frames of same Korean male esports coach short black hair wearing black polo with small D1 chest mark and red lanyard. Entering rooftop stair door at 00:05, returning at 00:41. Exactly those timestamps on corresponding frames. Night rooftop, no weapon.",
+      "source": "exec-5375b6a3-a756-4f83-87e6-306c9d8ee728.png",
+      "asset": "apps/murder-mystery/assets/clues/d1-crown-of-ashes/time_mac_roof.webp"
+    },
+    {
+      "id": "time_baetho_last_msg",
+      "prompt": "Close evidence photograph illustration of smartphone on crimson throne arm. Message thread containing exactly '00:26 메인 이벤트는 내가 직접 시작한다.' and '모두 놀라게 하자.' Crown symbol, elegant dark room. No other readable text.",
+      "source": "exec-5d047b0e-613f-4610-9b0a-56fc902780d0.png",
+      "asset": "apps/murder-mystery/assets/clues/d1-crown-of-ashes/time_baetho_last_msg.webp"
+    },
+    {
+      "id": "time_key_returns",
+      "prompt": "Close evidence illustration of returned D1 management access tag inside open locker, faint gray fabric fibers caught at edge of tag clasp, macro focus makes fibers clear, small gray maintenance glove behind as comparison. No people or text except D1.",
+      "source": "exec-77d25802-e8f0-43b0-ade1-fdce5bda40c8.png",
+      "asset": "apps/murder-mystery/assets/clues/d1-crown-of-ashes/time_key_returns.webp"
+    },
+    {
+      "id": "time_practice_live",
+      "prompt": "Two empty esports practice chairs at PCs showing identical paused stored match replay and playback scrubber, small time label 00:26. Clearly saved replay, not live participants.",
+      "source": "exec-4914f04f-08e7-4a2a-ab4d-8399f28e399d.png",
+      "asset": "apps/murder-mystery/assets/clues/d1-crown-of-ashes/time_practice_live.webp"
+    },
+    {
+      "id": "time_chef_service",
+      "prompt": "A late-night catering trolley with bread and clear broth bowls, an adjacent kitchen service slip with only 23:50 legible, oven in background. No people, no hotpot.",
+      "source": "exec-c4e01897-d1c7-478c-b87c-03ba07d73a39.png",
+      "asset": "apps/murder-mystery/assets/clues/d1-crown-of-ashes/time_chef_service.webp"
+    },
+    {
+      "id": "trick_throne_scene",
+      "prompt": "Forensic examination at foot of crimson gold throne: two distinctly different materials, lightweight broken foam prop pieces and heavy white stone dust in separate piles, magnifying glass, evidence markers. No corpse, no blood, no knife.",
+      "source": "exec-09227804-9200-4edd-9e36-4f9b64228e32.png",
+      "asset": "apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_throne_scene.webp"
+    },
+    {
+      "id": "trick_stage_outline",
+      "prompt": "Open stage rehearsal instruction booklet with hand-drawn diagram of safe light foam crown lowered above throne by cable, soft protective outline, a theatrical mask. No real technical construction instructions. All writing indistinct.",
+      "source": "exec-d11cadf2-07c8-4c24-87f6-4a0d4a820d34.png",
+      "asset": "apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_stage_outline.webp"
+    },
+    {
+      "id": "trick_showroom_slot",
+      "prompt": "Empty museum exhibit pedestal bearing small lightweight prop certification tag, wheel tracks on dark floor, absent statue. Nearby faded reference sketch on tag shows crown shaped like Galio's gold wing motifs. No statue on pedestal.",
+      "source": "exec-bed4075e-4943-4600-adbe-33d92a1c5317.png",
+      "asset": "apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_showroom_slot.webp"
+    },
+    {
+      "id": "trick_alarm_script",
+      "prompt": "Emergency lockdown broadcast script on desk beside microphone. One clearly legible handwritten Korean warning across bottom: '실제 붕괴 명령 금지'. Remaining writing abstract lines. No explosion or destruction.",
+      "source": "exec-aeddd0e0-cd8b-4cf0-a696-af3090914291.png",
+      "asset": "apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_alarm_script.webp"
+    },
+    {
+      "id": "trick_baetho_note_1",
+      "prompt": "Well worn D1 personal strategy notebook open to Roman numeral I, hand-drawn chess opponent and question mark, fine handwritten study notes blurred. Fountain pen, brass lamp. No other readable text.",
+      "source": "exec-089aeb30-e725-4c38-bff9-9eab60c98c4a.png",
+      "asset": "apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_baetho_note_1.webp"
+    },
+    {
+      "id": "trick_baetho_note_2",
+      "prompt": "D1 personal notebook open to Roman numeral II, diagram sketch of security camera aimed at wall mirror reflecting equipment-room doorway. Distinct mirror and camera. Handwriting indistinct.",
+      "source": "exec-160acb97-4754-4455-b5df-b39aa3829b6a.png",
+      "asset": "apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_baetho_note_2.webp"
+    },
+    {
+      "id": "trick_baetho_note_3",
+      "prompt": "D1 personal notebook open to Roman numeral III, illustrated sketch of seated stage performer holding activation remote, theatrical pretend-death rehearsal, small crown sketch. No death, no injuries, handwriting indistinct.",
+      "source": "exec-4089d4ab-7462-4c8b-9c2f-bc280313dad9.png",
+      "asset": "apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_baetho_note_3.webp"
+    },
+    {
+      "id": "trick_baetho_note_4",
+      "prompt": "D1 personal notebook open to Roman numeral IV with warm thank-you letter and small alpaca rescue photograph tucked in, charity receipt edge. Handwriting indistinct. Sentimental brass lamp light.",
+      "source": "exec-81d2cd1f-3a16-407a-ae23-ca245ea1cea9.png",
+      "asset": "apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_baetho_note_4.webp"
+    }
+  ]
+}

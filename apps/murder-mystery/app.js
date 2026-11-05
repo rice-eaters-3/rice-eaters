@@ -243,9 +243,12 @@ function lobby(room){
 }
 function synopsis(room){
   const readCount=room.players.filter(p=>p.read).length,my=room.players.find(p=>p.id===room.me);
+  const cover=window.MysteryArt?.cover(room.story.artTheme||room.story.id);
   return roomHeader(room)+
     '<div class="section-row"><div><div class="eyebrow">CHAPTER 01 / THE PROLOGUE</div><h2 style="margin-bottom:0">사건의 시작</h2></div><span class="tag">1 / 9 단계</span></div>'+
     '<div class="reading-layout"><article class="paper"><div class="stamp">CONFIDENTIAL · DO NOT LEAVE THIS ROOM</div>'+
+    (cover?'<div class="story-illustration">'+cover+'</div>':'')+
+    (window.MysteryArt?.victim(room.story)||'')+
     '<h2>'+escapeHtml(room.story.title)+'</h2>'+room.synopsis.map(p=>'<p>'+escapeHtml(p)+'</p>').join('')+
     '<div class="stamp" style="text-align:right;border:0;margin-top:30px">— END OF PROLOGUE —</div></article>'+
     '<aside class="surface panel-pad reading-sidebar"><div class="eyebrow">READING CONFIRMATION</div><h2>모두 읽으셨나요?</h2>'+

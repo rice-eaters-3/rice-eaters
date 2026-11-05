@@ -84,3 +84,54 @@ test('all four case visuals are composed per asset instead of returning a plain 
   assert.ok(artSet.every(p=>p.includes('EVIDENCE RECORD')));
  }
 });
+
+test('studio previews each authored status and both goal results for all 28 characters',()=>{
+ for(const file of ids){
+  const pkg=validate(require('../mystery-content/'+file+'.case.json'));
+  const state=Studio.create(pkg);
+  Studio.switchPhase(state,'ending');
+  const culprit=pkg.story.characters.find(c=>pkg.game.booklets[c.id]?.culprit);
+  for(const {id} of pkg.story.characters){
+   Studio.switchRole(state,id);
+   const authored=pkg.game.ending.characters[id];
+   for(const captured of [false,true]){
+    for(const status of ['alive','dead','restrained','escaped','arrested']){
+     // Arrest has one target, and a deceased culprit cannot be arrested.
+     if(status==='arrested'&&(id===culprit.id)!==captured)continue;
+     if(captured&&id===culprit.id&&status!=='arrested')continue;
+     Studio.setStatus(state,id,status==='arrested'?'alive':status);
+     Studio.setArrest(state,status==='arrested'?id:captured?culprit.id:null);
+     for(const goal of [true,false]){
+      Studio.setGoal(state,id,goal);
+      const {common,personal}=Studio.roomView(state).ending;
+      assert.equal(common.captured,captured);
+      assert.equal(personal.status,status);
+      assert.equal(personal.goalMet,goal);
+      assert.ok(personal.paragraphs.includes(authored[status]));
+      assert.ok(personal.paragraphs.includes(authored[goal?'goalAchieved':'goalFailed']));
+     }
+    }
+    Studio.setStatus(state,id,'auto');
+   }
+  }
+ }
+});
+
+test('restoring a simulated death clears the arrest and removes the suspect from the common ending',()=>{
+ const pkg=validate(require('../mystery-content/d1-gaming.case.json'));
+ const state=Studio.create(pkg);
+ Studio.switchPhase(state,'ending');
+ Studio.switchPhase(state,'action');
+ Studio.switchPhase(state,'ending');
+ Studio.switchRole(state,'mac');
+ Studio.setStatus(state,'mac','alive');
+ Studio.setArrest(state,'mac');
+ state.action.dead.push('mac');
+ Studio.setStatus(state,'mac','auto');
+ const {common,personal,editor}=Studio.roomView(state).ending;
+ assert.equal(state.verdict.arrestedCharacterId,null);
+ assert.equal(common.arrestedName,null);
+ assert.equal(editor.arrestedCharacterId,null);
+ assert.equal(common.verdictType,'unresolved');
+ assert.equal(personal.status,'dead');
+});

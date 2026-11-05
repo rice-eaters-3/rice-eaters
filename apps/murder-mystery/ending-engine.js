@@ -13,12 +13,13 @@
   const unique=xs=>[...new Set(xs||[])];
   const outcome=(story,game,verdict,body,roleId)=>{
     const roles=story.characters||[],culprit=roles.find(c=>game.booklets?.[c.id]?.culprit);
-    const chosen=roles.find(c=>c.id===verdict?.arrestedCharacterId)||null;
+    const selected=roles.find(c=>c.id===verdict?.arrestedCharacterId);
     const statuses=body||{},dead=unique(statuses.dead),restrained=unique(statuses.restrained),escaped=unique(statuses.escaped);
     // A deceased suspect cannot be physically arrested. Treat old room saves
     // with a stale dead+arrest combination as unresolved, never as a conviction.
-    const caught=!!culprit&&!!chosen&&chosen.id===culprit.id&&!dead.includes(chosen.id);
-    const verdictType=caught?'captured':chosen&&!dead.includes(chosen.id)?'wrongful':'unresolved';
+    const chosen=selected&&!dead.includes(selected.id)?selected:null;
+    const caught=!!chosen&&chosen.id===culprit?.id;
+    const verdictType=caught?'captured':chosen?'wrongful':'unresolved';
     const cfg=game.ending||{},common=cfg.common||{};
     const shared=caught?common.captured:common.missed;
     const fallback=caught?'사건의 진상을 밝히다':'진범을 놓친 밤';
@@ -27,7 +28,7 @@
       paragraphs:(Array.isArray(shared?.paragraphs)?shared.paragraphs:[]).filter(Boolean),
       captured:caught,
       verdictType,
-      arrestedCharacterId:dead.includes(chosen?.id)?null:chosen?.id||null,
+      arrestedCharacterId:chosen?.id||null,
       arrestedName:chosen?.name||null,
       culpritName:culprit?.name||null
     };
@@ -82,7 +83,7 @@
     const result=outcome(story,game,verdict,body,viewerId);
     if(!isHost)return result;
     result.editor={
-      arrestedCharacterId:verdict?.arrestedCharacterId||null,
+      arrestedCharacterId:result.common.arrestedCharacterId,
       goals:Object.fromEntries((story.characters||[]).map(c=>[c.id,
         verdict?.goals?.[c.id]===true?true:verdict?.goals?.[c.id]===false?false:null])),
       characters:(story.characters||[]).map(c=>({

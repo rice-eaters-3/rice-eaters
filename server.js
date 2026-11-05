@@ -232,6 +232,10 @@ function publicWhispers(room,member){
 function phaseChange(room,phase,sid){
   room.phase=phase;room.phaseStartedAt=Date.now();
   room.advanceVotes={};
+  if(phase==='ending'&&room.verdict?.arrestedCharacterId&&
+    endingStatus(room).dead.includes(room.verdict.arrestedCharacterId)){
+    room.verdict.arrestedCharacterId=null;
+  }
   if(room.investigation&&!INVESTIGATION_PHASES.includes(phase)){
     room.investigation.selectiveShares=[];
     room.investigation.offers=[];
@@ -301,7 +305,7 @@ function online(room,p){
     Date.now()-(recentPresence.get(room.id)?.get(p.sid)||0)<PRESENCE_TTL_MS;
 }
 function publicStory(story){
-  return {id:story.id,artTheme:story.artTheme||'',title:story.title,subtitle:story.subtitle,teaser:story.teaser,genre:story.genre,minutes:story.minutes,players:story.players};
+  return {id:story.id,victim:story.victim,artTheme:story.artTheme||'',title:story.title,subtitle:story.subtitle,teaser:story.teaser,genre:story.genre,minutes:story.minutes,players:story.players};
 }
 function endingStatus(room){
   const toCharacter=ids=>(ids||[]).map(id=>room.players.find(p=>p.id===id)?.characterId).filter(Boolean);
@@ -349,6 +353,9 @@ function roomView(room,sid){
         symbol:c.symbol,accent:c.accent,...positionFor(room,p)};
     })
   }:null;
+  const showVerdict=isMember&&['discussion2','action','ending'].includes(room.phase);
+  const statuses=showVerdict?endingStatus(room):null;
+  const arrested=room.verdict?.arrestedCharacterId||null;
   return {
     code:room.id,phase:room.phase,story:publicStory(story),
     progress:phaseReadiness(room),
@@ -367,15 +374,15 @@ function roomView(room,sid){
     booklet,map,investigation:investigationView(room,member),
     action:isMember&&['action','ending'].includes(room.phase)&&room.actions?
       actionEngine.view(room,member,game):null,
-    verdict:isMember&&['discussion2','action','ending'].includes(room.phase)?{
+    verdict:showVerdict?{
       isHost:room.host===sid,
-      arrestedCharacterId:room.verdict?.arrestedCharacterId||null,
+      arrestedCharacterId:statuses.dead.includes(arrested)?null:arrested,
       candidates:room.players.filter(p=>p.characterId).map(p=>({
         id:p.characterId,name:story.characters.find(c=>c.id===p.characterId)?.name||p.name,
-        dead:endingStatus(room).dead.includes(p.characterId)}))
+        dead:statuses.dead.includes(p.characterId)}))
     }:null,
     ending:isMember&&room.phase==='ending'&&char?
-      endingEngine.summary(story,game,room.verdict||{},endingStatus(room),char.id,room.host===sid):null,
+      endingEngine.summary(story,game,room.verdict||{},statuses,char.id,room.host===sid):null,
     whispers:isMember&&PLAY_PHASES.includes(room.phase)?publicWhispers(room,member):null
   };
 }

@@ -294,7 +294,7 @@
     if(!['auto','alive','dead','restrained','escaped'].includes(status))error('상태 값이 올바르지 않습니다.');
     if(status==='auto')delete state.statusOverrides[roleId];
     else state.statusOverrides[roleId]=status;
-    if(status==='dead'&&state.verdict.arrestedCharacterId===roleId)state.verdict.arrestedCharacterId=null;
+    if(state.verdict.arrestedCharacterId===roleId&&combinedEndingStatus(state).dead.includes(roleId))state.verdict.arrestedCharacterId=null;
     return state;
   }
   function combinedEndingStatus(state){

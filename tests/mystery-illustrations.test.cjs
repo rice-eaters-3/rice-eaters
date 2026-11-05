@@ -32,8 +32,8 @@ test('Illustration renderer draws portraits and evidence art with HTML escaping'
  const c=art.clue({id:'knife',title:'오염된 대형 식칼'},'d1-crown-of-ashes');
  assert.match(c,/<svg/);assert.match(c,/d1\.webp/);
  assert.equal(art.clueKind({id:'cloud_tainted_cleaver',title:'오염된 대형 식칼'},'d1-crown-of-ashes'),'knife');
- assert.match(art.object({kind:'gargoyle',name:'가고일 전시 조각상'},'d1-crown-of-ashes'),/d1\.webp/);
- assert.match(p,/d1\.webp/);
+ assert.match(art.object({kind:'gargoyle',name:'가고일 전시 조각상'},'d1-crown-of-ashes'),/props\/d1-crown-of-ashes\/gargoyle\.webp/);
+ assert.match(p,/portraits\/d1-crown-of-ashes\/jobi\.webp/);
  assert.doesNotMatch(p,/<path/,'the portrait must be real artwork, not a geometric drawing');
 });
 test('Frontend loads committed concept artwork before book, and map/card/portrait UI are wired',()=>{
