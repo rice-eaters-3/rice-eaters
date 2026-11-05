@@ -1187,7 +1187,7 @@
           "clueKind": "timeline",
           "owner": "nova",
           "blockedFor": [],
-          "back": "행동 단계에 한 사람을 보호할 수 있다. 장치 자체는 살인 도구가 아니다.",
+          "back": "은색 패치의 보호 회로에는 최근 한 차례 과부하가 걸린 흔적이 있다. 제작 번호는 검역국의 옛 납품 명세서에 적힌 것과 같다.",
           "repeatable": false,
           "transferable": true,
           "availableFromPhase": "investigation1",
@@ -1263,7 +1263,7 @@
           "clueKind": "timeline",
           "owner": "rune",
           "blockedFor": [],
-          "back": "과거 불법 복원 수술에 관여했지만 현재 사건의 살해자는 아니다.",
+          "back": "의료 면허는 몇 해 전 복원 시술 관련 기록 누락으로 취소됐다. 처분 문서의 세부 경위는 비공개 처리되어 있고 당시 담당 감사관의 이니셜이 남아 있다.",
           "repeatable": false,
           "transferable": false,
           "availableFromPhase": "investigation1",
@@ -1320,7 +1320,7 @@
           "clueKind": "timeline",
           "owner": "ion",
           "blockedFor": [],
-          "back": "행동 단계에서 다른 참가자에게 게임 내 공격 효과를 줄 수 있다. 현재 살인에 사용된 직접 도구라는 뜻은 아니다.",
+          "back": "방호용 방전 모듈의 시험 출력이 장치에 저장되어 있다. 충전 기록에는 격리 전날 짧은 작동 시험을 진행한 흔적이 있다.",
           "repeatable": false,
           "transferable": false,
           "availableFromPhase": "investigation1",
@@ -1358,7 +1358,7 @@
           "clueKind": "timeline",
           "owner": "ion",
           "blockedFor": [],
-          "back": "격리 사유로 적힌 감염은 실제로 발견되지 않았다. 외부 통신 차단은 살인을 숨기기 위한 선택이었다.",
+          "back": "감염자 발생을 이유로 한 격리 경고가 발송됐으나 해당 환자의 진료 번호는 비어 있다. 경고가 발송된 뒤 외부 통신 접속이 일제히 종료됐다.",
           "repeatable": false,
           "transferable": true,
           "availableFromPhase": "investigation1",
@@ -1415,7 +1415,7 @@
           "clueKind": "timeline",
           "owner": "mira",
           "blockedFor": [],
-          "back": "에코는 직접 살인에 참여하지 않았으며 존재 자체가 범행의 동기는 아니다.",
+          "back": "에코의 독립된 의사결정과 법적 보호를 요구하는 청원서다. 서명란에는 여러 사람의 이름이 있으며, 감사관에게 제출하려다 보류한 날짜가 찍혀 있다.",
           "repeatable": false,
           "transferable": false,
           "availableFromPhase": "investigation1",
@@ -1707,7 +1707,11 @@
           "transferable": true,
           "availableFromPhase": "investigation1",
           "requiresPresence": false,
-          "location": null,
+          "location": {
+            "floor": "atrium",
+            "x": 3,
+            "y": 2
+          },
           "grant": null,
           "insights": {}
         },
@@ -1749,7 +1753,11 @@
           "transferable": true,
           "availableFromPhase": "investigation1",
           "requiresPresence": false,
-          "location": null,
+          "location": {
+            "floor": "lab",
+            "x": 14,
+            "y": 8
+          },
           "grant": null,
           "insights": {}
         },
@@ -1791,7 +1799,11 @@
           "transferable": true,
           "availableFromPhase": "investigation1",
           "requiresPresence": false,
-          "location": null,
+          "location": {
+            "floor": "lab",
+            "x": 14,
+            "y": 2
+          },
           "grant": null,
           "insights": {}
         },
@@ -1799,7 +1811,7 @@
           "id": "memory_underground_bill",
           "title": "불법 배송 대금",
           "subtitle": "솔의 암시장 운송",
-          "back": "윤세라가 거래 증거를 확보하려고 솔에게 면책을 약속했다. 거래를 했다는 사실만으로 솔이 범인은 아니다.",
+          "back": "솔의 운송 대금 명세와 윤세라의 수사 협조 기록이 같은 거래 번호를 참조한다. 증거 제출 시 면책 조건을 검토한다는 문구가 별도로 붙어 있다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -1810,7 +1822,11 @@
           "transferable": true,
           "availableFromPhase": "investigation1",
           "requiresPresence": false,
-          "location": null,
+          "location": {
+            "floor": "atrium",
+            "x": 3,
+            "y": 8
+          },
           "grant": null,
           "insights": {}
         },
@@ -1829,7 +1845,11 @@
           "transferable": true,
           "availableFromPhase": "investigation1",
           "requiresPresence": false,
-          "location": null,
+          "location": {
+            "floor": "atrium",
+            "x": 14,
+            "y": 8
+          },
           "grant": null,
           "insights": {}
         },
@@ -1848,7 +1868,11 @@
           "transferable": true,
           "availableFromPhase": "investigation1",
           "requiresPresence": false,
-          "location": null,
+          "location": {
+            "floor": "atrium",
+            "x": 3,
+            "y": 2
+          },
           "grant": null,
           "insights": {}
         },
@@ -1890,7 +1914,11 @@
           "transferable": true,
           "availableFromPhase": "investigation1",
           "requiresPresence": false,
-          "location": null,
+          "location": {
+            "floor": "lab",
+            "x": 14,
+            "y": 8
+          },
           "grant": null,
           "insights": {}
         },
@@ -1909,7 +1937,11 @@
           "transferable": true,
           "availableFromPhase": "investigation1",
           "requiresPresence": false,
-          "location": null,
+          "location": {
+            "floor": "lab",
+            "x": 14,
+            "y": 8
+          },
           "grant": null,
           "insights": {}
         },
@@ -1928,7 +1960,11 @@
           "transferable": true,
           "availableFromPhase": "investigation1",
           "requiresPresence": false,
-          "location": null,
+          "location": {
+            "floor": "lab",
+            "x": 3,
+            "y": 8
+          },
           "grant": null,
           "insights": {}
         },
@@ -1999,7 +2035,11 @@
           "transferable": true,
           "availableFromPhase": "investigation2",
           "requiresPresence": false,
-          "location": null,
+          "location": {
+            "floor": "core",
+            "x": 14,
+            "y": 2
+          },
           "grant": null,
           "insights": {}
         },
@@ -2043,7 +2083,11 @@
           "transferable": true,
           "availableFromPhase": "investigation2",
           "requiresPresence": false,
-          "location": null,
+          "location": {
+            "floor": "lab",
+            "x": 14,
+            "y": 2
+          },
           "grant": null,
           "insights": {}
         },
@@ -2051,7 +2095,7 @@
           "id": "memory_ion_sibling",
           "title": "대체 신원 계약서",
           "subtitle": "2차 · 살인 동기",
-          "back": "이온은 동생의 대체 신원을 지키기 위해 불법 기억 거래에 연루됐고 감사관이 그 정보를 공개할까 두려워했다. 가족의 어려움은 살인의 면책이 되지 않는다.",
+          "back": "대체 신분 서류에는 이온의 가족 정보와 봉인된 의료 기록이 함께 묶여 있다. 감사 예정 목록에 그 서류 번호가 포함되어 있고, 열람을 막아 달라는 요청이 남아 있다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -2097,7 +2141,7 @@
           "id": "memory_core_backdoor",
           "title": "서버 보존 우회 감사 기록",
           "subtitle": "2차 · 사라진 원본",
-          "back": "범인이 감사관의 원본 삭제를 시도했으나 원본 해시 복구 기능이 작동했다. 사라진 파일을 완전히 지웠다는 주장은 거짓이다.",
+          "back": "감사관의 원본 데이터에 삭제 요청이 발생한 로그가 남아 있다. 요청 계정은 시스템 이름으로 기록되어 있으나 해시 검증 과정에서 원본 복구 사본이 발견됐다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -2120,7 +2164,7 @@
           "id": "memory_bio_echo",
           "title": "인격 복제의 법적 차이",
           "subtitle": "2차 · 진짜 사람과 재생 영상",
-          "back": "독립적 인격인 에코와 재생 전용 윤세라 잔향 영상은 다르다. 인공인격이라는 이유만으로 에코가 범인이라는 주장은 논리적으로 성립하지 않는다.",
+          "back": "에코의 독립 인격 기록은 연속된 기억을 갖지만 윤세라의 잔향 영상은 정해진 대사만 재생한다. 두 파일의 실행 권한과 저장 형식도 서로 다르다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -2133,7 +2177,11 @@
           "transferable": true,
           "availableFromPhase": "investigation2",
           "requiresPresence": false,
-          "location": null,
+          "location": {
+            "floor": "core",
+            "x": 3,
+            "y": 2
+          },
           "grant": null,
           "insights": {}
         },
@@ -2164,7 +2212,7 @@
           "id": "memory_security_ledger",
           "title": "교차 확인한 출입 기록",
           "subtitle": "2차 · 정비권한 로그",
-          "back": "기억실 입장·환자 관리 권한·EMP 승인 권한이 같은 정비 담당자 그룹에 묶였다. 아틀라스의 과거 계정과 이온의 현역 계정을 구별해야 한다.",
+          "back": "기억실 입장·환자 관리·EMP 승인 권한은 같은 정비 그룹에 연결돼 있다. 로그에는 현재 활성 계정과 이미 만료된 구형 계정이 함께 남아 있다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -2178,7 +2226,11 @@
           "transferable": true,
           "availableFromPhase": "investigation2",
           "requiresPresence": false,
-          "location": null,
+          "location": {
+            "floor": "atrium",
+            "x": 14,
+            "y": 8
+          },
           "grant": null,
           "insights": {}
         },
@@ -2235,7 +2287,7 @@
           "id": "memory_why_sealed",
           "title": "격리 지침의 모순",
           "subtitle": "2차 · 거짓 봉쇄 원인",
-          "back": "격리 필드는 원래 외부 재난을 막는 안전 기능이지만, 사건 당일 경보 요건은 충족되지 않았다. 통신 차단 자체가 범인의 은폐 수단이었다.",
+          "back": "격리 필드는 원래 외부 재난에 대비한 안전 장치다. 사건 당일에는 발동 조건을 충족한 외부 경보가 없는데도 통신 회선이 수동 차단되었다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,

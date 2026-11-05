@@ -1497,7 +1497,7 @@
           "subtitle": "증거를 훼손하지 않으려 준비한 장갑.",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "오염 흔적은 없지만 밤중 관측실에서 목격되었다는 오해를 부른다.",
+          "back": "손가락 끝이 유난히 닳은 검은 면장갑이다. 관측실 창틀 부근에서 같은 조직의 실이 발견됐지만 바닷바람에 염분과 모래가 많이 묻어 있다.",
           "owner": "taehan",
           "blockedFor": [],
           "requires": [],
@@ -1573,7 +1573,7 @@
           "subtitle": "동생이 건네준 오래된 머리끈.",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "관측실 난간에서 발견된 천 조각과 같은 염색 시리즈다. 직접 범인을 확정하지는 않지만 이동을 입증한다.",
+          "back": "머리끈의 보라색 섬유는 관측실 난간의 조각과 염색 특성이 비슷하다. 발견 지점의 다른 발자국과 함께 대조할 필요가 있다.",
           "owner": "harin",
           "blockedFor": [],
           "requires": [],
@@ -1611,7 +1611,7 @@
           "subtitle": "제작진이 지급한 비상용 소품.",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "실제 구조 신호로 사용될 수 있으나 행동 단계에서는 게임 안의 공격 아이템으로 취급된다. 흔적이 남아 쉽게 오해를 부른다.",
+          "back": "작은 구조 신호탄의 봉인 테이프가 낡아 있다. 안전 지침에는 이 장치를 관측실이 아닌 해변 데크에서 사용하도록 적혀 있다.",
           "owner": "harin",
           "blockedFor": [],
           "requires": [],
@@ -1725,7 +1725,7 @@
           "subtitle": "촬영 원본과 송출 시각이 분리된 기록.",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "하린의 숙소 인터뷰는 실제 촬영 23:17 이전, 방송 시각 23:30. 원본의 안전 기록과 대조하면 알리바이가 무너진다.",
+          "back": "숙소 인터뷰의 원본 파일 생성 시각은 23:17 이전이다. 방송 편성표에는 23:30으로 기록되어 있으며, 전송 로그의 지연 시간이 별도로 남아 있다.",
           "owner": "nayeon",
           "blockedFor": [],
           "requires": [],
@@ -1801,7 +1801,7 @@
           "subtitle": "해양 스포츠 연출에 쓰던 구난 소품.",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "사건 당일 살인과 관계 없지만 행동 단계에서 한 사람을 제압하는 도구로 사용할 수 있다.",
+          "back": "그물 가장자리의 여러 매듭 중 하나는 최근 새로 묶였다. 안전 표찰에는 해양 구조 훈련용으로 대여되었다는 날짜가 적혀 있다.",
           "owner": "somi",
           "blockedFor": [],
           "requires": [],
@@ -1867,7 +1867,11 @@
           "requiresPresence": false,
           "owner": null,
           "blockedFor": [],
-          "location": null,
+          "location": {
+            "floor": "villa",
+            "x": 3,
+            "y": 8
+          },
           "grant": null
         },
         {
@@ -1876,7 +1880,7 @@
           "subtitle": "연프 · 가짜 커플 의혹",
           "type": "information",
           "clueKind": "timeline",
-          "back": "도윤과 소미에게 짜여진 커플 연출을 요구하는 부속 합의서. 두 사람에게 살해 동기는 있지만 직접 행동의 증거는 없다.",
+          "back": "도윤과 소미에게 커플 연출을 요구하는 부속 합의서다. 관계가 깨지면 위약금이 발생한다는 조항과 홍보용 인터뷰 일정이 빼곡하게 기재되어 있다.",
           "availableFromPhase": "investigation1",
           "visibility": "locked",
           "requires": [],
@@ -1885,7 +1889,11 @@
           "requiresPresence": false,
           "owner": null,
           "blockedFor": [],
-          "location": null,
+          "location": {
+            "floor": "villa",
+            "x": 14,
+            "y": 8
+          },
           "grant": null
         },
         {
@@ -1925,7 +1933,11 @@
           "requiresPresence": false,
           "owner": null,
           "blockedFor": [],
-          "location": null,
+          "location": {
+            "floor": "villa",
+            "x": 14,
+            "y": 2
+          },
           "grant": null
         },
         {
@@ -2009,7 +2021,11 @@
           "requiresPresence": false,
           "owner": null,
           "blockedFor": [],
-          "location": null,
+          "location": {
+            "floor": "lighthouse",
+            "x": 3,
+            "y": 2
+          },
           "grant": null
         },
         {
@@ -2027,7 +2043,11 @@
           "requiresPresence": false,
           "owner": null,
           "blockedFor": [],
-          "location": null,
+          "location": {
+            "floor": "villa",
+            "x": 14,
+            "y": 8
+          },
           "grant": null
         },
         {
@@ -2036,7 +2056,7 @@
           "subtitle": "서해안 · 편집 전 프레임",
           "type": "information",
           "clueKind": "timeline",
-          "back": "영상에는 편집 시간표와 다른 관측실 입구의 움직임이 보인다. 시간이 맞지 않는 인터뷰 영상과 대조하면 특정 인물의 알리바이가 흔들린다.",
+          "back": "편집되지 않은 영상의 관측실 입구에는 누군가가 잠깐 나타났다 사라진다. 화면 구석 시계와 방송 편성표에 적힌 시간이 일치하지 않는다.",
           "availableFromPhase": "investigation1",
           "visibility": "locked",
           "requires": [
@@ -2047,7 +2067,11 @@
           "requiresPresence": false,
           "owner": null,
           "blockedFor": [],
-          "location": null,
+          "location": {
+            "floor": "villa",
+            "x": 14,
+            "y": 2
+          },
           "grant": null
         },
         {
@@ -2056,7 +2080,7 @@
           "subtitle": "선착장 · 구조 장비",
           "type": "information",
           "clueKind": "timeline",
-          "back": "촬영용 안전 그물과 예비 조끼가 보관되어 있다. 실제 살인에 사용된 장비는 없다는 확인 기록이 있다.",
+          "back": "촬영용 안전 그물과 예비 조끼가 보관되어 있다. 장비 체크리스트에는 마지막 반출 시간이 적혔지만 누가 확인했는지는 서명이 지워져 있다.",
           "availableFromPhase": "investigation1",
           "visibility": "locked",
           "requires": [],
@@ -2087,7 +2111,11 @@
           "requiresPresence": false,
           "owner": null,
           "blockedFor": [],
-          "location": null,
+          "location": {
+            "floor": "villa",
+            "x": 14,
+            "y": 2
+          },
           "grant": null
         },
         {
@@ -2120,7 +2148,7 @@
           "subtitle": "2차 조사 · 카드 ID 대조",
           "type": "information",
           "clueKind": "timeline",
-          "back": "23시대 편집실에 사용된 보조 카드의 번호가 하린의 오래된 편집증과 같았다. PD가 누군가를 만나러 나간 직후 사용됐다.",
+          "back": "편집실 보조 출입카드 사용 로그에는 23시대의 짧은 출입 기록이 있다. 사용 카드 번호는 낡은 카드의 표면 마모 때문에 끝자리 한 개가 흐릿하다.",
           "availableFromPhase": "investigation2",
           "visibility": "locked",
           "requires": [
@@ -2131,7 +2159,11 @@
           "requiresPresence": false,
           "owner": null,
           "blockedFor": [],
-          "location": null,
+          "location": {
+            "floor": "villa",
+            "x": 14,
+            "y": 2
+          },
           "grant": null
         },
         {
@@ -2186,7 +2218,7 @@
           "subtitle": "2차 조사 · 하린 23:17?",
           "type": "information",
           "clueKind": "timeline",
-          "back": "방송에서는 23:30 하린이 숙소에서 말하는 것처럼 보였지만 원본 메타데이터에는 훨씬 이른 촬영 시각이 적혀 있다. 방송 알리바이는 성립하지 않는다.",
+          "back": "편집된 영상에는 23:30이라는 방송 시각이 표시되어 있다. 원본 메타데이터에는 그보다 앞선 촬영 시각과 별도 편집 시각이 남아 있다.",
           "availableFromPhase": "investigation2",
           "visibility": "hidden",
           "requires": [

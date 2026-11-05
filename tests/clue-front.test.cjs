@@ -45,3 +45,29 @@ test('Studio player views do not expose evidence title or subtitle until discove
   assert.equal(seen.title,'조비의 협박 메시지가 남은 휴대전화');
   assert.ok(seen.revealed[0].back.includes('21:47'));
 });
+
+test('built-in clues have specific scene locations rather than generic case-file names',()=>{
+ const stories=[d1,require('../mystery-content/cruel-heart-island.case.json'),
+  require('../mystery-content/neon-memory-quarantine.case.json'),
+  require('../mystery-content/stellar-academy-first-case.case.json')];
+ for(const pkg of stories){
+  const fronts=front.labels(pkg.game.investigation.cards,pkg.story.characters,pkg.game.floors);
+  for(const card of pkg.game.investigation.cards){
+   assert.ok(!fronts[card.id].startsWith('사건 자료 '),pkg.story.id+'/'+card.id);
+   if(card.type==='belonging')continue;
+   assert.ok(card.location,pkg.story.id+'/'+card.id+' needs a location');
+   const floor=pkg.game.floors.find(f=>f.id===card.location.floor);
+   assert.equal(floor?.tiles[card.location.y]?.[card.location.x],'.',card.id);
+  }
+  assert.equal(new Set(Object.values(fronts)).size,pkg.game.investigation.cards.length,pkg.story.id);
+ }
+ const d1Names=front.labels(d1.game.investigation.cards,d1.story.characters,d1.game.floors);
+ for(let i=1;i<=4;i++)assert.ok(d1Names['trick_baetho_note_'+i].startsWith('배익호의 왕좌실 '));
+});
+test('tactical board never directly explains the culprit method',()=>{
+ const c=d1.game.investigation.cards.find(c=>c.id==='mac_tactical_board');
+ const item=d1.game.booklets.mac.inventory.find(c=>c.id==='mac_tactical_board');
+ for(const value of [c.back,item.description]){
+  assert.ok(!value.includes('배익호를 직접 공격하지 않고 살해할 구상을 암시한다'));
+ }
+});
