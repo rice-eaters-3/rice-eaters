@@ -129,6 +129,7 @@ function validate(input){
     const requires=Array.isArray(c.requires)?c.requires.map(x=>String(x)):[];
     const blockedFor=Array.isArray(c.blockedFor)?c.blockedFor.map(x=>String(x)):[];
     return {id:c.id,title:text(c.title,100)||c.id,subtitle:text(c.subtitle,180),
+      frontPlace:text(c.frontPlace,100),
       type:['place','information','belonging'].includes(c.type)?c.type:'place',
       back:text(c.back,4000),owner:story.characters.some(x=>x.id===c.owner)?c.owner:null,
       blockedFor:blockedFor.filter(x=>story.characters.some(v=>v.id===x)),
