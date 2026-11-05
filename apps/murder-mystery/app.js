@@ -384,6 +384,12 @@ async function perform(action,button){
       else if(action==='card-share')toast('같은 타일의 플레이어에게 카드가 선택 공개되었습니다.');
       else if(action==='exchange-offer')toast('양도 요청을 보냈습니다. 상대방의 승인을 기다립니다.');
       else if(action==='exchange-reply')toast(body.accept?'양도를 수락했습니다.':'양도를 거절했습니다.');
+    } else if(action==='accusation-vote'){
+      const characterId=document.getElementById('accusationTarget')?.value;
+      if(!characterId)throw Error('지목할 인물을 선택하세요.');
+      if(!window.confirm('이 인물을 범인으로 최종 지목할까요? 투표 후 변경할 수 없습니다.'))return;
+      updateRoom(await api('/api/rooms/'+code+'/accusation-vote','POST',{characterId}),state.connection,true);
+      toast('투표가 접수되었습니다. 다른 참가자의 투표를 기다립니다.');
     } else if(action==='verdict-arrest'){
       if(room?.me!==room?.hostId)throw Error('방장만 구속 대상을 지정할 수 있습니다.');
       const characterId=document.getElementById('endingArrestTarget')?.value||null;
