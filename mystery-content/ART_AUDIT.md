@@ -95,7 +95,7 @@
 
 ## 재개 지점
 
-D1 사옥의 71번째 카드 `trick_evacuation_truth`부터 다음 10장을 대조한다. D1 1장, 마지막 하트 56장, 네온 검역국 54장, 성하 영재관 48장이 남아 있다.
+D1 71장 교체 완료. 마지막 하트의 첫 카드 `minjae_rescue_ring`부터 이어간다. 마지막 하트 56장, 네온 검역국 54장, 성하 영재관 48장이 남아 있다.
 
 ## 추가 디자인 지정
 
@@ -147,3 +147,13 @@ D1 사옥의 71번째 카드 `trick_evacuation_truth`부터 다음 10장을 대�
 | `trick_safety_report` | 공용 D1 노트로 ‘보관실 최종 안전 사고 분석’의 개별 증거를 구분할 수 없음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_safety_report.webp` |
 | `trick_prop_invoice` | 공용 D1 노트로 ‘가고일 기념물 이동 내역’의 개별 증거를 구분할 수 없음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_prop_invoice.webp` |
 | `trick_reconstruction` | 공용 D1 노트로 ‘왕좌 사건 합동 재구성 도식’의 개별 증거를 구분할 수 없음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_reconstruction.webp` |
+
+## 명칭 및 표시 보정
+
+패러디 석상의 게임 내 이름을 **갈리온**으로 정했다. 전시대 그림의 Galio 명판을 이미지 생성으로 교체하고 지도 석상 이름도 변경했다. 독립 조사 그림은 전체 프레임을 표시해 가장자리 단서가 잘리거나 장식에 가려지지 않게 했다.
+
+## D1 사옥 · 최종 1장
+
+| 카드 ID | 기존 문제 | 신규 이미지 경로 |
+| --- | --- | --- |
+| `trick_evacuation_truth` | 공용 노트로 허구 경보와 실제 봉쇄를 구분할 수 없음 | `apps/murder-mystery/assets/clues/d1-crown-of-ashes/trick_evacuation_truth.webp` |

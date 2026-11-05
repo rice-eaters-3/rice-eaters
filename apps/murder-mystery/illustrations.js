@@ -156,7 +156,8 @@ window.MysteryArt=(function(){
    'trick_rehearsal_diary',
    'trick_safety_report',
    'trick_prop_invoice',
-   'trick_reconstruction'
+   'trick_reconstruction',
+   'trick_evacuation_truth'
   ])
  };
  const standaloneD1Props=new Set(['sink','fridge','pc','gargoyle','throne']);
@@ -302,8 +303,13 @@ window.MysteryArt=(function(){
   const cardId=c?.cardId||c?.id;
   if(individualClues[theme]?.has(cardId)){
    const asset={...data,file:'clues/'+theme+'/'+cardId+'.webp',size:[512,512]};
-   return compose(theme,[0,0,512,512],cardId,label,
-     'mystery-clue-art real-clue-art','evidence',null,asset);
+   // Evidence details at the edges must remain visible in every UI size.
+   return '<svg class="mystery-clue-art real-clue-art standalone-evidence"'+
+    ' data-asset="'+escape(cardId)+'" viewBox="0 0 512 512"'+
+    ' preserveAspectRatio="xMidYMid meet" role="img" aria-label="'+escape(label)+'"'+
+    ' xmlns="http://www.w3.org/2000/svg"><desc>EVIDENCE RECORD</desc>'+
+    '<image href="'+path+asset.file+'" width="512" height="512"'+
+    ' preserveAspectRatio="xMidYMid meet"/></svg>';
   }
   const key=clueKind(c,theme),rect=data?.clues?.[key];
   if(rect)return compose(story,rect,c?.id||c?.title||c?.name||key,label,

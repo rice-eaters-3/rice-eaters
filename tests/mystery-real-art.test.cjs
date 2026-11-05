@@ -72,10 +72,12 @@ test('every player, map prop and clue has a case illustration',()=>{
   assert.equal(data.game.investigation.cards.length,clues);
   for(const [index,clue] of data.game.investigation.cards.entries()){
    const v=art.clue(clue,id);
-   const standalone=id==='d1-crown-of-ashes'&&index<70;
+   const standalone=id==='d1-crown-of-ashes'&&index<71;
    if(standalone){
     const name='clues/'+id+'/'+clue.id+'.webp';
     assert.ok(v.includes(name));
+    assert.match(v,/preserveAspectRatio="xMidYMid meet"/);
+    assert.doesNotMatch(v,/<clipPath|<text|slice/,'standalone evidence must not crop or cover clues');
     assert.ok(!v.includes(file));
     assert.ok(art.clue({...clue,id:'holding_abc',cardId:clue.id},id).includes(name));
     assert.ok(art.clue({id:clue.id,name:clue.title},id).includes(name));
@@ -147,7 +149,7 @@ test('local HTTP server serves original and standalone artwork with image/webp M
   fs.rmSync(dir,{recursive:true,force:true});
  });
  const base='http://127.0.0.1:'+server.address().port;
- const independent=require('../mystery-content/d1-gaming.case.json').game.investigation.cards.slice(0,70)
+ const independent=require('../mystery-content/d1-gaming.case.json').game.investigation.cards.slice(0,71)
   .map(({id})=>['','d1-crown-of-ashes','clues/d1-crown-of-ashes/'+id+'.webp']);
  const backgrounds=scenarios.map(([filename,id,file])=>[filename,id,'backgrounds/'+file.replace('.webp','-background.webp')]);
  const d1=require('../mystery-content/d1-gaming.case.json').story;
