@@ -209,7 +209,13 @@ window.MysteryArt=(function(){
    'island_tide_autopsy',
    'island_last_intercom',
    'island_interview_raw',
-   'island_relay_key'
+   'island_relay_key',
+   'island_sponsor_real',
+   'island_tide_recheck',
+   'island_ribbon_thread',
+   'island_truth_contract',
+   'island_final_cut',
+   'island_escape_beacon'
   ])
  };
  const standaloneD1Props=new Set(['sink','fridge','pc','gargoyle','throne']);

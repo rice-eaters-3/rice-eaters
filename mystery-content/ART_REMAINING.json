@@ -1,0 +1,677 @@
+{
+  "note": "Only independently generated, connected illustrations counted. Legacy concept-sheet crops remain pending. Door/stair states and major NPCs beyond D1 still require independent-art review.",
+  "series": [
+    {
+      "series": "d1-crown-of-ashes",
+      "cluesTotal": 71,
+      "cluesComplete": 71,
+      "pendingClues": [],
+      "portraitsTotal": 7,
+      "pendingPortraits": [],
+      "pendingPropKinds": [
+        {
+          "kind": "stove",
+          "name": "훠궈 조리대"
+        },
+        {
+          "kind": "table",
+          "name": "8인용 식탁"
+        },
+        {
+          "kind": "camera",
+          "name": "왕좌 복도 감시 장비"
+        },
+        {
+          "kind": "plant",
+          "name": "로비 장식 화분"
+        },
+        {
+          "kind": "desk",
+          "name": "강의실 강사석"
+        },
+        {
+          "kind": "bed",
+          "name": "예비 침대"
+        },
+        {
+          "kind": "cabinet",
+          "name": "봉인된 교단 기록 보관함"
+        },
+        {
+          "kind": "terminal",
+          "name": "보안 감시 모니터"
+        },
+        {
+          "kind": "server",
+          "name": "보조 서버 랙"
+        },
+        {
+          "kind": "generator",
+          "name": "비상 통제 제어판"
+        },
+        {
+          "kind": "statue",
+          "name": "가고일 교단 장식물"
+        }
+      ]
+    },
+    {
+      "series": "cruel-heart-island",
+      "cluesTotal": 56,
+      "cluesComplete": 56,
+      "pendingClues": [],
+      "portraitsTotal": 8,
+      "pendingPortraits": [],
+      "pendingPropKinds": [
+        {
+          "kind": "boat",
+          "name": "섬 선착장 소형 보트"
+        },
+        {
+          "kind": "cabinet",
+          "name": "촬영용 구명장비 보관함"
+        },
+        {
+          "kind": "plant",
+          "name": "해변의 소나무"
+        },
+        {
+          "kind": "fireplace",
+          "name": "촬영용 모닥불 장식"
+        },
+        {
+          "kind": "camera",
+          "name": "등대 감시 카메라"
+        },
+        {
+          "kind": "terminal",
+          "name": "조수 관측 콘솔"
+        },
+        {
+          "kind": "sofa",
+          "name": "연애의 집 라운지 소파"
+        },
+        {
+          "kind": "table",
+          "name": "하트 투표 탁자"
+        },
+        {
+          "kind": "wardrobe",
+          "name": "분장실 화장대"
+        },
+        {
+          "kind": "fridge",
+          "name": "빌라 주방 냉장고"
+        },
+        {
+          "kind": "generator",
+          "name": "수위 경보 제어함"
+        },
+        {
+          "kind": "shelf",
+          "name": "선박 기록 서가"
+        },
+        {
+          "kind": "server",
+          "name": "봉인된 방송 로그 서버"
+        }
+      ]
+    },
+    {
+      "series": "neon-memory-quarantine",
+      "cluesTotal": 54,
+      "cluesComplete": 0,
+      "pendingClues": [
+        {
+          "id": "nova_memory_badge",
+          "title": "노바의 분실 기억 신분증"
+        },
+        {
+          "id": "nova_shield_patch",
+          "title": "노바의 은색 방호 패치"
+        },
+        {
+          "id": "nova_empty_notebook",
+          "title": "노바의 빈 수첩"
+        },
+        {
+          "id": "nova_old_case_file",
+          "title": "노바의 과거 미해결 사건 기록"
+        },
+        {
+          "id": "rune_medical_scanner",
+          "title": "룬의 신경 진단 스캐너"
+        },
+        {
+          "id": "rune_revoked_license",
+          "title": "룬의 말소된 의료 면허증"
+        },
+        {
+          "id": "rune_old_consent",
+          "title": "룬의 지워진 의료 동의서"
+        },
+        {
+          "id": "rune_surgical_tablet",
+          "title": "룬의 진료용 단말"
+        },
+        {
+          "id": "ion_pulse_blade",
+          "title": "이온의 서사 속 펄스 블레이드"
+        },
+        {
+          "id": "ion_maintenance_token",
+          "title": "이온의 고급 정비 토큰"
+        },
+        {
+          "id": "ion_fake_warning",
+          "title": "이온의 거짓 긴급 격리 경고"
+        },
+        {
+          "id": "ion_sibling_identity",
+          "title": "이온의 동생의 대체 신분 증명"
+        },
+        {
+          "id": "mira_legal_patch",
+          "title": "미라의 임시 보존 명령 카드"
+        },
+        {
+          "id": "mira_ai_petition",
+          "title": "미라의 에코 권리 청원서"
+        },
+        {
+          "id": "mira_shadow_receipt",
+          "title": "미라의 불법 복제 서비스 영수증"
+        },
+        {
+          "id": "mira_identity_clause",
+          "title": "미라의 법률 개정 초안"
+        },
+        {
+          "id": "atlas_riot_shield",
+          "title": "아틀라스의 개인 방호 방패"
+        },
+        {
+          "id": "atlas_old_access",
+          "title": "아틀라스의 만료된 보안 출입 카드"
+        },
+        {
+          "id": "atlas_duty_log",
+          "title": "아틀라스의 전직 요원 근무 일지"
+        },
+        {
+          "id": "atlas_encrypted_message",
+          "title": "아틀라스의 이온의 과거 연락"
+        },
+        {
+          "id": "echo_shell_drive",
+          "title": "에코의 인공인격 셸 저장기"
+        },
+        {
+          "id": "echo_ghost_key",
+          "title": "에코의 가상 권한 키"
+        },
+        {
+          "id": "echo_emotion_log",
+          "title": "에코의 새로운 감정 기록"
+        },
+        {
+          "id": "echo_backup_hash",
+          "title": "에코의 윤세라 음성 해시"
+        },
+        {
+          "id": "sol_courier_case",
+          "title": "솔의 기억 칩 운반 케이스"
+        },
+        {
+          "id": "sol_anon_invoice",
+          "title": "솔의 가명 입금 명세"
+        },
+        {
+          "id": "sol_radio_shell",
+          "title": "솔의 교신기 껍데기"
+        },
+        {
+          "id": "sol_immunity_paper",
+          "title": "솔의 감사관 면책 협약서"
+        },
+        {
+          "id": "memory_audit_letter",
+          "title": "윤세라의 감사 예고장"
+        },
+        {
+          "id": "memory_body_scan",
+          "title": "실물 신체 감식"
+        },
+        {
+          "id": "memory_echo_frame",
+          "title": "00:21 감사관 홀로그램"
+        },
+        {
+          "id": "memory_emptied_chair",
+          "title": "진료실 빈 의자"
+        },
+        {
+          "id": "memory_id_overlap",
+          "title": "겹치는 생체 계정"
+        },
+        {
+          "id": "memory_underground_bill",
+          "title": "불법 배송 대금"
+        },
+        {
+          "id": "memory_exmate_memo",
+          "title": "과거 공안 정비 기록"
+        },
+        {
+          "id": "memory_legal_hold",
+          "title": "인공인격 삭제 명령"
+        },
+        {
+          "id": "memory_emergency_log",
+          "title": "EMP 격리 경보"
+        },
+        {
+          "id": "memory_coat_camera",
+          "title": "기억실 출입 감시 영상"
+        },
+        {
+          "id": "memory_voice_repeat",
+          "title": "홀로그램 음성 중복"
+        },
+        {
+          "id": "memory_fake_patient",
+          "title": "허위 감염 검사 통보"
+        },
+        {
+          "id": "memory_core_key",
+          "title": "깊은 기억 금고 중계 키"
+        },
+        {
+          "id": "memory_backup_before",
+          "title": "00:16 이전 마지막 기억"
+        },
+        {
+          "id": "memory_ghost_sequence",
+          "title": "디지털 잔향 재생 시각"
+        },
+        {
+          "id": "memory_implant_receipt",
+          "title": "불법 복원 절차 기록"
+        },
+        {
+          "id": "memory_compromised_tag",
+          "title": "정비 토큰의 잔존 흔적"
+        },
+        {
+          "id": "memory_ion_sibling",
+          "title": "대체 신원 계약서"
+        },
+        {
+          "id": "memory_emp_order",
+          "title": "EMP 작동 서명 사본"
+        },
+        {
+          "id": "memory_core_backdoor",
+          "title": "서버 보존 우회 감사 기록"
+        },
+        {
+          "id": "memory_bio_echo",
+          "title": "인격 복제의 법적 차이"
+        },
+        {
+          "id": "memory_shutdown_map",
+          "title": "EMP 필드 종료 절차 문서"
+        },
+        {
+          "id": "memory_security_ledger",
+          "title": "교차 확인한 출입 기록"
+        },
+        {
+          "id": "memory_culprit_reconstruction",
+          "title": "사망·홀로그램·EMP 종합 재구성"
+        },
+        {
+          "id": "memory_original_rights",
+          "title": "원본 기억 보관 계약"
+        },
+        {
+          "id": "memory_why_sealed",
+          "title": "격리 지침의 모순"
+        }
+      ],
+      "portraitsTotal": 7,
+      "pendingPortraits": [
+        {
+          "id": "nova",
+          "name": "노바"
+        },
+        {
+          "id": "rune",
+          "name": "룬"
+        },
+        {
+          "id": "ion",
+          "name": "이온"
+        },
+        {
+          "id": "mira",
+          "name": "미라"
+        },
+        {
+          "id": "atlas",
+          "name": "아틀라스"
+        },
+        {
+          "id": "echo",
+          "name": "에코"
+        },
+        {
+          "id": "sol",
+          "name": "솔"
+        }
+      ],
+      "pendingPropKinds": [
+        {
+          "kind": "terminal",
+          "name": "감사 승인 터미널"
+        },
+        {
+          "kind": "sofa",
+          "name": "시민 대기 소파"
+        },
+        {
+          "kind": "cabinet",
+          "name": "봉인 기억 금고"
+        },
+        {
+          "kind": "camera",
+          "name": "신원 확인 게이트"
+        },
+        {
+          "kind": "medical",
+          "name": "신경 의료 침대"
+        },
+        {
+          "kind": "pod",
+          "name": "인격 보존 셸"
+        },
+        {
+          "kind": "generator",
+          "name": "EMP 계전 패널"
+        },
+        {
+          "kind": "server",
+          "name": "원본 백업 랙"
+        }
+      ]
+    },
+    {
+      "series": "stellar-academy-first-case",
+      "cluesTotal": 48,
+      "cluesComplete": 0,
+      "pendingClues": [
+        {
+          "id": "seoha_folded_map",
+          "title": "남서하의 접는 입체 약도"
+        },
+        {
+          "id": "seoha_puzzle_ring",
+          "title": "남서하의 암호 고리"
+        },
+        {
+          "id": "seoha_safe_marker",
+          "title": "남서하의 미로 표시 펜"
+        },
+        {
+          "id": "seoha_rescue_token",
+          "title": "남서하의 퍼즐 구조 토큰"
+        },
+        {
+          "id": "taewon_mirror_box",
+          "title": "이태원의 거울 마술 상자"
+        },
+        {
+          "id": "taewon_stage_rope",
+          "title": "이태원의 무대용 안전 로프"
+        },
+        {
+          "id": "taewon_voice_filter",
+          "title": "이태원의 마술용 음성 필터"
+        },
+        {
+          "id": "taewon_rented_prop",
+          "title": "이태원의 반환받지 못한 장비 대여표"
+        },
+        {
+          "id": "yeonju_star_almanac",
+          "title": "천연주의 종이 별자리 연감"
+        },
+        {
+          "id": "yeonju_anonymous_chat",
+          "title": "천연주의 연호와의 익명 채팅"
+        },
+        {
+          "id": "yeonju_micro_scope",
+          "title": "천연주의 휴대 광학 렌즈"
+        },
+        {
+          "id": "yeonju_sky_photo",
+          "title": "천연주의 하늘의 장시간 노출 사진"
+        },
+        {
+          "id": "jinwoo_rescue_helmet",
+          "title": "백진우의 개인 구조 헬멧"
+        },
+        {
+          "id": "jinwoo_floor_plan",
+          "title": "백진우의 안전 훈련 구역 도면"
+        },
+        {
+          "id": "jinwoo_failure_report",
+          "title": "백진우의 과거 구조 실패 기록"
+        },
+        {
+          "id": "jinwoo_emergency_radio",
+          "title": "백진우의 단거리 비상 무전기"
+        },
+        {
+          "id": "rion_cipher_ledger",
+          "title": "차리온의 지하 암호 해독 수첩"
+        },
+        {
+          "id": "rion_patron_letter",
+          "title": "차리온의 익명의 후원자 편지"
+        },
+        {
+          "id": "rion_golden_dictionary",
+          "title": "차리온의 금빛 어휘 사전"
+        },
+        {
+          "id": "rion_sealed_note",
+          "title": "차리온의 연호의 암호 쪽지"
+        },
+        {
+          "id": "gabin_voice_script",
+          "title": "유가빈의 연호 음성 모사 대본"
+        },
+        {
+          "id": "gabin_stage_dart",
+          "title": "유가빈의 연극용 그림자 화살"
+        },
+        {
+          "id": "gabin_family_badge",
+          "title": "유가빈의 운영자 가족 출입 배지"
+        },
+        {
+          "id": "gabin_red_fiber",
+          "title": "유가빈의 찢어진 무대 의상"
+        },
+        {
+          "id": "academy_first_body",
+          "title": "플라네타륨 첫 시신 기록"
+        },
+        {
+          "id": "academy_fake_sky",
+          "title": "01:10 천체 영상의 별자리"
+        },
+        {
+          "id": "academy_voice_witness",
+          "title": "연호의 마지막 목소리"
+        },
+        {
+          "id": "academy_corridor_log",
+          "title": "관측관 출입 기록"
+        },
+        {
+          "id": "academy_stage_loan",
+          "title": "마술 장비 대여표"
+        },
+        {
+          "id": "academy_old_tunnel",
+          "title": "학교 구형 탈출 약도"
+        },
+        {
+          "id": "academy_message",
+          "title": "연호의 봉인 쪽지"
+        },
+        {
+          "id": "academy_support_funds",
+          "title": "영재 선발 실험 예산표"
+        },
+        {
+          "id": "academy_red_thread",
+          "title": "관측실 문틈의 붉은 섬유"
+        },
+        {
+          "id": "academy_secret_fund",
+          "title": "익명 운영자의 후원 계약"
+        },
+        {
+          "id": "academy_safety_repeat",
+          "title": "안전 방송 반복 횟수"
+        },
+        {
+          "id": "academy_mock_exit",
+          "title": "옥상 가짜 비상구 도면"
+        },
+        {
+          "id": "academy_autopsy_time",
+          "title": "연호의 실제 사망 시각"
+        },
+        {
+          "id": "academy_voice_match",
+          "title": "연호와 가빈의 발음 파형"
+        },
+        {
+          "id": "academy_high_badge",
+          "title": "고급 출입 배지 소유자"
+        },
+        {
+          "id": "academy_deleted_phrase",
+          "title": "연호가 남긴 미전송 원본"
+        },
+        {
+          "id": "academy_projection_backup",
+          "title": "플라네타륨 투사기 백업"
+        },
+        {
+          "id": "academy_early_signal",
+          "title": "지하 복도에서 발견한 암호"
+        },
+        {
+          "id": "academy_lock_token",
+          "title": "지하 기술실 봉인 해제표"
+        },
+        {
+          "id": "academy_escape_pass_card",
+          "title": "탈출 통로 최종 인증서"
+        },
+        {
+          "id": "academy_admin_original",
+          "title": "운영자의 비밀 연구 원본"
+        },
+        {
+          "id": "academy_lost_student",
+          "title": "이전 기수의 탈출 기록"
+        },
+        {
+          "id": "academy_culprit_chain",
+          "title": "첫 번째 살인 종합 재구성"
+        },
+        {
+          "id": "academy_second_exit",
+          "title": "지하 최종 탈출 구획"
+        }
+      ],
+      "portraitsTotal": 6,
+      "pendingPortraits": [
+        {
+          "id": "seoha",
+          "name": "남서하"
+        },
+        {
+          "id": "taewon",
+          "name": "이태원"
+        },
+        {
+          "id": "yeonju",
+          "name": "천연주"
+        },
+        {
+          "id": "jinwoo",
+          "name": "백진우"
+        },
+        {
+          "id": "rion",
+          "name": "차리온"
+        },
+        {
+          "id": "gabin",
+          "name": "유가빈"
+        }
+      ],
+      "pendingPropKinds": [
+        {
+          "kind": "bed",
+          "name": "기숙사 침대"
+        },
+        {
+          "kind": "shelf",
+          "name": "지하 암호 자료"
+        },
+        {
+          "kind": "cabinet",
+          "name": "운영자 봉인 원고함"
+        },
+        {
+          "kind": "desk",
+          "name": "태원의 공연 준비 탁자"
+        },
+        {
+          "kind": "telescope",
+          "name": "천체 관측 망원경"
+        },
+        {
+          "kind": "projector",
+          "name": "플라네타륨 투영기"
+        },
+        {
+          "kind": "terminal",
+          "name": "탈출 인증서 보관 터미널"
+        },
+        {
+          "kind": "medical",
+          "name": "실험용 검사 침대"
+        },
+        {
+          "kind": "door",
+          "name": "막힌 가짜 출구 표지"
+        },
+        {
+          "kind": "generator",
+          "name": "지하 냉각 시설"
+        }
+      ]
+    }
+  ]
+}

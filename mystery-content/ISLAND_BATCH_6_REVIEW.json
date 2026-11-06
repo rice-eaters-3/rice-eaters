@@ -1,0 +1,47 @@
+{
+  "method": "Built-in image generation, independent image per card",
+  "assets": [
+    {
+      "id": "island_sponsor_real",
+      "prompt": "One original standalone square evidence illustration for Korean visual novel Last Heart. Polished painterly game object art, tropical luxury island, magenta twilight and dark ocean blue shadows. Full main object in frame with generous margins, no UI frame, no watermark. Producer psychological profiling dossier: anonymous contestant silhouettes and medical/counseling form icons connected to a storyboard for a future live broadcast. One sealed confidential folder, no legible text, names, dates or culprit marking.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-bd3ed0c7-b3ed-4035-8444-239b9e17499a.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/island_sponsor_real.webp",
+      "review": "Matched object and visible timing to current case; full frame preserved; no culprit conclusions."
+    },
+    {
+      "id": "island_tide_recheck",
+      "prompt": "One original standalone square evidence illustration for Korean visual novel Last Heart. Polished painterly game object art, tropical luxury island, magenta twilight and dark ocean blue shadows. Full main object in frame with generous margins, no UI frame, no watermark. A rescue dispatch console with received red coastal alarm row but empty outgoing radio-call queue. Two distinct columns with incoming alert icon and outgoing radio icon. No timestamps, dates, names or readable explanations.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-ff4f237d-a733-46ca-8f7e-aa6824a5768f.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/island_tide_recheck.webp",
+      "review": "Matched object and visible timing to current case; full frame preserved; no culprit conclusions."
+    },
+    {
+      "id": "island_ribbon_thread",
+      "prompt": "One original standalone square evidence illustration for Korean visual novel Last Heart. Polished painterly game object art, tropical luxury island, magenta twilight and dark ocean blue shadows. Full main object in frame with generous margins, no UI frame, no watermark. A few loose purple textile threads caught on a worn coastal observation door frame, adjacent indistinct shoeprint in sandy dust. Close-up evidence photograph style; no whole ribbon, no person, no label naming owner.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-126fc16a-95e9-4c08-93b9-016edc6f0b46.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/island_ribbon_thread.webp",
+      "review": "Matched object and visible timing to current case; full frame preserved; no culprit conclusions."
+    },
+    {
+      "id": "island_truth_contract",
+      "prompt": "One original standalone square evidence illustration for Korean visual novel Last Heart. Polished painterly game object art, tropical luxury island, magenta twilight and dark ocean blue shadows. Full main object in frame with generous margins, no UI frame, no watermark. Original confidential dating-show project contract with annex containing generic emotion chart icons, medical survey pictograms and sponsorship ad panels. Sealed document envelope and unsigned permission checkbox. No readable invented text.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-20d97d76-d544-4bb7-8d24-f1d47d228b5b.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/island_truth_contract.webp",
+      "review": "Matched object and visible timing to current case; full frame preserved; no culprit conclusions."
+    },
+    {
+      "id": "island_final_cut",
+      "prompt": "One original standalone square evidence illustration for Korean visual novel Last Heart. Polished painterly game object art, tropical luxury island, magenta twilight and dark ocean blue shadows. Full main object in frame with generous margins, no UI frame, no watermark. Editing workstation timeline: four separate clip tracks in clear sequence with only these exact labels \"23:04\", \"23:17\", \"13분\", and final audio waveform with scheduled-playback clock icon. Empty coastal hut thumbnail, alarm icon, empty interview chair thumbnail. No human face, no accusation or connecting suspect name.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-6b9061c7-91a1-4a22-987f-233a5d16ef86.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/island_final_cut.webp",
+      "review": "Matched object and visible timing to current case; full frame preserved; no culprit conclusions."
+    },
+    {
+      "id": "island_escape_beacon",
+      "prompt": "One original standalone square evidence illustration for Korean visual novel Last Heart. Polished painterly game object art, tropical luxury island, magenta twilight and dark ocean blue shadows. Full main object in frame with generous margins, no UI frame, no watermark. A functional marine rescue signal beacon with green status light in a locked dock storage equipment case. Beside it an inspection checklist with simple checked boxes, no readable dates or names. Storm clearing over ocean beyond dock.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-da3636de-7906-4bf5-a38f-e7b88654708c.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/island_escape_beacon.webp",
+      "review": "Matched object and visible timing to current case; full frame preserved; no culprit conclusions."
+    }
+  ]
+}
