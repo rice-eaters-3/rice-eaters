@@ -172,7 +172,7 @@
           },
           {
             "id": "nova_empty_notebook",
-            "name": "빈 수첩",
+            "name": "메모 수첩",
             "description": "00:21에 봤던 영상 속 윤세라의 눈동자 움직임이 예전 공지 영상과 동일하다는 메모가 적혀 있다."
           },
           {
@@ -1200,7 +1200,7 @@
         },
         {
           "id": "nova_empty_notebook",
-          "title": "노바의 빈 수첩",
+          "title": "노바의 메모 수첩",
           "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
@@ -2162,7 +2162,7 @@
         },
         {
           "id": "memory_bio_echo",
-          "title": "인격 복제의 법적 차이",
+          "title": "인격·발화 파일 속성표",
           "subtitle": "",
           "back": "두 파일의 속성표가 나란히 있다. 에코 파일에는 연속된 기억 기록과 쓰기 권한이, 윤세라 발화 파일에는 고정 대사 목록과 재생 권한이 표시되어 있다. 저장 형식도 서로 다르다.",
           "type": "information",
@@ -2210,7 +2210,7 @@
         },
         {
           "id": "memory_security_ledger",
-          "title": "교차 확인한 출입 기록",
+          "title": "정비 권한·출입 기록",
           "subtitle": "",
           "back": "권한 대장의 기억실 입장·환자 관리·EMP 승인 항목에 같은 정비 그룹 코드가 적혀 있다. 계정 목록에는 활성 계정과 만료된 구형 계정이 함께 있다.",
           "type": "information",
