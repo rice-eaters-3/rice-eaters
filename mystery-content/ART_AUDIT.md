@@ -214,3 +214,18 @@ D1 71장 교체 완료. 마지막 하트의 11번째 카드 `seojun_old_report`�
 | `nayeon_heart_chip` | 공용 컷이 개별 증거물을 나타내지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/nayeon_heart_chip.webp` |
 | `somi_scripted_dates` | 공용 컷이 개별 증거물을 나타내지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/somi_scripted_dates.webp` |
 | `somi_rescue_net` | 공용 컷이 개별 증거물을 나타내지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/somi_rescue_net.webp` |
+
+## 마지막 하트 · 4차 배치
+
+| 카드 ID | 기존 문제 | 신규 이미지 경로 |
+| --- | --- | --- |
+| `somi_family_letter` | 공용 컷이 개별 증거물을 나타내지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/somi_family_letter.webp` |
+| `somi_parting_note` | 공용 컷이 개별 증거물을 나타내지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/somi_parting_note.webp` |
+| `island_welcome` | 공용 컷이 개별 증거물을 나타내지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/island_welcome.webp` |
+| `island_cast_contract` | 공용 컷이 개별 증거물을 나타내지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/island_cast_contract.webp` |
+| `island_tide_warn` | 공용 컷이 개별 증거물을 나타내지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/island_tide_warn.webp` |
+| `island_sponsor_bill` | 공용 컷이 개별 증거물을 나타내지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/island_sponsor_bill.webp` |
+| `island_shoe_marks` | 공용 컷이 개별 증거물을 나타내지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/island_shoe_marks.webp` |
+| `island_edit_room` | 공용 컷이 개별 증거물을 나타내지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/island_edit_room.webp` |
+| `island_camera_lag` | 공용 컷이 개별 증거물을 나타내지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/island_camera_lag.webp` |
+| `island_early_message` | 공용 컷이 개별 증거물을 나타내지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/island_early_message.webp` |
