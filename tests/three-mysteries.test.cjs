@@ -159,6 +159,12 @@ test('all four multiplayer rooms expose shared endings and each player’s own r
    assert.equal((await call(count,ep)).data.booklet,null,'visitor cannot access role private action plan');
    for(let i=0;i<count;i++)await post(i,ep+'/study-ready');
    await post(0,ep+'/advance');
+   const sealed=(await call(1,ep)).data.investigation.cards;
+   assert.ok(sealed.length>0);
+   for(const c of sealed){
+    assert.ok(c.frontTitle);assert.equal(c.title,null);assert.equal(c.subtitle,null);
+    assert.deepEqual(c.revealed,[]);
+   }
    for(const phase of ['discussion1','investigation2','discussion2','action']){
     for(let i=0;i<count;i++)assert.equal((await post(i,ep+'/advance-vote')).status,200);
     const result=await post(0,ep+'/advance');

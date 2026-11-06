@@ -12,7 +12,7 @@ const scenarios=[
  ['neon-memory-quarantine.case.json','neon-memory-quarantine','neon.webp',7,14,54],
  ['stellar-academy-first-case.case.json','stellar-academy-first-case','academy.webp',6,14,48]
 ];
-const reviewedClueCounts={'d1-crown-of-ashes':71,'cruel-heart-island':20};
+const reviewedClueCounts={'d1-crown-of-ashes':71,'cruel-heart-island':30};
 const newD1Props=['sink','fridge','pc','gargoyle','throne'];
 const imagePath=name=>path.join(root,'apps/murder-mystery/assets',name);
 test('all four original concept-sheet WebP image files are real binary assets with a RIFF/WEBP header',()=>{

@@ -8,7 +8,7 @@ const vm=require('node:vm');
 test('RPG screen: map is main, 7-chapter booklet is paged, cards reveal only authorized backs',()=>{
   const source=fs.readFileSync(path.join(__dirname,'../apps/murder-mystery/study.js'),'utf8');
   const sandbox={
-    window:{MysteryVoice:{controls:()=>'<button>마이크 켜기</button>'}},
+    window:{MysteryArt:{clue:c=>'<img data-clue-art="'+c.id+'">',avatar:()=>'',object:()=>'',door:()=>'',stairs:()=>'',portrait:()=>''},MysteryVoice:{controls:()=>'<button>마이크 켜기</button>'}},
     escapeHtml:value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),
     btn:(action,label,cls='',disabled=false,extra='')=>'<button data-action="'+action+'" '+extra+' '+(disabled?'disabled':'')+'>'+label+'</button>',
     roomHeader:()=>'<div>자정의 저택</div>'
@@ -57,13 +57,14 @@ test('RPG screen: map is main, 7-chapter booklet is paged, cards reveal only aut
   view.navigate('book-toggle');
   const investigation={...room,phase:'investigation1',
     investigation:{tokens:4,totalTokens:4,canInvestigate:true,myCards:[],nearby:[],cards:[
-      {id:'desk',title:'서재 책상',subtitle:'서재',type:'place',location:{floor:'ground',x:2,y:1},
+      {id:'desk',frontTitle:'서재 1',title:null,subtitle:null,type:'place',location:{floor:'ground',x:1,y:1},
         locked:false,excluded:false,taken:false,reservedBy:null,revealed:[]},
       {id:'photo',title:'액자',subtitle:'응접실',type:'place',locked:false,excluded:false,
         taken:true,reservedBy:null,revealed:[{back:'사진 <증거>'}]}
     ]}};
   const mapWithResearch=view.render(investigation);
   assert.ok(mapWithResearch.includes('조사 토큰'));
+  assert.ok(mapWithResearch.includes('🔎 서재 1'),'map action uses anonymous place label');
   assert.ok(mapWithResearch.includes('조사 가능 정보 확인 (R)'));
   assert.ok(!mapWithResearch.includes('research-card'),'map view no longer permanently renders card list');
   sandbox.window.MysteryRoomState.room=investigation;
@@ -73,6 +74,8 @@ test('RPG screen: map is main, 7-chapter booklet is paged, cards reveal only aut
   assert.ok(invHtml.includes('research-card'),'card list lives in dedicated view');
   assert.ok(invHtml.includes('사진 &lt;증거&gt;'),'investigated back escaped');
   assert.ok(invHtml.includes('data-card="desk"'),'first come selection action');
+  assert.ok(!invHtml.includes('data-clue-art="desk"'),'hidden illustration never rendered');
+  assert.ok(invHtml.includes('data-clue-art="photo"'),'authorized back contains illustration');
   assert.ok(invHtml.includes('지도로 돌아가기 (R)'),'research catalog has exit button');
   const ownCase={...investigation,investigation:{...investigation.investigation,
     myCards:[{id:'holding1',cardId:'desk',title:'조사한 편지',subtitle:'비밀 증거',
