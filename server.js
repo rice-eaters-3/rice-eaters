@@ -152,6 +152,7 @@ function investigationView(room,member){
   const nearby=tilePlayers(room,positionFor(room,member)||{floor:null,x:-1,y:-1})
     .filter(p=>p.id!==member.id).map(p=>({id:p.id,name:p.name}));
   const cards=spec.cards.flatMap(card=>{
+    if(clueFront.isConcealedCard(card,floorsFor(room),(f,d)=>doorState(room,f,d)))return [];
     const owned=held.filter(h=>h.cardId===card.id);
     const shares=data.selectiveShares.filter(x=>x.toId===member.id&&
       data.holdings.some(h=>h.id===x.holdingId&&h.cardId===card.id));
@@ -341,11 +342,12 @@ function roomView(room,sid){
   }:null;
   const myPos=member&&positionFor(room,member);
   const floor=myPos&&floorFor(room,myPos.floor);
-  const map=floor&&PLAY_PHASES.includes(room.phase)?{
-    title:floor.title,legend:floor.legend,tiles:floor.tiles,rooms:floor.rooms,objects:floor.objects||[],
-    floorId:floor.id,floors:floorsFor(room).map(f=>({id:f.id,title:f.title})),
-    portals:floor.portals||[],areas:floor.areas||[],
-    doors:(floor.doors||[]).map(d=>({
+  const visibleFloor=floor&&clueFront.playerFloor(floor,(f,d)=>doorState(room,f,d));
+  const map=visibleFloor&&PLAY_PHASES.includes(room.phase)?{
+    title:visibleFloor.title,legend:visibleFloor.legend,tiles:visibleFloor.tiles,rooms:visibleFloor.rooms,objects:visibleFloor.objects||[],
+    floorId:visibleFloor.id,floors:floorsFor(room).map(f=>({id:f.id,title:f.title})),
+    portals:visibleFloor.portals||[],areas:visibleFloor.areas||[],
+    doors:(visibleFloor.doors||[]).map(d=>({
       id:d.id,name:d.name,x:d.x,y:d.y,
       ...doorState(room,floor,d),requiresItem:d.requiresItem||null
     })),
@@ -797,6 +799,8 @@ async function api(req,res,url,sid){
       if(mine){delete data.reserved[card.id];persist();sendState(room)}
       return json(res,200,roomView(room,sid));
     }
+    if(clueFront.isConcealedCard(card,floorsFor(room),(f,d)=>doorState(room,f,d)))
+      fail(409,'이 조사 구역은 아직 잠겨 있습니다.');
     if(!cardUnlocked(card,room))fail(409,'해금 조건을 충족하지 않았습니다.');
     if(card.requiresPresence===true&&card.location){
       const loc=positionFor(room,player);
