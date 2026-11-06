@@ -2008,7 +2008,7 @@
         },
         {
           "id": "island_early_message",
-          "title": "PD가 남긴 마지막 대화",
+          "title": "PD의 메신저 대화 기록",
           "subtitle": "",
           "type": "information",
           "clueKind": "timeline",
@@ -2056,7 +2056,7 @@
           "subtitle": "",
           "type": "information",
           "clueKind": "timeline",
-          "back": "원본 영상에 관측실 입구의 작은 사람 그림자이 잠깐 나타났다 사라진다. 파일에는 드론 내부 시각이 표시되어 있고 별도의 방송 편성표가 첨부되어 있다.",
+          "back": "드론 영상의 관측실 입구 쪽에 사람처럼 보이는 작은 형체가 잠깐 나타났다가 사라진다. 파일에는 ‘드론 내부 시각’이 표시되어 있고 방송 편성표 한 장이 첨부되어 있다.",
           "availableFromPhase": "investigation1",
           "visibility": "locked",
           "requires": [
@@ -2098,7 +2098,7 @@
         },
         {
           "id": "island_sound_test",
-          "title": "신원재의 마지막 보이스 테스트",
+          "title": "신원재의 리허설 음성 파일",
           "subtitle": "",
           "type": "information",
           "clueKind": "timeline",
