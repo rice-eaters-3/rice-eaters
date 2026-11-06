@@ -71,3 +71,26 @@ test('tactical board never directly explains the culprit method',()=>{
   assert.ok(!value.includes('배익호를 직접 공격하지 않고 살해할 구상을 암시한다'));
  }
 });
+
+test('all four test-mode catalogs preserve numbered fronts when backs become public',()=>{
+ const packages=[d1,require('../mystery-content/cruel-heart-island.case.json'),
+  require('../mystery-content/neon-memory-quarantine.case.json'),
+  require('../mystery-content/stellar-academy-first-case.case.json')];
+ for(const pkg of packages){
+  const state=E.create(pkg);E.switchPhase(state,'investigation2');
+  const hidden=E.roomView(state).investigation.cards;
+  const labels=front.labels(pkg.game.investigation.cards,pkg.story.characters,pkg.game.floors);
+  for(const c of hidden){
+   assert.equal(c.title,null);assert.equal(c.subtitle,null);assert.deepEqual(c.revealed,[]);
+   assert.equal(c.frontTitle,labels[c.id]);
+  }
+  for(const c of pkg.game.investigation.cards)state.publicCards[c.id]={at:1};
+  const revealed=E.roomView(state).investigation.cards;
+  assert.equal(revealed.length,pkg.game.investigation.cards.length);
+  for(const c of revealed){
+   const original=pkg.game.investigation.cards.find(x=>x.id===c.id);
+   assert.equal(c.frontTitle,labels[c.id]);assert.equal(c.title,original.title);
+   assert.equal(c.revealed[0].back,original.back);
+  }
+ }
+});

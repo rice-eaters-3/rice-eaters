@@ -1,0 +1,76 @@
+{
+  "method": "Built-in image generation, independent full-frame image per card",
+  "style": "Polished visual novel painterly object close-up, tropical luxury dating-show island, pink twilight, ocean blue shadows. Full object in frame with margins, no UI border, no watermark. No extra deductions, murder explanation or culprit identities.",
+  "assets": [
+    {
+      "id": "somi_family_letter",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-a3c6a1c7-9cdf-4174-9739-09a47d4db3f9.png",
+      "prompt": "A folded family debt notice and handwritten personal letter in a pale pink envelope on a young actress’s resort desk. Unreadable body text, no amounts, no threats written out.",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/somi_family_letter.webp",
+      "review": "Matched object and visible timing to current case; full frame preserved; no culprit conclusions."
+    },
+    {
+      "id": "somi_parting_note",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-7636f196-a018-42df-93ad-6bc33e9330cb.png",
+      "prompt": "An unsent handwritten contract termination letter on pink stationery next to an unsealed envelope. Small timestamp exactly \"23:30\" at top, no other readable sentences.",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/somi_parting_note.webp",
+      "review": "Matched object and visible timing to current case; full frame preserved; no culprit conclusions."
+    },
+    {
+      "id": "island_welcome",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-3e59c719-fb53-4a95-aa10-4003633c3933.png",
+      "prompt": "A first-day romantic compatibility board of anonymous paired silhouettes with pink hearts, visible manual revision strips over some cells. On resort common lounge table, no scores or character names.",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/island_welcome.webp",
+      "review": "Matched object and visible timing to current case; full frame preserved; no culprit conclusions."
+    },
+    {
+      "id": "island_cast_contract",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-30896478-a6a6-45df-92ae-d84368121f4d.png",
+      "prompt": "A confidential dating-show appearance agreement with separate couple-performance addendum, two anonymous signature lines, pink heart wax-seal envelope, promotional interview schedule tabs. No legible invented terms or signatures.",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/island_cast_contract.webp",
+      "review": "Matched object and visible timing to current case; full frame preserved; no culprit conclusions."
+    },
+    {
+      "id": "island_tide_warn",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-84cabc1a-1540-4d91-afc2-b1287a8543cb.png",
+      "prompt": "A printed marine safety warning showing a simple shoreline observation hut pictogram at rising tide, night crescent and crossed-out access symbol. On coastal observation console. No readable accusations.",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/island_tide_warn.webp",
+      "review": "Matched object and visible timing to current case; full frame preserved; no culprit conclusions."
+    },
+    {
+      "id": "island_sponsor_bill",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-a617ffd1-7938-41e8-9864-07e00c0e9cbd.png",
+      "prompt": "An advertising settlement spreadsheet on production desk with emotion heart icons, ad screen thumbnails and coin symbols in columns. No character names, numerical invented figures or criminal explanation.",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/island_sponsor_bill.webp",
+      "review": "Matched object and visible timing to current case; full frame preserved; no culprit conclusions."
+    },
+    {
+      "id": "island_shoe_marks",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-34477117-7128-4213-aa88-0fcf5dac50c7.png",
+      "prompt": "Two different sets of shoeprints in wet sand leading toward a coastal observation station door at night, one heavy adult shoe and one light sneaker tread. Evidence close-up no people, no character-identifying item.",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/island_shoe_marks.webp",
+      "review": "Matched object and visible timing to current case; full frame preserved; no culprit conclusions."
+    },
+    {
+      "id": "island_edit_room",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-a52a34ea-decf-4d2d-960b-d24acd8cc550.png",
+      "prompt": "Original standalone square evidence illustration, Korean visual novel Last Heart, luxury island TV editing room, pink twilight and navy shadows. Close-up access audit screen and old auxiliary badge reader. ONLY legible text anywhere in the picture: 23:00. NO DATE, NO YEAR, NO card serial digits, NO names. The rest of log is abstract blocks; one username row is visibly erased. Do not add labels. Full monitor in frame, no UI overlay, no watermark. Detailed painterly polished game object art.",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/island_edit_room.webp",
+      "review": "Matched object and visible timing to current case; full frame preserved; no culprit conclusions."
+    },
+    {
+      "id": "island_camera_lag",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-b188be73-825d-4223-aa0a-9fa50a427b96.png",
+      "prompt": "Broadcast delay console with two corresponding interview frame thumbnails of an empty pink interview chair, linked by a clearly labelled \"13분\" delay buffer. No person shown, no other times.",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/island_camera_lag.webp",
+      "review": "Matched object and visible timing to current case; full frame preserved; no culprit conclusions."
+    },
+    {
+      "id": "island_early_message",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-cc9cae28-f808-4daf-9b37-f6d1874aa456.png",
+      "prompt": "A phone on sea-observation desk showing a short chat line exactly \"협상이 끝나면 파일을 돌려주겠다\". Recipient and other lines visibly redacted. No names or accusation.",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/island_early_message.webp",
+      "review": "Matched object and visible timing to current case; full frame preserved; no culprit conclusions."
+    }
+  ]
+}

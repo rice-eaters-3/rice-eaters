@@ -189,7 +189,17 @@ window.MysteryArt=(function(){
    'nayeon_contract_copy',
    'nayeon_heart_chip',
    'somi_scripted_dates',
-   'somi_rescue_net'
+   'somi_rescue_net',
+   'somi_family_letter',
+   'somi_parting_note',
+   'island_welcome',
+   'island_cast_contract',
+   'island_tide_warn',
+   'island_sponsor_bill',
+   'island_shoe_marks',
+   'island_edit_room',
+   'island_camera_lag',
+   'island_early_message'
   ])
  };
  const standaloneD1Props=new Set(['sink','fridge','pc','gargoyle','throne']);
