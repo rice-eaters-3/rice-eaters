@@ -35,7 +35,7 @@
         },
         {
           "kind": "cabinet",
-          "name": "봉인된 교단 기록 보관함"
+          "name": "봉인 문서 보관함"
         },
         {
           "kind": "terminal",
@@ -120,48 +120,8 @@
     {
       "series": "neon-memory-quarantine",
       "cluesTotal": 54,
-      "cluesComplete": 0,
+      "cluesComplete": 10,
       "pendingClues": [
-        {
-          "id": "nova_memory_badge",
-          "title": "노바의 분실 기억 신분증"
-        },
-        {
-          "id": "nova_shield_patch",
-          "title": "노바의 은색 방호 패치"
-        },
-        {
-          "id": "nova_empty_notebook",
-          "title": "노바의 빈 수첩"
-        },
-        {
-          "id": "nova_old_case_file",
-          "title": "노바의 과거 미해결 사건 기록"
-        },
-        {
-          "id": "rune_medical_scanner",
-          "title": "룬의 신경 진단 스캐너"
-        },
-        {
-          "id": "rune_revoked_license",
-          "title": "룬의 말소된 의료 면허증"
-        },
-        {
-          "id": "rune_old_consent",
-          "title": "룬의 지워진 의료 동의서"
-        },
-        {
-          "id": "rune_surgical_tablet",
-          "title": "룬의 진료용 단말"
-        },
-        {
-          "id": "ion_pulse_blade",
-          "title": "이온의 펄스 블레이드"
-        },
-        {
-          "id": "ion_maintenance_token",
-          "title": "이온의 고급 정비 토큰"
-        },
         {
           "id": "ion_fake_warning",
           "title": "이온의 긴급 격리 경고문"
@@ -316,7 +276,7 @@
         },
         {
           "id": "memory_bio_echo",
-          "title": "인격 복제의 법적 차이"
+          "title": "인격·발화 파일 속성표"
         },
         {
           "id": "memory_shutdown_map",
@@ -324,7 +284,7 @@
         },
         {
           "id": "memory_security_ledger",
-          "title": "교차 확인한 출입 기록"
+          "title": "정비 권한·출입 기록"
         },
         {
           "id": "memory_culprit_reconstruction",
@@ -516,7 +476,7 @@
         },
         {
           "id": "academy_voice_witness",
-          "title": "연호의 마지막 목소리"
+          "title": "01:10 관측관 음성 파일"
         },
         {
           "id": "academy_corridor_log",
@@ -596,7 +556,7 @@
         },
         {
           "id": "academy_culprit_chain",
-          "title": "관측관 기록 정리표"
+          "title": "관측관 시각별 기록표"
         },
         {
           "id": "academy_second_exit",

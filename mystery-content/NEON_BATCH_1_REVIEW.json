@@ -1,0 +1,95 @@
+{
+  "method": "Built-in image generation, one standalone illustration per card. Full frame downscaled, no concept-sheet crops.",
+  "assets": [
+    {
+      "id": "nova_memory_badge",
+      "prompt": "Original standalone square evidence illustration for Korean visual novel Neon Memory Quarantine. Match concept art: cyberpunk forensic institution, dark navy graphite metal, cyan holograms, restrained violet neon. Polished painterly detailed object close-up. Main object completely in frame, no crop, no border or watermark. A worn futuristic memory identity badge with two overlapping anonymous profile icons and a small conflict warning symbol on its holographic screen. No human face, names or serial numbers. No narrative explanations or identification of murderer.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-fc0138a3-8ac1-4d21-9393-e3fcf1181715.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/nova_memory_badge.webp",
+      "title": "노바의 분실 기억 신분증",
+      "oldProblem": "Legacy concept sheet fallback was not an independently matched illustration.",
+      "review": "Individually reviewed object, composition and timestamps. Full frame preserved. Scanner regenerated to show cessation, not ongoing activity."
+    },
+    {
+      "id": "nova_shield_patch",
+      "prompt": "Original standalone square evidence illustration for Korean visual novel Neon Memory Quarantine. Match concept art: cyberpunk forensic institution, dark navy graphite metal, cyan holograms, restrained violet neon. Polished painterly detailed object close-up. Main object completely in frame, no crop, no border or watermark. A silver adhesive protective circuit patch on a black lab tray. Visible single scorched overload trace, metallic mesh and shield emblem; no blade or weapon, no printed serial number. No narrative explanations or identification of murderer.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-65dc3d00-7225-4638-971b-9064989394ad.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/nova_shield_patch.webp",
+      "title": "노바의 은색 방호 패치",
+      "oldProblem": "Legacy concept sheet fallback was not an independently matched illustration.",
+      "review": "Individually reviewed object, composition and timestamps. Full frame preserved. Scanner regenerated to show cessation, not ongoing activity."
+    },
+    {
+      "id": "nova_empty_notebook",
+      "prompt": "Original standalone square evidence illustration for Korean visual novel Neon Memory Quarantine. Match concept art: cyberpunk forensic institution, dark navy graphite metal, cyan holograms, restrained violet neon. Polished painterly detailed object close-up. Main object completely in frame, no crop, no border or watermark. A mostly empty pocket notebook with one short sketch comparing two eye movement traces, a small timestamp exactly \"00:21\", no other legible text. A dark pen beside it. No narrative explanations or identification of murderer.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-28a7a278-13fe-4113-8148-53be3cd291d8.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/nova_empty_notebook.webp",
+      "title": "노바의 메모 수첩",
+      "oldProblem": "Legacy concept sheet fallback was not an independently matched illustration.",
+      "review": "Individually reviewed object, composition and timestamps. Full frame preserved. Scanner regenerated to show cessation, not ongoing activity."
+    },
+    {
+      "id": "nova_old_case_file",
+      "prompt": "Original standalone square evidence illustration for Korean visual novel Neon Memory Quarantine. Match concept art: cyberpunk forensic institution, dark navy graphite metal, cyan holograms, restrained violet neon. Polished painterly detailed object close-up. Main object completely in frame, no crop, no border or watermark. A weathered unsolved investigation dossier with anonymous duplicated identity silhouettes and redacted missing-period rows, no readable dates or character names. No narrative explanations or identification of murderer.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-06075b13-a0a8-4c6e-aedd-3c6a679fe403.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/nova_old_case_file.webp",
+      "title": "노바의 과거 미해결 사건 기록",
+      "oldProblem": "Legacy concept sheet fallback was not an independently matched illustration.",
+      "review": "Individually reviewed object, composition and timestamps. Full frame preserved. Scanner regenerated to show cessation, not ongoing activity."
+    },
+    {
+      "id": "rune_medical_scanner",
+      "prompt": "Use case: illustration-story. A standalone square closeup evidence artwork for Korean cyberpunk murder mystery Neon Memory Quarantine. Handheld medical scanner on a graphite laboratory desk with cyan and violet light, polished painterly game illustration. Scanner entirely in frame. CRITICAL screen content: three biological trace graphs show small activity peaks only on the LEFT third, then all become perfectly straight horizontal flat lines across the RIGHT two thirds. A vertical divider at transition labeled exactly \"00:16\". No heartbeat peaks to right of divider. No human body, no wounds, no culprit, no explanatory verdict, no other legible text. This illustrates a stored historic recording, not a live patient.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-fb52e7b9-c63b-4dfb-b9d4-ba92473e768f.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/rune_medical_scanner.webp",
+      "title": "룬의 신경 진단 스캐너",
+      "oldProblem": "Legacy concept sheet fallback was not an independently matched illustration.",
+      "review": "Individually reviewed object, composition and timestamps. Full frame preserved. Scanner regenerated to show cessation, not ongoing activity."
+    },
+    {
+      "id": "rune_revoked_license",
+      "prompt": "Use case: illustration-story. Original standalone square evidence illustration for Korean visual novel Neon Memory Quarantine. Cyberpunk forensic institution, dark navy graphite metal, cyan holograms, restrained violet neon. Polished painterly detailed object close-up. Main object completely in frame, no crop, no border or watermark. A futuristic medical license card inside a formal revocation folder, professional medical emblem crossed by a cancellation stamp, heavily redacted disposition details. No face, initials, dates or legible names. No narrative explanations or identification of murderer.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-054210e7-eb4d-4aea-8ba6-41a939e8e11c.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/rune_revoked_license.webp",
+      "title": "룬의 말소된 의료 면허증",
+      "oldProblem": "Legacy concept sheet fallback was not an independently matched illustration.",
+      "review": "Individually reviewed object, composition and timestamps. Full frame preserved. Scanner regenerated to show cessation, not ongoing activity."
+    },
+    {
+      "id": "rune_old_consent",
+      "prompt": "Original standalone square evidence illustration for Korean visual novel Neon Memory Quarantine. Match concept art: cyberpunk forensic institution, dark navy graphite metal, cyan holograms, restrained violet neon. Polished painterly detailed object close-up. Main object completely in frame, no crop, no border or watermark. An erased medical consent form under forensic ultraviolet light, overwritten authorization box visible, unsigned signature area, clipboard and scanning light. No readable accusation, name or date. No narrative explanations or identification of murderer.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-5998bf10-4364-4442-a84c-c890116ce98f.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/rune_old_consent.webp",
+      "title": "룬의 지워진 의료 동의서",
+      "oldProblem": "Legacy concept sheet fallback was not an independently matched illustration.",
+      "review": "Individually reviewed object, composition and timestamps. Full frame preserved. Scanner regenerated to show cessation, not ongoing activity."
+    },
+    {
+      "id": "rune_surgical_tablet",
+      "prompt": "Original standalone square evidence illustration for Korean visual novel Neon Memory Quarantine. Match concept art: cyberpunk forensic institution, dark navy graphite metal, cyan holograms, restrained violet neon. Polished painterly detailed object close-up. Main object completely in frame, no crop, no border or watermark. Medical tablet comparing two identical speech waveform traces labelled exactly \"00:21\" and \"23:40\". Cyan medical interface with violet edges, no faces, no other legible text. No narrative explanations or identification of murderer.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-3be924a6-d39f-4936-8e38-adf87b7b123e.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/rune_surgical_tablet.webp",
+      "title": "룬의 진료용 단말",
+      "oldProblem": "Legacy concept sheet fallback was not an independently matched illustration.",
+      "review": "Individually reviewed object, composition and timestamps. Full frame preserved. Scanner regenerated to show cessation, not ongoing activity."
+    },
+    {
+      "id": "ion_pulse_blade",
+      "prompt": "Use case: illustration-story. Original standalone square evidence illustration for Korean visual novel Neon Memory Quarantine. Cyberpunk forensic institution, dark navy graphite metal, cyan holograms, restrained violet neon. Polished painterly detailed object close-up. Main object completely in frame, no crop, no border or watermark. A fictional sci-fi defensive pulse blade discharge module in a maintenance tray, compact insulated hilt, short blue energy emitter, small abstract test-output graph on attached screen. No person, violence, blood or readable dates. No narrative explanations or identification of murderer.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-2215888c-d099-48a4-9479-d81e23ef12ef.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/ion_pulse_blade.webp",
+      "title": "이온의 펄스 블레이드",
+      "oldProblem": "Legacy concept sheet fallback was not an independently matched illustration.",
+      "review": "Individually reviewed object, composition and timestamps. Full frame preserved. Scanner regenerated to show cessation, not ongoing activity."
+    },
+    {
+      "id": "ion_maintenance_token",
+      "prompt": "Use case: illustration-story. Original standalone square evidence illustration for Korean visual novel Neon Memory Quarantine. Cyberpunk forensic institution, dark navy graphite metal, cyan holograms, restrained violet neon. Polished painterly detailed object close-up. Main object completely in frame, no crop, no border or watermark. A rugged round advanced maintenance authorization token with wrench icon beside a cybernetic access panel; only readable time 00:08. No names, no biometric face. No narrative explanations or identification of murderer.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-1b3a073d-3f49-4740-b645-753b50b494a2.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/ion_maintenance_token.webp",
+      "title": "이온의 고급 정비 토큰",
+      "oldProblem": "Legacy concept sheet fallback was not an independently matched illustration.",
+      "review": "Individually reviewed object, composition and timestamps. Full frame preserved. Scanner regenerated to show cessation, not ongoing activity."
+    }
+  ]
+}

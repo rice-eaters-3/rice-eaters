@@ -72,3 +72,19 @@ test('booklet HTML splits prose into escaped paragraphs rather than flattening o
     'each manuscript paragraph is displayed separately on one booklet page');
   assert.equal(html.includes('<스포일러>'),false,'manuscript markup escaped');
 });
+
+test('cross-character chronology distinguishes recording, scheduling, and witnessed events',()=>{
+ const island=require('../mystery-content/cruel-heart-island.case.json');
+ const academy=require('../mystery-content/stellar-academy-first-case.case.json');
+ const event=(d,r,title)=>d.game.booklets[r].timeline.find(t=>t.title===title);
+ const minutes=t=>Number(t.split(':')[0])*60+Number(t.split(':')[1]);
+ assert.equal(minutes(event(island,'yura','모니터 재생').time)-minutes(event(island,'yura','숙소 촬영').time),13);
+ const raw=island.game.investigation.cards.find(c=>c.id==='island_interview_raw').back;
+ for(const time of ['22:10','23:17','23:30'])assert.ok(raw.includes(time));
+ assert.equal(event(academy,'jinwoo','생활동 순찰').time,event(academy,'gabin','생활동 복귀').time);
+ assert.ok(minutes(event(academy,'rion','언어 연구실').time)<minutes(event(academy,'gabin','연호와 대화').time));
+ assert.match(academy.game.investigation.cards.find(c=>c.id==='academy_autopsy_time').back,/안전 센서/);
+ const d1=require('../mystery-content/d1-gaming.case.json');
+ assert.doesNotMatch(event(d1,'karl','시체 발견').detail,/종료 신호가 없/);
+ assert.match(event(d1,'mac','미리 설정한 살인').detail,/직접 시작 버튼/);
+});

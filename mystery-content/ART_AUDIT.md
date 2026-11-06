@@ -255,3 +255,7 @@ D1 71장 교체 완료. 마지막 하트의 11번째 카드 `seojun_old_report`�
 | `island_truth_contract` | 공용 컷이 개별 증거물을 나타내지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/island_truth_contract.webp` |
 | `island_final_cut` | 공용 컷이 개별 증거물을 나타내지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/island_final_cut.webp` |
 | `island_escape_beacon` | 공용 컷이 개별 증거물을 나타내지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/island_escape_beacon.webp` |
+
+## Neon batch 1 — 10 reviewed independent clues
+
+Nova 4, Rune 4, Ion 2 assets connected in the shared renderer. Scanner was regenerated after visual review found an ongoing heartbeat inconsistent with the evidence. Full prompts, source paths and card IDs: NEON_BATCH_1_REVIEW.json. Independent clue total: 137/229. Remaining queue: ART_REMAINING.json.
