@@ -36,5 +36,42 @@
     }
     return result;
   }
-  return {labels,locationName};
+
+  // Author-only floor names and props are never sent to a player until
+  // the door controlling that area has been unlocked at least once.
+  function hiddenAreas(floor,doorStatus){
+    return (floor?.areas||[]).filter(area=>{
+      if(!area.revealDoor)return false;
+      const door=(floor.doors||[]).find(d=>d.id===area.revealDoor);
+      return !!door&&doorStatus(floor,door).locked;
+    });
+  }
+  function inside(area,x,y){
+    return x>=area.x&&y>=area.y&&x<area.x+area.width&&y<area.y+area.height;
+  }
+  function isConcealedCard(card,floors,doorStatus){
+    if(!card?.location)return false;
+    const floor=(floors||[]).find(f=>f.id===card.location.floor);
+    return hiddenAreas(floor,doorStatus).some(a=>inside(a,card.location.x,card.location.y));
+  }
+  function playerFloor(floor,doorStatus){
+    if(!floor)return null;
+    const secrets=hiddenAreas(floor,doorStatus);
+    if(!secrets.length)return floor;
+    const secretAt=(x,y)=>secrets.find(a=>inside(a,x,y));
+    return {...floor,legend:floor.hiddenLegend||floor.legend,
+      areas:(floor.areas||[]).map(a=>secrets.includes(a)?
+        {...a,name:a.hiddenName||'잠긴 구역',color:'#65666c',pattern:'plain'}:a),
+      rooms:(floor.rooms||[]).map(r=>{
+        const a=secretAt(r.x,r.y);
+        return a?{...r,name:a.hiddenName||'잠긴 구역',icon:'🔒'}:r;
+      }),
+      objects:(floor.objects||[]).filter(o=>!secretAt(o.x,o.y)),
+      doors:(floor.doors||[]).map(d=>{
+        const a=secrets.find(a=>a.revealDoor===d.id);
+        return a?{...d,name:a.hiddenDoorName||'잠긴 구역 출입문'}:d;
+      })
+    };
+  }
+  return {labels,locationName,hiddenAreas,isConcealedCard,playerFloor};
 });
