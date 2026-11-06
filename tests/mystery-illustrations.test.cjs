@@ -44,5 +44,7 @@ test('Frontend loads committed concept artwork before book, and map/card/portrai
  assert.ok(ui.includes('map-prop'));
  assert.ok(ui.includes('research-illustration'));
  const server=fs.readFileSync(path.join(__dirname,'../server.js'),'utf8');
- assert.ok(server.includes('objects:floor.objects||[]'));
+ assert.ok(server.includes('objects:visibleFloor.objects||[]'));
+ assert.ok(server.includes('clueFront.playerFloor'),
+   'art props must pass through the secret-room redaction before reaching player UI');
 });
