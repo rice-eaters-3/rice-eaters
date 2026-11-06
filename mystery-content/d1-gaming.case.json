@@ -545,7 +545,7 @@
           {
             "id": "karl_manager_badge",
             "name": "D1 관리자 출입 태그",
-            "description": "태그의 대여 기록란은 22:02 이후 부분이 지워져 있다. 3층 장비실 출입 기록에는 카알의 계정이 남아 있지만, 누가 태그를 들고 있었는지 확인할 영상은 첨부되지 않았다."
+            "description": "플라스틱 출입 태그 앞면에 ‘카알’과 ‘D1 관리자’가 인쇄되어 있다. 뒷면 대여 기입란에는 ‘22:02’라고 적혀 있고 그 아래 글씨가 지워져 있다."
           },
           {
             "id": "karl_alpaca_receipts",
@@ -731,7 +731,7 @@
           {
             "id": "mac_tactical_board",
             "name": "특수 전술 보드",
-            "description": "전술 보드 구석에 ‘보이는 시각’과 ‘기록 시각’이라는 두 칸이 그려져 있다. 00:26과 00:34 사이에 화살표가 이어져 있지만, 어떤 경기를 분석한 것인지는 적혀 있지 않다."
+            "description": "전술 보드의 두 칸에 각각 ‘보이는 시각’, ‘기록 시각’이라고 적혀 있다. 00:26과 00:34를 잇는 화살표가 그려져 있다."
           },
           {
             "id": "mac_maintenance_glove",
@@ -1100,7 +1100,7 @@
           "type": "belonging",
           "owner": "karl",
           "clueKind": "timeline",
-          "back": "태그의 대여 기록란은 22:02 이후 부분이 지워져 있다. 3층 장비실 출입 기록에는 카알의 계정이 남아 있지만, 누가 태그를 들고 있었는지 확인할 영상은 첨부되지 않았다.",
+          "back": "플라스틱 출입 태그 앞면에 ‘카알’과 ‘D1 관리자’가 인쇄되어 있다. 뒷면 대여 기입란에는 ‘22:02’라고 적혀 있고 그 아래 글씨가 지워져 있다.",
           "repeatable": false,
           "transferable": true,
           "visibility": "locked",
@@ -1233,7 +1233,7 @@
           "type": "belonging",
           "owner": "mac",
           "clueKind": "timeline",
-          "back": "전술 보드 구석에 ‘보이는 시각’과 ‘기록 시각’이라는 두 칸이 그려져 있다. 00:26과 00:34 사이에 화살표가 이어져 있지만, 어떤 경기를 분석한 것인지는 적혀 있지 않다.",
+          "back": "전술 보드의 두 칸에 각각 ‘보이는 시각’, ‘기록 시각’이라고 적혀 있다. 00:26과 00:34를 잇는 화살표가 그려져 있다.",
           "repeatable": false,
           "transferable": true,
           "visibility": "locked",
@@ -1425,7 +1425,7 @@
           "subtitle": "",
           "clueKind": "cult",
           "type": "information",
-          "back": "가장 많은 금액을 정기 후원한 사람은 ‘B.IGO’라는 이름을 사용했다. 송금 요청서에는 옥상 행사 일정표와 내부 동선도가 함께 첨부돼 있다. 실명 확인란은 비어 있다.",
+          "back": "후원자 명단에서 ‘B.IGO’라고 적힌 행의 송금액이 가장 크다. 해당 행에 첨부된 자료 목록에는 ‘옥상 행사 일정표’, ‘내부 동선도’가 적혀 있고 실명란은 비어 있다.",
           "visibility": "locked",
           "availableFromPhase": "investigation1",
           "repeatable": false,
@@ -1448,7 +1448,7 @@
           "subtitle": "",
           "clueKind": "cult",
           "type": "information",
-          "back": "오래전 D1 프로 연습실에서 배익호와 카알, 젊은 맥 감독이 함께 찍힌 사진이다. 사진 한쪽에는 흰 안전 테이프를 두른 낡은 장비 케이스가 놓여 있다.",
+          "back": "D1 연습실에서 세 사람이 나란히 선 사진이다. 뒷면에는 ‘배익호·카알·맥’이라는 이름이 적혀 있다. 사진 한쪽에 흰 테이프가 붙은 장비 케이스가 찍혀 있다.",
           "visibility": "locked",
           "availableFromPhase": "investigation1",
           "repeatable": false,
@@ -1891,7 +1891,7 @@
         },
         {
           "id": "trick_stage_outline",
-          "title": "가짜 죽음 연출 설명서",
+          "title": "왕좌 공연 연출 설명서",
           "subtitle": "",
           "clueKind": "trick",
           "type": "place",
@@ -2033,7 +2033,7 @@
           "subtitle": "",
           "clueKind": "trick",
           "type": "place",
-          "back": "카알에게 보내려던 감사 인사가 적혀 있다. “네가 몰래 돕던 알파카 구조소 이야기를 이제야 들었다. 나도 늦게나마 답을 돌려주고 싶다.” 끝부분은 완성되지 않았다.",
+          "back": "노트 한쪽에 ‘카알에게’라는 머리말이 있다. “네가 몰래 돕던 알파카 구조소 이야기를 이제야 들었다. 나도 늦게나마 답을 돌려주고 싶다.”라는 문장 뒤로 빈 줄이 이어진다.",
           "visibility": "locked",
           "availableFromPhase": "investigation2",
           "repeatable": false,
@@ -2104,7 +2104,7 @@
         },
         {
           "id": "trick_voice_recording",
-          "title": "「살았죠?」 미리 녹음한 음성",
+          "title": "「살았죠?」 음성 파일",
           "subtitle": "",
           "clueKind": "trick",
           "type": "place",
