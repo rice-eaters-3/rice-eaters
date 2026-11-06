@@ -172,3 +172,30 @@ D1 71장 교체 완료. 마지막 하트의 11번째 카드 `seojun_old_report`�
 | `doyun_brand_badge` | 공용 계약서 그림이 개별 소지품의 형태와 설명을 표현하지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/doyun_brand_badge.webp` |
 | `seojun_wave_meter` | 공용 관측 패널 그림으로 휴대용 수위 기록계를 구분할 수 없음 | `apps/murder-mystery/assets/clues/cruel-heart-island/seojun_wave_meter.webp` |
 | `seojun_research_badge` | 공용 계약서 그림이 개별 소지품의 형태와 설명을 표현하지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/seojun_research_badge.webp` |
+
+## 마지막 하트 · 2차 배치 및 독립 초상화
+
+전체 프레임을 보존한 신규 이미지 10장을 현재 카드 설명과 대조했다. 캐릭터 8명도 컨셉아트의 의상·외형과 대조 후 독립 초상화로 연결했다.
+
+| 카드 ID | 기존 문제 | 신규 이미지 경로 |
+| --- | --- | --- |
+| `seojun_old_report` | 공용 이미지가 개별 증거물을 표현하지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/seojun_old_report.webp` |
+| `seojun_dry_notebook` | 공용 이미지가 개별 증거물을 표현하지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/seojun_dry_notebook.webp` |
+| `taehan_old_warrant` | 공용 이미지가 개별 증거물을 표현하지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/taehan_old_warrant.webp` |
+| `taehan_black_gloves` | 공용 이미지가 개별 증거물을 표현하지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/taehan_black_gloves.webp` |
+| `taehan_shoe_sketch` | 공용 이미지가 개별 증거물을 표현하지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/taehan_shoe_sketch.webp` |
+| `taehan_handcuffs` | 공용 이미지가 개별 증거물을 표현하지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/taehan_handcuffs.webp` |
+| `harin_editor_pass` | 공용 이미지가 개별 증거물을 표현하지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/harin_editor_pass.webp` |
+| `harin_violet_ribbon` | 공용 이미지가 개별 증거물을 표현하지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/harin_violet_ribbon.webp` |
+| `harin_voice_draft` | 공용 이미지가 개별 증거물을 표현하지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/harin_voice_draft.webp` |
+| `harin_signal_flare` | 공용 이미지가 개별 증거물을 표현하지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/harin_signal_flare.webp` |
+| `minjae` | 컨셉 보드 잘라쓰기를 독립 초상화로 교체 | `apps/murder-mystery/assets/portraits/cruel-heart-island/minjae.webp` |
+| `doyun` | 컨셉 보드 잘라쓰기를 독립 초상화로 교체 | `apps/murder-mystery/assets/portraits/cruel-heart-island/doyun.webp` |
+| `seojun` | 컨셉 보드 잘라쓰기를 독립 초상화로 교체 | `apps/murder-mystery/assets/portraits/cruel-heart-island/seojun.webp` |
+| `taehan` | 컨셉 보드 잘라쓰기를 독립 초상화로 교체 | `apps/murder-mystery/assets/portraits/cruel-heart-island/taehan.webp` |
+| `harin` | 컨셉 보드 잘라쓰기를 독립 초상화로 교체 | `apps/murder-mystery/assets/portraits/cruel-heart-island/harin.webp` |
+| `yura` | 컨셉 보드 잘라쓰기를 독립 초상화로 교체 | `apps/murder-mystery/assets/portraits/cruel-heart-island/yura.webp` |
+| `nayeon` | 컨셉 보드 잘라쓰기를 독립 초상화로 교체 | `apps/murder-mystery/assets/portraits/cruel-heart-island/nayeon.webp` |
+| `somi` | 컨셉 보드 잘라쓰기를 독립 초상화로 교체 | `apps/murder-mystery/assets/portraits/cruel-heart-island/somi.webp` |
+
+반영 누계: 조사 카드 91/229 (D1 71, 마지막 하트 20), 플레이어 초상화 15/28 + D1 피해자 1. 남은 조사 카드 138, 플레이어 초상화 13.

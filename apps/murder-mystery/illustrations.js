@@ -169,7 +169,17 @@ window.MysteryArt=(function(){
    'doyun_luxury_watch',
    'doyun_brand_badge',
    'seojun_wave_meter',
-   'seojun_research_badge'
+   'seojun_research_badge',
+   'seojun_old_report',
+   'seojun_dry_notebook',
+   'taehan_old_warrant',
+   'taehan_black_gloves',
+   'taehan_shoe_sketch',
+   'taehan_handcuffs',
+   'harin_editor_pass',
+   'harin_violet_ribbon',
+   'harin_voice_draft',
+   'harin_signal_flare'
   ])
  };
  const standaloneD1Props=new Set(['sink','fridge','pc','gargoyle','throne']);
@@ -177,7 +187,7 @@ window.MysteryArt=(function(){
  const knownStory=id=>A[storyFor(id)]||null;
  function standalonePortrait(story,id){
   const theme=storyFor(story),data=knownStory(story);
-  if(theme!=='d1-crown-of-ashes'||!Object.hasOwn(data.portraits,id))return null;
+  if(!['d1-crown-of-ashes','cruel-heart-island'].includes(theme)||!Object.hasOwn(data.portraits,id))return null;
   return {...data,file:'portraits/'+theme+'/'+id+'.webp',size:[432,576]};
  }
  function artCrop(story,rect,css,alt,data=knownStory(story)){

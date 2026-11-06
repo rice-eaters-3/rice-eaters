@@ -1,0 +1,131 @@
+{
+  "note": "Recovered generated assets; original prompt text unavailable in resumed session. Current card text used for semantic review.",
+  "assets": [
+    {
+      "id": "seojun_old_report",
+      "kind": "clues",
+      "source": "generated_images/exec-cd74a9d9-40b2-4550-b57a-226e1014b574.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/seojun_old_report.webp",
+      "review": "Matched independently generated full image against current case text/concept; resized without cropping."
+    },
+    {
+      "id": "seojun_dry_notebook",
+      "kind": "clues",
+      "source": "generated_images/exec-acce5877-63f4-4621-a5f2-f4017a31f097.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/seojun_dry_notebook.webp",
+      "review": "Matched independently generated full image against current case text/concept; resized without cropping."
+    },
+    {
+      "id": "taehan_old_warrant",
+      "kind": "clues",
+      "source": "generated_images/exec-f21bf0da-6ebc-499b-93c5-670e00e08db8.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/taehan_old_warrant.webp",
+      "review": "Matched independently generated full image against current case text/concept; resized without cropping."
+    },
+    {
+      "id": "taehan_black_gloves",
+      "kind": "clues",
+      "source": "generated_images/exec-89a84c3a-577c-4364-903c-a7cc18079a7e.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/taehan_black_gloves.webp",
+      "review": "Matched independently generated full image against current case text/concept; resized without cropping."
+    },
+    {
+      "id": "taehan_shoe_sketch",
+      "kind": "clues",
+      "source": "generated_images/exec-43f4887f-dfba-4577-ba0a-895a821540e2.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/taehan_shoe_sketch.webp",
+      "review": "Matched independently generated full image against current case text/concept; resized without cropping."
+    },
+    {
+      "id": "taehan_handcuffs",
+      "kind": "clues",
+      "source": "generated_images/exec-5b2f47c0-d50c-4eee-96d0-13467efa9acf.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/taehan_handcuffs.webp",
+      "review": "Matched independently generated full image against current case text/concept; resized without cropping."
+    },
+    {
+      "id": "harin_editor_pass",
+      "kind": "clues",
+      "source": "generated_images/exec-34bf4f37-488a-4d32-8dd1-070da1a98da0.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/harin_editor_pass.webp",
+      "review": "Matched independently generated full image against current case text/concept; resized without cropping."
+    },
+    {
+      "id": "harin_violet_ribbon",
+      "kind": "clues",
+      "source": "generated_images/exec-99b465d5-7a52-42c4-80e1-35d2bce6858c.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/harin_violet_ribbon.webp",
+      "review": "Matched independently generated full image against current case text/concept; resized without cropping."
+    },
+    {
+      "id": "harin_voice_draft",
+      "kind": "clues",
+      "source": "generated_images/exec-69f6c145-b6c1-4c62-9b1c-f807d13db13d.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/harin_voice_draft.webp",
+      "review": "Matched independently generated full image against current case text/concept; resized without cropping."
+    },
+    {
+      "id": "harin_signal_flare",
+      "kind": "clues",
+      "source": "generated_images/exec-747a5b6b-07ca-4635-a952-034078e616d9.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/harin_signal_flare.webp",
+      "review": "Matched independently generated full image against current case text/concept; resized without cropping."
+    },
+    {
+      "id": "minjae",
+      "kind": "portraits",
+      "source": "generated_images/exec-35fc9255-3c25-4f4a-9412-406886bba228.png",
+      "asset": "apps/murder-mystery/assets/portraits/cruel-heart-island/minjae.webp",
+      "review": "Matched independently generated full image against current case text/concept; resized without cropping."
+    },
+    {
+      "id": "doyun",
+      "kind": "portraits",
+      "source": "generated_images/exec-a9e68d5c-22a3-47b7-a342-99fea3119144.png",
+      "asset": "apps/murder-mystery/assets/portraits/cruel-heart-island/doyun.webp",
+      "review": "Matched independently generated full image against current case text/concept; resized without cropping."
+    },
+    {
+      "id": "seojun",
+      "kind": "portraits",
+      "source": "generated_images/exec-fa9945ed-5c31-4f9c-aaad-de4eaebdff0b.png",
+      "asset": "apps/murder-mystery/assets/portraits/cruel-heart-island/seojun.webp",
+      "review": "Matched independently generated full image against current case text/concept; resized without cropping."
+    },
+    {
+      "id": "taehan",
+      "kind": "portraits",
+      "source": "generated_images/exec-dae063da-4d97-4da4-bcb0-495a2974ad13.png",
+      "asset": "apps/murder-mystery/assets/portraits/cruel-heart-island/taehan.webp",
+      "review": "Matched independently generated full image against current case text/concept; resized without cropping."
+    },
+    {
+      "id": "harin",
+      "kind": "portraits",
+      "source": "generated_images/exec-16e93ec0-a53a-45d6-bcbd-7585d0a743a2.png",
+      "asset": "apps/murder-mystery/assets/portraits/cruel-heart-island/harin.webp",
+      "review": "Matched independently generated full image against current case text/concept; resized without cropping."
+    },
+    {
+      "id": "yura",
+      "kind": "portraits",
+      "source": "generated_images/exec-9ca77739-e8c4-4121-92c2-7af55ca309cd.png",
+      "asset": "apps/murder-mystery/assets/portraits/cruel-heart-island/yura.webp",
+      "review": "Matched independently generated full image against current case text/concept; resized without cropping."
+    },
+    {
+      "id": "nayeon",
+      "kind": "portraits",
+      "source": "generated_images/exec-0f31a282-89b5-4539-894f-5b2dd913d99e.png",
+      "asset": "apps/murder-mystery/assets/portraits/cruel-heart-island/nayeon.webp",
+      "review": "Matched independently generated full image against current case text/concept; resized without cropping."
+    },
+    {
+      "id": "somi",
+      "kind": "portraits",
+      "source": "generated_images/exec-f24b55d8-f47e-4e52-bfd7-49c2579ae2b0.png",
+      "asset": "apps/murder-mystery/assets/portraits/cruel-heart-island/somi.webp",
+      "review": "Matched independently generated full image against current case text/concept; resized without cropping."
+    }
+  ]
+}
