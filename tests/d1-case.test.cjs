@@ -226,6 +226,9 @@ test('Studio simulator reveals sealed gallery only after throne evidence grants 
   assert.ok(view.map.rooms.some(r=>r.name==='가고일 전시실·옥상'));
   assert.ok(view.map.objects.some(o=>o.name==='갈리온 전시 석상'));
   assert.ok(view.investigation.cards.some(c=>c.id==='cult_gargoyle_poster'));
+  assert.throws(()=>engine.reserve(state,'cult_hero_landing_syllabus'),/조사 장소 타일/,
+    'an opened gallery still requires entering the room before taking evidence');
+  engine.move(state,'up');engine.move(state,'up');engine.move(state,'up');
   assert.equal(engine.reserve(state,'cult_hero_landing_syllabus'),true,
-    'non-site-only gallery cards become available only after opening the door');
+    'gallery evidence is available when standing in its room');
 });
