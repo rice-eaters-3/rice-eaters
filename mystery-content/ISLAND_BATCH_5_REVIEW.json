@@ -1,0 +1,75 @@
+{
+  "method": "Built-in image generation, independent image per card",
+  "assets": [
+    {
+      "id": "island_doctor_note",
+      "prompt": "Original standalone square evidence illustration for Korean visual novel Last Heart. Detailed painterly object close-up, luxury tropical island dating show, pink twilight and navy shadows. Full object visible with margins. No border, watermark, culprit deductions. A contestant counseling survey consent form on a clipboard with a visibly pasted extra clause strip and an unchecked consent box. Psychology questionnaire and plain pen on resort desk. All text abstract and unreadable, no names or signatures.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-a019626b-4c06-49fe-bf3f-18c10e74f0c9.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/island_doctor_note.webp",
+      "review": "Matched object and visible timing to current case; full frame preserved; no culprit conclusions."
+    },
+    {
+      "id": "island_drone_master",
+      "prompt": "Original standalone square evidence illustration for Korean visual novel Last Heart. Detailed painterly object close-up, luxury tropical island dating show, pink twilight and navy shadows. Full object visible with margins. No border, watermark, culprit deductions. A drone controller displaying unedited aerial footage of a coastal observation hut entrance. Tiny dark indistinct human silhouette at door, no recognizable clothing or identity. Separate paper broadcast schedule, timestamps deliberately illegible.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-1501cfc5-8e52-43bd-ac96-3d322b64d626.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/island_drone_master.webp",
+      "review": "Matched object and visible timing to current case; full frame preserved; no culprit conclusions."
+    },
+    {
+      "id": "island_net_box",
+      "prompt": "Original standalone square evidence illustration for Korean visual novel Last Heart. Detailed painterly object close-up, luxury tropical island dating show, pink twilight and navy shadows. Full object visible with margins. No border, watermark, culprit deductions. A locked metal cabinet in a boat shed seen through a wire-mesh door, containing a safety net and spare orange life jackets. Checklist clipped outside has an erased signature field. No visible times or names.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-de45bbf9-fdf7-4738-ac49-9e403a863972.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/island_net_box.webp",
+      "review": "Matched object and visible timing to current case; full frame preserved; no culprit conclusions."
+    },
+    {
+      "id": "island_sound_test",
+      "prompt": "Original standalone square evidence illustration for Korean visual novel Last Heart. Detailed painterly object close-up, luxury tropical island dating show, pink twilight and navy shadows. Full object visible with margins. No border, watermark, culprit deductions. A sound console with microphone and saved rehearsal audio waveform, clock-shaped scheduled-playback icon, one archive audio file selected. Do not show a man or voice speaker. No text, names or timestamp.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-53e143e2-1eb1-4e03-a2af-6a186c011bec.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/island_sound_test.webp",
+      "review": "Matched object and visible timing to current case; full frame preserved; no culprit conclusions."
+    },
+    {
+      "id": "island_tide_gate",
+      "prompt": "Original standalone square evidence illustration for Korean visual novel Last Heart. Detailed painterly object close-up, luxury tropical island dating show, pink twilight and navy shadows. Full object visible with margins. No border, watermark, culprit deductions. Coastal observation station safety-lock original log displayed on a rugged terminal. Exactly one legible timestamp \"23:17\" beside a red warning triangle and locked gate icon. Other rows abstract, no year, no name, no invented seconds.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-9271e0f0-85d7-436b-9847-52e552db5620.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/island_tide_gate.webp",
+      "review": "Matched object and visible timing to current case; full frame preserved; no culprit conclusions."
+    },
+    {
+      "id": "island_duplicate_badge",
+      "prompt": "Original standalone square evidence illustration for Korean visual novel Last Heart. Detailed painterly object close-up, luxury tropical island dating show, pink twilight and navy shadows. Full object visible with margins. No border, watermark, culprit deductions. Macro view of worn auxiliary editing access badge beside card-reader audit screen. Surface damage obscures final serial digit; remaining serial shown only as indistinct blocks. No readable numbers, names or date.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-1b545efe-d385-46b1-bec1-438201268600.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/island_duplicate_badge.webp",
+      "review": "Matched object and visible timing to current case; full frame preserved; no culprit conclusions."
+    },
+    {
+      "id": "island_tide_autopsy",
+      "prompt": "Original standalone square evidence illustration for Korean visual novel Last Heart. Detailed painterly object close-up, luxury tropical island dating show, pink twilight and navy shadows. Full object visible with margins. No border, watermark, culprit deductions. A non-graphic coastal scene inspection report with photographs of an empty flooded observation room, door lock and unattended alarm panel. No body, no injury, no culprit, no written deduction.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-671ed47d-541f-4924-b646-d742158346a9.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/island_tide_autopsy.webp",
+      "review": "Matched object and visible timing to current case; full frame preserved; no culprit conclusions."
+    },
+    {
+      "id": "island_last_intercom",
+      "prompt": "Original standalone square evidence illustration for Korean visual novel Last Heart. Detailed painterly object close-up, luxury tropical island dating show, pink twilight and navy shadows. Full object visible with margins. No border, watermark, culprit deductions. An old coastal intercom beside an audio recovery laptop. Waveform with a missing gap and recovered trailing segment in a contrasting color. No transcription, no names, no time or human face.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-011bbec9-d414-4425-b5ff-96630115bb10.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/island_last_intercom.webp",
+      "review": "Matched object and visible timing to current case; full frame preserved; no culprit conclusions."
+    },
+    {
+      "id": "island_interview_raw",
+      "prompt": "Original standalone square evidence illustration for Korean visual novel Last Heart. Detailed painterly object close-up, luxury tropical island dating show, pink twilight and navy shadows. Full object visible with margins. No border, watermark, culprit deductions. A memory card and raw interview footage laptop showing an empty pink resort interview set. Two metadata columns indicated by camera icon and editing-scissors icon; all metadata text blurred and no timestamp, nearby broadcast thumbnail.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-c89e0b57-920d-43dd-9746-6057d9b81fd8.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/island_interview_raw.webp",
+      "review": "Matched object and visible timing to current case; full frame preserved; no culprit conclusions."
+    },
+    {
+      "id": "island_relay_key",
+      "prompt": "Original standalone square evidence illustration for Korean visual novel Last Heart. Detailed painterly object close-up, luxury tropical island dating show, pink twilight and navy shadows. Full object visible with margins. No border, watermark, culprit deductions. A brass access token with engraved relay antenna icon in a small protective pouch beside a locked broadcast relay room panel. No named owner, no identity, no text.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-6ffab648-fb70-4a1e-92d6-4612ee7a63d9.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/island_relay_key.webp",
+      "review": "Matched object and visible timing to current case; full frame preserved; no culprit conclusions."
+    }
+  ]
+}
