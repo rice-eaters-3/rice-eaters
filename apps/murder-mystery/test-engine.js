@@ -128,6 +128,8 @@
     if(!investigationPhases.includes(state.phase))error('현재 조사 단계가 아닙니다.');
     const c=cards(state).find(x=>x.id===cardId);
     if(!c)error('조사 카드가 없습니다.');
+    if(ClueFront.isConcealedCard(c,state.pkg.game.floors,(f,d)=>doorView(state,f,d)))
+      error('이 조사 구역은 아직 잠겨 있습니다.');
     if(!unlocked(state,c))error('아직 해금되지 않은 카드입니다.');
     if(c.owner===state.roleId||(c.blockedFor||[]).includes(state.roleId))error('이 배역은 해당 카드를 조사할 수 없습니다.');
     if(c.requiresPresence&&c.location){
@@ -323,10 +325,11 @@
       shared:{synopsis:s.synopsis,characters:s.characters}
     }:null;
     const isMap=playPhases.includes(phase);
-    const map=isMap?{title:floor.title,legend:floor.legend,tiles:floor.tiles,rooms:floor.rooms,
-      objects:floor.objects||[],floorId:floor.id,
-      floors:g.floors.map(f=>({id:f.id,title:f.title})),portals:floor.portals||[],areas:floor.areas||[],
-      doors:(floor.doors||[]).map(d=>({id:d.id,name:d.name,x:d.x,y:d.y,
+    const visibleFloor=ClueFront.playerFloor(floor,(f,d)=>doorView(state,f,d));
+    const map=isMap?{title:visibleFloor.title,legend:visibleFloor.legend,tiles:visibleFloor.tiles,rooms:visibleFloor.rooms,
+      objects:visibleFloor.objects||[],floorId:visibleFloor.id,
+      floors:g.floors.map(f=>({id:f.id,title:f.title})),portals:visibleFloor.portals||[],areas:visibleFloor.areas||[],
+      doors:(visibleFloor.doors||[]).map(d=>({id:d.id,name:d.name,x:d.x,y:d.y,
         ...doorView(state,floor,d),requiresItem:d.requiresItem||null})),
       capacity:g.investigation?.maxTileOccupants||3,
       avatars:s.characters.filter(c=>state.positions[c.id]?.floor===floor.id)
@@ -337,6 +340,7 @@
     const investigation=afterFirst.includes(phase)?{
       tokens:state.tokens[role.id]||0,totalTokens:g.investigation?.tokensPerPlayer||4,canInvestigate,
       cards:cards(state).flatMap(c=>{
+        if(ClueFront.isConcealedCard(c,g.floors,(f,d)=>doorView(state,f,d)))return [];
         const mine=holdings(state,role.id).filter(h=>h.cardId===c.id);
         const visible=!!state.publicCards[c.id]||mine.length>0||
           state.selectiveShares.some(v=>v.to===role.id&&state.holdings.some(h=>h.id===v.holdingId&&h.cardId===c.id));

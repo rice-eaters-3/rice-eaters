@@ -85,6 +85,14 @@ test('all four test-mode catalogs preserve numbered fronts when backs become pub
    assert.equal(c.frontTitle,labels[c.id]);
   }
   for(const c of pkg.game.investigation.cards)state.publicCards[c.id]={at:1};
+  // Even globally published backs cannot expose the unrevealed room's catalog.
+  for(const f of pkg.game.floors||[])for(const a of f.areas||[])if(a.revealDoor){
+    assert.equal(E.roomView(state).investigation.cards.some(c=>
+      pkg.game.investigation.cards.find(x=>x.id===c.id)?.location?.floor===f.id&&
+      a.x<=c.location?.x&&c.location?.x<a.x+a.width&&
+      a.y<=c.location?.y&&c.location?.y<a.y+a.height),false);
+    state.doorStates[f.id+':'+a.revealDoor]={unlocked:true,open:true};
+  }
   const revealed=E.roomView(state).investigation.cards;
   assert.equal(revealed.length,pkg.game.investigation.cards.length);
   for(const c of revealed){

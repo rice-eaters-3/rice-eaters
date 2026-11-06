@@ -70,13 +70,17 @@ function validate(input){
       if(x+w>width||y+h>tiles.length)throw Error('구역 경계가 맵을 벗어납니다.');
       return {id:text(a.id,40),name:text(a.name,80),x,y,width:w,height:h,
         color:/^#[a-fA-F0-9]{6}$/.test(a.color)?a.color:'#7a8190',
-        pattern:['wood','carpet','stone','tile','plain'].includes(a.pattern)?a.pattern:'plain'};
+        pattern:['wood','carpet','stone','tile','plain'].includes(a.pattern)?a.pattern:'plain',
+        revealDoor:text(a.revealDoor,40),hiddenName:text(a.hiddenName,80),
+        hiddenDoorName:text(a.hiddenDoorName,80)};
     });
     const doors=(Array.isArray(f.doors)?f.doors:[]).slice(0,80).map(d=>({
       id:text(d.id,40),name:text(d.name,80),...location(d,'문'),
       locked:d.locked===true,closed:d.closed!==false,requiresItem:text(d.requiresItem,40)
     }));
     unique(doors.map(d=>d.id),'문');
+    for(const area of areas)if(area.revealDoor&&!doors.some(d=>d.id===area.revealDoor&&d.locked))
+      throw Error('비밀 구역은 잠긴 문 ID를 지정해야 합니다: '+area.id);
     const portals=(Array.isArray(f.portals)?f.portals:[]).slice(0,80).map(t=>({
       ...location(t,'이동 타일'),toFloor:text(t.toFloor,40),
       toX:int(t.toX,0,35,'도착 x'),toY:int(t.toY,0,35,'도착 y'),
@@ -101,6 +105,7 @@ function validate(input){
         throw Error('문 또는 계단 위에 통과 불가 오브젝트를 배치할 수 없습니다.');
     }
     return {id:f.id,title:text(f.title,100)||f.id,legend:text(f.legend,250),
+      hiddenLegend:text(f.hiddenLegend,250),
       tiles,rooms,areas,doors,portals,objects:cleaned};
   });
   unique(floors.map(f=>f.id),'층');

@@ -45,6 +45,19 @@ test('D1 mystery JSON has seven roles, 28 owned belongings, 43 layered clues and
   assert.equal(raw.game.investigation.tokensPerSecondInvestigation,4);
   assert.equal(raw.story.players*(4+4),56,'exactly 56 investigation tokens are issued');
   assert.equal(raw.game.floors.length,4);
+  const penthouse=raw.game.floors.find(f=>f.id==='penthouse');
+  const galleryDoor=penthouse.doors.find(d=>d.id==='ne_door');
+  assert.equal(galleryDoor.locked,true,'secret gallery is initially sealed');
+  assert.equal(galleryDoor.requiresItem,'gallery_key');
+  assert.equal(penthouse.areas.find(a=>a.id==='northeast').revealDoor,'ne_door');
+  assert.equal(normalized.game.floors.find(f=>f.id==='penthouse').areas.find(a=>a.id==='northeast').revealDoor,'ne_door');
+  const throne=cards.find(c=>c.id==='trick_throne_scene');
+  assert.equal(throne.requiresPresence,true,'gallery key requires physically inspecting the throne');
+  assert.equal(throne.grant?.id,'gallery_key');
+  assert.equal(normalized.game.investigation.cards.find(c=>c.id==='trick_throne_scene').grant?.id,'gallery_key');
+  const hasuDinner=booklets.hasu.timeline.find(t=>t.time==='19:30').detail;
+  for(const phrase of ['후원금이 어디로 갑니까','교단 후원금','교단을 언급'])
+    assert.ok(!hasuDinner.includes(phrase),'cult must stay secret at dinner');
   assert.equal(raw.game.floors.some(f=>f.doors.some(d=>d.requiresItem==='vault_override')),true,
     'vault cannot be entered until the investigation item is acquired');
   const vault=cards.find(c=>c.id==='trick_spare_override');
@@ -114,6 +127,10 @@ test('seven-player D1 case: private visions, first-round sealed clues, second-ro
   assert.equal(first.data.phase,'investigation1');
   const before=await Promise.all(names.map((_,i)=>call(i,endpoint)));
   assert.equal(before.reduce((n,r)=>n+r.data.investigation.tokens,0),28);
+  const galleryRemote=await post(4,endpoint+'/reserve',{cardId:'cult_hero_landing_syllabus'});
+  assert.equal(galleryRemote.status,409,'remote gallery evidence is inaccessible while locked');
+  assert.equal(before[4].data.investigation.cards.some(c=>c.id==='cult_hero_landing_syllabus'),false,
+    'sealed room cards are absent from player catalog');
   const unavailable=await post(4,endpoint+'/reserve',{cardId:'trick_spare_override'});
   assert.equal(unavailable.status,409,'round 2 item is locked before stage 2');
   assert.equal(before[4].data.investigation.cards.some(c=>c.id==='trick_spare_override'),false,
@@ -164,9 +181,16 @@ test('seven-player D1 case: private visions, first-round sealed clues, second-ro
   const roof=await post(4,endpoint+'/interact',{kind:'portal',portalIndex:1});
   assert.equal(roof.status,200);
   assert.equal(roof.data.map.floorId,'penthouse');
+  assert.equal(JSON.stringify(roof.data.map).includes('가고일'),false,
+    'map areas, objects, door labels and legends must conceal secret gallery');
+  assert.ok(roof.data.map.rooms.some(r=>r.name==='출입 제한 구역'));
+  assert.ok(!roof.data.investigation.cards.some(c=>c.id==='cult_founder_mask'),
+    'locked room clues must not leak through card fronts');
   assert.equal((await post(4,endpoint+'/reserve',{cardId:'cult_founder_signature'})).status,409,
     'victim archives remain site-specific even in round two');
   await walk(4,['right','right','right','right','right']);
+  assert.equal((await post(4,endpoint+'/interact',{kind:'door',doorId:'ne_door',mode:'open'})).status,403,
+    'the gallery lock rejects players without the throne key');
   const unlocked=await post(4,endpoint+'/interact',{kind:'door',doorId:'se_door',mode:'open'});
   assert.equal(unlocked.status,200,'round-two clue grants the real key to the sealed archive');
   assert.equal(unlocked.data.map.doors.find(d=>d.id==='se_door').open,true);
@@ -177,4 +201,34 @@ test('seven-player D1 case: private visions, first-round sealed clues, second-ro
   assert.ok(founder.data.investigation.myCards.some(c=>c.cardId==='cult_founder_signature'));
   assert.match(founder.data.investigation.cards.find(c=>c.id==='cult_founder_signature').revealed[0].back,/배익호/);
   assert.equal((await call(7,endpoint)).data.investigation,null,'observer receives no investigation backs');
+});
+
+test('Studio simulator reveals sealed gallery only after throne evidence grants its key',()=>{
+  const engine=require('../apps/murder-mystery/test-engine.js');
+  const state=engine.create(raw);
+  engine.switchRole(state,'karl');
+  engine.switchPhase(state,'investigation1');
+  state.positions.karl={floor:'penthouse',x:15,y:6};
+  let view=engine.roomView(state);
+  assert.equal(JSON.stringify(view.map).includes('가고일'),false);
+  assert.equal(view.map.doors.find(d=>d.id==='ne_door').name,'4층 출입 제한 구역 문');
+  assert.equal(view.investigation.cards.some(c=>c.id==='cult_gargoyle_poster'),false);
+  assert.throws(()=>engine.reserve(state,'cult_hero_landing_syllabus'),/잠겨/);
+  assert.throws(()=>engine.interact(state,'door','ne_door','open'),/열쇠|필수/);
+  state.positions.karl={floor:'penthouse',x:4,y:3};
+  engine.reserve(state,'trick_throne_scene');
+  engine.investigate(state,'trick_throne_scene');
+  assert.ok(state.collected.karl.some(i=>i.id==='gallery_key'));
+  state.positions.karl={floor:'penthouse',x:15,y:6};
+  engine.interact(state,'door','ne_door','open');
+  view=engine.roomView(state);
+  assert.equal(view.map.doors.find(d=>d.id==='ne_door').name,'가고일 전시실·옥상 출입문');
+  assert.ok(view.map.rooms.some(r=>r.name==='가고일 전시실·옥상'));
+  assert.ok(view.map.objects.some(o=>o.name==='갈리온 전시 석상'));
+  assert.ok(view.investigation.cards.some(c=>c.id==='cult_gargoyle_poster'));
+  assert.throws(()=>engine.reserve(state,'cult_hero_landing_syllabus'),/조사 장소 타일/,
+    'an opened gallery still requires entering the room before taking evidence');
+  engine.move(state,'up');engine.move(state,'up');engine.move(state,'up');
+  assert.equal(engine.reserve(state,'cult_hero_landing_syllabus'),true,
+    'gallery evidence is available when standing in its room');
 });
