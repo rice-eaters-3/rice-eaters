@@ -191,23 +191,23 @@
         "inventory": [
           {
             "id": "jobi_threat_phone",
-            "name": "협박 메시지가 남은 휴대전화",
-            "description": "배익호에게 보낸 강한 표현의 메시지가 삭제되지 않았다. 본인만 알고 있는 추가 정보: 21:47 “내 기록을 도둑질한 값을 치르게 하겠다. 00:20 왕좌에서 보자.” 후속 메시지 한 통은 발송에 실패했다. 휴대전화 검색 기록에는 ‘훈련 데이터 원본’과 ‘영상 출처’라는 단어가 반복된다."
+            "name": "메시지가 남은 휴대전화",
+            "description": "21:47 “내 기록을 도둑질한 값을 치르게 하겠다. 00:20 왕좌에서 보자.” 후속 메시지 한 통은 발송에 실패했다. 휴대전화 검색 기록에는 ‘훈련 데이터 원본’과 ‘영상 출처’라는 단어가 반복된다."
           },
           {
             "id": "jobi_stage_mouse",
             "name": "연승을 함께한 마우스",
-            "description": "연습 시간이 너무 길어 마모된 프로용 마우스다. 본인만 알고 있는 추가 정보: 측면에 D1 연습 서버 인증 라벨이 붙어 있다. 조비 개인 영상 데이터가 배익호의 수업 자료에 들어간 정황을 암시한다."
+            "description": "측면에 ‘D1 연습 서버 인증’ 라벨이 붙어 있다."
           },
           {
             "id": "jobi_qualifier_card",
             "name": "데뷔 선발전 탈락 카드",
-            "description": "매년 마지막 경기에서 탈락한 기록이다. 본인만 알고 있는 추가 정보: 탈락 경기의 순간 클릭 정확도는 높았으나 승부처에서만 수동적이었다. 배익호가 “제자에게 일부러 답을 주지 않는다”는 메모를 남겼다."
+            "description": "경기 평가표의 ‘클릭 정확도’ 칸에는 ‘높음’, ‘승부처 행동’ 칸에는 ‘수동적’이라고 적혀 있다. 여백에는 “제자에게 일부러 답을 주지 않는다”는 메모와 배익호의 이름이 있다."
           },
           {
             "id": "jobi_stopwatch",
             "name": "PC방 대회 타이머",
-            "description": "자정 무렵 누른 기록이 남은 독립형 타이머다. 본인만 알고 있는 추가 정보: 23:12에 측정을 시작했으며 00:26에 손을 멈춘 짧은 틈이 기록되어 있다. 연습실 서버 시계와 달리 외부 동기화가 없는 기계식 시각이다."
+            "description": "기록창에 시작 시각 23:12와 00:26의 측정 중단 표시가 남아 있다. 기계식 타이머이며 외부 시각 동기화 단자는 없다."
           }
         ],
         "culprit": false,
@@ -279,22 +279,22 @@
           {
             "id": "mayushi_oracle_cards",
             "name": "사라진 장면의 신탁 카드",
-            "description": "동그란 머리와 왕관이 그려진 독특한 타로 카드 묶음. 본인만 알고 있는 추가 정보: 첫 장에는 00:26을 가리키는 시계와 낙하하는 조형물이 그려졌다. 마유시가 초청장을 받기 전에 적은 일자가 적혀 있다."
+            "description": "첫 장에는 00:26을 가리키는 시계와 낙하하는 조형물이 그려져 있다. 모서리에 손으로 쓴 날짜가 있다."
           },
           {
             "id": "mayushi_spirit_bell",
             "name": "은색 작은 방울",
-            "description": "손때가 묻은 물건을 만질 때 손에서 놓지 않는 방울. 본인만 알고 있는 추가 정보: 방울 소리는 라이브 방송 소리로 오해받지만 마유시는 감응에 집중하기 위해 쓴다. 사건 당일 3층 복도에서 크게 울렸다."
+            "description": "작은 은색 방울이다. 흔들면 맑고 높은 소리가 난다. 손잡이에 묶인 끈은 손때가 타 있다."
           },
           {
             "id": "mayushi_fractured_talisman",
             "name": "금이 간 부적",
-            "description": "어젯밤 00:26 무렵 금이 갔다고 주장하는 부적. 본인만 알고 있는 추가 정보: 마유시는 이 부적에서 “고장이 난 장치의 안전 표시를 누군가 가려 놓았다”는 인상을 받았다. 정작 물리적 증거로 삼기는 어렵다."
+            "description": "접힌 부적의 중앙이 갈라져 있다. 접힌 선을 따라 잉크가 번져 일부 문양이 끊겨 보인다."
           },
           {
             "id": "mayushi_private_stream",
-            "name": "미공개 틱톡 원본 파일",
-            "description": "업로드하지 않은 수십 초의 예지 영상. 본인만 알고 있는 추가 정보: 초청장을 받기 전 촬영한 장면에서 “가벼워야 할 왕관이 너무 무거워요”라고 혼잣말한다. 업로드하면 진짜 무녀임을 들킬 가능성이 있다."
+            "name": "미공개 영상 파일",
+            "description": "공개 상태가 ‘미공개’인 영상 파일이다. 화면 속 마유시가 “가벼워야 할 왕관이 너무 무거워요”라고 말한다."
           }
         ],
         "culprit": false,
@@ -366,22 +366,22 @@
           {
             "id": "chajiwoo_mini_gargoyle",
             "name": "거대한 돌로 된 가고일 석상(미니어처)",
-            "description": "손바닥만 한 돌 조형물. 어딘가 든든하다. 본인만 알고 있는 추가 정보: 미니어처 바닥에 “날아라, 착지는 지면이 한다”라는 짧은 문구가 새겨져 있다. 손바닥만 한 물건으로, 전시실의 대형 조형물과는 규격과 재질이 다르다."
+            "description": "손바닥만 한 가고일 미니어처다. 바닥에 “날아라, 착지는 지면이 한다”라는 문구가 새겨져 있다."
           },
           {
             "id": "chajiwoo_donation_ledger",
             "name": "평생 구독 후원 내역",
-            "description": "배익호 방송에 보낸 고액 후원 영수증 뭉치. 본인만 알고 있는 추가 정보: 수년간 이름을 바꿔가며 고액 후원을 반복했지만 답장은 거의 없었다. 가장 최근 영수증의 여백에는 ‘이 정도로도 기억하지 못할까’라는 글씨가 눌러 쓰여 있다."
+            "description": "여러 해의 후원 영수증이 묶여 있다. 영수증마다 후원자명이 다르고 반복되는 고액 송금 내역이 있다. 최근 영수증의 여백에는 ‘이 정도로도 기억하지 못할까’라는 글씨가 눌러 쓰여 있다."
           },
           {
             "id": "chajiwoo_cult_invitation",
             "name": "가고일 예배 초대 카드",
-            "description": "히어로 랜딩이라는 교단 행사 안내장. 본인만 알고 있는 추가 정보: 이 카드를 따라가면 사고가 있었던 옥상 행사로 이어진다. 초대 카드 하단에는 D1 자선 지원 행사라는 표시가 아주 작게 적혀 있다."
+            "description": "초대 카드에 ‘히어로 랜딩’, ‘옥상’, ‘2021-09-18’이 인쇄되어 있다. 하단에는 ‘D1 자선 지원 행사’라는 작은 글씨가 있다."
           },
           {
             "id": "chajiwoo_unmailed_letter",
-            "name": "전달하지 못한 연애편지",
-            "description": "사랑 고백과 신앙적 맹세가 뒤섞인 편지. 본인만 알고 있는 추가 정보: “기억하지 못해도 반드시 곁에 있겠다”는 구절과 함께 왕좌 전시실의 배치도가 손으로 그려져 있다. 배치도 옆에는 누구에게 보낼지 정하지 못한 듯 이름이 여러 번 지워져 있다."
+            "name": "미발송 편지",
+            "description": "“기억하지 못해도 반드시 곁에 있겠다”는 구절 옆에 왕좌 전시실의 배치도가 손으로 그려져 있다. 수신인 칸에는 이름을 여러 번 지운 자국이 있다."
           }
         ],
         "culprit": false,
@@ -453,22 +453,22 @@
           {
             "id": "cloud_tainted_cleaver",
             "name": "오염된 대형 식칼",
-            "description": "붉고 검은 얼룩이 묻은 무거운 요리용 식칼. 본인만 알고 있는 추가 정보: 얼룩은 비트·고추 소스와 산화된 가지즙이다. 흉기에 필요한 마모나 충격 흔적은 없으며 칼날에 미세한 고춧가루가 남았다."
+            "description": "넓은 칼날에 붉은색과 짙은 자주색 얼룩이 말라붙어 있다. 칼날 가장자리에 작은 붉은 알갱이가 남아 있다."
           },
           {
             "id": "cloud_huoguo_ladle",
             "name": "D1 훠궈 전용 국자",
-            "description": "매일 사용하다 색이 바랜 구리색 국자. 본인만 알고 있는 추가 정보: 국자 손잡이에는 “모든 게임은 훠궈처럼 끓인다”는 배익호의 각인이 남아 있다. 손잡이 아래에 과거 교단 행사 케이터링 날짜가 적혀 있다."
+            "description": "국자 손잡이에 “모든 게임은 훠궈처럼 끓인다”는 문구가 새겨져 있다. 손잡이 아래쪽에는 ‘2021-09-18’이라고 적혀 있다."
           },
           {
             "id": "cloud_elephant_eggplant",
             "name": "코끼리 가지볶음 레시피",
-            "description": "건강식 신메뉴를 위한 실험 레시피. 본인만 알고 있는 추가 정보: 절인 가지·비트 소스의 조합이 식칼 얼룩과 일치한다. 배익호가 승인하지 않은 식단을 개발한 흔적이기도 하다."
+            "description": "재료 목록에 ‘절인 가지’, ‘비트 소스’, ‘고추’가 적혀 있다. 조리 순서 옆에는 분량을 고친 흔적이 있고 승인란은 비어 있다."
           },
           {
             "id": "cloud_oven_receipt",
             "name": "새벽 오븐 타이머 출력지",
-            "description": "전원 재설정 없이 찍힌 00:26 기록. 본인만 알고 있는 추가 정보: 00:23 가열 시작, 00:26 순간 조명 흔들림, 00:29 종료가 인쇄됐다. 3층 서버 로그와 시계가 정확히 8분 차이 난다는 비교 증거가 된다."
+            "description": "출력지에는 ‘00:23 가열 시작’, ‘00:26 전원 변동’, ‘00:29 종료’가 차례로 인쇄되어 있다."
           }
         ],
         "culprit": false,
@@ -540,22 +540,22 @@
           {
             "id": "karl_alpaca_notebook",
             "name": "수상한 털뭉치 노트",
-            "description": "알파카 사진과 해독하기 어려운 숫자로 가득한 작은 수첩. 본인만 알고 있는 추가 정보: 숫자는 몰래 운영하는 동물 보호소의 개체 번호·치료비·구조 일정이다. 겉보기에는 비밀 계좌와 불법 송금 암호처럼 보인다."
+            "description": "알파카 사진 옆에 숫자와 금액이 여러 줄 적혀 있다. 몇몇 줄에는 ‘치료비’, ‘구조 일정’이라는 메모가 붙어 있다."
           },
           {
             "id": "karl_manager_badge",
             "name": "D1 관리자 출입 태그",
-            "description": "수십 개 출입 기록을 열 수 있는 카드형 태그. 본인만 알고 있는 추가 정보: 태그의 대여 기록란은 22:02 이후 부분이 지워져 있다. 3층 장비실 출입 기록에는 카알의 계정이 남아 있지만, 누가 태그를 들고 있었는지 확인할 영상은 첨부되지 않았다."
+            "description": "태그의 대여 기록란은 22:02 이후 부분이 지워져 있다. 3층 장비실 출입 기록에는 카알의 계정이 남아 있지만, 누가 태그를 들고 있었는지 확인할 영상은 첨부되지 않았다."
           },
           {
             "id": "karl_alpaca_receipts",
             "name": "구조소 송금 영수증",
-            "description": "불규칙한 현금 이체와 동물 병원 송금 내역. 본인만 알고 있는 추가 정보: 송금처는 수상한 거래처가 아니라 사설 알파카 구조소다. 그동안 감추고 있던 빚이 얼마나 큰지 드러난다."
+            "description": "수취인란에 ‘알파카 구조소’라고 적힌 송금 영수증 묶음이다. 별지에 대출 잔액과 상환 일정이 기재되어 있다."
           },
           {
             "id": "karl_unbroken_promise",
             "name": "꺾이지 않는 마음 배지",
-            "description": "학창 시절 배익호와 나눠 가진 오래된 배지. 본인만 알고 있는 추가 정보: 두 사람은 “우승하지 못한 날에도 꺾이지 않는다”는 약속을 했다. 카알이 지키려던 것은 죽은 친구의 진실뿐 아니라 잃어버린 프로 커리어였다."
+            "description": "배지 뒷면에 “우승하지 못한 날에도 꺾이지 않는다”는 문구와 배익호·카알의 이름이 새겨져 있다."
           }
         ],
         "culprit": false,
@@ -627,22 +627,22 @@
           {
             "id": "hasu_cult_notebook",
             "name": "거대한 돌로 된 가고일 종교 추적 노트",
-            "description": "안전 논란이 끊이지 않는 “옥상에서 히어로 랜딩” 커리큘럼에 대한 조사. 본인만 알고 있는 추가 정보: 히어로 랜딩 수업에서 마빈이 낙상해 다리를 다쳤고 안전 경고가 반복되었다. 예산 흐름에 D1과 비슷한 자금 출처가 나타난다."
+            "description": "노트에는 ‘히어로 랜딩’, ‘마빈 낙상·다리 부상’이라는 메모와 안전 경고 문서의 사본이 붙어 있다. 예산표 사본의 송금처 일부에 ‘D1’이 적혀 있다."
           },
           {
             "id": "hasu_marvin_voice",
             "name": "마빈의 음성 메시지",
-            "description": "하수가 몰래 보관한 형 같은 친구의 마지막 음성. 본인만 알고 있는 추가 정보: “내가 착지에 실패한 건 내 실수만은 아니야. 안전 점검서에 누군가 서명했어.” 녹음 끝부분에서 종이가 구겨지는 소리와 함께 이름을 말하려던 목소리가 끊긴다."
+            "description": "녹음에 “내가 착지에 실패한 건 내 실수만은 아니야. 안전 점검서에 누군가 서명했어.”라는 말이 담겨 있다. 끝부분에서 종이가 구겨지는 소리가 나고 목소리가 중간에 끊긴다."
           },
           {
             "id": "hasu_solo_kill_log",
             "name": "솔킬 연승 경기 리플레이",
-            "description": "상대의 실수를 놓치지 않는 최연소 신인의 경기 영상. 본인만 알고 있는 추가 정보: 00:26 경기 재생 위치가 기록되어 있다. 화면의 스코어는 6:0이지만 실제 대국이 아니라 과거 기록 재생이라 완전한 알리바이는 아니다."
+            "description": "재생 화면의 스코어는 6:0이다. 화면에 00:26이라는 표시, 재생 버튼과 진행 막대가 보인다. 파일 목록에는 ‘저장된 경기’라고 적혀 있다."
           },
           {
             "id": "hasu_roof_safety_map",
             "name": "옥상 히어로 랜딩 안전 약도",
-            "description": "마빈 사고 당시 비상 계단과 추락 지점이 표시된 낡은 도면. 본인만 알고 있는 추가 정보: 교단 전용 착지 지점에서 현재 D1 옥상으로 이어지는 안전 통로가 보인다. 한쪽 구석에는 후원사 D1과 전담 코치라는 글씨가 지워져 있다."
+            "description": "약도에 착지 지점과 D1 옥상이 표시되어 있고 두 곳 사이에 통로가 그려져 있다. 구석의 ‘후원사 D1’, ‘전담 코치’ 글씨 위에 지운 자국이 남아 있다."
           }
         ],
         "culprit": false,
@@ -731,22 +731,22 @@
           {
             "id": "mac_tactical_board",
             "name": "특수 전술 보드",
-            "description": "데이터와 심리전을 함께 분석하는 훈련용 전술판. 본인만 알고 있는 추가 정보: 전술 보드 구석에 ‘보이는 시각’과 ‘기록 시각’이라는 두 칸이 그려져 있다. 00:26과 00:34 사이에 화살표가 이어져 있지만, 어떤 경기를 분석한 것인지는 적혀 있지 않다."
+            "description": "전술 보드 구석에 ‘보이는 시각’과 ‘기록 시각’이라는 두 칸이 그려져 있다. 00:26과 00:34 사이에 화살표가 이어져 있지만, 어떤 경기를 분석한 것인지는 적혀 있지 않다."
           },
           {
             "id": "mac_maintenance_glove",
             "name": "회색 점검 장갑",
-            "description": "기계실 설비 점검 때 사용하는 회색 장갑. 본인만 알고 있는 추가 정보: 엄지 부근의 회색 천에 흰 접착 잔여물과 고운 돌가루가 묻어 있다. 평소 장비실에서도 쓰던 장갑이어서 이것만으로 어느 물건에 닿았는지는 알기 어렵다."
+            "description": "엄지 부근의 회색 천에 흰 접착 잔여물과 고운 돌가루가 묻어 있다."
           },
           {
             "id": "mac_coach_whistle",
             "name": "프로 감독의 호루라기",
-            "description": "전략 지시를 할 때 쓰는 금속 호루라기. 본인만 알고 있는 추가 정보: 호루라기를 매단 가방끈의 한쪽 끝이 길게 해져 있다. 장비실 반사 영상에도 비슷한 끈 모양이 흐릿하게 찍혔으나 색과 길이를 정확히 확인하기는 어렵다."
+            "description": "호루라기가 가방끈에 매달려 있다. 가방끈 한쪽 끝이 길게 해져 있고 몇 가닥의 실이 풀려 나와 있다."
           },
           {
             "id": "mac_rehearsal_schedule",
             "name": "초청 강의 훈련 시간표",
-            "description": "전원 합숙 스케줄과 비정상적인 장비 점검 시간이 섞인 문서. 본인만 알고 있는 추가 정보: 합숙 일정표의 ‘22:14 장비 점검’과 ‘00:26 메인 이벤트’ 옆에 서로 다른 색의 동그라미가 있다. 몇몇 시간 표기는 지웠다가 다시 쓴 흔적이 남아 있다."
+            "description": "합숙 일정표의 ‘22:14 장비 점검’과 ‘00:26 메인 이벤트’ 옆에 서로 다른 색의 동그라미가 있다. 몇몇 시간 표기는 지웠다가 다시 쓴 흔적이 남아 있다."
           }
         ],
         "culprit": true,
@@ -772,8 +772,8 @@
       "cards": [
         {
           "id": "jobi_threat_phone",
-          "title": "조비의 협박 메시지가 남은 휴대전화",
-          "subtitle": "등장인물 · 협박 메시지가 남은 휴대전화",
+          "title": "조비의 메시지가 남은 휴대전화",
+          "subtitle": "",
           "type": "belonging",
           "owner": "jobi",
           "clueKind": "timeline",
@@ -792,11 +792,11 @@
         {
           "id": "jobi_stage_mouse",
           "title": "조비의 연승을 함께한 마우스",
-          "subtitle": "등장인물 · 연승을 함께한 마우스",
+          "subtitle": "",
           "type": "belonging",
           "owner": "jobi",
           "clueKind": "timeline",
-          "back": "측면에 D1 연습 서버 인증 라벨이 붙어 있다. 조비 개인 영상 데이터가 배익호의 수업 자료에 들어간 정황을 암시한다.",
+          "back": "측면에 ‘D1 연습 서버 인증’ 라벨이 붙어 있다.",
           "repeatable": false,
           "transferable": true,
           "visibility": "locked",
@@ -811,11 +811,11 @@
         {
           "id": "jobi_qualifier_card",
           "title": "조비의 데뷔 선발전 탈락 카드",
-          "subtitle": "등장인물 · 데뷔 선발전 탈락 카드",
+          "subtitle": "",
           "type": "belonging",
           "owner": "jobi",
           "clueKind": "timeline",
-          "back": "탈락 경기의 순간 클릭 정확도는 높았으나 승부처에서만 수동적이었다. 배익호가 “제자에게 일부러 답을 주지 않는다”는 메모를 남겼다.",
+          "back": "경기 평가표의 ‘클릭 정확도’ 칸에는 ‘높음’, ‘승부처 행동’ 칸에는 ‘수동적’이라고 적혀 있다. 여백에는 “제자에게 일부러 답을 주지 않는다”는 메모와 배익호의 이름이 있다.",
           "repeatable": false,
           "transferable": true,
           "visibility": "locked",
@@ -830,11 +830,11 @@
         {
           "id": "jobi_stopwatch",
           "title": "조비의 PC방 대회 타이머",
-          "subtitle": "등장인물 · PC방 대회 타이머",
+          "subtitle": "",
           "type": "belonging",
           "owner": "jobi",
           "clueKind": "timeline",
-          "back": "23:12에 측정을 시작했으며 00:26에 손을 멈춘 짧은 틈이 기록되어 있다. 연습실 서버 시계와 달리 외부 동기화가 없는 기계식 시각이다.",
+          "back": "기록창에 시작 시각 23:12와 00:26의 측정 중단 표시가 남아 있다. 기계식 타이머이며 외부 시각 동기화 단자는 없다.",
           "repeatable": false,
           "transferable": true,
           "visibility": "locked",
@@ -849,11 +849,11 @@
         {
           "id": "mayushi_oracle_cards",
           "title": "마유시의 사라진 장면의 신탁 카드",
-          "subtitle": "등장인물 · 사라진 장면의 신탁 카드",
+          "subtitle": "",
           "type": "belonging",
           "owner": "mayushi",
           "clueKind": "timeline",
-          "back": "첫 장에는 00:26을 가리키는 시계와 낙하하는 조형물이 그려졌다. 마유시가 초청장을 받기 전에 적은 일자가 적혀 있다.",
+          "back": "첫 장에는 00:26을 가리키는 시계와 낙하하는 조형물이 그려져 있다. 모서리에 손으로 쓴 날짜가 있다.",
           "repeatable": false,
           "transferable": true,
           "visibility": "locked",
@@ -868,11 +868,11 @@
         {
           "id": "mayushi_spirit_bell",
           "title": "마유시의 은색 작은 방울",
-          "subtitle": "등장인물 · 은색 작은 방울",
+          "subtitle": "",
           "type": "belonging",
           "owner": "mayushi",
           "clueKind": "timeline",
-          "back": "방울 소리는 라이브 방송 소리로 오해받지만 마유시는 감응에 집중하기 위해 쓴다. 사건 당일 3층 복도에서 크게 울렸다.",
+          "back": "작은 은색 방울이다. 흔들면 맑고 높은 소리가 난다. 손잡이에 묶인 끈은 손때가 타 있다.",
           "repeatable": false,
           "transferable": true,
           "visibility": "locked",
@@ -887,11 +887,11 @@
         {
           "id": "mayushi_fractured_talisman",
           "title": "마유시의 금이 간 부적",
-          "subtitle": "등장인물 · 금이 간 부적",
+          "subtitle": "",
           "type": "belonging",
           "owner": "mayushi",
           "clueKind": "timeline",
-          "back": "마유시는 이 부적에서 “고장이 난 장치의 안전 표시를 누군가 가려 놓았다”는 인상을 받았다. 정작 물리적 증거로 삼기는 어렵다.",
+          "back": "접힌 부적의 중앙이 갈라져 있다. 접힌 선을 따라 잉크가 번져 일부 문양이 끊겨 보인다.",
           "repeatable": false,
           "transferable": true,
           "visibility": "locked",
@@ -905,12 +905,12 @@
         },
         {
           "id": "mayushi_private_stream",
-          "title": "마유시의 미공개 틱톡 원본 파일",
-          "subtitle": "등장인물 · 미공개 틱톡 원본 파일",
+          "title": "마유시의 미공개 영상 파일",
+          "subtitle": "",
           "type": "belonging",
           "owner": "mayushi",
           "clueKind": "timeline",
-          "back": "초청장을 받기 전 촬영한 장면에서 “가벼워야 할 왕관이 너무 무거워요”라고 혼잣말한다. 업로드하면 진짜 무녀임을 들킬 가능성이 있다.",
+          "back": "공개 상태가 ‘미공개’인 영상 파일이다. 화면 속 마유시가 “가벼워야 할 왕관이 너무 무거워요”라고 말한다.",
           "repeatable": false,
           "transferable": false,
           "visibility": "locked",
@@ -925,11 +925,11 @@
         {
           "id": "chajiwoo_mini_gargoyle",
           "title": "차지우의 거대한 돌로 된 가고일 석상(미니어처)",
-          "subtitle": "등장인물 · 거대한 돌로 된 가고일 석상(미니어처)",
+          "subtitle": "",
           "type": "belonging",
           "owner": "chajiwoo",
           "clueKind": "timeline",
-          "back": "미니어처 바닥에 “날아라, 착지는 지면이 한다”라는 짧은 문구가 새겨져 있다. 손바닥만 한 물건으로, 전시실의 대형 조형물과는 규격과 재질이 다르다.",
+          "back": "손바닥만 한 가고일 미니어처다. 바닥에 “날아라, 착지는 지면이 한다”라는 문구가 새겨져 있다.",
           "repeatable": false,
           "transferable": false,
           "visibility": "locked",
@@ -944,11 +944,11 @@
         {
           "id": "chajiwoo_donation_ledger",
           "title": "차지우의 평생 구독 후원 내역",
-          "subtitle": "등장인물 · 평생 구독 후원 내역",
+          "subtitle": "",
           "type": "belonging",
           "owner": "chajiwoo",
           "clueKind": "timeline",
-          "back": "수년간 이름을 바꿔가며 고액 후원을 반복했지만 답장은 거의 없었다. 가장 최근 영수증의 여백에는 ‘이 정도로도 기억하지 못할까’라는 글씨가 눌러 쓰여 있다.",
+          "back": "여러 해의 후원 영수증이 묶여 있다. 영수증마다 후원자명이 다르고 반복되는 고액 송금 내역이 있다. 최근 영수증의 여백에는 ‘이 정도로도 기억하지 못할까’라는 글씨가 눌러 쓰여 있다.",
           "repeatable": false,
           "transferable": true,
           "visibility": "locked",
@@ -963,11 +963,11 @@
         {
           "id": "chajiwoo_cult_invitation",
           "title": "차지우의 가고일 예배 초대 카드",
-          "subtitle": "등장인물 · 가고일 예배 초대 카드",
+          "subtitle": "",
           "type": "belonging",
           "owner": "chajiwoo",
           "clueKind": "timeline",
-          "back": "이 카드를 따라가면 사고가 있었던 옥상 행사로 이어진다. 초대 카드 하단에는 D1 자선 지원 행사라는 표시가 아주 작게 적혀 있다.",
+          "back": "초대 카드에 ‘히어로 랜딩’, ‘옥상’, ‘2021-09-18’이 인쇄되어 있다. 하단에는 ‘D1 자선 지원 행사’라는 작은 글씨가 있다.",
           "repeatable": false,
           "transferable": true,
           "visibility": "locked",
@@ -981,12 +981,12 @@
         },
         {
           "id": "chajiwoo_unmailed_letter",
-          "title": "차지우의 전달하지 못한 연애편지",
-          "subtitle": "등장인물 · 전달하지 못한 연애편지",
+          "title": "차지우의 미발송 편지",
+          "subtitle": "",
           "type": "belonging",
           "owner": "chajiwoo",
           "clueKind": "timeline",
-          "back": "“기억하지 못해도 반드시 곁에 있겠다”는 구절과 함께 왕좌 전시실의 배치도가 손으로 그려져 있다. 배치도 옆에는 누구에게 보낼지 정하지 못한 듯 이름이 여러 번 지워져 있다.",
+          "back": "“기억하지 못해도 반드시 곁에 있겠다”는 구절 옆에 왕좌 전시실의 배치도가 손으로 그려져 있다. 수신인 칸에는 이름을 여러 번 지운 자국이 있다.",
           "repeatable": false,
           "transferable": true,
           "visibility": "locked",
@@ -1001,11 +1001,11 @@
         {
           "id": "cloud_tainted_cleaver",
           "title": "클라우드의 오염된 대형 식칼",
-          "subtitle": "등장인물 · 오염된 대형 식칼",
+          "subtitle": "",
           "type": "belonging",
           "owner": "cloud",
           "clueKind": "timeline",
-          "back": "얼룩은 비트·고추 소스와 산화된 가지즙이다. 흉기에 필요한 마모나 충격 흔적은 없으며 칼날에 미세한 고춧가루가 남았다.",
+          "back": "넓은 칼날에 붉은색과 짙은 자주색 얼룩이 말라붙어 있다. 칼날 가장자리에 작은 붉은 알갱이가 남아 있다.",
           "repeatable": false,
           "transferable": false,
           "visibility": "locked",
@@ -1020,11 +1020,11 @@
         {
           "id": "cloud_huoguo_ladle",
           "title": "클라우드의 D1 훠궈 전용 국자",
-          "subtitle": "등장인물 · D1 훠궈 전용 국자",
+          "subtitle": "",
           "type": "belonging",
           "owner": "cloud",
           "clueKind": "timeline",
-          "back": "국자 손잡이에는 “모든 게임은 훠궈처럼 끓인다”는 배익호의 각인이 남아 있다. 손잡이 아래에 과거 교단 행사 케이터링 날짜가 적혀 있다.",
+          "back": "국자 손잡이에 “모든 게임은 훠궈처럼 끓인다”는 문구가 새겨져 있다. 손잡이 아래쪽에는 ‘2021-09-18’이라고 적혀 있다.",
           "repeatable": false,
           "transferable": true,
           "visibility": "locked",
@@ -1039,11 +1039,11 @@
         {
           "id": "cloud_elephant_eggplant",
           "title": "클라우드의 코끼리 가지볶음 레시피",
-          "subtitle": "등장인물 · 코끼리 가지볶음 레시피",
+          "subtitle": "",
           "type": "belonging",
           "owner": "cloud",
           "clueKind": "timeline",
-          "back": "절인 가지·비트 소스의 조합이 식칼 얼룩과 일치한다. 배익호가 승인하지 않은 식단을 개발한 흔적이기도 하다.",
+          "back": "재료 목록에 ‘절인 가지’, ‘비트 소스’, ‘고추’가 적혀 있다. 조리 순서 옆에는 분량을 고친 흔적이 있고 승인란은 비어 있다.",
           "repeatable": false,
           "transferable": true,
           "visibility": "locked",
@@ -1058,11 +1058,11 @@
         {
           "id": "cloud_oven_receipt",
           "title": "클라우드의 새벽 오븐 타이머 출력지",
-          "subtitle": "등장인물 · 새벽 오븐 타이머 출력지",
+          "subtitle": "",
           "type": "belonging",
           "owner": "cloud",
           "clueKind": "timeline",
-          "back": "00:23 가열 시작, 00:26 순간 조명 흔들림, 00:29 종료가 인쇄됐다. 3층 서버 로그와 시계가 정확히 8분 차이 난다는 비교 증거가 된다.",
+          "back": "출력지에는 ‘00:23 가열 시작’, ‘00:26 전원 변동’, ‘00:29 종료’가 차례로 인쇄되어 있다.",
           "repeatable": false,
           "transferable": true,
           "visibility": "locked",
@@ -1077,11 +1077,11 @@
         {
           "id": "karl_alpaca_notebook",
           "title": "카알의 수상한 털뭉치 노트",
-          "subtitle": "등장인물 · 수상한 털뭉치 노트",
+          "subtitle": "",
           "type": "belonging",
           "owner": "karl",
           "clueKind": "timeline",
-          "back": "숫자는 몰래 운영하는 동물 보호소의 개체 번호·치료비·구조 일정이다. 겉보기에는 비밀 계좌와 불법 송금 암호처럼 보인다.",
+          "back": "알파카 사진 옆에 숫자와 금액이 여러 줄 적혀 있다. 몇몇 줄에는 ‘치료비’, ‘구조 일정’이라는 메모가 붙어 있다.",
           "repeatable": false,
           "transferable": false,
           "visibility": "locked",
@@ -1096,7 +1096,7 @@
         {
           "id": "karl_manager_badge",
           "title": "카알의 D1 관리자 출입 태그",
-          "subtitle": "등장인물 · D1 관리자 출입 태그",
+          "subtitle": "",
           "type": "belonging",
           "owner": "karl",
           "clueKind": "timeline",
@@ -1115,11 +1115,11 @@
         {
           "id": "karl_alpaca_receipts",
           "title": "카알의 구조소 송금 영수증",
-          "subtitle": "등장인물 · 구조소 송금 영수증",
+          "subtitle": "",
           "type": "belonging",
           "owner": "karl",
           "clueKind": "timeline",
-          "back": "송금처는 수상한 거래처가 아니라 사설 알파카 구조소다. 그동안 감추고 있던 빚이 얼마나 큰지 드러난다.",
+          "back": "수취인란에 ‘알파카 구조소’라고 적힌 송금 영수증 묶음이다. 별지에 대출 잔액과 상환 일정이 기재되어 있다.",
           "repeatable": false,
           "transferable": true,
           "visibility": "locked",
@@ -1134,11 +1134,11 @@
         {
           "id": "karl_unbroken_promise",
           "title": "카알의 꺾이지 않는 마음 배지",
-          "subtitle": "등장인물 · 꺾이지 않는 마음 배지",
+          "subtitle": "",
           "type": "belonging",
           "owner": "karl",
           "clueKind": "timeline",
-          "back": "두 사람은 “우승하지 못한 날에도 꺾이지 않는다”는 약속을 했다. 카알이 지키려던 것은 죽은 친구의 진실뿐 아니라 잃어버린 프로 커리어였다.",
+          "back": "배지 뒷면에 “우승하지 못한 날에도 꺾이지 않는다”는 문구와 배익호·카알의 이름이 새겨져 있다.",
           "repeatable": false,
           "transferable": false,
           "visibility": "locked",
@@ -1153,11 +1153,11 @@
         {
           "id": "hasu_cult_notebook",
           "title": "하수의 거대한 돌로 된 가고일 종교 추적 노트",
-          "subtitle": "등장인물 · 거대한 돌로 된 가고일 종교 추적 노트",
+          "subtitle": "",
           "type": "belonging",
           "owner": "hasu",
           "clueKind": "timeline",
-          "back": "히어로 랜딩 수업에서 마빈이 낙상해 다리를 다쳤고 안전 경고가 반복되었다. 예산 흐름에 D1과 비슷한 자금 출처가 나타난다.",
+          "back": "노트에는 ‘히어로 랜딩’, ‘마빈 낙상·다리 부상’이라는 메모와 안전 경고 문서의 사본이 붙어 있다. 예산표 사본의 송금처 일부에 ‘D1’이 적혀 있다.",
           "repeatable": false,
           "transferable": false,
           "visibility": "locked",
@@ -1172,11 +1172,11 @@
         {
           "id": "hasu_marvin_voice",
           "title": "하수의 마빈의 음성 메시지",
-          "subtitle": "등장인물 · 마빈의 음성 메시지",
+          "subtitle": "",
           "type": "belonging",
           "owner": "hasu",
           "clueKind": "timeline",
-          "back": "“내가 착지에 실패한 건 내 실수만은 아니야. 안전 점검서에 누군가 서명했어.” 녹음 끝부분에서 종이가 구겨지는 소리와 함께 이름을 말하려던 목소리가 끊긴다.",
+          "back": "녹음에 “내가 착지에 실패한 건 내 실수만은 아니야. 안전 점검서에 누군가 서명했어.”라는 말이 담겨 있다. 끝부분에서 종이가 구겨지는 소리가 나고 목소리가 중간에 끊긴다.",
           "repeatable": false,
           "transferable": false,
           "visibility": "locked",
@@ -1191,11 +1191,11 @@
         {
           "id": "hasu_solo_kill_log",
           "title": "하수의 솔킬 연승 경기 리플레이",
-          "subtitle": "등장인물 · 솔킬 연승 경기 리플레이",
+          "subtitle": "",
           "type": "belonging",
           "owner": "hasu",
           "clueKind": "timeline",
-          "back": "00:26 경기 재생 위치가 기록되어 있다. 화면의 스코어는 6:0이지만 실제 대국이 아니라 과거 기록 재생이라 완전한 알리바이는 아니다.",
+          "back": "재생 화면의 스코어는 6:0이다. 화면에 00:26이라는 표시, 재생 버튼과 진행 막대가 보인다. 파일 목록에는 ‘저장된 경기’라고 적혀 있다.",
           "repeatable": false,
           "transferable": true,
           "visibility": "locked",
@@ -1210,11 +1210,11 @@
         {
           "id": "hasu_roof_safety_map",
           "title": "하수의 옥상 히어로 랜딩 안전 약도",
-          "subtitle": "등장인물 · 옥상 히어로 랜딩 안전 약도",
+          "subtitle": "",
           "type": "belonging",
           "owner": "hasu",
           "clueKind": "timeline",
-          "back": "교단 전용 착지 지점에서 현재 D1 옥상으로 이어지는 안전 통로가 보인다. 한쪽 구석에는 후원사 D1과 전담 코치라는 글씨가 지워져 있다.",
+          "back": "약도에 착지 지점과 D1 옥상이 표시되어 있고 두 곳 사이에 통로가 그려져 있다. 구석의 ‘후원사 D1’, ‘전담 코치’ 글씨 위에 지운 자국이 남아 있다.",
           "repeatable": false,
           "transferable": true,
           "visibility": "locked",
@@ -1229,7 +1229,7 @@
         {
           "id": "mac_tactical_board",
           "title": "맥의 특수 전술 보드",
-          "subtitle": "등장인물 · 특수 전술 보드",
+          "subtitle": "",
           "type": "belonging",
           "owner": "mac",
           "clueKind": "timeline",
@@ -1248,11 +1248,11 @@
         {
           "id": "mac_maintenance_glove",
           "title": "맥의 회색 점검 장갑",
-          "subtitle": "등장인물 · 회색 점검 장갑",
+          "subtitle": "",
           "type": "belonging",
           "owner": "mac",
           "clueKind": "timeline",
-          "back": "엄지 부근의 회색 천에 흰 접착 잔여물과 고운 돌가루가 묻어 있다. 평소 장비실에서도 쓰던 장갑이어서 이것만으로 어느 물건에 닿았는지는 알기 어렵다.",
+          "back": "엄지 부근의 회색 천에 흰 접착 잔여물과 고운 돌가루가 묻어 있다.",
           "repeatable": false,
           "transferable": true,
           "visibility": "locked",
@@ -1267,11 +1267,11 @@
         {
           "id": "mac_coach_whistle",
           "title": "맥의 프로 감독의 호루라기",
-          "subtitle": "등장인물 · 프로 감독의 호루라기",
+          "subtitle": "",
           "type": "belonging",
           "owner": "mac",
           "clueKind": "timeline",
-          "back": "호루라기를 매단 가방끈의 한쪽 끝이 길게 해져 있다. 장비실 반사 영상에도 비슷한 끈 모양이 흐릿하게 찍혔으나 색과 길이를 정확히 확인하기는 어렵다.",
+          "back": "호루라기가 가방끈에 매달려 있다. 가방끈 한쪽 끝이 길게 해져 있고 몇 가닥의 실이 풀려 나와 있다.",
           "repeatable": false,
           "transferable": false,
           "visibility": "locked",
@@ -1286,7 +1286,7 @@
         {
           "id": "mac_rehearsal_schedule",
           "title": "맥의 초청 강의 훈련 시간표",
-          "subtitle": "등장인물 · 초청 강의 훈련 시간표",
+          "subtitle": "",
           "type": "belonging",
           "owner": "mac",
           "clueKind": "timeline",
@@ -1305,10 +1305,10 @@
         {
           "id": "cult_founder_mask",
           "title": "창립자 가면의 안쪽",
-          "subtitle": "교단 · 성자 가면",
+          "subtitle": "",
           "clueKind": "cult",
           "type": "information",
-          "back": "금속 가면 안쪽에 D1의 초기 법인 인장과 “왕좌를 오르는 자는 승리한다”는 문장이 새겨져 있다. 제작 의뢰인란은 칠이 벗겨져 판독하기 어렵다.",
+          "back": "금속 가면 안쪽에 D1 인장과 “왕좌를 오르는 자는 승리한다”는 문장이 새겨져 있다. 제작 의뢰인란은 칠이 벗겨져 판독하기 어렵다.",
           "visibility": "locked",
           "availableFromPhase": "investigation1",
           "repeatable": false,
@@ -1330,10 +1330,10 @@
         {
           "id": "cult_hero_landing_syllabus",
           "title": "히어로 랜딩 커리큘럼",
-          "subtitle": "교단 · 옥상 교육 자료",
+          "subtitle": "",
           "clueKind": "cult",
           "type": "information",
-          "back": "“왕좌에서 떨어져도 영웅은 반드시 일어선다”라는 구호와 함께 단계별 낙하 연기를 설명한 홍보 책자. 마지막 장에는 다수의 안전 경고가 삭제되어 있다. 마빈이라는 이름에 밑줄이 그어져 있다.",
+          "back": "홍보 책자에 “왕좌에서 떨어져도 영웅은 반드시 일어선다”는 구호와 단계별 낙하 연기 그림이 있다. 마지막 장의 안전 경고 문구 여러 곳에 취소선이 그어져 있고 ‘마빈’이라는 이름 아래 밑줄이 있다.",
           "visibility": "locked",
           "availableFromPhase": "investigation1",
           "repeatable": false,
@@ -1353,10 +1353,10 @@
         {
           "id": "cult_marvin_bill",
           "title": "마빈의 재활비 영수증",
-          "subtitle": "사고 · 피해자의 의료비",
+          "subtitle": "",
           "clueKind": "cult",
           "type": "information",
-          "back": "마빈의 장기 재활비 청구서에 여러 해의 치료 날짜가 적혀 있다. 합의 대행사의 연락처는 D1 협력사와 같고 수취인 주소는 일부 가려졌다.",
+          "back": "마빈의 이름이 적힌 재활비 청구서다. 여러 해의 치료 날짜, 합의 대행사 연락처가 인쇄되어 있고 수취인 주소 일부는 가려져 있다.",
           "visibility": "locked",
           "availableFromPhase": "investigation1",
           "repeatable": false,
@@ -1376,10 +1376,10 @@
         {
           "id": "cult_fund_account",
           "title": "교단 후원 계좌 일부",
-          "subtitle": "자금 · D1와 유사한 명칭",
+          "subtitle": "",
           "clueKind": "cult",
           "type": "information",
-          "back": "정기 송금인이 D1의 행사 자회사와 일치하는 계좌다. 초대 강의와 가고일 퍼포먼스 행사에 비슷한 예산 코드가 반복된다. 최종 승인자가 누구인지는 본사 결재 문서가 있어야 확인 가능하다.",
+          "back": "계좌 내역의 정기 송금인란에 ‘D1 행사 자회사’가 적혀 있다. ‘초청 강의’와 ‘가고일 퍼포먼스’ 항목에 같은 예산 코드가 반복된다. 최종 승인란은 비어 있다.",
           "visibility": "locked",
           "availableFromPhase": "investigation1",
           "repeatable": false,
@@ -1399,10 +1399,10 @@
         {
           "id": "cult_gargoyle_poster",
           "title": "돌가고일 찬양 포스터",
-          "subtitle": "교단 · 옥상 비상 커리큘럼",
+          "subtitle": "",
           "clueKind": "cult",
           "type": "information",
-          "back": "교단은 게임 속 거대한 돌가고일의 “영웅 착지”를 현실에서 흉내 낸다. 옥상 행사는 배익호의 은퇴 기념 방송과 같은 날 처음 개최되었다. 차지우가 가진 미니어처와 문양은 닮았지만 크기는 다르다.",
+          "back": "날개를 편 돌가고일과 착지 자세의 인물이 그려진 포스터다. ‘영웅 착지’, ‘첫 행사 2021-09-18’, ‘배익호 은퇴 기념 방송’이라는 글씨가 인쇄되어 있다.",
           "visibility": "locked",
           "availableFromPhase": "investigation1",
           "repeatable": false,
@@ -1422,7 +1422,7 @@
         {
           "id": "cult_donation_anchor",
           "title": "가명 후원자 명단",
-          "subtitle": "교단 · 숨겨진 후원",
+          "subtitle": "",
           "clueKind": "cult",
           "type": "information",
           "back": "가장 많은 금액을 정기 후원한 사람은 ‘B.IGO’라는 이름을 사용했다. 송금 요청서에는 옥상 행사 일정표와 내부 동선도가 함께 첨부돼 있다. 실명 확인란은 비어 있다.",
@@ -1445,7 +1445,7 @@
         {
           "id": "cult_old_team_photo",
           "title": "초창기 D1 단체 사진",
-          "subtitle": "인물 · 맥과 카알의 과거",
+          "subtitle": "",
           "clueKind": "cult",
           "type": "information",
           "back": "오래전 D1 프로 연습실에서 배익호와 카알, 젊은 맥 감독이 함께 찍힌 사진이다. 사진 한쪽에는 흰 안전 테이프를 두른 낡은 장비 케이스가 놓여 있다.",
@@ -1467,11 +1467,11 @@
         },
         {
           "id": "cult_unsafe_meeting",
-          "title": "안전 경고를 무시한 회의록",
-          "subtitle": "교단 · 중단 권고",
+          "title": "옥상 행사 회의록",
+          "subtitle": "",
           "clueKind": "cult",
           "type": "information",
-          "back": "“옥상 착지 과정 중단 권고”가 두 번 제기되었으나 배익호의 브랜드 행사 일정 때문에 보류되었다. 후원사는 이름을 숨기고 현장 감독에게 점검을 떠넘겼다. 기재된 서명은 글자가 잘려 판독하기 어렵다.",
+          "back": "회의록에 ‘옥상 착지 과정 중단 권고’가 두 번 적혀 있다. 처리란에는 ‘행사 일정 유지’, 담당란에는 ‘현장 감독 점검’이라고 쓰여 있다. 서명 일부는 종이 가장자리에서 잘려 있다.",
           "visibility": "locked",
           "availableFromPhase": "investigation1",
           "repeatable": false,
@@ -1491,10 +1491,10 @@
         {
           "id": "cult_founder_signature",
           "title": "교단 법인 초기 정관",
-          "subtitle": "봉인 보관실 · 배익호 서명",
+          "subtitle": "",
           "clueKind": "cult",
           "type": "information",
-          "back": "교단 설립 문서에는 배익호의 서명과 초기 법인 인장이 함께 남아 있다. 뒤쪽 결재철에는 안전 기준 변경 요청과 행사 비용 승인 내역이 같은 날짜로 묶여 있다.",
+          "back": "설립 문서의 서명란에 ‘배익호’라는 이름과 법인 인장이 있다. 뒤쪽에는 같은 날짜가 찍힌 안전 기준 변경 요청서와 행사 비용 승인서가 묶여 있다.",
           "visibility": "hidden",
           "availableFromPhase": "investigation2",
           "repeatable": false,
@@ -1515,11 +1515,11 @@
         },
         {
           "id": "cult_mac_scape_plan",
-          "title": "안전 사고 책임 전가 각서",
-          "subtitle": "서버실 · 위험한 합의서",
+          "title": "안전 사고 보고서와 발표용 사본",
+          "subtitle": "",
           "clueKind": "cult",
           "type": "information",
-          "back": "사고 보고서의 안전 감독란에는 맥이 서명했지만, 그 아래의 예산 삭감과 행사 강행 결재는 배익호가 승인했다. 배익호는 공개 발표 때 자신의 결재를 삭제하고 감독에게 전부 떠넘길 문서를 준비했다.",
+          "back": "안전 감독란에는 ‘맥’, 예산 삭감·행사 진행 승인란에는 ‘배익호’라는 서명이 있다. 함께 묶인 공개 발표용 사본에는 예산 승인 부분이 빠져 있고 안전 감독란만 남아 있다.",
           "visibility": "hidden",
           "availableFromPhase": "investigation2",
           "repeatable": false,
@@ -1540,11 +1540,11 @@
         },
         {
           "id": "cult_member_exit",
-          "title": "탈퇴를 거부당한 신도 진술",
-          "subtitle": "교단 · 가짜 영웅의 후유증",
+          "title": "신도 진술서",
+          "subtitle": "",
           "clueKind": "cult",
           "type": "information",
-          "back": "마빈을 포함한 몇몇 신도는 사고 이후 치료비와 채무 때문에 경제적 압박을 받았다. 진술서 일부에는 ‘행사 중단을 요청했지만 그대로 진행됐다’는 문구가 반복된다.",
+          "back": "진술서에 마빈 등 여러 이름이 적혀 있다. “치료비와 채무를 갚아야 한다”, “행사 중단을 요청했지만 그대로 진행됐다”는 문장이 반복된다.",
           "visibility": "locked",
           "availableFromPhase": "investigation2",
           "repeatable": false,
@@ -1566,7 +1566,7 @@
         {
           "id": "cult_hidden_fund",
           "title": "D1 비밀 후원 총괄표",
-          "subtitle": "봉인 보관실 · 후원 결재",
+          "subtitle": "",
           "clueKind": "cult",
           "type": "information",
           "back": "후원 총괄표에는 배익호의 행사 승인, 맥의 현장 안전 담당, 카알의 송금 실무가 각각 다른 열에 기재되어 있다. 몇몇 항목은 결재 날짜와 실제 지급 날짜가 맞지 않는다.",
@@ -1591,10 +1591,10 @@
         {
           "id": "time_dinner_receipt",
           "title": "마지막 훠궈 식사 명단",
-          "subtitle": "1층 식당 · 저녁 19:30",
+          "subtitle": "",
           "clueKind": "timeline",
           "type": "information",
-          "back": "19:30 훠궈 식사 명단에는 초청생 다섯 명과 배익호, 카알, 클라우드가 기재돼 있다. 클라우드는 음식을 준비했고, 카알의 자리에는 식사 도중 업무 전화를 받았다는 메모가 남아 있다.",
+          "back": "19:30 식사 명단에 초청생 다섯 명과 배익호·카알·클라우드가 기재되어 있다. 조리 담당란은 ‘클라우드’이며 카알의 자리 옆에 ‘식사 중 업무 전화’라는 메모가 있다.",
           "visibility": "locked",
           "availableFromPhase": "investigation1",
           "repeatable": false,
@@ -1614,10 +1614,10 @@
         {
           "id": "time_kitchen_oven",
           "title": "주방 독립 시계 기록",
-          "subtitle": "1층 주방 · 실제 00:26",
+          "subtitle": "",
           "clueKind": "timeline",
           "type": "information",
-          "back": "독립 전원으로 작동하는 오븐 출력물에 00:26의 짧은 전원 흔들림과 00:29 조리 종료 시각이 남아 있다. 4층 설비에도 같은 시각의 전원 변동 기록이 있다.",
+          "back": "오븐 출력물에 ‘00:26 전원 변동’, ‘00:29 조리 종료’가 인쇄되어 있다. 하단에는 ‘시계 전원: 독립 전원’, ‘외부 시각 동기화: 사용 안 함’이라고 적혀 있다.",
           "visibility": "locked",
           "availableFromPhase": "investigation1",
           "repeatable": false,
@@ -1637,7 +1637,7 @@
         {
           "id": "time_jobi_stair",
           "title": "4층 계단 복도 출입 영상",
-          "subtitle": "4층 왕좌 · 조비 00:19",
+          "subtitle": "",
           "clueKind": "timeline",
           "type": "information",
           "back": "00:19 4층 계단 복도 영상에는 조비가 왕좌실 문을 두 번 두드린 뒤 계단 쪽으로 돌아가는 모습이 보인다. 그의 손에는 물건이 보이지 않으며 00:19 이전 복도 영상은 일부 누락되어 있다.",
@@ -1660,10 +1660,10 @@
         {
           "id": "time_chajiwoo_photo",
           "title": "회랑 셀카의 그림자",
-          "subtitle": "4층 전시실 · 23:24",
+          "subtitle": "",
           "clueKind": "timeline",
           "type": "information",
-          "back": "차지우가 23:24 찍은 사진에는 빈 전시대와 바퀴 자국이 보인다. 그보다 이른 22:12 사진에서는 가벼운 소품 인증표가 붙은 가고일 왕관이 진열돼 있었다. 그녀의 미니어처는 그대로 주머니에 있다.",
+          "back": "23:24로 표시된 사진에 빈 전시대와 바퀴 자국이 보인다. 같은 파일 묶음의 22:12 사진에는 ‘경량 공연 소품’ 표찰이 붙은 가고일 왕관이 진열되어 있다.",
           "visibility": "locked",
           "availableFromPhase": "investigation1",
           "repeatable": false,
@@ -1683,10 +1683,10 @@
         {
           "id": "time_mayushi_warning",
           "title": "마유시의 미전달 경고문",
-          "subtitle": "4층 회랑 · 23:35",
+          "subtitle": "",
           "clueKind": "timeline",
           "type": "information",
-          "back": "“왕관이 떨어질 거예요. 무대 연출을 멈추세요.”라는 메모가 4층 회랑에서 발견됐다. 종이 한쪽에는 카알이 읽었다는 작은 표시가 있지만 배익호에게 전달한 기록은 없다.",
+          "back": "“왕관이 떨어질 거예요. 무대 연출을 멈추세요.”라고 적힌 메모다. 종이 한쪽에 ‘카알 확인’이라는 작은 표시가 있다.",
           "visibility": "locked",
           "availableFromPhase": "investigation1",
           "repeatable": false,
@@ -1708,10 +1708,10 @@
         {
           "id": "time_hasu_terminal",
           "title": "하수의 서버 검색 기록",
-          "subtitle": "3층 서버 단말 · 22:45",
+          "subtitle": "",
           "clueKind": "timeline",
           "type": "information",
-          "back": "22:45 무렵 하수의 계정으로 교단 후원 자료와 책임 서명이 검색됐다. 장치 설정 변경 내역에는 이 계정이 나타나지 않는다. 같은 단말의 로그 시각과 오븐 시각에는 차이가 있다.",
+          "back": "22:45 무렵 ‘하수’ 계정으로 후원 자료와 책임 서명을 검색한 기록이 있다. 첨부된 장치 설정 변경 내역에서는 이 계정명이 보이지 않는다.",
           "visibility": "locked",
           "availableFromPhase": "investigation1",
           "repeatable": false,
@@ -1731,10 +1731,10 @@
         {
           "id": "time_karl_badge",
           "title": "관리자 출입 태그 복사 로그",
-          "subtitle": "3층 장비실 · 22:14",
+          "subtitle": "",
           "clueKind": "timeline",
           "type": "information",
-          "back": "22:14 3층 장비실 출입 기록에는 카알 명의의 태그 번호가 남아 있다. 카알은 그 시간에 1층에서 업무 통화를 했다고 말했으며, 태그를 잠시 다른 사람에게 맡겼다는 메모가 발견된다.",
+          "back": "22:14 3층 장비실 출입 기록에 카알 명의의 태그 번호가 남아 있다. 함께 묶인 메모에는 “그 시간에는 1층에서 업무 통화. 태그는 잠시 맡김”이라고 적혀 있다.",
           "visibility": "locked",
           "availableFromPhase": "investigation1",
           "repeatable": false,
@@ -1754,10 +1754,10 @@
         {
           "id": "time_mac_roof",
           "title": "옥상 출입 기록",
-          "subtitle": "4층 옥상 · 00:05–00:41",
+          "subtitle": "",
           "clueKind": "timeline",
           "type": "information",
-          "back": "옥상 CCTV에는 맥이 00:05에 올라가 00:41에 내려오는 장면이 찍혀 있다. 00:26 전후의 영상에는 옥상 출입문만 보이며, 그 이전 시간대의 장비실 기록은 이 영상으로 확인할 수 없다.",
+          "back": "CCTV에 맥이 00:05에 옥상으로 올라가고 00:41에 내려오는 모습이 찍혀 있다. 00:26 전후에는 옥상 출입문과 그 앞 바닥만 화면에 보인다.",
           "visibility": "locked",
           "availableFromPhase": "investigation1",
           "repeatable": false,
@@ -1777,7 +1777,7 @@
         {
           "id": "time_baetho_last_msg",
           "title": "배익호가 남긴 마지막 문자",
-          "subtitle": "왕좌실 · 연습 지시",
+          "subtitle": "",
           "clueKind": "timeline",
           "type": "information",
           "back": "배익호가 맥에게 보낸 문자: “00:26 메인 이벤트는 내가 시작한다. 모두 놀라게 하자. 마지막에 살았죠?를 말하겠다.” 전송 시각은 21:52로 기록되어 있다.",
@@ -1800,10 +1800,10 @@
         {
           "id": "time_key_returns",
           "title": "대여 출입 태그의 반환 흔적",
-          "subtitle": "3층 사물함 · 누가 돌려주었나",
+          "subtitle": "",
           "clueKind": "timeline",
           "type": "information",
-          "back": "00:41 이후 관리자 태그가 매니저 사물함에 들어온 것으로 보인다. 사물함 손잡이에는 회색 섬유 한 올이 걸려 있으나 복도 카메라의 사각지대 때문에 반납자의 얼굴은 찍히지 않았다.",
+          "back": "00:41 이후 관리자 태그가 매니저 사물함 안에 놓인 모습이 촬영되어 있다. 사물함 손잡이에 회색 섬유 한 올이 걸려 있다. 영상에는 태그를 놓는 사람의 얼굴이 나오지 않는다.",
           "visibility": "locked",
           "availableFromPhase": "investigation2",
           "repeatable": false,
@@ -1822,11 +1822,11 @@
         },
         {
           "id": "time_practice_live",
-          "title": "2층 연습 리플레이의 진실",
-          "subtitle": "2층 연습실 · 게임 기록",
+          "title": "2층 연습 영상 파일",
+          "subtitle": "",
           "clueKind": "timeline",
           "type": "information",
-          "back": "하수와 조비의 연습 화면으로 알려진 영상은 저장된 경기 기록을 재생한 것이었다. 화면의 00:26 표시가 실제 접속 시각인지 확인하려면 별도의 접속 로그가 필요하다.",
+          "back": "영상 파일의 이름에 하수와 조비가 적혀 있다. 화면에는 00:26이라는 표시와 ‘저장된 경기 재생’ 메뉴, 재생 진행 막대가 보인다.",
           "visibility": "locked",
           "availableFromPhase": "investigation2",
           "repeatable": false,
@@ -1846,10 +1846,10 @@
         {
           "id": "time_chef_service",
           "title": "야식 카트 출입 기록",
-          "subtitle": "1층 · 클라우드와 카알",
+          "subtitle": "",
           "clueKind": "timeline",
           "type": "information",
-          "back": "23:50 클라우드가 카알에게 야식을 전달했다는 카트 출입 기록이 있다. 주방 오븐의 가열 시작·종료 시각은 별도 출력물로 남아 있으며 식칼의 얼룩 샘플이 봉인돼 있다.",
+          "back": "카트 출입 기록에 ‘23:50 클라우드 → 카알, 야식 전달’이라고 적혀 있다. 같은 봉투에 오븐 출력물과 ‘식칼 얼룩’이라고 표시된 봉인 샘플이 들어 있다.",
           "visibility": "locked",
           "availableFromPhase": "investigation2",
           "repeatable": false,
@@ -1869,10 +1869,10 @@
         {
           "id": "trick_throne_scene",
           "title": "왕좌실 현장 감식",
-          "subtitle": "4층 왕좌실 · 물리적 흔적",
+          "subtitle": "",
           "clueKind": "trick",
           "type": "place",
-          "back": "시신 머리 위쪽에는 둔탁한 물체에 의한 상처가 있다. 왕좌 발치에는 가벼운 폼 조형물 조각과 별개로 무거운 돌가루가 남았다. 식칼이나 독극물로 사망했다고 보기 어렵다.",
+          "back": "현장 사진에 시신의 머리 위쪽 상처와 왕좌 발치의 부스러기가 보인다. 수거물 목록에는 ‘폼 조각’과 ‘돌가루’가 별도 항목으로 적혀 있다.",
           "visibility": "locked",
           "availableFromPhase": "investigation1",
           "repeatable": false,
@@ -1892,10 +1892,10 @@
         {
           "id": "trick_stage_outline",
           "title": "가짜 죽음 연출 설명서",
-          "subtitle": "왕좌실 · 이벤트 초안",
+          "subtitle": "",
           "clueKind": "trick",
           "type": "place",
-          "back": "배익호가 직접 왕좌에 앉아 안전한 소품을 떨어뜨리고 죽은 척하는 연습 공연의 개요. 본인이 살아난 뒤 “살았죠?”라고 말하는 연출이 계획됐다. 실제로 소품이 무거웠다면 이 계획은 치명적이다.",
+          "back": "연출 설명서에 ‘배익호 왕좌 착석 → 경량 소품 낙하 → 쓰러진 연기 → 기립 후 “살았죠?”’ 순서가 적혀 있다. ‘안전 확인 후 실행’에 밑줄이 그어져 있다.",
           "visibility": "locked",
           "availableFromPhase": "investigation1",
           "repeatable": false,
@@ -1915,10 +1915,10 @@
         {
           "id": "trick_showroom_slot",
           "title": "전시실의 빈 소품 받침",
-          "subtitle": "4층 전시실 · 누락 조형물",
+          "subtitle": "",
           "clueKind": "trick",
           "type": "place",
-          "back": "전시대에서 원래 무거운 가고일 기념 조형물이 사라져 있다. 대신 가벼운 공연용 모형 인증표만 남았다. 두 소품의 외형은 비슷하지만 사용 목적과 무게가 전혀 다르다.",
+          "back": "전시대는 비어 있다. 받침 명판에는 ‘석재 기념 조형물’이라고 적혀 있고 바닥에는 ‘경량 공연 모형’ 인증표가 떨어져 있다.",
           "visibility": "locked",
           "availableFromPhase": "investigation1",
           "repeatable": false,
@@ -1938,7 +1938,7 @@
         {
           "id": "trick_alarm_script",
           "title": "D1 긴급 봉쇄 방송 대본",
-          "subtitle": "매니저 책상 · 위협과 모순",
+          "subtitle": "",
           "clueKind": "trick",
           "type": "place",
           "back": "“범인을 찾지 못하면 사옥이 무너집니다”라는 경고와 생존 지침이 적혀 있다. 마지막 장에는 검은 펜으로 ‘실제 붕괴 명령 금지’가 덧붙었고, 앞장과 뒷장의 필체가 조금 다르다.",
@@ -1961,7 +1961,7 @@
         {
           "id": "trick_baetho_note_1",
           "title": "배익호의 노트 ① 승리의 자세",
-          "subtitle": "연습 기록 · 카알의 관심",
+          "subtitle": "",
           "clueKind": "trick",
           "type": "place",
           "back": "“상대가 알고 있는 사실을 한 번 더 묻게 만들면 상대는 스스로 틈을 만든다.” 배익호의 손글씨다. 여백에는 카알의 이름 옆으로 여러 차례 수정한 연습 기록이 붙어 있다.",
@@ -1984,7 +1984,7 @@
         {
           "id": "trick_baetho_note_2",
           "title": "배익호의 노트 ② 미러전",
-          "subtitle": "전술 · 반사 화면",
+          "subtitle": "",
           "clueKind": "trick",
           "type": "place",
           "back": "“거울에 비친 행동은 원래의 소유자를 드러낸다.” 3층 장비실의 감시 카메라에는 정면 대신 유리 반사가 찍히는 구간이 있다는 손그림이 이어진다.",
@@ -2007,7 +2007,7 @@
         {
           "id": "trick_baetho_note_3",
           "title": "배익호의 노트 ③ 마지막 한 수",
-          "subtitle": "사전 리허설 · 왕좌 연출",
+          "subtitle": "",
           "clueKind": "trick",
           "type": "place",
           "back": "“가짜 죽음 연출 후 살아서 ‘살았죠?’를 외친다. 시작 버튼은 내 손으로 누른다.” 배익호의 필체다. 옆쪽 점검표에는 무대 소품과 안전 장치를 따로 확인하는 칸이 있다.",
@@ -2030,7 +2030,7 @@
         {
           "id": "trick_baetho_note_4",
           "title": "배익호의 노트 ④ 꺾이지 않는 마음",
-          "subtitle": "우승하지 못한 친구에게",
+          "subtitle": "",
           "clueKind": "trick",
           "type": "place",
           "back": "카알에게 보내려던 감사 인사가 적혀 있다. “네가 몰래 돕던 알파카 구조소 이야기를 이제야 들었다. 나도 늦게나마 답을 돌려주고 싶다.” 끝부분은 완성되지 않았다.",
@@ -2053,10 +2053,10 @@
         {
           "id": "trick_spare_override",
           "title": "비상 보관실 열쇠 케이스",
-          "subtitle": "3층 복도 · 보관실 해금용",
+          "subtitle": "",
           "clueKind": "trick",
           "type": "place",
-          "back": "왕좌실 사후 감식을 위해 3층 비상 안전실에 보관된 보조 출입 키다. 4층 봉인 보관실과 3층 무대 장비 보관실의 기계식 잠금에 사용할 수 있다.",
+          "back": "열쇠 케이스에 ‘비상 보조 출입 키’라는 표찰이 붙어 있다. 안쪽 사용처 목록에는 ‘4층 봉인 보관실’, ‘3층 무대 장비 보관실’이 적혀 있다.",
           "visibility": "hidden",
           "availableFromPhase": "investigation2",
           "repeatable": false,
@@ -2080,10 +2080,10 @@
         {
           "id": "trick_clock_offset",
           "title": "서버·오븐 시계 대조표",
-          "subtitle": "3층 보안실 · 8분의 오차",
+          "subtitle": "",
           "clueKind": "trick",
           "type": "place",
-          "back": "단전 직전 3층 보안 서버의 로그 시각은 독립 오븐 시계보다 8분 빨랐다. 서버의 00:34는 오븐 기록의 00:26과 같은 순간이다. 시계 보정 설정에는 마지막 변경자가 기록되지 않았다.",
+          "back": "대조표의 같은 행에 ‘전원 변동 / 보안 서버 00:34 / 독립 오븐 00:26’이 적혀 있다. 시계 보정 설정의 마지막 변경자 칸은 비어 있다.",
           "visibility": "locked",
           "availableFromPhase": "investigation2",
           "repeatable": false,
@@ -2105,10 +2105,10 @@
         {
           "id": "trick_voice_recording",
           "title": "「살았죠?」 미리 녹음한 음성",
-          "subtitle": "3층 방송 파일 · 가짜 생존",
+          "subtitle": "",
           "clueKind": "trick",
           "type": "place",
-          "back": "배익호의 “살았죠?” 파일은 전날 21:40에 녹음됐다. 방송 예약표에는 00:29 자동 재생으로 표시되어 있으며 실제 마이크 입력 기록은 별도로 남아 있지 않다.",
+          "back": "‘살았죠?’ 음성 파일의 녹음 시각은 전날 21:40으로 표시되어 있다. 예약표에는 이 파일의 ‘00:29 자동 재생’ 항목이 있고 마이크 입력 기록란은 비어 있다.",
           "visibility": "hidden",
           "availableFromPhase": "investigation2",
           "repeatable": false,
@@ -2128,10 +2128,10 @@
         {
           "id": "trick_stage_maintenance",
           "title": "무대 안전 기능 점검 보고서",
-          "subtitle": "3층 장비 보관실 · 22:14",
+          "subtitle": "",
           "clueKind": "trick",
           "type": "place",
-          "back": "22:14 무대 안전 기능의 정기 점검 완료 칸에 누락이 있다. 카알 명의 태그가 사용됐다는 시스템 기록과 별개로, 작업자 확인란의 자필 서명은 흐리게 번져 있다.",
+          "back": "‘22:14 정기 점검’ 행의 완료 칸이 비어 있다. 사용 태그 계정란에는 ‘카알’이 적혀 있으며 작업자 확인란의 자필 서명은 번져 있다.",
           "visibility": "locked",
           "availableFromPhase": "investigation2",
           "repeatable": false,
@@ -2153,10 +2153,10 @@
         {
           "id": "trick_tape_trace",
           "title": "왕좌 봉인 스티커의 접착 흔적",
-          "subtitle": "4층 왕좌 · 손에 남은 물증",
+          "subtitle": "",
           "clueKind": "trick",
           "type": "place",
-          "back": "왕좌 안전 표시 스티커가 뜯긴 자리에 회색 천 실밥과 희고 거친 접착 흔적이 남아 있다. 섬유의 종류는 좁혀졌으나 개인 소지품과의 대조 결과는 이 감식지에 없다.",
+          "back": "왕좌의 안전 표시 스티커가 떨어진 자리에 회색 실밥과 희고 거친 접착 잔여물이 남아 있다. 감식지의 소지품 대조 결과란은 비어 있다.",
           "visibility": "hidden",
           "availableFromPhase": "investigation2",
           "repeatable": false,
@@ -2178,7 +2178,7 @@
         {
           "id": "trick_camera_reflection",
           "title": "장비실 거울 카메라 반사 화면",
-          "subtitle": "3층 보안실 · 태그와 사용자의 차이",
+          "subtitle": "",
           "clueKind": "trick",
           "type": "place",
           "back": "22:14 장비실 출입구 반사 유리에 가방끈처럼 길게 늘어진 물체와 손목 부근의 밝은 띠가 찍혀 있다. 정면 얼굴은 보이지 않고 태그 번호만 기록되어 있다.",
@@ -2203,10 +2203,10 @@
         {
           "id": "trick_rehearsal_diary",
           "title": "배익호의 개인 연출 일지",
-          "subtitle": "4층 전시실 · 가짜 죽음 계획",
+          "subtitle": "",
           "clueKind": "trick",
           "type": "place",
-          "back": "배익호는 왕좌의 리허설 시작과 종료를 직접 조작하고, 공연용 영상과 음성을 예약해 두었다. ‘안전한 경량 소품만 사용’이라는 문구에 붉은 밑줄이 두 번 그어져 있다.",
+          "back": "일지에 ‘시작·종료 직접 조작’, ‘공연 영상·음성 예약’이라고 적혀 있다. ‘안전한 경량 소품만 사용’ 문장에 붉은 밑줄이 두 번 그어져 있다.",
           "visibility": "locked",
           "availableFromPhase": "investigation2",
           "repeatable": false,
@@ -2225,11 +2225,11 @@
         },
         {
           "id": "trick_safety_report",
-          "title": "보관실 최종 안전 사고 분석",
-          "subtitle": "4층 봉인 보관실 · 결정적 조사",
+          "title": "보관실 안전 점검표",
+          "subtitle": "",
           "clueKind": "trick",
           "type": "place",
-          "back": "왕좌의 안전한 공연용 조형물이 다른 무거운 가고일 기념물로 바뀌고 보호 기능이 작동하지 않아 사고가 발생했다. 장치 교체는 사망 전 저녁에 이루어졌다. 보고서의 사용자란은 관리자 계정이 아니라 작업 담당자 확인을 요구한다.",
+          "back": "점검표의 설치 규격란은 ‘경량 공연 모형’, 수거물란은 ‘석재 조형물’이다. 보호 기능 시험 결과에는 ‘작동 안 함’이 적혀 있다. 저녁 장비 교체 기록이 첨부되어 있고 작업 담당자 확인란은 비어 있다.",
           "visibility": "hidden",
           "availableFromPhase": "investigation2",
           "repeatable": false,
@@ -2253,10 +2253,10 @@
         {
           "id": "trick_prop_invoice",
           "title": "가고일 기념물 이동 내역",
-          "subtitle": "4층 봉인 보관실 · 소품 바꿔치기",
+          "subtitle": "",
           "clueKind": "trick",
           "type": "place",
-          "back": "무거운 가고일 기념 조형물이 22시대에 전시실에서 왕좌 소품 구역으로 옮겨졌다는 운반 표다. 정비 지시 승인란에는 코치용 장비 관리 코드가 쓰였고 사용자 서명 일부는 지워져 있다.",
+          "back": "운반 표에 ‘22시대 / 가고일 기념 조형물 / 전시실 → 왕좌 소품 구역’이 기재되어 있다. 정비 지시 승인란에는 코치용 장비 관리 코드가 있고 사용자 서명 일부는 지워져 있다.",
           "visibility": "hidden",
           "availableFromPhase": "investigation2",
           "repeatable": false,
@@ -2277,11 +2277,11 @@
         },
         {
           "id": "trick_reconstruction",
-          "title": "왕좌 사건 합동 재구성 도식",
-          "subtitle": "4층 봉인 보관실 · 여러 증거의 결합",
+          "title": "왕좌 관련 기록 정리표",
+          "subtitle": "",
           "clueKind": "trick",
           "type": "place",
-          "back": "독립 오븐 시각 00:26 → 장비실 로그 00:34의 시차 → 왕좌 연출 시작 → 소품 낙하 → 00:29 예약 음성 순서로 정리한 도식이다. 소품의 사전 이동 승인란은 다른 문서 번호를 참조하고 있다.",
+          "back": "도식에 ‘오븐 00:26’, ‘장비실 로그 00:34’, ‘왕좌 연출 시작’, ‘소품 낙하’, ‘음성 예약 00:29’가 적혀 있다. 소품 이동 승인란에는 별도의 문서 번호가 적혀 있다.",
           "visibility": "hidden",
           "availableFromPhase": "investigation2",
           "repeatable": false,
@@ -2304,10 +2304,10 @@
         {
           "id": "trick_evacuation_truth",
           "title": "건물 붕괴 경보 점검표",
-          "subtitle": "3층 위기관리실 · 믿었던 위협",
+          "subtitle": "",
           "clueKind": "trick",
           "type": "place",
-          "back": "진범을 찾지 못하면 건물이 무너진다는 방송은 배익호가 준비한 최후의 몰입형 연출이었다. 실제 붕괴 장치는 없다. 다만 외부 인터넷이 차단된 것처럼 보이도록 설계한 봉쇄 체계는 실제로 작동한다. 참가자가 느낀 공포는 진짜였다.",
+          "back": "점검표에 ‘붕괴 장치: 미설치’, ‘붕괴 경고 음원: 등록’, ‘출입 봉쇄: 작동’, ‘외부망 차단 표시: 작동’이라고 적혀 있다.",
           "visibility": "locked",
           "availableFromPhase": "investigation2",
           "repeatable": false,
