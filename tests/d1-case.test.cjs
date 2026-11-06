@@ -202,3 +202,30 @@ test('seven-player D1 case: private visions, first-round sealed clues, second-ro
   assert.match(founder.data.investigation.cards.find(c=>c.id==='cult_founder_signature').revealed[0].back,/배익호/);
   assert.equal((await call(7,endpoint)).data.investigation,null,'observer receives no investigation backs');
 });
+
+test('Studio simulator reveals sealed gallery only after throne evidence grants its key',()=>{
+  const engine=require('../apps/murder-mystery/test-engine.js');
+  const state=engine.create(raw);
+  engine.switchRole(state,'karl');
+  engine.switchPhase(state,'investigation1');
+  state.positions.karl={floor:'penthouse',x:15,y:6};
+  let view=engine.roomView(state);
+  assert.equal(JSON.stringify(view.map).includes('가고일'),false);
+  assert.equal(view.map.doors.find(d=>d.id==='ne_door').name,'4층 출입 제한 구역 문');
+  assert.equal(view.investigation.cards.some(c=>c.id==='cult_gargoyle_poster'),false);
+  assert.throws(()=>engine.reserve(state,'cult_hero_landing_syllabus'),/잠겨/);
+  assert.throws(()=>engine.interact(state,'door','ne_door','open'),/열쇠|필수/);
+  state.positions.karl={floor:'penthouse',x:4,y:3};
+  engine.reserve(state,'trick_throne_scene');
+  engine.investigate(state,'trick_throne_scene');
+  assert.ok(state.collected.karl.some(i=>i.id==='gallery_key'));
+  state.positions.karl={floor:'penthouse',x:15,y:6};
+  engine.interact(state,'door','ne_door','open');
+  view=engine.roomView(state);
+  assert.equal(view.map.doors.find(d=>d.id==='ne_door').name,'가고일 전시실·옥상 출입문');
+  assert.ok(view.map.rooms.some(r=>r.name==='가고일 전시실·옥상'));
+  assert.ok(view.map.objects.some(o=>o.name==='갈리온 전시 석상'));
+  assert.ok(view.investigation.cards.some(c=>c.id==='cult_gargoyle_poster'));
+  assert.equal(engine.reserve(state,'cult_hero_landing_syllabus'),true,
+    'non-site-only gallery cards become available only after opening the door');
+});
