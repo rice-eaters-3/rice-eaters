@@ -199,7 +199,17 @@ window.MysteryArt=(function(){
    'island_shoe_marks',
    'island_edit_room',
    'island_camera_lag',
-   'island_early_message'
+   'island_early_message',
+   'island_doctor_note',
+   'island_drone_master',
+   'island_net_box',
+   'island_sound_test',
+   'island_tide_gate',
+   'island_duplicate_badge',
+   'island_tide_autopsy',
+   'island_last_intercom',
+   'island_interview_raw',
+   'island_relay_key'
   ])
  };
  const standaloneD1Props=new Set(['sink','fridge','pc','gargoyle','throne']);
