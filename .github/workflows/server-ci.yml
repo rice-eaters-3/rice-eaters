@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - "server.js"
+      - "mystery-content/**"
       - "apps/murder-mystery/**"
       - "apps/terraforming-mars/index.html"
       - "tests/**"
@@ -13,6 +14,7 @@ on:
   pull_request:
     paths:
       - "server.js"
+      - "mystery-content/**"
       - "apps/murder-mystery/**"
       - "apps/terraforming-mars/index.html"
       - "tests/**"

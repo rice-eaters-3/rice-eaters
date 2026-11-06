@@ -12,7 +12,7 @@ const scenarios=[
  ['neon-memory-quarantine.case.json','neon-memory-quarantine','neon.webp',7,14,54],
  ['stellar-academy-first-case.case.json','stellar-academy-first-case','academy.webp',6,14,48]
 ];
-const reviewedClueCounts={'d1-crown-of-ashes':71,'cruel-heart-island':10};
+const reviewedClueCounts={'d1-crown-of-ashes':71,'cruel-heart-island':20};
 const newD1Props=['sink','fridge','pc','gargoyle','throne'];
 const imagePath=name=>path.join(root,'apps/murder-mystery/assets',name);
 test('all four original concept-sheet WebP image files are real binary assets with a RIFF/WEBP header',()=>{
@@ -46,7 +46,7 @@ test('every player, map prop and clue has a case illustration',()=>{
   for(const character of data.story.characters){
    const visual=art.portrait(character,id);
    assert.match(visual,/<svg/);
-   const portraitFile=id==='d1-crown-of-ashes'?'portraits/'+id+'/'+character.id+'.webp':file;
+   const portraitFile=['d1-crown-of-ashes','cruel-heart-island'].includes(id)?'portraits/'+id+'/'+character.id+'.webp':file;
    assert.ok(visual.includes(portraitFile),character.id+' should use its own case artwork');
    assert.ok(visual.includes('<image '),'player illustration should link a raster asset');
    assert.doesNotMatch(visual,/<path(?:\s|>)/,'no geometric cartoon portrait substitution');
@@ -156,6 +156,7 @@ test('local HTTP server serves original and standalone artwork with image/webp M
  const backgrounds=scenarios.map(([filename,id,file])=>[filename,id,'backgrounds/'+file.replace('.webp','-background.webp')]);
  const d1=require('../mystery-content/d1-gaming.case.json').story;
  const portraits=[...d1.characters,d1.victim].map(({id})=>['',d1.id,'portraits/'+d1.id+'/'+id+'.webp']);
+ portraits.push(...require('../mystery-content/cruel-heart-island.case.json').story.characters.map(({id})=>['','cruel-heart-island','portraits/cruel-heart-island/'+id+'.webp']));
  const props=newD1Props.map(kind=>['',d1.id,'props/'+d1.id+'/'+kind+'.webp']);
  for(const [,id,file] of [...scenarios,...independent,...backgrounds,...portraits,...props]){
   const response=await fetch(base+'/apps/murder-mystery/assets/'+file);
