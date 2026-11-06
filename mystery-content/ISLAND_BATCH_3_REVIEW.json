@@ -1,0 +1,75 @@
+{
+  "method": "Built-in image generation, independent full-frame image per card",
+  "assets": [
+    {
+      "id": "yura_dance_shoes",
+      "prompt": "Use case: stylized-concept. Create one ORIGINAL standalone square evidence illustration for a Korean murder mystery 'Last Heart', matching polished anime visual novel concept art, tropical island luxury dating-show resort, pink twilight, dark ocean blue shadows. Painterly detailed object close-up, no UI frame, no title, no watermark. Full object in frame with margins. Subject: Pair of wet burgundy soft dance shoes on a wet wooden outdoor resort deck, fine wood flakes near soles, sea spray droplets. No running shoes, no people. Illustration only, do not write explanatory deductions or reveal culprit.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-06187aa3-c68b-41ae-8cf8-2b5fdc1d6032.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/yura_dance_shoes.webp",
+      "review": "Verified subject and any visible times against card back; no crop or culprit conclusions."
+    },
+    {
+      "id": "yura_couple_photo",
+      "prompt": "Use case: stylized-concept. Create one ORIGINAL standalone square evidence illustration for a Korean murder mystery 'Last Heart', matching polished anime visual novel concept art, tropical island luxury dating-show resort, pink twilight, dark ocean blue shadows. Painterly detailed object close-up, no UI frame, no title, no watermark. Full object in frame with margins. Subject: An old printed couple photograph tucked into a clipped pre-show questionnaire on a tropical resort vanity. Photo shows long black-haired adult woman in burgundy dress and a past boyfriend whose face is indistinct. No accusation, no labels naming culprit. Illustration only, do not write explanatory deductions or reveal culprit.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-8f80ea2e-b23c-4eaa-895b-b16c947f626a.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/yura_couple_photo.webp",
+      "review": "Verified subject and any visible times against card back; no crop or culprit conclusions."
+    },
+    {
+      "id": "yura_diary",
+      "prompt": "Use case: stylized-concept. Create one ORIGINAL standalone square evidence illustration for a Korean murder mystery 'Last Heart', matching polished anime visual novel concept art, tropical island luxury dating-show resort, pink twilight, dark ocean blue shadows. Painterly detailed object close-up, no UI frame, no title, no watermark. Full object in frame with margins. Subject: Private handwritten diary with a small pressed burgundy flower, wistful heart doodles and a separate generic sponsorship agreement peeking underneath. Only readable handwriting: \"도윤\". No assertions about murder. Illustration only, do not write explanatory deductions or reveal culprit.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-6fa4b337-9494-4ed6-911c-f7c60401ace6.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/yura_diary.webp",
+      "review": "Verified subject and any visible times against card back; no crop or culprit conclusions."
+    },
+    {
+      "id": "yura_monitor_note",
+      "prompt": "Use case: stylized-concept. Create one ORIGINAL standalone square evidence illustration for a Korean murder mystery 'Last Heart', matching polished anime visual novel concept art, tropical island luxury dating-show resort, pink twilight, dark ocean blue shadows. Painterly detailed object close-up, no UI frame, no title, no watermark. Full object in frame with margins. Subject: Handwritten broadcast comparison memo beside a studio monitor. Exact clear two rows \"촬영 23:15\" and \"방송 23:28\", connected with a bracket labeled \"13분\". No other times. Illustration only, do not write explanatory deductions or reveal culprit.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-324f6904-b58f-4211-8e5f-4de019e015d4.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/yura_monitor_note.webp",
+      "review": "Verified subject and any visible times against card back; no crop or culprit conclusions."
+    },
+    {
+      "id": "nayeon_match_table",
+      "prompt": "Use case: stylized-concept. Create one ORIGINAL standalone square evidence illustration for a Korean murder mystery 'Last Heart', matching polished anime visual novel concept art, tropical island luxury dating-show resort, pink twilight, dark ocean blue shadows. Painterly detailed object close-up, no UI frame, no title, no watermark. Full object in frame with margins. Subject: A printed dating show matching spreadsheet on analyst desk. Anonymous silhouettes in pairs, pink heart pair symbols and sponsor money columns, high sponsorship rows highlighted. Tiny illegible cells, no character names or specific invented scores. Illustration only, do not write explanatory deductions or reveal culprit.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-d22c6f4e-bc26-447c-9aaa-bcb4efcd5671.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/nayeon_match_table.webp",
+      "review": "Verified subject and any visible times against card back; no crop or culprit conclusions."
+    },
+    {
+      "id": "nayeon_usb_backup",
+      "prompt": "Use case: stylized-concept. Create one ORIGINAL standalone square evidence illustration for a Korean murder mystery 'Last Heart', matching polished anime visual novel concept art, tropical island luxury dating-show resort, pink twilight, dark ocean blue shadows. Painterly detailed object close-up, no UI frame, no title, no watermark. Full object in frame with margins. Subject: A standalone black USB database backup drive with pink heart emblem on analyst desk next to a closed laptop, archival tag and coiled cable. No memory chip substitution, no readable times or invented log. Illustration only, do not write explanatory deductions or reveal culprit.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-4da00f4e-0f33-46dd-b1cd-753b1de0fe5e.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/nayeon_usb_backup.webp",
+      "review": "Verified subject and any visible times against card back; no crop or culprit conclusions."
+    },
+    {
+      "id": "nayeon_contract_copy",
+      "prompt": "Use case: stylized-concept. Create one ORIGINAL standalone square evidence illustration for a Korean murder mystery 'Last Heart', matching polished anime visual novel concept art, tropical island luxury dating-show resort, pink twilight, dark ocean blue shadows. Painterly detailed object close-up, no UI frame, no title, no watermark. Full object in frame with margins. Subject: A multi-page research data consent form on clipboard, medical and psychological survey icons, a blank unchecked consent box, and a separate advertisement storyboard underneath. No signatures, no conclusions about crimes. Illustration only, do not write explanatory deductions or reveal culprit.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-55f2a423-1c71-459f-80ed-42bf61535f35.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/nayeon_contract_copy.webp",
+      "review": "Verified subject and any visible times against card back; no crop or culprit conclusions."
+    },
+    {
+      "id": "nayeon_heart_chip",
+      "prompt": "Use case: stylized-concept. Create one ORIGINAL standalone square evidence illustration for a Korean murder mystery 'Last Heart', matching polished anime visual novel concept art, tropical island luxury dating-show resort, pink twilight, dark ocean blue shadows. Painterly detailed object close-up, no UI frame, no title, no watermark. Full object in frame with margins. Subject: A heart-shaped electronic voting badge with pink LED heart display resting next to a small backstage remote control, visible clip on badge, polished plastic, no numeric romantic score. Illustration only, do not write explanatory deductions or reveal culprit.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-f91341a7-7364-48de-9a2f-03d00fde4130.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/nayeon_heart_chip.webp",
+      "review": "Verified subject and any visible times against card back; no crop or culprit conclusions."
+    },
+    {
+      "id": "somi_scripted_dates",
+      "prompt": "Use case: stylized-concept. Create one ORIGINAL standalone square evidence illustration for a Korean murder mystery 'Last Heart', matching polished anime visual novel concept art, tropical island luxury dating-show resort, pink twilight, dark ocean blue shadows. Painterly detailed object close-up, no UI frame, no title, no watermark. Full object in frame with margins. Subject: A printed dating scene script with dialogue lines, pink revision marks and sponsor placement tabs, laid on resort makeup table beside pink ribbon. No readable fabricated dialogue or murderer names. Illustration only, do not write explanatory deductions or reveal culprit.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-574ce8f7-ce10-49f9-ab11-dd40be0ada3b.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/somi_scripted_dates.webp",
+      "review": "Verified subject and any visible times against card back; no crop or culprit conclusions."
+    },
+    {
+      "id": "somi_rescue_net",
+      "prompt": "Use case: stylized-concept. Create one ORIGINAL standalone square evidence illustration for a Korean murder mystery 'Last Heart', matching polished anime visual novel concept art, tropical island luxury dating-show resort, pink twilight, dark ocean blue shadows. Painterly detailed object close-up, no UI frame, no title, no watermark. Full object in frame with margins. Subject: Coiled marine safety net in a film equipment bag on a wooden resort deck, several thick rope knots with one freshly tied knot, a marine rescue training rental tag with no readable date, no person. Illustration only, do not write explanatory deductions or reveal culprit.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-dae317cb-85c2-4711-85be-83f0964fdd43.png",
+      "asset": "apps/murder-mystery/assets/clues/cruel-heart-island/somi_rescue_net.webp",
+      "review": "Verified subject and any visible times against card back; no crop or culprit conclusions."
+    }
+  ]
+}

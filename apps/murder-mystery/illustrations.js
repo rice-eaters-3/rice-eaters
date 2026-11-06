@@ -179,7 +179,17 @@ window.MysteryArt=(function(){
    'harin_editor_pass',
    'harin_violet_ribbon',
    'harin_voice_draft',
-   'harin_signal_flare'
+   'harin_signal_flare',
+   'yura_dance_shoes',
+   'yura_couple_photo',
+   'yura_diary',
+   'yura_monitor_note',
+   'nayeon_match_table',
+   'nayeon_usb_backup',
+   'nayeon_contract_copy',
+   'nayeon_heart_chip',
+   'somi_scripted_dates',
+   'somi_rescue_net'
   ])
  };
  const standaloneD1Props=new Set(['sink','fridge','pc','gargoyle','throne']);

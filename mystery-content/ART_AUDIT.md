@@ -199,3 +199,18 @@ D1 71장 교체 완료. 마지막 하트의 11번째 카드 `seojun_old_report`�
 | `somi` | 컨셉 보드 잘라쓰기를 독립 초상화로 교체 | `apps/murder-mystery/assets/portraits/cruel-heart-island/somi.webp` |
 
 반영 누계: 조사 카드 91/229 (D1 71, 마지막 하트 20), 플레이어 초상화 15/28 + D1 피해자 1. 남은 조사 카드 138, 플레이어 초상화 13.
+
+## 마지막 하트 · 3차 배치
+
+| 카드 ID | 기존 문제 | 신규 이미지 경로 |
+| --- | --- | --- |
+| `yura_dance_shoes` | 공용 컷이 개별 증거물을 나타내지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/yura_dance_shoes.webp` |
+| `yura_couple_photo` | 공용 컷이 개별 증거물을 나타내지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/yura_couple_photo.webp` |
+| `yura_diary` | 공용 컷이 개별 증거물을 나타내지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/yura_diary.webp` |
+| `yura_monitor_note` | 공용 컷이 개별 증거물을 나타내지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/yura_monitor_note.webp` |
+| `nayeon_match_table` | 공용 컷이 개별 증거물을 나타내지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/nayeon_match_table.webp` |
+| `nayeon_usb_backup` | 공용 컷이 개별 증거물을 나타내지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/nayeon_usb_backup.webp` |
+| `nayeon_contract_copy` | 공용 컷이 개별 증거물을 나타내지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/nayeon_contract_copy.webp` |
+| `nayeon_heart_chip` | 공용 컷이 개별 증거물을 나타내지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/nayeon_heart_chip.webp` |
+| `somi_scripted_dates` | 공용 컷이 개별 증거물을 나타내지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/somi_scripted_dates.webp` |
+| `somi_rescue_net` | 공용 컷이 개별 증거물을 나타내지 못함 | `apps/murder-mystery/assets/clues/cruel-heart-island/somi_rescue_net.webp` |

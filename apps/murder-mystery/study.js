@@ -160,7 +160,7 @@ window.MysteryStudy=(function(){
           '" data-door-action="'+(d.open?'close':'open')+'"')).join(''):'')+
       (!portals.length&&!doors.length?'<small class="muted">현재 사용할 수 있는 이동·문 액션이 없습니다.</small>':'')+'</div>'+
       (inv?.canInvestigate?'<p class="muted small">이 타일의 조사 정보</p>'+
-      (here.length?here.map(c=>btn('reserve','🔎 '+esc(c.title),'btn btn-outline btn-sm',
+      (here.length?here.map(c=>btn('reserve','🔎 '+esc(c.frontTitle||'조사 카드'),'btn btn-outline btn-sm',
         (!!c.reservedBy&&c.reservedBy!==room.me)||inv.tokens<1,'data-card="'+esc(c.id)+'"')).join(''):
       '<span class="muted small">현재 타일에 조사할 카드가 없습니다.</span>'):'');
   }
