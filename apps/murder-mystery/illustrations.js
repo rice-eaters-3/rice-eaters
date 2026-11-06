@@ -217,7 +217,7 @@ window.MysteryArt=(function(){
    'island_final_cut',
    'island_escape_beacon'
   ]),
-  'neon-memory-quarantine':new Set(["nova_memory_badge", "nova_shield_patch", "nova_empty_notebook", "nova_old_case_file", "rune_medical_scanner", "rune_revoked_license", "rune_old_consent", "rune_surgical_tablet", "ion_pulse_blade", "ion_maintenance_token"])
+  'neon-memory-quarantine':new Set(["nova_memory_badge", "nova_shield_patch", "nova_empty_notebook", "nova_old_case_file", "rune_medical_scanner", "rune_revoked_license", "rune_old_consent", "rune_surgical_tablet", "ion_pulse_blade", "ion_maintenance_token", "ion_fake_warning", "ion_sibling_identity", "mira_legal_patch", "mira_ai_petition", "mira_shadow_receipt", "mira_identity_clause", "atlas_riot_shield", "atlas_old_access", "atlas_duty_log", "atlas_encrypted_message"])
  };
  const standaloneD1Props=new Set(['sink','fridge','pc','gargoyle','throne']);
  const storyFor=id=>Object.hasOwn(A,id)?id:id==='d1-gaming'?'d1-crown-of-ashes':null;

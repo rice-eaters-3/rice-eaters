@@ -120,48 +120,8 @@
     {
       "series": "neon-memory-quarantine",
       "cluesTotal": 54,
-      "cluesComplete": 10,
+      "cluesComplete": 20,
       "pendingClues": [
-        {
-          "id": "ion_fake_warning",
-          "title": "이온의 긴급 격리 경고문"
-        },
-        {
-          "id": "ion_sibling_identity",
-          "title": "이온의 대체 신분 서류"
-        },
-        {
-          "id": "mira_legal_patch",
-          "title": "미라의 임시 보존 명령 카드"
-        },
-        {
-          "id": "mira_ai_petition",
-          "title": "미라의 에코 권리 청원서"
-        },
-        {
-          "id": "mira_shadow_receipt",
-          "title": "미라의 기억 복제 서비스 영수증"
-        },
-        {
-          "id": "mira_identity_clause",
-          "title": "미라의 법률 개정 초안"
-        },
-        {
-          "id": "atlas_riot_shield",
-          "title": "아틀라스의 개인 방호 방패"
-        },
-        {
-          "id": "atlas_old_access",
-          "title": "아틀라스의 만료된 보안 출입 카드"
-        },
-        {
-          "id": "atlas_duty_log",
-          "title": "아틀라스의 전직 요원 근무 일지"
-        },
-        {
-          "id": "atlas_encrypted_message",
-          "title": "아틀라스의 이온의 과거 연락"
-        },
         {
           "id": "echo_shell_drive",
           "title": "에코의 인공인격 셸 저장기"
