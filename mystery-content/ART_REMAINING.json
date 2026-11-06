@@ -156,7 +156,7 @@
         },
         {
           "id": "ion_pulse_blade",
-          "title": "이온의 서사 속 펄스 블레이드"
+          "title": "이온의 펄스 블레이드"
         },
         {
           "id": "ion_maintenance_token",
@@ -164,11 +164,11 @@
         },
         {
           "id": "ion_fake_warning",
-          "title": "이온의 거짓 긴급 격리 경고"
+          "title": "이온의 긴급 격리 경고문"
         },
         {
           "id": "ion_sibling_identity",
-          "title": "이온의 동생의 대체 신분 증명"
+          "title": "이온의 대체 신분 서류"
         },
         {
           "id": "mira_legal_patch",
@@ -180,7 +180,7 @@
         },
         {
           "id": "mira_shadow_receipt",
-          "title": "미라의 불법 복제 서비스 영수증"
+          "title": "미라의 기억 복제 서비스 영수증"
         },
         {
           "id": "mira_identity_clause",
@@ -256,7 +256,7 @@
         },
         {
           "id": "memory_underground_bill",
-          "title": "불법 배송 대금"
+          "title": "배송 대금 명세"
         },
         {
           "id": "memory_exmate_memo",
@@ -280,7 +280,7 @@
         },
         {
           "id": "memory_fake_patient",
-          "title": "허위 감염 검사 통보"
+          "title": "감염 검사 통보"
         },
         {
           "id": "memory_core_key",
@@ -328,7 +328,7 @@
         },
         {
           "id": "memory_culprit_reconstruction",
-          "title": "사망·홀로그램·EMP 종합 재구성"
+          "title": "신체·영상·격리 기록 정리표"
         },
         {
           "id": "memory_original_rights",
@@ -336,7 +336,7 @@
         },
         {
           "id": "memory_why_sealed",
-          "title": "격리 지침의 모순"
+          "title": "격리 지침과 당일 로그"
         }
       ],
       "portraitsTotal": 7,
@@ -492,7 +492,7 @@
         },
         {
           "id": "gabin_voice_script",
-          "title": "유가빈의 연호 음성 모사 대본"
+          "title": "유가빈의 연호 배역 대본"
         },
         {
           "id": "gabin_stage_dart",
@@ -500,7 +500,7 @@
         },
         {
           "id": "gabin_family_badge",
-          "title": "유가빈의 운영자 가족 출입 배지"
+          "title": "유가빈의 관리실 출입 배지"
         },
         {
           "id": "gabin_red_fiber",
@@ -552,19 +552,19 @@
         },
         {
           "id": "academy_mock_exit",
-          "title": "옥상 가짜 비상구 도면"
+          "title": "옥상 출입문 도면"
         },
         {
           "id": "academy_autopsy_time",
-          "title": "연호의 실제 사망 시각"
+          "title": "연호의 의료 기록"
         },
         {
           "id": "academy_voice_match",
-          "title": "연호와 가빈의 발음 파형"
+          "title": "방송과 리허설의 음성 파형"
         },
         {
           "id": "academy_high_badge",
-          "title": "고급 출입 배지 소유자"
+          "title": "고급 출입 배지 발급대장"
         },
         {
           "id": "academy_deleted_phrase",
@@ -596,7 +596,7 @@
         },
         {
           "id": "academy_culprit_chain",
-          "title": "첫 번째 살인 종합 재구성"
+          "title": "관측관 기록 정리표"
         },
         {
           "id": "academy_second_exit",

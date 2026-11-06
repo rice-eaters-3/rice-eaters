@@ -177,22 +177,22 @@
           {
             "id": "minjae_rescue_ring",
             "name": "노란 구명환",
-            "description": "사건 전에도 사용했던 구조용 구명환."
+            "description": "노란 구명환에 장비 회수 기록표가 붙어 있다. 지시자 칸에는 ‘신원재’라는 이름이 적혀 있다."
           },
           {
             "id": "minjae_first_aid",
             "name": "방수 응급가방",
-            "description": "의약품·구조용 비품이 들어 있다."
+            "description": "방수 응급가방의 봉인 띠가 붙어 있다. 안에는 포장이 뜯기지 않은 붕대와 거즈가 들어 있다."
           },
           {
             "id": "minjae_old_photo",
-            "name": "유라와 함께 찍은 사진",
-            "description": "두 사람이 연인이었다는 증거."
+            "name": "강민재와 유라가 찍힌 사진",
+            "description": "민재와 유라가 나란히 찍힌 사진이다. 뒷면에 촬영 날짜가 적혀 있고 종이 가장자리가 닳아 있다."
           },
           {
             "id": "minjae_tide_chart",
             "name": "수기 물때표",
-            "description": "구조사가 직접 표시한 수위 예상표."
+            "description": "수기 물때표에 ‘23시 이후 관측실 출입 주의’라고 적혀 있다. 수위 곡선은 23:17 전후 구간에서 가파르게 변한다."
           }
         ],
         "culprit": false,
@@ -243,22 +243,22 @@
           {
             "id": "doyun_sponsor_contract",
             "name": "비밀 커플 광고 계약서",
-            "description": "수상한 수익 배분 조항이 있다."
+            "description": "계약서에 도윤·소미의 이름과 ‘커플 역할 연출’ 조항이 적혀 있다. 별지에 연출 결과별 지급 조건이 기재되어 있다."
           },
           {
             "id": "doyun_drone_clip",
             "name": "드론 촬영 메모리",
-            "description": "바람 속에서 찍은 불안정한 영상."
+            "description": "메모리의 영상에는 23:00 전후의 관측실 출입구가 찍혀 있다. 시각 표시 옆에는 ‘드론 내부 시계’라고 적혀 있다."
           },
           {
             "id": "doyun_luxury_watch",
             "name": "협찬 손목시계",
-            "description": "바닷물에도 견딘다는 제품."
+            "description": "협찬 로고가 새겨진 손목시계다. 설정 화면의 네트워크 시각 동기화 항목이 꺼져 있다."
           },
           {
             "id": "doyun_brand_badge",
             "name": "브랜드 VIP 배지",
-            "description": "시청자에게는 신분증처럼 보인다."
+            "description": "VIP 배지의 사용 구역 목록에 촬영장 구역들이 적혀 있다. ‘해양 관측실 구형 출입문’은 목록에 없다."
           }
         ],
         "culprit": false,
@@ -309,22 +309,22 @@
           {
             "id": "seojun_wave_meter",
             "name": "휴대 수위 기록계",
-            "description": "소형 수위 측정 도구."
+            "description": "기록계의 수위 곡선이 23:17 부근에서 급격히 변한다. 경보 출력 표시는 곡선 변화 지점보다 뒤에 찍혀 있다."
           },
           {
             "id": "seojun_research_badge",
             "name": "해양연구소 출입증",
-            "description": "출연자 신분과 맞지 않는 배지."
+            "description": "해양연구소 이름과 이서준의 이름·사진이 인쇄된 출입증이다."
           },
           {
             "id": "seojun_old_report",
             "name": "과거 촬영 사고 보고서",
-            "description": "방송국이 보류 처리한 안전 자문 서류."
+            "description": "보고서의 구조 비용 항목에 여러 차례 삭감 표시가 있다. 해당 결재란에는 ‘신원재’가 적혀 있다."
           },
           {
             "id": "seojun_dry_notebook",
             "name": "비를 피한 연구 노트",
-            "description": "방수 종이에 기록한 섬 관측 수치."
+            "description": "연구 노트에 ‘23:17 위험 예상’이라는 메모와 ‘방송 자막 23:30’이라는 메모가 나란히 적혀 있다."
           }
         ],
         "culprit": false,
@@ -375,22 +375,22 @@
           {
             "id": "taehan_old_warrant",
             "name": "실종 조연출의 조사 자료",
-            "description": "공식 사건 종결 전 기록 사본."
+            "description": "조사 자료에 조연출의 인적 사항과 실종 기록이 묶여 있다. 첨부된 문안에 “개인정보 이용 계약을 고발하려 한다”는 문장이 있다."
           },
           {
             "id": "taehan_black_gloves",
             "name": "검은 면장갑",
-            "description": "증거를 훼손하지 않으려 준비한 장갑."
+            "description": "검은 면장갑의 손가락 끝이 유난히 닳아 있다. 천 사이에 흰 가루와 모래 알갱이가 묻어 있다."
           },
           {
             "id": "taehan_shoe_sketch",
             "name": "신발 자국 스케치",
-            "description": "두 사람의 이동 동선을 그린 종이."
+            "description": "스케치에 서로 다른 두 종류의 밑창 무늬와 관측실 입구 방향의 화살표가 그려져 있다. 모서리에 ‘23:11’이 적혀 있다."
           },
           {
             "id": "taehan_handcuffs",
             "name": "연출용 제압 띠",
-            "description": "방송에서 쓰던 안전용 제압 도구."
+            "description": "탈착용 잠금부가 달린 띠다. 안쪽에 ‘방송용 연출 장비’라는 표찰이 붙어 있다."
           }
         ],
         "culprit": false,
@@ -447,22 +447,22 @@
           {
             "id": "harin_editor_pass",
             "name": "구형 편집실 출입 카드",
-            "description": "섬 방송 서버의 옛 보조 출입권한."
+            "description": "낡은 출입 카드 앞면에 ‘편집실 보조’가 적혀 있다. 뒷면의 권한 목록에는 ‘지연 송출 설정 열람’이 있다."
           },
           {
             "id": "harin_violet_ribbon",
             "name": "보라색 머리끈",
-            "description": "동생이 건네준 오래된 머리끈."
+            "description": "보라색 천으로 된 머리끈이다. 가장자리 한 곳이 해져 있고 짧은 보라색 실밥이 나와 있다."
           },
           {
             "id": "harin_voice_draft",
             "name": "지워진 인터뷰 초안",
-            "description": "매우 사적인 상담 내용이 포함된 스크립트."
+            "description": "인터뷰 초안의 가족 상담 내용 옆에 ‘시청률 자극 소재’라는 메모가 있다. 사용 동의 확인란은 비어 있다."
           },
           {
             "id": "harin_signal_flare",
             "name": "방송용 비상 신호탄",
-            "description": "제작진이 지급한 비상용 소품."
+            "description": "작은 구조 신호탄의 봉인 테이프가 낡아 있다. 안전 지침에는 이 장치를 관측실이 아닌 해변 데크에서 사용하도록 적혀 있다."
           }
         ],
         "culprit": true,
@@ -513,22 +513,22 @@
           {
             "id": "yura_dance_shoes",
             "name": "젖은 무용화",
-            "description": "새벽에 물가로 걸어갔다고 오해받는 신발."
+            "description": "무용화가 젖어 있고 밑창에 작은 나무 부스러기가 붙어 있다."
           },
           {
             "id": "yura_couple_photo",
-            "name": "옛 커플 사진",
-            "description": "민재와의 연애를 증명하는 사진."
+            "name": "오래된 사진",
+            "description": "두 사람이 함께 찍힌 오래된 사진이다. 사진 뒤에 ‘사전 설문 첨부’ 표찰과 방송 편집용 표시가 붙어 있다."
           },
           {
             "id": "yura_diary",
             "name": "비밀 감정 일기",
-            "description": "새 출발에 대한 기대와 불안이 적혀 있다."
+            "description": "일기에 “도윤에게 마음이 생겼다”, “광고 계약으로 출연했다는 이야기를 들었다”는 문장이 적혀 있다."
           },
           {
             "id": "yura_monitor_note",
             "name": "방송 시차 메모",
-            "description": "독백 방송의 시각을 손으로 적은 노트."
+            "description": "메모에 ‘촬영 23:15’, ‘방송 23:28’이 나란히 적혀 있다. 두 시각 옆에 ‘13분’이라고 적은 괄호가 있다."
           }
         ],
         "culprit": false,
@@ -579,22 +579,22 @@
           {
             "id": "nayeon_match_table",
             "name": "커플 매칭 원표",
-            "description": "시청자 투표와 추천 순위가 다른 표."
+            "description": "매칭 원표에 출연 조합, 광고비, 우선순위 열이 있다. 광고비가 큰 조합의 행 여러 곳에 우선 표시가 붙어 있다."
           },
           {
             "id": "nayeon_usb_backup",
             "name": "데이터베이스 백업 USB",
-            "description": "촬영 원본과 송출 시각이 분리된 기록."
+            "description": "USB의 백업 목록에 숙소 인터뷰 파일이 있다. 생성 시각란은 23:17 이전, 첨부 편성표의 방송 시각란은 23:30으로 표시되어 있다. 별도 전송 로그에 지연 시간 항목이 있다."
           },
           {
             "id": "nayeon_contract_copy",
             "name": "데이터 이용 동의서",
-            "description": "작은 글씨가 가득한 계약서."
+            "description": "동의서에 ‘의료·심리 설문의 광고 소재 이용’ 조항이 있다. 해당 항목의 동의 체크칸과 서명칸은 비어 있다."
           },
           {
             "id": "nayeon_heart_chip",
             "name": "하트 투표 배지",
-            "description": "전자 하트가 켜지는 소형 배지."
+            "description": "하트 모양 배지에 숫자 표시창이 있다. 뒷면 설명에는 ‘표시값: 제작진 콘솔 입력’이라고 적혀 있다."
           }
         ],
         "culprit": false,
@@ -644,23 +644,23 @@
         "inventory": [
           {
             "id": "somi_scripted_dates",
-            "name": "가짜 데이트 대본",
-            "description": "도윤과 맞출 질문과 답변이 적혀 있다."
+            "name": "데이트 촬영 대본",
+            "description": "대본에 도윤과 소미의 대사가 번갈아 적혀 있다. 각 대사 옆에 광고 상품명과 노출 지시가 붙어 있다."
           },
           {
             "id": "somi_rescue_net",
             "name": "촬영용 안전 그물",
-            "description": "해양 스포츠 연출에 쓰던 구난 소품."
+            "description": "그물 가장자리의 매듭 하나는 다른 매듭보다 실밥이 적고 팽팽하다. 표찰에 ‘해양 구조 훈련용 대여’와 날짜가 적혀 있다."
           },
           {
             "id": "somi_family_letter",
             "name": "가족 채무 편지",
-            "description": "한소미가 방송 출연을 거절하기 어려운 이유."
+            "description": "가족 채무 내역이 적힌 편지다. 동봉된 메모에는 “채무 문제를 생각해서 촬영 조건을 받아들여 달라”는 문장과 신원재의 이름이 있다."
           },
           {
             "id": "somi_parting_note",
             "name": "미발송 계약 파기 편지",
-            "description": "사랑을 돈으로 거래하지 않겠다는 결심."
+            "description": "‘계약을 파기하겠다’는 편지에 작성 시각 23:30이 적혀 있다. 발송 상태는 ‘미발송’이다."
           }
         ],
         "culprit": false,
@@ -1247,10 +1247,10 @@
         {
           "id": "minjae_rescue_ring",
           "title": "강민재의 노란 구명환",
-          "subtitle": "사건 전에도 사용했던 구조용 구명환.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "신원재가 구명 장비 회수 지시를 내려 한때 사라졌던 기록이 붙어 있다.",
+          "back": "노란 구명환에 장비 회수 기록표가 붙어 있다. 지시자 칸에는 ‘신원재’라는 이름이 적혀 있다.",
           "owner": "minjae",
           "blockedFor": [],
           "requires": [],
@@ -1266,10 +1266,10 @@
         {
           "id": "minjae_first_aid",
           "title": "강민재의 방수 응급가방",
-          "subtitle": "의약품·구조용 비품이 들어 있다.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "관측실 사망 추정 시각에 사용한 흔적은 없다. 민재는 위험을 인지하고도 들어가지 않았다는 죄책감을 느낀다.",
+          "back": "방수 응급가방의 봉인 띠가 붙어 있다. 안에는 포장이 뜯기지 않은 붕대와 거즈가 들어 있다.",
           "owner": "minjae",
           "blockedFor": [],
           "requires": [],
@@ -1284,11 +1284,11 @@
         },
         {
           "id": "minjae_old_photo",
-          "title": "강민재의 유라와 함께 찍은 사진",
-          "subtitle": "두 사람이 연인이었다는 증거.",
+          "title": "강민재와 유라가 찍힌 사진",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "날짜는 3년 전. 민재와 유라는 제작진에게 이전 연인 관계를 감췄다.",
+          "back": "민재와 유라가 나란히 찍힌 사진이다. 뒷면에 촬영 날짜가 적혀 있고 종이 가장자리가 닳아 있다.",
           "owner": "minjae",
           "blockedFor": [],
           "requires": [],
@@ -1304,10 +1304,10 @@
         {
           "id": "minjae_tide_chart",
           "title": "강민재의 수기 물때표",
-          "subtitle": "구조사가 직접 표시한 수위 예상표.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "23시 이후 관측실은 안전하지 않다는 경고가 있다. 23:17 전후 수위 변동이 특히 크다.",
+          "back": "수기 물때표에 ‘23시 이후 관측실 출입 주의’라고 적혀 있다. 수위 곡선은 23:17 전후 구간에서 가파르게 변한다.",
           "owner": "minjae",
           "blockedFor": [],
           "requires": [],
@@ -1323,10 +1323,10 @@
         {
           "id": "doyun_sponsor_contract",
           "title": "정도윤의 비밀 커플 광고 계약서",
-          "subtitle": "수상한 수익 배분 조항이 있다.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "도윤·소미가 가짜 커플 역할을 맡고 결과에 따라 대가를 받는 계약이다.",
+          "back": "계약서에 도윤·소미의 이름과 ‘커플 역할 연출’ 조항이 적혀 있다. 별지에 연출 결과별 지급 조건이 기재되어 있다.",
           "owner": "doyun",
           "blockedFor": [],
           "requires": [],
@@ -1342,10 +1342,10 @@
         {
           "id": "doyun_drone_clip",
           "title": "정도윤의 드론 촬영 메모리",
-          "subtitle": "바람 속에서 찍은 불안정한 영상.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "23:00 전후 방송 송출 시각과 맞지 않는 관측실 출입 동선이 보인다. 원본 시각은 드론 내부 시계 기준이다.",
+          "back": "메모리의 영상에는 23:00 전후의 관측실 출입구가 찍혀 있다. 시각 표시 옆에는 ‘드론 내부 시계’라고 적혀 있다.",
           "owner": "doyun",
           "blockedFor": [],
           "requires": [],
@@ -1361,10 +1361,10 @@
         {
           "id": "doyun_luxury_watch",
           "title": "정도윤의 협찬 손목시계",
-          "subtitle": "바닷물에도 견딘다는 제품.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "손목시계는 섬 네트워크와 동기화되어 있지 않아 제작진 영상의 지연 시간 검증에 쓸 수 있다.",
+          "back": "협찬 로고가 새겨진 손목시계다. 설정 화면의 네트워크 시각 동기화 항목이 꺼져 있다.",
           "owner": "doyun",
           "blockedFor": [],
           "requires": [],
@@ -1380,10 +1380,10 @@
         {
           "id": "doyun_brand_badge",
           "title": "정도윤의 브랜드 VIP 배지",
-          "subtitle": "시청자에게는 신분증처럼 보인다.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "본래 촬영장 곳곳에 들어갈 수 있지만 해양 관측실의 구형 문을 열 권한은 없다.",
+          "back": "VIP 배지의 사용 구역 목록에 촬영장 구역들이 적혀 있다. ‘해양 관측실 구형 출입문’은 목록에 없다.",
           "owner": "doyun",
           "blockedFor": [],
           "requires": [],
@@ -1399,10 +1399,10 @@
         {
           "id": "seojun_wave_meter",
           "title": "이서준의 휴대 수위 기록계",
-          "subtitle": "소형 수위 측정 도구.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "23:17 관측실 수위가 급격하게 바뀐 사실과 안전 경보 지연이 확인된다.",
+          "back": "기록계의 수위 곡선이 23:17 부근에서 급격히 변한다. 경보 출력 표시는 곡선 변화 지점보다 뒤에 찍혀 있다.",
           "owner": "seojun",
           "blockedFor": [],
           "requires": [],
@@ -1418,10 +1418,10 @@
         {
           "id": "seojun_research_badge",
           "title": "이서준의 해양연구소 출입증",
-          "subtitle": "출연자 신분과 맞지 않는 배지.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "출연 목적이 연애가 아니라 방송 안전 비리 조사였음을 시사한다.",
+          "back": "해양연구소 이름과 이서준의 이름·사진이 인쇄된 출입증이다.",
           "owner": "seojun",
           "blockedFor": [],
           "requires": [],
@@ -1437,10 +1437,10 @@
         {
           "id": "seojun_old_report",
           "title": "이서준의 과거 촬영 사고 보고서",
-          "subtitle": "방송국이 보류 처리한 안전 자문 서류.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "신원재 PD가 섬 구조 비용을 여러 차례 축소했음을 기록한다.",
+          "back": "보고서의 구조 비용 항목에 여러 차례 삭감 표시가 있다. 해당 결재란에는 ‘신원재’가 적혀 있다.",
           "owner": "seojun",
           "blockedFor": [],
           "requires": [],
@@ -1456,10 +1456,10 @@
         {
           "id": "seojun_dry_notebook",
           "title": "이서준의 비를 피한 연구 노트",
-          "subtitle": "방수 종이에 기록한 섬 관측 수치.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "23:17 현장이 위험하다는 예측과 영상의 23:30 자막이 동시에 적혀 있다.",
+          "back": "연구 노트에 ‘23:17 위험 예상’이라는 메모와 ‘방송 자막 23:30’이라는 메모가 나란히 적혀 있다.",
           "owner": "seojun",
           "blockedFor": [],
           "requires": [],
@@ -1475,10 +1475,10 @@
         {
           "id": "taehan_old_warrant",
           "title": "차태한의 실종 조연출의 조사 자료",
-          "subtitle": "공식 사건 종결 전 기록 사본.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "실종 조연출은 프로그램의 개인정보 이용 계약을 고발하려 했다.",
+          "back": "조사 자료에 조연출의 인적 사항과 실종 기록이 묶여 있다. 첨부된 문안에 “개인정보 이용 계약을 고발하려 한다”는 문장이 있다.",
           "owner": "taehan",
           "blockedFor": [],
           "requires": [],
@@ -1494,10 +1494,10 @@
         {
           "id": "taehan_black_gloves",
           "title": "차태한의 검은 면장갑",
-          "subtitle": "증거를 훼손하지 않으려 준비한 장갑.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "손가락 끝이 유난히 닳은 검은 면장갑이다. 관측실 창틀 부근에서 같은 조직의 실이 발견됐지만 바닷바람에 염분과 모래가 많이 묻어 있다.",
+          "back": "검은 면장갑의 손가락 끝이 유난히 닳아 있다. 천 사이에 흰 가루와 모래 알갱이가 묻어 있다.",
           "owner": "taehan",
           "blockedFor": [],
           "requires": [],
@@ -1513,10 +1513,10 @@
         {
           "id": "taehan_shoe_sketch",
           "title": "차태한의 신발 자국 스케치",
-          "subtitle": "두 사람의 이동 동선을 그린 종이.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "23:11에 서로 다른 두 신발 자국이 관측실 입구 쪽으로 이어졌음을 보여 준다.",
+          "back": "스케치에 서로 다른 두 종류의 밑창 무늬와 관측실 입구 방향의 화살표가 그려져 있다. 모서리에 ‘23:11’이 적혀 있다.",
           "owner": "taehan",
           "blockedFor": [],
           "requires": [],
@@ -1532,10 +1532,10 @@
         {
           "id": "taehan_handcuffs",
           "title": "차태한의 연출용 제압 띠",
-          "subtitle": "방송에서 쓰던 안전용 제압 도구.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "당시 실제 수갑이 아니라 탈착 가능한 방송용 장비다. 행동 단계에서 한 사람의 움직임을 막는 데 사용 가능하다.",
+          "back": "탈착용 잠금부가 달린 띠다. 안쪽에 ‘방송용 연출 장비’라는 표찰이 붙어 있다.",
           "owner": "taehan",
           "blockedFor": [],
           "requires": [],
@@ -1551,10 +1551,10 @@
         {
           "id": "harin_editor_pass",
           "title": "서하린의 구형 편집실 출입 카드",
-          "subtitle": "섬 방송 서버의 옛 보조 출입권한.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "신원재의 허락 없이 편집실 지연 송출 설정을 읽을 수 있었다. 편집실에 들어간 것을 숨길 수 없다.",
+          "back": "낡은 출입 카드 앞면에 ‘편집실 보조’가 적혀 있다. 뒷면의 권한 목록에는 ‘지연 송출 설정 열람’이 있다.",
           "owner": "harin",
           "blockedFor": [],
           "requires": [],
@@ -1570,10 +1570,10 @@
         {
           "id": "harin_violet_ribbon",
           "title": "서하린의 보라색 머리끈",
-          "subtitle": "동생이 건네준 오래된 머리끈.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "머리끈의 보라색 섬유는 관측실 난간의 조각과 염색 특성이 비슷하다. 발견 지점의 다른 발자국과 함께 대조할 필요가 있다.",
+          "back": "보라색 천으로 된 머리끈이다. 가장자리 한 곳이 해져 있고 짧은 보라색 실밥이 나와 있다.",
           "owner": "harin",
           "blockedFor": [],
           "requires": [],
@@ -1589,10 +1589,10 @@
         {
           "id": "harin_voice_draft",
           "title": "서하린의 지워진 인터뷰 초안",
-          "subtitle": "매우 사적인 상담 내용이 포함된 스크립트.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "PD가 동의를 받지 않고 가족의 비밀을 시청률 자극 소재로 사용하려 했음을 보여 준다.",
+          "back": "인터뷰 초안의 가족 상담 내용 옆에 ‘시청률 자극 소재’라는 메모가 있다. 사용 동의 확인란은 비어 있다.",
           "owner": "harin",
           "blockedFor": [],
           "requires": [],
@@ -1608,7 +1608,7 @@
         {
           "id": "harin_signal_flare",
           "title": "서하린의 방송용 비상 신호탄",
-          "subtitle": "제작진이 지급한 비상용 소품.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
           "back": "작은 구조 신호탄의 봉인 테이프가 낡아 있다. 안전 지침에는 이 장치를 관측실이 아닌 해변 데크에서 사용하도록 적혀 있다.",
@@ -1627,10 +1627,10 @@
         {
           "id": "yura_dance_shoes",
           "title": "오유라의 젖은 무용화",
-          "subtitle": "새벽에 물가로 걸어갔다고 오해받는 신발.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "실제로는 야외 데크에서 연습한 흔적이며 관측실의 모래 입자와 다르다.",
+          "back": "무용화가 젖어 있고 밑창에 작은 나무 부스러기가 붙어 있다.",
           "owner": "yura",
           "blockedFor": [],
           "requires": [],
@@ -1645,11 +1645,11 @@
         },
         {
           "id": "yura_couple_photo",
-          "title": "오유라의 옛 커플 사진",
-          "subtitle": "민재와의 연애를 증명하는 사진.",
+          "title": "오유라의 오래된 사진",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "PD가 몰래 사전 설문에서 수집해 방송 연출에 사용했다.",
+          "back": "두 사람이 함께 찍힌 오래된 사진이다. 사진 뒤에 ‘사전 설문 첨부’ 표찰과 방송 편집용 표시가 붙어 있다.",
           "owner": "yura",
           "blockedFor": [],
           "requires": [],
@@ -1665,10 +1665,10 @@
         {
           "id": "yura_diary",
           "title": "오유라의 비밀 감정 일기",
-          "subtitle": "새 출발에 대한 기대와 불안이 적혀 있다.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "진심으로 도윤에게 마음이 생겼지만 그가 광고 계약으로 출연했다는 사실을 들었다.",
+          "back": "일기에 “도윤에게 마음이 생겼다”, “광고 계약으로 출연했다는 이야기를 들었다”는 문장이 적혀 있다.",
           "owner": "yura",
           "blockedFor": [],
           "requires": [],
@@ -1684,10 +1684,10 @@
         {
           "id": "yura_monitor_note",
           "title": "오유라의 방송 시차 메모",
-          "subtitle": "독백 방송의 시각을 손으로 적은 노트.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "실제 촬영 23:15가 23:28로 나갔다. 다른 인터뷰에도 같은 13분 편차를 적용해 보아야 한다.",
+          "back": "메모에 ‘촬영 23:15’, ‘방송 23:28’이 나란히 적혀 있다. 두 시각 옆에 ‘13분’이라고 적은 괄호가 있다.",
           "owner": "yura",
           "blockedFor": [],
           "requires": [],
@@ -1703,10 +1703,10 @@
         {
           "id": "nayeon_match_table",
           "title": "백나연의 커플 매칭 원표",
-          "subtitle": "시청자 투표와 추천 순위가 다른 표.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "광고비가 큰 출연 조합을 우선시키는 숨은 규칙이 있다.",
+          "back": "매칭 원표에 출연 조합, 광고비, 우선순위 열이 있다. 광고비가 큰 조합의 행 여러 곳에 우선 표시가 붙어 있다.",
           "owner": "nayeon",
           "blockedFor": [],
           "requires": [],
@@ -1722,10 +1722,10 @@
         {
           "id": "nayeon_usb_backup",
           "title": "백나연의 데이터베이스 백업 USB",
-          "subtitle": "촬영 원본과 송출 시각이 분리된 기록.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "숙소 인터뷰의 원본 파일 생성 시각은 23:17 이전이다. 방송 편성표에는 23:30으로 기록되어 있으며, 전송 로그의 지연 시간이 별도로 남아 있다.",
+          "back": "USB의 백업 목록에 숙소 인터뷰 파일이 있다. 생성 시각란은 23:17 이전, 첨부 편성표의 방송 시각란은 23:30으로 표시되어 있다. 별도 전송 로그에 지연 시간 항목이 있다.",
           "owner": "nayeon",
           "blockedFor": [],
           "requires": [],
@@ -1741,10 +1741,10 @@
         {
           "id": "nayeon_contract_copy",
           "title": "백나연의 데이터 이용 동의서",
-          "subtitle": "작은 글씨가 가득한 계약서.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "출연자의 의료·심리 설문을 광고 소재로 이용하는 데 적법한 동의가 없다는 허점이 드러난다.",
+          "back": "동의서에 ‘의료·심리 설문의 광고 소재 이용’ 조항이 있다. 해당 항목의 동의 체크칸과 서명칸은 비어 있다.",
           "owner": "nayeon",
           "blockedFor": [],
           "requires": [],
@@ -1760,10 +1760,10 @@
         {
           "id": "nayeon_heart_chip",
           "title": "백나연의 하트 투표 배지",
-          "subtitle": "전자 하트가 켜지는 소형 배지.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "감정 수치가 아니라 제작진이 지정한 화면 연출값을 표시한다. 누가 누구를 좋아하는지 확정할 수 없다.",
+          "back": "하트 모양 배지에 숫자 표시창이 있다. 뒷면 설명에는 ‘표시값: 제작진 콘솔 입력’이라고 적혀 있다.",
           "owner": "nayeon",
           "blockedFor": [],
           "requires": [],
@@ -1778,11 +1778,11 @@
         },
         {
           "id": "somi_scripted_dates",
-          "title": "한소미의 가짜 데이트 대본",
-          "subtitle": "도윤과 맞출 질문과 답변이 적혀 있다.",
+          "title": "한소미의 데이트 촬영 대본",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "두 사람의 감정이 아니라 광고 계약으로 만든 대화다. 소미는 이를 공개하기 어렵다.",
+          "back": "대본에 도윤과 소미의 대사가 번갈아 적혀 있다. 각 대사 옆에 광고 상품명과 노출 지시가 붙어 있다.",
           "owner": "somi",
           "blockedFor": [],
           "requires": [],
@@ -1798,10 +1798,10 @@
         {
           "id": "somi_rescue_net",
           "title": "한소미의 촬영용 안전 그물",
-          "subtitle": "해양 스포츠 연출에 쓰던 구난 소품.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "그물 가장자리의 여러 매듭 중 하나는 최근 새로 묶였다. 안전 표찰에는 해양 구조 훈련용으로 대여되었다는 날짜가 적혀 있다.",
+          "back": "그물 가장자리의 매듭 하나는 다른 매듭보다 실밥이 적고 팽팽하다. 표찰에 ‘해양 구조 훈련용 대여’와 날짜가 적혀 있다.",
           "owner": "somi",
           "blockedFor": [],
           "requires": [],
@@ -1817,10 +1817,10 @@
         {
           "id": "somi_family_letter",
           "title": "한소미의 가족 채무 편지",
-          "subtitle": "한소미가 방송 출연을 거절하기 어려운 이유.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "PD가 가족 채무를 이유로 소미를 압박했고, 도윤도 이를 전부 알지는 못했다.",
+          "back": "가족 채무 내역이 적힌 편지다. 동봉된 메모에는 “채무 문제를 생각해서 촬영 조건을 받아들여 달라”는 문장과 신원재의 이름이 있다.",
           "owner": "somi",
           "blockedFor": [],
           "requires": [],
@@ -1836,10 +1836,10 @@
         {
           "id": "somi_parting_note",
           "title": "한소미의 미발송 계약 파기 편지",
-          "subtitle": "사랑을 돈으로 거래하지 않겠다는 결심.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "23:30에 작성된 원본으로, PD가 사망했다는 사실을 아직 모른 채 썼다.",
+          "back": "‘계약을 파기하겠다’는 편지에 작성 시각 23:30이 적혀 있다. 발송 상태는 ‘미발송’이다.",
           "owner": "somi",
           "blockedFor": [],
           "requires": [],
@@ -1855,10 +1855,10 @@
         {
           "id": "island_welcome",
           "title": "첫날 호감도 공개 표",
-          "subtitle": "제작진 · 매칭 순서",
+          "subtitle": "",
           "type": "information",
           "clueKind": "timeline",
-          "back": "민재와 유라는 처음부터 높은 관련 점수였지만 제작진이 알고리즘 결과를 수정했다. 출연자가 전 연인 관계임을 제작진이 알고 있었음을 의미한다.",
+          "back": "첫날 표의 민재·유라 행에 높은 관련 점수가 적혀 있다. 그 위에 수정값이 덧붙어 있고 수정자 칸에는 ‘제작진’이 기재되어 있다.",
           "availableFromPhase": "investigation1",
           "visibility": "locked",
           "requires": [],
@@ -1877,7 +1877,7 @@
         {
           "id": "island_cast_contract",
           "title": "비밀 출연 계약",
-          "subtitle": "연프 · 가짜 커플 의혹",
+          "subtitle": "",
           "type": "information",
           "clueKind": "timeline",
           "back": "도윤과 소미에게 커플 연출을 요구하는 부속 합의서다. 관계가 깨지면 위약금이 발생한다는 조항과 홍보용 인터뷰 일정이 빼곡하게 기재되어 있다.",
@@ -1899,10 +1899,10 @@
         {
           "id": "island_tide_warn",
           "title": "해양 안전 경고서",
-          "subtitle": "관측실 · 위험한 수위",
+          "subtitle": "",
           "type": "information",
           "clueKind": "timeline",
-          "back": "방송용 조수 관측실이 위험해질 수 있어 야간 출입 금지가 권고되었다. 신원재 PD가 촬영 편의를 이유로 경고를 무시했다.",
+          "back": "안전 경고서에 ‘야간 조수 관측실 출입 금지 권고’가 적혀 있다. 처리란에는 ‘촬영 일정 유지’와 신원재의 결재 표시가 있다.",
           "availableFromPhase": "investigation1",
           "visibility": "locked",
           "requires": [],
@@ -1921,10 +1921,10 @@
         {
           "id": "island_sponsor_bill",
           "title": "감정 광고 정산표",
-          "subtitle": "후원금 · 시청률 조작",
+          "subtitle": "",
           "type": "information",
           "clueKind": "timeline",
-          "back": "연애 감정 데이터에 따라 노출 광고비가 다르게 책정된다. 단순 연애 프로그램이 아니라 사람의 사생활을 거래하는 시스템이다.",
+          "back": "정산표에 감정 반응 수치, 출연 조합, 광고 노출 단가가 각각 열로 나뉘어 있다. 행마다 다른 단가가 기재되어 있다.",
           "availableFromPhase": "investigation1",
           "visibility": "locked",
           "requires": [],
@@ -1943,10 +1943,10 @@
         {
           "id": "island_shoe_marks",
           "title": "관측실 주변 발자국",
-          "subtitle": "현장 · 두 사람의 그림자",
+          "subtitle": "",
           "type": "information",
           "clueKind": "timeline",
-          "back": "신원재 외에 가벼운 운동화 한 사람이 관측실에 함께 접근했다. 비슷한 신발은 여러 명이 갖고 있다.",
+          "back": "관측실 입구 쪽으로 서로 다른 두 종류의 신발 자국이 이어져 있다. 한쪽은 운동화 밑창 무늬다.",
           "availableFromPhase": "investigation1",
           "visibility": "locked",
           "requires": [],
@@ -1965,7 +1965,7 @@
         {
           "id": "island_edit_room",
           "title": "편집실 야간 출입표",
-          "subtitle": "방송실 · 무단 방문",
+          "subtitle": "",
           "type": "information",
           "clueKind": "timeline",
           "back": "23시 전후 구형 보조 출입카드가 사용됐다. 사용자의 이름이 삭제되었으나 카드 일련번호는 남아 있다.",
@@ -1986,11 +1986,11 @@
         },
         {
           "id": "island_camera_lag",
-          "title": "13분 늦은 방송 화면",
-          "subtitle": "방송 · 녹화와 송출의 어긋남",
+          "title": "인터뷰 송출 설정 화면",
+          "subtitle": "",
           "type": "information",
           "clueKind": "timeline",
-          "back": "제작진의 송출 서버는 사전 제작 인터뷰를 실제보다 13분 늦게 방송한다. 영상 속의 출연자가 표시 시각에 실제 그 장소에 있다는 보장은 없다.",
+          "back": "송출 서버 화면의 인터뷰 파일 항목에 ‘사전 제작’이 표시되어 있다. 지연 설정값은 ‘13분’이다.",
           "availableFromPhase": "investigation1",
           "visibility": "locked",
           "requires": [],
@@ -2009,10 +2009,10 @@
         {
           "id": "island_early_message",
           "title": "PD가 남긴 마지막 대화",
-          "subtitle": "관측실 · 원본 인터폰",
+          "subtitle": "",
           "type": "information",
           "clueKind": "timeline",
-          "back": "PD는 관측실로 누군가를 만나러 가며 “협상이 끝나면 파일을 돌려주겠다”고 말했다. 누구와 협상하는지는 지워졌다.",
+          "back": "신원재의 대화 기록에 “협상이 끝나면 파일을 돌려주겠다”는 문장이 남아 있다. 상대방 이름과 앞부분 대화는 지워져 있다.",
           "availableFromPhase": "investigation1",
           "visibility": "locked",
           "requires": [],
@@ -2031,10 +2031,10 @@
         {
           "id": "island_doctor_note",
           "title": "출연자 설문 동의서",
-          "subtitle": "비밀 · 상담 기록",
+          "subtitle": "",
           "type": "information",
           "clueKind": "timeline",
-          "back": "상담 내용을 방송 소재로 사용할 수 있다는 조항이 실제 동의 없이 삽입되었다. PD는 누군가의 가족 비밀을 이용해 압박하고 있었다.",
+          "back": "상담 설문 동의서에 ‘방송 소재로 사용 가능’이라는 문구가 덧붙어 있다. 그 조항의 동의 확인란은 비어 있다.",
           "availableFromPhase": "investigation1",
           "visibility": "locked",
           "requires": [],
@@ -2053,10 +2053,10 @@
         {
           "id": "island_drone_master",
           "title": "드론 원본 영상",
-          "subtitle": "서해안 · 편집 전 프레임",
+          "subtitle": "",
           "type": "information",
           "clueKind": "timeline",
-          "back": "편집되지 않은 영상의 관측실 입구에는 누군가가 잠깐 나타났다 사라진다. 화면 구석 시계와 방송 편성표에 적힌 시간이 일치하지 않는다.",
+          "back": "원본 영상에 관측실 입구의 작은 사람 그림자이 잠깐 나타났다 사라진다. 파일에는 드론 내부 시각이 표시되어 있고 별도의 방송 편성표가 첨부되어 있다.",
           "availableFromPhase": "investigation1",
           "visibility": "locked",
           "requires": [
@@ -2077,7 +2077,7 @@
         {
           "id": "island_net_box",
           "title": "보트 창고의 잠금된 캐비닛",
-          "subtitle": "선착장 · 구조 장비",
+          "subtitle": "",
           "type": "information",
           "clueKind": "timeline",
           "back": "촬영용 안전 그물과 예비 조끼가 보관되어 있다. 장비 체크리스트에는 마지막 반출 시간이 적혔지만 누가 확인했는지는 서명이 지워져 있다.",
@@ -2099,10 +2099,10 @@
         {
           "id": "island_sound_test",
           "title": "신원재의 마지막 보이스 테스트",
-          "subtitle": "방송 · “컷” 신호",
+          "subtitle": "",
           "type": "information",
           "clueKind": "timeline",
-          "back": "PD가 생전에 예약한 리허설 메시지가 사건 이후 송출되었다. 나중에 들렸다는 PD 목소리는 생존 증거가 아니다.",
+          "back": "리허설 음성 파일의 속성에 ‘예약 재생’이 표시되어 있다. 설정 기록과 실제 송출 기록이 각각 별도 행에 남아 있다.",
           "availableFromPhase": "investigation1",
           "visibility": "locked",
           "requires": [],
@@ -2121,10 +2121,10 @@
         {
           "id": "island_tide_gate",
           "title": "관측실 잠금 기록 원본",
-          "subtitle": "2차 조사 · 실제 잠금 시각",
+          "subtitle": "",
           "type": "information",
           "clueKind": "timeline",
-          "back": "프로그램의 조수 관측실 안전 차단이 23:17 무렵 작동했고, PD가 위험 상태에 빠졌다. 강제 개방 권한은 제작진과 옛 보조 편집 카드 소지자에게 있었다.",
+          "back": "관측실 로그에 ‘23:17 안전 차단 작동’이 기록되어 있다. 강제 개방 권한 목록에는 ‘제작진’, ‘구형 보조 편집 카드’가 적혀 있다.",
           "availableFromPhase": "investigation2",
           "visibility": "hidden",
           "requires": [
@@ -2145,10 +2145,10 @@
         {
           "id": "island_duplicate_badge",
           "title": "구형 편집 출입카드 사용 내역",
-          "subtitle": "2차 조사 · 카드 ID 대조",
+          "subtitle": "",
           "type": "information",
           "clueKind": "timeline",
-          "back": "편집실 보조 출입카드 사용 로그에는 23시대의 짧은 출입 기록이 있다. 사용 카드 번호는 낡은 카드의 표면 마모 때문에 끝자리 한 개가 흐릿하다.",
+          "back": "로그에 23시대의 보조 카드 출입 기록이 남아 있다. 첨부된 카드 표면 사진에서는 일련번호 끝자리 한 개가 마모되어 읽기 어렵다.",
           "availableFromPhase": "investigation2",
           "visibility": "locked",
           "requires": [
@@ -2168,11 +2168,11 @@
         },
         {
           "id": "island_tide_autopsy",
-          "title": "관측실 감식 종합표",
-          "subtitle": "2차 조사 · 단순 사고 아님",
+          "title": "관측실 현장 감식표",
+          "subtitle": "",
           "type": "information",
           "clueKind": "timeline",
-          "back": "신원재는 외부 공격보다 위험이 예견된 관측실에 고립되어 사망했다. 현장 경보를 무시하거나 구조 신호를 차단하지 않았다면 결과가 달라질 수 있었다.",
+          "back": "현장 감식표에 관측실 안쪽의 신원재 발견 위치, 문 잠금 상태, 경보 패널 상태가 기록되어 있다. 첨부 사진에는 침수된 바닥과 잠긴 출입문이 보인다.",
           "availableFromPhase": "investigation2",
           "visibility": "hidden",
           "requires": [],
@@ -2191,10 +2191,10 @@
         {
           "id": "island_last_intercom",
           "title": "삭제된 인터폰 뒷부분",
-          "subtitle": "2차 조사 · 마지막 요청",
+          "subtitle": "",
           "type": "information",
           "clueKind": "timeline",
-          "back": "“약속했잖아, 편집 원본을 주겠다고. 내보내 줘.”라고 PD가 말한다. 편집 경험이 있는 사람이 이 내용을 숨기고 있었음을 시사한다.",
+          "back": "복구된 녹음에서 신원재가 “약속했잖아, 편집 원본을 주겠다고. 내보내 줘.”라고 말한다.",
           "availableFromPhase": "investigation2",
           "visibility": "hidden",
           "requires": [
@@ -2215,10 +2215,10 @@
         {
           "id": "island_interview_raw",
           "title": "숙소 인터뷰 촬영 원본",
-          "subtitle": "2차 조사 · 하린 23:17?",
+          "subtitle": "",
           "type": "information",
           "clueKind": "timeline",
-          "back": "편집된 영상에는 23:30이라는 방송 시각이 표시되어 있다. 원본 메타데이터에는 그보다 앞선 촬영 시각과 별도 편집 시각이 남아 있다.",
+          "back": "방송 영상에는 23:30이 표시되어 있다. 원본 파일 속성에는 촬영 시각과 편집 시각이 서로 다른 항목으로 남아 있으며 촬영 시각은 방송 표시보다 이르다.",
           "availableFromPhase": "investigation2",
           "visibility": "hidden",
           "requires": [
@@ -2239,10 +2239,10 @@
         {
           "id": "island_relay_key",
           "title": "송출 중계실 출입 표식",
-          "subtitle": "2차 조사 · 봉인실 개방용",
+          "subtitle": "",
           "type": "information",
           "clueKind": "timeline",
-          "back": "비상 송출 중계실의 잠금을 해제할 수 있는 출입 토큰이 들어 있다. 관계자의 편집 기록을 확인할 수 있게 된다.",
+          "back": "작은 케이스 안에 출입 토큰이 있다. 표면에 ‘비상 송출 중계실’이라고 새겨져 있다.",
           "availableFromPhase": "investigation2",
           "visibility": "locked",
           "requires": [],
@@ -2265,10 +2265,10 @@
         {
           "id": "island_sponsor_real",
           "title": "제작진의 심리 프로파일",
-          "subtitle": "2차 조사 · 출연자의 약점",
+          "subtitle": "",
           "type": "information",
           "clueKind": "timeline",
-          "back": "신원재는 모든 출연자의 비밀을 시청률 소재로 만들 계획이었다. 누군가의 가족 상담 기록을 다음 생방송의 반전으로 공개하려 했다.",
+          "back": "프로파일에 출연자들의 설문 내용과 비공개 가족 상담 기록이 묶여 있다. 다음 생방송 구성표의 ‘반전 공개’ 칸에 상담 기록의 문서 번호가 적혀 있다.",
           "availableFromPhase": "investigation2",
           "visibility": "hidden",
           "requires": [],
@@ -2287,10 +2287,10 @@
         {
           "id": "island_tide_recheck",
           "title": "제작진의 구조 호출 표",
-          "subtitle": "2차 조사 · 없었던 구조 요청",
+          "subtitle": "",
           "type": "information",
           "clueKind": "timeline",
-          "back": "현장 경보가 발생한 뒤 공식 구조 요청이 발송되지 않았다. 경보를 확인할 수 있었던 사람과 실제 섬 출입 기록을 비교해야 한다.",
+          "back": "현장 경보 수신 항목에는 기록이 있다. 그 뒤의 공식 구조 요청 발신 목록은 비어 있다.",
           "availableFromPhase": "investigation2",
           "visibility": "locked",
           "requires": [],
@@ -2309,10 +2309,10 @@
         {
           "id": "island_ribbon_thread",
           "title": "발자국 옆 보라색 섬유",
-          "subtitle": "2차 조사 · 소지품 대조",
+          "subtitle": "",
           "type": "information",
           "clueKind": "timeline",
-          "back": "관측실 구형 문 근처의 보라색 실밥이 하린의 머리끈 염색 성분과 비슷하다. 단독 증거는 아니지만 인터폰 기록과 겹친다.",
+          "back": "관측실 구형 문 근처에 보라색 실밥이 걸려 있다. 바로 옆 바닥에는 신발 자국 일부가 남아 있다.",
           "availableFromPhase": "investigation2",
           "visibility": "hidden",
           "requires": [],
@@ -2331,10 +2331,10 @@
         {
           "id": "island_truth_contract",
           "title": "프로그램 비밀 원본 계약",
-          "subtitle": "2차 조사 · 연프가 아닌 사회 실험",
+          "subtitle": "",
           "type": "information",
           "clueKind": "timeline",
-          "back": "감정 반응을 수집하고 불안한 관계를 의도적으로 배치하여 광고 수익을 높이는 프로젝트였다. 출연자의 과거 의료 정보가 승인 없이 이용됐다.",
+          "back": "계약서에 ‘감정 반응 수집’, ‘출연 관계 배치’, ‘광고 수익’ 항목이 있다. 부록에 의료 정보 목록이 붙어 있고 이용 동의 확인란은 비어 있다.",
           "availableFromPhase": "investigation2",
           "visibility": "hidden",
           "requires": [],
@@ -2353,10 +2353,10 @@
         {
           "id": "island_final_cut",
           "title": "마지막 편집 타임라인",
-          "subtitle": "2차 조사 · 네 자료의 충돌",
+          "subtitle": "",
           "type": "information",
           "clueKind": "timeline",
-          "back": "23:04 관측실 동행 → 23:17 경보 → 13분 지연된 인터뷰 → 예약 PD 음성이라는 순서로 합쳐야 동선을 설명할 수 있다. 누가 보조 카드와 보라색 실밥을 가졌는지 판단하라.",
+          "back": "편집 화면에 ‘23:04 관측실’, ‘23:17 경보’, ‘인터뷰 지연 13분’, ‘PD 음성 예약’ 트랙이 나란히 표시되어 있다. 각 트랙에 원본 파일 번호가 붙어 있다.",
           "availableFromPhase": "investigation2",
           "visibility": "hidden",
           "requires": [
@@ -2378,10 +2378,10 @@
         {
           "id": "island_escape_beacon",
           "title": "구조 신호기 작동 확인서",
-          "subtitle": "2차 조사 · 섬 탈출 조건",
+          "subtitle": "",
           "type": "information",
           "clueKind": "timeline",
-          "back": "폭풍이 잦아들면 신호기를 켜 구조선을 호출할 수 있다. 신호 장치는 선착장 창고에 보관돼 있고 출연자에게 열쇠가 필요하다.",
+          "back": "작동 확인서의 신호기 점검란에 확인 표시가 있다. 사용 안내에는 ‘폭풍이 잦아든 뒤 작동’, 보관 장소에는 ‘선착장 창고’, 출입 방식에는 ‘열쇠’라고 적혀 있다.",
           "availableFromPhase": "investigation2",
           "visibility": "locked",
           "requires": [],

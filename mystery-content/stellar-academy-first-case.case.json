@@ -149,22 +149,22 @@
           {
             "id": "seoha_folded_map",
             "name": "접는 입체 약도",
-            "description": "복도를 겹쳐야 보이는 지하 경로."
+            "description": "접을 수 있는 반투명 약도다. 각 면에 통로의 일부가 그려져 있고 가장자리에는 겹침 표시가 있다. 한 면만 펼치면 통로 선이 중간에서 끊긴다."
           },
           {
             "id": "seoha_puzzle_ring",
             "name": "암호 고리",
-            "description": "본인이 만든 원통 모양 퍼즐."
+            "description": "고리에 숫자가 새겨져 있다. 종이에 찍으면 숫자가 좌우로 뒤집혀 나타난다. 안쪽 금속에 마모 자국이 있다."
           },
           {
             "id": "seoha_safe_marker",
             "name": "미로 표시 펜",
-            "description": "통로 바닥에 화살표를 그리는 펜."
+            "description": "표시 펜과 접힌 메모가 함께 있다. 메모의 별표 옆에 ‘지하 전기실’이 적혀 있고 아래에는 ‘연호’라는 이름이 있다."
           },
           {
             "id": "seoha_rescue_token",
             "name": "퍼즐 구조 토큰",
-            "description": "학교가 지급한 안전 확인 장치."
+            "description": "구조 토큰에 방패 모양과 ‘보호’라는 글자가 새겨져 있다. 뒷면에 장착 홈이 있다."
           }
         ],
         "culprit": false,
@@ -215,22 +215,22 @@
           {
             "id": "taewon_mirror_box",
             "name": "거울 마술 상자",
-            "description": "안에서 소리가 울리는 공연 소품."
+            "description": "상자 안에 여러 각도로 기울어진 거울이 달려 있다. 뚜껑을 움직이면 내부 공간이 서로 다른 방향으로 비친다."
           },
           {
             "id": "taewon_stage_rope",
             "name": "무대용 안전 로프",
-            "description": "탈착할 수 있는 공연용 고리 줄."
+            "description": "무대용 안전 로프다. 양 끝에 고정 고리가 달려 있고 중간에 여러 매듭이 묶여 있다."
           },
           {
             "id": "taewon_voice_filter",
             "name": "마술용 음성 필터",
-            "description": "목소리 변조용 저전력 공연 기기."
+            "description": "음성 필터에 음높이와 음색 조절 기능이 있다. 별도의 장비 대여 기록표가 함께 들어 있다."
           },
           {
             "id": "taewon_rented_prop",
             "name": "반환받지 못한 장비 대여표",
-            "description": "빌려준 장치가 적힌 종이."
+            "description": "대여표에 ‘22:30 / 소품 케이스 / 수령인 가빈’이 적혀 있다. 반환 예정 시각과 반환 체크 표시는 서로 다른 색의 펜으로 쓰여 있다."
           }
         ],
         "culprit": false,
@@ -281,22 +281,22 @@
           {
             "id": "yeonju_star_almanac",
             "name": "종이 별자리 연감",
-            "description": "천문 관측 시각이 기록된 달력."
+            "description": "종이 연감에 날짜·시각별 별자리 위치가 그려져 있다. 01:10 항목 옆에 손으로 표시한 흔적이 있다."
           },
           {
             "id": "yeonju_anonymous_chat",
             "name": "연호와의 익명 채팅",
-            "description": "공개하지 않은 비밀 온라인 관계."
+            "description": "연호와의 채팅에 ‘비밀 연구관’, ‘탈출 길’, ‘학원 실험’이라는 단어가 반복된다. 여러 통로 위치를 주고받은 메시지가 남아 있다."
           },
           {
             "id": "yeonju_micro_scope",
             "name": "휴대 광학 렌즈",
-            "description": "조명과 별자리 투사 장치를 구분한다."
+            "description": "휴대 렌즈와 관측 메모가 함께 있다. 메모에는 “화면 구석에 예약 재생 표시가 보인다”라고 적혀 있다."
           },
           {
             "id": "yeonju_sky_photo",
             "name": "하늘의 장시간 노출 사진",
-            "description": "원본 촬영 시각이 있는 사진."
+            "description": "별의 이동 궤적이 찍힌 장시간 노출 사진이다. 파일의 촬영 시각은 00:42경으로 표시되어 있다."
           }
         ],
         "culprit": false,
@@ -347,22 +347,22 @@
           {
             "id": "jinwoo_rescue_helmet",
             "name": "개인 구조 헬멧",
-            "description": "현장 안전을 위해 직접 만든 장비."
+            "description": "완충재와 턱끈이 달린 구조 헬멧이다. 안쪽에 ‘충격 보호용’ 표찰이 붙어 있다."
           },
           {
             "id": "jinwoo_floor_plan",
             "name": "안전 훈련 구역 도면",
-            "description": "지하 통로의 존재가 지워진 도면."
+            "description": "안전 훈련 구역 도면의 지하 부분에 이름 없는 빈 칸이 있다. 빈 칸의 한쪽 벽에는 통로 선이 닿아 있다."
           },
           {
             "id": "jinwoo_failure_report",
             "name": "과거 구조 실패 기록",
-            "description": "본인이 감추고 싶은 판단 기록."
+            "description": "모의 구조 훈련 보고서에 한 사람을 먼저 대피시킨 순서가 적혀 있다. 평가란에는 ‘판단을 보류한 이유를 설명하지 못함’이라는 감독관 메모가 있다."
           },
           {
             "id": "jinwoo_emergency_radio",
             "name": "단거리 비상 무전기",
-            "description": "건물 안 통신은 되지만 외부로는 나가지 않는다."
+            "description": "단거리 무전기다. 메뉴에 송신·수신 기록 목록과 구조 요청 채널이 있다."
           }
         ],
         "culprit": false,
@@ -413,22 +413,22 @@
           {
             "id": "rion_cipher_ledger",
             "name": "지하 암호 해독 수첩",
-            "description": "낡은 건물 출입 암호를 해석했다."
+            "description": "수첩에 지하 냉각 통로 기호와 상층 출입문 기호가 나란히 적혀 있다. 각 기호 아래에 고어와 여러 번 고친 해독 메모가 있다."
           },
           {
             "id": "rion_patron_letter",
             "name": "익명의 후원자 편지",
-            "description": "학교 운영자와의 개인적 관계."
+            "description": "발신인 이름이 없는 후원 편지다. 본문에 ‘재능별 실험군’, ‘외부 연락 제한’, ‘폐쇄 환경 유지’라는 문구가 있다."
           },
           {
             "id": "rion_golden_dictionary",
             "name": "금빛 어휘 사전",
-            "description": "알 수 없는 표식을 언어로 바꾼 사전."
+            "description": "금빛 표지의 사전이다. 몇몇 단어에 표시가 있고 여백에 “별이 사라지는 층의 왼쪽 길”이라고 적혀 있다."
           },
           {
             "id": "rion_sealed_note",
             "name": "연호의 암호 쪽지",
-            "description": "죽은 학생이 남긴 마지막 부탁."
+            "description": "연호의 이름이 적힌 쪽지다. “그 말은 믿기 어렵다”라는 문장 뒤에 고어 암호가 이어진다. 암호 아래에는 여러 번 눌러 쓴 밑줄이 있다."
           }
         ],
         "culprit": false,
@@ -484,23 +484,23 @@
         "inventory": [
           {
             "id": "gabin_voice_script",
-            "name": "연호 음성 모사 대본",
-            "description": "방송용 말투와 대사 강세가 적힌 메모."
+            "name": "연호 배역 대본",
+            "description": "공연 대본의 연호 배역 대사에 고어 표현이 섞여 있다. 단어 위에는 강세 표시, 문장 사이에는 숨을 멈추는 표시가 적혀 있다."
           },
           {
             "id": "gabin_stage_dart",
             "name": "연극용 그림자 화살",
-            "description": "위험하지 않은 무대 소품처럼 보인다."
+            "description": "연극 소품 케이스 안에 그림자 화살이 들어 있다. 케이스에 ‘무대용’ 표찰이 붙어 있다."
           },
           {
             "id": "gabin_family_badge",
-            "name": "운영자 가족 출입 배지",
-            "description": "학생에게는 불필요한 고급 출입 권한."
+            "name": "관리실 출입 배지",
+            "description": "배지에 ‘운영자 가족’과 ‘플라네타륨 관리실’이 적혀 있다. 뒷면에는 배지 번호가 인쇄되어 있다."
           },
           {
             "id": "gabin_red_fiber",
             "name": "찢어진 무대 의상",
-            "description": "깊은 붉은색 천 조각."
+            "description": "붉은 무대 의상의 한쪽 끝이 찢어져 있다. 찢어진 가장자리에 가는 붉은 실밥이 여러 가닥 남아 있다."
           }
         ],
         "culprit": true,
@@ -1088,7 +1088,7 @@
         {
           "id": "seoha_folded_map",
           "title": "남서하의 접는 입체 약도",
-          "subtitle": "복도를 겹쳐야 보이는 지하 경로.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
           "owner": "seoha",
@@ -1102,12 +1102,12 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "시설이 탈출 불가능해 보이지만 일부 통로는 위치 정보를 겹치면 나타난다."
+          "back": "접을 수 있는 반투명 약도다. 각 면에 통로의 일부가 그려져 있고 가장자리에는 겹침 표시가 있다. 한 면만 펼치면 통로 선이 중간에서 끊긴다."
         },
         {
           "id": "seoha_puzzle_ring",
           "title": "남서하의 암호 고리",
-          "subtitle": "본인이 만든 원통 모양 퍼즐.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
           "owner": "seoha",
@@ -1121,12 +1121,12 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "관측실 봉인 번호와 비슷한 숫자가 새겨져 있다. 종이에 찍어 보면 숫자의 방향이 정반대로 나타나며, 고리 안쪽에는 최근 손댄 듯한 금속 마모가 있다."
+          "back": "고리에 숫자가 새겨져 있다. 종이에 찍으면 숫자가 좌우로 뒤집혀 나타난다. 안쪽 금속에 마모 자국이 있다."
         },
         {
           "id": "seoha_safe_marker",
           "title": "남서하의 미로 표시 펜",
-          "subtitle": "통로 바닥에 화살표를 그리는 펜.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
           "owner": "seoha",
@@ -1140,12 +1140,12 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "연호가 마지막으로 표시한 별표 근처에 지하 전기실 위치가 적혀 있다."
+          "back": "표시 펜과 접힌 메모가 함께 있다. 메모의 별표 옆에 ‘지하 전기실’이 적혀 있고 아래에는 ‘연호’라는 이름이 있다."
         },
         {
           "id": "seoha_rescue_token",
           "title": "남서하의 퍼즐 구조 토큰",
-          "subtitle": "학교가 지급한 안전 확인 장치.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
           "owner": "seoha",
@@ -1159,12 +1159,12 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "행동 단계에서 한 참가자의 위험을 막는 보호 도구로 쓸 수 있다."
+          "back": "구조 토큰에 방패 모양과 ‘보호’라는 글자가 새겨져 있다. 뒷면에 장착 홈이 있다."
         },
         {
           "id": "taewon_mirror_box",
           "title": "이태원의 거울 마술 상자",
-          "subtitle": "안에서 소리가 울리는 공연 소품.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
           "owner": "taewon",
@@ -1178,12 +1178,12 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "여러 각도에서 공간이 달라 보이는 착시용 도구다. 시신을 운반하는 데 사용되지 않았다."
+          "back": "상자 안에 여러 각도로 기울어진 거울이 달려 있다. 뚜껑을 움직이면 내부 공간이 서로 다른 방향으로 비친다."
         },
         {
           "id": "taewon_stage_rope",
           "title": "이태원의 무대용 안전 로프",
-          "subtitle": "탈착할 수 있는 공연용 고리 줄.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
           "owner": "taewon",
@@ -1197,12 +1197,12 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "행동 단계에서 일시적으로 한 참가자의 움직임을 제한하는 서사적 소품이다."
+          "back": "무대용 안전 로프다. 양 끝에 고정 고리가 달려 있고 중간에 여러 매듭이 묶여 있다."
         },
         {
           "id": "taewon_voice_filter",
           "title": "이태원의 마술용 음성 필터",
-          "subtitle": "목소리 변조용 저전력 공연 기기.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
           "owner": "taewon",
@@ -1216,12 +1216,12 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "연호의 목소리를 흉내 내기 어렵지는 않지만 장비는 태원이 소지 중이었다. 대여 기록이 따로 존재한다."
+          "back": "음성 필터에 음높이와 음색 조절 기능이 있다. 별도의 장비 대여 기록표가 함께 들어 있다."
         },
         {
           "id": "taewon_rented_prop",
           "title": "이태원의 반환받지 못한 장비 대여표",
-          "subtitle": "빌려준 장치가 적힌 종이.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
           "owner": "taewon",
@@ -1235,12 +1235,12 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "22:30 소품 케이스를 가빈에게 빌려줬다는 대여 기록이다. 반환 예정 시간과 실제 반환 체크 표시가 서로 다른 색의 펜으로 적혀 있다."
+          "back": "대여표에 ‘22:30 / 소품 케이스 / 수령인 가빈’이 적혀 있다. 반환 예정 시각과 반환 체크 표시는 서로 다른 색의 펜으로 쓰여 있다."
         },
         {
           "id": "yeonju_star_almanac",
           "title": "천연주의 종이 별자리 연감",
-          "subtitle": "천문 관측 시각이 기록된 달력.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
           "owner": "yeonju",
@@ -1254,12 +1254,12 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "01:10 화면에 나온 별자리는 실제 01:10 하늘과 맞지 않아 미리 만든 영상임을 보여 준다."
+          "back": "종이 연감에 날짜·시각별 별자리 위치가 그려져 있다. 01:10 항목 옆에 손으로 표시한 흔적이 있다."
         },
         {
           "id": "yeonju_anonymous_chat",
           "title": "천연주의 연호와의 익명 채팅",
-          "subtitle": "공개하지 않은 비밀 온라인 관계.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
           "owner": "yeonju",
@@ -1273,12 +1273,12 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "둘은 비밀 연구관의 탈출 길과 학원의 거짓 실험을 함께 조사했다."
+          "back": "연호와의 채팅에 ‘비밀 연구관’, ‘탈출 길’, ‘학원 실험’이라는 단어가 반복된다. 여러 통로 위치를 주고받은 메시지가 남아 있다."
         },
         {
           "id": "yeonju_micro_scope",
           "title": "천연주의 휴대 광학 렌즈",
-          "subtitle": "조명과 별자리 투사 장치를 구분한다.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
           "owner": "yeonju",
@@ -1292,12 +1292,12 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "관측실 화면은 실제 천체 영상이 아니라 예약된 시뮬레이션 영상이었다."
+          "back": "휴대 렌즈와 관측 메모가 함께 있다. 메모에는 “화면 구석에 예약 재생 표시가 보인다”라고 적혀 있다."
         },
         {
           "id": "yeonju_sky_photo",
           "title": "천연주의 하늘의 장시간 노출 사진",
-          "subtitle": "원본 촬영 시각이 있는 사진.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
           "owner": "yeonju",
@@ -1311,12 +1311,12 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "00:42경 별자리 배치와 관측실 녹화본의 하늘을 비교할 수 있다."
+          "back": "별의 이동 궤적이 찍힌 장시간 노출 사진이다. 파일의 촬영 시각은 00:42경으로 표시되어 있다."
         },
         {
           "id": "jinwoo_rescue_helmet",
           "title": "백진우의 개인 구조 헬멧",
-          "subtitle": "현장 안전을 위해 직접 만든 장비.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
           "owner": "jinwoo",
@@ -1330,12 +1330,12 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "행동 단계에서 한 사람의 생존을 보호하는 데 활용할 수 있다."
+          "back": "완충재와 턱끈이 달린 구조 헬멧이다. 안쪽에 ‘충격 보호용’ 표찰이 붙어 있다."
         },
         {
           "id": "jinwoo_floor_plan",
           "title": "백진우의 안전 훈련 구역 도면",
-          "subtitle": "지하 통로의 존재가 지워진 도면.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
           "owner": "jinwoo",
@@ -1349,12 +1349,12 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "기존 도면의 빈 칸이 실제 봉인된 지하 출구에 대응한다."
+          "back": "안전 훈련 구역 도면의 지하 부분에 이름 없는 빈 칸이 있다. 빈 칸의 한쪽 벽에는 통로 선이 닿아 있다."
         },
         {
           "id": "jinwoo_failure_report",
           "title": "백진우의 과거 구조 실패 기록",
-          "subtitle": "본인이 감추고 싶은 판단 기록.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
           "owner": "jinwoo",
@@ -1368,12 +1368,12 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "모의 구조 훈련에서 한 사람을 먼저 대피시키기로 판단한 기록이 있다. 평가서에는 ‘판단을 보류한 이유를 설명하지 못함’이라는 감독관 메모가 붙어 있다."
+          "back": "모의 구조 훈련 보고서에 한 사람을 먼저 대피시킨 순서가 적혀 있다. 평가란에는 ‘판단을 보류한 이유를 설명하지 못함’이라는 감독관 메모가 있다."
         },
         {
           "id": "jinwoo_emergency_radio",
           "title": "백진우의 단거리 비상 무전기",
-          "subtitle": "건물 안 통신은 되지만 외부로는 나가지 않는다.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
           "owner": "jinwoo",
@@ -1387,12 +1387,12 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "다른 학생이 구조 요청을 보냈는지 확인할 수 있다."
+          "back": "단거리 무전기다. 메뉴에 송신·수신 기록 목록과 구조 요청 채널이 있다."
         },
         {
           "id": "rion_cipher_ledger",
           "title": "차리온의 지하 암호 해독 수첩",
-          "subtitle": "낡은 건물 출입 암호를 해석했다.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
           "owner": "rion",
@@ -1406,12 +1406,12 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "학원의 실제 탈출문은 지하 냉각 통로와 이어지며 상층 출입문은 미끼라는 뜻이 담겨 있다."
+          "back": "수첩에 지하 냉각 통로 기호와 상층 출입문 기호가 나란히 적혀 있다. 각 기호 아래에 고어와 여러 번 고친 해독 메모가 있다."
         },
         {
           "id": "rion_patron_letter",
           "title": "차리온의 익명의 후원자 편지",
-          "subtitle": "학교 운영자와의 개인적 관계.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
           "owner": "rion",
@@ -1425,12 +1425,12 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "운영자가 학생들을 재능 실험으로 분류하고 학교를 폐쇄 실험실로 이용했다는 암시가 있다."
+          "back": "발신인 이름이 없는 후원 편지다. 본문에 ‘재능별 실험군’, ‘외부 연락 제한’, ‘폐쇄 환경 유지’라는 문구가 있다."
         },
         {
           "id": "rion_golden_dictionary",
           "title": "차리온의 금빛 어휘 사전",
-          "subtitle": "알 수 없는 표식을 언어로 바꾼 사전.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
           "owner": "rion",
@@ -1444,12 +1444,12 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "“별이 사라지는 층의 왼쪽 길”이라는 탈출 단서가 해독된다."
+          "back": "금빛 표지의 사전이다. 몇몇 단어에 표시가 있고 여백에 “별이 사라지는 층의 왼쪽 길”이라고 적혀 있다."
         },
         {
           "id": "rion_sealed_note",
           "title": "차리온의 연호의 암호 쪽지",
-          "subtitle": "죽은 학생이 남긴 마지막 부탁.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
           "owner": "rion",
@@ -1463,12 +1463,12 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "연호는 특정 동료가 고의로 대화를 오도하고 있음을 의심했고 그 이름을 암호로 숨겼다."
+          "back": "연호의 이름이 적힌 쪽지다. “그 말은 믿기 어렵다”라는 문장 뒤에 고어 암호가 이어진다. 암호 아래에는 여러 번 눌러 쓴 밑줄이 있다."
         },
         {
           "id": "gabin_voice_script",
-          "title": "유가빈의 연호 음성 모사 대본",
-          "subtitle": "방송용 말투와 대사 강세가 적힌 메모.",
+          "title": "유가빈의 연호 배역 대본",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
           "owner": "gabin",
@@ -1482,12 +1482,12 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "연호가 실제로 쓰지 않는 문장을 가빈이 공연용 대본에 적어 놓았다. 01:10 방송의 어색한 표현과 일치한다."
+          "back": "공연 대본의 연호 배역 대사에 고어 표현이 섞여 있다. 단어 위에는 강세 표시, 문장 사이에는 숨을 멈추는 표시가 적혀 있다."
         },
         {
           "id": "gabin_stage_dart",
           "title": "유가빈의 연극용 그림자 화살",
-          "subtitle": "위험하지 않은 무대 소품처럼 보인다.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
           "owner": "gabin",
@@ -1501,12 +1501,12 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "행동 단계에서만 허구적 추가 사망 효과를 주는 아이템. 현재 연호의 살인 수법과는 별개의 연출 도구다."
+          "back": "연극 소품 케이스 안에 그림자 화살이 들어 있다. 케이스에 ‘무대용’ 표찰이 붙어 있다."
         },
         {
           "id": "gabin_family_badge",
-          "title": "유가빈의 운영자 가족 출입 배지",
-          "subtitle": "학생에게는 불필요한 고급 출입 권한.",
+          "title": "유가빈의 관리실 출입 배지",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
           "owner": "gabin",
@@ -1520,12 +1520,12 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "학원 운영자와 가빈이 가족 관계임을 암시한다. 플라네타륨 관리실 접근 기록이 남아 있다."
+          "back": "배지에 ‘운영자 가족’과 ‘플라네타륨 관리실’이 적혀 있다. 뒷면에는 배지 번호가 인쇄되어 있다."
         },
         {
           "id": "gabin_red_fiber",
           "title": "유가빈의 찢어진 무대 의상",
-          "subtitle": "깊은 붉은색 천 조각.",
+          "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
           "owner": "gabin",
@@ -1539,13 +1539,13 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "무대 의상의 붉은 섬유는 플라네타륨 출입문 뒤에 남은 천 조각과 소재가 비슷하다. 같은 소재를 사용한 공연 의상은 여러 벌이다."
+          "back": "붉은 무대 의상의 한쪽 끝이 찢어져 있다. 찢어진 가장자리에 가는 붉은 실밥이 여러 가닥 남아 있다."
         },
         {
           "id": "academy_first_body",
           "title": "플라네타륨 첫 시신 기록",
-          "subtitle": "관측관 · 01:12",
-          "back": "연호는 플라네타륨 안쪽에서 숨진 채 발견됐다. 무대 주변엔 간단한 소품 흔적과 별빛 영상이 남아 있다. 추정 사망 시각과 방송 시각은 아직 구별되지 않는다.",
+          "subtitle": "",
+          "back": "발견 기록에 ‘01:12, 플라네타륨 안쪽, 장연호’라고 적혀 있다. 현장 사진에 쓰러진 연호와 무대 소품, 켜진 별빛 투사 화면이 보인다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -1567,8 +1567,8 @@
         {
           "id": "academy_fake_sky",
           "title": "01:10 천체 영상의 별자리",
-          "subtitle": "시간표 · 실제 하늘과 다름",
-          "back": "방송에서 재생된 플라네타륨 별 위치는 실제 01:10 하늘과 맞지 않는다. 연주의 연감과 대조하면 녹화 영상임을 알 수 있다.",
+          "subtitle": "",
+          "back": "01:10 표시가 있는 플라네타륨 영상이다. 화면에 여러 별의 위치와 투사기 화면 가장자리가 찍혀 있다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -1590,8 +1590,8 @@
         {
           "id": "academy_voice_witness",
           "title": "연호의 마지막 목소리",
-          "subtitle": "01:10 · 어색한 발음",
-          "back": "모두가 들은 연호의 대사에는 평소 사용하지 않던 고어 표현이 있다. 누구라도 따라 할 수 있는 짧은 문장이지만 발음과 말버릇이 일치하지 않는다.",
+          "subtitle": "",
+          "back": "녹음에 연호의 목소리로 들리는 짧은 문장이 남아 있다. 대사에는 고어 표현이 있고 특정 단어 앞뒤에서 숨소리가 끊긴다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -1613,8 +1613,8 @@
         {
           "id": "academy_corridor_log",
           "title": "관측관 출입 기록",
-          "subtitle": "00:38–00:45 · 혼자였나?",
-          "back": "연호와 익명 고급 배지 소지자가 00:38 무렵 같은 구역에 들어갔다. 00:45에는 고급 배지만 빠져나왔다.",
+          "subtitle": "",
+          "back": "00:38 출입 기록에 ‘장연호’와 고급 배지 번호가 같은 구역의 입장자로 표시된다. 00:45 퇴장 기록에는 고급 배지 번호만 있다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -1636,8 +1636,8 @@
         {
           "id": "academy_stage_loan",
           "title": "마술 장비 대여표",
-          "subtitle": "22:30 · 목소리 재생 소품",
-          "back": "공연용 음성 장치의 대여표에는 22:30에 가빈이 수령한 서명이 있다. 반납란은 비어 있으며 장치의 마지막 재생 로그는 따로 보관돼 있다.",
+          "subtitle": "",
+          "back": "공연용 음성 장치 대여표에 ‘22:30 수령, 가빈’이라는 서명이 있다. 반납란은 비어 있고 재생 로그의 보관 번호가 적혀 있다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -1659,8 +1659,8 @@
         {
           "id": "academy_old_tunnel",
           "title": "학교 구형 탈출 약도",
-          "subtitle": "지하 · 통로의 비밀",
-          "back": "폐쇄된 학원에는 지하 냉각 통로가 있고, 현재 출입문은 기존 통로를 가리기 위한 장식일 수 있다.",
+          "subtitle": "",
+          "back": "구형 약도에 지하 냉각 통로가 그려져 있다. 상층 출입문 위치는 별도의 판으로 덧붙어 있고 일부 통로 선을 가리고 있다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -1682,8 +1682,8 @@
         {
           "id": "academy_message",
           "title": "연호의 봉인 쪽지",
-          "subtitle": "00:38 · 마지막 경고",
-          "back": "연호는 “내부자의 목소리가 거짓 진술을 만들 거야”라고 적었다. 누가 내부자인지는 고어 암호로 쓰여 있다.",
+          "subtitle": "",
+          "back": "쪽지에 “내부자의 목소리가 거짓 진술을 만들 거야”라고 적혀 있다. 그 아래에는 고어로 쓴 암호가 이어진다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -1705,8 +1705,8 @@
         {
           "id": "academy_support_funds",
           "title": "영재 선발 실험 예산표",
-          "subtitle": "장학생 · 감금 실험",
-          "back": "이 학교는 재능 향상보다 폐쇄된 환경에서 학생들의 의사결정을 관찰하는 실험을 위해 만들어졌다.",
+          "subtitle": "",
+          "back": "예산표에 ‘폐쇄 환경 유지’, ‘학생 의사결정 관찰’, ‘기록 장비’ 항목과 지출액이 기재되어 있다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -1728,8 +1728,8 @@
         {
           "id": "academy_red_thread",
           "title": "관측실 문틈의 붉은 섬유",
-          "subtitle": "현장 · 소품 의상",
-          "back": "출입구에 붉은 무대 의상 실밥이 끼어 있다. 가빈이 찢어진 의상을 갖고 있지만 다른 연출 소품도 비슷한 색이다.",
+          "subtitle": "",
+          "back": "관측실 출입문 틈에 붉은 천 조각과 실밥이 끼어 있다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -1751,8 +1751,8 @@
         {
           "id": "academy_secret_fund",
           "title": "익명 운영자의 후원 계약",
-          "subtitle": "운영자 · 가족 간의 비밀",
-          "back": "학교 운영자는 일부 학생의 가족 정보를 후원 조건으로 요구했고 진실을 폭로하려던 연호를 압박했다.",
+          "subtitle": "",
+          "back": "후원 계약의 제출 서류 목록에 학생 가족 정보가 있다. 첨부된 연호 수신 문서에는 ‘자료 공개 중단 요청’이라고 적혀 있다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -1774,7 +1774,7 @@
         {
           "id": "academy_safety_repeat",
           "title": "안전 방송 반복 횟수",
-          "subtitle": "방송 예약의 흔적",
+          "subtitle": "",
           "back": "안전 방송 장치에는 01:10 자동 재생 예약과 같은 문장을 반복한 기록이 남아 있다. 누가 예약을 설정했는지 사용자 정보는 저장되지 않았다.",
           "type": "information",
           "clueKind": "trick",
@@ -1796,9 +1796,9 @@
         },
         {
           "id": "academy_mock_exit",
-          "title": "옥상 가짜 비상구 도면",
-          "subtitle": "탈출 · 첫 번째 함정",
-          "back": "학생들에게 보이는 출입문은 실물 구조 통로로 연결되지 않는다. 잘못된 탈출 방향으로 시간을 낭비하게 하는 가짜 설계다.",
+          "title": "옥상 출입문 도면",
+          "subtitle": "",
+          "back": "옥상 출입문 도면에 문 뒤쪽의 막힌 벽과 얕은 공간이 그려져 있다. 외부 통로와 이어지는 선은 없다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -1819,9 +1819,9 @@
         },
         {
           "id": "academy_autopsy_time",
-          "title": "연호의 실제 사망 시각",
-          "subtitle": "2차 · 00:42 추정",
-          "back": "학교 의료 기록의 독립 시간표는 연호가 00:42 무렵 이미 사망했음을 나타낸다. 01:10에 들린 목소리와 정면으로 모순된다.",
+          "title": "연호의 의료 기록",
+          "subtitle": "",
+          "back": "의료 기록의 독립 시계 항목에 ‘00:42경 생체 활동 종료’라고 적혀 있다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -1842,9 +1842,9 @@
         },
         {
           "id": "academy_voice_match",
-          "title": "연호와 가빈의 발음 파형",
-          "subtitle": "2차 · 말버릇 비교",
-          "back": "01:10 방송에서 특정 단어의 강세와 숨 멈춤이 리허설 대본 한 부분과 비슷하게 나타난다. 방송 파일은 원본 녹음과 음성 변조기 출력을 모두 거친 것으로 보인다.",
+          "title": "방송과 리허설의 음성 파형",
+          "subtitle": "",
+          "back": "01:10 방송과 리허설 시료의 파형이 나란히 표시되어 있다. 특정 단어의 강세와 숨 멈춤 지점에 표시가 있다. 파일 처리 이력에는 원본 녹음과 음성 변조기 출력이 적혀 있다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -1867,9 +1867,9 @@
         },
         {
           "id": "academy_high_badge",
-          "title": "고급 출입 배지 소유자",
-          "subtitle": "2차 · 운영자 가족",
-          "back": "00:38 관측관에 입장한 배지의 소유자는 가빈이다. 이는 단순히 가까이 있었다는 것 이상으로 운영자와의 관계를 드러낸다.",
+          "title": "고급 출입 배지 발급대장",
+          "subtitle": "",
+          "back": "배지 발급대장의 고급 배지 번호 옆에 ‘유가빈’이 적혀 있다. 첨부 출입표에 같은 배지 번호의 00:38 관측관 입장 기록이 있다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -1893,8 +1893,8 @@
         {
           "id": "academy_deleted_phrase",
           "title": "연호가 남긴 미전송 원본",
-          "subtitle": "2차 · 방송과 다른 마지막 말",
-          "back": "연호의 메모에는 관측관에 들어가기 전 ‘운영자 가족 명단’과 ‘가빈’이라는 이름이 나란히 적혀 있다. 마지막 문장은 지워져 읽을 수 없다.",
+          "subtitle": "",
+          "back": "미전송 메모에 ‘운영자 가족 명단’과 ‘가빈’이라는 이름이 나란히 적혀 있다. 마지막 문장은 지워져 읽을 수 없다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -1916,8 +1916,8 @@
         {
           "id": "academy_projection_backup",
           "title": "플라네타륨 투사기 백업",
-          "subtitle": "2차 · 별의 움직임",
-          "back": "영상은 00:20대에 제작된 파일이며 01:10 재생되었다. 천문 데이터와 오디오 데이터의 동일 예약 장치에서 나온 기록이다.",
+          "subtitle": "",
+          "back": "백업 파일의 생성 시각은 00:20대, 재생 시각은 01:10으로 표시되어 있다. 천문 데이터와 오디오 데이터에 같은 예약 장치 번호가 적혀 있다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -1939,8 +1939,8 @@
         {
           "id": "academy_early_signal",
           "title": "지하 복도에서 발견한 암호",
-          "subtitle": "2차 · 진짜 비상구",
-          "back": "바닥의 낡은 표식이 리온의 고어 사전에 있는 “그늘에서 별을 거꾸로 읽어라”와 일치한다.",
+          "subtitle": "",
+          "back": "지하 복도 바닥에 별 모양과 방향 표시가 새겨져 있다. 일부 표식은 닳아 거꾸로 읽으면 다른 모양으로 보인다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -1962,8 +1962,8 @@
         {
           "id": "academy_lock_token",
           "title": "지하 기술실 봉인 해제표",
-          "subtitle": "2차 · 연구동 잠금 해제",
-          "back": "학원 지하 보관실의 문과 탈출 보관함을 여는 비상 해제 토큰이다. 토큰을 얻어야만 핵심 출구 자료를 볼 수 있다.",
+          "subtitle": "",
+          "back": "토큰 표찰에 ‘지하 기술실 비상 봉인 해제’가 적혀 있다. 사용처 목록에는 지하 보관실 문과 탈출 보관함이 있다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -1989,8 +1989,8 @@
         {
           "id": "academy_escape_pass_card",
           "title": "탈출 통로 최종 인증서",
-          "subtitle": "2차 · 공동 탈출의 조건",
-          "back": "연호가 생전에 남긴 출구 사용 승인서다. 단 한 명이라도 행동 단계에서 이를 실행하면 모두가 진짜 탈출로를 알 수 있다.",
+          "subtitle": "",
+          "back": "출구 사용 승인서의 작성자란에 ‘장연호’가 적혀 있다. 문서에 통로 번호와 인증 절차가 인쇄되어 있다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -2018,8 +2018,8 @@
         {
           "id": "academy_admin_original",
           "title": "운영자의 비밀 연구 원본",
-          "subtitle": "2차 · 감금의 이유",
-          "back": "학생은 순수한 교육 대상이 아니라 외부 연락이 불가능한 환경에서 재능과 신뢰를 시험하는 피실험자로 분류돼 있었다.",
+          "subtitle": "",
+          "back": "연구 문서의 대상 분류란에 학생 이름과 ‘피실험자’가 적혀 있다. 실험 조건에는 ‘외부 연락 제한’, ‘재능 및 신뢰 관찰’이 기재되어 있다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -2041,8 +2041,8 @@
         {
           "id": "academy_lost_student",
           "title": "이전 기수의 탈출 기록",
-          "subtitle": "2차 · 탈출 실패의 교훈",
-          "back": "이전 기수는 옥상에 있는 모형 비상구로 가려다 실패했다. 지하 냉각 통로의 공기 순환 표식이 진짜 출구로 연결된다.",
+          "subtitle": "",
+          "back": "이전 기수 기록에 ‘옥상 문 뒤 막힘’, ‘대피 실패’라는 문장이 있다. 지하 냉각 통로의 공기 순환 표식이 그려진 별지가 붙어 있다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -2063,9 +2063,9 @@
         },
         {
           "id": "academy_culprit_chain",
-          "title": "첫 번째 살인 종합 재구성",
-          "subtitle": "2차 · 알리바이의 붕괴",
-          "back": "00:38 동시 입장 기록, 00:42 전후의 신체 감식 시각, 00:45 고급 배지 출입, 01:10 방송 기록, 01:12 발견 시각이 하나의 도식에 정리되어 있다. 출입자 신원과 방송 출처는 별도의 원본 자료 번호로 표시돼 있다.",
+          "title": "관측관 기록 정리표",
+          "subtitle": "",
+          "back": "기록 정리표에 ‘00:38 입장’, ‘00:42경 신체 감식’, ‘00:45 고급 배지 퇴장’, ‘01:10 방송’, ‘01:12 발견’이 적혀 있다. 신원과 방송 출처 칸에는 별도의 원본 문서 번호가 있다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -2090,8 +2090,8 @@
         {
           "id": "academy_second_exit",
           "title": "지하 최종 탈출 구획",
-          "subtitle": "2차 · 진실 이후의 결단",
-          "back": "현재 열려 있는 출입문은 외부 통로와 이어지지 않는다. 보관함에 기록된 다른 통로 번호와 인증 장치를 대조해야 한다.",
+          "subtitle": "",
+          "back": "구획도에 열린 문 뒤의 막힌 공간과 별도의 통로 번호가 표시되어 있다. 보관함 목록에 같은 통로 번호와 인증 장치 번호가 적혀 있다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,

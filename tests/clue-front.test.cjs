@@ -42,7 +42,7 @@ test('Studio player views do not expose evidence title or subtitle until discove
   E.reserve(state,'jobi_threat_phone');
   E.investigate(state,'jobi_threat_phone');
   const seen=E.roomView(state).investigation.cards.find(c=>c.id==='jobi_threat_phone');
-  assert.equal(seen.title,'조비의 협박 메시지가 남은 휴대전화');
+  assert.equal(seen.title,'조비의 메시지가 남은 휴대전화');
   assert.ok(seen.revealed[0].back.includes('21:47'));
 });
 
