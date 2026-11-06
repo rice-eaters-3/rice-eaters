@@ -1346,7 +1346,7 @@
             "x": 15,
             "y": 3
           },
-          "requiresPresence": false,
+          "requiresPresence": true,
           "grant": null,
           "insights": {}
         },
@@ -1415,7 +1415,7 @@
             "x": 15,
             "y": 3
           },
-          "requiresPresence": false,
+          "requiresPresence": true,
           "grant": null,
           "insights": {}
         },
@@ -1676,7 +1676,7 @@
             "x": 16,
             "y": 3
           },
-          "requiresPresence": false,
+          "requiresPresence": true,
           "grant": null,
           "insights": {}
         },
@@ -2223,7 +2223,7 @@
             "x": 14,
             "y": 3
           },
-          "requiresPresence": false,
+          "requiresPresence": true,
           "grant": null,
           "insights": {}
         },
