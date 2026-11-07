@@ -191,48 +191,8 @@
     {
       "series": "stellar-academy-first-case",
       "cluesTotal": 48,
-      "cluesComplete": 20,
+      "cluesComplete": 30,
       "pendingClues": [
-        {
-          "id": "gabin_voice_script",
-          "title": "유가빈의 연호 배역 대본"
-        },
-        {
-          "id": "gabin_stage_dart",
-          "title": "유가빈의 연극용 그림자 화살"
-        },
-        {
-          "id": "gabin_family_badge",
-          "title": "유가빈의 관리실 출입 배지"
-        },
-        {
-          "id": "gabin_red_fiber",
-          "title": "유가빈의 찢어진 무대 의상"
-        },
-        {
-          "id": "academy_first_body",
-          "title": "플라네타륨 첫 시신 기록"
-        },
-        {
-          "id": "academy_fake_sky",
-          "title": "01:10 천체 영상의 별자리"
-        },
-        {
-          "id": "academy_voice_witness",
-          "title": "01:10 관측관 음성 파일"
-        },
-        {
-          "id": "academy_corridor_log",
-          "title": "관측관 출입 기록"
-        },
-        {
-          "id": "academy_stage_loan",
-          "title": "마술 장비 대여표"
-        },
-        {
-          "id": "academy_old_tunnel",
-          "title": "학교 구형 탈출 약도"
-        },
         {
           "id": "academy_message",
           "title": "연호의 봉인 쪽지"
