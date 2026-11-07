@@ -299,3 +299,7 @@ Reviewed and connected in shared game/studio/test renderer. Card IDs, prompts, s
 ## Academy batch 5 — 8 independent clues
 
 Reviewed and connected in shared game/studio/test renderer. Card IDs, prompts, source and final paths: ACADEMY_BATCH_5_REVIEW.json. Independent clues: 229/229; Academy 48/48. Remaining queue: ART_REMAINING.json.
+
+## Neon portraits — 7 independent illustrations
+
+Reference designs preserved; new full-frame paintings linked in shared portrait and avatar renderer. Details: NEON_PORTRAIT_REVIEW.json.
