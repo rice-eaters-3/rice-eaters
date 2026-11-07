@@ -1,0 +1,95 @@
+{
+  "method": "Built-in image generation, independent illustration per card, full-frame downscale.",
+  "assets": [
+    {
+      "id": "seoha_folded_map",
+      "prompt": "Original standalone SQUARE evidence item illustration for Stellar Academy mystery visual novel. Elegant anime painterly object rendering, navy blue and muted antique gold palette, moonlight and warm desk lamp, subtle star-motif academy atmosphere. Single cohesive scene, main object fully visible with generous margins. No collage, border, watermark, or narrative revelation. A translucent folded pop-up route sketch, several connected panels each showing only a partial corridor line, registration marks on edges. One opened panel has a line ending mid-route. No literal valid game map, no words.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-3440c3f6-894b-48ec-8334-a0672a0ee4de.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/seoha_folded_map.webp",
+      "title": "남서하의 접는 입체 약도",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "seoha_puzzle_ring",
+      "prompt": "Original standalone SQUARE evidence item illustration for Stellar Academy mystery visual novel. Elegant anime painterly object rendering, navy blue and muted antique gold palette, moonlight and warm desk lamp, subtle star-motif academy atmosphere. Single cohesive scene, main object fully visible with generous margins. No collage, border, watermark, or narrative revelation. An engraved metal cipher ring on paper, visible small incised digits and worn inner band, a faint reversed ink digit impression on paper. No extra clue text.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-92b5c0ea-23bd-4a4b-8f2f-f6d2ae381148.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/seoha_puzzle_ring.webp",
+      "title": "남서하의 암호 고리",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "seoha_safe_marker",
+      "prompt": "Original standalone SQUARE evidence item illustration for Stellar Academy mystery visual novel. Elegant anime painterly object rendering, navy blue and muted antique gold palette, moonlight and warm desk lamp, subtle star-motif academy atmosphere. Single cohesive scene, main object fully visible with generous margins. No collage, border, watermark, or narrative revelation. A maze marking pen beside folded handwritten note. Note contains a star then exactly '지하 전기실', below it '연호'. No other readable writing.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-bb9876fb-119a-4f93-a494-9de6f675570a.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/seoha_safe_marker.webp",
+      "title": "남서하의 미로 표시 펜",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "seoha_rescue_token",
+      "prompt": "Original standalone SQUARE evidence item illustration for Stellar Academy mystery visual novel. Elegant anime painterly object rendering, navy blue and muted antique gold palette, moonlight and warm desk lamp, subtle star-motif academy atmosphere. Single cohesive scene, main object fully visible with generous margins. No collage, border, watermark, or narrative revelation. A brass puzzle rescue token engraved shield emblem and Korean '보호', resting upright slightly turned to show an edge mounting groove. No other equipment or symbols.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-36b0ccd8-2ea9-472d-ae20-444fda8a9469.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/seoha_rescue_token.webp",
+      "title": "남서하의 퍼즐 구조 토큰",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "taewon_mirror_box",
+      "prompt": "Original standalone SQUARE evidence item illustration for Stellar Academy mystery visual novel. Elegant anime painterly object rendering, navy blue and muted antique gold palette, moonlight and warm desk lamp, subtle star-motif academy atmosphere. Single cohesive scene, main object fully visible with generous margins. No collage, border, watermark, or narrative revelation. An open magician's portable wooden mirror box lined with several tilted mirrors reflecting the inner chamber in different directions. No human reflections, no hidden murder weapon.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-5de74b10-fa14-470c-af80-908121706bd7.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/taewon_mirror_box.webp",
+      "title": "이태원의 거울 마술 상자",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "taewon_stage_rope",
+      "prompt": "Original standalone SQUARE evidence item illustration for Stellar Academy mystery visual novel. Elegant anime painterly object rendering, navy blue and muted antique gold palette, moonlight and warm desk lamp, subtle star-motif academy atmosphere. Single cohesive scene, main object fully visible with generous margins. No collage, border, watermark, or narrative revelation. Coiled theatrical safety rope with a sturdy metal fastening ring at EACH end, several knots along the middle. On polished wooden stage floor. Whole rope and both rings visible.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-2e1d7d9d-1c79-46ba-a6e7-a2a70cbf911d.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/taewon_stage_rope.webp",
+      "title": "이태원의 무대용 안전 로프",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "taewon_voice_filter",
+      "prompt": "Original standalone SQUARE evidence item illustration for Stellar Academy mystery visual novel. Elegant anime painterly object rendering, navy blue and muted antique gold palette, moonlight and warm desk lamp, subtle star-motif academy atmosphere. Single cohesive scene, main object fully visible with generous margins. No collage, border, watermark, or narrative revelation. A compact theatrical voice filter with clearly distinct pitch and timbre adjustment knobs, cables, alongside a separate paper equipment lending register. No readable invented dates or names.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-1cd67400-7ff3-4012-8ca4-d8e6a9eef60a.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/taewon_voice_filter.webp",
+      "title": "이태원의 마술용 음성 필터",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "taewon_rented_prop",
+      "prompt": "Original standalone SQUARE evidence item illustration for Stellar Academy mystery visual novel. Elegant anime painterly object rendering, navy blue and muted antique gold palette, moonlight and warm desk lamp, subtle star-motif academy atmosphere. Single cohesive scene, main object fully visible with generous margins. No collage, border, watermark, or narrative revelation. A paper equipment lending slip on walnut desk. Main inscription exactly '22:30 / 소품 케이스 / 수령인 가빈'. Below this an abstract expected return entry in blue pen and a return checkmark in red pen. No other numbers, no invented time.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-160aaeca-5cb4-4791-b968-8396bec507dc.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/taewon_rented_prop.webp",
+      "title": "이태원의 반환받지 못한 장비 대여표",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "yeonju_star_almanac",
+      "prompt": "Original standalone SQUARE evidence item illustration for Stellar Academy mystery visual novel. Elegant anime painterly object rendering, navy blue and muted antique gold palette, moonlight and warm desk lamp, subtle star-motif academy atmosphere. Single cohesive scene, main object fully visible with generous margins. No collage, border, watermark, or narrative revelation. An open PAPER star-position almanac with delicate star charts and tabular sky diagrams, a small entry marked exactly '01:10' with a handdrawn circle beside it. No suspect names or deductions.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-3fa8647c-55fc-40d9-bcf0-1ef313301f07.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/yeonju_star_almanac.webp",
+      "title": "천연주의 종이 별자리 연감",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "yeonju_anonymous_chat",
+      "prompt": "Original standalone SQUARE evidence item illustration for Stellar Academy mystery visual novel. Elegant anime painterly object rendering, navy blue and muted antique gold palette, moonlight and warm desk lamp, subtle star-motif academy atmosphere. Single cohesive scene, main object fully visible with generous margins. No collage, border, watermark, or narrative revelation. A modern phone on a midnight blue student desk showing anonymous chat bubbles with repeated Korean phrases '비밀 연구관', '탈출 길', '학원 실험' and small rough corridor sketch thumbnails. No avatars with recognizable faces, no dates or invented coordinates.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-8a5a52dd-ddde-4fba-8273-1b909d7fe883.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/yeonju_anonymous_chat.webp",
+      "title": "천연주의 연호와의 익명 채팅",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    }
+  ]
+}

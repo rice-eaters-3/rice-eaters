@@ -191,48 +191,8 @@
     {
       "series": "stellar-academy-first-case",
       "cluesTotal": 48,
-      "cluesComplete": 0,
+      "cluesComplete": 10,
       "pendingClues": [
-        {
-          "id": "seoha_folded_map",
-          "title": "남서하의 접는 입체 약도"
-        },
-        {
-          "id": "seoha_puzzle_ring",
-          "title": "남서하의 암호 고리"
-        },
-        {
-          "id": "seoha_safe_marker",
-          "title": "남서하의 미로 표시 펜"
-        },
-        {
-          "id": "seoha_rescue_token",
-          "title": "남서하의 퍼즐 구조 토큰"
-        },
-        {
-          "id": "taewon_mirror_box",
-          "title": "이태원의 거울 마술 상자"
-        },
-        {
-          "id": "taewon_stage_rope",
-          "title": "이태원의 무대용 안전 로프"
-        },
-        {
-          "id": "taewon_voice_filter",
-          "title": "이태원의 마술용 음성 필터"
-        },
-        {
-          "id": "taewon_rented_prop",
-          "title": "이태원의 반환받지 못한 장비 대여표"
-        },
-        {
-          "id": "yeonju_star_almanac",
-          "title": "천연주의 종이 별자리 연감"
-        },
-        {
-          "id": "yeonju_anonymous_chat",
-          "title": "천연주의 연호와의 익명 채팅"
-        },
         {
           "id": "yeonju_micro_scope",
           "title": "천연주의 휴대 광학 렌즈"
