@@ -123,36 +123,7 @@
       "cluesComplete": 54,
       "pendingClues": [],
       "portraitsTotal": 7,
-      "pendingPortraits": [
-        {
-          "id": "nova",
-          "name": "노바"
-        },
-        {
-          "id": "rune",
-          "name": "룬"
-        },
-        {
-          "id": "ion",
-          "name": "이온"
-        },
-        {
-          "id": "mira",
-          "name": "미라"
-        },
-        {
-          "id": "atlas",
-          "name": "아틀라스"
-        },
-        {
-          "id": "echo",
-          "name": "에코"
-        },
-        {
-          "id": "sol",
-          "name": "솔"
-        }
-      ],
+      "pendingPortraits": [],
       "pendingPropKinds": [
         {
           "kind": "terminal",

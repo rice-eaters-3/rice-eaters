@@ -1,0 +1,68 @@
+{
+  "method": "New standalone illustrations generated from user concept design; no sheet crops.",
+  "assets": [
+    {
+      "id": "nova",
+      "prompt": "Create a NEW independent vertical 3:4 character illustration using attached concept sheet only as design reference. Do NOT crop or reuse any sheet pixels. Show ONE character alone, head to upper thighs, entire head, hands and elbows comfortably in frame. Consistent refined Korean anime visual novel painting, crisp elegant linework, dark navy atmospheric gradient background with subtle cyan/violet edge lighting, no text, labels, panels or border. Preserve reference facial features, hair, costume and personality. 노바, first character from left: handsome disheveled black-haired male detective, cheek bandage, gray trench coat over dark open collar shirt, black gloves. Thoughtful wary expression, hand near temple.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-406b7a68-73f5-4e59-9a42-ff4526238217.png",
+      "asset": "apps/murder-mystery/assets/portraits/neon-memory-quarantine/nova.webp",
+      "name": "노바",
+      "oldProblem": "Shared concept-sheet crop rather than independent portrait",
+      "review": "Compared individually with reference design: face, hair, clothing and silhouette."
+    },
+    {
+      "id": "rune",
+      "prompt": "Create a NEW independent vertical 3:4 character illustration using attached concept sheet only as design reference. Do NOT crop or reuse any sheet pixels. Show ONE character alone, head to upper thighs, entire head, hands and elbows comfortably in frame. Consistent refined Korean anime visual novel painting, crisp elegant linework, dark navy atmospheric gradient background with subtle cyan/violet edge lighting, no text, labels, panels or border. Preserve reference facial features, hair, costume and personality. 룬, second from left: composed adult woman physician, silver lavender hair in low bun, glasses, white lab coat over black blouse, stethoscope and ID badge. Calm analytical expression.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-200da09c-dc65-4b2c-bc62-02067e3ac551.png",
+      "asset": "apps/murder-mystery/assets/portraits/neon-memory-quarantine/rune.webp",
+      "name": "룬",
+      "oldProblem": "Shared concept-sheet crop rather than independent portrait",
+      "review": "Compared individually with reference design: face, hair, clothing and silhouette."
+    },
+    {
+      "id": "ion",
+      "prompt": "Create a NEW independent vertical 3:4 character illustration using attached concept sheet only as design reference. Do NOT crop or reuse any sheet pixels. Show ONE character alone, head to upper thighs, entire head, hands and elbows comfortably in frame. Consistent refined Korean anime visual novel painting, crisp elegant linework, dark navy atmospheric gradient background with subtle cyan/violet edge lighting, no text, labels, panels or border. Preserve reference facial features, hair, costume and personality. 이온, third from left: cheerful young adult male technician, tousled dark hair, goggles on head, gray blue utility jacket with yellow accents and harness. Gloved hand touching goggles.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-d6439b04-cc59-4370-99ae-190ef56e08d4.png",
+      "asset": "apps/murder-mystery/assets/portraits/neon-memory-quarantine/ion.webp",
+      "name": "이온",
+      "oldProblem": "Shared concept-sheet crop rather than independent portrait",
+      "review": "Compared individually with reference design: face, hair, clothing and silhouette."
+    },
+    {
+      "id": "mira",
+      "prompt": "Create a NEW independent vertical 3:4 character illustration using attached concept sheet only as design reference. Do NOT crop or reuse any sheet pixels. Show ONE character alone, head to upper thighs, entire head, hands and elbows comfortably in frame. Consistent refined Korean anime visual novel painting, crisp elegant linework, dark navy atmospheric gradient background with subtle cyan/violet edge lighting, no text, labels, panels or border. Preserve reference facial features, hair, costume and personality. 미라, fourth from left: elegant adult female attorney, long sleek black hair, black pinstripe suit and white open-collar shirt, small gold scales lapel pin, dark legal folio. Confident reserved expression.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-46e6e58a-af5d-4046-8693-993076821558.png",
+      "asset": "apps/murder-mystery/assets/portraits/neon-memory-quarantine/mira.webp",
+      "name": "미라",
+      "oldProblem": "Shared concept-sheet crop rather than independent portrait",
+      "review": "Compared individually with reference design: face, hair, clothing and silhouette."
+    },
+    {
+      "id": "atlas",
+      "prompt": "Create a NEW independent vertical 3:4 character illustration using attached concept sheet only as design reference. Do NOT crop or reuse any sheet pixels. Show ONE character alone, head to upper thighs, entire head, hands and elbows comfortably in frame. Consistent refined Korean anime visual novel painting, crisp elegant linework, dark navy atmospheric gradient background with subtle cyan/violet edge lighting, no text, labels, panels or border. Preserve reference facial features, hair, costume and personality. 아틀라스, fifth from left: towering muscular middle-aged man, short dark hair, stern broad face, black tactical vest and short-sleeve security uniform, hexagonal insignia. Arms folded.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-2eb5aae1-77f5-48ba-bb45-3f99f52c2b95.png",
+      "asset": "apps/murder-mystery/assets/portraits/neon-memory-quarantine/atlas.webp",
+      "name": "아틀라스",
+      "oldProblem": "Shared concept-sheet crop rather than independent portrait",
+      "review": "Compared individually with reference design: face, hair, clothing and silhouette."
+    },
+    {
+      "id": "echo",
+      "prompt": "Create a NEW independent vertical 3:4 character illustration using attached concept sheet only as design reference. Do NOT crop or reuse any sheet pixels. Show ONE character alone, head to upper thighs, entire head, hands and elbows comfortably in frame. Consistent refined Korean anime visual novel painting, crisp elegant linework, dark navy atmospheric gradient background with subtle cyan/violet edge lighting, no text, labels, panels or border. Preserve reference facial features, hair, costume and personality. 에코, sixth from left: ethereal adult feminine artificial person, very long silver white hair, cyan eyes, white futuristic clothing with cyan circuitry and delicate halo-like luminous arc. Thoughtful gentle expression.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-28bea599-f9ba-4efc-8c47-f10b15974eda.png",
+      "asset": "apps/murder-mystery/assets/portraits/neon-memory-quarantine/echo.webp",
+      "name": "에코",
+      "oldProblem": "Shared concept-sheet crop rather than independent portrait",
+      "review": "Compared individually with reference design: face, hair, clothing and silhouette."
+    },
+    {
+      "id": "sol",
+      "prompt": "Create a NEW independent vertical 3:4 character illustration using attached concept sheet only as design reference. Do NOT crop or reuse any sheet pixels. Show ONE character alone, head to upper thighs, entire head, hands and elbows comfortably in frame. Consistent refined Korean anime visual novel painting, crisp elegant linework, dark navy atmospheric gradient background with subtle cyan/violet edge lighting, no text, labels, panels or border. Preserve reference facial features, hair, costume and personality. 솔, seventh from left: youthful adult male courier, tousled sandy blond hair, black baseball cap, yellow hooded jacket with dark harness and slate courier case. Mischievous easy smile.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-9b5daa46-c11b-403b-a963-51c8f2d8d171.png",
+      "asset": "apps/murder-mystery/assets/portraits/neon-memory-quarantine/sol.webp",
+      "name": "솔",
+      "oldProblem": "Shared concept-sheet crop rather than independent portrait",
+      "review": "Compared individually with reference design: face, hair, clothing and silhouette."
+    }
+  ]
+}

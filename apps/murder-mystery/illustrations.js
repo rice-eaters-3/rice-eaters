@@ -225,7 +225,7 @@ window.MysteryArt=(function(){
  const knownStory=id=>A[storyFor(id)]||null;
  function standalonePortrait(story,id){
   const theme=storyFor(story),data=knownStory(story);
-  if(!['d1-crown-of-ashes','cruel-heart-island'].includes(theme)||!Object.hasOwn(data.portraits,id))return null;
+  if(!['d1-crown-of-ashes','cruel-heart-island','neon-memory-quarantine'].includes(theme)||!Object.hasOwn(data.portraits,id))return null;
   return {...data,file:'portraits/'+theme+'/'+id+'.webp',size:[432,576]};
  }
  function artCrop(story,rect,css,alt,data=knownStory(story)){
