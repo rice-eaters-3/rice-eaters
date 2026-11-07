@@ -1,0 +1,77 @@
+{
+  "method": "Built-in image generation, independent illustration per card, full-frame downscale.",
+  "assets": [
+    {
+      "id": "academy_projection_backup",
+      "prompt": "Original standalone square evidence illustration for Stellar Academy Korean murder mystery visual novel. Elegant painterly anime object art, dark navy and antique gold, warm lamp and cool moonlight, subtle star academy motif. Fully visible evidence object, margins. No collage, watermark or invented extra text. A planetarium backup tablet: creation field exactly '00:20대', scheduled playback '01:10'. Star data file and audio file icons both have identical abstract scheduler barcode marks. No other dates, exact seconds, identities or conclusions.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-7e39b064-7a38-42db-917e-d59f6ccc44ce.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/academy_projection_backup.webp",
+      "title": "플라네타륨 투사기 백업",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "academy_early_signal",
+      "prompt": "Original standalone square evidence illustration for Stellar Academy Korean murder mystery visual novel. Elegant painterly anime object art, dark navy and antique gold, warm lamp and cool moonlight, subtle star academy motif. Fully visible evidence object, margins. No collage, watermark or invented extra text. Close-up of old underground school corridor stone floor with engraved star shapes and directional arrow marks, some worn so their shapes look ambiguous upside down. No solved route, readable labels or people.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-56662434-9229-41d0-b161-c79736de8f67.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/academy_early_signal.webp",
+      "title": "지하 복도에서 발견한 암호",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "academy_lock_token",
+      "prompt": "Original standalone square evidence illustration for Stellar Academy Korean murder mystery visual novel. Elegant painterly anime object art, dark navy and antique gold, warm lamp and cool moonlight, subtle star academy motif. Fully visible evidence object, margins. No collage, watermark or invented extra text. A brass emergency release token with a paper tag reading '지하 기술실 비상 봉인 해제'. Attached usage list has '지하 보관실 문' and '탈출 보관함'. Whole object visible, no extra keys or passwords.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-0ed51577-b2f1-4322-b377-85c1db4145c7.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/academy_lock_token.webp",
+      "title": "지하 기술실 봉인 해제표",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "academy_escape_pass_card",
+      "prompt": "Original standalone square evidence illustration for Stellar Academy Korean murder mystery visual novel. Elegant painterly anime object art, dark navy and antique gold, warm lamp and cool moonlight, subtle star academy motif. Fully visible evidence object, margins. No collage, watermark or invented extra text. An exit authorization certificate with author name '장연호'. Printed corridor reference shown only as abstract barcode and authentication steps represented by simple scan/check icons. No invented numeric passcode or location name.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-422621bb-d5e8-46bb-b55c-c4224e041cec.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/academy_escape_pass_card.webp",
+      "title": "탈출 통로 최종 인증서",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "academy_admin_original",
+      "prompt": "Original standalone square evidence illustration for Stellar Academy Korean murder mystery visual novel. Elegant painterly anime object art, dark navy and antique gold, warm lamp and cool moonlight, subtle star academy motif. Fully visible evidence object, margins. No collage, watermark or invented extra text. A confidential school research manuscript. Subject category '피실험자' beside anonymous obscured student-name lines, experimental conditions '외부 연락 제한' and '재능 및 신뢰 관찰'. No lab torture imagery, no extra legible names.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-8cea5311-01d2-48da-8b71-cbbc699f8b43.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/academy_admin_original.webp",
+      "title": "운영자의 비밀 연구 원본",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "academy_lost_student",
+      "prompt": "Original standalone square evidence illustration for Stellar Academy Korean murder mystery visual novel. Elegant painterly anime object art, dark navy and antique gold, warm lamp and cool moonlight, subtle star academy motif. Fully visible evidence object, margins. No collage, watermark or invented extra text. An old student cohort escape record containing only readable phrases '옥상 문 뒤 막힘' and '대피 실패'. Attached loose sheet has cooling tunnel airflow circulation symbol drawn as looping arrows and snowflake. No dead bodies or actual solved route.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-1f023a49-5236-4b48-bcfe-b0905d7a5f9b.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/academy_lost_student.webp",
+      "title": "이전 기수의 탈출 기록",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "academy_culprit_chain",
+      "prompt": "Original standalone square evidence illustration for Stellar Academy Korean murder mystery visual novel. Elegant painterly anime object art, dark navy and antique gold, warm lamp and cool moonlight, subtle star academy motif. Fully visible evidence object, margins. No collage, watermark or invented extra text. An investigation chronology worksheet with five rows labelled exactly '00:38 입장', '00:42경 신체 감식', '00:45 고급 배지 퇴장', '01:10 방송', '01:12 발견'. Two columns on right contain abstract document reference blocks, not names. No culprit portrait, no extra times or dates.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-caefd480-2f72-4bab-9768-9976a1f3f9a0.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/academy_culprit_chain.webp",
+      "title": "관측관 시각별 기록표",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "academy_second_exit",
+      "prompt": "Original standalone square evidence illustration for Stellar Academy Korean murder mystery visual novel. Elegant painterly anime object art, dark navy and antique gold, warm lamp and cool moonlight, subtle star academy motif. Fully visible evidence object, margins. No collage, watermark or invented extra text. A paper area schematic: one open doorway leads only into a small blocked recess; separate passage line elsewhere has abstract matching barcode reference. Beside it a storage inventory sheet repeats same passage barcode and a scanner device symbol. No readable route numbers or explicit solved path.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-7c8ba578-df6f-4d98-b9b8-6cc2f94ea0d3.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/academy_second_exit.webp",
+      "title": "지하 최종 탈출 구획",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    }
+  ]
+}
