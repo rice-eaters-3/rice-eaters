@@ -191,48 +191,8 @@
     {
       "series": "stellar-academy-first-case",
       "cluesTotal": 48,
-      "cluesComplete": 10,
+      "cluesComplete": 20,
       "pendingClues": [
-        {
-          "id": "yeonju_micro_scope",
-          "title": "천연주의 휴대 광학 렌즈"
-        },
-        {
-          "id": "yeonju_sky_photo",
-          "title": "천연주의 하늘의 장시간 노출 사진"
-        },
-        {
-          "id": "jinwoo_rescue_helmet",
-          "title": "백진우의 개인 구조 헬멧"
-        },
-        {
-          "id": "jinwoo_floor_plan",
-          "title": "백진우의 안전 훈련 구역 도면"
-        },
-        {
-          "id": "jinwoo_failure_report",
-          "title": "백진우의 과거 구조 실패 기록"
-        },
-        {
-          "id": "jinwoo_emergency_radio",
-          "title": "백진우의 단거리 비상 무전기"
-        },
-        {
-          "id": "rion_cipher_ledger",
-          "title": "차리온의 지하 암호 해독 수첩"
-        },
-        {
-          "id": "rion_patron_letter",
-          "title": "차리온의 익명의 후원자 편지"
-        },
-        {
-          "id": "rion_golden_dictionary",
-          "title": "차리온의 금빛 어휘 사전"
-        },
-        {
-          "id": "rion_sealed_note",
-          "title": "차리온의 연호의 암호 쪽지"
-        },
         {
           "id": "gabin_voice_script",
           "title": "유가빈의 연호 배역 대본"
