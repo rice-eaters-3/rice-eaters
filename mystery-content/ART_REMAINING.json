@@ -120,25 +120,8 @@
     {
       "series": "neon-memory-quarantine",
       "cluesTotal": 54,
-      "cluesComplete": 50,
-      "pendingClues": [
-        {
-          "id": "memory_security_ledger",
-          "title": "정비 권한·출입 기록"
-        },
-        {
-          "id": "memory_culprit_reconstruction",
-          "title": "신체·영상·격리 기록 정리표"
-        },
-        {
-          "id": "memory_original_rights",
-          "title": "원본 기억 보관 계약"
-        },
-        {
-          "id": "memory_why_sealed",
-          "title": "격리 지침과 당일 로그"
-        }
-      ],
+      "cluesComplete": 54,
+      "pendingClues": [],
       "portraitsTotal": 7,
       "pendingPortraits": [
         {
