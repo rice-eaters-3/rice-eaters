@@ -267,3 +267,7 @@ Ion 2, Mira 4, Atlas 4 connected in shared game/studio/test rendering. Legal pre
 ## Neon batch 3 — 10 independent clues
 
 Reviewed and connected in shared game/studio/test renderer. Card IDs, prompts, source and final paths: NEON_BATCH_3_REVIEW.json. Independent clues: 157/229; Neon 30/54. Remaining queue: ART_REMAINING.json.
+
+## Neon batch 4 — 10 independent clues
+
+Reviewed and connected in shared game/studio/test renderer. Card IDs, prompts, source and final paths: NEON_BATCH_4_REVIEW.json. Independent clues: 167/229; Neon 40/54. Remaining queue: ART_REMAINING.json.
