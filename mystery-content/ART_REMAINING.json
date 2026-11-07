@@ -120,48 +120,8 @@
     {
       "series": "neon-memory-quarantine",
       "cluesTotal": 54,
-      "cluesComplete": 20,
+      "cluesComplete": 30,
       "pendingClues": [
-        {
-          "id": "echo_shell_drive",
-          "title": "에코의 인공인격 셸 저장기"
-        },
-        {
-          "id": "echo_ghost_key",
-          "title": "에코의 가상 권한 키"
-        },
-        {
-          "id": "echo_emotion_log",
-          "title": "에코의 새로운 감정 기록"
-        },
-        {
-          "id": "echo_backup_hash",
-          "title": "에코의 윤세라 음성 해시"
-        },
-        {
-          "id": "sol_courier_case",
-          "title": "솔의 기억 칩 운반 케이스"
-        },
-        {
-          "id": "sol_anon_invoice",
-          "title": "솔의 가명 입금 명세"
-        },
-        {
-          "id": "sol_radio_shell",
-          "title": "솔의 교신기 껍데기"
-        },
-        {
-          "id": "sol_immunity_paper",
-          "title": "솔의 감사관 면책 협약서"
-        },
-        {
-          "id": "memory_audit_letter",
-          "title": "윤세라의 감사 예고장"
-        },
-        {
-          "id": "memory_body_scan",
-          "title": "실물 신체 감식"
-        },
         {
           "id": "memory_echo_frame",
           "title": "00:21 감사관 홀로그램"

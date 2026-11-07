@@ -263,3 +263,7 @@ Nova 4, Rune 4, Ion 2 assets connected in the shared renderer. Scanner was regen
 ## Neon batch 2 — 10 reviewed independent clues
 
 Ion 2, Mira 4, Atlas 4 connected in shared game/studio/test rendering. Legal preservation order card regenerated after review removed an unrelated USB drive. Prompts, source images and final paths: NEON_BATCH_2_REVIEW.json. Independent clue total: 147/229; Neon 20/54. Next card: echo_shell_drive. Remaining queue: ART_REMAINING.json.
+
+## Neon batch 3 — 10 independent clues
+
+Reviewed and connected in shared game/studio/test renderer. Card IDs, prompts, source and final paths: NEON_BATCH_3_REVIEW.json. Independent clues: 157/229; Neon 30/54. Remaining queue: ART_REMAINING.json.
