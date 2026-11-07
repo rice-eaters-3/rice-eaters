@@ -191,48 +191,8 @@
     {
       "series": "stellar-academy-first-case",
       "cluesTotal": 48,
-      "cluesComplete": 30,
+      "cluesComplete": 40,
       "pendingClues": [
-        {
-          "id": "academy_message",
-          "title": "연호의 봉인 쪽지"
-        },
-        {
-          "id": "academy_support_funds",
-          "title": "영재 선발 실험 예산표"
-        },
-        {
-          "id": "academy_red_thread",
-          "title": "관측실 문틈의 붉은 섬유"
-        },
-        {
-          "id": "academy_secret_fund",
-          "title": "익명 운영자의 후원 계약"
-        },
-        {
-          "id": "academy_safety_repeat",
-          "title": "안전 방송 반복 횟수"
-        },
-        {
-          "id": "academy_mock_exit",
-          "title": "옥상 출입문 도면"
-        },
-        {
-          "id": "academy_autopsy_time",
-          "title": "연호의 의료 기록"
-        },
-        {
-          "id": "academy_voice_match",
-          "title": "방송과 리허설의 음성 파형"
-        },
-        {
-          "id": "academy_high_badge",
-          "title": "고급 출입 배지 발급대장"
-        },
-        {
-          "id": "academy_deleted_phrase",
-          "title": "연호가 남긴 미전송 원본"
-        },
         {
           "id": "academy_projection_backup",
           "title": "플라네타륨 투사기 백업"
