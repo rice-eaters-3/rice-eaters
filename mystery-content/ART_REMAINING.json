@@ -120,48 +120,8 @@
     {
       "series": "neon-memory-quarantine",
       "cluesTotal": 54,
-      "cluesComplete": 40,
+      "cluesComplete": 50,
       "pendingClues": [
-        {
-          "id": "memory_core_key",
-          "title": "깊은 기억 금고 중계 키"
-        },
-        {
-          "id": "memory_backup_before",
-          "title": "00:16 이전 마지막 기억"
-        },
-        {
-          "id": "memory_ghost_sequence",
-          "title": "디지털 잔향 재생 시각"
-        },
-        {
-          "id": "memory_implant_receipt",
-          "title": "불법 복원 절차 기록"
-        },
-        {
-          "id": "memory_compromised_tag",
-          "title": "정비 토큰의 잔존 흔적"
-        },
-        {
-          "id": "memory_ion_sibling",
-          "title": "대체 신원 계약서"
-        },
-        {
-          "id": "memory_emp_order",
-          "title": "EMP 작동 서명 사본"
-        },
-        {
-          "id": "memory_core_backdoor",
-          "title": "서버 보존 우회 감사 기록"
-        },
-        {
-          "id": "memory_bio_echo",
-          "title": "인격·발화 파일 속성표"
-        },
-        {
-          "id": "memory_shutdown_map",
-          "title": "EMP 필드 종료 절차 문서"
-        },
         {
           "id": "memory_security_ledger",
           "title": "정비 권한·출입 기록"
