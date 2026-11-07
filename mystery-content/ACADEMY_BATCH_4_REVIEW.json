@@ -1,0 +1,95 @@
+{
+  "method": "Built-in image generation, independent illustration per card, full-frame downscale.",
+  "assets": [
+    {
+      "id": "academy_message",
+      "prompt": "Standalone square evidence illustration for Stellar Academy Korean mystery visual novel. Elegant anime painterly rendering, navy and antique gold, warm desk lamp and moonlight. Object fully visible with margin. No collage, watermark or additional readable text. An opened folded note, exact handwritten sentence '내부자의 목소리가 거짓 진술을 만들 거야', below it one line of fictional archaic cipher glyphs. No explanatory solution.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-5de11b05-d1b5-45c0-8be9-9e1fae860e4d.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/academy_message.webp",
+      "title": "연호의 봉인 쪽지",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "academy_support_funds",
+      "prompt": "Original standalone square evidence illustration for Stellar Academy Korean mystery visual novel. Elegant anime painterly rendering, midnight navy and antique gold, warm lamp and cool moonlight. Main object fully visible. No collage, watermark, unnecessary readable text or added clues. A budget ledger with three rows labelled exactly '폐쇄 환경 유지', '학생 의사결정 관찰', '기록 장비'. Expense column has tiny indistinct ink marks, no readable invented sums, no people or experiment scene.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-e058ddfe-2f90-4f32-bc77-79ca9f428474.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/academy_support_funds.webp",
+      "title": "영재 선발 실험 예산표",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "academy_red_thread",
+      "prompt": "Original standalone square evidence illustration for Stellar Academy Korean mystery visual novel. Elegant anime painterly rendering, midnight navy and antique gold, warm lamp and cool moonlight. Main object fully visible. No collage, watermark, unnecessary readable text or added clues. Close view of a dark walnut observatory doorway seam, a tiny torn scrap of red theatrical cloth and several red threads caught between door and frame. No body, suspect or other clues.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-5d9cd480-0f89-4c73-97b7-be152eef4470.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/academy_red_thread.webp",
+      "title": "관측실 문틈의 붉은 섬유",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "academy_secret_fund",
+      "prompt": "Original standalone square evidence illustration for Stellar Academy Korean mystery visual novel. Elegant anime painterly rendering, midnight navy and antique gold, warm lamp and cool moonlight. Main object fully visible. No collage, watermark, unnecessary readable text or added clues. Two cream paper documents clipped together. Sponsor contract has a required-documents entry '학생 가족 정보', attached document addressed '연호' has heading '자료 공개 중단 요청'. No sender name, no additional legible wording.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-ac7544b3-6614-4f81-822d-e78a6f953c4b.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/academy_secret_fund.webp",
+      "title": "익명 운영자의 후원 계약",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "academy_safety_repeat",
+      "prompt": "Original standalone square evidence illustration for Stellar Academy Korean mystery visual novel. Elegant anime painterly rendering, midnight navy and antique gold, warm lamp and cool moonlight. Main object fully visible. No collage, watermark, unnecessary readable text or added clues. A safety broadcast audio device screen showing scheduled play '01:10', repeated identical short waveform rows, and an empty user identity field marked only by blank profile icon. No other times, usernames or numeric repeats.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-d0c78e2f-ba79-4372-a75e-c087faa8f64b.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/academy_safety_repeat.webp",
+      "title": "안전 방송 반복 횟수",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "academy_mock_exit",
+      "prompt": "Original standalone square evidence illustration for Stellar Academy Korean mystery visual novel. Elegant anime painterly rendering, midnight navy and antique gold, warm lamp and cool moonlight. Main object fully visible. No collage, watermark, unnecessary readable text or added clues. An architectural cutaway drawing of rooftop doorway. Behind the door is only a shallow narrow recess ending in solid thick wall; no corridor or exit beyond. No captions, floor numbers or codes.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-e384ab7d-a69a-4a05-96c3-444d951aa760.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/academy_mock_exit.webp",
+      "title": "옥상 출입문 도면",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "academy_autopsy_time",
+      "prompt": "Standalone square evidence illustration for Stellar Academy Korean mystery visual novel. Elegant anime painterly rendering, navy and antique gold, warm desk lamp and moonlight. Object fully visible with margin. No collage, watermark or additional readable text. A portable personal safety sensor beside a medical record. Sensor screen shows exactly '00:42' and a completely straight horizontal biological line, NO pulses or spikes. Record bears '장연호', a small head outline with subtle bruise marker and two matching abstract equipment barcode strips. No gore, dates or extra numbers.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-4d8fc434-a3d7-4dd3-9aa5-947a83698add.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/academy_autopsy_time.webp",
+      "title": "연호의 의료 기록",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "academy_voice_match",
+      "prompt": "Standalone square evidence illustration for Stellar Academy Korean mystery visual novel. Elegant anime painterly rendering, navy and antique gold, warm desk lamp and moonlight. Object fully visible with margin. No collage, watermark or additional readable text. An audio comparison tablet, two parallel waveform tracks with matching stress peaks and silent gaps highlighted. Top track label '01:10', lower track '리허설'. Processing history microphone icon leading to voice filter icon. No culprit statement or extra times.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-5f7fffa8-3f48-41fb-9711-85302592b504.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/academy_voice_match.webp",
+      "title": "방송과 리허설의 음성 파형",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "academy_high_badge",
+      "prompt": "Standalone square evidence illustration for Stellar Academy Korean mystery visual novel. Elegant anime painterly rendering, navy and antique gold, warm desk lamp and moonlight. Object fully visible with margin. No collage, watermark or additional readable text. A gold badge issuance register and attached entrance slip. Register row '유가빈' beside abstract gold badge barcode. Attached slip same barcode and exact time '00:38', entry door icon. No other names or serial digits.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-0301a7c4-a46c-46fd-bd79-a7bf1d36d821.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/academy_high_badge.webp",
+      "title": "고급 출입 배지 발급대장",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "academy_deleted_phrase",
+      "prompt": "Standalone square evidence illustration for Stellar Academy Korean mystery visual novel. Elegant anime painterly rendering, navy and antique gold, warm desk lamp and moonlight. Object fully visible with margin. No collage, watermark or additional readable text. An unsent paper draft, words '운영자 가족 명단' and '가빈' side by side. Last sentence rubbed and crossed out completely illegible. No readable accusations.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-4588c718-26e8-4043-87ab-c427443fa1c6.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/academy_deleted_phrase.webp",
+      "title": "연호가 남긴 미전송 원본",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    }
+  ]
+}
