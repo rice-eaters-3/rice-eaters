@@ -1,0 +1,95 @@
+{
+  "method": "Built-in image generation, independent illustration per card, full-frame downscale.",
+  "assets": [
+    {
+      "id": "memory_core_key",
+      "prompt": "Use case: illustration-story. Original standalone square evidence illustration for Korean cyberpunk visual novel Neon Memory Quarantine. Painterly polished forensic object art, dark navy graphite surfaces, cyan light and restrained violet neon. Whole main object in frame with generous margins. No collage, cropping, border, watermark or invented murderer clues. A physical futuristic recovery key resting in a foam tray, adjacent etched relay-equipment icon and deep-vault icon indicating its two uses. Complete compact key visible. No words, names or numbers.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-dd46a76c-5ac2-4db9-b24f-b5880b18bb96.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/memory_core_key.webp",
+      "title": "깊은 기억 금고 중계 키",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "memory_backup_before",
+      "prompt": "Use case: illustration-story. Original standalone square evidence illustration for Korean cyberpunk visual novel Neon Memory Quarantine. Painterly polished forensic object art, dark navy graphite surfaces, cyan light and restrained violet neon. Whole main object in frame with generous margins. No collage, cropping, border, watermark or invented murderer clues. A recovered audio recording on a forensic playback device, two alternating speech tracks, one smooth and one interrupted with gaps and uneven breath waveform. No portraits, no readable text or times, no accusation.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-4450bca0-e2e2-4992-8c39-c3ed3d32b4cf.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/memory_backup_before.webp",
+      "title": "00:16 이전 마지막 기억",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "memory_ghost_sequence",
+      "prompt": "Use case: illustration-story. Original standalone square evidence illustration for Korean cyberpunk visual novel Neon Memory Quarantine. Painterly polished forensic object art, dark navy graphite surfaces, cyan light and restrained violet neon. Whole main object in frame with generous margins. No collage, cropping, border, watermark or invented murderer clues. A forensic execution-log tablet, one saved speech-model file icon linked to a playback event marked exactly \"00:21\", earlier creation event to its left with no readable timestamp. No face or other legible text.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-981c6a75-ba09-4b44-a859-7b1aefa22cbf.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/memory_ghost_sequence.webp",
+      "title": "디지털 잔향 재생 시각",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "memory_implant_receipt",
+      "prompt": "Use case: illustration-story. Original standalone square evidence illustration for Korean cyberpunk visual novel Neon Memory Quarantine. Painterly polished forensic object art, dark navy graphite surfaces, cyan light and restrained violet neon. Whole main object in frame with generous margins. No collage, cropping, border, watermark or invented murderer clues. A printed neural restoration procedure record beside a small clinical terminal. Two clear exact times \"00:08\" and \"00:16\". Reading-file icon replaced by restoration-cycle icon, blank consent checkbox, maintenance approval wrench icon. No readable names or other text, no person or injury.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-f44cee29-eec9-47c0-b846-5253727df381.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/memory_implant_receipt.webp",
+      "title": "불법 복원 절차 기록",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "memory_compromised_tag",
+      "prompt": "Use case: illustration-story. Original standalone square evidence illustration for Korean cyberpunk visual novel Neon Memory Quarantine. Painterly polished forensic object art, dark navy graphite surfaces, cyan light and restrained violet neon. Whole main object in frame with generous margins. No collage, cropping, border, watermark or invented murderer clues. A memory-room controller identification printout beside an old maintenance-token issuance ledger. Matching abstract code blocks on paper and controller readout, small token sketches grouped in the ledger. No readable names, dates or verdict.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-694bba6a-b6e2-42c6-a0e0-700e9c7c6921.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/memory_compromised_tag.webp",
+      "title": "정비 토큰의 잔존 흔적",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "memory_ion_sibling",
+      "prompt": "Use case: illustration-story. Original standalone square evidence illustration for Korean cyberpunk visual novel Neon Memory Quarantine. Painterly polished forensic object art, dark navy graphite surfaces, cyan light and restrained violet neon. Whole main object in frame with generous margins. No collage, cropping, border, watermark or invented murderer clues. Alternative identity paperwork with anonymous family-tree fields, sealed medical-record envelope and attached audit inventory slip sharing a highlighted document reference. No readable names, dates, words or portraits, no culprit marking.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-3779e11f-b639-459f-9c06-e80527efa941.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/memory_ion_sibling.webp",
+      "title": "대체 신원 계약서",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "memory_emp_order",
+      "prompt": "Use case: illustration-story. Original standalone square evidence illustration for Korean cyberpunk visual novel Neon Memory Quarantine. Painterly polished forensic object art, dark navy graphite surfaces, cyan light and restrained violet neon. Whole main object in frame with generous margins. No collage, cropping, border, watermark or invented murderer clues. A quarantine authorization terminal marked exactly \"00:30\", maintenance-token wrench emblem beside an authorization entry and an issue-batch identifier represented by unreadable strokes. No other readable text, no suspect face.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-b3f9888b-ecbf-4e7c-baa4-557fa4ee5246.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/memory_emp_order.webp",
+      "title": "EMP 작동 서명 사본",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "memory_core_backdoor",
+      "prompt": "Use case: illustration-story. Original standalone square evidence illustration for Korean cyberpunk visual novel Neon Memory Quarantine. Painterly polished forensic object art, dark navy graphite surfaces, cyan light and restrained violet neon. Whole main object in frame with generous margins. No collage, cropping, border, watermark or invented murderer clues. A forensic terminal showing a data-deletion request log and a recovered backup verification panel. Trash-request icon on one side, preserved file with verification tick on other. No accusation, no human, no readable names or dates.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-5f8e76dc-439e-49a8-be8e-f758ab2102be.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/memory_core_backdoor.webp",
+      "title": "서버 보존 우회 감사 기록",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "memory_bio_echo",
+      "prompt": "Use case: illustration-story. Original standalone square evidence illustration for Korean cyberpunk visual novel Neon Memory Quarantine. Painterly polished forensic object art, dark navy graphite surfaces, cyan light and restrained violet neon. Whole main object in frame with generous margins. No collage, cropping, border, watermark or invented murderer clues. A file-properties comparison panel: left file has a continuous evolving memory timeline and write-pencil icon, right file has a fixed dialogue playlist and play-only triangle. Distinct file-format icons. No portraits, no names, no readable text or conclusion.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-8b443ce8-5cc8-4a92-8bf3-43f05ebe7f57.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/memory_bio_echo.webp",
+      "title": "인격·발화 파일 속성표",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "memory_shutdown_map",
+      "prompt": "Use case: illustration-story. Original standalone square evidence illustration for Korean cyberpunk visual novel Neon Memory Quarantine. Painterly polished forensic object art, dark navy graphite surfaces, cyan light and restrained violet neon. Whole main object in frame with generous margins. No collage, cropping, border, watermark or invented murderer clues. A shutdown procedure document on a technical desk: healthy relay-check icon, user authorization icon, protected local storage and wired terminal icons still lit, external wireless icon crossed out. A recovery-key insertion diagram leads to network reconnect icon. No legible text, no actual floor map, no humans.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-0fed31f4-b4df-46dd-aa7b-845c3ba9582b.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/memory_shutdown_map.webp",
+      "title": "EMP 필드 종료 절차 문서",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    }
+  ]
+}
