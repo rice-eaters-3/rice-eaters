@@ -275,3 +275,7 @@ Reviewed and connected in shared game/studio/test renderer. Card IDs, prompts, s
 ## Neon batch 5 — 10 independent clues
 
 Reviewed and connected in shared game/studio/test renderer. Card IDs, prompts, source and final paths: NEON_BATCH_5_REVIEW.json. Independent clues: 177/229; Neon 50/54. Remaining queue: ART_REMAINING.json.
+
+## Neon batch 6 — 4 independent clues
+
+Reviewed and connected in shared game/studio/test renderer. Card IDs, prompts, source and final paths: NEON_BATCH_6_REVIEW.json. Independent clues: 181/229; Neon 54/54. Remaining queue: ART_REMAINING.json.

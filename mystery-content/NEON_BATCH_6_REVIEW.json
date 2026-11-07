@@ -1,0 +1,41 @@
+{
+  "method": "Built-in image generation, independent illustration per card, full-frame downscale.",
+  "assets": [
+    {
+      "id": "memory_security_ledger",
+      "prompt": "Original standalone square evidence illustration for Korean cyberpunk visual novel Neon Memory Quarantine. Painterly polished forensic object art, navy graphite, cyan and restrained violet neon. Whole object visible with generous margins. No collage, border, watermark, or added solution. An open security permission ledger and terminal. Three rows use entry-door, patient-bed, EMP-coil icons with the same abstract maintenance group code. Separate account list shows lit active entries and gray expired entries. No names or culprit portrait.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-93fa0158-e3ac-485e-b4ae-586ba4c36f0d.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/memory_security_ledger.webp",
+      "title": "정비 권한·출입 기록",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "memory_culprit_reconstruction",
+      "prompt": "A dark cyberpunk physical forensic worksheet, four rows ONLY. Each row has one time: 00:08, 00:16, 00:21, 00:30. Row1 approval check icon. Row2 an absolutely straight horizontal cyan line: NO heartbeat peaks, NO pulses, NO oscillations. Row3 audio play triangle. Row4 quarantine shield check. Rightmost identity boxes all completely empty. No other numbers, no dates, no locations, no headings, no words anywhere. Navy paper, cyan and purple desk lighting, painterly game evidence artwork, whole document in frame.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-71bc18ae-312e-4ab2-85fa-6d21bf33a94e.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/memory_culprit_reconstruction.webp",
+      "title": "신체·영상·격리 기록 정리표",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "memory_original_rights",
+      "prompt": "Original standalone square evidence illustration for Korean cyberpunk visual novel Neon Memory Quarantine. Painterly polished forensic object art, navy graphite, cyan and restrained violet neon. Whole object visible with generous margins. No collage, border, watermark, or added solution. Two futuristic paper contracts and a sealed memory data chip on dark desk. Foreground memory storage agreement with chip serial barcode and empty consent signature rectangle; attached recovery procedure form with a visibly blank completion field. Abstract document printing only, no invented legible names, no signed fields.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-7e637d24-bf54-461f-82c9-c706c9f095b8.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/memory_original_rights.webp",
+      "title": "원본 기억 보관 계약",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "memory_why_sealed",
+      "prompt": "Original cyberpunk forensic object illustration, navy cyan violet painterly visual novel style. A paper instruction sheet shows ONLY a disaster warning triangle linked to a quarantine shield symbol, with abstract horizontal printing strokes. Beside it, a terminal shows a completely EMPTY external alert list rectangle, and below this a separate log area showing a hand-operated toggle switch and crossed wireless symbol. ABSOLUTELY NO words, letters, dates, timestamps, digits, labels, readable text anywhere. No disaster scene or person. Entire objects visible with margins.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-7e97777c-700e-49f0-9025-7fb83ef4dd13.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/memory_why_sealed.webp",
+      "title": "격리 지침과 당일 로그",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    }
+  ]
+}
