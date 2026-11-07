@@ -1,0 +1,95 @@
+{
+  "method": "Built-in image generation, independent illustration per card, full-frame downscale.",
+  "assets": [
+    {
+      "id": "yeonju_micro_scope",
+      "prompt": "Original standalone square evidence item illustration for Stellar Academy mystery visual novel. Elegant anime painterly objects, navy blue and muted antique gold palette, moonlight and warm lamp, subtle star-motif academia. Main object fills frame but fully visible with margins. No collage, watermark, invented times, or narrative revelation. A portable optical magnifying lens with an observation memo, exact handwritten Korean '화면 구석에 예약 재생 표시가 보인다'. Whole lens and paper visible.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-232e3fbf-da3e-428d-9f44-1fecf888168b.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/yeonju_micro_scope.webp",
+      "title": "천연주의 휴대 광학 렌즈",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "yeonju_sky_photo",
+      "prompt": "Original standalone square evidence item illustration for Stellar Academy mystery visual novel. Elegant anime painterly objects, navy blue and muted antique gold palette, moonlight and warm lamp, subtle star-motif academia. Main object fills frame but fully visible with margins. No collage, watermark, invented times, or narrative revelation. A digital photograph displayed on a camera review screen: long exposure night sky with curved star trails over a school roof silhouette. Single exact timestamp 00:42. No other dates, times or labels.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-ad09a580-617c-4ff4-be84-0b0ec473ebbb.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/yeonju_sky_photo.webp",
+      "title": "천연주의 하늘의 장시간 노출 사진",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "jinwoo_rescue_helmet",
+      "prompt": "Original standalone square evidence item illustration for Stellar Academy mystery visual novel. Elegant anime painterly objects, navy blue and muted antique gold palette, moonlight and warm lamp, subtle star-motif academia. Main object fills frame but fully visible with margins. No collage, watermark, invented times, or narrative revelation. A personal white rescue helmet resting tilted, visible internal cushioning pads and chin strap; inner label '충격 보호용'. Ordinary modern safety equipment, clean not damaged, no blood.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-6b056e46-0077-4d04-a1c5-40d1d0396f85.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/jinwoo_rescue_helmet.webp",
+      "title": "백진우의 개인 구조 헬멧",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "jinwoo_floor_plan",
+      "prompt": "Original standalone square evidence item illustration for Stellar Academy mystery visual novel. Elegant anime painterly objects, navy blue and muted antique gold palette, moonlight and warm lamp, subtle star-motif academia. Main object fills frame but fully visible with margins. No collage, watermark, invented times, or narrative revelation. A safety training area schematic printed on paper, basement zone includes one completely blank unlabeled rectangle with corridor line touching one wall. Stylized conceptual schematic, no readable invented rooms or numbers.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-67c24a5f-9bcf-48e9-907b-6f62698c1443.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/jinwoo_floor_plan.webp",
+      "title": "백진우의 안전 훈련 구역 도면",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "jinwoo_failure_report",
+      "prompt": "Original standalone square evidence item illustration for Stellar Academy mystery visual novel. Elegant anime painterly objects, navy blue and muted antique gold palette, moonlight and warm lamp, subtle star-motif academia. Main object fills frame but fully visible with margins. No collage, watermark, invented times, or narrative revelation. A mock rescue drill report, small evacuation sequence list of anonymous people represented by simple neutral symbols, instructor assessment note exactly '판단을 보류한 이유를 설명하지 못함'. No actual injured people, no dates.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-a68f8eb8-8002-4590-a83b-68cc2e40d8a0.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/jinwoo_failure_report.webp",
+      "title": "백진우의 과거 구조 실패 기록",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "jinwoo_emergency_radio",
+      "prompt": "Original standalone square evidence item illustration for Stellar Academy mystery visual novel. Elegant anime painterly objects, navy blue and muted antique gold palette, moonlight and warm lamp, subtle star-motif academia. Main object fills frame but fully visible with margins. No collage, watermark, invented times, or narrative revelation. A modern handheld short range emergency radio with a tiny screen showing transmit list, receive list and rescue channel icons. No actual frequencies, timestamps, or messages. Antenna and whole body visible.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-ddffc1ab-97f4-41eb-a632-f7c7b1394b98.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/jinwoo_emergency_radio.webp",
+      "title": "백진우의 단거리 비상 무전기",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "rion_cipher_ledger",
+      "prompt": "Original standalone square evidence item illustration for Stellar Academy mystery visual novel. Elegant anime painterly objects, navy blue and muted antique gold palette, moonlight and warm lamp, subtle star-motif academia. Main object fills frame but fully visible with margins. No collage, watermark, invented times, or narrative revelation. An open decoding notebook with paired abstract symbols, one snowflake cooling tunnel symbol and one upper-floor door symbol, with fictional archaic glyphs and repeatedly crossed out handwritten decoding notes beneath. No readable revealed solution.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-2b8a289b-f773-4c1e-9250-da25ce67db03.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/rion_cipher_ledger.webp",
+      "title": "차리온의 지하 암호 해독 수첩",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "rion_patron_letter",
+      "prompt": "Original standalone square evidence item illustration for Stellar Academy mystery visual novel. Elegant anime painterly objects, navy blue and muted antique gold palette, moonlight and warm lamp, subtle star-motif academia. Main object fills frame but fully visible with margins. No collage, watermark, invented times, or narrative revelation. An anonymous cream paper patron letter without signature or sender name. Three legible phrases in body only '재능별 실험군', '외부 연락 제한', '폐쇄 환경 유지'. The rest abstract ink strokes, no seal identifying a person.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-6fda0e60-3851-4698-96cb-1f82decf6f74.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/rion_patron_letter.webp",
+      "title": "차리온의 익명의 후원자 편지",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "rion_golden_dictionary",
+      "prompt": "Original standalone square evidence item illustration for Stellar Academy mystery visual novel. Elegant anime painterly objects, navy blue and muted antique gold palette, moonlight and warm lamp, subtle star-motif academia. Main object fills frame but fully visible with margins. No collage, watermark, invented times, or narrative revelation. An open gilded golden-cover vocabulary dictionary, several words highlighted; handwritten margin phrase exactly '별이 사라지는 층의 왼쪽 길'. Other dictionary text tiny indistinct strokes. No map or solution.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-ff8dd295-bd17-4128-b1eb-4c1b26d1d278.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/rion_golden_dictionary.webp",
+      "title": "차리온의 금빛 어휘 사전",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "rion_sealed_note",
+      "prompt": "Original standalone square evidence item illustration for Stellar Academy mystery visual novel. Elegant anime painterly objects, navy blue and muted antique gold palette, moonlight and warm lamp, subtle star-motif academia. Main object fills frame but fully visible with margins. No collage, watermark, invented times, or narrative revelation. A small paper note labelled '연호', handwritten sentence '그 말은 믿기 어렵다' followed by fictional archaic cipher glyphs, with a heavily retraced underline beneath the cipher. No identifiable code solution.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-f74fa28b-8885-40e4-be58-7b6317929a77.png",
+      "asset": "apps/murder-mystery/assets/clues/stellar-academy-first-case/rion_sealed_note.webp",
+      "title": "차리온의 연호의 암호 쪽지",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    }
+  ]
+}

@@ -283,3 +283,7 @@ Reviewed and connected in shared game/studio/test renderer. Card IDs, prompts, s
 ## Academy batch 1 — 10 independent clues
 
 Reviewed and connected in shared game/studio/test renderer. Card IDs, prompts, source and final paths: ACADEMY_BATCH_1_REVIEW.json. Independent clues: 191/229; Academy 10/48. Remaining queue: ART_REMAINING.json.
+
+## Academy batch 2 — 10 independent clues
+
+Reviewed and connected in shared game/studio/test renderer. Card IDs, prompts, source and final paths: ACADEMY_BATCH_2_REVIEW.json. Independent clues: 201/229; Academy 20/48. Remaining queue: ART_REMAINING.json.
