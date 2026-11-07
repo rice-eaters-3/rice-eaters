@@ -1,0 +1,95 @@
+{
+  "method": "Built-in image generation, independent illustration per card, full-frame downscale.",
+  "assets": [
+    {
+      "id": "echo_shell_drive",
+      "prompt": "Use case: illustration-story. Original standalone square evidence artwork for Korean visual novel Neon Memory Quarantine, matching its cyberpunk forensic setting. Polished painterly object close-up, dark navy graphite, cyan holograms, restrained violet neon. Whole main object visible with margins. No cropping, collage, border, watermark or explanation of culprit. A compact artificial-personality shell storage device on a laboratory desk, translucent protected memory core, clearly visible separate data and power ports. A small file-creator interface uses anonymous abstract lines. No face, no person, no readable writing.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-df882d6f-15de-4492-a19d-a22b5528be32.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/echo_shell_drive.webp",
+      "title": "에코의 인공인격 셸 저장기",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "echo_ghost_key",
+      "prompt": "Use case: illustration-story. Original standalone square evidence artwork for Korean visual novel Neon Memory Quarantine, matching its cyberpunk forensic setting. Polished painterly object close-up, dark navy graphite, cyan holograms, restrained violet neon. Whole main object visible with margins. No cropping, collage, border, watermark or explanation of culprit. A holographic virtual authorization key above a small token, paired interface icons: server access illuminated cyan, vault access gray and disabled. No physical door or human, no readable writing.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-73108442-ab4c-47be-8812-27a05f12cf54.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/echo_ghost_key.webp",
+      "title": "에코의 가상 권한 키",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "echo_emotion_log",
+      "prompt": "Use case: illustration-story. Original standalone square evidence artwork for Korean visual novel Neon Memory Quarantine, matching its cyberpunk forensic setting. Polished painterly object close-up, dark navy graphite, cyan holograms, restrained violet neon. Whole main object visible with margins. No cropping, collage, border, watermark or explanation of culprit. A slim tablet displaying a chronological personal response journal: one repeated question icon followed by visibly different response lines, one revised paragraph and subtle emotion symbols. No legible dates, names or text, no face.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-57efc314-b271-4cc5-ba9b-f847d3d49ba0.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/echo_emotion_log.webp",
+      "title": "에코의 새로운 감정 기록",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "echo_backup_hash",
+      "prompt": "Use case: illustration-story. Original standalone square evidence artwork for Korean visual novel Neon Memory Quarantine, matching its cyberpunk forensic setting. Polished painterly object close-up, dark navy graphite, cyan holograms, restrained violet neon. Whole main object visible with margins. No cropping, collage, border, watermark or explanation of culprit. A forensic tablet with two stacked audio-file comparison panels. The upper panel label is exactly \"00:21\". Both panels show the EXACT same short hash \"A7C9F2\" clearly aligned, identical waveform thumbnails. No other readable text, no accusatory verdict.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-fcaccbc7-dfee-4a60-ad74-b9a5e702b50a.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/echo_backup_hash.webp",
+      "title": "에코의 윤세라 음성 해시",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "sol_courier_case",
+      "prompt": "Use case: illustration-story. Original standalone square evidence artwork for Korean visual novel Neon Memory Quarantine, matching its cyberpunk forensic setting. Polished painterly object close-up, dark navy graphite, cyan holograms, restrained violet neon. Whole main object visible with margins. No cropping, collage, border, watermark or explanation of culprit. A closed rugged rectangular memory-chip transport case with protected corners and a delivery manifest clipped on top. Two contact rows and transaction fields represented by abstract unreadable strokes. No loose chips outside case, no weapon, no readable names or dates.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-314ee9c2-d403-4b12-ad68-d30f1ac75d9c.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/sol_courier_case.webp",
+      "title": "솔의 기억 칩 운반 케이스",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "sol_anon_invoice",
+      "prompt": "Use case: illustration-story. Original standalone square evidence artwork for Korean visual novel Neon Memory Quarantine, matching its cyberpunk forensic setting. Polished painterly object close-up, dark navy graphite, cyan holograms, restrained violet neon. Whole main object visible with margins. No cropping, collage, border, watermark or explanation of culprit. A futuristic printed courier payment statement on a graphite counter, several transaction rows and masked account fields, a small delivery-case icon and identity-card icon. No legible text, names, dates, amounts or conclusions.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-79604bdf-a8f4-4240-8ae3-ec08860e5330.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/sol_anon_invoice.webp",
+      "title": "솔의 가명 입금 명세",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "sol_radio_shell",
+      "prompt": "Use case: illustration-story. Original standalone square evidence artwork for Korean visual novel Neon Memory Quarantine, matching its cyberpunk forensic setting. Polished painterly object close-up, dark navy graphite, cyan holograms, restrained violet neon. Whole main object visible with margins. No cropping, collage, border, watermark or explanation of culprit. An opened handheld radio casing with the main circuit-board slot conspicuously EMPTY. Visible unconnected terminals and an empty relay-key socket. Only a few peripheral wires; NO main circuit board inside, no functioning screen, no readable words.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-98ec7f41-86a9-4f18-9dfc-dba75e923344.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/sol_radio_shell.webp",
+      "title": "솔의 교신기 껍데기",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "sol_immunity_paper",
+      "prompt": "Use case: illustration-story. Original standalone square evidence artwork for Korean visual novel Neon Memory Quarantine, matching its cyberpunk forensic setting. Polished painterly object close-up, dark navy graphite, cyan holograms, restrained violet neon. Whole main object visible with margins. No cropping, collage, border, watermark or explanation of culprit. A formal inspector cooperation agreement on pale paper in a dark navy folder, a small memory-chip evidence icon, official seal, two signature fields and conditional-review checkboxes. No readable names, dates, text, no handcuffs or accused person.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-491ad281-d815-428b-b06a-e11707e66f96.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/sol_immunity_paper.webp",
+      "title": "솔의 감사관 면책 협약서",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "memory_audit_letter",
+      "prompt": "Use case: illustration-story. Original standalone square evidence artwork for Korean visual novel Neon Memory Quarantine, matching its cyberpunk forensic setting. Polished painterly object close-up, dark navy graphite, cyan holograms, restrained violet neon. Whole main object visible with margins. No cropping, collage, border, watermark or explanation of culprit. A formal audit announcement letter clipped to a dark futuristic clipboard, exact prominently printed time \"01:00\", a list of attached document references rendered as unreadable lines, memory chip and identity-card emblems. No other legible text, no suspect portrait.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-129d96ea-a00e-4562-940b-c1473ea9d915.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/memory_audit_letter.webp",
+      "title": "윤세라의 감사 예고장",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    },
+    {
+      "id": "memory_body_scan",
+      "prompt": "Use case: illustration-story. Original standalone square evidence artwork for Korean visual novel Neon Memory Quarantine, matching its cyberpunk forensic setting. Polished painterly object close-up, dark navy graphite, cyan holograms, restrained violet neon. Whole main object visible with margins. No cropping, collage, border, watermark or explanation of culprit. A large flat forensic laboratory panel showing a generic body-outline diagram and stored biological recording. Graph has a few activity peaks on LEFT third, a vertical marker labeled exactly \"00:16\", then a perfectly flat horizontal line on RIGHT two thirds. NO peaks after marker. No real body, no wounds, no other readable text.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-f65fcb8b-bf56-4b8e-898a-8281b23fb0e5.png",
+      "asset": "apps/murder-mystery/assets/clues/neon-memory-quarantine/memory_body_scan.webp",
+      "title": "실물 신체 감식",
+      "oldProblem": "Legacy concept-sheet fallback did not independently illustrate this card.",
+      "review": "Individually inspected object, visible marks and timestamps against card back. Full frame preserved; no added culprit verdict."
+    }
+  ]
+}
