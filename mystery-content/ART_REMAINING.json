@@ -120,48 +120,8 @@
     {
       "series": "neon-memory-quarantine",
       "cluesTotal": 54,
-      "cluesComplete": 30,
+      "cluesComplete": 40,
       "pendingClues": [
-        {
-          "id": "memory_echo_frame",
-          "title": "00:21 감사관 홀로그램"
-        },
-        {
-          "id": "memory_emptied_chair",
-          "title": "진료실 빈 의자"
-        },
-        {
-          "id": "memory_id_overlap",
-          "title": "겹치는 생체 계정"
-        },
-        {
-          "id": "memory_underground_bill",
-          "title": "배송 대금 명세"
-        },
-        {
-          "id": "memory_exmate_memo",
-          "title": "과거 공안 정비 기록"
-        },
-        {
-          "id": "memory_legal_hold",
-          "title": "인공인격 삭제 명령"
-        },
-        {
-          "id": "memory_emergency_log",
-          "title": "EMP 격리 경보"
-        },
-        {
-          "id": "memory_coat_camera",
-          "title": "기억실 출입 감시 영상"
-        },
-        {
-          "id": "memory_voice_repeat",
-          "title": "홀로그램 음성 중복"
-        },
-        {
-          "id": "memory_fake_patient",
-          "title": "감염 검사 통보"
-        },
         {
           "id": "memory_core_key",
           "title": "깊은 기억 금고 중계 키"
