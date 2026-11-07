@@ -191,41 +191,8 @@
     {
       "series": "stellar-academy-first-case",
       "cluesTotal": 48,
-      "cluesComplete": 40,
-      "pendingClues": [
-        {
-          "id": "academy_projection_backup",
-          "title": "플라네타륨 투사기 백업"
-        },
-        {
-          "id": "academy_early_signal",
-          "title": "지하 복도에서 발견한 암호"
-        },
-        {
-          "id": "academy_lock_token",
-          "title": "지하 기술실 봉인 해제표"
-        },
-        {
-          "id": "academy_escape_pass_card",
-          "title": "탈출 통로 최종 인증서"
-        },
-        {
-          "id": "academy_admin_original",
-          "title": "운영자의 비밀 연구 원본"
-        },
-        {
-          "id": "academy_lost_student",
-          "title": "이전 기수의 탈출 기록"
-        },
-        {
-          "id": "academy_culprit_chain",
-          "title": "관측관 시각별 기록표"
-        },
-        {
-          "id": "academy_second_exit",
-          "title": "지하 최종 탈출 구획"
-        }
-      ],
+      "cluesComplete": 48,
+      "pendingClues": [],
       "portraitsTotal": 6,
       "pendingPortraits": [
         {
