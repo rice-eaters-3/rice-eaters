@@ -73,6 +73,14 @@ test('RPG screen: map is main, 7-chapter booklet is paged, cards reveal only aut
   assert.ok(invHtml.includes('조사 가능 정보'));
   assert.ok(invHtml.includes('research-card'),'card list lives in dedicated view');
   assert.ok(!invHtml.includes('사진 &lt;증거&gt;'),'catalog should keep backs hidden until a flip');
+  view.navigate('clue-open','desk');
+  const unopened=view.render(investigation);
+  assert.ok(unopened.includes('role="dialog"')&&unopened.includes('🪙 조사 토큰 1개 사용하기'),
+    'a clue popup has a one-token research button');
+  view.navigate('clue-flip');
+  assert.ok(!view.render(investigation).includes('data-clue-art="desk"'),
+    'unresearched evidence cannot be flipped for an unauthorized viewer');
+  view.navigate('clue-close');
   view.navigate('clue-open','photo');
   assert.ok(!view.render(investigation).includes('사진 &lt;증거&gt;'),'modal opens showing only its front');
   view.navigate('clue-flip');
