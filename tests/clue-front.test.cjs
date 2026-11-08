@@ -39,9 +39,12 @@ test('Studio player views do not expose evidence title or subtitle until discove
   assert.equal(hidden.title,null);
   assert.equal(hidden.subtitle,null);
   assert.equal(hidden.revealed.length,0);
-  for(const prerequisite of ['jobi_stage_mouse','jobi_qualifier_card','jobi_stopwatch']){
+  // The personal-item quota means different players collaborate on the earlier cards.
+  for(const [role,prerequisite] of [['cloud','jobi_stage_mouse'],['hasu','jobi_qualifier_card'],['karl','jobi_stopwatch']]){
+    E.switchRole(state,role);
     E.reserve(state,prerequisite);E.investigate(state,prerequisite);
   }
+  E.switchRole(state,'mayushi');
   E.reserve(state,'jobi_threat_phone');
   E.investigate(state,'jobi_threat_phone');
   const seen=E.roomView(state).investigation.cards.find(c=>c.id==='jobi_threat_phone');
@@ -158,8 +161,9 @@ test('sequential owner evidence cannot be skipped, and previous discovery unlock
   assert.equal(E.roomView(s).investigation.cards.find(c=>c.id==='jobi_qualifier_card').sequenceLocked,true);
   E.reserve(s,'jobi_stage_mouse');E.investigate(s,'jobi_stage_mouse');
   assert.equal(E.roomView(s).investigation.cards.find(c=>c.id==='jobi_qualifier_card').sequenceLocked,false);
-  E.reserve(s,'jobi_qualifier_card');E.investigate(s,'jobi_qualifier_card');
   E.switchRole(s,'cloud');
+  E.reserve(s,'jobi_qualifier_card');E.investigate(s,'jobi_qualifier_card');
+  E.switchRole(s,'hasu');
   assert.equal(E.roomView(s).investigation.cards.find(c=>c.id==='jobi_stopwatch').sequenceLocked,false,
     'a previous card investigated by another role globally unlocks the following card');
   assert.equal(E.roomView(s).investigation.cards.find(c=>c.id==='jobi_qualifier_card').title,null,
