@@ -1,0 +1,94 @@
+{
+  "assets": [
+    {
+      "series": "stellar-academy-first-case",
+      "kind": "shelf",
+      "previousIssue": "Legacy concept-board crop instead of independent prop illustration",
+      "path": "apps/murder-mystery/assets/props/stellar-academy-first-case/shelf.webp",
+      "prompt": "New independent square map-object sprite for Stellar Academy mystery. Elegant navy and antique gold painterly anime style matching supplied board. One isolated object, clear three-quarter view, entire silhouette and feet within generous margins, transparent background. No collage or people, no secret contents. Tall dark wooden library bookcase filled with navy and gold bound books, no readable titles.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-79ca8ba5-bae7-4987-b847-7c4815f07035.png",
+      "review": "Full silhouette and object identity checked; no secret contents or plot conclusions; alpha retained."
+    },
+    {
+      "series": "stellar-academy-first-case",
+      "kind": "telescope",
+      "previousIssue": "Legacy concept-board crop instead of independent prop illustration",
+      "path": "apps/murder-mystery/assets/props/stellar-academy-first-case/telescope.webp",
+      "prompt": "New independent square map-object sprite for Stellar Academy mystery. Elegant navy and antique gold painterly anime style matching supplied board. One isolated object, clear three-quarter view, entire silhouette and feet within generous margins, transparent background. No collage or people, no secret contents. White and brass optical telescope on dark adjustable tripod, whole telescope and all legs.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-539622e3-942d-4874-a351-f04ec102d053.png",
+      "review": "Full silhouette and object identity checked; no secret contents or plot conclusions; alpha retained."
+    },
+    {
+      "series": "stellar-academy-first-case",
+      "kind": "projector",
+      "previousIssue": "Legacy concept-board crop instead of independent prop illustration",
+      "path": "apps/murder-mystery/assets/props/stellar-academy-first-case/projector.webp",
+      "prompt": "New independent square map-object sprite for Stellar Academy mystery. Elegant navy and antique gold painterly anime style matching supplied board. One isolated object, clear three-quarter view, entire silhouette and feet within generous margins, transparent background. No collage or people, no secret contents. Classic spherical planetarium star projector on dark pedestal, many tiny lenses, subtle violet-blue illumination.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-2fdd23db-0e55-4f63-a4b8-bf856e692cd4.png",
+      "review": "Full silhouette and object identity checked; no secret contents or plot conclusions; alpha retained."
+    },
+    {
+      "series": "stellar-academy-first-case",
+      "kind": "terminal",
+      "previousIssue": "Legacy concept-board crop instead of independent prop illustration",
+      "path": "apps/murder-mystery/assets/props/stellar-academy-first-case/terminal.webp",
+      "prompt": "New independent square map-object sprite for Stellar Academy mystery. Elegant navy and antique gold painterly anime style matching supplied board. One isolated object, clear three-quarter view, entire silhouette and feet within generous margins, transparent background. No collage or people, no secret contents. Navy modern basement control console with two blue screens showing abstract star grids and controls. No dates, times, warnings or clues.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-908d7d17-0383-46d3-b9dd-340a53b54d6c.png",
+      "review": "Full silhouette and object identity checked; no secret contents or plot conclusions; alpha retained."
+    },
+    {
+      "series": "stellar-academy-first-case",
+      "kind": "medical",
+      "previousIssue": "Legacy concept-board crop instead of independent prop illustration",
+      "path": "apps/murder-mystery/assets/props/stellar-academy-first-case/medical.webp",
+      "prompt": "New independent square map-object sprite for Stellar Academy mystery. Elegant navy and antique gold painterly anime style matching supplied board. One isolated object, clear three-quarter view, entire silhouette and feet within generous margins, transparent background. No collage or people, no secret contents. Clean modern examination bed with white cushion, metal frame, small monitor, no patient or restraints.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-fd40c67e-fe04-49a6-b0e4-7cd1055c18bf.png",
+      "review": "Full silhouette and object identity checked; no secret contents or plot conclusions; alpha retained."
+    },
+    {
+      "series": "stellar-academy-first-case",
+      "kind": "door",
+      "previousIssue": "Legacy concept-board crop instead of independent prop illustration",
+      "path": "apps/murder-mystery/assets/props/stellar-academy-first-case/door.webp",
+      "prompt": "New independent square map-object sprite for Stellar Academy mystery. Elegant navy and antique gold painterly anime style matching supplied board. One isolated object, clear three-quarter view, entire silhouette and feet within generous margins, transparent background. No collage or people, no secret contents. Stone mounted rooftop direction sign reading exactly 옥상 출구 with a right arrow, simple metal railing behind. Do not mark fake or reveal any concealed passage.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-bd726f7c-3571-4d39-b957-edbe0ed5fe81.png",
+      "review": "Full silhouette and object identity checked; no secret contents or plot conclusions; alpha retained."
+    },
+    {
+      "series": "stellar-academy-first-case",
+      "kind": "generator",
+      "previousIssue": "Legacy concept-board crop instead of independent prop illustration",
+      "path": "apps/murder-mystery/assets/props/stellar-academy-first-case/generator.webp",
+      "prompt": "New independent square map-object sprite for Stellar Academy mystery. Elegant navy and antique gold painterly anime style matching supplied board. One isolated object, clear three-quarter view, entire silhouette and feet within generous margins, transparent background. No collage or people, no secret contents. Basement cooling machinery with large circular ventilation fan, pipes and a modest control box. No labels or warning messages.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-c86e7da1-e292-42f8-8d7f-b5ba1a0b3761.png",
+      "review": "Full silhouette and object identity checked; no secret contents or plot conclusions; alpha retained."
+    },
+    {
+      "series": "neon-memory-quarantine",
+      "kind": "terminal",
+      "previousIssue": "Legacy concept-board crop instead of independent prop illustration",
+      "path": "apps/murder-mystery/assets/props/neon-memory-quarantine/terminal.webp",
+      "prompt": "Use case stylized-concept. Draw a NEW independent square isolated map prop for Neon Memory Quarantine mystery. Supplied concept board is style reference only, do not crop or reuse. Painterly anime game asset, charcoal metal, cyan and violet neon highlights. Three-quarter view, full silhouette with margins, transparent background. No people, no labels, no story spoilers. Futuristic standing holographic control console, translucent cyan screen with abstract geometric interface, black metal base. No readable text, logs, personal records or clues.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-4e549ca5-9d81-44c8-9331-799f402298ad.png",
+      "review": "Full silhouette and object identity checked; no secret contents or plot conclusions; alpha retained."
+    },
+    {
+      "series": "neon-memory-quarantine",
+      "kind": "sofa",
+      "previousIssue": "Legacy concept-board crop instead of independent prop illustration",
+      "path": "apps/murder-mystery/assets/props/neon-memory-quarantine/sofa.webp",
+      "prompt": "Use case stylized-concept. Draw a NEW independent square isolated map prop for Neon Memory Quarantine mystery. Supplied concept board is style reference only, do not crop or reuse. Painterly anime game asset, charcoal metal, cyan and violet neon highlights. Three-quarter view, full silhouette with margins, transparent background. No people, no labels, no story spoilers. Three-seat waiting-room sofa, dark navy upholstered cushions, clean angular brushed-metal frame and faint cyan accent lighting.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-ccbd85ca-0188-4992-9cb1-862e2fb4194e.png",
+      "review": "Full silhouette and object identity checked; no secret contents or plot conclusions; alpha retained."
+    },
+    {
+      "series": "neon-memory-quarantine",
+      "kind": "cabinet",
+      "previousIssue": "Legacy concept-board crop instead of independent prop illustration",
+      "path": "apps/murder-mystery/assets/props/neon-memory-quarantine/cabinet.webp",
+      "prompt": "Use case stylized-concept. Draw a NEW independent square isolated map prop for Neon Memory Quarantine mystery. Supplied concept board is style reference only, do not crop or reuse. Painterly anime game asset, charcoal metal, cyan and violet neon highlights. Three-quarter view, full silhouette with margins, transparent background. No people, no labels, no story spoilers. Closed secure futuristic storage cabinet, dark metal, small cyan access panel and subtle magenta status light. No visible contents or labels.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-7d823ae4-477b-4467-b500-55f36a506937.png",
+      "review": "Full silhouette and object identity checked; no secret contents or plot conclusions; alpha retained."
+    }
+  ]
+}
