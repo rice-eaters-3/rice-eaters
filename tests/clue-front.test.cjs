@@ -7,10 +7,10 @@ const d1=require('../mystery-content/d1-gaming.case.json');
 
 test('unrevealed cards have stable, sequential owner and location labels',()=>{
   const cards=d1.game.investigation.cards,labels=front.labels(cards,d1.story.characters,d1.game.floors);
-  assert.equal(labels.jobi_threat_phone,'조비의 소지품 1');
-  assert.equal(labels.jobi_stage_mouse,'조비의 소지품 2');
-  assert.equal(labels.jobi_qualifier_card,'조비의 소지품 3');
-  assert.equal(labels.jobi_stopwatch,'조비의 소지품 4');
+  assert.equal(labels.jobi_threat_phone,'조비의 소지품 4');
+  assert.equal(labels.jobi_stage_mouse,'조비의 소지품 1');
+  assert.equal(labels.jobi_qualifier_card,'조비의 소지품 2');
+  assert.equal(labels.jobi_stopwatch,'조비의 소지품 3');
   const throne=cards.filter(c=>c.location?.floor==='penthouse'&&
     c.location.x>=1&&c.location.x<10&&c.location.y>=1&&c.location.y<6);
   assert.ok(throne.length>=2);
@@ -35,10 +35,13 @@ test('Studio player views do not expose evidence title or subtitle until discove
   E.switchRole(state,'mayushi');
   E.switchPhase(state,'investigation1');
   const hidden=E.roomView(state).investigation.cards.find(c=>c.id==='jobi_threat_phone');
-  assert.equal(hidden.frontTitle,'조비의 소지품 1');
+  assert.equal(hidden.frontTitle,'조비의 소지품 4');
   assert.equal(hidden.title,null);
   assert.equal(hidden.subtitle,null);
   assert.equal(hidden.revealed.length,0);
+  for(const prerequisite of ['jobi_stage_mouse','jobi_qualifier_card','jobi_stopwatch']){
+    E.reserve(state,prerequisite);E.investigate(state,prerequisite);
+  }
   E.reserve(state,'jobi_threat_phone');
   E.investigate(state,'jobi_threat_phone');
   const seen=E.roomView(state).investigation.cards.find(c=>c.id==='jobi_threat_phone');
