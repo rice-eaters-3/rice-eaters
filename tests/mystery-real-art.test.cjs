@@ -15,7 +15,7 @@ const scenarios=[
 const reviewedClueCounts={'d1-crown-of-ashes':71,'cruel-heart-island':56,'neon-memory-quarantine':54,'stellar-academy-first-case':48};
 const newD1Props=['sink','fridge','pc','gargoyle','throne','stove','table','camera','plant','desk','bed','cabinet','terminal','server','generator','statue'];
 const independentProps={'cruel-heart-island':['boat','cabinet','plant','fireplace','camera','terminal','sofa','table','wardrobe','fridge','generator','shelf','server'],'d1-crown-of-ashes':newD1Props,'stellar-academy-first-case':['bed','cabinet','desk','shelf','telescope','projector','terminal','medical','door','generator'],'neon-memory-quarantine':['terminal','sofa','cabinet','camera','medical','pod','generator','server']};
-const navigationThemes=['d1-crown-of-ashes','stellar-academy-first-case'];
+const navigationThemes=['d1-crown-of-ashes','stellar-academy-first-case','cruel-heart-island','neon-memory-quarantine'];
 const navigationKinds=['door-open','door-closed','door-locked','stairs-up','stairs-down'];
 const imagePath=name=>path.join(root,'apps/murder-mystery/assets',name);
 test('all four original concept-sheet WebP image files are real binary assets with a RIFF/WEBP header',()=>{

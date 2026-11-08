@@ -331,3 +331,9 @@ Added independent neutral portraits of producer 신원재 and auditor 윤세라,
 ## D1 / Academy navigation (10)
 
 Independent open/closed/locked doors and up/down stair sprites. Added state selection and HTTP regression coverage; locked state retains precedence. Original full images fitted without cropping. Sources/prompts: NAV_D1_ACADEMY_REVIEW.json.
+
+## Final navigation batch — 2026-11-09
+
+Connected ten independent island/neon navigation images (open/closed/locked doors and up/down stairs), completing 20 navigation assets across four cases. Eight earlier generated originals recovered; two missing stair originals generated anew. Full-frame resizing only; no concept-sheet crop reuse. Source IDs, paths and review notes: `NAV_ISLAND_NEON_REVIEW.json`. Shared renderer covers game, studio and test mode. Latest investigation modal and per-character-per-round rule preserved.
+
+Validation: `npm test` passed 63/63; four-case Chromium smoke passed hidden-front privacy and authorized modal flipping; all 229 clue images decoded. Inventory on disk: clues 229, portraits 32 (28 players + 4 primary victims), props 47, backgrounds 4, navigation 20 = 332. HTTP asset tests cover navigation states and shared rendering. No human full-session multiplayer playtest was performed.
