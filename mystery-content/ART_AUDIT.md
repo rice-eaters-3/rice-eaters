@@ -327,3 +327,7 @@ All thirteen Island prop kinds now use independent originals through the shared 
 ## Remaining victim NPC portraits
 
 Added independent neutral portraits of producer 신원재 and auditor 윤세라, canonical victim metadata, shared victim renderer registration and HTTP asset coverage. All four primary victim NPCs now have independent portraits. Sources and prompts: ISLAND_NEON_NPC_REVIEW.json.
+
+## D1 / Academy navigation (10)
+
+Independent open/closed/locked doors and up/down stair sprites. Added state selection and HTTP regression coverage; locked state retains precedence. Original full images fitted without cropping. Sources/prompts: NAV_D1_ACADEMY_REVIEW.json.

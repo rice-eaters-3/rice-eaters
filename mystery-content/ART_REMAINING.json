@@ -1,5 +1,5 @@
 {
-  "note": "Independent art connected: all clues, players, four primary victim NPCs and major prop kinds. Remaining: three door states and two stair directions per series (20 navigation illustrations).",
+  "note": "All clue, player, primary victim NPC and major prop art connected. Remaining: Island and Neon door/stair navigation (10 images).",
   "series": [
     {
       "series": "d1-crown-of-ashes",
@@ -40,16 +40,6 @@
   ],
   "pendingNavigation": [
     {
-      "series": "d1-crown-of-ashes",
-      "assets": [
-        "door-open",
-        "door-closed",
-        "door-locked",
-        "stairs-up",
-        "stairs-down"
-      ]
-    },
-    {
       "series": "cruel-heart-island",
       "assets": [
         "door-open",
@@ -61,16 +51,6 @@
     },
     {
       "series": "neon-memory-quarantine",
-      "assets": [
-        "door-open",
-        "door-closed",
-        "door-locked",
-        "stairs-up",
-        "stairs-down"
-      ]
-    },
-    {
-      "series": "stellar-academy-first-case",
       "assets": [
         "door-open",
         "door-closed",

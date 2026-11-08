@@ -388,9 +388,18 @@ window.MysteryArt=(function(){
   // For custom/legacy maps whose authors entered an emoji, display that.
   return '<span class="map-prop-icon" aria-hidden="true">'+escape(o?.icon||'✧')+'</span>';
  }
+ const independentNavigation=new Set(['d1-crown-of-ashes','stellar-academy-first-case']);
+ function navigationAsset(story,key,css,label){
+  const theme=storyFor(story),data=knownStory(story);
+  if(!independentNavigation.has(theme))return null;
+  return artCrop(story,[0,0,384,384],css,label,
+   {...data,file:'navigation/'+theme+'/'+key+'.webp',size:[384,384]});
+ }
  function door(d,story){
   const data=knownStory(story);
   const kind=d?.locked?'locked':d?.open?'open':'closed';
+  const independent=navigationAsset(story,'door-'+kind,'mystery-door-art',d?.name||'문');
+  if(independent)return independent;
   const rect=data?.doors?.[kind];
   return rect?artCrop(story,rect,'mystery-door-art',d?.name||'문'):null;
  }
@@ -399,6 +408,8 @@ window.MysteryArt=(function(){
   if(!data)return null;
   const down=/아래|내려|down|지하/i.test(portal?.label||'');
   const key=down?'down':'up';
+  const independent=navigationAsset(story,'stairs-'+key,'mystery-stair-art',portal?.label||'층 이동');
+  if(independent)return independent;
   return artCrop(story,data.stairs[key],'mystery-stair-art',portal?.label||'층 이동');
  }
  function cover(story){

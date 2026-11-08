@@ -15,6 +15,8 @@ const scenarios=[
 const reviewedClueCounts={'d1-crown-of-ashes':71,'cruel-heart-island':56,'neon-memory-quarantine':54,'stellar-academy-first-case':48};
 const newD1Props=['sink','fridge','pc','gargoyle','throne','stove','table','camera','plant','desk','bed','cabinet','terminal','server','generator','statue'];
 const independentProps={'cruel-heart-island':['boat','cabinet','plant','fireplace','camera','terminal','sofa','table','wardrobe','fridge','generator','shelf','server'],'d1-crown-of-ashes':newD1Props,'stellar-academy-first-case':['bed','cabinet','desk','shelf','telescope','projector','terminal','medical','door','generator'],'neon-memory-quarantine':['terminal','sofa','cabinet','camera','medical','pod','generator','server']};
+const navigationThemes=['d1-crown-of-ashes','stellar-academy-first-case'];
+const navigationKinds=['door-open','door-closed','door-locked','stairs-up','stairs-down'];
 const imagePath=name=>path.join(root,'apps/murder-mystery/assets',name);
 test('all four original concept-sheet WebP image files are real binary assets with a RIFF/WEBP header',()=>{
  for(const [,id,file] of scenarios){
@@ -63,11 +65,11 @@ test('every player, map prop and clue has a case illustration',()=>{
    }
    for(const door of floor.doors||[]){
     const v=art.door({name:door.name,locked:door.locked,open:!door.closed&&!door.locked},id);
-    assert.ok(v?.includes(file),'door state must have real painted game sprite');
+    assert.ok(v?.includes(navigationThemes.includes(id)?'navigation/'+id+'/door-':file),'door state must have real painted game sprite');
    }
    for(const portal of floor.portals||[]){
     const v=art.stairs(portal,id);
-    assert.ok(v?.includes(file),'portal must use painted floor transition');
+    assert.ok(v?.includes(navigationThemes.includes(id)?'navigation/'+id+'/stairs-':file),'portal must use painted floor transition');
    }
   }
   assert.equal(tally,props);
@@ -165,7 +167,8 @@ test('local HTTP server serves original and standalone artwork with image/webp M
   portraits.push(['',theme,'portraits/'+theme+'/'+victim.id+'.webp']);
  }
  const props=Object.entries(independentProps).flatMap(([theme,kinds])=>kinds.map(kind=>['',theme,'props/'+theme+'/'+kind+'.webp']));
- for(const [,id,file] of [...scenarios,...independent,...backgrounds,...portraits,...props]){
+ const navigation=navigationThemes.flatMap(theme=>navigationKinds.map(kind=>['',theme,'navigation/'+theme+'/'+kind+'.webp']));
+ for(const [,id,file] of [...scenarios,...independent,...backgrounds,...portraits,...props,...navigation]){
   const response=await fetch(base+'/apps/murder-mystery/assets/'+file);
   assert.equal(response.status,200,id+' artwork must be browser-accessible');
   assert.match(response.headers.get('content-type')||'',/image\/webp/);
@@ -173,4 +176,17 @@ test('local HTTP server serves original and standalone artwork with image/webp M
   assert.ok(binary.length>(file.includes('/')?1000:100000));
   assert.equal(binary.subarray(0,4).toString('ascii'),'RIFF');
  }
+});
+
+test('independent navigation preserves locked precedence and stair direction',()=>{
+ for(const theme of navigationThemes){
+  for(const [state,input] of [['open',{open:true}],['closed',{}],['locked',{locked:true,open:true}]]){
+   assert.ok(art.door(input,theme).includes('navigation/'+theme+'/door-'+state+'.webp'));
+  }
+  for(const [direction,label] of [['up','위층으로'],['down','아래층으로']]){
+   assert.ok(art.stairs({label},theme).includes('navigation/'+theme+'/stairs-'+direction+'.webp'));
+  }
+ }
+ assert.equal(art.door({},'unknown'),null);
+ assert.equal(art.stairs({},'unknown'),null);
 });
