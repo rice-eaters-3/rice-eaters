@@ -72,10 +72,17 @@ test('RPG screen: map is main, 7-chapter booklet is paged, cards reveal only aut
   const invHtml=view.render(investigation);
   assert.ok(invHtml.includes('조사 가능 정보'));
   assert.ok(invHtml.includes('research-card'),'card list lives in dedicated view');
-  assert.ok(invHtml.includes('사진 &lt;증거&gt;'),'investigated back escaped');
+  assert.ok(!invHtml.includes('사진 &lt;증거&gt;'),'catalog should keep backs hidden until a flip');
+  view.navigate('clue-open','photo');
+  assert.ok(!view.render(investigation).includes('사진 &lt;증거&gt;'),'modal opens showing only its front');
+  view.navigate('clue-flip');
+  const flippedHtml=view.render(investigation);
+  assert.ok(flippedHtml.includes('사진 &lt;증거&gt;'),'authorized reverse escapes HTML');
+  assert.ok(flippedHtml.includes('data-clue-art="photo"'),'authorized reverse displays its illustration');
+  view.navigate('clue-close');
   assert.ok(invHtml.includes('data-card="desk"'),'first come selection action');
   assert.ok(!invHtml.includes('data-clue-art="desk"'),'hidden illustration never rendered');
-  assert.ok(invHtml.includes('data-clue-art="photo"'),'authorized back contains illustration');
+  assert.ok(!invHtml.includes('data-clue-art="photo"'),'the main catalog never reveals its back artwork');
   assert.ok(invHtml.includes('지도로 돌아가기 (R)'),'research catalog has exit button');
   const ownCase={...investigation,investigation:{...investigation.investigation,
     myCards:[{id:'holding1',cardId:'desk',title:'조사한 편지',subtitle:'비밀 증거',
@@ -89,7 +96,14 @@ test('RPG screen: map is main, 7-chapter booklet is paged, cards reveal only aut
   for(const action of ['card-public','card-share','exchange-offer','exchange-reply','exchange-cancel'])
     assert.ok(exchangeView.includes('data-action="'+action+'"'),action+' control is visible');
   assert.ok(exchangeView.includes('tokenTransferTarget'),'token transfer target selector exists');
-  assert.ok(exchangeView.includes('양도 전 비밀 &lt;important&gt;'),'private holding text is HTML escaped');
+  assert.ok(!exchangeView.includes('양도 전 비밀 &lt;important&gt;'),'the holding grid also stays front-only');
+  const ownedRoom={...ownCase,investigation:{...ownCase.investigation,cards:ownCase.investigation.cards.map(c=>
+    c.id==='desk'?{...c,title:'조사한 편지',heldByMe:1,revealed:[{back:'양도 전 비밀 <important>'}]}:c)}};
+  sandbox.window.MysteryRoomState.room=ownedRoom;
+  view.navigate('clue-open','desk');view.navigate('clue-flip');
+  assert.ok(view.render(ownedRoom).includes('양도 전 비밀 &lt;important&gt;'),
+    'authorized holding reverse must be escaped in modal');
+  view.navigate('clue-close');
   const noTrades={...ownCase,phase:'discussion1',investigation:{...ownCase.investigation,canInvestigate:false}};
   const readOnly=view.render(noTrades);
   assert.ok(readOnly.includes('조사한 편지'),'owned cards remain readable in discussion');
