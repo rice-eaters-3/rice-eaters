@@ -162,6 +162,8 @@ function investigationView(room,member){
     const unlocked=cardUnlocked(card,room);
     const previous=sequence[card.id];
     const sequenceLocked=!!previous&&!(discovered[previous]||[]).length;
+    const personLimitReached=card.type==='belonging'&&clueFront.personalInvestigationUsed(
+      spec.cards,discovered,member.id,room.phase,card.owner);
     if(!unlocked&&card.visibility==='hidden'&&!canRead)return [];
     const found=discovered[card.id]||[],reservation=activeReservation(room,card.id);
     return [{
@@ -169,6 +171,7 @@ function investigationView(room,member){
       title:canRead?card.title:null,subtitle:canRead?card.subtitle:null,type:card.type,
       location:card.location||null,locked:!unlocked||sequenceLocked,
       sequenceLocked,sequenceAfter:sequenceLocked?frontTitles[previous]:null,
+      personLimitReached,
       requiresPresence:card.requiresPresence===true,
       atLocation:!!(card.location&&positionFor(room,member)?.floor===card.location.floor&&
         positionFor(room,member)?.x===card.location.x&&positionFor(room,member)?.y===card.location.y),
@@ -816,6 +819,9 @@ async function api(req,res,url,sid){
     }
     if(card.owner===player.characterId||(card.blockedFor||[]).includes(player.characterId))
       fail(403,'이 캐릭터는 해당 카드를 조사할 수 없습니다.');
+    if(card.type==='belonging'&&clueFront.personalInvestigationUsed(
+      spec.cards,data.discovered,player.id,room.phase,card.owner))
+      fail(409,'이번 조사 단계에서 해당 인물의 소지품은 1장만 조사할 수 있습니다. 2차 조사에서는 다시 1장을 조사할 수 있습니다.');
     if((data.discovered[card.id]||[]).length&&!card.repeatable)
       fail(409,'이미 다른 플레이어가 조사한 카드입니다.');
     if((data.tokens[player.id]||0)<1)fail(409,'조사 토큰이 부족합니다.');
@@ -832,7 +838,7 @@ async function api(req,res,url,sid){
     delete data.reserved[card.id];
     data.tokens[player.id]--;
     data.discovered[card.id] ||= [];
-    data.discovered[card.id].push({playerId:player.id,at:Date.now()});
+    data.discovered[card.id].push({playerId:player.id,phase:room.phase,at:Date.now()});
     exchangeFor(room).holdings.push({id:randomId(8),cardId:card.id,
       ownerId:player.id,createdAt:Date.now()});
     if(card.grant){
