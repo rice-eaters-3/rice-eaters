@@ -1501,6 +1501,30 @@
           "sequenceOrder": 7
         },
         {
+          "id": "cult_fund_account",
+          "title": "교단 후원 계좌 일부",
+          "subtitle": "",
+          "clueKind": "cult",
+          "type": "information",
+          "back": "계좌 내역의 정기 송금인란에 ‘D1 행사 자회사’가 적혀 있다. ‘초청 강의’와 ‘가고일 퍼포먼스’ 항목에 같은 예산 코드가 반복된다. 최종 승인란은 비어 있다.",
+          "visibility": "locked",
+          "availableFromPhase": "investigation1",
+          "repeatable": false,
+          "transferable": true,
+          "requires": [],
+          "blockedFor": [],
+          "owner": null,
+          "location": {
+            "floor": "operations",
+            "x": 4,
+            "y": 3
+          },
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 1
+        },
+        {
           "id": "cult_marvin_bill",
           "title": "마빈의 재활비 영수증",
           "subtitle": "",
@@ -1522,7 +1546,7 @@
           "requiresPresence": false,
           "grant": null,
           "insights": {},
-          "sequenceOrder": 1
+          "sequenceOrder": 2
         },
         {
           "id": "cult_donation_anchor",
@@ -1546,7 +1570,7 @@
           "requiresPresence": false,
           "grant": null,
           "insights": {},
-          "sequenceOrder": 2
+          "sequenceOrder": 3
         },
         {
           "id": "cult_unsafe_meeting",
@@ -1570,7 +1594,7 @@
           "requiresPresence": false,
           "grant": null,
           "insights": {},
-          "sequenceOrder": 3
+          "sequenceOrder": 4
         },
         {
           "id": "time_hasu_terminal",
@@ -1579,30 +1603,6 @@
           "clueKind": "timeline",
           "type": "information",
           "back": "22:45 무렵 ‘하수’ 계정으로 후원 자료와 책임 서명을 검색한 기록이 있다. 첨부된 장치 설정 변경 내역에서는 이 계정명이 보이지 않는다.",
-          "visibility": "locked",
-          "availableFromPhase": "investigation1",
-          "repeatable": false,
-          "transferable": true,
-          "requires": [],
-          "blockedFor": [],
-          "owner": null,
-          "location": {
-            "floor": "operations",
-            "x": 4,
-            "y": 3
-          },
-          "requiresPresence": false,
-          "grant": null,
-          "insights": {},
-          "sequenceOrder": 4
-        },
-        {
-          "id": "cult_fund_account",
-          "title": "교단 후원 계좌 일부",
-          "subtitle": "",
-          "clueKind": "cult",
-          "type": "information",
-          "back": "계좌 내역의 정기 송금인란에 ‘D1 행사 자회사’가 적혀 있다. ‘초청 강의’와 ‘가고일 퍼포먼스’ 항목에 같은 예산 코드가 반복된다. 최종 승인란은 비어 있다.",
           "visibility": "locked",
           "availableFromPhase": "investigation1",
           "repeatable": false,
