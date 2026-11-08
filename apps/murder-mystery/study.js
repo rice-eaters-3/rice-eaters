@@ -217,7 +217,7 @@ window.MysteryStudy=(function(){
       '<div class="map-roster" id="mapRoster">'+roster(room)+'</div></section>'+
       '<aside class="adventure-side"><section class="surface panel-pad"><div class="eyebrow">PERSONAL RESOURCES</div>'+
       '<h3>조사 토큰 <span class="token-count">'+(inv?inv.tokens:'—')+'</span></h3>'+
-      (inv?'<p class="muted small">조사 카드 선택 → 조사 실행 시 토큰 1개가 소모됩니다.</p>'+
+      (inv?'<p class="muted small">조사 카드 팝업에서 토큰 1개를 사용하면 뒷면을 볼 수 있습니다.</p>'+
         '<div class="collected-items">'+(inv.collected?.length?'<b>조사로 획득한 물품</b>'+
           inv.collected.map(item=>'<p>⌑ '+esc(item.name)+' · '+esc(item.description)+'</p>').join(''):'')+'</div>':
         '<p class="muted small">1차 조사 단계에서 조사 토큰이 지급됩니다.</p>')+'</section>'+
@@ -285,7 +285,7 @@ window.MysteryStudy=(function(){
       '<div class="research-toolbar"><div><div class="eyebrow">INVESTIGATION · CARD LIBRARY</div>'+
       '<h2>'+phase+' · 조사 가능 정보</h2>'+
       '<p class="muted small">'+(inv.canInvestigate?
-        '카드를 선점해 조사한 뒤 내가 얻은 정보는 전체 공개·선택 공개·양도할 수 있습니다.':
+        '카드 팝업에서 토큰을 사용해 조사하면 뒷면을 확인하고 공개·양도할 수 있습니다.':
         '조사 단계가 아닙니다. 기존에 공개된 정보와 보유 카드는 계속 확인할 수 있습니다.')+'</p></div>'+
       '<div class="research-switches">'+btn('research-toggle','← 지도로 돌아가기 (R)','btn btn-outline')+
       btn('book-toggle','📖 개인 책자 (I)','btn btn-outline')+'</div></div>'+
