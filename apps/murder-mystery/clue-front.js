@@ -24,6 +24,15 @@
     }
     return label(floor.title)||'사건 자료';
   }
+  // A player's own discoveries (not card transfers or public sharing) count
+  // toward the one-belonging-per-target-character limit for each investigation.
+  // Old saves had no 'phase' on discovery records: treat those as round one.
+  function personalInvestigationUsed(cards,discovered,playerId,phase,owner){
+    if(!owner||!playerId||!['investigation1','investigation2'].includes(phase))return false;
+    return (cards||[]).some(card=>card.type==='belonging'&&card.owner===owner&&
+      (discovered?.[card.id]||[]).some(entry=>entry.playerId===playerId&&
+        (entry.phase||'investigation1')===phase));
+  }
   function groupKey(card,floors){
     return card.type==='belonging'&&card.owner?
       'owner:'+card.owner:'place:'+locationName(card,floors);
@@ -102,5 +111,5 @@
       })
     };
   }
-  return {labels,locationName,sequenceAfter,groupKey,hiddenAreas,isConcealedCard,playerFloor};
+  return {labels,locationName,sequenceAfter,groupKey,personalInvestigationUsed,hiddenAreas,isConcealedCard,playerFloor};
 });
