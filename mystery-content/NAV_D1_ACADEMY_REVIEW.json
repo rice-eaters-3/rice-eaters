@@ -1,0 +1,114 @@
+{
+  "assets": [
+    {
+      "short": "d1",
+      "id": "door-open",
+      "spec": "Charcoal stained wood office door with a simple brass handle and plain frame, modern Korean esports building. No logos, statues or symbols. STATE: Door is swung fully open, empty dark doorway clearly visible, no room contents.",
+      "prompt": "NEW independent isolated game navigation sprite, painterly detailed anime style. One door and its frame. Full shape in generous margins, three-quarter view, transparent outside object. No people, room scenery, clues, readable text or captions. Do not make an asset sheet. Charcoal stained wood office door with a simple brass handle and plain frame, modern Korean esports building. No logos, statues or symbols. STATE: Door is swung fully open, empty dark doorway clearly visible, no room contents.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-45d3028e-00eb-4ef7-9203-3419ba00c16c.png",
+      "series": "d1-crown-of-ashes",
+      "path": "apps/murder-mystery/assets/navigation/d1-crown-of-ashes/door-open.webp",
+      "previousIssue": "Legacy board crop",
+      "review": "Independent complete silhouette; door state and stair direction checked visually."
+    },
+    {
+      "short": "d1",
+      "id": "door-closed",
+      "spec": "Charcoal stained wood office door with a simple brass handle and plain frame, modern Korean esports building. No logos, statues or symbols. STATE: Door fully closed, no chains or padlock.",
+      "prompt": "NEW independent isolated game navigation sprite, painterly detailed anime style. One door and its frame. Full shape in generous margins, three-quarter view, transparent outside object. No people, room scenery, clues, readable text or captions. Do not make an asset sheet. Charcoal stained wood office door with a simple brass handle and plain frame, modern Korean esports building. No logos, statues or symbols. STATE: Door fully closed, no chains or padlock.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-98eb2f3d-74c0-41fe-94c5-4e1a212d33e1.png",
+      "series": "d1-crown-of-ashes",
+      "path": "apps/murder-mystery/assets/navigation/d1-crown-of-ashes/door-closed.webp",
+      "previousIssue": "Legacy board crop",
+      "review": "Independent complete silhouette; door state and stair direction checked visually."
+    },
+    {
+      "short": "d1",
+      "id": "door-locked",
+      "spec": "Charcoal stained wood office door with a simple brass handle and plain frame, modern Korean esports building. No logos, statues or symbols. STATE: Door fully closed and visibly secured by a chain and padlock.",
+      "prompt": "NEW independent isolated game navigation sprite, painterly detailed anime style. One door and its frame. Full shape in generous margins, three-quarter view, transparent outside object. No people, room scenery, clues, readable text or captions. Do not make an asset sheet. Charcoal stained wood office door with a simple brass handle and plain frame, modern Korean esports building. No logos, statues or symbols. STATE: Door fully closed and visibly secured by a chain and padlock.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-111ce605-445b-46cf-b334-1b0775888f3a.png",
+      "series": "d1-crown-of-ashes",
+      "path": "apps/murder-mystery/assets/navigation/d1-crown-of-ashes/door-locked.webp",
+      "previousIssue": "Legacy board crop",
+      "review": "Independent complete silhouette; door state and stair direction checked visually."
+    },
+    {
+      "short": "d1",
+      "id": "stairs-up",
+      "spec": "Dark concrete indoor staircase with charcoal metal railing, modern office building. Camera looks from the bottom upward along rising steps toward the upper landing. Include one simple up arrow sign, no words.",
+      "prompt": "NEW independent isolated game navigation sprite, painterly detailed anime style. One staircase section and railings. Full shape in generous margins, three-quarter view, transparent outside object. No people, room scenery, clues, readable text or captions. Do not make an asset sheet. Dark concrete indoor staircase with charcoal metal railing, modern office building. Camera looks from the bottom upward along rising steps toward the upper landing. Include one simple up arrow sign, no words.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-9574ce44-cd5e-4814-aede-e549fce0aff7.png",
+      "series": "d1-crown-of-ashes",
+      "path": "apps/murder-mystery/assets/navigation/d1-crown-of-ashes/stairs-up.webp",
+      "previousIssue": "Legacy board crop",
+      "review": "Independent complete silhouette; door state and stair direction checked visually."
+    },
+    {
+      "short": "d1",
+      "id": "stairs-down",
+      "spec": "Dark concrete indoor staircase with charcoal metal railing, modern office building. Camera looks from the top downward along descending steps toward the lower landing. Include one simple down arrow sign, no words.",
+      "prompt": "NEW independent isolated game navigation sprite, painterly detailed anime style. One staircase section and railings. Full shape in generous margins, three-quarter view, transparent outside object. No people, room scenery, clues, readable text or captions. Do not make an asset sheet. Dark concrete indoor staircase with charcoal metal railing, modern office building. Camera looks from the top downward along descending steps toward the lower landing. Include one simple down arrow sign, no words.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-84e7285a-8b04-4d5d-982f-1a81a531167f.png",
+      "series": "d1-crown-of-ashes",
+      "path": "apps/murder-mystery/assets/navigation/d1-crown-of-ashes/stairs-down.webp",
+      "previousIssue": "Legacy board crop",
+      "review": "Independent complete silhouette; door state and stair direction checked visually."
+    },
+    {
+      "short": "academy",
+      "id": "door-open",
+      "spec": "Navy paneled wood academy door with a small gold star emblem, antique brass handle and stone frame. STATE: Door is swung fully open, empty dark doorway clearly visible, no room contents.",
+      "prompt": "NEW independent isolated game navigation sprite, painterly detailed anime style. One door and its frame. Full shape in generous margins, three-quarter view, transparent outside object. No people, room scenery, clues, readable text or captions. Do not make an asset sheet. Navy paneled wood academy door with a small gold star emblem, antique brass handle and stone frame. STATE: Door is swung fully open, empty dark doorway clearly visible, no room contents.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-de897184-3d97-436e-8427-125348234ca4.png",
+      "series": "stellar-academy-first-case",
+      "path": "apps/murder-mystery/assets/navigation/stellar-academy-first-case/door-open.webp",
+      "previousIssue": "Legacy board crop",
+      "review": "Independent complete silhouette; door state and stair direction checked visually."
+    },
+    {
+      "short": "academy",
+      "id": "door-closed",
+      "spec": "Navy paneled wood academy door with a small gold star emblem, antique brass handle and stone frame. STATE: Door fully closed, no chains or padlock.",
+      "prompt": "NEW independent isolated game navigation sprite, painterly detailed anime style. One door and its frame. Full shape in generous margins, three-quarter view, transparent outside object. No people, room scenery, clues, readable text or captions. Do not make an asset sheet. Navy paneled wood academy door with a small gold star emblem, antique brass handle and stone frame. STATE: Door fully closed, no chains or padlock.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-5078284e-9c00-46d6-9af1-131af639e997.png",
+      "series": "stellar-academy-first-case",
+      "path": "apps/murder-mystery/assets/navigation/stellar-academy-first-case/door-closed.webp",
+      "previousIssue": "Legacy board crop",
+      "review": "Independent complete silhouette; door state and stair direction checked visually."
+    },
+    {
+      "short": "academy",
+      "id": "door-locked",
+      "spec": "Navy paneled wood academy door with a small gold star emblem, antique brass handle and stone frame. STATE: Door fully closed and visibly secured by a chain and padlock.",
+      "prompt": "NEW independent isolated game navigation sprite, painterly detailed anime style. One door and its frame. Full shape in generous margins, three-quarter view, transparent outside object. No people, room scenery, clues, readable text or captions. Do not make an asset sheet. Navy paneled wood academy door with a small gold star emblem, antique brass handle and stone frame. STATE: Door fully closed and visibly secured by a chain and padlock.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-c19676b9-2bee-44c7-a5cd-c26ae21368b6.png",
+      "series": "stellar-academy-first-case",
+      "path": "apps/murder-mystery/assets/navigation/stellar-academy-first-case/door-locked.webp",
+      "previousIssue": "Legacy board crop",
+      "review": "Independent complete silhouette; door state and stair direction checked visually."
+    },
+    {
+      "short": "academy",
+      "id": "stairs-up",
+      "spec": "Elegant academy staircase of stone steps with navy walls and antique brass handrail, small gold star decoration. Camera looks from the bottom upward along rising steps toward the upper landing. Include one simple up arrow sign, no words.",
+      "prompt": "NEW independent isolated game navigation sprite, painterly detailed anime style. One staircase section and railings. Full shape in generous margins, three-quarter view, transparent outside object. No people, room scenery, clues, readable text or captions. Do not make an asset sheet. Elegant academy staircase of stone steps with navy walls and antique brass handrail, small gold star decoration. Camera looks from the bottom upward along rising steps toward the upper landing. Include one simple up arrow sign, no words.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-1dc58d0e-c5f8-42cb-a70a-7ddb86d8d94f.png",
+      "series": "stellar-academy-first-case",
+      "path": "apps/murder-mystery/assets/navigation/stellar-academy-first-case/stairs-up.webp",
+      "previousIssue": "Legacy board crop",
+      "review": "Independent complete silhouette; door state and stair direction checked visually."
+    },
+    {
+      "short": "academy",
+      "id": "stairs-down",
+      "spec": "Elegant academy staircase of stone steps with navy walls and antique brass handrail, small gold star decoration. Camera looks from the top downward along descending steps toward the lower landing. Include one simple down arrow sign, no words.",
+      "prompt": "NEW independent isolated game navigation sprite, painterly detailed anime style. One staircase section and railings. Full shape in generous margins, three-quarter view, transparent outside object. No people, room scenery, clues, readable text or captions. Do not make an asset sheet. Elegant academy staircase of stone steps with navy walls and antique brass handrail, small gold star decoration. Camera looks from the top downward along descending steps toward the lower landing. Include one simple down arrow sign, no words.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-b0bb866b-c51c-4d6d-b5a2-882b6879d1a1.png",
+      "series": "stellar-academy-first-case",
+      "path": "apps/murder-mystery/assets/navigation/stellar-academy-first-case/stairs-down.webp",
+      "previousIssue": "Legacy board crop",
+      "review": "Independent complete silhouette; door state and stair direction checked visually."
+    }
+  ]
+}
