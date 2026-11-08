@@ -311,3 +311,7 @@ Six player portraits, victim Jang Yeonho and three prop kinds (bed, cabinet, des
 ## Academy / Neon map props batch (10)
 
 Replaced seven remaining Academy prop kinds and Neon console, waiting sofa and secure cabinet with independently generated illustrations. Reviewed full silhouettes, alpha, and non-spoiler content. Academy rooftop sign says only 옥상 출구. Shared renderer supplies game, studio and test mode. Sources/prompts/paths: ACADEMY_NEON_PROP_REVIEW.json.
+
+## neon_d1_props (10 independent map props)
+
+Shared renderer updated for game, studio and test mode. Full original illustrations fitted without cropping. Prompts, previous issue, source, path and review recorded in NEON_D1_PROPS_REVIEW.json.
