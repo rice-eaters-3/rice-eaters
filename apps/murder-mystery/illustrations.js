@@ -388,7 +388,7 @@ window.MysteryArt=(function(){
   // For custom/legacy maps whose authors entered an emoji, display that.
   return '<span class="map-prop-icon" aria-hidden="true">'+escape(o?.icon||'✧')+'</span>';
  }
- const independentNavigation=new Set(['d1-crown-of-ashes','stellar-academy-first-case']);
+ const independentNavigation=new Set(['d1-crown-of-ashes','stellar-academy-first-case','cruel-heart-island','neon-memory-quarantine']);
  function navigationAsset(story,key,css,label){
   const theme=storyFor(story),data=knownStory(story);
   if(!independentNavigation.has(theme))return null;

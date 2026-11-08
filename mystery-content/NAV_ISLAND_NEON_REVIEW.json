@@ -1,0 +1,94 @@
+[
+  {
+    "id": "island/door-closed",
+    "source": "/workspace/scratch/490a51c77c43/nav-recovered/닫힌 파스텔 빌라 현관문.png",
+    "library_file_id": "libfile_94fe6f2c7f24819180118a301b2bd252",
+    "series": "cruel-heart-island",
+    "path": "apps/murder-mystery/assets/navigation/cruel-heart-island/door-closed.webp",
+    "previousProblem": "Navigation used concept-sheet crops.",
+    "review": "Independent full-frame illustration; theme and door state or direction marker verified; no clue spoilers."
+  },
+  {
+    "id": "island/door-open",
+    "source": "/workspace/scratch/490a51c77c43/nav-recovered/파스텔 빌라의 열린 문.png",
+    "library_file_id": "libfile_ef380709fab08191affff2c03b5733e1",
+    "series": "cruel-heart-island",
+    "path": "apps/murder-mystery/assets/navigation/cruel-heart-island/door-open.webp",
+    "previousProblem": "Navigation used concept-sheet crops.",
+    "review": "Independent full-frame illustration; theme and door state or direction marker verified; no clue spoilers."
+  },
+  {
+    "id": "neon/door-open",
+    "source": "/workspace/scratch/490a51c77c43/nav-recovered/청록 포인트의 미래형 개방 슬라이딩 도어.png",
+    "library_file_id": "libfile_e55c4c4d757081919b13d54ce43847be",
+    "series": "neon-memory-quarantine",
+    "path": "apps/murder-mystery/assets/navigation/neon-memory-quarantine/door-open.webp",
+    "previousProblem": "Navigation used concept-sheet crops.",
+    "review": "Independent full-frame illustration; theme and door state or direction marker verified; no clue spoilers."
+  },
+  {
+    "id": "island/door-locked",
+    "source": "/workspace/scratch/490a51c77c43/nav-recovered/체인과 황동 자물쇠가 잠근 빌라 문.png",
+    "library_file_id": "libfile_d685f5fa08148191881aa954b741ca51",
+    "series": "cruel-heart-island",
+    "path": "apps/murder-mystery/assets/navigation/cruel-heart-island/door-locked.webp",
+    "previousProblem": "Navigation used concept-sheet crops.",
+    "review": "Independent full-frame illustration; theme and door state or direction marker verified; no clue spoilers."
+  },
+  {
+    "id": "neon/door-locked",
+    "source": "/workspace/scratch/490a51c77c43/nav-recovered/붉은 자물쇠가 빛나는 미래형 문.png",
+    "library_file_id": "libfile_1e5f78935b8c81919658f70f6131c370",
+    "series": "neon-memory-quarantine",
+    "path": "apps/murder-mystery/assets/navigation/neon-memory-quarantine/door-locked.webp",
+    "previousProblem": "Navigation used concept-sheet crops.",
+    "review": "Independent full-frame illustration; theme and door state or direction marker verified; no clue spoilers."
+  },
+  {
+    "id": "neon/stairs-down",
+    "source": "/workspace/scratch/490a51c77c43/nav-recovered/사이버펑크 네온 하강 계단과 난간.png",
+    "library_file_id": "libfile_e680ee702d34819193d5a73f1f5c4424",
+    "series": "neon-memory-quarantine",
+    "path": "apps/murder-mystery/assets/navigation/neon-memory-quarantine/stairs-down.webp",
+    "previousProblem": "Navigation used concept-sheet crops.",
+    "review": "Independent full-frame illustration; theme and door state or direction marker verified; no clue spoilers."
+  },
+  {
+    "id": "neon/door-closed",
+    "source": "/workspace/scratch/490a51c77c43/nav-recovered/청록빛 미래형 슬라이딩 도어.png",
+    "library_file_id": "libfile_e59a91051d4c8191b49b2ac9e5670934",
+    "series": "neon-memory-quarantine",
+    "path": "apps/murder-mystery/assets/navigation/neon-memory-quarantine/door-closed.webp",
+    "previousProblem": "Navigation used concept-sheet crops.",
+    "review": "Independent full-frame illustration; theme and door state or direction marker verified; no clue spoilers."
+  },
+  {
+    "id": "island/stairs-up",
+    "source": "/workspace/scratch/490a51c77c43/nav-recovered/해안 빌라 계단의 위쪽 화살표.png",
+    "library_file_id": "libfile_b0dff62adcac8191a02d468840c19d4f",
+    "series": "cruel-heart-island",
+    "path": "apps/murder-mystery/assets/navigation/cruel-heart-island/stairs-up.webp",
+    "previousProblem": "Navigation used concept-sheet crops.",
+    "review": "Independent full-frame illustration; theme and door state or direction marker verified; no clue spoilers."
+  },
+  {
+    "id": "island/stairs-down",
+    "prompt": "Use case: stylized-concept. Independent murder mystery navigation game sprite, polished semi-realistic anime painted architectural illustration. Cream limestone villa staircase descending away from a top landing, warm brass handrails, pastel blush architectural trim, one clear DOWNWARD arrow on a small unlettered plaque. Tropical romance mystery villa. Center full staircase section, front three-quarter perspective, square composition, transparent background, no people, no words, no collage or surrounding scene, no clues or spoilers.",
+    "source": "/workspace/scratch/490a51c77c43/generated_images/exec-c61437f6-a37e-4598-af21-5037fcddb92b.png",
+    "hint": "Generated images are saved to /workspace/scratch/490a51c77c43/generated_images as /workspace/scratch/490a51c77c43/generated_images/exec-c61437f6-a37e-4598-af21-5037fcddb92b.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "series": "cruel-heart-island",
+    "path": "apps/murder-mystery/assets/navigation/cruel-heart-island/stairs-down.webp",
+    "previousProblem": "Navigation used concept-sheet crops.",
+    "review": "Independent full-frame illustration; theme and door state or direction marker verified; no clue spoilers."
+  },
+  {
+    "id": "neon/stairs-up",
+    "prompt": "Use case: stylized-concept. Independent murder mystery navigation game sprite, polished semi-realistic anime painted architectural illustration. Futuristic dark graphite metal staircase ascending away from bottom landing, cyan edge lights and subtle magenta glow, industrial handrails, one clear UPWARD arrow on a small unlettered plaque. Cyberpunk quarantine facility. Center full staircase section, front three-quarter perspective, square composition, transparent background, no people, no words, no collage or surrounding scene, no clues or spoilers.",
+    "source": "/workspace/scratch/490a51c77c43/generated_images/exec-0b0af81e-4eef-474b-93a8-0ec090f39e88.png",
+    "hint": "Generated images are saved to /workspace/scratch/490a51c77c43/generated_images as /workspace/scratch/490a51c77c43/generated_images/exec-0b0af81e-4eef-474b-93a8-0ec090f39e88.png by default.\nIf you need to use a generated image at another path, copy it and leave the original in place unless the user explicitly asks you to delete it.\nThe generated image is already displayed to the user. There is no need to render it in the final response as a Markdown image or file link.",
+    "series": "neon-memory-quarantine",
+    "path": "apps/murder-mystery/assets/navigation/neon-memory-quarantine/stairs-up.webp",
+    "previousProblem": "Navigation used concept-sheet crops.",
+    "review": "Independent full-frame illustration; theme and door state or direction marker verified; no clue spoilers."
+  }
+]

@@ -1,5 +1,5 @@
 {
-  "note": "All clue, player, primary victim NPC and major prop art connected. Remaining: Island and Neon door/stair navigation (10 images).",
+  "note": "Independent art connected for all four series: 229 clues, 28 players, 4 primary victim NPCs, 47 major prop kinds, 4 backgrounds and 20 navigation illustrations. No pending assets in this inventory. Human full-session playtesting remains separate.",
   "series": [
     {
       "series": "d1-crown-of-ashes",
@@ -38,26 +38,5 @@
       "pendingPropKinds": []
     }
   ],
-  "pendingNavigation": [
-    {
-      "series": "cruel-heart-island",
-      "assets": [
-        "door-open",
-        "door-closed",
-        "door-locked",
-        "stairs-up",
-        "stairs-down"
-      ]
-    },
-    {
-      "series": "neon-memory-quarantine",
-      "assets": [
-        "door-open",
-        "door-closed",
-        "door-locked",
-        "stairs-up",
-        "stairs-down"
-      ]
-    }
-  ]
+  "pendingNavigation": []
 }
