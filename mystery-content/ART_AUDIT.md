@@ -303,3 +303,7 @@ Reviewed and connected in shared game/studio/test renderer. Card IDs, prompts, s
 ## Neon portraits — 7 independent illustrations
 
 Reference designs preserved; new full-frame paintings linked in shared portrait and avatar renderer. Details: NEON_PORTRAIT_REVIEW.json.
+
+## Academy character and prop batch
+
+Six player portraits, victim Jang Yeonho and three prop kinds (bed, cabinet, desk) now use independent illustrations. All 28 playable portraits complete. See ACADEMY_CHARACTER_PROP_REVIEW.json.

@@ -165,48 +165,11 @@
       "cluesComplete": 48,
       "pendingClues": [],
       "portraitsTotal": 6,
-      "pendingPortraits": [
-        {
-          "id": "seoha",
-          "name": "남서하"
-        },
-        {
-          "id": "taewon",
-          "name": "이태원"
-        },
-        {
-          "id": "yeonju",
-          "name": "천연주"
-        },
-        {
-          "id": "jinwoo",
-          "name": "백진우"
-        },
-        {
-          "id": "rion",
-          "name": "차리온"
-        },
-        {
-          "id": "gabin",
-          "name": "유가빈"
-        }
-      ],
+      "pendingPortraits": [],
       "pendingPropKinds": [
-        {
-          "kind": "bed",
-          "name": "기숙사 침대"
-        },
         {
           "kind": "shelf",
           "name": "지하 암호 자료"
-        },
-        {
-          "kind": "cabinet",
-          "name": "운영자 봉인 원고함"
-        },
-        {
-          "kind": "desk",
-          "name": "태원의 공연 준비 탁자"
         },
         {
           "kind": "telescope",
