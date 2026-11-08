@@ -131,6 +131,9 @@
     if(ClueFront.isConcealedCard(c,state.pkg.game.floors,(f,d)=>doorView(state,f,d)))
       error('이 조사 구역은 아직 잠겨 있습니다.');
     if(!unlocked(state,c))error('아직 해금되지 않은 카드입니다.');
+    const previous=ClueFront.sequenceAfter(cards(state),state.pkg.game.floors)[cardId];
+    if(previous&&!(state.discovered[previous]||[]).length)
+      error('이 장소의 이전 조사 카드를 먼저 조사해야 합니다.');
     if(c.owner===state.roleId||(c.blockedFor||[]).includes(state.roleId))error('이 배역은 해당 카드를 조사할 수 없습니다.');
     if(c.requiresPresence&&c.location){
       const p=position(state);
@@ -337,6 +340,7 @@
           symbol:c.symbol,accent:c.accent,...state.positions[c.id]}))}:null;
     const canInvestigate=investigationPhases.includes(phase);
     const frontTitles=ClueFront.labels(cards(state),s.characters,g.floors);
+    const sequence=ClueFront.sequenceAfter(cards(state),g.floors);
     const investigation=afterFirst.includes(phase)?{
       tokens:state.tokens[role.id]||0,totalTokens:g.investigation?.tokensPerPlayer||4,canInvestigate,
       cards:cards(state).flatMap(c=>{
@@ -344,14 +348,18 @@
         const mine=holdings(state,role.id).filter(h=>h.cardId===c.id);
         const visible=!!state.publicCards[c.id]||mine.length>0||
           state.selectiveShares.some(v=>v.to===role.id&&state.holdings.some(h=>h.id===v.holdingId&&h.cardId===c.id));
-        const locked=!unlocked(state,c);
-        if(locked&&c.visibility==='hidden'&&!visible)return [];
+        const phaseLocked=!unlocked(state,c);
+        const previous=sequence[c.id];
+        const sequenceLocked=!!previous&&!(state.discovered[previous]||[]).length;
+        const locked=phaseLocked||sequenceLocked;
+        if(phaseLocked&&c.visibility==='hidden'&&!visible)return [];
         const at=c.location&&yourPos.floor===c.location.floor&&yourPos.x===c.location.x&&yourPos.y===c.location.y;
         const prior=state.discovered[c.id]||[];
         return [{id:c.id,frontTitle:frontTitles[c.id],
           title:visible?c.title:null,subtitle:visible?c.subtitle:null,
           type:c.type,location:c.location||null,
-          locked,requiresPresence:!!c.requiresPresence,atLocation:!!at,
+          locked,sequenceLocked,sequenceAfter:sequenceLocked?frontTitles[previous]:null,
+          requiresPresence:!!c.requiresPresence,atLocation:!!at,
           excluded:c.owner===role.id||(c.blockedFor||[]).includes(role.id),
           taken:prior.length>0&&!c.repeatable,repeatable:!!c.repeatable,transferable:c.transferable!==false,
           public:!!state.publicCards[c.id],heldByMe:mine.length,sharedToMe:visible&&
