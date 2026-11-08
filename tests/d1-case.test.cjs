@@ -138,6 +138,23 @@ test('seven-player D1 case: private visions, first-round sealed clues, second-ro
   // A baseline fund clue opens a second-round document.
   assert.equal((await post(0,endpoint+'/reserve',{cardId:'cult_fund_account'})).status,200);
   assert.equal((await post(0,endpoint+'/investigate',{cardId:'cult_fund_account'})).status,200);
+  // New rule: each investigator can inspect only one belonging per other role, per round.
+  assert.equal((await post(0,endpoint+'/reserve',{cardId:'cloud_huoguo_ladle'})).status,200);
+  assert.equal((await post(0,endpoint+'/investigate',{cardId:'cloud_huoguo_ladle'})).status,200);
+  const limited=(await call(0,endpoint)).data.investigation;
+  assert.equal(limited.cards.find(c=>c.id==='cloud_elephant_eggplant').personLimitReached,true);
+  assert.equal((await post(0,endpoint+'/reserve',{cardId:'cloud_elephant_eggplant'})).status,409,
+    'Jobi cannot investigate a second Cloud belonging in round one');
+  assert.equal((await post(0,endpoint+'/investigate',{cardId:'cloud_elephant_eggplant'})).status,409,
+    'direct investigate also enforces the personal target limit');
+  assert.equal((await call(0,endpoint)).data.investigation.tokens,2,
+    'blocked attempts do not spend any tokens');
+  assert.equal((await post(0,endpoint+'/reserve',{cardId:'hasu_solo_kill_log'})).status,200,
+    'different target characters each have an independent allowance');
+  assert.equal((await post(0,endpoint+'/investigate',{cardId:'hasu_solo_kill_log'})).status,200);
+  assert.equal((await post(1,endpoint+'/reserve',{cardId:'cloud_elephant_eggplant'})).status,200,
+    'another investigator can inspect Cloud belongings in the same round');
+  assert.equal((await post(1,endpoint+'/investigate',{cardId:'cloud_elephant_eggplant'})).status,200);
   // Mayushi's psychometry is visible to her only, even if her clue is made public.
   assert.equal((await post(1,endpoint+'/reserve',{cardId:'time_mayushi_warning'})).status,200);
   const vision=await post(1,endpoint+'/investigate',{cardId:'time_mayushi_warning'});
@@ -155,8 +172,16 @@ test('seven-player D1 case: private visions, first-round sealed clues, second-ro
   const second=await post(0,endpoint+'/advance');
   assert.equal(second.data.phase,'investigation2');
   const wallets=await Promise.all(names.map((_,i)=>call(i,endpoint)));
-  assert.equal(wallets.reduce((n,r)=>n+r.data.investigation.tokens,0),54,
-    '56 tokens issued in total minus two phase-one investigations');
+  assert.equal(wallets.reduce((n,r)=>n+r.data.investigation.tokens,0),51,
+    '56 tokens issued in total minus five phase-one investigations');
+  assert.equal(wallets[0].data.investigation.cards.find(c=>c.id==='cloud_tainted_cleaver').personLimitReached,false,
+    'the round-one Cloud limit resets when round two begins');
+  assert.equal((await post(0,endpoint+'/reserve',{cardId:'cloud_tainted_cleaver'})).status,200,
+    'same player can inspect the same character again in round two');
+  assert.equal((await post(0,endpoint+'/investigate',{cardId:'cloud_tainted_cleaver'})).status,200);
+  assert.equal((await post(0,endpoint+'/reserve',{cardId:'cloud_oven_receipt'})).status,409,
+    'round two separately limits the same player to one Cloud belonging');
+  assert.equal((await call(0,endpoint)).data.investigation.cards.find(c=>c.id==='cloud_oven_receipt').personLimitReached,true);
   assert.equal(wallets[4].data.investigation.cards.some(c=>c.id==='trick_spare_override'),true,
     'stage two hidden key becomes visible');
   assert.equal((await post(4,endpoint+'/reserve',{cardId:'trick_spare_override'})).status,409,
