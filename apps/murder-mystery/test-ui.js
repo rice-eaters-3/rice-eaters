@@ -200,6 +200,9 @@ function runAction(button){
     engine.setGoal(state,characterId,value==='yes'?true:value==='no'?false:null);
     note('개인 목표 판정이 반영되었습니다.');render();return;
   }
+  if(['clue-open','clue-flip','clue-close'].includes(action)){
+    window.MysteryStudy.navigate(action,button.dataset.card);render();return;
+  }
   if(['book-toggle','research-toggle','book-prev','book-next','book-chapter'].includes(action)){
     window.MysteryStudy.navigate(action,button.dataset.chapter);render();return;
   }
@@ -210,6 +213,13 @@ function runAction(button){
   }
   if(action==='study-ready'){
     state.studyReady[state.roleId]=true;note('숙지 완료 처리됨 (현재 캐릭터만).');render();return;
+  }
+  if(action==='clue-investigate'){
+    const cardId=button.dataset.card;
+    if(state.reservations[cardId]!==state.roleId)engine.reserve(state,cardId);
+    engine.investigate(state,cardId);
+    window.MysteryStudy.navigate('clue-revealed');
+    note('조사 토큰 1개 사용 · 카드 뒷면 열람 권한을 얻었습니다.');render();return;
   }
   if(action==='reserve'){
     engine.reserve(state,button.dataset.card);note('카드를 선택했습니다. 「조사 실행」으로 토큰을 사용해 뒷면을 확인하세요.');render();return;
@@ -253,7 +263,8 @@ function runAction(button){
 }
 $('testStage').addEventListener('click',event=>{
   const button=event.target.closest('[data-action]');if(!button||!state)return;
-  try{runAction(button)}catch(e){note('테스트 동작: '+e.message,true);}
+  try{runAction(button)}catch(e){note('테스트 동작: '+e.message,true);
+    if(button.dataset.action==='interact')window.alert('액션을 수행할 수 없습니다.\n'+e.message);}
 });
 $('testLoad').addEventListener('click',load);
 $('testReset').addEventListener('click',()=>{
@@ -272,6 +283,10 @@ $('testMeta').addEventListener('click',event=>{
   const btn=event.target.closest('[data-test-focus]');if(btn)roleTo(btn.dataset.testFocus);
 });
 document.addEventListener('keydown',event=>{
+  if(event.key==='Escape'&&window.MysteryStudy?.isModalOpen?.()){
+    event.preventDefault();window.MysteryStudy.navigate('clue-close');render();return;
+  }
+  if(window.MysteryStudy?.isModalOpen?.())return;
   if(!state||event.altKey||event.metaKey||event.ctrlKey||
      ['INPUT','TEXTAREA','SELECT'].includes(event.target?.tagName)||event.target?.isContentEditable)return;
   const key=event.key.toLowerCase();

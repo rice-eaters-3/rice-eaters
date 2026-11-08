@@ -165,14 +165,14 @@
         ],
         "inventory": [
           {
-            "id": "nova_memory_badge",
-            "name": "분실 기억 신분증",
-            "description": "신분증의 조회 화면에 서로 다른 두 계정과 ‘생체 신원 중복’ 경고가 표시된다."
-          },
-          {
             "id": "nova_shield_patch",
             "name": "은색 방호 패치",
             "description": "은색 패치의 회로 한 곳에 그을린 흔적이 있다. 가장자리에 제작 번호가 새겨져 있다."
+          },
+          {
+            "id": "nova_memory_badge",
+            "name": "분실 기억 신분증",
+            "description": "신분증의 조회 화면에 서로 다른 두 계정과 ‘생체 신원 중복’ 경고가 표시된다."
           },
           {
             "id": "nova_empty_notebook",
@@ -231,11 +231,6 @@
         ],
         "inventory": [
           {
-            "id": "rune_medical_scanner",
-            "name": "신경 진단 스캐너",
-            "description": "스캐너에 감사관의 신체 활동 기록이 저장되어 있다. 활동 파형이 00:16 표시 전에 끝나고 이후에는 평평한 선이 이어진다."
-          },
-          {
             "id": "rune_revoked_license",
             "name": "말소된 의료 면허증",
             "description": "면허증에 말소 표시가 있다. 동봉된 처분서에는 ‘복원 시술 기록 누락’이 적혀 있고 세부 경위는 가려져 있다. 담당 감사관란에 이니셜이 남아 있다."
@@ -244,6 +239,11 @@
             "id": "rune_old_consent",
             "name": "지워진 의료 동의서",
             "description": "의료 동의서의 서명란에 지운 자국과 겹쳐 쓴 필획이 있다. 같은 이름이 인쇄된 다른 서명 사본이 첨부되어 있다."
+          },
+          {
+            "id": "rune_medical_scanner",
+            "name": "신경 진단 스캐너",
+            "description": "스캐너에 감사관의 신체 활동 기록이 저장되어 있다. 활동 파형이 00:16 표시 전에 끝나고 이후에는 평평한 선이 이어진다."
           },
           {
             "id": "rune_surgical_tablet",
@@ -303,9 +303,9 @@
             "description": "방전 모듈에 시험 출력 기록이 저장되어 있다. 충전 기록에는 격리 전날의 짧은 작동 시험 항목이 있다."
           },
           {
-            "id": "ion_maintenance_token",
-            "name": "고급 정비 토큰",
-            "description": "토큰의 사용 기록에 ‘00:08 기억실 접근 승인’이 있다. 권한 목록에 ‘정비’, ‘사용자 로그 일부 숨김’이 적혀 있다."
+            "id": "ion_sibling_identity",
+            "name": "대체 신분 서류",
+            "description": "대체 신분 서류의 가족란에 이온의 이름이 있다. 원본 기억 제공자와 신분 사용자의 이름이 서로 다르고, 기억 이용 동의란은 비어 있다."
           },
           {
             "id": "ion_fake_warning",
@@ -313,9 +313,9 @@
             "description": "격리 경고문에 ‘감염자 발생’이 적혀 있으나 진료 번호 칸은 비어 있다. 첨부 접속 기록에는 경고 발송 뒤 외부 통신 종료 항목들이 이어진다."
           },
           {
-            "id": "ion_sibling_identity",
-            "name": "대체 신분 서류",
-            "description": "대체 신분 서류의 가족란에 이온의 이름이 있다. 원본 기억 제공자와 신분 사용자의 이름이 서로 다르고, 기억 이용 동의란은 비어 있다."
+            "id": "ion_maintenance_token",
+            "name": "고급 정비 토큰",
+            "description": "토큰의 사용 기록에 ‘00:08 기억실 접근 승인’이 있다. 권한 목록에 ‘정비’, ‘사용자 로그 일부 숨김’이 적혀 있다."
           }
         ],
         "culprit": true,
@@ -374,14 +374,14 @@
             "description": "청원서에 ‘에코의 독립된 의사결정 인정 및 법적 보호 요청’이 적혀 있다. 여러 서명이 있고 감사관 제출란에는 보류 표시와 날짜가 찍혀 있다."
           },
           {
-            "id": "mira_shadow_receipt",
-            "name": "기억 복제 서비스 영수증",
-            "description": "기억 복제 서비스 영수증이다. 이용자란에 ‘미라’가 적혀 있고 제공 서비스와 지급 내역이 기재되어 있다."
-          },
-          {
             "id": "mira_identity_clause",
             "name": "법률 개정 초안",
             "description": "법률 개정 초안에 ‘원본과 복제자의 권리 충돌 시 기록 우선순위’라는 조항이 있다. 해당 조항 옆에 수정 표시가 남아 있다."
+          },
+          {
+            "id": "mira_shadow_receipt",
+            "name": "기억 복제 서비스 영수증",
+            "description": "기억 복제 서비스 영수증이다. 이용자란에 ‘미라’가 적혀 있고 제공 서비스와 지급 내역이 기재되어 있다."
           }
         ],
         "culprit": false,
@@ -501,14 +501,14 @@
             "description": "셸 저장기의 파일 생성자 항목 일부에 ‘에코’가 적혀 있다. 외부 연결부는 데이터 단자와 전원 단자다."
           },
           {
-            "id": "echo_ghost_key",
-            "name": "가상 권한 키",
-            "description": "가상 권한 키의 허용 대상에 ‘서버 접근’이 표시되어 있다. ‘금고 개방’ 항목은 비활성화되어 있다."
-          },
-          {
             "id": "echo_emotion_log",
             "name": "새로운 감정 기록",
             "description": "기록에 같은 질문에 대한 서로 다른 응답이 날짜순으로 남아 있다. 이전 응답을 수정한 문장과 ‘새로운 감정’이라는 항목이 보인다."
+          },
+          {
+            "id": "echo_ghost_key",
+            "name": "가상 권한 키",
+            "description": "가상 권한 키의 허용 대상에 ‘서버 접근’이 표시되어 있다. ‘금고 개방’ 항목은 비활성화되어 있다."
           },
           {
             "id": "echo_backup_hash",
@@ -562,6 +562,11 @@
         ],
         "inventory": [
           {
+            "id": "sol_radio_shell",
+            "name": "교신기 껍데기",
+            "description": "교신기 껍데기 안의 핵심 회로 자리가 비어 있다. 연결 단자 옆에는 중계 키 장착 표시가 있다."
+          },
+          {
             "id": "sol_courier_case",
             "name": "기억 칩 운반 케이스",
             "description": "운반 케이스에 배송 명세가 붙어 있다. 명세의 연락처 항목에 윤세라와 이온의 이름이 있으며 각 항목 옆에 거래 번호가 적혀 있다."
@@ -570,11 +575,6 @@
             "id": "sol_anon_invoice",
             "name": "가명 입금 명세",
             "description": "배송료 입금 명세에 가명 계좌가 적혀 있다. 일부 입금 항목의 거래 분류는 ‘대체 신원’이다."
-          },
-          {
-            "id": "sol_radio_shell",
-            "name": "교신기 껍데기",
-            "description": "교신기 껍데기 안의 핵심 회로 자리가 비어 있다. 연결 단자 옆에는 중계 키 장착 표시가 있다."
           },
           {
             "id": "sol_immunity_paper",
@@ -1165,25 +1165,6 @@
       "maxTileOccupants": 3,
       "cards": [
         {
-          "id": "nova_memory_badge",
-          "title": "노바의 분실 기억 신분증",
-          "subtitle": "",
-          "type": "belonging",
-          "clueKind": "timeline",
-          "owner": "nova",
-          "blockedFor": [],
-          "back": "신분증의 조회 화면에 서로 다른 두 계정과 ‘생체 신원 중복’ 경고가 표시된다.",
-          "repeatable": false,
-          "transferable": false,
-          "availableFromPhase": "investigation1",
-          "visibility": "locked",
-          "requires": [],
-          "location": null,
-          "requiresPresence": false,
-          "grant": null,
-          "insights": {}
-        },
-        {
           "id": "nova_shield_patch",
           "title": "노바의 은색 방호 패치",
           "subtitle": "",
@@ -1200,7 +1181,28 @@
           "location": null,
           "requiresPresence": false,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 1
+        },
+        {
+          "id": "nova_memory_badge",
+          "title": "노바의 분실 기억 신분증",
+          "subtitle": "",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "nova",
+          "blockedFor": [],
+          "back": "신분증의 조회 화면에 서로 다른 두 계정과 ‘생체 신원 중복’ 경고가 표시된다.",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 2
         },
         {
           "id": "nova_empty_notebook",
@@ -1219,7 +1221,8 @@
           "location": null,
           "requiresPresence": false,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 3
         },
         {
           "id": "nova_old_case_file",
@@ -1238,26 +1241,8 @@
           "location": null,
           "requiresPresence": false,
           "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "rune_medical_scanner",
-          "title": "룬의 신경 진단 스캐너",
-          "subtitle": "",
-          "type": "belonging",
-          "clueKind": "timeline",
-          "owner": "rune",
-          "blockedFor": [],
-          "back": "스캐너에 감사관의 신체 활동 기록이 저장되어 있다. 활동 파형이 00:16 표시 전에 끝나고 이후에는 평평한 선이 이어진다.",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation1",
-          "visibility": "locked",
-          "requires": [],
-          "location": null,
-          "requiresPresence": false,
-          "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 4
         },
         {
           "id": "rune_revoked_license",
@@ -1276,7 +1261,8 @@
           "location": null,
           "requiresPresence": false,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 1
         },
         {
           "id": "rune_old_consent",
@@ -1295,7 +1281,28 @@
           "location": null,
           "requiresPresence": false,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 2
+        },
+        {
+          "id": "rune_medical_scanner",
+          "title": "룬의 신경 진단 스캐너",
+          "subtitle": "",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "rune",
+          "blockedFor": [],
+          "back": "스캐너에 감사관의 신체 활동 기록이 저장되어 있다. 활동 파형이 00:16 표시 전에 끝나고 이후에는 평평한 선이 이어진다.",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 3
         },
         {
           "id": "rune_surgical_tablet",
@@ -1314,7 +1321,8 @@
           "location": null,
           "requiresPresence": false,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 4
         },
         {
           "id": "ion_pulse_blade",
@@ -1333,45 +1341,8 @@
           "location": null,
           "requiresPresence": false,
           "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "ion_maintenance_token",
-          "title": "이온의 고급 정비 토큰",
-          "subtitle": "",
-          "type": "belonging",
-          "clueKind": "timeline",
-          "owner": "ion",
-          "blockedFor": [],
-          "back": "토큰의 사용 기록에 ‘00:08 기억실 접근 승인’이 있다. 권한 목록에 ‘정비’, ‘사용자 로그 일부 숨김’이 적혀 있다.",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation1",
-          "visibility": "locked",
-          "requires": [],
-          "location": null,
-          "requiresPresence": false,
-          "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "ion_fake_warning",
-          "title": "이온의 긴급 격리 경고문",
-          "subtitle": "",
-          "type": "belonging",
-          "clueKind": "timeline",
-          "owner": "ion",
-          "blockedFor": [],
-          "back": "격리 경고문에 ‘감염자 발생’이 적혀 있으나 진료 번호 칸은 비어 있다. 첨부 접속 기록에는 경고 발송 뒤 외부 통신 종료 항목들이 이어진다.",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation1",
-          "visibility": "locked",
-          "requires": [],
-          "location": null,
-          "requiresPresence": false,
-          "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 1
         },
         {
           "id": "ion_sibling_identity",
@@ -1390,7 +1361,48 @@
           "location": null,
           "requiresPresence": false,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 2
+        },
+        {
+          "id": "ion_fake_warning",
+          "title": "이온의 긴급 격리 경고문",
+          "subtitle": "",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "ion",
+          "blockedFor": [],
+          "back": "격리 경고문에 ‘감염자 발생’이 적혀 있으나 진료 번호 칸은 비어 있다. 첨부 접속 기록에는 경고 발송 뒤 외부 통신 종료 항목들이 이어진다.",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 3
+        },
+        {
+          "id": "ion_maintenance_token",
+          "title": "이온의 고급 정비 토큰",
+          "subtitle": "",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "ion",
+          "blockedFor": [],
+          "back": "토큰의 사용 기록에 ‘00:08 기억실 접근 승인’이 있다. 권한 목록에 ‘정비’, ‘사용자 로그 일부 숨김’이 적혀 있다.",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 4
         },
         {
           "id": "mira_legal_patch",
@@ -1409,7 +1421,8 @@
           "location": null,
           "requiresPresence": false,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 1
         },
         {
           "id": "mira_ai_petition",
@@ -1428,26 +1441,8 @@
           "location": null,
           "requiresPresence": false,
           "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "mira_shadow_receipt",
-          "title": "미라의 기억 복제 서비스 영수증",
-          "subtitle": "",
-          "type": "belonging",
-          "clueKind": "timeline",
-          "owner": "mira",
-          "blockedFor": [],
-          "back": "기억 복제 서비스 영수증이다. 이용자란에 ‘미라’가 적혀 있고 제공 서비스와 지급 내역이 기재되어 있다.",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation1",
-          "visibility": "locked",
-          "requires": [],
-          "location": null,
-          "requiresPresence": false,
-          "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 2
         },
         {
           "id": "mira_identity_clause",
@@ -1466,7 +1461,28 @@
           "location": null,
           "requiresPresence": false,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 3
+        },
+        {
+          "id": "mira_shadow_receipt",
+          "title": "미라의 기억 복제 서비스 영수증",
+          "subtitle": "",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "mira",
+          "blockedFor": [],
+          "back": "기억 복제 서비스 영수증이다. 이용자란에 ‘미라’가 적혀 있고 제공 서비스와 지급 내역이 기재되어 있다.",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 4
         },
         {
           "id": "atlas_riot_shield",
@@ -1485,7 +1501,8 @@
           "location": null,
           "requiresPresence": false,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 1
         },
         {
           "id": "atlas_old_access",
@@ -1504,7 +1521,8 @@
           "location": null,
           "requiresPresence": false,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 2
         },
         {
           "id": "atlas_duty_log",
@@ -1523,7 +1541,8 @@
           "location": null,
           "requiresPresence": false,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 3
         },
         {
           "id": "atlas_encrypted_message",
@@ -1542,7 +1561,8 @@
           "location": null,
           "requiresPresence": false,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 4
         },
         {
           "id": "echo_shell_drive",
@@ -1561,26 +1581,8 @@
           "location": null,
           "requiresPresence": false,
           "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "echo_ghost_key",
-          "title": "에코의 가상 권한 키",
-          "subtitle": "",
-          "type": "belonging",
-          "clueKind": "timeline",
-          "owner": "echo",
-          "blockedFor": [],
-          "back": "가상 권한 키의 허용 대상에 ‘서버 접근’이 표시되어 있다. ‘금고 개방’ 항목은 비활성화되어 있다.",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation1",
-          "visibility": "locked",
-          "requires": [],
-          "location": null,
-          "requiresPresence": false,
-          "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 1
         },
         {
           "id": "echo_emotion_log",
@@ -1599,7 +1601,28 @@
           "location": null,
           "requiresPresence": false,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 2
+        },
+        {
+          "id": "echo_ghost_key",
+          "title": "에코의 가상 권한 키",
+          "subtitle": "",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "echo",
+          "blockedFor": [],
+          "back": "가상 권한 키의 허용 대상에 ‘서버 접근’이 표시되어 있다. ‘금고 개방’ 항목은 비활성화되어 있다.",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 3
         },
         {
           "id": "echo_backup_hash",
@@ -1618,45 +1641,8 @@
           "location": null,
           "requiresPresence": false,
           "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "sol_courier_case",
-          "title": "솔의 기억 칩 운반 케이스",
-          "subtitle": "",
-          "type": "belonging",
-          "clueKind": "timeline",
-          "owner": "sol",
-          "blockedFor": [],
-          "back": "운반 케이스에 배송 명세가 붙어 있다. 명세의 연락처 항목에 윤세라와 이온의 이름이 있으며 각 항목 옆에 거래 번호가 적혀 있다.",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation1",
-          "visibility": "locked",
-          "requires": [],
-          "location": null,
-          "requiresPresence": false,
-          "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "sol_anon_invoice",
-          "title": "솔의 가명 입금 명세",
-          "subtitle": "",
-          "type": "belonging",
-          "clueKind": "timeline",
-          "owner": "sol",
-          "blockedFor": [],
-          "back": "배송료 입금 명세에 가명 계좌가 적혀 있다. 일부 입금 항목의 거래 분류는 ‘대체 신원’이다.",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation1",
-          "visibility": "locked",
-          "requires": [],
-          "location": null,
-          "requiresPresence": false,
-          "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 4
         },
         {
           "id": "sol_radio_shell",
@@ -1675,7 +1661,48 @@
           "location": null,
           "requiresPresence": false,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 1
+        },
+        {
+          "id": "sol_courier_case",
+          "title": "솔의 기억 칩 운반 케이스",
+          "subtitle": "",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "sol",
+          "blockedFor": [],
+          "back": "운반 케이스에 배송 명세가 붙어 있다. 명세의 연락처 항목에 윤세라와 이온의 이름이 있으며 각 항목 옆에 거래 번호가 적혀 있다.",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 2
+        },
+        {
+          "id": "sol_anon_invoice",
+          "title": "솔의 가명 입금 명세",
+          "subtitle": "",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "sol",
+          "blockedFor": [],
+          "back": "배송료 입금 명세에 가명 계좌가 적혀 있다. 일부 입금 항목의 거래 분류는 ‘대체 신원’이다.",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "location": null,
+          "requiresPresence": false,
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 3
         },
         {
           "id": "sol_immunity_paper",
@@ -1694,7 +1721,8 @@
           "location": null,
           "requiresPresence": false,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 4
         },
         {
           "id": "memory_audit_letter",
@@ -1717,145 +1745,8 @@
             "y": 2
           },
           "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "memory_body_scan",
-          "title": "실물 신체 감식",
-          "subtitle": "",
-          "back": "신체 감식 기록의 생체 활동 파형은 00:16 부근에서 끝난다. 이후 구간은 평평하게 표시되어 있다.",
-          "type": "information",
-          "clueKind": "trick",
-          "owner": null,
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "locked",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": {
-            "floor": "lab",
-            "x": 4,
-            "y": 2
-          },
-          "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "memory_echo_frame",
-          "title": "00:21 감사관 홀로그램",
-          "subtitle": "",
-          "back": "00:21 표시가 있는 영상에서 윤세라가 같은 문장을 반복한다. 반복 구간의 입 움직임과 멈추는 지점이 겹쳐 보인다.",
-          "type": "information",
-          "clueKind": "trick",
-          "owner": null,
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "locked",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": {
-            "floor": "lab",
-            "x": 14,
-            "y": 8
-          },
-          "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "memory_emptied_chair",
-          "title": "진료실 빈 의자",
-          "subtitle": "",
-          "back": "빈 진료 의자 옆 단말에 두 개의 신경 기록 날짜가 남아 있다. 한 항목에는 별도의 수정 시각과 덮어쓰기 표시가 있다.",
-          "type": "information",
-          "clueKind": "trick",
-          "owner": null,
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "locked",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": {
-            "floor": "lab",
-            "x": 4,
-            "y": 2
-          },
-          "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "memory_id_overlap",
-          "title": "겹치는 생체 계정",
-          "subtitle": "",
-          "back": "생체 조회표에 서로 다른 소유자 이름의 두 계정이 있다. 노바의 계정과 다른 계정의 생체 특징 값이 같다.",
-          "type": "information",
-          "clueKind": "trick",
-          "owner": null,
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "locked",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": {
-            "floor": "lab",
-            "x": 14,
-            "y": 2
-          },
-          "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "memory_underground_bill",
-          "title": "배송 대금 명세",
-          "subtitle": "",
-          "back": "운송 대금 명세와 윤세라 명의 수사 협조 문서가 묶여 있다. 두 문서에 같은 거래 번호가 적혀 있으며 협조 문서에는 ‘증거 제출 시 면책 조건 검토’라는 문구가 있다.",
-          "type": "information",
-          "clueKind": "trick",
-          "owner": null,
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "locked",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": {
-            "floor": "atrium",
-            "x": 3,
-            "y": 8
-          },
-          "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "memory_exmate_memo",
-          "title": "과거 공안 정비 기록",
-          "subtitle": "",
-          "back": "정비 기록의 ‘격리 프로토콜 공동 시험’ 참가자란에 이온과 아틀라스가 적혀 있다. 담당 부서란에는 정비 구역과 공안 부서가 함께 기재되어 있다.",
-          "type": "information",
-          "clueKind": "trick",
-          "owner": null,
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "locked",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": {
-            "floor": "atrium",
-            "x": 14,
-            "y": 8
-          },
-          "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 1
         },
         {
           "id": "memory_legal_hold",
@@ -1878,13 +1769,14 @@
             "y": 2
           },
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 2
         },
         {
-          "id": "memory_emergency_log",
-          "title": "EMP 격리 경보",
+          "id": "memory_body_scan",
+          "title": "실물 신체 감식",
           "subtitle": "",
-          "back": "격리 로그의 명령 발생원 항목은 ‘긴급 진단 정보’다. 첨부 전력 사고 목록에는 같은 시각의 항목이 없다.",
+          "back": "신체 감식 기록의 생체 활동 파형은 00:16 부근에서 끝난다. 이후 구간은 평평하게 표시되어 있다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -1898,16 +1790,41 @@
           "location": {
             "floor": "lab",
             "x": 4,
-            "y": 8
+            "y": 2
           },
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 1
         },
         {
-          "id": "memory_coat_camera",
-          "title": "기억실 출입 감시 영상",
+          "id": "memory_emptied_chair",
+          "title": "진료실 빈 의자",
           "subtitle": "",
-          "back": "00:08 영상에 정비복을 입고 공구 케이스를 든 인물이 찍혀 있다. 얼굴은 가려져 있다.",
+          "back": "빈 진료 의자 옆 단말에 두 개의 신경 기록 날짜가 남아 있다. 한 항목에는 별도의 수정 시각과 덮어쓰기 표시가 있다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": {
+            "floor": "lab",
+            "x": 4,
+            "y": 2
+          },
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 2
+        },
+        {
+          "id": "memory_echo_frame",
+          "title": "00:21 감사관 홀로그램",
+          "subtitle": "",
+          "back": "00:21 표시가 있는 영상에서 윤세라가 같은 문장을 반복한다. 반복 구간의 입 움직임과 멈추는 지점이 겹쳐 보인다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
@@ -1924,7 +1841,8 @@
             "y": 8
           },
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 1
         },
         {
           "id": "memory_voice_repeat",
@@ -1947,7 +1865,181 @@
             "y": 8
           },
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 2
+        },
+        {
+          "id": "memory_coat_camera",
+          "title": "기억실 출입 감시 영상",
+          "subtitle": "",
+          "back": "00:08 영상에 정비복을 입고 공구 케이스를 든 인물이 찍혀 있다. 얼굴은 가려져 있다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": {
+            "floor": "lab",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 3
+        },
+        {
+          "id": "memory_id_overlap",
+          "title": "겹치는 생체 계정",
+          "subtitle": "",
+          "back": "생체 조회표에 서로 다른 소유자 이름의 두 계정이 있다. 노바의 계정과 다른 계정의 생체 특징 값이 같다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": {
+            "floor": "lab",
+            "x": 14,
+            "y": 2
+          },
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 1
+        },
+        {
+          "id": "memory_compromised_tag",
+          "title": "정비 토큰의 잔존 흔적",
+          "subtitle": "",
+          "back": "기억실 제어기에서 읽은 식별 코드가 인쇄되어 있다. 첨부 발행대장의 해당 묶음에는 구형 정비 토큰들이 나열되어 있다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [
+            "memory_coat_camera"
+          ],
+          "visibility": "hidden",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation2",
+          "requiresPresence": false,
+          "location": {
+            "floor": "lab",
+            "x": 14,
+            "y": 2
+          },
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 2
+        },
+        {
+          "id": "memory_underground_bill",
+          "title": "배송 대금 명세",
+          "subtitle": "",
+          "back": "운송 대금 명세와 윤세라 명의 수사 협조 문서가 묶여 있다. 두 문서에 같은 거래 번호가 적혀 있으며 협조 문서에는 ‘증거 제출 시 면책 조건 검토’라는 문구가 있다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": {
+            "floor": "atrium",
+            "x": 3,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 1
+        },
+        {
+          "id": "memory_exmate_memo",
+          "title": "과거 공안 정비 기록",
+          "subtitle": "",
+          "back": "정비 기록의 ‘격리 프로토콜 공동 시험’ 참가자란에 이온과 아틀라스가 적혀 있다. 담당 부서란에는 정비 구역과 공안 부서가 함께 기재되어 있다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": {
+            "floor": "atrium",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 1
+        },
+        {
+          "id": "memory_security_ledger",
+          "title": "정비 권한·출입 기록",
+          "subtitle": "",
+          "back": "권한 대장의 기억실 입장·환자 관리·EMP 승인 항목에 같은 정비 그룹 코드가 적혀 있다. 계정 목록에는 활성 계정과 만료된 구형 계정이 함께 있다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [
+            "memory_id_overlap",
+            "memory_emergency_log"
+          ],
+          "visibility": "hidden",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation2",
+          "requiresPresence": false,
+          "location": {
+            "floor": "atrium",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 2
+        },
+        {
+          "id": "memory_emergency_log",
+          "title": "EMP 격리 경보",
+          "subtitle": "",
+          "back": "격리 로그의 명령 발생원 항목은 ‘긴급 진단 정보’다. 첨부 전력 사고 목록에는 같은 시각의 항목이 없다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": {
+            "floor": "lab",
+            "x": 4,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 1
         },
         {
           "id": "memory_fake_patient",
@@ -1970,7 +2062,8 @@
             "y": 8
           },
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 2
         },
         {
           "id": "memory_core_key",
@@ -1997,197 +2090,8 @@
             "name": "기억 코어 중계 키",
             "description": "코어 보관실 문을 열고 행동 단계 도시 교신을 복구한다."
           },
-          "insights": {}
-        },
-        {
-          "id": "memory_backup_before",
-          "title": "00:16 이전 마지막 기억",
-          "subtitle": "",
-          "back": "복구된 녹음에서 윤세라가 “네 동생의 신분은 살리겠지만 기록을 지우지는 않겠다”고 말한다. 상대방 목소리에는 말이 끊기는 구간과 거친 숨소리가 있다.",
-          "type": "information",
-          "clueKind": "trick",
-          "owner": null,
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "hidden",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation2",
-          "requiresPresence": true,
-          "location": {
-            "floor": "core",
-            "x": 14,
-            "y": 8
-          },
-          "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "memory_ghost_sequence",
-          "title": "디지털 잔향 재생 시각",
-          "subtitle": "",
-          "back": "00:21 실행 로그에 ‘저장된 발화 모델 재생’이라고 적혀 있다. 연결된 음성 파일의 생성 시각은 00:16 이전으로 표시되어 있다.",
-          "type": "information",
-          "clueKind": "trick",
-          "owner": null,
-          "blockedFor": [],
-          "requires": [
-            "memory_voice_repeat"
-          ],
-          "visibility": "hidden",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation2",
-          "requiresPresence": false,
-          "location": {
-            "floor": "core",
-            "x": 14,
-            "y": 2
-          },
-          "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "memory_implant_receipt",
-          "title": "불법 복원 절차 기록",
-          "subtitle": "",
-          "back": "복원 장치의 00:08~00:16 절차 기록이다. 대상란은 ‘윤세라’, 최초 신청은 ‘자료 열람’, 변경 후 절차는 ‘복원’이다. 변경 동의란은 비어 있고 감독 승인 권한란에는 ‘정비 구역 관리자’가 적혀 있다.",
-          "type": "information",
-          "clueKind": "trick",
-          "owner": null,
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "locked",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation2",
-          "requiresPresence": true,
-          "location": {
-            "floor": "core",
-            "x": 14,
-            "y": 8
-          },
-          "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "memory_compromised_tag",
-          "title": "정비 토큰의 잔존 흔적",
-          "subtitle": "",
-          "back": "기억실 제어기에서 읽은 식별 코드가 인쇄되어 있다. 첨부 발행대장의 해당 묶음에는 구형 정비 토큰들이 나열되어 있다.",
-          "type": "information",
-          "clueKind": "trick",
-          "owner": null,
-          "blockedFor": [],
-          "requires": [
-            "memory_coat_camera"
-          ],
-          "visibility": "hidden",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation2",
-          "requiresPresence": false,
-          "location": {
-            "floor": "lab",
-            "x": 14,
-            "y": 2
-          },
-          "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "memory_ion_sibling",
-          "title": "대체 신원 계약서",
-          "subtitle": "",
-          "back": "대체 신분 서류에 이온의 가족 정보가 적혀 있고 봉인된 의료 기록이 묶여 있다. 첨부 감사 목록에 같은 서류 번호가 있으며 “열람을 막아 달라”는 요청문이 붙어 있다.",
-          "type": "information",
-          "clueKind": "trick",
-          "owner": null,
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "hidden",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation2",
-          "requiresPresence": true,
-          "location": {
-            "floor": "core",
-            "x": 14,
-            "y": 8
-          },
-          "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "memory_emp_order",
-          "title": "EMP 작동 서명 사본",
-          "subtitle": "",
-          "back": "격리 승인 시각이 00:30으로 표시되어 있다. 제출 권한은 ‘정비 토큰’이며 발행 묶음 번호가 함께 적혀 있다.",
-          "type": "information",
-          "clueKind": "trick",
-          "owner": null,
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "hidden",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation2",
-          "requiresPresence": true,
-          "location": {
-            "floor": "core",
-            "x": 14,
-            "y": 8
-          },
-          "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "memory_core_backdoor",
-          "title": "서버 보존 우회 감사 기록",
-          "subtitle": "",
-          "back": "감사관 원본 데이터에 대한 삭제 요청 로그가 남아 있다. 요청 계정은 시스템 이름으로 표시되어 있고 복구 사본의 해시 검증 결과가 첨부되어 있다.",
-          "type": "information",
-          "clueKind": "trick",
-          "owner": null,
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "locked",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation2",
-          "requiresPresence": false,
-          "location": {
-            "floor": "core",
-            "x": 14,
-            "y": 8
-          },
-          "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "memory_bio_echo",
-          "title": "인격·발화 파일 속성표",
-          "subtitle": "",
-          "back": "두 파일의 속성표가 나란히 있다. 에코 파일에는 연속된 기억 기록과 쓰기 권한이, 윤세라 발화 파일에는 고정 대사 목록과 재생 권한이 표시되어 있다. 저장 형식도 서로 다르다.",
-          "type": "information",
-          "clueKind": "trick",
-          "owner": null,
-          "blockedFor": [],
-          "requires": [
-            "memory_legal_hold"
-          ],
-          "visibility": "hidden",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation2",
-          "requiresPresence": false,
-          "location": {
-            "floor": "core",
-            "x": 3,
-            "y": 2
-          },
-          "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 3
         },
         {
           "id": "memory_shutdown_map",
@@ -2210,33 +2114,176 @@
             "y": 8
           },
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 1
         },
         {
-          "id": "memory_security_ledger",
-          "title": "정비 권한·출입 기록",
+          "id": "memory_backup_before",
+          "title": "00:16 이전 마지막 기억",
           "subtitle": "",
-          "back": "권한 대장의 기억실 입장·환자 관리·EMP 승인 항목에 같은 정비 그룹 코드가 적혀 있다. 계정 목록에는 활성 계정과 만료된 구형 계정이 함께 있다.",
+          "back": "복구된 녹음에서 윤세라가 “네 동생의 신분은 살리겠지만 기록을 지우지는 않겠다”고 말한다. 상대방 목소리에는 말이 끊기는 구간과 거친 숨소리가 있다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
           "blockedFor": [],
-          "requires": [
-            "memory_id_overlap",
-            "memory_emergency_log"
-          ],
+          "requires": [],
           "visibility": "hidden",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation2",
+          "requiresPresence": true,
+          "location": {
+            "floor": "core",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 2
+        },
+        {
+          "id": "memory_ion_sibling",
+          "title": "대체 신원 계약서",
+          "subtitle": "",
+          "back": "대체 신분 서류에 이온의 가족 정보가 적혀 있고 봉인된 의료 기록이 묶여 있다. 첨부 감사 목록에 같은 서류 번호가 있으며 “열람을 막아 달라”는 요청문이 붙어 있다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "hidden",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation2",
+          "requiresPresence": true,
+          "location": {
+            "floor": "core",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 3
+        },
+        {
+          "id": "memory_emp_order",
+          "title": "EMP 작동 서명 사본",
+          "subtitle": "",
+          "back": "격리 승인 시각이 00:30으로 표시되어 있다. 제출 권한은 ‘정비 토큰’이며 발행 묶음 번호가 함께 적혀 있다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "hidden",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation2",
+          "requiresPresence": true,
+          "location": {
+            "floor": "core",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 4
+        },
+        {
+          "id": "memory_core_backdoor",
+          "title": "서버 보존 우회 감사 기록",
+          "subtitle": "",
+          "back": "감사관 원본 데이터에 대한 삭제 요청 로그가 남아 있다. 요청 계정은 시스템 이름으로 표시되어 있고 복구 사본의 해시 검증 결과가 첨부되어 있다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
           "repeatable": false,
           "transferable": true,
           "availableFromPhase": "investigation2",
           "requiresPresence": false,
           "location": {
-            "floor": "atrium",
+            "floor": "core",
             "x": 14,
             "y": 8
           },
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 5
+        },
+        {
+          "id": "memory_why_sealed",
+          "title": "격리 지침과 당일 로그",
+          "subtitle": "",
+          "back": "격리 지침의 발동 조건은 ‘외부 재난 경보’다. 당일 외부 경보 목록은 비어 있고 통신 회선 로그에는 ‘수동 차단’이 기록되어 있다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation2",
+          "requiresPresence": false,
+          "location": {
+            "floor": "core",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 6
+        },
+        {
+          "id": "memory_implant_receipt",
+          "title": "불법 복원 절차 기록",
+          "subtitle": "",
+          "back": "복원 장치의 00:08~00:16 절차 기록이다. 대상란은 ‘윤세라’, 최초 신청은 ‘자료 열람’, 변경 후 절차는 ‘복원’이다. 변경 동의란은 비어 있고 감독 승인 권한란에는 ‘정비 구역 관리자’가 적혀 있다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation2",
+          "requiresPresence": true,
+          "location": {
+            "floor": "core",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 7
+        },
+        {
+          "id": "memory_original_rights",
+          "title": "원본 기억 보관 계약",
+          "subtitle": "",
+          "back": "노바의 기억 기록 번호가 적힌 보관 계약서다. 이용처에는 ‘대체 신분 사업’이 적혀 있고 동의란은 비어 있다. 윤세라 명의 회복 절차 서류가 첨부되어 있으며 완료란은 비어 있다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation2",
+          "requiresPresence": false,
+          "location": {
+            "floor": "core",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 8
         },
         {
           "id": "memory_culprit_reconstruction",
@@ -2262,19 +2309,22 @@
             "y": 8
           },
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 9
         },
         {
-          "id": "memory_original_rights",
-          "title": "원본 기억 보관 계약",
+          "id": "memory_ghost_sequence",
+          "title": "디지털 잔향 재생 시각",
           "subtitle": "",
-          "back": "노바의 기억 기록 번호가 적힌 보관 계약서다. 이용처에는 ‘대체 신분 사업’이 적혀 있고 동의란은 비어 있다. 윤세라 명의 회복 절차 서류가 첨부되어 있으며 완료란은 비어 있다.",
+          "back": "00:21 실행 로그에 ‘저장된 발화 모델 재생’이라고 적혀 있다. 연결된 음성 파일의 생성 시각은 00:16 이전으로 표시되어 있다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
           "blockedFor": [],
-          "requires": [],
-          "visibility": "locked",
+          "requires": [
+            "memory_voice_repeat"
+          ],
+          "visibility": "hidden",
           "repeatable": false,
           "transferable": true,
           "availableFromPhase": "investigation2",
@@ -2282,33 +2332,37 @@
           "location": {
             "floor": "core",
             "x": 14,
-            "y": 8
+            "y": 2
           },
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 1
         },
         {
-          "id": "memory_why_sealed",
-          "title": "격리 지침과 당일 로그",
+          "id": "memory_bio_echo",
+          "title": "인격·발화 파일 속성표",
           "subtitle": "",
-          "back": "격리 지침의 발동 조건은 ‘외부 재난 경보’다. 당일 외부 경보 목록은 비어 있고 통신 회선 로그에는 ‘수동 차단’이 기록되어 있다.",
+          "back": "두 파일의 속성표가 나란히 있다. 에코 파일에는 연속된 기억 기록과 쓰기 권한이, 윤세라 발화 파일에는 고정 대사 목록과 재생 권한이 표시되어 있다. 저장 형식도 서로 다르다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
           "blockedFor": [],
-          "requires": [],
-          "visibility": "locked",
+          "requires": [
+            "memory_legal_hold"
+          ],
+          "visibility": "hidden",
           "repeatable": false,
           "transferable": true,
           "availableFromPhase": "investigation2",
           "requiresPresence": false,
           "location": {
             "floor": "core",
-            "x": 14,
-            "y": 8
+            "x": 3,
+            "y": 2
           },
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 1
         }
       ]
     },

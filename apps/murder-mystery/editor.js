@@ -123,6 +123,7 @@ function cardsPanel(){
       selectField('유형','game.investigation.cards.'+selectedCard+'.type',[['place','장소'],['belonging','소지품'],['information','정보']],c.type)+
       field('뒷면 상세 정보 (조사한 플레이어에게만 공개)','game.investigation.cards.'+selectedCard+'.back',c.back,'textarea')+
       field('앞면 장소명 직접 지정 (지도 위치가 없는 카드용)','game.investigation.cards.'+selectedCard+'.frontPlace',c.frontPlace||'')+
+      field('같은 장소/인물의 조사 순서 (1부터, 빈칸이면 자유 조사)','game.investigation.cards.'+selectedCard+'.sequenceOrder',c.sequenceOrder??'','number','min="1" max="200"')+
       selectField('소유 캐릭터: 본인은 조사 불가','game.investigation.cards.'+selectedCard+'.owner',[['','없음'],...doc.story.characters.map(x=>[x.id,x.name])],c.owner||'')+
       field('선행 조사 카드 ID (쉼표 구분)','card.requires',(c.requires||[]).join(', '))+
       selectField('해금 전 표시','game.investigation.cards.'+selectedCard+'.visibility',[['locked','잠금 표시'],['hidden','존재 숨기기']],c.visibility||'locked')+
@@ -258,6 +259,7 @@ function valueChange(path,value){
     try{const arr=JSON.parse(value);if(!Array.isArray(arr))throw Error('배열이 아닙니다.');b[path.split('.')[1]]=arr;status('JSON 항목이 반영되었습니다.');}
     catch(e){status('이 항목은 JSON 배열이어야 합니다: '+e.message,true);return;}
   }else if(path.startsWith('role.'))b[path.slice(5)]=value;
+  else if(path.endsWith('.sequenceOrder'))setPath(path,value===''?null:Number(value));
   else if(path==='card.requires')card.requires=value.split(',').map(x=>x.trim()).filter(Boolean);
   else if(path==='card.insights'){
     try{

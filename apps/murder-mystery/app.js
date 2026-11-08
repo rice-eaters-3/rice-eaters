@@ -316,6 +316,9 @@ function nameFromInput(){
   return name;
 }
 async function perform(action,button){
+  if(['clue-open','clue-flip','clue-close'].includes(action)){
+    window.MysteryStudy.navigate(action,button.dataset.card);render();return;
+  }
   if(action==='move'){await moveMyPlayer(button.dataset.direction);return;}
   if(action==='interact'){
     try{
@@ -325,7 +328,7 @@ async function perform(action,button){
       const updated=await api('/api/rooms/'+state.room.code+'/interact','POST',payload);
       updateRoom(updated,state.connection,true);
       if(payload.kind==='door')toast(payload.doorAction==='close'?'문을 닫았습니다.':'문을 열었습니다.');
-    }catch(e){toast(e.message)}
+    }catch(e){toast(e.message);window.alert('액션을 수행할 수 없습니다.\n'+e.message)}
     return;
   }
   if(['book-toggle','book-chapter','book-prev','book-next','research-toggle'].includes(action)){
@@ -418,6 +421,18 @@ async function perform(action,button){
       const changed=await api('/api/rooms/'+code+'/act','POST',{abilityId,targetId});
       updateRoom(changed,state.connection,true);
       toast('행동이 처리되었습니다. 다음 순서로 진행합니다.');
+    } else if(action==='clue-investigate'){
+      const cardId=button.dataset.card;
+      const clue=room?.investigation?.cards.find(c=>c.id===cardId);
+      if(!clue||clue.locked||clue.taken||clue.excluded||room.investigation.tokens<1)
+        throw Error('현재 이 조사 카드를 조사할 수 없습니다.');
+      if(!window.confirm('조사 토큰 1개를 사용해 카드 뒷면을 확인할까요?'))return;
+      if(clue.reservedBy!==room.me)
+        await api('/api/rooms/'+code+'/reserve','POST',{cardId});
+      const result=await api('/api/rooms/'+code+'/investigate','POST',{cardId});
+      window.MysteryStudy.navigate('clue-revealed');
+      updateRoom(result,state.connection,true);
+      toast('조사 토큰 1개를 사용했습니다. 카드 뒷면을 확인할 수 있습니다.');
     } else if(['reserve','release','investigate'].includes(action)){
       const cardId=button.dataset.card||room?.investigation?.cards.find(c=>c.reservedBy===room.me)?.id;
       if(!cardId)throw Error('조사할 카드를 선택해주세요.');
@@ -448,6 +463,10 @@ $('app').addEventListener('click',e=>{
   if(button)perform(button.dataset.action,button);
 });
 document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&window.MysteryStudy?.isModalOpen?.()){
+    window.MysteryStudy.navigate('clue-close');render();return;
+  }
+  if(window.MysteryStudy?.isModalOpen?.())return;
   if(SOCIAL_PHASES.includes(state.room?.phase)&&!e.altKey&&!e.metaKey&&!e.ctrlKey){
     const tag=e.target?.tagName?.toLowerCase();
     if(['i','r'].includes(e.key.toLowerCase())&&!['input','textarea','select'].includes(tag)&&!e.target?.isContentEditable){

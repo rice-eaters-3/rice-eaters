@@ -7,10 +7,10 @@ const d1=require('../mystery-content/d1-gaming.case.json');
 
 test('unrevealed cards have stable, sequential owner and location labels',()=>{
   const cards=d1.game.investigation.cards,labels=front.labels(cards,d1.story.characters,d1.game.floors);
-  assert.equal(labels.jobi_threat_phone,'조비의 소지품 1');
-  assert.equal(labels.jobi_stage_mouse,'조비의 소지품 2');
-  assert.equal(labels.jobi_qualifier_card,'조비의 소지품 3');
-  assert.equal(labels.jobi_stopwatch,'조비의 소지품 4');
+  assert.equal(labels.jobi_threat_phone,'조비의 소지품 4');
+  assert.equal(labels.jobi_stage_mouse,'조비의 소지품 1');
+  assert.equal(labels.jobi_qualifier_card,'조비의 소지품 2');
+  assert.equal(labels.jobi_stopwatch,'조비의 소지품 3');
   const throne=cards.filter(c=>c.location?.floor==='penthouse'&&
     c.location.x>=1&&c.location.x<10&&c.location.y>=1&&c.location.y<6);
   assert.ok(throne.length>=2);
@@ -35,10 +35,13 @@ test('Studio player views do not expose evidence title or subtitle until discove
   E.switchRole(state,'mayushi');
   E.switchPhase(state,'investigation1');
   const hidden=E.roomView(state).investigation.cards.find(c=>c.id==='jobi_threat_phone');
-  assert.equal(hidden.frontTitle,'조비의 소지품 1');
+  assert.equal(hidden.frontTitle,'조비의 소지품 4');
   assert.equal(hidden.title,null);
   assert.equal(hidden.subtitle,null);
   assert.equal(hidden.revealed.length,0);
+  for(const prerequisite of ['jobi_stage_mouse','jobi_qualifier_card','jobi_stopwatch']){
+    E.reserve(state,prerequisite);E.investigate(state,prerequisite);
+  }
   E.reserve(state,'jobi_threat_phone');
   E.investigate(state,'jobi_threat_phone');
   const seen=E.roomView(state).investigation.cards.find(c=>c.id==='jobi_threat_phone');
@@ -101,4 +104,64 @@ test('all four test-mode catalogs preserve numbered fronts when backs become pub
    assert.equal(c.revealed[0].back,original.back);
   }
  }
+});
+
+
+test('all authored scenarios rank every clue in a solvable, acyclic place or owner chain',()=>{
+  const {validate}=require('../mystery-content/validate.js');
+  for(const pkg of [
+    d1,require('../mystery-content/cruel-heart-island.case.json'),
+    require('../mystery-content/neon-memory-quarantine.case.json'),
+    require('../mystery-content/stellar-academy-first-case.case.json')
+  ]){
+    const original=pkg.game.investigation.cards,normalized=validate(pkg).game.investigation.cards;
+    const byId=new Map(original.map(c=>[c.id,c]));
+    const seq=front.sequenceAfter(original,pkg.game.floors);
+    const named=front.labels(original,pkg.story.characters,pkg.game.floors);
+    const buckets=new Map();
+    for(const card of original){
+      assert.ok(Number.isInteger(card.sequenceOrder)&&card.sequenceOrder>=1,pkg.story.id+'/'+card.id);
+      assert.equal(normalized.find(c=>c.id===card.id)?.sequenceOrder,card.sequenceOrder,
+        'Studio import must retain authored order');
+      const group=front.groupKey(card,pkg.game.floors);
+      if(!buckets.has(group))buckets.set(group,[]);
+      buckets.get(group).push(card);
+      assert.ok(named[card.id].endsWith(' '+card.sequenceOrder),
+        'front label must reflect the same rank as the server');
+    }
+    for(const group of buckets.values()){
+      const sorted=group.slice().sort((a,b)=>a.sequenceOrder-b.sequenceOrder);
+      assert.deepEqual(sorted.map(c=>c.sequenceOrder),sorted.map((_,i)=>i+1));
+      for(let i=1;i<sorted.length;i++)assert.equal(seq[sorted[i].id],sorted[i-1].id);
+    }
+    // Ordering and explicit author prerequisites must never create a deadlock.
+    const done=new Set(),stack=new Set();
+    function visit(id){
+      if(stack.has(id))assert.fail(pkg.story.id+' circular clue dependency at '+id);
+      if(done.has(id))return;
+      stack.add(id);
+      for(const before of [...(byId.get(id).requires||[]),...(seq[id]?[seq[id]]:[])])visit(before);
+      stack.delete(id);done.add(id);
+    }
+    for(const card of original)visit(card.id);
+    for(const [role,book] of Object.entries(pkg.game.booklets)){
+      const personal=book.inventory.map(x=>byId.get(x.id)).filter(Boolean);
+      assert.deepEqual(personal.map(c=>c.sequenceOrder),personal.map((_,i)=>i+1),
+        pkg.story.id+'/'+role+' booklet order must match numbered card fronts');
+    }
+  }
+});
+
+test('sequential owner evidence cannot be skipped, and previous discovery unlocks later cards',()=>{
+  const s=E.create(d1);E.switchPhase(s,'investigation1');E.switchRole(s,'mayushi');
+  assert.throws(()=>E.reserve(s,'jobi_qualifier_card'),/이전 조사 카드/);
+  assert.equal(E.roomView(s).investigation.cards.find(c=>c.id==='jobi_qualifier_card').sequenceLocked,true);
+  E.reserve(s,'jobi_stage_mouse');E.investigate(s,'jobi_stage_mouse');
+  assert.equal(E.roomView(s).investigation.cards.find(c=>c.id==='jobi_qualifier_card').sequenceLocked,false);
+  E.reserve(s,'jobi_qualifier_card');E.investigate(s,'jobi_qualifier_card');
+  E.switchRole(s,'cloud');
+  assert.equal(E.roomView(s).investigation.cards.find(c=>c.id==='jobi_stopwatch').sequenceLocked,false,
+    'a previous card investigated by another role globally unlocks the following card');
+  assert.equal(E.roomView(s).investigation.cards.find(c=>c.id==='jobi_qualifier_card').title,null,
+    'previous research does not automatically leak the private reverse to all players');
 });

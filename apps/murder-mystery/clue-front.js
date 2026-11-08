@@ -24,15 +24,44 @@
     }
     return label(floor.title)||'사건 자료';
   }
+  function groupKey(card,floors){
+    return card.type==='belonging'&&card.owner?
+      'owner:'+card.owner:'place:'+locationName(card,floors);
+  }
+  function orderedGroups(cards,floors){
+    const groups=new Map();
+    for(const card of cards||[]){
+      const key=groupKey(card,floors);
+      if(!groups.has(key))groups.set(key,[]);
+      groups.get(key).push(card);
+    }
+    for(const group of groups.values()){
+      // Only authored ranks change established card numbering. Unranked editor
+      // scenarios retain their original source order and investigation rules.
+      group.sort((a,b)=>(Number.isInteger(a.sequenceOrder)?a.sequenceOrder:9999)-
+        (Number.isInteger(b.sequenceOrder)?b.sequenceOrder:9999));
+    }
+    return groups;
+  }
+  function sequenceAfter(cards,floors){
+    const result={};
+    for(const group of orderedGroups(cards,floors).values()){
+      for(let i=1;i<group.length;i++)if(Number.isInteger(group[i].sequenceOrder)&&
+          Number.isInteger(group[i-1].sequenceOrder)){
+        result[group[i].id]=group[i-1].id;
+      }
+    }
+    return result;
+  }
   function labels(cards,characters,floors){
     const names=new Map((characters||[]).map(c=>[c.id,label(c.name)]));
-    const counters=new Map(),result={};
-    for(const card of cards||[]){
-      const owned=card.type==='belonging'&&names.has(card.owner);
-      const name=owned?names.get(card.owner)+'의 소지품':locationName(card,floors);
-      const group=owned?'owner:'+card.owner:'place:'+name;
-      const number=(counters.get(group)||0)+1;counters.set(group,number);
-      result[card.id]=name+' '+number;
+    const result={};
+    for(const [key,group] of orderedGroups(cards,floors)){
+      for(const [i,card] of group.entries()){
+        const name=key.startsWith('owner:')?
+          (names.get(card.owner)||card.owner)+'의 소지품':locationName(card,floors);
+        result[card.id]=name+' '+(i+1);
+      }
     }
     return result;
   }
@@ -73,5 +102,5 @@
       })
     };
   }
-  return {labels,locationName,hiddenAreas,isConcealedCard,playerFloor};
+  return {labels,locationName,sequenceAfter,groupKey,hiddenAreas,isConcealedCard,playerFloor};
 });

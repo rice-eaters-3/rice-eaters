@@ -151,6 +151,16 @@
         ],
         "inventory": [
           {
+            "id": "seoha_rescue_token",
+            "name": "퍼즐 구조 토큰",
+            "description": "구조 토큰에 방패 모양과 ‘보호’라는 글자가 새겨져 있다. 뒷면에 장착 홈이 있다."
+          },
+          {
+            "id": "seoha_safe_marker",
+            "name": "미로 표시 펜",
+            "description": "표시 펜과 접힌 메모가 함께 있다. 메모의 별표 옆에 ‘지하 전기실’이 적혀 있고 아래에는 ‘연호’라는 이름이 있다."
+          },
+          {
             "id": "seoha_folded_map",
             "name": "접는 입체 약도",
             "description": "접을 수 있는 반투명 약도다. 각 면에 통로의 일부가 그려져 있고 가장자리에는 겹침 표시가 있다. 한 면만 펼치면 통로 선이 중간에서 끊긴다."
@@ -159,16 +169,6 @@
             "id": "seoha_puzzle_ring",
             "name": "암호 고리",
             "description": "고리에 숫자가 새겨져 있다. 종이에 찍으면 숫자가 좌우로 뒤집혀 나타난다. 안쪽 금속에 마모 자국이 있다."
-          },
-          {
-            "id": "seoha_safe_marker",
-            "name": "미로 표시 펜",
-            "description": "표시 펜과 접힌 메모가 함께 있다. 메모의 별표 옆에 ‘지하 전기실’이 적혀 있고 아래에는 ‘연호’라는 이름이 있다."
-          },
-          {
-            "id": "seoha_rescue_token",
-            "name": "퍼즐 구조 토큰",
-            "description": "구조 토큰에 방패 모양과 ‘보호’라는 글자가 새겨져 있다. 뒷면에 장착 홈이 있다."
           }
         ],
         "culprit": false,
@@ -217,14 +217,14 @@
         ],
         "inventory": [
           {
-            "id": "taewon_mirror_box",
-            "name": "거울 마술 상자",
-            "description": "상자 안에 여러 각도로 기울어진 거울이 달려 있다. 뚜껑을 움직이면 내부 공간이 서로 다른 방향으로 비친다."
-          },
-          {
             "id": "taewon_stage_rope",
             "name": "무대용 안전 로프",
             "description": "무대용 안전 로프다. 양 끝에 고정 고리가 달려 있고 중간에 여러 매듭이 묶여 있다."
+          },
+          {
+            "id": "taewon_mirror_box",
+            "name": "거울 마술 상자",
+            "description": "상자 안에 여러 각도로 기울어진 거울이 달려 있다. 뚜껑을 움직이면 내부 공간이 서로 다른 방향으로 비친다."
           },
           {
             "id": "taewon_voice_filter",
@@ -288,9 +288,9 @@
             "description": "종이 연감에 날짜·시각별 별자리 위치가 그려져 있다. 01:10 항목 옆에 손으로 표시한 흔적이 있다."
           },
           {
-            "id": "yeonju_anonymous_chat",
-            "name": "연호와의 익명 채팅",
-            "description": "연호와의 채팅에 ‘비밀 연구관’, ‘탈출 길’, ‘학원 실험’이라는 단어가 반복된다. 여러 통로 위치를 주고받은 메시지가 남아 있다."
+            "id": "yeonju_sky_photo",
+            "name": "하늘의 장시간 노출 사진",
+            "description": "별의 이동 궤적이 찍힌 장시간 노출 사진이다. 파일의 촬영 시각은 00:42경으로 표시되어 있다."
           },
           {
             "id": "yeonju_micro_scope",
@@ -298,9 +298,9 @@
             "description": "휴대 렌즈와 관측 메모가 함께 있다. 메모에는 “화면 구석에 예약 재생 표시가 보인다”라고 적혀 있다."
           },
           {
-            "id": "yeonju_sky_photo",
-            "name": "하늘의 장시간 노출 사진",
-            "description": "별의 이동 궤적이 찍힌 장시간 노출 사진이다. 파일의 촬영 시각은 00:42경으로 표시되어 있다."
+            "id": "yeonju_anonymous_chat",
+            "name": "연호와의 익명 채팅",
+            "description": "연호와의 채팅에 ‘비밀 연구관’, ‘탈출 길’, ‘학원 실험’이라는 단어가 반복된다. 여러 통로 위치를 주고받은 메시지가 남아 있다."
           }
         ],
         "culprit": false,
@@ -354,9 +354,9 @@
             "description": "완충재와 턱끈이 달린 구조 헬멧이다. 안쪽에 ‘충격 보호용’ 표찰이 붙어 있다."
           },
           {
-            "id": "jinwoo_floor_plan",
-            "name": "안전 훈련 구역 도면",
-            "description": "안전 훈련 구역 도면의 지하 부분에 이름 없는 빈 칸이 있다. 빈 칸의 한쪽 벽에는 통로 선이 닿아 있다."
+            "id": "jinwoo_emergency_radio",
+            "name": "단거리 비상 무전기",
+            "description": "단거리 무전기다. 메뉴에 송신·수신 기록 목록과 구조 요청 채널이 있다."
           },
           {
             "id": "jinwoo_failure_report",
@@ -364,9 +364,9 @@
             "description": "모의 구조 훈련 보고서에 한 사람을 먼저 대피시킨 순서가 적혀 있다. 평가란에는 ‘판단을 보류한 이유를 설명하지 못함’이라는 감독관 메모가 있다."
           },
           {
-            "id": "jinwoo_emergency_radio",
-            "name": "단거리 비상 무전기",
-            "description": "단거리 무전기다. 메뉴에 송신·수신 기록 목록과 구조 요청 채널이 있다."
+            "id": "jinwoo_floor_plan",
+            "name": "안전 훈련 구역 도면",
+            "description": "안전 훈련 구역 도면의 지하 부분에 이름 없는 빈 칸이 있다. 빈 칸의 한쪽 벽에는 통로 선이 닿아 있다."
           }
         ],
         "culprit": false,
@@ -415,24 +415,24 @@
         ],
         "inventory": [
           {
-            "id": "rion_cipher_ledger",
-            "name": "지하 암호 해독 수첩",
-            "description": "수첩에 지하 냉각 통로 기호와 상층 출입문 기호가 나란히 적혀 있다. 각 기호 아래에 고어와 여러 번 고친 해독 메모가 있다."
-          },
-          {
-            "id": "rion_patron_letter",
-            "name": "익명의 후원자 편지",
-            "description": "발신인 이름이 없는 후원 편지다. 본문에 ‘재능별 실험군’, ‘외부 연락 제한’, ‘폐쇄 환경 유지’라는 문구가 있다."
-          },
-          {
             "id": "rion_golden_dictionary",
             "name": "금빛 어휘 사전",
             "description": "금빛 표지의 사전이다. 몇몇 단어에 표시가 있고 여백에 “별이 사라지는 층의 왼쪽 길”이라고 적혀 있다."
           },
           {
+            "id": "rion_cipher_ledger",
+            "name": "지하 암호 해독 수첩",
+            "description": "수첩에 지하 냉각 통로 기호와 상층 출입문 기호가 나란히 적혀 있다. 각 기호 아래에 고어와 여러 번 고친 해독 메모가 있다."
+          },
+          {
             "id": "rion_sealed_note",
             "name": "연호의 암호 쪽지",
             "description": "연호의 이름이 적힌 쪽지다. “그 말은 믿기 어렵다”라는 문장 뒤에 고어 암호가 이어진다. 암호 아래에는 여러 번 눌러 쓴 밑줄이 있다."
+          },
+          {
+            "id": "rion_patron_letter",
+            "name": "익명의 후원자 편지",
+            "description": "발신인 이름이 없는 후원 편지다. 본문에 ‘재능별 실험군’, ‘외부 연락 제한’, ‘폐쇄 환경 유지’라는 문구가 있다."
           }
         ],
         "culprit": false,
@@ -487,24 +487,24 @@
         ],
         "inventory": [
           {
-            "id": "gabin_voice_script",
-            "name": "연호 배역 대본",
-            "description": "공연 대본의 연호 배역 대사에 고어 표현이 섞여 있다. 단어 위에는 강세 표시, 문장 사이에는 숨을 멈추는 표시가 적혀 있다."
-          },
-          {
             "id": "gabin_stage_dart",
             "name": "연극용 그림자 화살",
             "description": "연극 소품 케이스 안에 그림자 화살이 들어 있다. 케이스에 ‘무대용’ 표찰이 붙어 있다."
           },
           {
-            "id": "gabin_family_badge",
-            "name": "관리실 출입 배지",
-            "description": "배지에 ‘운영자 가족’과 ‘플라네타륨 관리실’이 적혀 있다. 뒷면에는 배지 번호가 인쇄되어 있다."
-          },
-          {
             "id": "gabin_red_fiber",
             "name": "찢어진 무대 의상",
             "description": "붉은 무대 의상의 한쪽 끝이 찢어져 있다. 찢어진 가장자리에 가는 붉은 실밥이 여러 가닥 남아 있다."
+          },
+          {
+            "id": "gabin_voice_script",
+            "name": "연호 배역 대본",
+            "description": "공연 대본의 연호 배역 대사에 고어 표현이 섞여 있다. 단어 위에는 강세 표시, 문장 사이에는 숨을 멈추는 표시가 적혀 있다."
+          },
+          {
+            "id": "gabin_family_badge",
+            "name": "관리실 출입 배지",
+            "description": "배지에 ‘운영자 가족’과 ‘플라네타륨 관리실’이 적혀 있다. 뒷면에는 배지 번호가 인쇄되어 있다."
           }
         ],
         "culprit": true,
@@ -1090,27 +1090,8 @@
       "maxTileOccupants": 3,
       "cards": [
         {
-          "id": "seoha_folded_map",
-          "title": "남서하의 접는 입체 약도",
-          "subtitle": "",
-          "type": "belonging",
-          "clueKind": "timeline",
-          "owner": "seoha",
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "locked",
-          "repeatable": false,
-          "transferable": false,
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": null,
-          "grant": null,
-          "insights": {},
-          "back": "접을 수 있는 반투명 약도다. 각 면에 통로의 일부가 그려져 있고 가장자리에는 겹침 표시가 있다. 한 면만 펼치면 통로 선이 중간에서 끊긴다."
-        },
-        {
-          "id": "seoha_puzzle_ring",
-          "title": "남서하의 암호 고리",
+          "id": "seoha_rescue_token",
+          "title": "남서하의 퍼즐 구조 토큰",
           "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
@@ -1125,7 +1106,8 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "고리에 숫자가 새겨져 있다. 종이에 찍으면 숫자가 좌우로 뒤집혀 나타난다. 안쪽 금속에 마모 자국이 있다."
+          "back": "구조 토큰에 방패 모양과 ‘보호’라는 글자가 새겨져 있다. 뒷면에 장착 홈이 있다.",
+          "sequenceOrder": 1
         },
         {
           "id": "seoha_safe_marker",
@@ -1144,11 +1126,32 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "표시 펜과 접힌 메모가 함께 있다. 메모의 별표 옆에 ‘지하 전기실’이 적혀 있고 아래에는 ‘연호’라는 이름이 있다."
+          "back": "표시 펜과 접힌 메모가 함께 있다. 메모의 별표 옆에 ‘지하 전기실’이 적혀 있고 아래에는 ‘연호’라는 이름이 있다.",
+          "sequenceOrder": 2
         },
         {
-          "id": "seoha_rescue_token",
-          "title": "남서하의 퍼즐 구조 토큰",
+          "id": "seoha_folded_map",
+          "title": "남서하의 접는 입체 약도",
+          "subtitle": "",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "seoha",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "접을 수 있는 반투명 약도다. 각 면에 통로의 일부가 그려져 있고 가장자리에는 겹침 표시가 있다. 한 면만 펼치면 통로 선이 중간에서 끊긴다.",
+          "sequenceOrder": 3
+        },
+        {
+          "id": "seoha_puzzle_ring",
+          "title": "남서하의 암호 고리",
           "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
@@ -1163,26 +1166,8 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "구조 토큰에 방패 모양과 ‘보호’라는 글자가 새겨져 있다. 뒷면에 장착 홈이 있다."
-        },
-        {
-          "id": "taewon_mirror_box",
-          "title": "이태원의 거울 마술 상자",
-          "subtitle": "",
-          "type": "belonging",
-          "clueKind": "timeline",
-          "owner": "taewon",
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "locked",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": null,
-          "grant": null,
-          "insights": {},
-          "back": "상자 안에 여러 각도로 기울어진 거울이 달려 있다. 뚜껑을 움직이면 내부 공간이 서로 다른 방향으로 비친다."
+          "back": "고리에 숫자가 새겨져 있다. 종이에 찍으면 숫자가 좌우로 뒤집혀 나타난다. 안쪽 금속에 마모 자국이 있다.",
+          "sequenceOrder": 4
         },
         {
           "id": "taewon_stage_rope",
@@ -1201,7 +1186,28 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "무대용 안전 로프다. 양 끝에 고정 고리가 달려 있고 중간에 여러 매듭이 묶여 있다."
+          "back": "무대용 안전 로프다. 양 끝에 고정 고리가 달려 있고 중간에 여러 매듭이 묶여 있다.",
+          "sequenceOrder": 1
+        },
+        {
+          "id": "taewon_mirror_box",
+          "title": "이태원의 거울 마술 상자",
+          "subtitle": "",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "taewon",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "상자 안에 여러 각도로 기울어진 거울이 달려 있다. 뚜껑을 움직이면 내부 공간이 서로 다른 방향으로 비친다.",
+          "sequenceOrder": 2
         },
         {
           "id": "taewon_voice_filter",
@@ -1220,7 +1226,8 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "음성 필터에 음높이와 음색 조절 기능이 있다. 별도의 장비 대여 기록표가 함께 들어 있다."
+          "back": "음성 필터에 음높이와 음색 조절 기능이 있다. 별도의 장비 대여 기록표가 함께 들어 있다.",
+          "sequenceOrder": 3
         },
         {
           "id": "taewon_rented_prop",
@@ -1239,7 +1246,8 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "대여표에 ‘22:30 / 소품 케이스 / 수령인 가빈’이 적혀 있다. 반환 예정 시각과 반환 체크 표시는 서로 다른 색의 펜으로 쓰여 있다."
+          "back": "대여표에 ‘22:30 / 소품 케이스 / 수령인 가빈’이 적혀 있다. 반환 예정 시각과 반환 체크 표시는 서로 다른 색의 펜으로 쓰여 있다.",
+          "sequenceOrder": 4
         },
         {
           "id": "yeonju_star_almanac",
@@ -1258,45 +1266,8 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "종이 연감에 날짜·시각별 별자리 위치가 그려져 있다. 01:10 항목 옆에 손으로 표시한 흔적이 있다."
-        },
-        {
-          "id": "yeonju_anonymous_chat",
-          "title": "천연주의 연호와의 익명 채팅",
-          "subtitle": "",
-          "type": "belonging",
-          "clueKind": "timeline",
-          "owner": "yeonju",
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "locked",
-          "repeatable": false,
-          "transferable": false,
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": null,
-          "grant": null,
-          "insights": {},
-          "back": "연호와의 채팅에 ‘비밀 연구관’, ‘탈출 길’, ‘학원 실험’이라는 단어가 반복된다. 여러 통로 위치를 주고받은 메시지가 남아 있다."
-        },
-        {
-          "id": "yeonju_micro_scope",
-          "title": "천연주의 휴대 광학 렌즈",
-          "subtitle": "",
-          "type": "belonging",
-          "clueKind": "timeline",
-          "owner": "yeonju",
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "locked",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": null,
-          "grant": null,
-          "insights": {},
-          "back": "휴대 렌즈와 관측 메모가 함께 있다. 메모에는 “화면 구석에 예약 재생 표시가 보인다”라고 적혀 있다."
+          "back": "종이 연감에 날짜·시각별 별자리 위치가 그려져 있다. 01:10 항목 옆에 손으로 표시한 흔적이 있다.",
+          "sequenceOrder": 1
         },
         {
           "id": "yeonju_sky_photo",
@@ -1315,7 +1286,48 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "별의 이동 궤적이 찍힌 장시간 노출 사진이다. 파일의 촬영 시각은 00:42경으로 표시되어 있다."
+          "back": "별의 이동 궤적이 찍힌 장시간 노출 사진이다. 파일의 촬영 시각은 00:42경으로 표시되어 있다.",
+          "sequenceOrder": 2
+        },
+        {
+          "id": "yeonju_micro_scope",
+          "title": "천연주의 휴대 광학 렌즈",
+          "subtitle": "",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "yeonju",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "휴대 렌즈와 관측 메모가 함께 있다. 메모에는 “화면 구석에 예약 재생 표시가 보인다”라고 적혀 있다.",
+          "sequenceOrder": 3
+        },
+        {
+          "id": "yeonju_anonymous_chat",
+          "title": "천연주의 연호와의 익명 채팅",
+          "subtitle": "",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "yeonju",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "연호와의 채팅에 ‘비밀 연구관’, ‘탈출 길’, ‘학원 실험’이라는 단어가 반복된다. 여러 통로 위치를 주고받은 메시지가 남아 있다.",
+          "sequenceOrder": 4
         },
         {
           "id": "jinwoo_rescue_helmet",
@@ -1334,45 +1346,8 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "완충재와 턱끈이 달린 구조 헬멧이다. 안쪽에 ‘충격 보호용’ 표찰이 붙어 있다."
-        },
-        {
-          "id": "jinwoo_floor_plan",
-          "title": "백진우의 안전 훈련 구역 도면",
-          "subtitle": "",
-          "type": "belonging",
-          "clueKind": "timeline",
-          "owner": "jinwoo",
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "locked",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": null,
-          "grant": null,
-          "insights": {},
-          "back": "안전 훈련 구역 도면의 지하 부분에 이름 없는 빈 칸이 있다. 빈 칸의 한쪽 벽에는 통로 선이 닿아 있다."
-        },
-        {
-          "id": "jinwoo_failure_report",
-          "title": "백진우의 과거 구조 실패 기록",
-          "subtitle": "",
-          "type": "belonging",
-          "clueKind": "timeline",
-          "owner": "jinwoo",
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "locked",
-          "repeatable": false,
-          "transferable": false,
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": null,
-          "grant": null,
-          "insights": {},
-          "back": "모의 구조 훈련 보고서에 한 사람을 먼저 대피시킨 순서가 적혀 있다. 평가란에는 ‘판단을 보류한 이유를 설명하지 못함’이라는 감독관 메모가 있다."
+          "back": "완충재와 턱끈이 달린 구조 헬멧이다. 안쪽에 ‘충격 보호용’ 표찰이 붙어 있다.",
+          "sequenceOrder": 1
         },
         {
           "id": "jinwoo_emergency_radio",
@@ -1391,34 +1366,16 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "단거리 무전기다. 메뉴에 송신·수신 기록 목록과 구조 요청 채널이 있다."
+          "back": "단거리 무전기다. 메뉴에 송신·수신 기록 목록과 구조 요청 채널이 있다.",
+          "sequenceOrder": 2
         },
         {
-          "id": "rion_cipher_ledger",
-          "title": "차리온의 지하 암호 해독 수첩",
+          "id": "jinwoo_failure_report",
+          "title": "백진우의 과거 구조 실패 기록",
           "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "owner": "rion",
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "locked",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": null,
-          "grant": null,
-          "insights": {},
-          "back": "수첩에 지하 냉각 통로 기호와 상층 출입문 기호가 나란히 적혀 있다. 각 기호 아래에 고어와 여러 번 고친 해독 메모가 있다."
-        },
-        {
-          "id": "rion_patron_letter",
-          "title": "차리온의 익명의 후원자 편지",
-          "subtitle": "",
-          "type": "belonging",
-          "clueKind": "timeline",
-          "owner": "rion",
+          "owner": "jinwoo",
           "blockedFor": [],
           "requires": [],
           "visibility": "locked",
@@ -1429,7 +1386,28 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "발신인 이름이 없는 후원 편지다. 본문에 ‘재능별 실험군’, ‘외부 연락 제한’, ‘폐쇄 환경 유지’라는 문구가 있다."
+          "back": "모의 구조 훈련 보고서에 한 사람을 먼저 대피시킨 순서가 적혀 있다. 평가란에는 ‘판단을 보류한 이유를 설명하지 못함’이라는 감독관 메모가 있다.",
+          "sequenceOrder": 3
+        },
+        {
+          "id": "jinwoo_floor_plan",
+          "title": "백진우의 안전 훈련 구역 도면",
+          "subtitle": "",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "jinwoo",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "안전 훈련 구역 도면의 지하 부분에 이름 없는 빈 칸이 있다. 빈 칸의 한쪽 벽에는 통로 선이 닿아 있다.",
+          "sequenceOrder": 4
         },
         {
           "id": "rion_golden_dictionary",
@@ -1448,7 +1426,28 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "금빛 표지의 사전이다. 몇몇 단어에 표시가 있고 여백에 “별이 사라지는 층의 왼쪽 길”이라고 적혀 있다."
+          "back": "금빛 표지의 사전이다. 몇몇 단어에 표시가 있고 여백에 “별이 사라지는 층의 왼쪽 길”이라고 적혀 있다.",
+          "sequenceOrder": 1
+        },
+        {
+          "id": "rion_cipher_ledger",
+          "title": "차리온의 지하 암호 해독 수첩",
+          "subtitle": "",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "rion",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "수첩에 지하 냉각 통로 기호와 상층 출입문 기호가 나란히 적혀 있다. 각 기호 아래에 고어와 여러 번 고친 해독 메모가 있다.",
+          "sequenceOrder": 2
         },
         {
           "id": "rion_sealed_note",
@@ -1467,15 +1466,16 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "연호의 이름이 적힌 쪽지다. “그 말은 믿기 어렵다”라는 문장 뒤에 고어 암호가 이어진다. 암호 아래에는 여러 번 눌러 쓴 밑줄이 있다."
+          "back": "연호의 이름이 적힌 쪽지다. “그 말은 믿기 어렵다”라는 문장 뒤에 고어 암호가 이어진다. 암호 아래에는 여러 번 눌러 쓴 밑줄이 있다.",
+          "sequenceOrder": 3
         },
         {
-          "id": "gabin_voice_script",
-          "title": "유가빈의 연호 배역 대본",
+          "id": "rion_patron_letter",
+          "title": "차리온의 익명의 후원자 편지",
           "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "owner": "gabin",
+          "owner": "rion",
           "blockedFor": [],
           "requires": [],
           "visibility": "locked",
@@ -1486,7 +1486,8 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "공연 대본의 연호 배역 대사에 고어 표현이 섞여 있다. 단어 위에는 강세 표시, 문장 사이에는 숨을 멈추는 표시가 적혀 있다."
+          "back": "발신인 이름이 없는 후원 편지다. 본문에 ‘재능별 실험군’, ‘외부 연락 제한’, ‘폐쇄 환경 유지’라는 문구가 있다.",
+          "sequenceOrder": 4
         },
         {
           "id": "gabin_stage_dart",
@@ -1505,26 +1506,8 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "연극 소품 케이스 안에 그림자 화살이 들어 있다. 케이스에 ‘무대용’ 표찰이 붙어 있다."
-        },
-        {
-          "id": "gabin_family_badge",
-          "title": "유가빈의 관리실 출입 배지",
-          "subtitle": "",
-          "type": "belonging",
-          "clueKind": "timeline",
-          "owner": "gabin",
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "locked",
-          "repeatable": false,
-          "transferable": false,
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": null,
-          "grant": null,
-          "insights": {},
-          "back": "배지에 ‘운영자 가족’과 ‘플라네타륨 관리실’이 적혀 있다. 뒷면에는 배지 번호가 인쇄되어 있다."
+          "back": "연극 소품 케이스 안에 그림자 화살이 들어 있다. 케이스에 ‘무대용’ 표찰이 붙어 있다.",
+          "sequenceOrder": 1
         },
         {
           "id": "gabin_red_fiber",
@@ -1543,7 +1526,48 @@
           "location": null,
           "grant": null,
           "insights": {},
-          "back": "붉은 무대 의상의 한쪽 끝이 찢어져 있다. 찢어진 가장자리에 가는 붉은 실밥이 여러 가닥 남아 있다."
+          "back": "붉은 무대 의상의 한쪽 끝이 찢어져 있다. 찢어진 가장자리에 가는 붉은 실밥이 여러 가닥 남아 있다.",
+          "sequenceOrder": 2
+        },
+        {
+          "id": "gabin_voice_script",
+          "title": "유가빈의 연호 배역 대본",
+          "subtitle": "",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "gabin",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "공연 대본의 연호 배역 대사에 고어 표현이 섞여 있다. 단어 위에는 강세 표시, 문장 사이에는 숨을 멈추는 표시가 적혀 있다.",
+          "sequenceOrder": 3
+        },
+        {
+          "id": "gabin_family_badge",
+          "title": "유가빈의 관리실 출입 배지",
+          "subtitle": "",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "owner": "gabin",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "back": "배지에 ‘운영자 가족’과 ‘플라네타륨 관리실’이 적혀 있다. 뒷면에는 배지 번호가 인쇄되어 있다.",
+          "sequenceOrder": 4
         },
         {
           "id": "academy_first_body",
@@ -1566,30 +1590,8 @@
             "y": 2
           },
           "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "academy_fake_sky",
-          "title": "01:10 천체 영상의 별자리",
-          "subtitle": "",
-          "back": "01:10 표시가 있는 플라네타륨 영상이다. 화면에 여러 별의 위치와 투사기 화면 가장자리가 찍혀 있다.",
-          "type": "information",
-          "clueKind": "trick",
-          "owner": null,
-          "blockedFor": [],
-          "requires": [],
-          "repeatable": false,
-          "transferable": true,
-          "visibility": "locked",
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": {
-            "floor": "observatory",
-            "x": 14,
-            "y": 2
-          },
-          "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 1
         },
         {
           "id": "academy_voice_witness",
@@ -1612,76 +1614,8 @@
             "y": 2
           },
           "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "academy_corridor_log",
-          "title": "관측관 출입 기록",
-          "subtitle": "",
-          "back": "00:38 출입 기록에 ‘장연호’와 고급 배지 번호가 같은 구역의 입장자로 표시된다. 00:45 퇴장 기록에는 고급 배지 번호만 있다.",
-          "type": "information",
-          "clueKind": "trick",
-          "owner": null,
-          "blockedFor": [],
-          "requires": [],
-          "repeatable": false,
-          "transferable": true,
-          "visibility": "locked",
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": {
-            "floor": "observatory",
-            "x": 14,
-            "y": 8
-          },
-          "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "academy_stage_loan",
-          "title": "마술 장비 대여표",
-          "subtitle": "",
-          "back": "공연용 음성 장치 대여표에 ‘22:30 수령, 가빈’이라는 서명이 있다. 반납란은 비어 있고 재생 로그의 보관 번호가 적혀 있다.",
-          "type": "information",
-          "clueKind": "trick",
-          "owner": null,
-          "blockedFor": [],
-          "requires": [],
-          "repeatable": false,
-          "transferable": true,
-          "visibility": "locked",
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": {
-            "floor": "dorm",
-            "x": 14,
-            "y": 8
-          },
-          "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "academy_old_tunnel",
-          "title": "학교 구형 탈출 약도",
-          "subtitle": "",
-          "back": "구형 약도에 지하 냉각 통로가 그려져 있다. 상층 출입문 위치는 별도의 판으로 덧붙어 있고 일부 통로 선을 가리고 있다.",
-          "type": "information",
-          "clueKind": "trick",
-          "owner": null,
-          "blockedFor": [],
-          "requires": [],
-          "repeatable": false,
-          "transferable": true,
-          "visibility": "locked",
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": {
-            "floor": "basement",
-            "x": 3,
-            "y": 8
-          },
-          "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 2
         },
         {
           "id": "academy_message",
@@ -1704,30 +1638,8 @@
             "y": 2
           },
           "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "academy_support_funds",
-          "title": "영재 선발 실험 예산표",
-          "subtitle": "",
-          "back": "예산표에 ‘폐쇄 환경 유지’, ‘학생 의사결정 관찰’, ‘기록 장비’ 항목과 지출액이 기재되어 있다.",
-          "type": "information",
-          "clueKind": "trick",
-          "owner": null,
-          "blockedFor": [],
-          "requires": [],
-          "repeatable": false,
-          "transferable": true,
-          "visibility": "locked",
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": {
-            "floor": "dorm",
-            "x": 14,
-            "y": 2
-          },
-          "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 3
         },
         {
           "id": "academy_red_thread",
@@ -1750,76 +1662,8 @@
             "y": 2
           },
           "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "academy_secret_fund",
-          "title": "익명 운영자의 후원 계약",
-          "subtitle": "",
-          "back": "후원 계약의 제출 서류 목록에 학생 가족 정보가 있다. 첨부된 연호 수신 문서에는 ‘자료 공개 중단 요청’이라고 적혀 있다.",
-          "type": "information",
-          "clueKind": "trick",
-          "owner": null,
-          "blockedFor": [],
-          "requires": [],
-          "repeatable": false,
-          "transferable": true,
-          "visibility": "locked",
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": {
-            "floor": "dorm",
-            "x": 14,
-            "y": 2
-          },
-          "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "academy_safety_repeat",
-          "title": "안전 방송 반복 횟수",
-          "subtitle": "",
-          "back": "안전 방송 장치에는 01:10 자동 재생 예약과 같은 문장을 반복한 기록이 남아 있다. 누가 예약을 설정했는지 사용자 정보는 저장되지 않았다.",
-          "type": "information",
-          "clueKind": "trick",
-          "owner": null,
-          "blockedFor": [],
-          "requires": [],
-          "repeatable": false,
-          "transferable": true,
-          "visibility": "locked",
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": {
-            "floor": "observatory",
-            "x": 14,
-            "y": 2
-          },
-          "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "academy_mock_exit",
-          "title": "옥상 출입문 도면",
-          "subtitle": "",
-          "back": "옥상 출입문 도면에 문 뒤쪽의 막힌 벽과 얕은 공간이 그려져 있다. 외부 통로와 이어지는 선은 없다.",
-          "type": "information",
-          "clueKind": "trick",
-          "owner": null,
-          "blockedFor": [],
-          "requires": [],
-          "repeatable": false,
-          "transferable": true,
-          "visibility": "locked",
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": {
-            "floor": "basement",
-            "x": 14,
-            "y": 2
-          },
-          "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 4
         },
         {
           "id": "academy_autopsy_time",
@@ -1842,24 +1686,23 @@
             "y": 2
           },
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 5
         },
         {
-          "id": "academy_voice_match",
-          "title": "방송과 리허설의 음성 파형",
+          "id": "academy_fake_sky",
+          "title": "01:10 천체 영상의 별자리",
           "subtitle": "",
-          "back": "01:10 방송과 리허설 시료의 파형이 나란히 표시되어 있다. 특정 단어의 강세와 숨 멈춤 지점에 표시가 있다. 파일 처리 이력에는 원본 녹음과 음성 변조기 출력이 적혀 있다.",
+          "back": "01:10 표시가 있는 플라네타륨 영상이다. 화면에 여러 별의 위치와 투사기 화면 가장자리가 찍혀 있다.",
           "type": "information",
           "clueKind": "trick",
           "owner": null,
           "blockedFor": [],
-          "requires": [
-            "academy_voice_witness"
-          ],
+          "requires": [],
           "repeatable": false,
           "transferable": true,
           "visibility": "locked",
-          "availableFromPhase": "investigation2",
+          "availableFromPhase": "investigation1",
           "requiresPresence": false,
           "location": {
             "floor": "observatory",
@@ -1867,7 +1710,32 @@
             "y": 2
           },
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 1
+        },
+        {
+          "id": "academy_safety_repeat",
+          "title": "안전 방송 반복 횟수",
+          "subtitle": "",
+          "back": "안전 방송 장치에는 01:10 자동 재생 예약과 같은 문장을 반복한 기록이 남아 있다. 누가 예약을 설정했는지 사용자 정보는 저장되지 않았다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "locked",
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": {
+            "floor": "observatory",
+            "x": 14,
+            "y": 2
+          },
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 2
         },
         {
           "id": "academy_high_badge",
@@ -1892,7 +1760,8 @@
             "y": 2
           },
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 3
         },
         {
           "id": "academy_deleted_phrase",
@@ -1915,7 +1784,8 @@
             "y": 2
           },
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 4
         },
         {
           "id": "academy_projection_backup",
@@ -1938,7 +1808,106 @@
             "y": 2
           },
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 5
+        },
+        {
+          "id": "academy_voice_match",
+          "title": "방송과 리허설의 음성 파형",
+          "subtitle": "",
+          "back": "01:10 방송과 리허설 시료의 파형이 나란히 표시되어 있다. 특정 단어의 강세와 숨 멈춤 지점에 표시가 있다. 파일 처리 이력에는 원본 녹음과 음성 변조기 출력이 적혀 있다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [
+            "academy_voice_witness"
+          ],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "locked",
+          "availableFromPhase": "investigation2",
+          "requiresPresence": false,
+          "location": {
+            "floor": "observatory",
+            "x": 14,
+            "y": 2
+          },
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 6
+        },
+        {
+          "id": "academy_corridor_log",
+          "title": "관측관 출입 기록",
+          "subtitle": "",
+          "back": "00:38 출입 기록에 ‘장연호’와 고급 배지 번호가 같은 구역의 입장자로 표시된다. 00:45 퇴장 기록에는 고급 배지 번호만 있다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "locked",
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": {
+            "floor": "observatory",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 1
+        },
+        {
+          "id": "academy_stage_loan",
+          "title": "마술 장비 대여표",
+          "subtitle": "",
+          "back": "공연용 음성 장치 대여표에 ‘22:30 수령, 가빈’이라는 서명이 있다. 반납란은 비어 있고 재생 로그의 보관 번호가 적혀 있다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "locked",
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": {
+            "floor": "dorm",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 1
+        },
+        {
+          "id": "academy_old_tunnel",
+          "title": "학교 구형 탈출 약도",
+          "subtitle": "",
+          "back": "구형 약도에 지하 냉각 통로가 그려져 있다. 상층 출입문 위치는 별도의 판으로 덧붙어 있고 일부 통로 선을 가리고 있다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "locked",
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": {
+            "floor": "basement",
+            "x": 3,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 1
         },
         {
           "id": "academy_early_signal",
@@ -1961,7 +1930,104 @@
             "y": 8
           },
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 2
+        },
+        {
+          "id": "academy_second_exit",
+          "title": "지하 최종 탈출 구획",
+          "subtitle": "",
+          "back": "구획도에 열린 문 뒤의 막힌 공간과 별도의 통로 번호가 표시되어 있다. 보관함 목록에 같은 통로 번호와 인증 장치 번호가 적혀 있다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "locked",
+          "availableFromPhase": "investigation2",
+          "requiresPresence": true,
+          "location": {
+            "floor": "basement",
+            "x": 4,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 3
+        },
+        {
+          "id": "academy_support_funds",
+          "title": "영재 선발 실험 예산표",
+          "subtitle": "",
+          "back": "예산표에 ‘폐쇄 환경 유지’, ‘학생 의사결정 관찰’, ‘기록 장비’ 항목과 지출액이 기재되어 있다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "locked",
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": {
+            "floor": "dorm",
+            "x": 14,
+            "y": 2
+          },
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 1
+        },
+        {
+          "id": "academy_secret_fund",
+          "title": "익명 운영자의 후원 계약",
+          "subtitle": "",
+          "back": "후원 계약의 제출 서류 목록에 학생 가족 정보가 있다. 첨부된 연호 수신 문서에는 ‘자료 공개 중단 요청’이라고 적혀 있다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "locked",
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": {
+            "floor": "dorm",
+            "x": 14,
+            "y": 2
+          },
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 2
+        },
+        {
+          "id": "academy_mock_exit",
+          "title": "옥상 출입문 도면",
+          "subtitle": "",
+          "back": "옥상 출입문 도면에 문 뒤쪽의 막힌 벽과 얕은 공간이 그려져 있다. 외부 통로와 이어지는 선은 없다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "locked",
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": {
+            "floor": "basement",
+            "x": 14,
+            "y": 2
+          },
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 1
         },
         {
           "id": "academy_lock_token",
@@ -1988,7 +2054,8 @@
             "name": "지하 보관실 해제표",
             "description": "학교 지하 봉인 보관실 문을 열 수 있다."
           },
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 1
         },
         {
           "id": "academy_escape_pass_card",
@@ -2017,30 +2084,8 @@
             "name": "공동 탈출 인증서",
             "description": "행동 단계에서 진짜 학교 탈출 경로를 여는 데 필요한 패스."
           },
-          "insights": {}
-        },
-        {
-          "id": "academy_admin_original",
-          "title": "운영자의 비밀 연구 원본",
-          "subtitle": "",
-          "back": "연구 문서의 대상 분류란에 학생 이름과 ‘피실험자’가 적혀 있다. 실험 조건에는 ‘외부 연락 제한’, ‘재능 및 신뢰 관찰’이 기재되어 있다.",
-          "type": "information",
-          "clueKind": "trick",
-          "owner": null,
-          "blockedFor": [],
-          "requires": [],
-          "repeatable": false,
-          "transferable": true,
-          "visibility": "hidden",
-          "availableFromPhase": "investigation2",
-          "requiresPresence": true,
-          "location": {
-            "floor": "basement",
-            "x": 14,
-            "y": 8
-          },
-          "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 1
         },
         {
           "id": "academy_lost_student",
@@ -2063,7 +2108,32 @@
             "y": 8
           },
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 2
+        },
+        {
+          "id": "academy_admin_original",
+          "title": "운영자의 비밀 연구 원본",
+          "subtitle": "",
+          "back": "연구 문서의 대상 분류란에 학생 이름과 ‘피실험자’가 적혀 있다. 실험 조건에는 ‘외부 연락 제한’, ‘재능 및 신뢰 관찰’이 기재되어 있다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "visibility": "hidden",
+          "availableFromPhase": "investigation2",
+          "requiresPresence": true,
+          "location": {
+            "floor": "basement",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 3
         },
         {
           "id": "academy_culprit_chain",
@@ -2089,30 +2159,8 @@
             "y": 8
           },
           "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "academy_second_exit",
-          "title": "지하 최종 탈출 구획",
-          "subtitle": "",
-          "back": "구획도에 열린 문 뒤의 막힌 공간과 별도의 통로 번호가 표시되어 있다. 보관함 목록에 같은 통로 번호와 인증 장치 번호가 적혀 있다.",
-          "type": "information",
-          "clueKind": "trick",
-          "owner": null,
-          "blockedFor": [],
-          "requires": [],
-          "repeatable": false,
-          "transferable": true,
-          "visibility": "locked",
-          "availableFromPhase": "investigation2",
-          "requiresPresence": true,
-          "location": {
-            "floor": "basement",
-            "x": 4,
-            "y": 8
-          },
-          "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 4
         }
       ]
     },
