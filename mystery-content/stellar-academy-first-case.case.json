@@ -70,7 +70,11 @@
         "symbol": "♢",
         "accent": "#e0a1a9"
       }
-    ]
+    ],
+    "victim": {
+      "id": "yeonho",
+      "name": "장연호"
+    }
   },
   "spawn": {
     "seoha": {

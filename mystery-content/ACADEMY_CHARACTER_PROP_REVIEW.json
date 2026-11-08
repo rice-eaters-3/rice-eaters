@@ -1,0 +1,94 @@
+{
+  "assets": [
+    {
+      "id": "seoha",
+      "source": "/workspace/scratch/490a51c77c43/recovered-art/별빛 아래 퍼즐 노트를 든 학생.png",
+      "library_file_id": "libfile_537f78626418819199c10ce2c8de8447",
+      "prompt": "Recovered original independently generated concept-reference illustration from previous batch.",
+      "asset": "apps/murder-mystery/assets/portraits/stellar-academy-first-case/seoha.webp",
+      "oldProblem": "Legacy concept crop or missing independent art",
+      "review": "New standalone illustration checked against supplied concept; full frame retained."
+    },
+    {
+      "id": "taewon",
+      "source": "/workspace/scratch/490a51c77c43/recovered-art/별무늬 모자를 올린 학생 마술사.png",
+      "library_file_id": "libfile_8ddb67b5a1a08191bdc90ccf83345df3",
+      "prompt": "Recovered original independently generated concept-reference illustration from previous batch.",
+      "asset": "apps/murder-mystery/assets/portraits/stellar-academy-first-case/taewon.webp",
+      "oldProblem": "Legacy concept crop or missing independent art",
+      "review": "New standalone illustration checked against supplied concept; full frame retained."
+    },
+    {
+      "id": "yeonju",
+      "source": "/workspace/scratch/490a51c77c43/recovered-art/별노트를 든 천문 학생.png",
+      "library_file_id": "libfile_0efce1b9b47c819185fdae73c9ea3472",
+      "prompt": "Recovered original independently generated concept-reference illustration from previous batch.",
+      "asset": "apps/murder-mystery/assets/portraits/stellar-academy-first-case/yeonju.webp",
+      "oldProblem": "Legacy concept crop or missing independent art",
+      "review": "New standalone illustration checked against supplied concept; full frame retained."
+    },
+    {
+      "id": "jinwoo",
+      "source": "/workspace/scratch/490a51c77c43/recovered-art/별빛 아래 구조 전문가 백진우.png",
+      "library_file_id": "libfile_3f416aa0f1008191b181c8d676f082a0",
+      "prompt": "Recovered original independently generated concept-reference illustration from previous batch.",
+      "asset": "apps/murder-mystery/assets/portraits/stellar-academy-first-case/jinwoo.webp",
+      "oldProblem": "Legacy concept crop or missing independent art",
+      "review": "New standalone illustration checked against supplied concept; full frame retained."
+    },
+    {
+      "id": "rion",
+      "source": "/workspace/scratch/490a51c77c43/recovered-art/별빛 아래 사색하는 은발의 학생.png",
+      "library_file_id": "libfile_345fdf8611e48191a53e6c660834255c",
+      "prompt": "Recovered original independently generated concept-reference illustration from previous batch.",
+      "asset": "apps/murder-mystery/assets/portraits/stellar-academy-first-case/rion.webp",
+      "oldProblem": "Legacy concept crop or missing independent art",
+      "review": "New standalone illustration checked against supplied concept; full frame retained."
+    },
+    {
+      "id": "gabin",
+      "source": "/workspace/scratch/490a51c77c43/recovered-art/장미빛 머리의 학교 무대 소녀.png",
+      "library_file_id": "libfile_87b201955550819191b7a7a97f36726a",
+      "prompt": "Recovered original independently generated concept-reference illustration from previous batch.",
+      "asset": "apps/murder-mystery/assets/portraits/stellar-academy-first-case/gabin.webp",
+      "oldProblem": "Legacy concept crop or missing independent art",
+      "review": "New standalone illustration checked against supplied concept; full frame retained."
+    },
+    {
+      "id": "yeonho",
+      "source": "/workspace/scratch/490a51c77c43/recovered-art/별빛 속 장연호의 초상.png",
+      "library_file_id": "libfile_b36a92ed666881919469c4a8bfc73d45",
+      "prompt": "Recovered original independently generated concept-reference illustration from previous batch.",
+      "asset": "apps/murder-mystery/assets/portraits/stellar-academy-first-case/yeonho.webp",
+      "oldProblem": "Legacy concept crop or missing independent art",
+      "review": "New standalone illustration checked against supplied concept; full frame retained."
+    },
+    {
+      "id": "bed",
+      "source": "/workspace/scratch/490a51c77c43/recovered-art/아카데미 기숙사의 남색 체크 침대.png",
+      "library_file_id": "libfile_a2f2cb551a408191b36e3f3519d045d1",
+      "prompt": "Recovered original independently generated concept-reference illustration from previous batch.",
+      "asset": "apps/murder-mystery/assets/props/stellar-academy-first-case/bed.webp",
+      "oldProblem": "Legacy concept crop or missing independent art",
+      "review": "New standalone illustration checked against supplied concept; full frame retained."
+    },
+    {
+      "id": "cabinet",
+      "source": "/workspace/scratch/490a51c77c43/recovered-art/황동 손잡이의 별무늬 학원 보관장.png",
+      "library_file_id": "libfile_6a69b96ca6b88191a3b9709fb7061a45",
+      "prompt": "Recovered original independently generated concept-reference illustration from previous batch.",
+      "asset": "apps/murder-mystery/assets/props/stellar-academy-first-case/cabinet.webp",
+      "oldProblem": "Legacy concept crop or missing independent art",
+      "review": "New standalone illustration checked against supplied concept; full frame retained."
+    },
+    {
+      "id": "desk",
+      "source": "/workspace/scratch/490a51c77c43/recovered-art/스텔라 아카데미 고풍스러운 학습 책상 세트.png",
+      "library_file_id": "libfile_f228c4473658819188c81dde92b57483",
+      "prompt": "Recovered original independently generated concept-reference illustration from previous batch.",
+      "asset": "apps/murder-mystery/assets/props/stellar-academy-first-case/desk.webp",
+      "oldProblem": "Legacy concept crop or missing independent art",
+      "review": "New standalone illustration checked against supplied concept; full frame retained."
+    }
+  ]
+}

@@ -220,12 +220,12 @@ window.MysteryArt=(function(){
   'stellar-academy-first-case':new Set(["seoha_folded_map", "seoha_puzzle_ring", "seoha_safe_marker", "seoha_rescue_token", "taewon_mirror_box", "taewon_stage_rope", "taewon_voice_filter", "taewon_rented_prop", "yeonju_star_almanac", "yeonju_anonymous_chat", "yeonju_micro_scope", "yeonju_sky_photo", "jinwoo_rescue_helmet", "jinwoo_floor_plan", "jinwoo_failure_report", "jinwoo_emergency_radio", "rion_cipher_ledger", "rion_patron_letter", "rion_golden_dictionary", "rion_sealed_note", "gabin_voice_script", "gabin_stage_dart", "gabin_family_badge", "gabin_red_fiber", "academy_first_body", "academy_fake_sky", "academy_voice_witness", "academy_corridor_log", "academy_stage_loan", "academy_old_tunnel", "academy_message", "academy_support_funds", "academy_red_thread", "academy_secret_fund", "academy_safety_repeat", "academy_mock_exit", "academy_autopsy_time", "academy_voice_match", "academy_high_badge", "academy_deleted_phrase", "academy_projection_backup", "academy_early_signal", "academy_lock_token", "academy_escape_pass_card", "academy_admin_original", "academy_lost_student", "academy_culprit_chain", "academy_second_exit"]),
   'neon-memory-quarantine':new Set(["nova_memory_badge", "nova_shield_patch", "nova_empty_notebook", "nova_old_case_file", "rune_medical_scanner", "rune_revoked_license", "rune_old_consent", "rune_surgical_tablet", "ion_pulse_blade", "ion_maintenance_token", "ion_fake_warning", "ion_sibling_identity", "mira_legal_patch", "mira_ai_petition", "mira_shadow_receipt", "mira_identity_clause", "atlas_riot_shield", "atlas_old_access", "atlas_duty_log", "atlas_encrypted_message", "echo_shell_drive", "echo_ghost_key", "echo_emotion_log", "echo_backup_hash", "sol_courier_case", "sol_anon_invoice", "sol_radio_shell", "sol_immunity_paper", "memory_audit_letter", "memory_body_scan", "memory_echo_frame", "memory_emptied_chair", "memory_id_overlap", "memory_underground_bill", "memory_exmate_memo", "memory_legal_hold", "memory_emergency_log", "memory_coat_camera", "memory_voice_repeat", "memory_fake_patient", "memory_core_key", "memory_backup_before", "memory_ghost_sequence", "memory_implant_receipt", "memory_compromised_tag", "memory_ion_sibling", "memory_emp_order", "memory_core_backdoor", "memory_bio_echo", "memory_shutdown_map", "memory_security_ledger", "memory_culprit_reconstruction", "memory_original_rights", "memory_why_sealed"])
  };
- const standaloneD1Props=new Set(['sink','fridge','pc','gargoyle','throne']);
+ const standaloneProps={'d1-crown-of-ashes':new Set(['sink','fridge','pc','gargoyle','throne']),'stellar-academy-first-case':new Set(['bed','cabinet','desk'])};
  const storyFor=id=>Object.hasOwn(A,id)?id:id==='d1-gaming'?'d1-crown-of-ashes':null;
  const knownStory=id=>A[storyFor(id)]||null;
  function standalonePortrait(story,id){
   const theme=storyFor(story),data=knownStory(story);
-  if(!['d1-crown-of-ashes','cruel-heart-island','neon-memory-quarantine'].includes(theme)||!Object.hasOwn(data.portraits,id))return null;
+  if(!['d1-crown-of-ashes','cruel-heart-island','neon-memory-quarantine','stellar-academy-first-case'].includes(theme)||!Object.hasOwn(data.portraits,id))return null;
   return {...data,file:'portraits/'+theme+'/'+id+'.webp',size:[432,576]};
  }
  function artCrop(story,rect,css,alt,data=knownStory(story)){
@@ -378,7 +378,7 @@ window.MysteryArt=(function(){
  }
  function object(o,story){
   const theme=storyFor(story),data=knownStory(story);
-  if(theme==='d1-crown-of-ashes'&&standaloneD1Props.has(o?.kind)){
+  if(standaloneProps[theme]?.has(o?.kind)){
    const asset={...data,file:'props/'+theme+'/'+o.kind+'.webp',size:[384,384]};
    return artCrop(theme,[0,0,...asset.size],'mystery-map-object real-map-object',o.name||o.kind,asset);
   }

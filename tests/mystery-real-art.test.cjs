@@ -14,6 +14,7 @@ const scenarios=[
 ];
 const reviewedClueCounts={'d1-crown-of-ashes':71,'cruel-heart-island':56,'neon-memory-quarantine':54,'stellar-academy-first-case':48};
 const newD1Props=['sink','fridge','pc','gargoyle','throne'];
+const independentProps={'d1-crown-of-ashes':newD1Props,'stellar-academy-first-case':['bed','cabinet','desk']};
 const imagePath=name=>path.join(root,'apps/murder-mystery/assets',name);
 test('all four original concept-sheet WebP image files are real binary assets with a RIFF/WEBP header',()=>{
  for(const [,id,file] of scenarios){
@@ -46,7 +47,7 @@ test('every player, map prop and clue has a case illustration',()=>{
   for(const character of data.story.characters){
    const visual=art.portrait(character,id);
    assert.match(visual,/<svg/);
-   const portraitFile=['d1-crown-of-ashes','cruel-heart-island','neon-memory-quarantine'].includes(id)?'portraits/'+id+'/'+character.id+'.webp':file;
+   const portraitFile=['d1-crown-of-ashes','cruel-heart-island','neon-memory-quarantine','stellar-academy-first-case'].includes(id)?'portraits/'+id+'/'+character.id+'.webp':file;
    assert.ok(visual.includes(portraitFile),character.id+' should use its own case artwork');
    assert.ok(visual.includes('<image '),'player illustration should link a raster asset');
    assert.doesNotMatch(visual,/<path(?:\s|>)/,'no geometric cartoon portrait substitution');
@@ -56,7 +57,7 @@ test('every player, map prop and clue has a case illustration',()=>{
   for(const floor of data.game.floors){
    for(const o of floor.objects||[]){
     const v=art.object(o,id);
-    const expected=id==='d1-crown-of-ashes'&&newD1Props.includes(o.kind)?'props/'+id+'/'+o.kind+'.webp':file;
+    const expected=independentProps[id]?.includes(o.kind)?'props/'+id+'/'+o.kind+'.webp':file;
     assert.ok(v.includes(expected),id+' object '+o.kind+' has no matching art');
     tally++;
    }
@@ -158,7 +159,8 @@ test('local HTTP server serves original and standalone artwork with image/webp M
  const portraits=[...d1.characters,d1.victim].map(({id})=>['',d1.id,'portraits/'+d1.id+'/'+id+'.webp']);
  portraits.push(...require('../mystery-content/cruel-heart-island.case.json').story.characters.map(({id})=>['','cruel-heart-island','portraits/cruel-heart-island/'+id+'.webp']));
  portraits.push(...require('../mystery-content/neon-memory-quarantine.case.json').story.characters.map(({id})=>['','neon-memory-quarantine','portraits/neon-memory-quarantine/'+id+'.webp']));
- const props=newD1Props.map(kind=>['',d1.id,'props/'+d1.id+'/'+kind+'.webp']);
+ portraits.push(...[...require('../mystery-content/stellar-academy-first-case.case.json').story.characters,require('../mystery-content/stellar-academy-first-case.case.json').story.victim].map(({id})=>['','stellar-academy-first-case','portraits/stellar-academy-first-case/'+id+'.webp']));
+ const props=Object.entries(independentProps).flatMap(([theme,kinds])=>kinds.map(kind=>['',theme,'props/'+theme+'/'+kind+'.webp']));
  for(const [,id,file] of [...scenarios,...independent,...backgrounds,...portraits,...props]){
   const response=await fetch(base+'/apps/murder-mystery/assets/'+file);
   assert.equal(response.status,200,id+' artwork must be browser-accessible');
