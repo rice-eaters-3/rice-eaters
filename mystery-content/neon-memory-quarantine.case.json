@@ -79,7 +79,11 @@
         "symbol": "⌁",
         "accent": "#7ab7b8"
       }
-    ]
+    ],
+    "victim": {
+      "id": "sera",
+      "name": "윤세라"
+    }
   },
   "spawn": {
     "nova": {

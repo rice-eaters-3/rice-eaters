@@ -319,3 +319,11 @@ Shared renderer updated for game, studio and test mode. Full original illustrati
 ## D1 / Island independent map props (10)
 
 Complete D1 remaining six prop kinds; add Island boat, rescue locker, pine and firepit. Full original images fitted without cropping. Shared game/studio/test renderer updated. D1 monitor console regenerated without gargoyle decoration. Sources, previous issue and paths: D1_ISLAND_PROPS_REVIEW.json.
+
+## Island final major props (9)
+
+All thirteen Island prop kinds now use independent originals through the shared game/studio/test renderer. No timestamps, private contents or plot conclusions added. Sources and prompts: ISLAND_FINAL_PROPS_REVIEW.json.
+
+## Remaining victim NPC portraits
+
+Added independent neutral portraits of producer 신원재 and auditor 윤세라, canonical victim metadata, shared victim renderer registration and HTTP asset coverage. All four primary victim NPCs now have independent portraits. Sources and prompts: ISLAND_NEON_NPC_REVIEW.json.

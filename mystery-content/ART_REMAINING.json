@@ -1,5 +1,5 @@
 {
-  "note": "Only independently generated, connected illustrations counted. Legacy concept-sheet crops remain pending. Door/stair states and major NPCs beyond D1 still require independent-art review.",
+  "note": "Independent art connected: all clues, players, four primary victim NPCs and major prop kinds. Remaining: three door states and two stair directions per series (20 navigation illustrations).",
   "series": [
     {
       "series": "d1-crown-of-ashes",
@@ -17,44 +17,7 @@
       "pendingClues": [],
       "portraitsTotal": 8,
       "pendingPortraits": [],
-      "pendingPropKinds": [
-        {
-          "kind": "camera",
-          "name": "등대 감시 카메라"
-        },
-        {
-          "kind": "terminal",
-          "name": "조수 관측 콘솔"
-        },
-        {
-          "kind": "sofa",
-          "name": "연애의 집 라운지 소파"
-        },
-        {
-          "kind": "table",
-          "name": "하트 투표 탁자"
-        },
-        {
-          "kind": "wardrobe",
-          "name": "분장실 화장대"
-        },
-        {
-          "kind": "fridge",
-          "name": "빌라 주방 냉장고"
-        },
-        {
-          "kind": "generator",
-          "name": "수위 경보 제어함"
-        },
-        {
-          "kind": "shelf",
-          "name": "선박 기록 서가"
-        },
-        {
-          "kind": "server",
-          "name": "봉인된 방송 로그 서버"
-        }
-      ]
+      "pendingPropKinds": []
     },
     {
       "series": "neon-memory-quarantine",
@@ -73,6 +36,48 @@
       "portraitsTotal": 6,
       "pendingPortraits": [],
       "pendingPropKinds": []
+    }
+  ],
+  "pendingNavigation": [
+    {
+      "series": "d1-crown-of-ashes",
+      "assets": [
+        "door-open",
+        "door-closed",
+        "door-locked",
+        "stairs-up",
+        "stairs-down"
+      ]
+    },
+    {
+      "series": "cruel-heart-island",
+      "assets": [
+        "door-open",
+        "door-closed",
+        "door-locked",
+        "stairs-up",
+        "stairs-down"
+      ]
+    },
+    {
+      "series": "neon-memory-quarantine",
+      "assets": [
+        "door-open",
+        "door-closed",
+        "door-locked",
+        "stairs-up",
+        "stairs-down"
+      ]
+    },
+    {
+      "series": "stellar-academy-first-case",
+      "assets": [
+        "door-open",
+        "door-closed",
+        "door-locked",
+        "stairs-up",
+        "stairs-down"
+      ]
     }
   ]
 }

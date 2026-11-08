@@ -1,0 +1,26 @@
+{
+  "assets": [
+    {
+      "id": "wonjae",
+      "theme": "cruel-heart-island",
+      "name": "신원재",
+      "board": "ChatGPT 이미지 2026년 11월 4일 오후 10_41_54-2(1).png",
+      "desc": "A Korean male senior television producer in his forties, neat short dark hair with slight grey at temples, composed neutral expression, charcoal casual blazer over an open-collar shirt, discreet production headset around neck. Bust to waist portrait, alive and uninjured. Subtle out-of-focus tropical villa at dusk, restrained pink and navy colors.",
+      "prompt": "Create a NEW standalone NPC portrait for a Korean murder mystery game. Board is artistic style reference, NOT a face to copy or a crop. Detailed painterly anime semi-realism consistent with supplied cast, elegant linework. Vertical 3:4 composition with head centered, generous space above hair and full shoulders visible. No text, nameplate, frame, blood, injury, weapons or clues. A Korean male senior television producer in his forties, neat short dark hair with slight grey at temples, composed neutral expression, charcoal casual blazer over an open-collar shirt, discreet production headset around neck. Bust to waist portrait, alive and uninjured. Subtle out-of-focus tropical villa at dusk, restrained pink and navy colors.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-27696f71-99f8-4d17-a7c8-cbfc51e5fa8a.png",
+      "path": "apps/murder-mystery/assets/portraits/cruel-heart-island/wonjae.webp",
+      "review": "Independent, living neutral portrait; no injury or evidence; consistent series palette."
+    },
+    {
+      "id": "sera",
+      "theme": "neon-memory-quarantine",
+      "name": "윤세라",
+      "board": "ChatGPT 이미지 2026년 11월 4일 오후 10_41_56-3(1).png",
+      "desc": "A Korean female internal government auditor in her late thirties, sleek dark shoulder-length hair tucked behind ear, calm professional expression, structured charcoal futuristic formal jacket with understated silver seams. Bust to waist portrait, human, alive and uninjured. Blurred cyberpunk institutional interior, cyan and violet accents. No halo or robotic skin.",
+      "prompt": "Create a NEW standalone NPC portrait for a Korean murder mystery game. Board is artistic style reference, NOT a face to copy or a crop. Detailed painterly anime semi-realism consistent with supplied cast, elegant linework. Vertical 3:4 composition with head centered, generous space above hair and full shoulders visible. No text, nameplate, frame, blood, injury, weapons or clues. A Korean female internal government auditor in her late thirties, sleek dark shoulder-length hair tucked behind ear, calm professional expression, structured charcoal futuristic formal jacket with understated silver seams. Bust to waist portrait, human, alive and uninjured. Blurred cyberpunk institutional interior, cyan and violet accents. No halo or robotic skin.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-7ddf210b-a74e-4cd8-bed7-f1ff24c4cb17.png",
+      "path": "apps/murder-mystery/assets/portraits/neon-memory-quarantine/sera.webp",
+      "review": "Independent, living neutral portrait; no injury or evidence; consistent series palette."
+    }
+  ]
+}

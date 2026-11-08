@@ -88,7 +88,11 @@
         "symbol": "♥",
         "accent": "#e3a1b1"
       }
-    ]
+    ],
+    "victim": {
+      "id": "wonjae",
+      "name": "신원재"
+    }
   },
   "spawn": {
     "minjae": {
