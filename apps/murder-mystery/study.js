@@ -112,6 +112,7 @@ window.MysteryStudy=(function(){
     if(c.public)return '전체 공개';
     if(c.sharedToMe)return '선택 공개받음';
     if(c.heldByMe)return '내 보유 카드';
+    if(c.personLimitReached)return '이번 조사 단계에서 이 인물의 소지품 1장 조사 완료';
     if(c.taken)return '다른 플레이어가 조사함';
     if(c.locked)return '선행 조건 또는 조사 단계 잠김';
     if(c.excluded)return '내 배역은 이 카드를 조사할 수 없습니다';
@@ -122,7 +123,7 @@ window.MysteryStudy=(function(){
   }
   function canSpend(room,c){
     const inv=room.investigation;
-    return !!(inv?.canInvestigate&&!c.locked&&!c.sequenceLocked&&!c.taken&&!c.excluded&&
+    return !!(inv?.canInvestigate&&!c.locked&&!c.sequenceLocked&&!c.personLimitReached&&!c.taken&&!c.excluded&&
       (!c.reservedBy||c.reservedBy===room.me)&&inv.tokens>=1&&
       (!c.requiresPresence||c.atLocation));
   }
@@ -217,7 +218,7 @@ window.MysteryStudy=(function(){
       '<div class="map-roster" id="mapRoster">'+roster(room)+'</div></section>'+
       '<aside class="adventure-side"><section class="surface panel-pad"><div class="eyebrow">PERSONAL RESOURCES</div>'+
       '<h3>조사 토큰 <span class="token-count">'+(inv?inv.tokens:'—')+'</span></h3>'+
-      (inv?'<p class="muted small">조사 카드 팝업에서 토큰 1개를 사용하면 뒷면을 볼 수 있습니다.</p>'+
+      (inv?'<p class="muted small">조사 카드 팝업에서 토큰 1개를 사용하면 뒷면을 볼 수 있습니다. 인물별 소지품은 조사 단계마다 1장씩만 조사할 수 있습니다.</p>'+
         '<div class="collected-items">'+(inv.collected?.length?'<b>조사로 획득한 물품</b>'+
           inv.collected.map(item=>'<p>⌑ '+esc(item.name)+' · '+esc(item.description)+'</p>').join(''):'')+'</div>':
         '<p class="muted small">1차 조사 단계에서 조사 토큰이 지급됩니다.</p>')+'</section>'+
