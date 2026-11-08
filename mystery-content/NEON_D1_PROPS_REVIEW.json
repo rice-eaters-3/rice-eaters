@@ -1,0 +1,94 @@
+{
+  "assets": [
+    {
+      "series": "neon-memory-quarantine",
+      "kind": "camera",
+      "previousIssue": "Legacy concept-board crop; independent illustration required",
+      "path": "apps/murder-mystery/assets/props/neon-memory-quarantine/camera.webp",
+      "prompt": "New independent isolated game map prop. Concept board is style reference only; redraw from scratch, not a crop. Painterly anime illustration, dark cyberpunk metal with cyan and violet highlights. One object assembly, full three-quarter silhouette with generous margin, transparent background, no people, no plot spoilers, no titles. A futuristic walk-through identity verification security gate, two dark metal pillars and overhead bridge, cyan scanner strip and tiny abstract person silhouette on side screen. No people.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-85e74bc6-4447-479b-8d97-05ebfa894188.png",
+      "review": "Subject and full silhouette visually checked; no plot conclusions or personal records; transparent alpha retained."
+    },
+    {
+      "series": "neon-memory-quarantine",
+      "kind": "medical",
+      "previousIssue": "Legacy concept-board crop; independent illustration required",
+      "path": "apps/murder-mystery/assets/props/neon-memory-quarantine/medical.webp",
+      "prompt": "New independent isolated game map prop. Concept board is style reference only; redraw from scratch, not a crop. Painterly anime illustration, dark cyberpunk metal with cyan and violet highlights. One object assembly, full three-quarter silhouette with generous margin, transparent background, no people, no plot spoilers, no titles. Futuristic neural medical bed, white padded adjustable mattress, dark metal frame, bedside monitor with generic waveform and articulated scanner above headrest. No patient.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-10e13d15-b8c4-4e2f-a41b-40f89c40aac0.png",
+      "review": "Subject and full silhouette visually checked; no plot conclusions or personal records; transparent alpha retained."
+    },
+    {
+      "series": "neon-memory-quarantine",
+      "kind": "pod",
+      "previousIssue": "Legacy concept-board crop; independent illustration required",
+      "path": "apps/murder-mystery/assets/props/neon-memory-quarantine/pod.webp",
+      "prompt": "New independent isolated game map prop. Concept board is style reference only; redraw from scratch, not a crop. Painterly anime illustration, dark cyberpunk metal with cyan and violet highlights. One object assembly, full three-quarter silhouette with generous margin, transparent background, no people, no plot spoilers, no titles. A closed transparent memory preservation capsule with an empty reclining chair inside, cyan illuminated oval frame and subtle violet tubing. No person or readable data.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-5373fea8-a00a-4148-9e48-796283e100ef.png",
+      "review": "Subject and full silhouette visually checked; no plot conclusions or personal records; transparent alpha retained."
+    },
+    {
+      "series": "neon-memory-quarantine",
+      "kind": "generator",
+      "previousIssue": "Legacy concept-board crop; independent illustration required",
+      "path": "apps/murder-mystery/assets/props/neon-memory-quarantine/generator.webp",
+      "prompt": "New independent isolated game map prop. Concept board is style reference only; redraw from scratch, not a crop. Painterly anime illustration, dark cyberpunk metal with cyan and violet highlights. One object assembly, full three-quarter silhouette with generous margin, transparent background, no people, no plot spoilers, no titles. Industrial EMP relay control panel, black metal box, protected magenta coil, cables and small switch panel. No warnings or readable labels.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-72ab87bc-9bf5-4941-9e3d-09adfc19f72b.png",
+      "review": "Subject and full silhouette visually checked; no plot conclusions or personal records; transparent alpha retained."
+    },
+    {
+      "series": "neon-memory-quarantine",
+      "kind": "server",
+      "previousIssue": "Legacy concept-board crop; independent illustration required",
+      "path": "apps/murder-mystery/assets/props/neon-memory-quarantine/server.webp",
+      "prompt": "New independent isolated game map prop. Concept board is style reference only; redraw from scratch, not a crop. Painterly anime illustration, dark cyberpunk metal with cyan and violet highlights. One object assembly, full three-quarter silhouette with generous margin, transparent background, no people, no plot spoilers, no titles. Tall black server rack with many modular drives, cyan and violet small indicator lights and ventilation grille. No labels or readable data.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-1aa6e5f4-c559-48fe-b3de-33fc5119126c.png",
+      "review": "Subject and full silhouette visually checked; no plot conclusions or personal records; transparent alpha retained."
+    },
+    {
+      "series": "d1-crown-of-ashes",
+      "kind": "stove",
+      "previousIssue": "Legacy concept-board crop; independent illustration required",
+      "path": "apps/murder-mystery/assets/props/d1-crown-of-ashes/stove.webp",
+      "prompt": "New independent isolated game map prop. Concept board is style reference only; redraw from scratch, not a crop. Painterly anime illustration, modern Korean esports building, charcoal and restrained purple palette, grounded realistic materials. One object assembly, full three-quarter silhouette with generous margin, transparent background, no people, no plot spoilers, no titles. Stainless restaurant cooking station with a round divided hotpot full of broth, induction burner and tidy ladles. No people.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-06dd9e7d-51c4-4b5f-b6ce-7f03adb6a337.png",
+      "review": "Subject and full silhouette visually checked; no plot conclusions or personal records; transparent alpha retained."
+    },
+    {
+      "series": "d1-crown-of-ashes",
+      "kind": "table",
+      "previousIssue": "Legacy concept-board crop; independent illustration required",
+      "path": "apps/murder-mystery/assets/props/d1-crown-of-ashes/table.webp",
+      "prompt": "New independent isolated game map prop. Concept board is style reference only; redraw from scratch, not a crop. Painterly anime illustration, modern Korean esports building, charcoal and restrained purple palette, grounded realistic materials. One object assembly, full three-quarter silhouette with generous margin, transparent background, no people, no plot spoilers, no titles. Modern dark wood dining table with exactly eight simple chairs, four on each long side, tidy empty table. No people.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-cb4b50af-444e-470d-ba64-7e989c9a0fd8.png",
+      "review": "Subject and full silhouette visually checked; no plot conclusions or personal records; transparent alpha retained."
+    },
+    {
+      "series": "d1-crown-of-ashes",
+      "kind": "camera",
+      "previousIssue": "Legacy concept-board crop; independent illustration required",
+      "path": "apps/murder-mystery/assets/props/d1-crown-of-ashes/camera.webp",
+      "prompt": "New independent isolated game map prop. Concept board is style reference only; redraw from scratch, not a crop. Painterly anime illustration, modern Korean esports building, charcoal and restrained purple palette, grounded realistic materials. One object assembly, full three-quarter silhouette with generous margin, transparent background, no people, no plot spoilers, no titles. Professional black video camera on sturdy tripod, lens hood and small fold-out blank viewfinder. No visible recording, no labels.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-8fa21910-f8c2-4c5d-9765-149ae3976d8b.png",
+      "review": "Subject and full silhouette visually checked; no plot conclusions or personal records; transparent alpha retained."
+    },
+    {
+      "series": "d1-crown-of-ashes",
+      "kind": "plant",
+      "previousIssue": "Legacy concept-board crop; independent illustration required",
+      "path": "apps/murder-mystery/assets/props/d1-crown-of-ashes/plant.webp",
+      "prompt": "New independent isolated game map prop. Concept board is style reference only; redraw from scratch, not a crop. Painterly anime illustration, modern Korean esports building, charcoal and restrained purple palette, grounded realistic materials. One object assembly, full three-quarter silhouette with generous margin, transparent background, no people, no plot spoilers, no titles. Tall lush indoor broadleaf plant in a heavy charcoal ceramic planter, realistic foliage.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-bc9c66dd-72eb-41cc-8888-60cb2f7e328a.png",
+      "review": "Subject and full silhouette visually checked; no plot conclusions or personal records; transparent alpha retained."
+    },
+    {
+      "series": "d1-crown-of-ashes",
+      "kind": "desk",
+      "previousIssue": "Legacy concept-board crop; independent illustration required",
+      "path": "apps/murder-mystery/assets/props/d1-crown-of-ashes/desk.webp",
+      "prompt": "New independent isolated game map prop. Concept board is style reference only; redraw from scratch, not a crop. Painterly anime illustration, modern Korean esports building, charcoal and restrained purple palette, grounded realistic materials. One object assembly, full three-quarter silhouette with generous margin, transparent background, no people, no plot spoilers, no titles. Modern gaming academy lecturer desk, dark wood top and metal frame, closed laptop and tidy small lectern microphone, no documents or readable text.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-57e1c774-50fc-44d7-9108-5deae61b1ee2.png",
+      "review": "Subject and full silhouette visually checked; no plot conclusions or personal records; transparent alpha retained."
+    }
+  ]
+}

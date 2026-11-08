@@ -10,26 +10,6 @@
       "pendingPortraits": [],
       "pendingPropKinds": [
         {
-          "kind": "stove",
-          "name": "훠궈 조리대"
-        },
-        {
-          "kind": "table",
-          "name": "8인용 식탁"
-        },
-        {
-          "kind": "camera",
-          "name": "왕좌 복도 감시 장비"
-        },
-        {
-          "kind": "plant",
-          "name": "로비 장식 화분"
-        },
-        {
-          "kind": "desk",
-          "name": "강의실 강사석"
-        },
-        {
           "kind": "bed",
           "name": "예비 침대"
         },
@@ -124,28 +104,7 @@
       "pendingClues": [],
       "portraitsTotal": 7,
       "pendingPortraits": [],
-      "pendingPropKinds": [
-        {
-          "kind": "camera",
-          "name": "신원 확인 게이트"
-        },
-        {
-          "kind": "medical",
-          "name": "신경 의료 침대"
-        },
-        {
-          "kind": "pod",
-          "name": "인격 보존 셸"
-        },
-        {
-          "kind": "generator",
-          "name": "EMP 계전 패널"
-        },
-        {
-          "kind": "server",
-          "name": "원본 백업 랙"
-        }
-      ]
+      "pendingPropKinds": []
     },
     {
       "series": "stellar-academy-first-case",
