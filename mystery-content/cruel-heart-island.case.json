@@ -245,14 +245,9 @@
         ],
         "inventory": [
           {
-            "id": "doyun_sponsor_contract",
-            "name": "비밀 커플 광고 계약서",
-            "description": "계약서에 도윤·소미의 이름과 ‘커플 역할 연출’ 조항이 적혀 있다. 별지에 연출 결과별 지급 조건이 기재되어 있다."
-          },
-          {
-            "id": "doyun_drone_clip",
-            "name": "드론 촬영 메모리",
-            "description": "메모리의 영상에는 23:00 전후의 관측실 출입구가 찍혀 있다. 시각 표시 옆에는 ‘드론 내부 시계’라고 적혀 있다."
+            "id": "doyun_brand_badge",
+            "name": "브랜드 VIP 배지",
+            "description": "VIP 배지의 사용 구역 목록에 촬영장 구역들이 적혀 있다. ‘해양 관측실 구형 출입문’은 목록에 없다."
           },
           {
             "id": "doyun_luxury_watch",
@@ -260,9 +255,14 @@
             "description": "협찬 로고가 새겨진 손목시계다. 설정 화면의 네트워크 시각 동기화 항목이 꺼져 있다."
           },
           {
-            "id": "doyun_brand_badge",
-            "name": "브랜드 VIP 배지",
-            "description": "VIP 배지의 사용 구역 목록에 촬영장 구역들이 적혀 있다. ‘해양 관측실 구형 출입문’은 목록에 없다."
+            "id": "doyun_drone_clip",
+            "name": "드론 촬영 메모리",
+            "description": "메모리의 영상에는 23:00 전후의 관측실 출입구가 찍혀 있다. 시각 표시 옆에는 ‘드론 내부 시계’라고 적혀 있다."
+          },
+          {
+            "id": "doyun_sponsor_contract",
+            "name": "비밀 커플 광고 계약서",
+            "description": "계약서에 도윤·소미의 이름과 ‘커플 역할 연출’ 조항이 적혀 있다. 별지에 연출 결과별 지급 조건이 기재되어 있다."
           }
         ],
         "culprit": false,
@@ -311,11 +311,6 @@
         ],
         "inventory": [
           {
-            "id": "seojun_wave_meter",
-            "name": "휴대 수위 기록계",
-            "description": "기록계의 수위 곡선이 23:17 부근에서 급격히 변한다. 경보 출력 표시는 곡선 변화 지점보다 뒤에 찍혀 있다."
-          },
-          {
             "id": "seojun_research_badge",
             "name": "해양연구소 출입증",
             "description": "해양연구소 이름과 이서준의 이름·사진이 인쇄된 출입증이다."
@@ -324,6 +319,11 @@
             "id": "seojun_old_report",
             "name": "과거 촬영 사고 보고서",
             "description": "보고서의 구조 비용 항목에 여러 차례 삭감 표시가 있다. 해당 결재란에는 ‘신원재’가 적혀 있다."
+          },
+          {
+            "id": "seojun_wave_meter",
+            "name": "휴대 수위 기록계",
+            "description": "기록계의 수위 곡선이 23:17 부근에서 급격히 변한다. 경보 출력 표시는 곡선 변화 지점보다 뒤에 찍혀 있다."
           },
           {
             "id": "seojun_dry_notebook",
@@ -377,9 +377,9 @@
         ],
         "inventory": [
           {
-            "id": "taehan_old_warrant",
-            "name": "실종 조연출의 조사 자료",
-            "description": "조사 자료에 조연출의 인적 사항과 실종 기록이 묶여 있다. 첨부된 문안에 “개인정보 이용 계약을 고발하려 한다”는 문장이 있다."
+            "id": "taehan_handcuffs",
+            "name": "연출용 제압 띠",
+            "description": "탈착용 잠금부가 달린 띠다. 안쪽에 ‘방송용 연출 장비’라는 표찰이 붙어 있다."
           },
           {
             "id": "taehan_black_gloves",
@@ -392,9 +392,9 @@
             "description": "스케치에 서로 다른 두 종류의 밑창 무늬와 관측실 입구 방향의 화살표가 그려져 있다. 모서리에 ‘23:11’이 적혀 있다."
           },
           {
-            "id": "taehan_handcuffs",
-            "name": "연출용 제압 띠",
-            "description": "탈착용 잠금부가 달린 띠다. 안쪽에 ‘방송용 연출 장비’라는 표찰이 붙어 있다."
+            "id": "taehan_old_warrant",
+            "name": "실종 조연출의 조사 자료",
+            "description": "조사 자료에 조연출의 인적 사항과 실종 기록이 묶여 있다. 첨부된 문안에 “개인정보 이용 계약을 고발하려 한다”는 문장이 있다."
           }
         ],
         "culprit": false,
@@ -449,9 +449,9 @@
         ],
         "inventory": [
           {
-            "id": "harin_editor_pass",
-            "name": "구형 편집실 출입 카드",
-            "description": "낡은 출입 카드 앞면에 ‘편집실 보조’가 적혀 있다. 뒷면의 권한 목록에는 ‘지연 송출 설정 열람’이 있다."
+            "id": "harin_signal_flare",
+            "name": "방송용 비상 신호탄",
+            "description": "작은 구조 신호탄의 봉인 테이프가 낡아 있다. 안전 지침에는 이 장치를 관측실이 아닌 해변 데크에서 사용하도록 적혀 있다."
           },
           {
             "id": "harin_violet_ribbon",
@@ -464,9 +464,9 @@
             "description": "인터뷰 초안의 가족 상담 내용 옆에 ‘시청률 자극 소재’라는 메모가 있다. 사용 동의 확인란은 비어 있다."
           },
           {
-            "id": "harin_signal_flare",
-            "name": "방송용 비상 신호탄",
-            "description": "작은 구조 신호탄의 봉인 테이프가 낡아 있다. 안전 지침에는 이 장치를 관측실이 아닌 해변 데크에서 사용하도록 적혀 있다."
+            "id": "harin_editor_pass",
+            "name": "구형 편집실 출입 카드",
+            "description": "낡은 출입 카드 앞면에 ‘편집실 보조’가 적혀 있다. 뒷면의 권한 목록에는 ‘지연 송출 설정 열람’이 있다."
           }
         ],
         "culprit": true,
@@ -581,14 +581,14 @@
         ],
         "inventory": [
           {
+            "id": "nayeon_heart_chip",
+            "name": "하트 투표 배지",
+            "description": "하트 모양 배지에 숫자 표시창이 있다. 뒷면 설명에는 ‘표시값: 제작진 콘솔 입력’이라고 적혀 있다."
+          },
+          {
             "id": "nayeon_match_table",
             "name": "커플 매칭 원표",
             "description": "매칭 원표에 출연 조합, 광고비, 우선순위 열이 있다. 광고비가 큰 조합의 행 여러 곳에 우선 표시가 붙어 있다."
-          },
-          {
-            "id": "nayeon_usb_backup",
-            "name": "데이터베이스 백업 USB",
-            "description": "USB의 숙소 인터뷰 파일에는 ‘촬영 22:10’이 적혀 있다. 편성 기록은 ‘대기열 입력 23:17’, 송출 기록은 ‘방송 23:30’으로 표시된다. 별도 전송 로그의 지연 설정값은 ‘13분’이다."
           },
           {
             "id": "nayeon_contract_copy",
@@ -596,9 +596,9 @@
             "description": "동의서에 ‘의료·심리 설문의 광고 소재 이용’ 조항이 있다. 해당 항목의 동의 체크칸과 서명칸은 비어 있다."
           },
           {
-            "id": "nayeon_heart_chip",
-            "name": "하트 투표 배지",
-            "description": "하트 모양 배지에 숫자 표시창이 있다. 뒷면 설명에는 ‘표시값: 제작진 콘솔 입력’이라고 적혀 있다."
+            "id": "nayeon_usb_backup",
+            "name": "데이터베이스 백업 USB",
+            "description": "USB의 숙소 인터뷰 파일에는 ‘촬영 22:10’이 적혀 있다. 편성 기록은 ‘대기열 입력 23:17’, 송출 기록은 ‘방송 23:30’으로 표시된다. 별도 전송 로그의 지연 설정값은 ‘13분’이다."
           }
         ],
         "culprit": false,
@@ -652,14 +652,14 @@
             "description": "대본에 도윤과 소미의 대사가 번갈아 적혀 있다. 각 대사 옆에 광고 상품명과 노출 지시가 붙어 있다."
           },
           {
-            "id": "somi_rescue_net",
-            "name": "촬영용 안전 그물",
-            "description": "그물 가장자리의 매듭 하나는 다른 매듭보다 실밥이 적고 팽팽하다. 표찰에 ‘해양 구조 훈련용 대여’와 날짜가 적혀 있다."
-          },
-          {
             "id": "somi_family_letter",
             "name": "가족 채무 편지",
             "description": "가족 채무 내역이 적힌 편지다. 동봉된 메모에는 “채무 문제를 생각해서 촬영 조건을 받아들여 달라”는 문장과 신원재의 이름이 있다."
+          },
+          {
+            "id": "somi_rescue_net",
+            "name": "촬영용 안전 그물",
+            "description": "그물 가장자리의 매듭 하나는 다른 매듭보다 실밥이 적고 팽팽하다. 표찰에 ‘해양 구조 훈련용 대여’와 날짜가 적혀 있다."
           },
           {
             "id": "somi_parting_note",
@@ -1265,7 +1265,8 @@
           "requiresPresence": false,
           "location": null,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 1
         },
         {
           "id": "minjae_first_aid",
@@ -1284,7 +1285,8 @@
           "requiresPresence": false,
           "location": null,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 2
         },
         {
           "id": "minjae_old_photo",
@@ -1303,7 +1305,8 @@
           "requiresPresence": false,
           "location": null,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 3
         },
         {
           "id": "minjae_tide_chart",
@@ -1322,64 +1325,8 @@
           "requiresPresence": false,
           "location": null,
           "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "doyun_sponsor_contract",
-          "title": "정도윤의 비밀 커플 광고 계약서",
-          "subtitle": "",
-          "type": "belonging",
-          "clueKind": "timeline",
-          "back": "계약서에 도윤·소미의 이름과 ‘커플 역할 연출’ 조항이 적혀 있다. 별지에 연출 결과별 지급 조건이 기재되어 있다.",
-          "owner": "doyun",
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "locked",
-          "repeatable": false,
-          "transferable": false,
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": null,
-          "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "doyun_drone_clip",
-          "title": "정도윤의 드론 촬영 메모리",
-          "subtitle": "",
-          "type": "belonging",
-          "clueKind": "timeline",
-          "back": "메모리의 영상에는 23:00 전후의 관측실 출입구가 찍혀 있다. 시각 표시 옆에는 ‘드론 내부 시계’라고 적혀 있다.",
-          "owner": "doyun",
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "locked",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": null,
-          "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "doyun_luxury_watch",
-          "title": "정도윤의 협찬 손목시계",
-          "subtitle": "",
-          "type": "belonging",
-          "clueKind": "timeline",
-          "back": "협찬 로고가 새겨진 손목시계다. 설정 화면의 네트워크 시각 동기화 항목이 꺼져 있다.",
-          "owner": "doyun",
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "locked",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": null,
-          "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 4
         },
         {
           "id": "doyun_brand_badge",
@@ -1398,16 +1345,17 @@
           "requiresPresence": false,
           "location": null,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 1
         },
         {
-          "id": "seojun_wave_meter",
-          "title": "이서준의 휴대 수위 기록계",
+          "id": "doyun_luxury_watch",
+          "title": "정도윤의 협찬 손목시계",
           "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "기록계의 수위 곡선이 23:17 부근에서 급격히 변한다. 경보 출력 표시는 곡선 변화 지점보다 뒤에 찍혀 있다.",
-          "owner": "seojun",
+          "back": "협찬 로고가 새겨진 손목시계다. 설정 화면의 네트워크 시각 동기화 항목이 꺼져 있다.",
+          "owner": "doyun",
           "blockedFor": [],
           "requires": [],
           "visibility": "locked",
@@ -1417,7 +1365,48 @@
           "requiresPresence": false,
           "location": null,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 2
+        },
+        {
+          "id": "doyun_drone_clip",
+          "title": "정도윤의 드론 촬영 메모리",
+          "subtitle": "",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "메모리의 영상에는 23:00 전후의 관측실 출입구가 찍혀 있다. 시각 표시 옆에는 ‘드론 내부 시계’라고 적혀 있다.",
+          "owner": "doyun",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 3
+        },
+        {
+          "id": "doyun_sponsor_contract",
+          "title": "정도윤의 비밀 커플 광고 계약서",
+          "subtitle": "",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "계약서에 도윤·소미의 이름과 ‘커플 역할 연출’ 조항이 적혀 있다. 별지에 연출 결과별 지급 조건이 기재되어 있다.",
+          "owner": "doyun",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 4
         },
         {
           "id": "seojun_research_badge",
@@ -1436,7 +1425,8 @@
           "requiresPresence": false,
           "location": null,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 1
         },
         {
           "id": "seojun_old_report",
@@ -1455,7 +1445,28 @@
           "requiresPresence": false,
           "location": null,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 2
+        },
+        {
+          "id": "seojun_wave_meter",
+          "title": "이서준의 휴대 수위 기록계",
+          "subtitle": "",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "기록계의 수위 곡선이 23:17 부근에서 급격히 변한다. 경보 출력 표시는 곡선 변화 지점보다 뒤에 찍혀 있다.",
+          "owner": "seojun",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 3
         },
         {
           "id": "seojun_dry_notebook",
@@ -1474,64 +1485,8 @@
           "requiresPresence": false,
           "location": null,
           "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "taehan_old_warrant",
-          "title": "차태한의 실종 조연출의 조사 자료",
-          "subtitle": "",
-          "type": "belonging",
-          "clueKind": "timeline",
-          "back": "조사 자료에 조연출의 인적 사항과 실종 기록이 묶여 있다. 첨부된 문안에 “개인정보 이용 계약을 고발하려 한다”는 문장이 있다.",
-          "owner": "taehan",
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "locked",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": null,
-          "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "taehan_black_gloves",
-          "title": "차태한의 검은 면장갑",
-          "subtitle": "",
-          "type": "belonging",
-          "clueKind": "timeline",
-          "back": "검은 면장갑의 손가락 끝이 유난히 닳아 있다. 천 사이에 흰 가루와 모래 알갱이가 묻어 있다.",
-          "owner": "taehan",
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "locked",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": null,
-          "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "taehan_shoe_sketch",
-          "title": "차태한의 신발 자국 스케치",
-          "subtitle": "",
-          "type": "belonging",
-          "clueKind": "timeline",
-          "back": "스케치에 서로 다른 두 종류의 밑창 무늬와 관측실 입구 방향의 화살표가 그려져 있다. 모서리에 ‘23:11’이 적혀 있다.",
-          "owner": "taehan",
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "locked",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": null,
-          "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 4
         },
         {
           "id": "taehan_handcuffs",
@@ -1550,35 +1505,17 @@
           "requiresPresence": false,
           "location": null,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 1
         },
         {
-          "id": "harin_editor_pass",
-          "title": "서하린의 구형 편집실 출입 카드",
+          "id": "taehan_black_gloves",
+          "title": "차태한의 검은 면장갑",
           "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "낡은 출입 카드 앞면에 ‘편집실 보조’가 적혀 있다. 뒷면의 권한 목록에는 ‘지연 송출 설정 열람’이 있다.",
-          "owner": "harin",
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "locked",
-          "repeatable": false,
-          "transferable": false,
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": null,
-          "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "harin_violet_ribbon",
-          "title": "서하린의 보라색 머리끈",
-          "subtitle": "",
-          "type": "belonging",
-          "clueKind": "timeline",
-          "back": "보라색 천으로 된 머리끈이다. 가장자리 한 곳이 해져 있고 짧은 보라색 실밥이 나와 있다.",
-          "owner": "harin",
+          "back": "검은 면장갑의 손가락 끝이 유난히 닳아 있다. 천 사이에 흰 가루와 모래 알갱이가 묻어 있다.",
+          "owner": "taehan",
           "blockedFor": [],
           "requires": [],
           "visibility": "locked",
@@ -1588,26 +1525,48 @@
           "requiresPresence": false,
           "location": null,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 2
         },
         {
-          "id": "harin_voice_draft",
-          "title": "서하린의 지워진 인터뷰 초안",
+          "id": "taehan_shoe_sketch",
+          "title": "차태한의 신발 자국 스케치",
           "subtitle": "",
           "type": "belonging",
           "clueKind": "timeline",
-          "back": "인터뷰 초안의 가족 상담 내용 옆에 ‘시청률 자극 소재’라는 메모가 있다. 사용 동의 확인란은 비어 있다.",
-          "owner": "harin",
+          "back": "스케치에 서로 다른 두 종류의 밑창 무늬와 관측실 입구 방향의 화살표가 그려져 있다. 모서리에 ‘23:11’이 적혀 있다.",
+          "owner": "taehan",
           "blockedFor": [],
           "requires": [],
           "visibility": "locked",
           "repeatable": false,
-          "transferable": false,
+          "transferable": true,
           "availableFromPhase": "investigation1",
           "requiresPresence": false,
           "location": null,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 3
+        },
+        {
+          "id": "taehan_old_warrant",
+          "title": "차태한의 실종 조연출의 조사 자료",
+          "subtitle": "",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "조사 자료에 조연출의 인적 사항과 실종 기록이 묶여 있다. 첨부된 문안에 “개인정보 이용 계약을 고발하려 한다”는 문장이 있다.",
+          "owner": "taehan",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 4
         },
         {
           "id": "harin_signal_flare",
@@ -1626,7 +1585,68 @@
           "requiresPresence": false,
           "location": null,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 1
+        },
+        {
+          "id": "harin_violet_ribbon",
+          "title": "서하린의 보라색 머리끈",
+          "subtitle": "",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "보라색 천으로 된 머리끈이다. 가장자리 한 곳이 해져 있고 짧은 보라색 실밥이 나와 있다.",
+          "owner": "harin",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 2
+        },
+        {
+          "id": "harin_voice_draft",
+          "title": "서하린의 지워진 인터뷰 초안",
+          "subtitle": "",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "인터뷰 초안의 가족 상담 내용 옆에 ‘시청률 자극 소재’라는 메모가 있다. 사용 동의 확인란은 비어 있다.",
+          "owner": "harin",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 3
+        },
+        {
+          "id": "harin_editor_pass",
+          "title": "서하린의 구형 편집실 출입 카드",
+          "subtitle": "",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "낡은 출입 카드 앞면에 ‘편집실 보조’가 적혀 있다. 뒷면의 권한 목록에는 ‘지연 송출 설정 열람’이 있다.",
+          "owner": "harin",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 4
         },
         {
           "id": "yura_dance_shoes",
@@ -1645,7 +1665,8 @@
           "requiresPresence": false,
           "location": null,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 1
         },
         {
           "id": "yura_couple_photo",
@@ -1664,7 +1685,8 @@
           "requiresPresence": false,
           "location": null,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 2
         },
         {
           "id": "yura_diary",
@@ -1683,7 +1705,8 @@
           "requiresPresence": false,
           "location": null,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 3
         },
         {
           "id": "yura_monitor_note",
@@ -1702,64 +1725,8 @@
           "requiresPresence": false,
           "location": null,
           "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "nayeon_match_table",
-          "title": "백나연의 커플 매칭 원표",
-          "subtitle": "",
-          "type": "belonging",
-          "clueKind": "timeline",
-          "back": "매칭 원표에 출연 조합, 광고비, 우선순위 열이 있다. 광고비가 큰 조합의 행 여러 곳에 우선 표시가 붙어 있다.",
-          "owner": "nayeon",
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "locked",
-          "repeatable": false,
-          "transferable": false,
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": null,
-          "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "nayeon_usb_backup",
-          "title": "백나연의 데이터베이스 백업 USB",
-          "subtitle": "",
-          "type": "belonging",
-          "clueKind": "timeline",
-          "back": "USB의 숙소 인터뷰 파일에는 ‘촬영 22:10’이 적혀 있다. 편성 기록은 ‘대기열 입력 23:17’, 송출 기록은 ‘방송 23:30’으로 표시된다. 별도 전송 로그의 지연 설정값은 ‘13분’이다.",
-          "owner": "nayeon",
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "locked",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": null,
-          "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "nayeon_contract_copy",
-          "title": "백나연의 데이터 이용 동의서",
-          "subtitle": "",
-          "type": "belonging",
-          "clueKind": "timeline",
-          "back": "동의서에 ‘의료·심리 설문의 광고 소재 이용’ 조항이 있다. 해당 항목의 동의 체크칸과 서명칸은 비어 있다.",
-          "owner": "nayeon",
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "locked",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": null,
-          "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 4
         },
         {
           "id": "nayeon_heart_chip",
@@ -1778,7 +1745,68 @@
           "requiresPresence": false,
           "location": null,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 1
+        },
+        {
+          "id": "nayeon_match_table",
+          "title": "백나연의 커플 매칭 원표",
+          "subtitle": "",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "매칭 원표에 출연 조합, 광고비, 우선순위 열이 있다. 광고비가 큰 조합의 행 여러 곳에 우선 표시가 붙어 있다.",
+          "owner": "nayeon",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": false,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 2
+        },
+        {
+          "id": "nayeon_contract_copy",
+          "title": "백나연의 데이터 이용 동의서",
+          "subtitle": "",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "동의서에 ‘의료·심리 설문의 광고 소재 이용’ 조항이 있다. 해당 항목의 동의 체크칸과 서명칸은 비어 있다.",
+          "owner": "nayeon",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 3
+        },
+        {
+          "id": "nayeon_usb_backup",
+          "title": "백나연의 데이터베이스 백업 USB",
+          "subtitle": "",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "USB의 숙소 인터뷰 파일에는 ‘촬영 22:10’이 적혀 있다. 편성 기록은 ‘대기열 입력 23:17’, 송출 기록은 ‘방송 23:30’으로 표시된다. 별도 전송 로그의 지연 설정값은 ‘13분’이다.",
+          "owner": "nayeon",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 4
         },
         {
           "id": "somi_scripted_dates",
@@ -1797,26 +1825,8 @@
           "requiresPresence": false,
           "location": null,
           "grant": null,
-          "insights": {}
-        },
-        {
-          "id": "somi_rescue_net",
-          "title": "한소미의 촬영용 안전 그물",
-          "subtitle": "",
-          "type": "belonging",
-          "clueKind": "timeline",
-          "back": "그물 가장자리의 매듭 하나는 다른 매듭보다 실밥이 적고 팽팽하다. 표찰에 ‘해양 구조 훈련용 대여’와 날짜가 적혀 있다.",
-          "owner": "somi",
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "locked",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation1",
-          "requiresPresence": false,
-          "location": null,
-          "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 1
         },
         {
           "id": "somi_family_letter",
@@ -1835,7 +1845,28 @@
           "requiresPresence": false,
           "location": null,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 2
+        },
+        {
+          "id": "somi_rescue_net",
+          "title": "한소미의 촬영용 안전 그물",
+          "subtitle": "",
+          "type": "belonging",
+          "clueKind": "timeline",
+          "back": "그물 가장자리의 매듭 하나는 다른 매듭보다 실밥이 적고 팽팽하다. 표찰에 ‘해양 구조 훈련용 대여’와 날짜가 적혀 있다.",
+          "owner": "somi",
+          "blockedFor": [],
+          "requires": [],
+          "visibility": "locked",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "requiresPresence": false,
+          "location": null,
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 3
         },
         {
           "id": "somi_parting_note",
@@ -1854,7 +1885,8 @@
           "requiresPresence": false,
           "location": null,
           "grant": null,
-          "insights": {}
+          "insights": {},
+          "sequenceOrder": 4
         },
         {
           "id": "island_welcome",
@@ -1876,161 +1908,8 @@
             "x": 3,
             "y": 8
           },
-          "grant": null
-        },
-        {
-          "id": "island_cast_contract",
-          "title": "비밀 출연 계약",
-          "subtitle": "",
-          "type": "information",
-          "clueKind": "timeline",
-          "back": "도윤과 소미에게 커플 연출을 요구하는 부속 합의서다. 관계가 깨지면 위약금이 발생한다는 조항과 홍보용 인터뷰 일정이 빼곡하게 기재되어 있다.",
-          "availableFromPhase": "investigation1",
-          "visibility": "locked",
-          "requires": [],
-          "repeatable": false,
-          "transferable": true,
-          "requiresPresence": false,
-          "owner": null,
-          "blockedFor": [],
-          "location": {
-            "floor": "villa",
-            "x": 14,
-            "y": 8
-          },
-          "grant": null
-        },
-        {
-          "id": "island_tide_warn",
-          "title": "해양 안전 경고서",
-          "subtitle": "",
-          "type": "information",
-          "clueKind": "timeline",
-          "back": "안전 경고서에 ‘야간 조수 관측실 출입 금지 권고’가 적혀 있다. 처리란에는 ‘촬영 일정 유지’와 신원재의 결재 표시가 있다.",
-          "availableFromPhase": "investigation1",
-          "visibility": "locked",
-          "requires": [],
-          "repeatable": false,
-          "transferable": true,
-          "requiresPresence": false,
-          "owner": null,
-          "blockedFor": [],
-          "location": {
-            "floor": "lighthouse",
-            "x": 4,
-            "y": 2
-          },
-          "grant": null
-        },
-        {
-          "id": "island_sponsor_bill",
-          "title": "감정 광고 정산표",
-          "subtitle": "",
-          "type": "information",
-          "clueKind": "timeline",
-          "back": "정산표에 감정 반응 수치, 출연 조합, 광고 노출 단가가 각각 열로 나뉘어 있다. 행마다 다른 단가가 기재되어 있다.",
-          "availableFromPhase": "investigation1",
-          "visibility": "locked",
-          "requires": [],
-          "repeatable": false,
-          "transferable": true,
-          "requiresPresence": false,
-          "owner": null,
-          "blockedFor": [],
-          "location": {
-            "floor": "villa",
-            "x": 14,
-            "y": 2
-          },
-          "grant": null
-        },
-        {
-          "id": "island_shoe_marks",
-          "title": "관측실 주변 발자국",
-          "subtitle": "",
-          "type": "information",
-          "clueKind": "timeline",
-          "back": "관측실 입구 쪽으로 서로 다른 두 종류의 신발 자국이 이어져 있다. 한쪽은 운동화 밑창 무늬다.",
-          "availableFromPhase": "investigation1",
-          "visibility": "locked",
-          "requires": [],
-          "repeatable": false,
-          "transferable": true,
-          "requiresPresence": true,
-          "owner": null,
-          "blockedFor": [],
-          "location": {
-            "floor": "lighthouse",
-            "x": 4,
-            "y": 2
-          },
-          "grant": null
-        },
-        {
-          "id": "island_edit_room",
-          "title": "편집실 야간 출입표",
-          "subtitle": "",
-          "type": "information",
-          "clueKind": "timeline",
-          "back": "23시 전후 구형 보조 출입카드가 사용됐다. 사용자의 이름이 삭제되었으나 카드 일련번호는 남아 있다.",
-          "availableFromPhase": "investigation1",
-          "visibility": "locked",
-          "requires": [],
-          "repeatable": false,
-          "transferable": true,
-          "requiresPresence": false,
-          "owner": null,
-          "blockedFor": [],
-          "location": {
-            "floor": "villa",
-            "x": 14,
-            "y": 2
-          },
-          "grant": null
-        },
-        {
-          "id": "island_camera_lag",
-          "title": "인터뷰 송출 설정 화면",
-          "subtitle": "",
-          "type": "information",
-          "clueKind": "timeline",
-          "back": "송출 서버 화면의 인터뷰 파일 항목에 ‘사전 제작’이 표시되어 있다. 지연 설정값은 ‘13분’이다.",
-          "availableFromPhase": "investigation1",
-          "visibility": "locked",
-          "requires": [],
-          "repeatable": false,
-          "transferable": true,
-          "requiresPresence": false,
-          "owner": null,
-          "blockedFor": [],
-          "location": {
-            "floor": "villa",
-            "x": 4,
-            "y": 2
-          },
-          "grant": null
-        },
-        {
-          "id": "island_early_message",
-          "title": "PD의 메신저 대화 기록",
-          "subtitle": "",
-          "type": "information",
-          "clueKind": "timeline",
-          "back": "신원재의 대화 기록에 “협상이 끝나면 파일을 돌려주겠다”는 문장이 남아 있다. 상대방 이름과 앞부분 대화는 지워져 있다.",
-          "availableFromPhase": "investigation1",
-          "visibility": "locked",
-          "requires": [],
-          "repeatable": false,
-          "transferable": true,
-          "requiresPresence": false,
-          "owner": null,
-          "blockedFor": [],
-          "location": {
-            "floor": "lighthouse",
-            "x": 3,
-            "y": 2
-          },
-          "grant": null
+          "grant": null,
+          "sequenceOrder": 1
         },
         {
           "id": "island_doctor_note",
@@ -2052,39 +1931,16 @@
             "x": 14,
             "y": 8
           },
-          "grant": null
+          "grant": null,
+          "sequenceOrder": 1
         },
         {
-          "id": "island_drone_master",
-          "title": "드론 원본 영상",
+          "id": "island_cast_contract",
+          "title": "비밀 출연 계약",
           "subtitle": "",
           "type": "information",
           "clueKind": "timeline",
-          "back": "드론 영상의 관측실 입구 쪽에 사람처럼 보이는 작은 형체가 잠깐 나타났다가 사라진다. 파일에는 ‘드론 내부 시각’이 표시되어 있고 방송 편성표 한 장이 첨부되어 있다.",
-          "availableFromPhase": "investigation1",
-          "visibility": "locked",
-          "requires": [
-            "island_camera_lag"
-          ],
-          "repeatable": false,
-          "transferable": true,
-          "requiresPresence": false,
-          "owner": null,
-          "blockedFor": [],
-          "location": {
-            "floor": "villa",
-            "x": 14,
-            "y": 2
-          },
-          "grant": null
-        },
-        {
-          "id": "island_net_box",
-          "title": "보트 창고의 잠금된 캐비닛",
-          "subtitle": "",
-          "type": "information",
-          "clueKind": "timeline",
-          "back": "촬영용 안전 그물과 예비 조끼가 보관되어 있다. 장비 체크리스트에는 마지막 반출 시간이 적혔지만 누가 확인했는지는 서명이 지워져 있다.",
+          "back": "도윤과 소미에게 커플 연출을 요구하는 부속 합의서다. 관계가 깨지면 위약금이 발생한다는 조항과 홍보용 인터뷰 일정이 빼곡하게 기재되어 있다.",
           "availableFromPhase": "investigation1",
           "visibility": "locked",
           "requires": [],
@@ -2094,19 +1950,43 @@
           "owner": null,
           "blockedFor": [],
           "location": {
-            "floor": "shore",
-            "x": 4,
+            "floor": "villa",
+            "x": 14,
             "y": 8
           },
-          "grant": null
+          "grant": null,
+          "sequenceOrder": 2
         },
         {
-          "id": "island_sound_test",
-          "title": "신원재의 리허설 음성 파일",
+          "id": "island_shoe_marks",
+          "title": "관측실 주변 발자국",
           "subtitle": "",
           "type": "information",
           "clueKind": "timeline",
-          "back": "리허설 음성 파일의 속성에 ‘예약 재생’이 표시되어 있다. 설정 기록과 실제 송출 기록이 각각 별도 행에 남아 있다.",
+          "back": "관측실 입구 쪽으로 서로 다른 두 종류의 신발 자국이 이어져 있다. 한쪽은 운동화 밑창 무늬다.",
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": true,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "lighthouse",
+            "x": 4,
+            "y": 2
+          },
+          "grant": null,
+          "sequenceOrder": 1
+        },
+        {
+          "id": "island_tide_warn",
+          "title": "해양 안전 경고서",
+          "subtitle": "",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "안전 경고서에 ‘야간 조수 관측실 출입 금지 권고’가 적혀 있다. 처리란에는 ‘촬영 일정 유지’와 신원재의 결재 표시가 있다.",
           "availableFromPhase": "investigation1",
           "visibility": "locked",
           "requires": [],
@@ -2116,11 +1996,104 @@
           "owner": null,
           "blockedFor": [],
           "location": {
-            "floor": "villa",
-            "x": 14,
+            "floor": "lighthouse",
+            "x": 4,
             "y": 2
           },
-          "grant": null
+          "grant": null,
+          "sequenceOrder": 2
+        },
+        {
+          "id": "island_early_message",
+          "title": "PD의 메신저 대화 기록",
+          "subtitle": "",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "신원재의 대화 기록에 “협상이 끝나면 파일을 돌려주겠다”는 문장이 남아 있다. 상대방 이름과 앞부분 대화는 지워져 있다.",
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": false,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "lighthouse",
+            "x": 3,
+            "y": 2
+          },
+          "grant": null,
+          "sequenceOrder": 3
+        },
+        {
+          "id": "island_ribbon_thread",
+          "title": "발자국 옆 보라색 섬유",
+          "subtitle": "",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "관측실 구형 문 근처에 보라색 실밥이 걸려 있다. 바로 옆 바닥에는 신발 자국 일부가 남아 있다.",
+          "availableFromPhase": "investigation2",
+          "visibility": "hidden",
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": true,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "lighthouse",
+            "x": 4,
+            "y": 2
+          },
+          "grant": null,
+          "sequenceOrder": 4
+        },
+        {
+          "id": "island_tide_autopsy",
+          "title": "관측실 현장 감식표",
+          "subtitle": "",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "현장 감식표에 관측실 안쪽의 신원재 발견 위치, 문 잠금 상태, 경보 패널 상태가 기록되어 있다. 첨부 사진에는 침수된 바닥과 잠긴 출입문이 보인다.",
+          "availableFromPhase": "investigation2",
+          "visibility": "hidden",
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": true,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "lighthouse",
+            "x": 4,
+            "y": 2
+          },
+          "grant": null,
+          "sequenceOrder": 5
+        },
+        {
+          "id": "island_tide_recheck",
+          "title": "제작진의 구조 호출 표",
+          "subtitle": "",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "현장 경보의 수신처는 ‘편집실 보조 단말’이다. 같은 단말의 인터폰 수신 이력이 남아 있다. 그 뒤 공식 구조 요청 발신 목록은 비어 있다.",
+          "availableFromPhase": "investigation2",
+          "visibility": "locked",
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": false,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "lighthouse",
+            "x": 4,
+            "y": 2
+          },
+          "grant": null,
+          "sequenceOrder": 6
         },
         {
           "id": "island_tide_gate",
@@ -2144,7 +2117,102 @@
             "x": 4,
             "y": 2
           },
-          "grant": null
+          "grant": null,
+          "sequenceOrder": 7
+        },
+        {
+          "id": "island_sponsor_bill",
+          "title": "감정 광고 정산표",
+          "subtitle": "",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "정산표에 감정 반응 수치, 출연 조합, 광고 노출 단가가 각각 열로 나뉘어 있다. 행마다 다른 단가가 기재되어 있다.",
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": false,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "villa",
+            "x": 14,
+            "y": 2
+          },
+          "grant": null,
+          "sequenceOrder": 1
+        },
+        {
+          "id": "island_edit_room",
+          "title": "편집실 야간 출입표",
+          "subtitle": "",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "23시 전후 구형 보조 출입카드가 사용됐다. 사용자의 이름이 삭제되었으나 카드 일련번호는 남아 있다.",
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": false,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "villa",
+            "x": 14,
+            "y": 2
+          },
+          "grant": null,
+          "sequenceOrder": 2
+        },
+        {
+          "id": "island_sound_test",
+          "title": "신원재의 리허설 음성 파일",
+          "subtitle": "",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "리허설 음성 파일의 속성에 ‘예약 재생’이 표시되어 있다. 설정 기록과 실제 송출 기록이 각각 별도 행에 남아 있다.",
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": false,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "villa",
+            "x": 14,
+            "y": 2
+          },
+          "grant": null,
+          "sequenceOrder": 3
+        },
+        {
+          "id": "island_drone_master",
+          "title": "드론 원본 영상",
+          "subtitle": "",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "드론 영상의 관측실 입구 쪽에 사람처럼 보이는 작은 형체가 잠깐 나타났다가 사라진다. 파일에는 ‘드론 내부 시각’이 표시되어 있고 방송 편성표 한 장이 첨부되어 있다.",
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [
+            "island_camera_lag"
+          ],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": false,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "villa",
+            "x": 14,
+            "y": 2
+          },
+          "grant": null,
+          "sequenceOrder": 4
         },
         {
           "id": "island_duplicate_badge",
@@ -2168,53 +2236,8 @@
             "x": 14,
             "y": 2
           },
-          "grant": null
-        },
-        {
-          "id": "island_tide_autopsy",
-          "title": "관측실 현장 감식표",
-          "subtitle": "",
-          "type": "information",
-          "clueKind": "timeline",
-          "back": "현장 감식표에 관측실 안쪽의 신원재 발견 위치, 문 잠금 상태, 경보 패널 상태가 기록되어 있다. 첨부 사진에는 침수된 바닥과 잠긴 출입문이 보인다.",
-          "availableFromPhase": "investigation2",
-          "visibility": "hidden",
-          "requires": [],
-          "repeatable": false,
-          "transferable": true,
-          "requiresPresence": true,
-          "owner": null,
-          "blockedFor": [],
-          "location": {
-            "floor": "lighthouse",
-            "x": 4,
-            "y": 2
-          },
-          "grant": null
-        },
-        {
-          "id": "island_last_intercom",
-          "title": "삭제된 인터폰 뒷부분",
-          "subtitle": "",
-          "type": "information",
-          "clueKind": "timeline",
-          "back": "복구된 녹음에서 신원재가 “약속했잖아, 편집 원본을 주겠다고. 내보내 줘.”라고 말한다.",
-          "availableFromPhase": "investigation2",
-          "visibility": "hidden",
-          "requires": [
-            "island_early_message"
-          ],
-          "repeatable": false,
-          "transferable": true,
-          "requiresPresence": false,
-          "owner": null,
-          "blockedFor": [],
-          "location": {
-            "floor": "lighthouse",
-            "x": 14,
-            "y": 8
-          },
-          "grant": null
+          "grant": null,
+          "sequenceOrder": 5
         },
         {
           "id": "island_interview_raw",
@@ -2238,7 +2261,54 @@
             "x": 14,
             "y": 2
           },
-          "grant": null
+          "grant": null,
+          "sequenceOrder": 6
+        },
+        {
+          "id": "island_camera_lag",
+          "title": "인터뷰 송출 설정 화면",
+          "subtitle": "",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "송출 서버 화면의 인터뷰 파일 항목에 ‘사전 제작’이 표시되어 있다. 지연 설정값은 ‘13분’이다.",
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": false,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "villa",
+            "x": 4,
+            "y": 2
+          },
+          "grant": null,
+          "sequenceOrder": 1
+        },
+        {
+          "id": "island_net_box",
+          "title": "보트 창고의 잠금된 캐비닛",
+          "subtitle": "",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "촬영용 안전 그물과 예비 조끼가 보관되어 있다. 장비 체크리스트에는 마지막 반출 시간이 적혔지만 누가 확인했는지는 서명이 지워져 있다.",
+          "availableFromPhase": "investigation1",
+          "visibility": "locked",
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": false,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "shore",
+            "x": 4,
+            "y": 8
+          },
+          "grant": null,
+          "sequenceOrder": 1
         },
         {
           "id": "island_relay_key",
@@ -2264,120 +2334,8 @@
             "id": "island_relay_key",
             "name": "중계실 비상 출입 표식",
             "description": "봉인된 해상 방송 로그 보관실 잠금을 해제한다."
-          }
-        },
-        {
-          "id": "island_sponsor_real",
-          "title": "제작진의 심리 프로파일",
-          "subtitle": "",
-          "type": "information",
-          "clueKind": "timeline",
-          "back": "프로파일에 출연자들의 설문 내용과 비공개 가족 상담 기록이 묶여 있다. 다음 생방송 구성표의 ‘반전 공개’ 칸에 상담 기록의 문서 번호가 적혀 있다.",
-          "availableFromPhase": "investigation2",
-          "visibility": "hidden",
-          "requires": [],
-          "repeatable": false,
-          "transferable": true,
-          "requiresPresence": true,
-          "owner": null,
-          "blockedFor": [],
-          "location": {
-            "floor": "lighthouse",
-            "x": 14,
-            "y": 8
           },
-          "grant": null
-        },
-        {
-          "id": "island_tide_recheck",
-          "title": "제작진의 구조 호출 표",
-          "subtitle": "",
-          "type": "information",
-          "clueKind": "timeline",
-          "back": "현장 경보의 수신처는 ‘편집실 보조 단말’이다. 같은 단말의 인터폰 수신 이력이 남아 있다. 그 뒤 공식 구조 요청 발신 목록은 비어 있다.",
-          "availableFromPhase": "investigation2",
-          "visibility": "locked",
-          "requires": [],
-          "repeatable": false,
-          "transferable": true,
-          "requiresPresence": false,
-          "owner": null,
-          "blockedFor": [],
-          "location": {
-            "floor": "lighthouse",
-            "x": 4,
-            "y": 2
-          },
-          "grant": null
-        },
-        {
-          "id": "island_ribbon_thread",
-          "title": "발자국 옆 보라색 섬유",
-          "subtitle": "",
-          "type": "information",
-          "clueKind": "timeline",
-          "back": "관측실 구형 문 근처에 보라색 실밥이 걸려 있다. 바로 옆 바닥에는 신발 자국 일부가 남아 있다.",
-          "availableFromPhase": "investigation2",
-          "visibility": "hidden",
-          "requires": [],
-          "repeatable": false,
-          "transferable": true,
-          "requiresPresence": true,
-          "owner": null,
-          "blockedFor": [],
-          "location": {
-            "floor": "lighthouse",
-            "x": 4,
-            "y": 2
-          },
-          "grant": null
-        },
-        {
-          "id": "island_truth_contract",
-          "title": "프로그램 비밀 원본 계약",
-          "subtitle": "",
-          "type": "information",
-          "clueKind": "timeline",
-          "back": "계약서에 ‘감정 반응 수집’, ‘출연 관계 배치’, ‘광고 수익’ 항목이 있다. 부록에 의료 정보 목록이 붙어 있고 이용 동의 확인란은 비어 있다.",
-          "availableFromPhase": "investigation2",
-          "visibility": "hidden",
-          "requires": [],
-          "repeatable": false,
-          "transferable": true,
-          "requiresPresence": true,
-          "owner": null,
-          "blockedFor": [],
-          "location": {
-            "floor": "lighthouse",
-            "x": 14,
-            "y": 8
-          },
-          "grant": null
-        },
-        {
-          "id": "island_final_cut",
-          "title": "마지막 편집 타임라인",
-          "subtitle": "",
-          "type": "information",
-          "clueKind": "timeline",
-          "back": "편집 화면에 ‘23:04 관측실’, ‘23:17 경보’, ‘인터뷰 지연 13분’, ‘PD 음성 예약’ 트랙이 나란히 표시되어 있다. 각 트랙에 원본 파일 번호가 붙어 있다.",
-          "availableFromPhase": "investigation2",
-          "visibility": "hidden",
-          "requires": [
-            "island_duplicate_badge",
-            "island_camera_lag"
-          ],
-          "repeatable": false,
-          "transferable": true,
-          "requiresPresence": true,
-          "owner": null,
-          "blockedFor": [],
-          "location": {
-            "floor": "lighthouse",
-            "x": 14,
-            "y": 8
-          },
-          "grant": null
+          "sequenceOrder": 2
         },
         {
           "id": "island_escape_beacon",
@@ -2403,7 +2361,105 @@
             "id": "island_beacon",
             "name": "구조 신호기",
             "description": "행동 단계에서 섬 구조 요청을 성립시키는 비상 아이템."
-          }
+          },
+          "sequenceOrder": 3
+        },
+        {
+          "id": "island_last_intercom",
+          "title": "삭제된 인터폰 뒷부분",
+          "subtitle": "",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "복구된 녹음에서 신원재가 “약속했잖아, 편집 원본을 주겠다고. 내보내 줘.”라고 말한다.",
+          "availableFromPhase": "investigation2",
+          "visibility": "hidden",
+          "requires": [
+            "island_early_message"
+          ],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": false,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "lighthouse",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null,
+          "sequenceOrder": 1
+        },
+        {
+          "id": "island_sponsor_real",
+          "title": "제작진의 심리 프로파일",
+          "subtitle": "",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "프로파일에 출연자들의 설문 내용과 비공개 가족 상담 기록이 묶여 있다. 다음 생방송 구성표의 ‘반전 공개’ 칸에 상담 기록의 문서 번호가 적혀 있다.",
+          "availableFromPhase": "investigation2",
+          "visibility": "hidden",
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": true,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "lighthouse",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null,
+          "sequenceOrder": 2
+        },
+        {
+          "id": "island_final_cut",
+          "title": "마지막 편집 타임라인",
+          "subtitle": "",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "편집 화면에 ‘23:04 관측실’, ‘23:17 경보’, ‘인터뷰 지연 13분’, ‘PD 음성 예약’ 트랙이 나란히 표시되어 있다. 각 트랙에 원본 파일 번호가 붙어 있다.",
+          "availableFromPhase": "investigation2",
+          "visibility": "hidden",
+          "requires": [
+            "island_duplicate_badge",
+            "island_camera_lag"
+          ],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": true,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "lighthouse",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null,
+          "sequenceOrder": 3
+        },
+        {
+          "id": "island_truth_contract",
+          "title": "프로그램 비밀 원본 계약",
+          "subtitle": "",
+          "type": "information",
+          "clueKind": "timeline",
+          "back": "계약서에 ‘감정 반응 수집’, ‘출연 관계 배치’, ‘광고 수익’ 항목이 있다. 부록에 의료 정보 목록이 붙어 있고 이용 동의 확인란은 비어 있다.",
+          "availableFromPhase": "investigation2",
+          "visibility": "hidden",
+          "requires": [],
+          "repeatable": false,
+          "transferable": true,
+          "requiresPresence": true,
+          "owner": null,
+          "blockedFor": [],
+          "location": {
+            "floor": "lighthouse",
+            "x": 14,
+            "y": 8
+          },
+          "grant": null,
+          "sequenceOrder": 4
         }
       ]
     },
