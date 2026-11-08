@@ -588,7 +588,7 @@ async function api(req,res,url,sid){
     if(room.phase!=='lobby')fail(409,'이미 게임이 시작되었습니다.');
     if(room.players.length!==storyById(room.storyId).players)fail(409,'정원이 모두 모여야 시작할 수 있습니다.');
     if(!room.players.every(p=>online(room,p)))fail(409,'모든 참가자가 온라인이어야 시작할 수 있습니다.');
-    room.gameStartedAt=Date.now();phaseChange(room,'synopsis',sid);
+    phaseChange(room,'synopsis',sid);room.gameStartedAt=room.phaseStartedAt;
     room.players.forEach(p=>{p.read=false;p.characterId=null});
     logActivity('game_started',sid,{room:room.id});persist();sendState(room);
     return json(res,200,roomView(room,sid));

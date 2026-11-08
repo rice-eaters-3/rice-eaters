@@ -1,0 +1,77 @@
+{
+  "assets": [
+    {
+      "id": "camera",
+      "prompt": "Single professional black video camera on a tall tripod, isolated on transparent background. Detailed painterly anime game asset for a modern tropical villa reality show. Lens hood, small blank folded viewfinder, subtle pink rim light. Entire tripod feet and camera within generous margins, three-quarter view. ONLY CAMERA AND TRIPOD. No screens, no poster, no board, no collage, no scenery, no picture of a villa, no background, no labels, no text.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-0d557b36-c479-4457-bfe3-8ecc1a584689.png",
+      "path": "apps/murder-mystery/assets/props/cruel-heart-island/camera.webp",
+      "previousIssue": "Legacy concept-sheet crop",
+      "review": "Full silhouette and subject match checked; no story conclusions, personal data or timestamps.",
+      "rejectedPrevious": "Unrequested scene board beside camera; replaced with isolated camera and tripod."
+    },
+    {
+      "id": "terminal",
+      "prompt": "NEW independently drawn isolated map prop for a tropical reality-show murder mystery. Supplied board is style reference only; never crop or reuse it. Detailed painterly anime game art, modern luxury villa, restrained pink and cream accents. One complete object assembly, three-quarter view, entire silhouette with generous margins. Transparent background with no ground or scenery, no people, no story spoilers or text. Compact modern monitoring console with two blue flat screens and physical control buttons. Screens show abstract wave curves and plain grids only, NO numbers or timestamps.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-f501e1f7-0ef4-484a-a41b-c50283b69f89.png",
+      "path": "apps/murder-mystery/assets/props/cruel-heart-island/terminal.webp",
+      "previousIssue": "Legacy concept-sheet crop",
+      "review": "Full silhouette and subject match checked; no story conclusions, personal data or timestamps."
+    },
+    {
+      "id": "sofa",
+      "prompt": "NEW independently drawn isolated map prop for a tropical reality-show murder mystery. Supplied board is style reference only; never crop or reuse it. Detailed painterly anime game art, modern luxury villa, restrained pink and cream accents. One complete object assembly, three-quarter view, entire silhouette with generous margins. Transparent background with no ground or scenery, no people, no story spoilers or text. Elegant cream upholstered three seat lounge sofa with pale blush pink cushions, dark wood feet.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-bb7262f0-b7e6-48a5-81c6-3de9a58013ee.png",
+      "path": "apps/murder-mystery/assets/props/cruel-heart-island/sofa.webp",
+      "previousIssue": "Legacy concept-sheet crop",
+      "review": "Full silhouette and subject match checked; no story conclusions, personal data or timestamps."
+    },
+    {
+      "id": "table",
+      "prompt": "NEW independently drawn isolated map prop for a tropical reality-show murder mystery. Supplied board is style reference only; never crop or reuse it. Detailed painterly anime game art, modern luxury villa, restrained pink and cream accents. One complete object assembly, three-quarter view, entire silhouette with generous margins. Transparent background with no ground or scenery, no people, no story spoilers or text. Small round white voting table with a pink heart-shaped closed ballot box in the center. No ballots, names or text visible.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-95f66af0-7f54-44b3-9976-00d26f3cf728.png",
+      "path": "apps/murder-mystery/assets/props/cruel-heart-island/table.webp",
+      "previousIssue": "Legacy concept-sheet crop",
+      "review": "Full silhouette and subject match checked; no story conclusions, personal data or timestamps."
+    },
+    {
+      "id": "wardrobe",
+      "prompt": "NEW independently drawn isolated map prop for a tropical reality-show murder mystery. Supplied board is style reference only; never crop or reuse it. Detailed painterly anime game art, modern luxury villa, restrained pink and cream accents. One complete object assembly, three-quarter view, entire silhouette with generous margins. Transparent background with no ground or scenery, no people, no story spoilers or text. White and pale wood dressing-room vanity with a round bulb-lit mirror, tidy cosmetics bottles and a blush pink stool.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-11e3525a-fb3e-4858-abad-58702d43e5da.png",
+      "path": "apps/murder-mystery/assets/props/cruel-heart-island/wardrobe.webp",
+      "previousIssue": "Legacy concept-sheet crop",
+      "review": "Full silhouette and subject match checked; no story conclusions, personal data or timestamps."
+    },
+    {
+      "id": "fridge",
+      "prompt": "NEW independently drawn isolated map prop for a tropical reality-show murder mystery. Supplied board is style reference only; never crop or reuse it. Detailed painterly anime game art, modern luxury villa, restrained pink and cream accents. One complete object assembly, three-quarter view, entire silhouette with generous margins. Transparent background with no ground or scenery, no people, no story spoilers or text. Modern stainless double-door villa kitchen refrigerator with water dispenser, closed doors, no notes or readable labels.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-90962f14-8171-4224-b9f0-d18853f4af86.png",
+      "path": "apps/murder-mystery/assets/props/cruel-heart-island/fridge.webp",
+      "previousIssue": "Legacy concept-sheet crop",
+      "review": "Full silhouette and subject match checked; no story conclusions, personal data or timestamps."
+    },
+    {
+      "id": "generator",
+      "prompt": "NEW independently drawn isolated map prop for a tropical reality-show murder mystery. Supplied board is style reference only; never crop or reuse it. Detailed painterly anime game art, modern luxury villa, restrained pink and cream accents. One complete object assembly, three-quarter view, entire silhouette with generous margins. Transparent background with no ground or scenery, no people, no story spoilers or text. Wall-mounted maritime water-level alarm control box, gray steel housing with gauge, simple switches and a small red beacon. No readable numbers, no warning text.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-2bfedb31-6474-45b8-9e42-de388f12e57f.png",
+      "path": "apps/murder-mystery/assets/props/cruel-heart-island/generator.webp",
+      "previousIssue": "Legacy concept-sheet crop",
+      "review": "Full silhouette and subject match checked; no story conclusions, personal data or timestamps."
+    },
+    {
+      "id": "shelf",
+      "prompt": "NEW independently drawn isolated map prop for a tropical reality-show murder mystery. Supplied board is style reference only; never crop or reuse it. Detailed painterly anime game art, modern luxury villa, restrained pink and cream accents. One complete object assembly, three-quarter view, entire silhouette with generous margins. Transparent background with no ground or scenery, no people, no story spoilers or text. Wooden archive bookshelf filled with plain navy and cream binders, simple brass handles, no readable titles or documents.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-7332450c-ab45-48a0-b06f-7e6472082fdb.png",
+      "path": "apps/murder-mystery/assets/props/cruel-heart-island/shelf.webp",
+      "previousIssue": "Legacy concept-sheet crop",
+      "review": "Full silhouette and subject match checked; no story conclusions, personal data or timestamps."
+    },
+    {
+      "id": "server",
+      "prompt": "NEW independently drawn isolated map prop for a tropical reality-show murder mystery. Supplied board is style reference only; never crop or reuse it. Detailed painterly anime game art, modern luxury villa, restrained pink and cream accents. One complete object assembly, three-quarter view, entire silhouette with generous margins. Transparent background with no ground or scenery, no people, no story spoilers or text. Compact black broadcast server rack with drives, vents, small green and blue status lights; a closed secure cabinet with a simple lock. No labels, papers, seals with text or logs.",
+      "source": "/workspace/scratch/490a51c77c43/generated_images/exec-6ede74bd-e560-4e1d-b3a4-c373d2b4b793.png",
+      "path": "apps/murder-mystery/assets/props/cruel-heart-island/server.webp",
+      "previousIssue": "Legacy concept-sheet crop",
+      "review": "Full silhouette and subject match checked; no story conclusions, personal data or timestamps."
+    }
+  ]
+}
