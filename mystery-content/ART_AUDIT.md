@@ -307,3 +307,7 @@ Reference designs preserved; new full-frame paintings linked in shared portrait 
 ## Academy character and prop batch
 
 Six player portraits, victim Jang Yeonho and three prop kinds (bed, cabinet, desk) now use independent illustrations. All 28 playable portraits complete. See ACADEMY_CHARACTER_PROP_REVIEW.json.
+
+## Academy / Neon map props batch (10)
+
+Replaced seven remaining Academy prop kinds and Neon console, waiting sofa and secure cabinet with independently generated illustrations. Reviewed full silhouettes, alpha, and non-spoiler content. Academy rooftop sign says only 옥상 출구. Shared renderer supplies game, studio and test mode. Sources/prompts/paths: ACADEMY_NEON_PROP_REVIEW.json.

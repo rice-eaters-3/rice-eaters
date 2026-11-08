@@ -14,7 +14,7 @@ const scenarios=[
 ];
 const reviewedClueCounts={'d1-crown-of-ashes':71,'cruel-heart-island':56,'neon-memory-quarantine':54,'stellar-academy-first-case':48};
 const newD1Props=['sink','fridge','pc','gargoyle','throne'];
-const independentProps={'d1-crown-of-ashes':newD1Props,'stellar-academy-first-case':['bed','cabinet','desk']};
+const independentProps={'d1-crown-of-ashes':newD1Props,'stellar-academy-first-case':['bed','cabinet','desk','shelf','telescope','projector','terminal','medical','door','generator'],'neon-memory-quarantine':['terminal','sofa','cabinet']};
 const imagePath=name=>path.join(root,'apps/murder-mystery/assets',name);
 test('all four original concept-sheet WebP image files are real binary assets with a RIFF/WEBP header',()=>{
  for(const [,id,file] of scenarios){

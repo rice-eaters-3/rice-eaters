@@ -126,18 +126,6 @@
       "pendingPortraits": [],
       "pendingPropKinds": [
         {
-          "kind": "terminal",
-          "name": "감사 승인 터미널"
-        },
-        {
-          "kind": "sofa",
-          "name": "시민 대기 소파"
-        },
-        {
-          "kind": "cabinet",
-          "name": "봉인 기억 금고"
-        },
-        {
           "kind": "camera",
           "name": "신원 확인 게이트"
         },
@@ -166,36 +154,7 @@
       "pendingClues": [],
       "portraitsTotal": 6,
       "pendingPortraits": [],
-      "pendingPropKinds": [
-        {
-          "kind": "shelf",
-          "name": "지하 암호 자료"
-        },
-        {
-          "kind": "telescope",
-          "name": "천체 관측 망원경"
-        },
-        {
-          "kind": "projector",
-          "name": "플라네타륨 투영기"
-        },
-        {
-          "kind": "terminal",
-          "name": "탈출 인증서 보관 터미널"
-        },
-        {
-          "kind": "medical",
-          "name": "실험용 검사 침대"
-        },
-        {
-          "kind": "door",
-          "name": "막힌 가짜 출구 표지"
-        },
-        {
-          "kind": "generator",
-          "name": "지하 냉각 시설"
-        }
-      ]
+      "pendingPropKinds": []
     }
   ]
 }
