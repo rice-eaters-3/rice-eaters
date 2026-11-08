@@ -489,5 +489,6 @@ window.MysteryStudy=(function(){
     return false;
   }
   const currentView=()=>ui.view;
-  return {render,patch,navigate,currentView};
+  const isModalOpen=()=>!!ui.modalCardId;
+  return {render,patch,navigate,currentView,isModalOpen};
 })();
