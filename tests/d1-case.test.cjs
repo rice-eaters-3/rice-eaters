@@ -173,6 +173,10 @@ test('seven-player D1 case: private visions, first-round sealed clues, second-ro
   const staircase=await post(4,endpoint+'/interact',{kind:'portal',portalIndex:1});
   assert.equal(staircase.status,200,'operations floor is reached via explicit portal action');
   assert.equal(staircase.data.map.floorId,'operations');
+  assert.equal((await post(4,endpoint+'/reserve',{cardId:'trick_spare_override'})).status,409,
+    'first inspect the access log before the case containing its key');
+  assert.equal((await post(4,endpoint+'/reserve',{cardId:'time_karl_badge'})).status,200);
+  assert.equal((await post(4,endpoint+'/investigate',{cardId:'time_karl_badge'})).status,200);
   const keyReservation=await post(4,endpoint+'/reserve',{cardId:'trick_spare_override'});
   assert.equal(keyReservation.status,200);
   const foundKey=await post(4,endpoint+'/investigate',{cardId:'trick_spare_override'});
