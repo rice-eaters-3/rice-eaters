@@ -1,0 +1,104 @@
+{
+  "assets": [
+    {
+      "short": "d1",
+      "kind": "bed",
+      "source": "/workspace/scratch/490a51c77c43/recovered-props/남색 이불의 기숙사 침대.png",
+      "library_file_id": "libfile_4298ac944044819181e9589bf2456fda",
+      "series": "d1-crown-of-ashes",
+      "path": "apps/murder-mystery/assets/props/d1-crown-of-ashes/bed.webp",
+      "previousIssue": "Legacy concept-board crop; independent illustration required",
+      "review": "Full silhouette and object identity checked; no plot conclusions. D1 terminal regenerated to remove unrequested gargoyle ornament."
+    },
+    {
+      "short": "d1",
+      "kind": "cabinet",
+      "source": "/workspace/scratch/490a51c77c43/recovered-props/차콜 퍼플 금속 보관 락커.png",
+      "library_file_id": "libfile_25dbb06768c88191bf32be59640a720e",
+      "series": "d1-crown-of-ashes",
+      "path": "apps/murder-mystery/assets/props/d1-crown-of-ashes/cabinet.webp",
+      "previousIssue": "Legacy concept-board crop; independent illustration required",
+      "review": "Full silhouette and object identity checked; no plot conclusions. D1 terminal regenerated to remove unrequested gargoyle ornament."
+    },
+    {
+      "short": "d1",
+      "kind": "terminal",
+      "source": "/workspace/scratch/490a51c77c43/recovered-props/삼중 모니터 보안 콘솔.png",
+      "library_file_id": "libfile_ac8a2465c6348191bff239a4184f7c4b",
+      "series": "d1-crown-of-ashes",
+      "path": "apps/murder-mystery/assets/props/d1-crown-of-ashes/terminal.webp",
+      "previousIssue": "Legacy concept-board crop; independent illustration required",
+      "review": "Full silhouette and object identity checked; no plot conclusions. D1 terminal regenerated to remove unrequested gargoyle ornament."
+    },
+    {
+      "short": "d1",
+      "kind": "server",
+      "source": "/workspace/scratch/490a51c77c43/recovered-props/보랏빛 게이밍 서버 랙.png",
+      "library_file_id": "libfile_7372e4ae54f481918cf751bf0a94bacc",
+      "series": "d1-crown-of-ashes",
+      "path": "apps/murder-mystery/assets/props/d1-crown-of-ashes/server.webp",
+      "previousIssue": "Legacy concept-board crop; independent illustration required",
+      "review": "Full silhouette and object identity checked; no plot conclusions. D1 terminal regenerated to remove unrequested gargoyle ornament."
+    },
+    {
+      "short": "d1",
+      "kind": "generator",
+      "source": "/workspace/scratch/490a51c77c43/recovered-props/차콜 퍼플 비상 제어 캐비닛.png",
+      "library_file_id": "libfile_1d5b4c84b30881918419ed1c345e5788",
+      "series": "d1-crown-of-ashes",
+      "path": "apps/murder-mystery/assets/props/d1-crown-of-ashes/generator.webp",
+      "previousIssue": "Legacy concept-board crop; independent illustration required",
+      "review": "Full silhouette and object identity checked; no plot conclusions. D1 terminal regenerated to remove unrequested gargoyle ornament."
+    },
+    {
+      "short": "d1",
+      "kind": "statue",
+      "source": "/workspace/scratch/490a51c77c43/recovered-props/보랏빛 날개를 단 석조 가고일.png",
+      "library_file_id": "libfile_25080974c7588191acc50f3a2b1b3e40",
+      "series": "d1-crown-of-ashes",
+      "path": "apps/murder-mystery/assets/props/d1-crown-of-ashes/statue.webp",
+      "previousIssue": "Legacy concept-board crop; independent illustration required",
+      "review": "Full silhouette and object identity checked; no plot conclusions. D1 terminal regenerated to remove unrequested gargoyle ornament."
+    },
+    {
+      "short": "island",
+      "kind": "boat",
+      "source": "/workspace/scratch/490a51c77c43/recovered-props/네이비 좌석의 화이트 모터보트.png",
+      "library_file_id": "libfile_e9c69350c4448191936bd167ecd9b03a",
+      "series": "cruel-heart-island",
+      "path": "apps/murder-mystery/assets/props/cruel-heart-island/boat.webp",
+      "previousIssue": "Legacy concept-board crop; independent illustration required",
+      "review": "Full silhouette and object identity checked; no plot conclusions. D1 terminal regenerated to remove unrequested gargoyle ornament."
+    },
+    {
+      "short": "island",
+      "kind": "cabinet",
+      "source": "/workspace/scratch/490a51c77c43/recovered-props/열대 리조트 구명조끼 보관함.png",
+      "library_file_id": "libfile_15d6233cf6d08191a431047590ca200f",
+      "series": "cruel-heart-island",
+      "path": "apps/murder-mystery/assets/props/cruel-heart-island/cabinet.webp",
+      "previousIssue": "Legacy concept-board crop; independent illustration required",
+      "review": "Full silhouette and object identity checked; no plot conclusions. D1 terminal regenerated to remove unrequested gargoyle ornament."
+    },
+    {
+      "short": "island",
+      "kind": "plant",
+      "source": "/workspace/scratch/490a51c77c43/recovered-props/모래 화분에 담긴 해안 소나무.png",
+      "library_file_id": "libfile_48522799e90481919b2323cefe533009",
+      "series": "cruel-heart-island",
+      "path": "apps/murder-mystery/assets/props/cruel-heart-island/plant.webp",
+      "previousIssue": "Legacy concept-board crop; independent illustration required",
+      "review": "Full silhouette and object identity checked; no plot conclusions. D1 terminal regenerated to remove unrequested gargoyle ornament."
+    },
+    {
+      "short": "island",
+      "kind": "fireplace",
+      "source": "/workspace/scratch/490a51c77c43/recovered-props/열대 빌라의 둥근 돌 화로.png",
+      "library_file_id": "libfile_e2f1681943ec8191ac6d5ba44a09975d",
+      "series": "cruel-heart-island",
+      "path": "apps/murder-mystery/assets/props/cruel-heart-island/fireplace.webp",
+      "previousIssue": "Legacy concept-board crop; independent illustration required",
+      "review": "Full silhouette and object identity checked; no plot conclusions. D1 terminal regenerated to remove unrequested gargoyle ornament."
+    }
+  ]
+}
