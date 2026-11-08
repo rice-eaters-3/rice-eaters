@@ -195,11 +195,11 @@ test('seven-player D1 case: private visions, first-round sealed clues, second-ro
   assert.equal(unlocked.status,200,'round-two clue grants the real key to the sealed archive');
   assert.equal(unlocked.data.map.doors.find(d=>d.id==='se_door').open,true);
   await walk(4,['down','down','right','down']);
-  assert.equal((await post(4,endpoint+'/reserve',{cardId:'cult_founder_signature'})).status,200);
-  const founder=await post(4,endpoint+'/investigate',{cardId:'cult_founder_signature'});
-  assert.equal(founder.status,200);
-  assert.ok(founder.data.investigation.myCards.some(c=>c.cardId==='cult_founder_signature'));
-  assert.match(founder.data.investigation.cards.find(c=>c.id==='cult_founder_signature').revealed[0].back,/배익호/);
+  assert.equal((await post(4,endpoint+'/reserve',{cardId:'cult_founder_signature'})).status,409,
+    'new sequential room clues cannot be skipped after opening the vault');
+  const founderCard=(await call(4,endpoint)).data.investigation.cards.find(c=>c.id==='cult_founder_signature');
+  assert.equal(founderCard.sequenceLocked,true);
+  assert.ok(founderCard.sequenceAfter,'player receives neutral previous-front hint');
   assert.equal((await call(7,endpoint)).data.investigation,null,'observer receives no investigation backs');
 });
 
@@ -226,9 +226,16 @@ test('Studio simulator reveals sealed gallery only after throne evidence grants 
   assert.ok(view.map.rooms.some(r=>r.name==='가고일 전시실·옥상'));
   assert.ok(view.map.objects.some(o=>o.name==='갈리온 전시 석상'));
   assert.ok(view.investigation.cards.some(c=>c.id==='cult_gargoyle_poster'));
-  assert.throws(()=>engine.reserve(state,'cult_hero_landing_syllabus'),/조사 장소 타일/,
-    'an opened gallery still requires entering the room before taking evidence');
+  assert.throws(()=>engine.reserve(state,'cult_hero_landing_syllabus'),/이전 조사 카드/,
+    'later cards require the earlier gallery evidence before they are accessible');
+  assert.throws(()=>engine.reserve(state,'cult_gargoyle_poster'),/조사 장소 타일/,
+    'the first gallery evidence still requires entering the opened room');
+  engine.switchPhase(state,'investigation2');
   engine.move(state,'up');engine.move(state,'up');engine.move(state,'up');
+  for(const [id,x,y] of [['cult_gargoyle_poster',15,3],['time_chajiwoo_photo',16,3],['cult_founder_mask',15,3]]){
+    state.positions.karl={floor:'penthouse',x,y};
+    engine.reserve(state,id);engine.investigate(state,id);
+  }
   assert.equal(engine.reserve(state,'cult_hero_landing_syllabus'),true,
-    'gallery evidence is available when standing in its room');
+    'gallery evidence unlocks in story order after site research');
 });
