@@ -135,6 +135,9 @@
     if(previous&&!(state.discovered[previous]||[]).length)
       error('이 장소의 이전 조사 카드를 먼저 조사해야 합니다.');
     if(c.owner===state.roleId||(c.blockedFor||[]).includes(state.roleId))error('이 배역은 해당 카드를 조사할 수 없습니다.');
+    if(c.type==='belonging'&&ClueFront.personalInvestigationUsed(
+      cards(state),state.discovered,id(state.roleId),state.phase,c.owner))
+      error('이번 조사 단계에서 해당 인물의 소지품은 1장만 조사할 수 있습니다. 2차 조사에서는 다시 1장을 조사할 수 있습니다.');
     if(c.requiresPresence&&c.location){
       const p=position(state);
       if(c.location.floor!==p.floor||c.location.x!==p.x||c.location.y!==p.y)error('조사 장소 타일로 이동해야 합니다.');
@@ -157,7 +160,7 @@
     if(state.reservations[cardId]!==state.roleId)error('먼저 카드를 선택해야 합니다.');
     delete state.reservations[cardId];
     state.tokens[state.roleId]--;
-    state.discovered[cardId]||=[];state.discovered[cardId].push({playerId:id(state.roleId),at:Date.now()});
+    state.discovered[cardId]||=[];state.discovered[cardId].push({playerId:id(state.roleId),phase:state.phase,at:Date.now()});
     const h={id:'test_h'+state.serial++,cardId,ownerId:state.roleId};state.holdings.push(h);
     if(c.grant){state.collected[state.roleId]||=[];state.collected[state.roleId].push(deep(c.grant));}
     return h;
@@ -351,6 +354,8 @@
         const phaseLocked=!unlocked(state,c);
         const previous=sequence[c.id];
         const sequenceLocked=!!previous&&!(state.discovered[previous]||[]).length;
+        const personLimitReached=c.type==='belonging'&&ClueFront.personalInvestigationUsed(
+          cards(state),state.discovered,member(role.id),state.phase,c.owner);
         const locked=phaseLocked||sequenceLocked;
         if(phaseLocked&&c.visibility==='hidden'&&!visible)return [];
         const at=c.location&&yourPos.floor===c.location.floor&&yourPos.x===c.location.x&&yourPos.y===c.location.y;
@@ -359,6 +364,7 @@
           title:visible?c.title:null,subtitle:visible?c.subtitle:null,
           type:c.type,location:c.location||null,
           locked,sequenceLocked,sequenceAfter:sequenceLocked?frontTitles[previous]:null,
+          personLimitReached,
           requiresPresence:!!c.requiresPresence,atLocation:!!at,
           excluded:c.owner===role.id||(c.blockedFor||[]).includes(role.id),
           taken:prior.length>0&&!c.repeatable,repeatable:!!c.repeatable,transferable:c.transferable!==false,

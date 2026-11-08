@@ -39,9 +39,12 @@ test('Studio player views do not expose evidence title or subtitle until discove
   assert.equal(hidden.title,null);
   assert.equal(hidden.subtitle,null);
   assert.equal(hidden.revealed.length,0);
-  for(const prerequisite of ['jobi_stage_mouse','jobi_qualifier_card','jobi_stopwatch']){
+  // The personal-item quota means different players collaborate on the earlier cards.
+  for(const [role,prerequisite] of [['cloud','jobi_stage_mouse'],['hasu','jobi_qualifier_card'],['karl','jobi_stopwatch']]){
+    E.switchRole(state,role);
     E.reserve(state,prerequisite);E.investigate(state,prerequisite);
   }
+  E.switchRole(state,'mayushi');
   E.reserve(state,'jobi_threat_phone');
   E.investigate(state,'jobi_threat_phone');
   const seen=E.roomView(state).investigation.cards.find(c=>c.id==='jobi_threat_phone');
@@ -158,10 +161,51 @@ test('sequential owner evidence cannot be skipped, and previous discovery unlock
   assert.equal(E.roomView(s).investigation.cards.find(c=>c.id==='jobi_qualifier_card').sequenceLocked,true);
   E.reserve(s,'jobi_stage_mouse');E.investigate(s,'jobi_stage_mouse');
   assert.equal(E.roomView(s).investigation.cards.find(c=>c.id==='jobi_qualifier_card').sequenceLocked,false);
-  E.reserve(s,'jobi_qualifier_card');E.investigate(s,'jobi_qualifier_card');
   E.switchRole(s,'cloud');
+  E.reserve(s,'jobi_qualifier_card');E.investigate(s,'jobi_qualifier_card');
+  E.switchRole(s,'hasu');
   assert.equal(E.roomView(s).investigation.cards.find(c=>c.id==='jobi_stopwatch').sequenceLocked,false,
     'a previous card investigated by another role globally unlocks the following card');
   assert.equal(E.roomView(s).investigation.cards.find(c=>c.id==='jobi_qualifier_card').title,null,
     'previous research does not automatically leak the private reverse to all players');
+});
+
+
+test('one belonging per target per investigation round, independently for every player',()=>{
+  const state=E.create(d1);
+  E.switchRole(state,'jobi');
+  E.switchPhase(state,'investigation1');
+  E.reserve(state,'cloud_huoguo_ladle');
+  E.investigate(state,'cloud_huoguo_ladle');
+  assert.deepEqual(state.discovered.cloud_huoguo_ladle.map(x=>x.phase),['investigation1']);
+  assert.throws(()=>E.reserve(state,'cloud_elephant_eggplant'),/소지품은 1장만/);
+  let view=E.roomView(state);
+  assert.equal(view.investigation.cards.find(c=>c.id==='cloud_elephant_eggplant').personLimitReached,true);
+  assert.equal(view.investigation.cards.find(c=>c.id==='hasu_solo_kill_log').personLimitReached,false);
+  E.reserve(state,'hasu_solo_kill_log');E.investigate(state,'hasu_solo_kill_log');
+  E.switchRole(state,'mayushi');
+  assert.equal(E.roomView(state).investigation.cards.find(c=>c.id==='cloud_elephant_eggplant').personLimitReached,false);
+  E.reserve(state,'cloud_elephant_eggplant');E.investigate(state,'cloud_elephant_eggplant');
+  E.switchRole(state,'jobi');
+  E.switchPhase(state,'discussion1');
+  E.switchPhase(state,'investigation2');
+  view=E.roomView(state);
+  assert.equal(view.investigation.cards.find(c=>c.id==='cloud_tainted_cleaver').personLimitReached,false);
+  E.reserve(state,'cloud_tainted_cleaver');E.investigate(state,'cloud_tainted_cleaver');
+  assert.deepEqual(state.discovered.cloud_tainted_cleaver.map(x=>x.phase),['investigation2']);
+  assert.throws(()=>E.reserve(state,'cloud_oven_receipt'),/소지품은 1장만/);
+  assert.equal(E.roomView(state).investigation.cards.find(c=>c.id==='cloud_oven_receipt').personLimitReached,true);
+  E.switchRole(state,'mayushi');
+  assert.equal(E.roomView(state).investigation.cards.find(c=>c.id==='cloud_oven_receipt').personLimitReached,false);
+  E.reserve(state,'cloud_oven_receipt');
+});
+test('legacy discovery history with no phase is counted for first investigation only',()=>{
+  const c={id:'other_item',type:'belonging',owner:'cloud'};
+  const found={other_item:[{playerId:'playerA',at:1}]};
+  assert.equal(front.personalInvestigationUsed([c],found,'playerA','investigation1','cloud'),true);
+  assert.equal(front.personalInvestigationUsed([c],found,'playerA','investigation2','cloud'),false);
+  assert.equal(front.personalInvestigationUsed([c],found,'playerB','investigation1','cloud'),false);
+  assert.equal(front.personalInvestigationUsed([c],found,'playerA','investigation1','karl'),false);
+  assert.equal(front.personalInvestigationUsed([c],{other_item:[{playerId:'playerA',phase:'investigation2'}]},
+    'playerA','investigation2','cloud'),true);
 });

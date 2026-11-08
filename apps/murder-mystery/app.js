@@ -424,6 +424,8 @@ async function perform(action,button){
     } else if(action==='clue-investigate'){
       const cardId=button.dataset.card;
       const clue=room?.investigation?.cards.find(c=>c.id===cardId);
+      if(clue?.personLimitReached)
+        throw Error('이번 조사 단계에서 같은 인물의 소지품은 1장만 조사할 수 있습니다.');
       if(!clue||clue.locked||clue.taken||clue.excluded||room.investigation.tokens<1)
         throw Error('현재 이 조사 카드를 조사할 수 없습니다.');
       if(!window.confirm('조사 토큰 1개를 사용해 카드 뒷면을 확인할까요?'))return;
