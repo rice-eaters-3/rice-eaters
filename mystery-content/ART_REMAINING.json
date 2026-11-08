@@ -8,32 +8,7 @@
       "pendingClues": [],
       "portraitsTotal": 7,
       "pendingPortraits": [],
-      "pendingPropKinds": [
-        {
-          "kind": "bed",
-          "name": "예비 침대"
-        },
-        {
-          "kind": "cabinet",
-          "name": "봉인 문서 보관함"
-        },
-        {
-          "kind": "terminal",
-          "name": "보안 감시 모니터"
-        },
-        {
-          "kind": "server",
-          "name": "보조 서버 랙"
-        },
-        {
-          "kind": "generator",
-          "name": "비상 통제 제어판"
-        },
-        {
-          "kind": "statue",
-          "name": "가고일 교단 장식물"
-        }
-      ]
+      "pendingPropKinds": []
     },
     {
       "series": "cruel-heart-island",
@@ -43,22 +18,6 @@
       "portraitsTotal": 8,
       "pendingPortraits": [],
       "pendingPropKinds": [
-        {
-          "kind": "boat",
-          "name": "섬 선착장 소형 보트"
-        },
-        {
-          "kind": "cabinet",
-          "name": "촬영용 구명장비 보관함"
-        },
-        {
-          "kind": "plant",
-          "name": "해변의 소나무"
-        },
-        {
-          "kind": "fireplace",
-          "name": "촬영용 모닥불 장식"
-        },
         {
           "kind": "camera",
           "name": "등대 감시 카메라"

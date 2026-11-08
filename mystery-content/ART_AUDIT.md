@@ -315,3 +315,7 @@ Replaced seven remaining Academy prop kinds and Neon console, waiting sofa and s
 ## neon_d1_props (10 independent map props)
 
 Shared renderer updated for game, studio and test mode. Full original illustrations fitted without cropping. Prompts, previous issue, source, path and review recorded in NEON_D1_PROPS_REVIEW.json.
+
+## D1 / Island independent map props (10)
+
+Complete D1 remaining six prop kinds; add Island boat, rescue locker, pine and firepit. Full original images fitted without cropping. Shared game/studio/test renderer updated. D1 monitor console regenerated without gargoyle decoration. Sources, previous issue and paths: D1_ISLAND_PROPS_REVIEW.json.
