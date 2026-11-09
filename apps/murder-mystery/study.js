@@ -82,12 +82,11 @@ window.MysteryStudy=(function(){
     for(const c of room.investigation?.cards||[])if(c.location?.floor===m.floorId){
       const k=c.location.x+','+c.location.y;research.set(k,[...(research.get(k)||[]),c]);
     }
-    return '<div id="mapTiles" class="map-tiles world-tiles" style="--map-width:'+m.tiles[0].length+';--tile-size:'+ui.tileSize+'px" role="img" aria-label="'+esc(m.title)+'">'+
+    return '<div id="mapTiles" class="map-tiles world-tiles" style="--map-width:'+m.tiles[0].length+';--map-height:'+m.tiles.length+';--manual-tile-size:'+ui.tileSize+'px" role="img" aria-label="'+esc(m.title)+'">'+
       m.tiles.flatMap((row,y)=>Array.from(row,(tile,x)=>{
         const k=x+','+y,loc=rooms.get(k),portalsHere=portals.get(k)||[],door=doors.get(k),region=regionAt(x,y),here=people.get(k)||[],cards=research.get(k)||[],furniture=props.get(k)||[];
         const mine=here.some(a=>a.id===room.me);
         const blocked=tile!=='.'?'벽':furniture.some(o=>o.solid)?'가구':door?.locked?'잠긴 문':door&&!door.open?'닫힌 문':here.filter(a=>a.id!==room.me).length>=(m.capacity||3)?'정원 초과':'';
-        const marker=blocked==='벽'?'×':blocked==='가구'?'⊘':blocked.includes('문')?'잠김':blocked?'만석':'';
         const edge=region?['n','e','s','w'].filter((dir,i)=>{
           const [dx,dy]=[[0,-1],[1,0],[0,1],[-1,0]][i];
           return regionAt(x+dx,y+dy)?.id!==region.id;
@@ -96,7 +95,6 @@ window.MysteryStudy=(function(){
           (door?.locked?' door-locked':door&&!door.open?' door-closed':door?' door-open':'')+(region?' map-region pattern-'+esc(region.pattern):'')+
           (cards.length?' investigable':'')+(furniture.length?' furnished':'')+(blocked?' movement-blocked':'')+(mine?' current-position':'')+edge+'" style="'+(region?'--region-color:'+esc(region.color)+';':'')+
           '" data-x="'+x+'" data-y="'+y+'" data-blocked="'+esc(blocked)+'" title="'+esc((blocked?'이동 불가 · '+blocked+' — ':'')+(mine?'내 위치 — ':'')+(door?.name||portalsHere[0]?.label||furniture.map(o=>o.name).join(' · ')||loc?.name||region?.name||'')+' ('+x+', '+y+')')+'">'+
-          (blocked?'<span class="tile-blocked-marker" aria-label="'+esc(blocked)+' · 이동 불가">'+(blocked==='닫힌 문'?'닫힘':marker)+'</span>':'')+
           (mine?'<span class="tile-me-marker">나</span>':'')+
           (loc?'<span class="map-room-name">'+esc(loc.icon)+' '+esc(loc.name)+'</span>':
             zoneLabels.has(k)?'<span class="map-room-name region-name">'+esc(zoneLabels.get(k))+'</span>':'')+
@@ -105,7 +103,7 @@ window.MysteryStudy=(function(){
            (portalsHere.length?'<span class="portal-sigil">'+(window.MysteryArt?.stairs(portalsHere[0],theme(room))||'⇅')+'</span>':'')+
           (door?'<span class="door-icon">'+(window.MysteryArt?.door(door,theme(room))||(door.locked?'🔒':door.open?'◫':'🚪'))+'</span>':'')+
           (cards.length?'<span class="tile-spark" title="조사 가능한 장소">✧</span>':'')+
-          (here.length?'<div class="map-sprites">'+here.map(a=>'<span class="map-sprite '+(a.id===room.me?'mine':'')+'" style="--sprite:'+esc(a.accent)+'" title="'+esc(a.name)+'">'+
+          (here.length?'<div class="map-sprites">'+here.map(a=>'<span class="map-sprite '+(a.id===room.me?'mine':'')+'" data-map-player="'+esc(a.id)+'" style="--sprite:'+esc(a.accent)+'" title="'+esc(a.name)+'">'+
               (window.MysteryArt?.avatar(a,theme(room))||esc(a.symbol))+'</span>').join('')+'</div>':'')+
           '</div>';
       })).join('')+'</div>';
@@ -215,8 +213,8 @@ window.MysteryStudy=(function(){
     return '<div class="adventure-grid"><section class="surface panel-pad adventure-main"><div class="adventure-heading"><div class="eyebrow">WORLD MAP · '+esc(room.map?.floorId||'')+'</div><h2>'+esc(room.map?.title||'공용 건물')+'</h2>'+
       '<p class="muted small">WASD / 방향키 이동 · 계단 위에서 상호작용 버튼으로 층 이동 · 타일 최대 '+(room.map?.capacity||3)+'명</p></div>'+
       '<div class="map-toolbar" aria-label="지도 보기 설정">'+btn2('map-zoom-out','− 축소')+'<output id="mapZoomLabel" aria-live="polite">'+Math.round(ui.tileSize/44*100)+'%</output>'+btn2('map-zoom-in','＋ 확대')+btn2('map-center','◎ 내 위치')+'</div>'+
-      '<div class="map-legend"><span>× 벽</span><span>⊘ 가구 · 통행 불가</span><span>닫힘 / 잠김 · 문 열기 필요</span><span>만석 · 정원 초과</span><span>나 · 현재 위치</span><span>✧ 조사 장소</span></div>'+
-      '<p class="muted small">지도가 화면보다 크면 좌우·위아래로 스크롤하세요. ⊘ 표시가 있는 가구 칸은 이동할 수 없습니다.</p>'+
+      '<div class="map-legend"><span>진한 테두리 · 통행 불가</span><span>✧ 조사 장소</span></div>'+
+      '<p class="muted small">지도가 화면보다 크면 좌우·위아래로 스크롤하세요. 진한 테두리의 칸은 이동할 수 없습니다.</p>'+
       '<div class="map-scroller big-map" tabindex="0" role="region" aria-label="스크롤 가능한 지도">'+mapHtml(room)+'</div>'+
       '<div class="map-controls"><div class="dpad"><span></span>'+btn2('move','↑','data-direction="up"')+'<span></span>'+
       btn2('move','←','data-direction="left"')+btn2('move','↓','data-direction="down"')+btn2('move','→','data-direction="right"')+'</div>'+
@@ -405,7 +403,7 @@ window.MysteryStudy=(function(){
   function render(room){
     if(window.MysteryStage&&room.phase!=='ending'){
       const content=ui.view==='book'?book(room):ui.view==='research'?researchView(room):ui.view==='context'?tileActions(room):ui.view==='whisper'?whisper(room):ui.view==='progress'?roomHeader(room)+verdictPanel(room)+actionStage(room)+(room.phase==='study'?btn('study-ready','숙지 완료 · 다음 단계 대기','btn btn-primary',!!room.players.find(p=>p.id===room.me)?.studyReady):''):'';
-      return '<section class="game-scene"><div id="adventureRoot" class="scene-map map-scroller big-map" data-floor="'+esc(room.code+':'+theme(room)+':'+room.map?.floorId)+'" tabindex="0" aria-label="게임 지도">'+mapHtml(room)+'</div><div class="scene-hint">WASD / 방향키 / 옆 칸 터치 · ⊘ 통행 불가 <button data-action="map-center" class="btn btn-sm">내 위치</button></div>'+window.MysteryStage.dock(room)+(ui.view!=='map'?'<section class="scene-panel" role="region" aria-label="게임 정보"><button data-action="panel-close" class="btn panel-close">닫기 <kbd>Esc</kbd></button>'+content+'</section>':'')+clueModal(room)+'</section>';
+      return '<section class="game-scene"><div class="scene-hint"><span>WASD · 방향키 · 옆 칸 터치</span><button type="button" data-action="map-center" class="btn btn-sm">내 위치</button></div><div id="adventureRoot" class="scene-map big-map" tabindex="0" aria-label="게임 지도">'+mapHtml(room)+'</div>'+window.MysteryStage.dock(room)+(ui.view!=='map'?'<section class="scene-panel" role="region" aria-label="게임 정보"><button data-action="panel-close" class="btn panel-close">닫기 <kbd>Esc</kbd></button>'+content+'</section>':'')+clueModal(room)+'</section>';
     }
     return roomHeader(room)+
       '<div class="section-row"><div><div class="eyebrow">MYSTERY PHASE · '+esc(room.phase.toUpperCase())+'</div>'+
@@ -458,7 +456,13 @@ window.MysteryStudy=(function(){
     const oldMap=document.getElementById('mapTiles'),oldCards=document.querySelector('.research-sidebar');
     if(!oldMap)return false;
     const temporary=document.createElement('div');temporary.innerHTML=mapHtml(room);
-    if(temporary.firstElementChild){oldMap.innerHTML=temporary.firstElementChild.innerHTML;oldMap.style.cssText=temporary.firstElementChild.style.cssText;oldMap.setAttribute('aria-label',room.map.title);window.MysteryStage?.mount();}
+    const replacement=temporary.firstElementChild;
+    if(replacement){
+      if(window.MysteryStage&&oldMap.closest('.scene-map'))window.MysteryStage.patchTiles(oldMap,replacement);
+      else oldMap.innerHTML=replacement.innerHTML;
+      oldMap.style.cssText=replacement.style.cssText;
+      oldMap.setAttribute('aria-label',room.map.title);
+    }
     if(oldCards){const wrapper=document.createElement('div');wrapper.innerHTML=investigationCards(room);
       const present=oldCards.querySelector('.research-grid');
       if(present&&wrapper.firstElementChild)present.replaceWith(wrapper.firstElementChild);
@@ -485,7 +489,11 @@ window.MysteryStudy=(function(){
     if(['context-toggle','whisper-toggle','progress-toggle'].includes(action)){const v=action.split('-')[0];ui.view=ui.view===v?'map':v;return true;}
     if(action==='inventory-toggle'){ui.view=ui.view==='research'&&ui.inventory?'map':'research';ui.inventory=true;return true;}
     if(action.startsWith('map-')){
-      const grid=document.getElementById('mapTiles'),scroller=grid?.closest('.map-scroller');
+      const grid=document.getElementById('mapTiles');
+      if(action==='map-center'&&grid?.closest('.scene-map')){
+        window.MysteryStage.highlightPosition(grid);return true;
+      }
+      const scroller=grid?.closest('.map-scroller');
       if(!grid||!scroller)return true;
       if(action==='map-center'){
         const me=grid.querySelector('.current-position');
@@ -493,7 +501,7 @@ window.MysteryStudy=(function(){
       }else if(['map-zoom-in','map-zoom-out'].includes(action)){
         const old=ui.tileSize;ui.tileSize=Math.max(32,Math.min(64,old+(action==='map-zoom-in'?4:-4)));
         const x=(scroller.scrollLeft+scroller.clientWidth/2)/(old+1),y=(scroller.scrollTop+scroller.clientHeight/2)/(old+1);
-        grid.style.setProperty('--tile-size',ui.tileSize+'px');scroller.scrollLeft=x*(ui.tileSize+1)-scroller.clientWidth/2;scroller.scrollTop=y*(ui.tileSize+1)-scroller.clientHeight/2;
+        grid.style.setProperty('--manual-tile-size',ui.tileSize+'px');scroller.scrollLeft=x*(ui.tileSize+1)-scroller.clientWidth/2;scroller.scrollTop=y*(ui.tileSize+1)-scroller.clientHeight/2;
         document.getElementById('mapZoomLabel').textContent=Math.round(ui.tileSize/44*100)+'%';
       }
       return true;

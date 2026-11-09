@@ -5,7 +5,7 @@ window.MysteryStage=(()=>{
   const phases=['synopsis','characters','study','investigation1','discussion1','investigation2','discussion2','action','ending'];
   const shortcuts={r:'research-toggle',c:'inventory-toggle',i:'book-toggle',e:'context-toggle',
     t:'whisper-toggle',p:'progress-toggle',m:'voice-mic',v:'voice-speaker'};
-  let selected=null,castRoom=null,observer=null,mapKey=null,positionKey=null,scroll=null;
+  let selected=null,castRoom=null;
   const theme=room=>room.story?.artTheme||room.story?.id;
   const keyLabel=action=>Object.keys(shortcuts).find(key=>shortcuts[key]===action)?.toUpperCase();
   function button(action,label,disabled=false,extra=''){
@@ -74,7 +74,7 @@ window.MysteryStage=(()=>{
         'data-character="'+esc(x.id)+'" aria-pressed="'+(x.id===selected)+'"');
     }).join('');
     const ready=room.players.filter(p=>p.characterId).length;
-    return '<section class="casting-scene"><div class="casting-map scene-map map-scroller big-map" aria-hidden="true">'+background+'</div>'+
+    return '<section class="casting-scene"><div class="casting-map scene-map big-map" aria-hidden="true">'+background+'</div>'+
       '<div class="casting-top"><b>'+esc(room.story.title)+'</b><span>캐릭터 선택 · ← → 탐색 · Enter 확정</span>'+
       button('progress-toggle',test?'단계 진행':'선택 '+ready+'/'+cast.length)+'</div>'+
       '<div class="casting-feature"><div class="casting-portrait">'+portrait+'</div><article class="casting-description">'+
@@ -101,37 +101,38 @@ window.MysteryStage=(()=>{
     const delta=[Number(tile.dataset.x)-position.x,Number(tile.dataset.y)-position.y].join(',');
     return {'0,-1':'up','0,1':'down','-1,0':'left','1,0':'right'}[delta]||null;
   }
-  function rememberMap(){
-    const viewport=document.querySelector('.game-scene .scene-map');
-    if(viewport)scroll={floor:viewport.dataset.floor,left:viewport.scrollLeft,top:viewport.scrollTop};
+  function patchTiles(grid,next){
+    // Keep the board and untouched tiles mounted when a player takes a step.
+    const animated=!window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const sprites=()=>Array.from(grid.querySelectorAll('[data-map-player]'));
+    const before=new Map();
+    if(animated)for(const sprite of sprites())before.set(sprite.dataset.mapPlayer,sprite.getBoundingClientRect());
+    const oldTiles=Array.from(grid.children),newTiles=Array.from(next.children);
+    if(oldTiles.length!==newTiles.length)grid.replaceChildren(...newTiles);
+    else newTiles.forEach((tile,index)=>{
+      if(!oldTiles[index].isEqualNode(tile))oldTiles[index].replaceWith(tile);
+    });
+    if(animated)for(const sprite of sprites()){
+      const previous=before.get(sprite.dataset.mapPlayer);
+      if(!previous)continue;
+      const now=sprite.getBoundingClientRect(),x=previous.left-now.left,y=previous.top-now.top;
+      if(Math.abs(x)<1&&Math.abs(y)<1)continue;
+      sprite.animate([{translate:x+'px '+y+'px'},{translate:'0 0'}],{duration:140,easing:'ease-out'});
+    }
+  }
+  function highlightPosition(grid){
+    const marker=grid.querySelector('.map-sprite.mine');
+    if(!marker)return;
+    marker.tabIndex=-1;
+    marker.focus({preventScroll:true});
+    if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+      marker.animate([{scale:1},{scale:1.32},{scale:1}],{duration:420,easing:'ease-out'});
   }
   function mount(){
-    observer?.disconnect();
     const immersive=!!document.querySelector('.game-scene,.casting-scene');
     document.body.classList.toggle('immersive-game',immersive&&!document.body.classList.contains('studio-testing'));
     const roster=document.querySelector('.casting-roster'),selection=roster?.querySelector('.selected');
     if(selection)roster.scrollLeft=selection.offsetLeft-(roster.clientWidth-selection.offsetWidth)/2;
-    const grid=document.getElementById('mapTiles'),viewport=grid?.closest('.scene-map');
-    if(!viewport)return;
-    const fit=()=>{
-      const columns=Number(grid.style.getPropertyValue('--map-width'))||1;
-      grid.style.setProperty('--tile-size',Math.max(24,Math.floor((viewport.clientWidth-20)/columns)-1)+'px');
-      const me=grid.querySelector('.current-position');
-      if(!me)return;
-      const currentMap=viewport.dataset.floor,currentPosition=me.dataset.x+','+me.dataset.y;
-      const rect=me.getBoundingClientRect(),bounds=viewport.getBoundingClientRect();
-      if(currentMap!==mapKey||(currentPosition!==positionKey&&
-        (rect.top<bounds.top||rect.bottom>bounds.bottom||rect.left<bounds.left||rect.right>bounds.right))){
-        viewport.scrollBy(rect.left-bounds.left-(bounds.width-rect.width)/2,
-          rect.top-bounds.top-(bounds.height-rect.height)/2);
-      }
-      mapKey=currentMap;positionKey=currentPosition;
-    };
-    if(scroll?.floor&&scroll.floor===viewport.dataset.floor){
-      viewport.scrollLeft=scroll.left;viewport.scrollTop=scroll.top;scroll=null;
-    }
-    fit();
-    if(window.ResizeObserver){observer=new ResizeObserver(fit);observer.observe(viewport);}
   }
-  return {dock,status,voices,casting,preview,mount,rememberMap,shortcuts,tileDirection};
+  return {dock,status,voices,casting,preview,mount,patchTiles,highlightPosition,shortcuts,tileDirection};
 })();

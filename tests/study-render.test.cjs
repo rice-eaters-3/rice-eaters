@@ -191,7 +191,9 @@ test('full-screen play and casting render from the studio room view without expo
     assert.match(screen,/class="game-dock"/);
     assert.match(screen,/data-hud-clock="remaining"/);
     assert.match(screen,/data-voice-player=/);
-    assert.doesNotMatch(screen,/class="dpad"|PRIVATE DOSSIER/);
+    assert.doesNotMatch(screen,/class="dpad"|PRIVATE DOSSIER|tile-blocked-marker/);
+    assert.match(screen,/--map-height:[0-9]+/);
+    assert.match(screen,/movement-blocked/);
     const p=room.players.find(p=>p.id===room.me).position;
     assert.equal(stage.tileDirection({closest:()=>({dataset:{x:p.x+1,y:p.y,blocked:''}})},room),'right');
     assert.equal(stage.tileDirection({closest:()=>({dataset:{x:p.x+1,y:p.y,blocked:'닫힌 문'}})},room),null);
