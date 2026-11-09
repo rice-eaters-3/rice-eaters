@@ -202,6 +202,11 @@ window.MysteryVoice=(function(){
       audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true},video:false
     });
     stream=acquired;micOn=true;
+    for(const track of acquired.getAudioTracks())track.addEventListener?.('ended',()=>{
+      if(stream!==acquired)return;
+      setMicrophone(false);
+      window.dispatchEvent?.(new Event('mystery-voice-change'));
+    },{once:true});
     try{await start();await enableMeters();routeOutgoing()}
     catch(e){micOn=false;for(const t of acquired.getTracks())t.stop();stream=null;throw e}
   }

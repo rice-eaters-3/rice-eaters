@@ -5,22 +5,36 @@ window.MysteryStage=(()=>{
   const phases=['synopsis','characters','study','investigation1','discussion1','investigation2','discussion2','action','ending'];
   const shortcuts={r:'research-toggle',c:'inventory-toggle',i:'book-toggle',e:'context-toggle',
     t:'whisper-toggle',p:'progress-toggle',m:'voice-mic',v:'voice-speaker'};
-  let selected=null,castRoom=null;
+  let selected=null,castRoom=null,introKey=null;
+  const phaseHelp={
+    study:'I 키로 개인 책자를 읽고, P 키를 눌러 숙지 완료를 표시하세요.',
+    investigation1:'E 키로 현재 칸의 단서를 찾고, R 키로 조사 목록을 여세요. 단서 뒷면을 확인할 때 토큰을 사용합니다.',
+    discussion1:'C 키로 수집한 단서를 확인하고 참가자들과 첫 번째 추리를 나누세요. 준비되면 P 키에서 다음 단계에 동의하세요.',
+    investigation2:'새로 열린 단서와 1차에서 놓친 단서를 조사하세요. E 키로 현재 칸을 확인할 수 있습니다.',
+    discussion2:'수집한 단서를 대조해 진범을 결정하세요. P 키에서 최종 결정과 다음 단계 진행을 확인하세요.',
+    action:'P 키로 행동 순서와 내 차례에 가능한 행동을 확인하세요.',
+    ending:'공통 결말과 내 캐릭터의 목표 달성 여부를 확인하세요.'
+  };
   const theme=room=>room.story?.artTheme||room.story?.id;
   const keyLabel=action=>Object.keys(shortcuts).find(key=>shortcuts[key]===action)?.toUpperCase();
   function button(action,label,disabled=false,extra=''){
     const key=keyLabel(action);
     return btn(action,label+(key?' <kbd>'+key+'</kbd>':''),'btn hud-button',disabled,extra);
   }
-  function status(room){
-    const position=room.players.find(p=>p.id===room.me)?.position,map=room.map;
+  function location(room){
+    const player=room.players.find(p=>p.id===room.me),position=player?.position,map=room.map;
     const zone=position&&(map?.areas||[]).find(a=>position.x>=a.x&&position.x<a.x+a.width&&
       position.y>=a.y&&position.y<a.y+a.height);
     const namedTile=position&&map?.rooms?.find(r=>r.x===position.x&&r.y===position.y);
-    const place=namedTile?.name||zone?.name;
+    const place=namedTile?.name||zone?.name||(position?'현재 칸 ('+position.x+', '+position.y+')':'');
+    const direction=window.MysteryDirection;
+    const [, ,arrow,name]=direction.directions[direction.facing(player?.facing)];
+    return '<strong>'+esc(map?.title||room.story.title)+(place?' · '+esc(place):'')+'</strong>'+
+      '<span class="scene-facing">'+arrow+' '+name+'을 바라보는 중</span>';
+  }
+  function status(room){
     const phase=phases.indexOf(room.phase);
-    return '<div class="hud-location">'+esc(map?.title||room.story.title)+(place?' · '+esc(place):'')+'</div>'+
-      '<b>'+esc(phaseNames[phase]||room.phase)+' <small>'+(phase+1)+' / '+phases.length+'</small></b>'+
+    return '<b>'+esc(phaseNames[phase]||room.phase)+' <small>'+(phase+1)+' / '+phases.length+'</small></b>'+
       '<div class="hud-metrics"><span>진행 <strong data-hud-clock="total">00:00:00</strong></span>'+
       '<span>남은 시간 <strong data-hud-clock="remaining">--:--</strong></span>'+
       '<span>조사 토큰 <strong class="token-count">'+(room.investigation?.tokens??'—')+'</strong></span></div>';
@@ -37,32 +51,27 @@ window.MysteryStage=(()=>{
     });
     return '<div class="hud-voice-title">'+(privateChannel?'밀담 채널 · 그룹 외 음소거':'근접 음성 · 초록 테두리 = 발화')+'</div>'+
       '<div class="speaker-list">'+chips.join('')+'</div><div class="hud-voice-buttons">'+
-      button('voice-mic','마이크',false,'aria-pressed="'+!!voice?.micOn+'"')+
-      button('voice-speaker','듣기',false,'aria-pressed="'+!!voice?.speakerOn+'"')+'</div>';
+      button('voice-mic',voice?.setMicrophone?(voice.micOn?'● 마이크 켜짐':'○ 마이크 꺼짐'):'마이크 미리보기',!voice?.setMicrophone,'aria-pressed="'+!!voice?.micOn+'"')+
+      button('voice-speaker',voice?.setSpeaker?(voice.speakerOn?'듣기 켜짐':'듣기 꺼짐'):'듣기 미리보기',!voice?.setSpeaker,'aria-pressed="'+!!voice?.speakerOn+'"')+'</div>';
   }
   function panel(title,content,closeAction='panel-close'){
     return '<section class="scene-panel" role="region" aria-label="'+esc(title)+'">'+
       '<header class="scene-panel-header"><h2>'+esc(title)+'</h2>'+btn(closeAction,'닫기 <kbd>Esc</kbd>','btn btn-outline btn-sm')+'</header>'+
       '<div class="scene-panel-body" tabindex="0">'+content+'</div></section>';
   }
-  function dock(room,active,content){
+  function dock(room,active){
     const invites=room.whispers?.proposals?.filter(p=>p.voters.includes(room.me)&&!p.yes.includes(room.me)).length||0;
     const pendingTurn=room.action?.currentActor?.id===room.me;
     const progress=room.progress;
     let progressLabel='단계 · 준비';
     if(pendingTurn)progressLabel='내 행동 차례';
     else if(progress?.total&&room.phase==='study')progressLabel='숙지 '+progress.ready+'/'+progress.total;
-    const titles={context:'주변 행동',whisper:'밀담',progress:'단계 · 준비'};
-    const right=active?'<section class="hud-utility" aria-label="'+titles[active]+'">'+
-      '<header><strong>'+titles[active]+'</strong>'+btn('panel-close','음성으로','btn btn-quiet btn-sm')+'</header>'+
-      '<div class="hud-utility-body" id="hudUtility" tabindex="0">'+content+'</div></section>':
-      '<section class="hud-voice" aria-label="음성 참여자">'+voices(room)+'</section>';
     const toggle=(tab,label)=>button(tab+'-toggle',label,false,'aria-pressed="'+(active===tab)+'"');
     return '<footer class="game-dock"><nav class="hud-actions" aria-label="게임 액션">'+
       button('research-toggle','조사 정보',!room.investigation)+button('inventory-toggle','보유 카드',!room.investigation)+
       button('book-toggle','책자')+toggle('context','주변 행동')+toggle('whisper',invites?'밀담 ('+invites+')':'밀담')+
       toggle('progress',progressLabel)+'</nav><section id="hudStatus" class="hud-status" aria-label="현재 게임 상황">'+
-      status(room)+'</section>'+right+'</footer>';
+      status(room)+'</section><section class="hud-voice" aria-label="음성 참여자">'+voices(room)+'</section></footer>';
   }
   function casting(room,test=false){
     const cast=room.characters||[];
@@ -146,11 +155,54 @@ window.MysteryStage=(()=>{
     if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)
       marker.animate([{scale:1},{scale:1.32},{scale:1}],{duration:420,easing:'ease-out'});
   }
-  function mount(){
+  function phaseIntro(room,phaseStartedAt){
+    const key=room?[room.code,room.story.id,room.phase,phaseStartedAt??room.clock?.phaseStartedAt].join(':'):null;
+    if(key===introKey)return;
+    introKey=key;
+    const previous=document.getElementById('phaseIntro');
+    if(previous){previous.close();previous.remove();}
+    const help=phaseHelp[room?.phase];
+    if(!help)return;
+    const dialog=document.createElement('dialog');
+    dialog.id='phaseIntro';dialog.className='phase-intro';dialog.setAttribute('aria-labelledby','phaseIntroTitle');
+    const phase=phases.indexOf(room.phase);
+    dialog.innerHTML='<p>단계 '+(phase+1)+' / '+phases.length+'</p><h1 id="phaseIntroTitle">'+phaseNames[phase]+
+      '</h1><p>'+help+'</p><form method="dialog"><button class="btn btn-outline" autofocus>계속하기</button></form>';
+    document.body.append(dialog);dialog.showModal();
+    const timer=setTimeout(()=>dialog.close(),5500);
+    dialog.addEventListener('close',()=>{clearTimeout(timer);dialog.remove();},{once:true});
+  }
+  function confirmAction(room,action,body={}){
+    const inv=room?.investigation;
+    const card=inv?.myCards?.find(c=>c.id===body.holdingId);
+    const title=card?'「'+card.title+'」':'이 조사 카드';
+    const to=room?.players.find(p=>p.id===body.toId)?.name;
+    let message;
+    if(action==='clue-investigate'||action==='investigate')message='조사 토큰 1개를 사용해 카드 뒷면을 확인할까요?';
+    if(action==='card-public')message=title+'을 모든 참가자에게 영구 공개할까요? 공개 후에는 취소할 수 없습니다.';
+    if(action==='card-share'){
+      if(!to)throw Error('공개할 참가자를 선택하세요.');
+      message=title+'을 '+to+'님에게 선택 공개할까요? 같은 타일에 있는 동안만 보입니다.';
+    }
+    if(action==='exchange-offer'){
+      if(!to)throw Error('받는 참가자를 선택하세요.');
+      if(body.type==='token'&&(!Number.isInteger(body.amount)||body.amount<1||body.amount>(inv?.tokens??0)))
+        throw Error('보유 토큰 안에서 양도할 수량을 입력하세요.');
+      message=(body.type==='token'?'조사 토큰 '+body.amount+'개':title)+'를 '+to+'님에게 양도 제안할까요? 상대가 수락하면 이동합니다.';
+    }
+    if(action==='exchange-reply'&&body.accept){
+      const offer=inv?.incomingOffers?.find(o=>o.id===body.offerId);
+      if(!offer)throw Error('이 양도 제안은 더 이상 유효하지 않습니다.');
+      message=offer.fromName+'님의 '+(offer.type==='token'?'조사 토큰 '+offer.amount+'개':offer.cardTitle||'카드')+' 양도를 수락할까요?';
+    }
+    return !message||window.confirm(message);
+  }
+  function mount(room,phaseStartedAt){
+    phaseIntro(room,phaseStartedAt);
     const immersive=!!document.querySelector('.game-scene,.casting-scene');
     document.body.classList.toggle('immersive-game',immersive&&!document.body.classList.contains('studio-testing'));
     const roster=document.querySelector('.casting-roster'),selection=roster?.querySelector('.selected');
     if(selection)roster.scrollLeft=selection.offsetLeft-(roster.clientWidth-selection.offsetWidth)/2;
   }
-  return {dock,panel,status,voices,casting,preview,mount,patchTiles,highlightPosition,shortcuts,tileDirection,turnAtBlockedTile};
+  return {dock,panel,location,status,voices,confirmAction,casting,preview,mount,patchTiles,highlightPosition,shortcuts,tileDirection,turnAtBlockedTile};
 })();
