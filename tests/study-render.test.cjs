@@ -166,3 +166,37 @@ test('RPG screen: map is main, 7-chapter booklet is paged, cards reveal only aut
   const noMap={...room,map:null};
   assert.ok(view.render(noMap).includes('제공된 맵이 없습니다.'));
 });
+
+test('full-screen play and casting render from the studio room view without exposing private casting data',()=>{
+  const engine=require('../apps/murder-mystery/test-engine.js');
+  const sandbox={window:{},escapeHtml:value=>String(value??'').replaceAll('<','&lt;').replaceAll('"','&quot;'),
+    btn:(action,label,cls,disabled,extra='')=>'<button class="'+cls+'" data-action="'+action+'" '+extra+(disabled?' disabled':'')+'>'+label+'</button>',
+    roomHeader:()=>'<header>단계 진행</header>'};
+  for(const name of ['study','stage'])vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../apps/murder-mystery/'+name+'.js'),'utf8'),sandbox);
+  const {MysteryStage:stage,MysteryStudy:study}=sandbox.window;
+  for(const filename of ['d1-gaming','cruel-heart-island','neon-memory-quarantine','stellar-academy-first-case','jeju-lab-conference']){
+    const state=engine.create(require('../mystery-content/'+filename+'.case.json'));
+    engine.switchPhase(state,'characters');
+    const cast=engine.roomView(state),first=stage.casting(cast,true);
+    assert.match(first,/casting-map.*mapTiles/);
+    assert.match(first,/casting-description/);
+    assert.equal((first.match(/data-action="cast-preview"/g)||[]).length,cast.characters.length);
+    stage.preview('next',cast);
+    assert.notEqual(stage.casting(cast,true),first);
+    assert.equal(cast.booklet,null);
+    engine.switchPhase(state,'investigation1');
+    const room=engine.roomView(state);sandbox.window.MysteryRoomState={room};
+    const screen=study.render(room);
+    assert.match(screen,/class="game-scene"/);
+    assert.match(screen,/class="game-dock"/);
+    assert.match(screen,/data-hud-clock="remaining"/);
+    assert.match(screen,/data-voice-player=/);
+    assert.doesNotMatch(screen,/class="dpad"|PRIVATE DOSSIER/);
+    const p=room.players.find(p=>p.id===room.me).position;
+    assert.equal(stage.tileDirection({closest:()=>({dataset:{x:p.x+1,y:p.y,blocked:''}})},room),'right');
+    assert.equal(stage.tileDirection({closest:()=>({dataset:{x:p.x+1,y:p.y,blocked:'닫힌 문'}})},room),null);
+    study.navigate('inventory-toggle');assert.match(study.render(room),/inventory-only/);
+    study.navigate('research-toggle');assert.match(study.render(room),/catalog-only/);
+    study.navigate('panel-close');
+  }
+});

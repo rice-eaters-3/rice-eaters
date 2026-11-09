@@ -131,7 +131,8 @@ test('live game and studio both load artwork module and connect painted props/do
   'portrait(b.basic','art(c,theme(room))'])assert.ok(screen.includes(token),token);
  const game=fs.readFileSync(path.join(root,'apps/murder-mystery/app.js'),'utf8');
  assert.ok(game.includes('MysteryArt?.cover(story.artTheme||story.id)'));
- assert.ok(game.includes('MysteryArt?.portrait(c,room.story?.artTheme||room.story?.id)'));
+ const stage=fs.readFileSync(path.join(root,'apps/murder-mystery/stage.js'),'utf8');
+ assert.ok(stage.includes('MysteryArt?.portrait(c,theme(room))'));
  assert.ok(game.includes('MysteryArt?.cover(room.story.artTheme||room.story.id)'));
  const editor=fs.readFileSync(path.join(root,'apps/murder-mystery/editor.js'),'utf8');
  assert.ok(editor.includes('MysteryArt?.portrait(c,visualStory())'));

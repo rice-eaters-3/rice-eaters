@@ -5,6 +5,60 @@
 window.MysteryVoice=(function(){
   let stream=null,room=null,timer=null,cursor=0,active=false,micOn=false,speakerOn=false,busy=false;
   const peers=new Map(),audio=new Map();
+  let audioContext=null,meterTimer=null;
+  const meters=new Map(),talkUntil=new Map(),gains=new Map();
+  function meter(id,stream){
+    if(!audioContext||!stream)return;
+    try{
+      const source=audioContext.createMediaStreamSource(stream);
+      const analyser=audioContext.createAnalyser();
+      analyser.fftSize=512;
+      source.connect(analyser);
+      meters.get(id)?.source.disconnect();
+      meters.set(id,{source,analyser,data:new Uint8Array(analyser.fftSize)});
+    }catch(e){ /* Audio playback still works without a meter. */ }
+  }
+  async function enableMeters(){
+    const Context=window.AudioContext||window.webkitAudioContext;
+    if(!Context)return;
+    try{
+      audioContext=audioContext||new Context();
+      await audioContext.resume();
+      for(const [id,node] of audio)meter(id,node.srcObject);
+      if(stream&&room?.me)meter(room.me,stream);
+    }catch(e){ /* Audio playback still works without a meter. */ }
+  }
+  function status(id){
+    if(!room)return {audible:false,label:'연결 대기'};
+    if(id===room.me)return {audible:micOn,label:micOn?'내 마이크':'내 음소거'};
+    if(room.players.find(p=>p.id===id)?.online===false)return {audible:false,label:'오프라인'};
+    if(!allowedToHear(id,room.me))return {audible:false,label:'밀담 외부'};
+    if(!speakerOn)return {audible:false,label:'듣기 꺼짐'};
+    if(!gains.get(id))return {audible:false,label:'범위 밖'};
+    const node=audio.get(id);
+    if(!node||node.paused||peers.get(id)?.pc.connectionState!=='connected')return {audible:false,label:'연결 대기'};
+    return {audible:true,label:'수신 가능'};
+  }
+  function paintMeters(){
+    const now=Date.now();
+    for(const [id,{analyser,data}] of meters){
+      if(!status(id).audible){talkUntil.delete(id);continue;}
+      analyser.getByteTimeDomainData(data);
+      let sum=0;
+      for(const value of data)sum+=((value-128)/128)**2;
+      if(Math.sqrt(sum/data.length)>.025)talkUntil.set(id,now+240);
+    }
+    for(const chip of document.querySelectorAll?.('[data-voice-player]')||[]){
+      const id=chip.dataset.voicePlayer,state=status(id);
+      const speaking=state.audible&&(talkUntil.get(id)||0)>now;
+      const text=speaking?'말하는 중':state.label;
+      chip.classList.toggle('unavailable',!state.audible);
+      chip.classList.toggle('speaking',speaking);
+      chip.title=text;
+      const label=chip.querySelector('.speaker-state');
+      if(label&&label.textContent!==text)label.textContent=text;
+    }
+  }
   const valid=()=>!!(room?.me&&['study','investigation1','discussion1','investigation2','discussion2','action','ending'].includes(room.phase));
   async function send(to,type,payload={}){
     if(!room?.code)return;
@@ -12,6 +66,7 @@ window.MysteryVoice=(function(){
     catch(e){console.warn('Voice signaling',e.message)}
   }
   function closePeer(id){
+    meters.get(id)?.source.disconnect();meters.delete(id);talkUntil.delete(id);
     const p=peers.get(id);
     if(p){p.pc.close();peers.delete(id)}
     const node=audio.get(id);
@@ -19,18 +74,20 @@ window.MysteryVoice=(function(){
   }
   function allowedToHear(speaker,listener){
     const group=(room?.whispers?.groups||[]).find(g=>g.members.includes(speaker));
-    return !group||group.members.includes(listener);
+    const listenerGroup=(room?.whispers?.groups||[]).find(g=>g.members.includes(listener));
+    return (!group||group.members.includes(listener))&&(!listenerGroup||listenerGroup.members.includes(speaker));
   }
-  function acousticDistance(from,to){
-    return window.MysteryAcoustics?.distance(room,from,to)??Infinity;
+  function updateGains(){
+    gains.clear();
+    const acoustics=window.MysteryAcoustics;
+    if(!room?.me||!acoustics)return;
+    for(const {id} of room.players)if(id!==room.me)gains.set(id,acoustics.gain(acoustics.distance(room,room.me,id)));
   }
   function routeOutgoing(){
     if(!room)return;
     const track=micOn?stream?.getAudioTracks()[0]||null:null;
     for(const [id,p] of peers){
-      const d=acousticDistance(room.me,id);
-      const target=track&&allowedToHear(room.me,id)&&Number.isFinite(d)&&
-        window.MysteryAcoustics.gain(d)>0?track:null;
+      const target=track&&allowedToHear(room.me,id)&&gains.get(id)>0?track:null;
       p.targetTrack=target;
       // Queue replacements; rapid movement/door transitions must not restore
       // a previously permitted microphone track after a later block.
@@ -43,9 +100,7 @@ window.MysteryVoice=(function(){
   function volumes(){
     if(!room?.me)return;
     for(const [id,node] of audio){
-      const d=acousticDistance(id,room.me);
-      const gain=speakerOn&&allowedToHear(id,room.me)?
-        (window.MysteryAcoustics?.gain(d)||0):0;
+      const gain=speakerOn&&allowedToHear(id,room.me)?(gains.get(id)||0):0;
       node.muted=!speakerOn||gain===0;
       node.volume=gain;
     }
@@ -67,7 +122,7 @@ window.MysteryVoice=(function(){
         document.body.appendChild(node);audio.set(id,node);
       }
       node.srcObject=e.streams[0]||new MediaStream([e.track]);
-      volumes();
+      meter(id,node.srcObject);volumes();
       if(speakerOn)node.play().catch(()=>{});
     };
     pc.onconnectionstatechange=()=>{
@@ -127,12 +182,14 @@ window.MysteryVoice=(function(){
     if(!window.RTCPeerConnection)throw Error('이 브라우저에서 WebRTC를 지원하지 않습니다.');
     active=true;cursor=0;
     timer=setInterval(tick,900);
+    meterTimer=setInterval(paintMeters,120);
     for(const p of room.players)if(p.id!==room.me)await send(p.id,'hello');
     tick();
   }
   async function setMicrophone(on){
     if(!on){
       micOn=false;routeOutgoing();
+      meters.get(room?.me)?.source.disconnect();meters.delete(room?.me);talkUntil.delete(room?.me);
       for(const track of stream?.getTracks()||[])track.stop();
       stream=null;
       if(!speakerOn)disable();
@@ -145,7 +202,7 @@ window.MysteryVoice=(function(){
       audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true},video:false
     });
     stream=acquired;micOn=true;
-    try{await start();routeOutgoing()}
+    try{await start();await enableMeters();routeOutgoing()}
     catch(e){micOn=false;for(const t of acquired.getTracks())t.stop();stream=null;throw e}
   }
   async function setSpeaker(on){
@@ -153,21 +210,22 @@ window.MysteryVoice=(function(){
     if(speakerOn)return;
     speakerOn=true;
     try{await start()}catch(e){speakerOn=false;throw e}
-    volumes();
+    await enableMeters();volumes();
     for(const node of audio.values())node.play().catch(()=>{});
   }
   function disable(){
     if(active&&room)
       for(const p of room.players)if(p.id!==room.me)send(p.id,'bye');
     active=false;micOn=false;speakerOn=false;clearInterval(timer);timer=null;
+    clearInterval(meterTimer);meterTimer=null;
     for(const id of [...peers.keys()])closePeer(id);
     for(const track of stream?.getTracks()||[])track.stop();
-    stream=null;
+    stream=null;for(const m of meters.values())m.source.disconnect();meters.clear();talkUntil.clear();audioContext?.close();audioContext=null;
   }
   function sync(next){
     const prev=room?.code;
     if(prev&&prev!==next?.code)disable();
-    room=next;
+    room=next;updateGains();
     if(!valid()){if(active)disable();return}
     routeOutgoing();volumes();
   }
@@ -186,7 +244,7 @@ window.MysteryVoice=(function(){
       '<p class="muted small">네트워크에 따라 TURN 중계 서버 없이는 통화 연결이 실패할 수 있습니다.</p></div>';
   }
   return {
-    setMicrophone,setSpeaker,disable,sync,controls,
+    setMicrophone,setSpeaker,disable,sync,controls,status,
     get micOn(){return micOn},get speakerOn(){return speakerOn},get enabled(){return active}
   };
 })();

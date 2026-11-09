@@ -290,7 +290,7 @@ window.MysteryStudy=(function(){
     if(!inv)return '<p>조사 정보가 아직 준비되지 않았습니다.</p>';
     ui.lastResearchSignature=JSON.stringify({inv,players:room.players.map(p=>({id:p.id,position:p.position}))});
     const phase=room.phase==='investigation2'?'2차 조사':room.phase==='investigation1'?'1차 조사':'사건 기록';
-    return '<section class="research-screen" id="investigationScreen">'+
+    return '<section class="research-screen '+(ui.inventory?'inventory-only':'catalog-only')+'" id="investigationScreen">'+
       '<div class="research-toolbar"><div><div class="eyebrow">INVESTIGATION · CARD LIBRARY</div>'+
       '<h2>'+phase+' · 조사 가능 정보</h2>'+
       '<p class="muted small">'+(inv.canInvestigate?
@@ -403,6 +403,10 @@ window.MysteryStudy=(function(){
         '</section>':'')+'</div>';
   }
   function render(room){
+    if(window.MysteryStage&&room.phase!=='ending'){
+      const content=ui.view==='book'?book(room):ui.view==='research'?researchView(room):ui.view==='context'?tileActions(room):ui.view==='whisper'?whisper(room):ui.view==='progress'?roomHeader(room)+verdictPanel(room)+actionStage(room)+(room.phase==='study'?btn('study-ready','숙지 완료 · 다음 단계 대기','btn btn-primary',!!room.players.find(p=>p.id===room.me)?.studyReady):''):'';
+      return '<section class="game-scene"><div id="adventureRoot" class="scene-map map-scroller big-map" data-floor="'+esc(room.code+':'+theme(room)+':'+room.map?.floorId)+'" tabindex="0" aria-label="게임 지도">'+mapHtml(room)+'</div><div class="scene-hint">WASD / 방향키 / 옆 칸 터치 · ⊘ 통행 불가 <button data-action="map-center" class="btn btn-sm">내 위치</button></div>'+window.MysteryStage.dock(room)+(ui.view!=='map'?'<section class="scene-panel" role="region" aria-label="게임 정보"><button data-action="panel-close" class="btn panel-close">닫기 <kbd>Esc</kbd></button>'+content+'</section>':'')+clueModal(room)+'</section>';
+    }
     return roomHeader(room)+
       '<div class="section-row"><div><div class="eyebrow">MYSTERY PHASE · '+esc(room.phase.toUpperCase())+'</div>'+
       '<h2>'+esc(({study:'캐릭터 숙지',investigation1:'1차 조사',discussion1:'1차 토론',investigation2:'2차 조사',
@@ -414,6 +418,8 @@ window.MysteryStudy=(function(){
       '<div id="adventureRoot">'+(ui.view==='book'?book(room):ui.view==='research'?researchView(room):mapView(room))+'</div>'+clueModal(room));
   }
   function patch(room){
+    const hud=document.getElementById('hudStatus');if(hud)hud.innerHTML=window.MysteryStage.status(room);
+    if(['context','whisper','progress'].includes(ui.view))return false;
     // Keep the active book page and focus while other players move.
     if(!document.getElementById('adventureRoot'))return false;
     const modal=document.getElementById('clueModalRoot');
@@ -452,7 +458,7 @@ window.MysteryStudy=(function(){
     const oldMap=document.getElementById('mapTiles'),oldCards=document.querySelector('.research-sidebar');
     if(!oldMap)return false;
     const temporary=document.createElement('div');temporary.innerHTML=mapHtml(room);
-    if(temporary.firstElementChild){oldMap.innerHTML=temporary.firstElementChild.innerHTML;oldMap.style.cssText=temporary.firstElementChild.style.cssText;oldMap.setAttribute('aria-label',room.map.title);}
+    if(temporary.firstElementChild){oldMap.innerHTML=temporary.firstElementChild.innerHTML;oldMap.style.cssText=temporary.firstElementChild.style.cssText;oldMap.setAttribute('aria-label',room.map.title);window.MysteryStage?.mount();}
     if(oldCards){const wrapper=document.createElement('div');wrapper.innerHTML=investigationCards(room);
       const present=oldCards.querySelector('.research-grid');
       if(present&&wrapper.firstElementChild)present.replaceWith(wrapper.firstElementChild);
@@ -475,6 +481,9 @@ window.MysteryStudy=(function(){
     return true;
   }
   function navigate(action,chapter){
+    if(action==='panel-close'){ui.view='map';return true;}
+    if(['context-toggle','whisper-toggle','progress-toggle'].includes(action)){const v=action.split('-')[0];ui.view=ui.view===v?'map':v;return true;}
+    if(action==='inventory-toggle'){ui.view=ui.view==='research'&&ui.inventory?'map':'research';ui.inventory=true;return true;}
     if(action.startsWith('map-')){
       const grid=document.getElementById('mapTiles'),scroller=grid?.closest('.map-scroller');
       if(!grid||!scroller)return true;
@@ -502,7 +511,8 @@ window.MysteryStudy=(function(){
     if(action==='book-toggle'){ui.view=ui.view==='book'?'map':'book';return true}
     if(action==='research-toggle'){
       if(window.MysteryRoomState?.room?.investigation)
-        ui.view=ui.view==='research'?'map':'research';
+        ui.view=ui.view==='research'&&!ui.inventory?'map':'research';
+      ui.inventory=false;
       return true;
     }
     const all=pages(window.MysteryRoomState?.room||{});
@@ -513,5 +523,5 @@ window.MysteryStudy=(function(){
   }
   const currentView=()=>ui.view;
   const isModalOpen=()=>!!ui.modalCardId;
-  return {render,patch,navigate,currentView,isModalOpen};
+  return {render,patch,navigate,currentView,isModalOpen,mapHtml};
 })();

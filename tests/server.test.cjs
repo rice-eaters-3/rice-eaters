@@ -144,6 +144,9 @@ test('server: four-player mystery flow, persistence, and Mars save endpoints',as
   const allCast=await call(clients[0],'/api/rooms/'+code);
   assert.equal(allCast.data.players.filter(p=>p.characterId).length,4);
   assert.equal(allCast.data.phase,'characters','full cast waits for host to advance');
+  assert.ok(allCast.data.castingMap.tiles.length);
+  assert.deepEqual(Object.keys(allCast.data.castingMap).sort(),['tiles','title'],'casting preview carries geometry only');
+  assert.equal(allCast.data.booklet,null,'no private role notes in casting');
   assert.equal(allCast.data.progress.canAdvance,true);
   assert.equal((await post(clients[2],'/api/rooms/'+code+'/advance')).status,403);
   assert.equal((await post(clients[0],'/api/rooms/'+code+'/advance')).data.phase,'study');

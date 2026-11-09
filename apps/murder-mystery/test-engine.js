@@ -395,7 +395,8 @@
     const verdict=['discussion2','action','ending'].includes(phase)?{
       isHost:true,arrestedCharacterId:state.verdict.arrestedCharacterId,
       candidates:s.characters.map(c=>({id:c.id,name:c.name,dead:statuses.dead.includes(c.id)}))}:null;
-    return {code:'TEST',phase,story:s,me:member(role.id),players,hostId:member(role.id),
+    return {code:'TEST',phase,story:s,characters:s.characters,
+      castingMap:phase==='characters'&&g.floors[0]?{title:g.floors[0].title,tiles:g.floors[0].tiles}:null,me:member(role.id),players,hostId:member(role.id),
       progress:{ready:s.players,total:s.players,canAdvance:true},
       clock:null,advanceVotes:{},booklet,map,investigation,verdict,
       ending:phase==='ending'&&Ending?Ending.summary(s,g,{...state.verdict,statuses:state.statusOverrides},statuses,role.id,true):null,
