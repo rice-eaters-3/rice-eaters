@@ -367,11 +367,13 @@ function roomView(room,sid){
         symbol:c.symbol,accent:c.accent,...positionFor(room,p)};
     })
   }:null;
+  const castingFloor=isMember&&room.phase==='characters'?floorsFor(room)[0]:null;
   const showVerdict=isMember&&['discussion2','action','ending'].includes(room.phase);
   const statuses=showVerdict?endingStatus(room):null;
   const arrested=room.verdict?.arrestedCharacterId||null;
   return {
     code:room.id,phase:room.phase,story:publicStory(story),
+    castingMap:castingFloor?{title:castingFloor.title,tiles:castingFloor.tiles}:null,
     progress:phaseReadiness(room),
     advanceVotes:isMember?Object.fromEntries(room.players.map(p=>[p.id,room.advanceVotes?.[p.id]===true])):null,
     clock:room.gameStartedAt?{gameStartedAt:room.gameStartedAt,

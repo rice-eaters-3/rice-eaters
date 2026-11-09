@@ -77,8 +77,7 @@ async function load(){
 function phaseTo(phase){
   if(!state)return;
   engine.switchPhase(state,phase);phaseStart=Date.now();
-  if(window.MysteryStudy.currentView()==='book')window.MysteryStudy.navigate('book-toggle');
-  else if(window.MysteryStudy.currentView()==='research')window.MysteryStudy.navigate('research-toggle');
+  castProgress=false;window.MysteryStudy.navigate('panel-close');window.MysteryStudy.navigate('clue-close');
   render();
 }
 function roleTo(role){
@@ -95,6 +94,8 @@ function updateClock(){
   const phaseSeconds=Math.floor((Date.now()-phaseStart)/1000);
   const remaining=Math.max(0,Number(state.pkg.game.phaseMinutes?.[state.phase]||5)*60-phaseSeconds);
   const game=$('testGameElapsed'),phase=$('testPhaseRemaining');
+  document.querySelectorAll('[data-hud-clock="total"]').forEach(n=>n.textContent=format(elapsed));
+  document.querySelectorAll('[data-hud-clock="remaining"]').forEach(n=>n.textContent=format(remaining));
   if(game)game.textContent=format(elapsed);
   if(phase)phase.textContent=format(remaining).slice(3);
 }
@@ -127,20 +128,10 @@ function synopsis(){
     '<p class="muted small">제작자 테스트에서는 준비 완료를 기다리지 않고 언제든 다음 단계로 이동할 수 있어.</p>'+
     btn('test-stage-next','캐릭터 선택 미리 보기 →','btn btn-primary')+'</aside></div>';
 }
+let castProgress=false;
 function casting(){
-  const s=state.pkg.story;
-  return roomHeader(window.MysteryRoomState.room)+
-    '<div class="section-row"><div><div class="eyebrow">CHAPTER 02 · CASTING PREVIEW</div><h2>누구의 시점으로 플레이할까?</h2>'+
-    '<p class="muted small">카드를 눌러 배역을 바꾸면 나머지 단계의 책자·보유 정보도 해당 인물 기준으로 보여.</p></div></div>'+
-    '<div class="character-grid">'+s.characters.map(c=>
-      '<article class="character-card '+(c.id===state.roleId?'selected':'')+'" style="--accent:'+escapeHtml(c.accent)+'">'+
-      '<div class="char-symbol char-illustration">'+(window.MysteryArt?.portrait(c,s.artTheme||s.id)||escapeHtml(c.symbol))+'</div>'+
-      '<h3 class="character-name">'+escapeHtml(c.name)+'</h3><div class="character-role">'+escapeHtml(c.role)+'</div>'+
-      '<p class="char-hint">'+escapeHtml(c.hint)+'</p>'+
-      (c.startLine?'<p class="char-start">“'+escapeHtml(c.startLine)+'”</p>':'')+
-      btn('test-role',c.id===state.roleId?'✓ 현재 시점':'이 캐릭터 시점으로',c.id===state.roleId?'btn btn-outline':'btn btn-primary',
-        false,'data-role="'+escapeHtml(c.id)+'"')+'</article>').join('')+
-    '</div>';
+  return window.MysteryStage.casting(window.MysteryRoomState.room,true)+(castProgress?
+    '<section class="scene-panel" role="dialog" aria-label="단계 진행"><button data-action="progress-toggle" class="btn panel-close">닫기</button>'+roomHeader(window.MysteryRoomState.room)+'</section>':'');
 }
 function render(){
   if(!state)return;
@@ -164,7 +155,9 @@ function render(){
       '</select>'+btn('test-set-status','이 캐릭터 상태 적용','btn btn-outline')+'</div></section>'+body;
   }
   $('testStage').dataset.story=room.story?.artTheme||room.story?.id||'';
+  window.MysteryStage.rememberMap();
   $('testStage').innerHTML=body;
+  window.MysteryStage?.mount();
   updateClock();
 }
 function requireHolding(button){
@@ -201,6 +194,10 @@ function runAction(button){
     note('개인 목표 판정이 반영되었습니다.');render();return;
   }
   if(['map-zoom-in','map-zoom-out','map-center'].includes(action)){window.MysteryStudy.navigate(action);return;}
+  if(action==='cast-preview'){window.MysteryStage.preview(button.dataset.character,window.MysteryRoomState.room);render();return;}
+  if(action==='progress-toggle'&&state.phase==='characters'){castProgress=!castProgress;render();return;}
+  if(['inventory-toggle','context-toggle','whisper-toggle','progress-toggle','panel-close'].includes(action)){window.MysteryStudy.navigate(action);render();return;}
+  if(['voice-mic','voice-speaker'].includes(action)){note('테스트 모드에서는 음성 통화를 연결하지 않습니다. 실제 게임에서 확인하세요.');return;}
   if(['clue-open','clue-flip','clue-close'].includes(action)){
     window.MysteryStudy.navigate(action,button.dataset.card);render();return;
   }
@@ -263,16 +260,22 @@ function runAction(button){
   note('이 버튼은 멀티플레이 전용입니다: '+action);
 }
 $('testStage').addEventListener('click',event=>{
-  const button=event.target.closest('[data-action]');if(!button||!state)return;
-  try{runAction(button)}catch(e){note('테스트 동작: '+e.message,true);
-    if(button.dataset.action==='interact')window.alert('액션을 수행할 수 없습니다.\n'+e.message);}
+  if(!state)return;
+  const button=event.target.closest('[data-action]');
+  try{
+    if(button)runAction(button);
+    else if(window.MysteryStudy.currentView()==='map'){
+      const direction=window.MysteryStage.tileDirection(event.target,window.MysteryRoomState.room);
+      if(direction){engine.move(state,direction);render();}
+    }
+  }catch(e){note('테스트 동작: '+e.message,true);
+    if(button?.dataset.action==='interact')window.alert('액션을 수행할 수 없습니다.\n'+e.message);}
 });
 $('testLoad').addEventListener('click',load);
 $('testReset').addEventListener('click',()=>{
   if(!state)return;
   state=engine.reset(state);testStart=phaseStart=Date.now();
-  if(window.MysteryStudy.currentView()==='book')window.MysteryStudy.navigate('book-toggle');
-  else if(window.MysteryStudy.currentView()==='research')window.MysteryStudy.navigate('research-toggle');
+  castProgress=false;window.MysteryStudy.navigate('panel-close');window.MysteryStudy.navigate('clue-close');
   render();note('테스트 상태를 초기화했습니다. 편집 원고는 변경되지 않았습니다.');
 });
 $('testRole').addEventListener('change',event=>{try{roleTo(event.target.value)}catch(e){note(e.message,true)}});
@@ -284,6 +287,16 @@ $('testMeta').addEventListener('click',event=>{
   const btn=event.target.closest('[data-test-focus]');if(btn)roleTo(btn.dataset.testFocus);
 });
 document.addEventListener('keydown',event=>{
+  if(state&&!event.altKey&&!event.metaKey&&!event.ctrlKey&&!['INPUT','TEXTAREA','SELECT'].includes(event.target?.tagName)&&!event.target?.isContentEditable){
+    if(state.phase==='characters'&&(event.key.toLowerCase()==='p'||(event.key==='Escape'&&castProgress))){event.preventDefault();castProgress=!castProgress;render();return;}
+    if(state.phase==='characters'&&castProgress)return;
+    if(state.phase==='characters'&&['ArrowLeft','ArrowRight'].includes(event.key)){event.preventDefault();window.MysteryStage.preview(event.key==='ArrowLeft'?'prev':'next',window.MysteryRoomState.room);render();return;}
+    if(state.phase==='characters'&&event.key==='Enter'&&event.target?.tagName!=='BUTTON'){event.preventDefault();document.querySelector('.casting-description button')?.click();return;}
+    if(engine.PHASES.indexOf(state.phase)>=2&&!window.MysteryStudy.isModalOpen()){
+      if(event.key==='Escape'&&window.MysteryStudy.currentView()!=='map'){event.preventDefault();window.MysteryStudy.navigate('panel-close');render();return;}
+      const action=window.MysteryStage?.shortcuts[event.key.toLowerCase()];if(action){event.preventDefault();document.querySelector('[data-action="'+action+'"]')?.click();return;}
+    }
+  }
   if(event.key==='Escape'&&window.MysteryStudy?.isModalOpen?.()){
     event.preventDefault();window.MysteryStudy.navigate('clue-close');render();return;
   }

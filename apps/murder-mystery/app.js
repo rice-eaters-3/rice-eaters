@@ -19,6 +19,8 @@ function updateClockDisplay(){
   const recommended=(clock.phaseMinutes[room.phase]||0)*60;
   const over=recommended>0&&elapsed>=recommended;
   const total=$('gameClock'),phase=$('phaseClock'),hint=$('phaseClockHint');
+  document.querySelectorAll('[data-hud-clock="total"]').forEach(n=>n.textContent=clockFmt(game));
+  document.querySelectorAll('[data-hud-clock="remaining"]').forEach(n=>n.textContent=(over?'+ ':'')+clockFmt(over?elapsed-recommended:recommended-elapsed));
   if(total)total.textContent=clockFmt(game);
   if(phase){phase.textContent=(over?'+ ':'')+clockFmt(over?elapsed-recommended:recommended-elapsed);
     phase.classList.toggle('overdue',over)}
@@ -110,10 +112,15 @@ function connectStream(){
 }
 function updateRoom(room,connection,force=false){
   const old=state.room;
-  const changed=force||JSON.stringify(old)!==JSON.stringify(room)||state.connection!==connection;
+  // Clock samples sync continuously without replacing the focused controls.
+  const snapshot=value=>value&&{...value,clock:value.clock&&{...value.clock,serverNow:0}};
+  const changed=force||JSON.stringify(snapshot(old))!==JSON.stringify(snapshot(room))||state.connection!==connection;
   if(room.clock)state.clockOffset=room.clock.serverNow-Date.now();
-  if(old?.phase!==room.phase&&room.phase==='investigation1'&&window.MysteryStudy?.currentView()==='book')
-    window.MysteryStudy.navigate('book-toggle');
+  if(old?.phase!==room.phase||old?.code!==room.code){
+    castProgress=false;
+    window.MysteryStudy?.navigate('panel-close');
+    window.MysteryStudy?.navigate('clue-close');
+  }
   state.room=room;
   window.MysteryVoice?.sync(room);
   if(connection)state.connection=connection;
@@ -260,35 +267,10 @@ function synopsis(room){
     btn('read',my?.read?'확인 완료 · 다른 플레이어 대기 중':'시놉시스를 모두 읽었습니다 ✓','btn btn-primary btn-wide',!!my?.read)+
     '</aside></div>';
 }
+let castProgress=false;
 function characters(room){
-  const my=room.players.find(p=>p.id===room.me),taken=room.players.filter(p=>p.characterId).length;
-  const allDone=taken===room.story.players;
-  return roomHeader(room)+
-  '<div class="section-row"><div><div class="eyebrow">CHAPTER 02 / CASTING</div><h2 style="margin-bottom:0">당신은 누구인가요?</h2>'+
-  '<p class="muted" style="margin:6px 0 0">서로 다른 '+room.story.players+'명의 등장인물. 한 명을 선택하세요. 선택은 서버에서 공유되며 중복 선택할 수 없습니다.</p></div><span class="tag">2 / 9 단계</span></div>'+
-  '<div class="room-grid"><div class="character-grid">'+room.characters.map(c=>{
-    const owner=room.players.find(p=>p.characterId===c.id);
-    const mine=owner?.id===room.me;
-    return '<article class="character-card '+(mine?'selected':owner?'taken':'')+'" style="--accent:'+escapeHtml(c.accent)+'">'+
-    (mine?'<span class="chosen-label">내 캐릭터</span>':owner?'<span class="chosen-label">선택 완료</span>':'')+
-    '<div class="char-symbol char-illustration">'+(window.MysteryArt?.portrait(c,room.story?.artTheme||room.story?.id)||escapeHtml(c.symbol))+'</div>'+
-    '<h3 class="character-name">'+escapeHtml(c.name)+'</h3><div class="character-role">'+escapeHtml(c.role)+'</div>'+
-    '<p class="char-hint">'+escapeHtml(c.hint)+'</p>'+ (c.startLine?'<p class="char-start">“'+escapeHtml(c.startLine)+'”</p>':'')+
-    btn('character',mine?'선택한 캐릭터입니다 ✓':owner?'이미 선택된 캐릭터':'이 캐릭터 선택','btn '+(mine?'btn-outline':'btn-primary'),!!owner,'data-character="'+escapeHtml(c.id)+'"')+
-    '</article>';
-  }).join('')+'</div>'+
-  '<aside class="surface panel-pad"><div class="eyebrow">CHARACTER ASSIGNMENT</div><h2>배역 현황</h2>'+
-  '<div class="ready-list">'+room.players.map(p=>{
-    const c=room.characters.find(x=>x.id===p.characterId);
-    return '<div class="ready-item"><div><span class="ready-name">'+escapeHtml(p.name)+'</span>'+
-    '<div class="player-sub">'+(c?escapeHtml(c.name):'배역 미선택')+'</div></div>'+
-    '<span class="'+(c?'ready-yes':'ready-no')+'">'+(c?'✓ 선택됨':'◷ 대기')+'</span></div>';
-  }).join('')+'</div>'+
-  '<div class="notice"><strong>'+taken+' / '+room.story.players+'명 선택 완료</strong><p>'+
-    (my?.characterId?'선택한 캐릭터를 변경하려면 아직 비어 있는 다른 카드를 누르세요.':'카드를 선택하면 다른 참가자에게 즉시 반영됩니다.')+
-    '</p></div><div class="line"></div>'+
-  '<p class="muted small">전원이 캐릭터를 선택하면 방장이 캐릭터 숙지 단계로 진행할 수 있습니다.</p></aside></div>'+
-  (allDone?'<div class="all-chosen"><div class="eyebrow">ALL ROLES ASSIGNED</div><h2>모든 배역이 정해졌습니다.</h2><p class="muted">전원이 선택을 마쳤습니다. 방장의 다음 단계 진행 버튼을 기다리세요.</p></div>':'');
+  return window.MysteryStage.casting(room)+(castProgress?
+    '<section class="scene-panel" role="dialog" aria-label="단계 진행"><button class="btn panel-close" data-action="progress-toggle">닫기</button>'+roomHeader(room)+'</section>':'');
 }
 function preview(room){
   return roomHeader(room)+
@@ -303,10 +285,12 @@ function preview(room){
 function render(){
   const root=$('app'),room=state.room;
   root.dataset.story=room?.story?.artTheme||room?.story?.id||state.selectedStory||'';
-  if(!room){root.innerHTML=home();return}
-  if(!room.me){root.innerHTML=preview(room);return}
+  if(!room){root.innerHTML=home();window.MysteryStage?.mount();return}
+  if(!room.me){root.innerHTML=preview(room);window.MysteryStage.mount();return}
+  window.MysteryStage.rememberMap();
   root.innerHTML='<div class="status-strip"><span>◉ '+escapeHtml(state.connection)+' · 참가자별 독립 세션</span><span>새로고침해도 방에 다시 연결됩니다.</span></div>'+
     (room.phase==='lobby'?lobby(room):room.phase==='synopsis'?synopsis(room):room.phase==='characters'?characters(room):window.MysteryStudy.render(room));
+  window.MysteryStage?.mount();
   updateClockDisplay();
 }
 function nameFromInput(){
@@ -316,6 +300,9 @@ function nameFromInput(){
   return name;
 }
 async function perform(action,button){
+  if(action==='cast-preview'){window.MysteryStage.preview(button.dataset.character,state.room);render();return;}
+  if(action==='progress-toggle'&&state.room?.phase==='characters'){castProgress=!castProgress;render();return;}
+  if(['inventory-toggle','context-toggle','whisper-toggle','progress-toggle','panel-close'].includes(action)){window.MysteryStudy.navigate(action);render();return;}
   if(['map-zoom-in','map-zoom-out','map-center'].includes(action)){window.MysteryStudy.navigate(action);return;}
   if(['clue-open','clue-flip','clue-close'].includes(action)){
     window.MysteryStudy.navigate(action,button.dataset.card);render();return;
@@ -463,9 +450,25 @@ $('app').addEventListener('change',e=>{
 });
 $('app').addEventListener('click',e=>{
   const button=e.target.closest('button[data-action]');
-  if(button)perform(button.dataset.action,button);
+  if(button){perform(button.dataset.action,button);return;}
+  if(window.MysteryStudy.currentView()==='map'){
+    const direction=window.MysteryStage.tileDirection(e.target,state.room);
+    if(direction)moveMyPlayer(direction);
+  }
 });
 document.addEventListener('keydown',e=>{
+  if(!e.altKey&&!e.metaKey&&!e.ctrlKey&&!['INPUT','TEXTAREA','SELECT'].includes(e.target?.tagName)&&!e.target?.isContentEditable){
+    if(state.room?.phase==='characters'){
+      if(e.key.toLowerCase()==='p'||(e.key==='Escape'&&castProgress)){e.preventDefault();castProgress=!castProgress;render();return;}
+      if(castProgress)return;
+      if(['ArrowLeft','ArrowRight'].includes(e.key)){e.preventDefault();window.MysteryStage.preview(e.key==='ArrowLeft'?'prev':'next',state.room);render();return;}
+      if(e.key==='Enter'&&e.target?.tagName!=='BUTTON'){e.preventDefault();document.querySelector('.casting-description button:not(:disabled)')?.click();return;}
+    }
+    if(SOCIAL_PHASES.includes(state.room?.phase)&&!window.MysteryStudy.isModalOpen()){
+      if(e.key==='Escape'&&window.MysteryStudy.currentView()!=='map'){e.preventDefault();window.MysteryStudy.navigate('panel-close');render();return;}
+      const action=window.MysteryStage?.shortcuts[e.key.toLowerCase()];if(action){e.preventDefault();if(!e.repeat)$('app').querySelector('[data-action="'+action+'"]')?.click();return;}
+    }
+  }
   if(e.key==='Escape'&&window.MysteryStudy?.isModalOpen?.()){
     window.MysteryStudy.navigate('clue-close');render();return;
   }

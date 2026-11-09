@@ -40,7 +40,16 @@ test('closed doors and walls block voice; opening restores route-based attenuati
 
 test('independent microphone and speaker toggles, listen-only access and microphone routing through doors',async()=>{
   const instances=[],tracks=[],calls=[];
-  let microphoneRequests=0,deliverOffer=true;
+  let microphoneRequests=0,deliverOffer=true,meterTick;
+  const painted=new Set(),speakerLabel={};
+  const speakerChip={dataset:{voicePlayer:'right'},querySelector:()=>speakerLabel,
+    classList:{toggle:(name,on)=>on?painted.add(name):painted.delete(name)}};
+  class MockAudioContext{
+    resume(){}
+    close(){}
+    createMediaStreamSource(){return {connect(){},disconnect(){}};}
+    createAnalyser(){return {getByteTimeDomainData(data){data.fill(150);}};}
+  }
   class MockPeer{
     constructor(){this.signalingState='stable';this.connectionState='connected';this.remoteDescription=null;
       instances.push(this);}
@@ -56,7 +65,7 @@ test('independent microphone and speaker toggles, listen-only access and microph
     close(){this.signalingState='closed';this.connectionState='closed'}
   }
   const sandbox={
-    window:{MysteryAcoustics:acoustic(),RTCPeerConnection:MockPeer},
+    window:{MysteryAcoustics:acoustic(),RTCPeerConnection:MockPeer,AudioContext:MockAudioContext},
     RTCPeerConnection:MockPeer,
     RTCSessionDescription:class{constructor(x){Object.assign(this,x)}},
     RTCIceCandidate:class{constructor(x){Object.assign(this,x)}},
@@ -66,8 +75,8 @@ test('independent microphone and speaker toggles, listen-only access and microph
       return {getAudioTracks:()=>[t],getTracks:()=>[t]};
     }}},
     console:{warn:()=>{}},
-    setInterval:()=>123,clearInterval:()=>{},
-    document:{createElement:()=>({play:async()=>{},pause:()=>{},remove:()=>{},dataset:{}}),
+    setInterval:(fn,delay)=>{if(delay===120)meterTick=fn;return 123;},clearInterval:()=>{},
+    document:{querySelectorAll:()=>[speakerChip],createElement:()=>({play:async()=>{},pause:()=>{},remove:()=>{},dataset:{}}),
       body:{appendChild:()=>{}}},
     MediaStream:class{constructor(tracks){this.tracks=tracks}},
     api:async(route,method,payload)=>{
@@ -100,6 +109,22 @@ test('independent microphone and speaker toggles, listen-only access and microph
   voice.sync(area(true));
   await new Promise(r=>setTimeout(r,10));
   assert.ok(instances[0].sender.track,'opening the door allows microphone transmission');
+  instances[0].ontrack({streams:[{}]});
+  meterTick();
+  assert.equal(speakerLabel.textContent,'말하는 중');
+  assert.ok(painted.has('speaking'),'audible input lights the speaking indicator');
+  const privateRoom=area(true);
+  privateRoom.whispers.groups=[{members:['left','third']}];
+  voice.sync(privateRoom);meterTick();
+  assert.equal(speakerLabel.textContent,'밀담 외부');
+  assert.ok(painted.has('unavailable'));
+  assert.ok(!painted.has('speaking'),'out-of-group input never lights up');
+  await new Promise(r=>setTimeout(r,10));
+  assert.equal(instances[0].sender.track,null,'private channel also strips outbound audio');
+  privateRoom.whispers.groups[0].members.push('right');
+  voice.sync(privateRoom);meterTick();
+  assert.ok(painted.has('speaking'),'participants in the same whisper can hear');
+
   voice.sync(area(false));
   await new Promise(r=>setTimeout(r,10));
   assert.equal(instances[0].sender.track,null,'closing door immediately strips transmitted track');
