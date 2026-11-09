@@ -13,7 +13,8 @@ const privateMysteries = {
   'midnight-manor':require('./mystery-content/midnight-manor.js'),
   'd1-crown-of-ashes':{...d1Case.game,spawn:d1Case.spawn},
   ...Object.fromEntries([
-    'cruel-heart-island','neon-memory-quarantine','stellar-academy-first-case'
+    'cruel-heart-island','neon-memory-quarantine','stellar-academy-first-case',
+    'jeju-lab-conference'
   ].map(id=>{
     const pkg=require('./mystery-content/'+id+'.case.json');
     return [id,{...pkg.game,spawn:pkg.spawn}];

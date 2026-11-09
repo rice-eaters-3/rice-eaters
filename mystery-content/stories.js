@@ -21,4 +21,5 @@ module.exports=[
   ,require('./cruel-heart-island.case.json').story
   ,require('./neon-memory-quarantine.case.json').story
   ,require('./stellar-academy-first-case.case.json').story
+  ,require('./jeju-lab-conference.case.json').story
 ];

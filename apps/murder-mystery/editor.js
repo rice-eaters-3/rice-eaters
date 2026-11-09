@@ -3,7 +3,7 @@ const el=id=>document.getElementById(id);
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const newid=prefix=>prefix+'_'+Math.random().toString(36).slice(2,8);
 const phases={synopsis:5,characters:5,study:20,investigation1:20,discussion1:15,investigation2:20,discussion2:20,action:10,ending:15};
-const artChoices=[['','자동 (시나리오 ID)'],['d1-crown-of-ashes','D1 사옥 · 어두운 금빛'],['cruel-heart-island','마지막 하트 · 핑크'],['neon-memory-quarantine','네온 검역국 · 사이버펑크'],['stellar-academy-first-case','성하 영재관 · 별빛']];
+const artChoices=[['','자동 (시나리오 ID)'],['d1-crown-of-ashes','D1 사옥 · 어두운 금빛'],['cruel-heart-island','마지막 하트 · 핑크'],['neon-memory-quarantine','네온 검역국 · 사이버펑크'],['stellar-academy-first-case','성하 영재관 · 별빛'],['jeju-lab-conference','제주 학회 MT · 더미 이미지']];
 const endingFields=[['intro','인물 결말 도입'],['captured','진범 구속 성공 시 개인 서사'],['missed','진범 구속 실패 시 개인 서사'],['goalAchieved','개인 승리 목표 달성'],['goalFailed','개인 승리 목표 실패'],['alive','생존'],['dead','사망'],['restrained','제압'],['arrested','구속'],['escaped','탈출'],['closing','개인 결말 마무리']];
 const visualStory=()=>doc.story.artTheme||doc.story.id;
 function ensureEndings(){
