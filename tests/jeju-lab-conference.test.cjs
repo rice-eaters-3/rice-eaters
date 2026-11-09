@@ -169,3 +169,44 @@ test('Jeju artwork uses only in-browser placeholders; no real or generated image
   }
   assert.match(art.cover(theme),/ART PLACEHOLDER/);
 });
+
+
+test('new Jeju case is available from real server catalog while its culprit and cards stay private',async t=>{
+  const http=require('node:http'),os=require('node:os');
+  const folder=fs.mkdtempSync(path.join(os.tmpdir(),'jeju-case-http-'));
+  const previous=process.env.DATA_DIR;process.env.DATA_DIR=folder;
+  const {handler}=require('../server.js');
+  const server=http.createServer(handler);
+  await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
+  t.after(async()=>{
+    server.closeAllConnections();
+    await new Promise(done=>server.close(done));
+    fs.rmSync(folder,{force:true,recursive:true});
+    if(previous===undefined)delete process.env.DATA_DIR;else process.env.DATA_DIR=previous;
+  });
+  const base='http://127.0.0.1:'+server.address().port;
+  const catalog=await fetch(base+'/api/stories');
+  assert.equal(catalog.status,200);
+  const stories=(await catalog.json()).stories;
+  const listing=stories.find(s=>s.id==='jeju-lab-conference');
+  assert.ok(listing);
+  assert.equal(listing.players,7);
+  assert.ok(!JSON.stringify(stories).includes('creatorGuide'));
+  assert.ok(!JSON.stringify(stories).includes('prof_corrected_draft'));
+  const author=await fetch(base+'/api/editor/test-case/jeju-lab-conference');
+  assert.equal(author.status,200);
+  const pkg=await author.json();
+  assert.equal(pkg.game.investigation.cards.length,64);
+  assert.equal(pkg.game.floors.length,3);
+  assert.equal(pkg.game.ending.common.captured.paragraphs.length,5);
+  const created=await fetch(base+'/api/rooms',{
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({storyId:'jeju-lab-conference',name:'게임방장'})
+  });
+  assert.equal(created.status,201);
+  const room=await created.json();
+  assert.equal(room.story.players,7);
+  assert.equal(room.story.id,'jeju-lab-conference');
+  assert.equal(JSON.stringify(room).includes('creatorGuide'),false);
+  assert.equal(JSON.stringify(room).includes('dy_research'),false);
+});
