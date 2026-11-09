@@ -218,11 +218,15 @@ test('seven-player D1 case: private visions, first-round sealed clues, second-ro
   assert.equal((await post(4,endpoint+'/reserve',{cardId:'cult_founder_signature'})).status,409,
     'victim archives remain site-specific even in round two');
   await walk(4,['right','right','right','right','right']);
+  assert.equal((await post(4,endpoint+'/move',{direction:'up',turnOnly:true})).status,200);
   assert.equal((await post(4,endpoint+'/interact',{kind:'door',doorId:'ne_door',mode:'open'})).status,403,
     'the gallery lock rejects players without the throne key');
+  await new Promise(ok=>setTimeout(ok,140));
+  assert.equal((await post(4,endpoint+'/move',{direction:'down',turnOnly:true})).status,200);
   const unlocked=await post(4,endpoint+'/interact',{kind:'door',doorId:'se_door',mode:'open'});
   assert.equal(unlocked.status,200,'round-two clue grants the real key to the sealed archive');
   assert.equal(unlocked.data.map.doors.find(d=>d.id==='se_door').open,true);
+  await new Promise(ok=>setTimeout(ok,140));
   await walk(4,['down','down','right','down']);
   assert.equal((await post(4,endpoint+'/reserve',{cardId:'cult_founder_signature'})).status,409,
     'new sequential room clues cannot be skipped after opening the vault');
@@ -243,6 +247,7 @@ test('Studio simulator reveals sealed gallery only after throne evidence grants 
   assert.equal(view.map.doors.find(d=>d.id==='ne_door').name,'4층 출입 제한 구역 문');
   assert.equal(view.investigation.cards.some(c=>c.id==='cult_gargoyle_poster'),false);
   assert.throws(()=>engine.reserve(state,'cult_hero_landing_syllabus'),/잠겨/);
+  engine.move(state,'up',true);
   assert.throws(()=>engine.interact(state,'door','ne_door','open'),/열쇠|필수/);
   state.positions.karl={floor:'penthouse',x:4,y:3};
   engine.reserve(state,'trick_throne_scene');

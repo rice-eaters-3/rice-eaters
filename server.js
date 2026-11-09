@@ -9,6 +9,7 @@ const {requireOperator}=require('./private/studio-auth.js');
 const d1Case = require('./mystery-content/d1-gaming.case.json');
 const actionEngine = require('./mystery-content/action-engine.js');
 const endingEngine = require('./apps/murder-mystery/ending-engine.js');
+const mapDirection = require('./apps/murder-mystery/map-direction.js');
 const clueFront = require('./apps/murder-mystery/clue-front.js');
 const privateMysteries = {
   'midnight-manor':require('./mystery-content/midnight-manor.js'),
@@ -364,7 +365,7 @@ function roomView(room,sid){
     avatars:room.players.filter(p=>p.characterId&&positionFor(room,p)?.floor===floor.id).map(p=>{
       const c=story.characters.find(ch=>ch.id===p.characterId);
       return {id:p.id,name:p.name,characterId:p.characterId,characterName:c.name,
-        symbol:c.symbol,accent:c.accent,...positionFor(room,p)};
+        symbol:c.symbol,accent:c.accent,facing:mapDirection.facing(room.mapFacings?.[p.id]),...positionFor(room,p)};
     })
   }:null;
   const castingFloor=isMember&&room.phase==='characters'?floorsFor(room)[0]:null;
@@ -384,7 +385,8 @@ function roomView(room,sid){
     me:member?.id||null,
     players:room.players.map(p=>({id:p.id,name:p.name,read:!!p.read,
       studyReady:!!p.studyReady,characterId:!['lobby','synopsis'].includes(room.phase)?p.characterId:null,
-      online:online(room,p),position:isMember?positionFor(room,p):null})),
+      online:online(room,p),position:isMember?positionFor(room,p):null,
+      facing:isMember&&positionFor(room,p)?mapDirection.facing(room.mapFacings?.[p.id]):null})),
     synopsis:isMember&&room.phase!=='lobby'?story.synopsis:null,
     characters:isMember&&!['lobby','synopsis'].includes(room.phase)?story.characters:null,
     booklet,map,investigation:investigationView(room,member),
@@ -633,7 +635,7 @@ async function api(req,res,url,sid){
     if(progress.next==='study'){
       const game=gameFor(room);
       room.players.forEach(p=>p.studyReady=false);
-      room.mapPositions={};
+      room.mapPositions={};room.mapFacings={};
       if(game?.floorplan||game?.floors?.length){
         for(const p of room.players){
           const spawn=game.spawn?.[p.characterId]||game.floorplan?.spawn?.[p.characterId];
@@ -707,12 +709,16 @@ async function api(req,res,url,sid){
     const current=positionFor(room,player);
     const floorplan=current&&floorFor(room,current.floor);
     if(!floorplan||!current)fail(409,'이 시나리오에는 이동 가능한 지도가 없습니다.');
-    const steps={up:[0,-1],down:[0,1],left:[-1,0],right:[1,0]};
-    if(typeof body.direction!=='string'||!Object.hasOwn(steps,body.direction))fail(400,'잘못된 이동 방향입니다.');
+    if(!mapDirection.valid(body.direction))fail(400,'잘못된 이동 방향입니다.');
     const lastKey=room.id+':'+sid;
     if(Date.now()-(lastMoves.get(lastKey)||0)<120)fail(429,'이동 요청이 너무 빠릅니다.');
+    if(body.turnOnly===true){
+      room.mapFacings||={};room.mapFacings[player.id]=body.direction;
+      lastMoves.set(lastKey,Date.now());persist();sendState(room);
+      return json(res,200,roomView(room,sid));
+    }
     const previous=current;
-    const [dx,dy]=steps[body.direction];
+    const [dx,dy]=mapDirection.directions[body.direction];
     const x=previous.x+dx,y=previous.y+dy;
     if(y<0||y>=floorplan.tiles.length||x<0||x>=floorplan.tiles[y].length||
       floorplan.tiles[y][x]!=='.')fail(409,'벽이나 지도 밖으로 이동할 수 없습니다.');
@@ -725,6 +731,7 @@ async function api(req,res,url,sid){
     if(occupantCount(room,next,player.id)>=(gameFor(room).investigation?.maxTileOccupants||3))
       fail(409,'해당 타일의 최대 인원을 초과했습니다.');
     room.mapPositions[player.id]=next;
+    room.mapFacings||={};room.mapFacings[player.id]=body.direction;
     pruneWhispers(room); // leaving the tile also leaves its private voice group
     pruneExchanges(room); // tile-only card reveals and pending trades expire immediately
     lastMoves.set(lastKey,Date.now());
@@ -759,7 +766,8 @@ async function api(req,res,url,sid){
     if(body.kind==='door'){
       const door=(floor.doors||[]).find(d=>d.id===body.doorId);
       if(!door)fail(404,'문을 찾을 수 없습니다.');
-      if(Math.abs(door.x-pos.x)+Math.abs(door.y-pos.y)>1)fail(409,'문 옆에서 액션을 사용하세요.');
+      if(!mapDirection.isAhead(pos,door,room.mapFacings?.[player.id]))
+        fail(409,'바라보는 바로 앞의 문만 조작할 수 있습니다.');
       const state=doorState(room,floor,door);
       const operation=body.doorAction||'open';
       if(!['open','close'].includes(operation))fail(400,'지원하지 않는 문 액션입니다.');

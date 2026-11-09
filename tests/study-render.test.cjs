@@ -8,7 +8,7 @@ const vm=require('node:vm');
 test('RPG screen: map is main, 7-chapter booklet is paged, cards reveal only authorized backs',()=>{
   const source=fs.readFileSync(path.join(__dirname,'../apps/murder-mystery/study.js'),'utf8');
   const sandbox={
-    window:{MysteryArt:{clue:c=>'<img data-clue-art="'+c.id+'">',avatar:()=>'',object:()=>'',door:()=>'',stairs:()=>'',portrait:()=>''},MysteryVoice:{controls:()=>'<button>마이크 켜기</button>'}},
+    window:{MysteryDirection:require('../apps/murder-mystery/map-direction.js'),MysteryArt:{clue:c=>'<img data-clue-art="'+c.id+'">',avatar:()=>'',object:()=>'',door:()=>'',stairs:()=>'',portrait:()=>''},MysteryVoice:{controls:()=>'<button>마이크 켜기</button>'}},
     escapeHtml:value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),
     btn:(action,label,cls='',disabled=false,extra='')=>'<button data-action="'+action+'" '+extra+' '+(disabled?'disabled':'')+'>'+label+'</button>',
     roomHeader:()=>'<div>자정의 저택</div>'
@@ -18,7 +18,7 @@ test('RPG screen: map is main, 7-chapter booklet is paged, cards reveal only aut
   const role={id:'elena',name:'엘레나',role:'조카',hint:'비밀이 있는 사람',symbol:'♜',accent:'#aabbcc'};
   const room={
     me:'p1',phase:'study',story:{players:4},characters:[role],
-    players:[{id:'p1',name:'나',characterId:'elena',studyReady:false,position:{floor:'ground',x:1,y:1}}],
+    players:[{id:'p1',name:'나',characterId:'elena',facing:'right',studyReady:false,position:{floor:'ground',x:1,y:1}}],
     booklet:{
       basic:role,background:['중요 <비밀>','이야기 2'],timeline:[{time:'22:20',title:'로비',detail:'증언'}],
       inventory:[{id:'key',name:'열쇠',description:'작은 열쇠'}],
@@ -169,7 +169,7 @@ test('RPG screen: map is main, 7-chapter booklet is paged, cards reveal only aut
 
 test('full-screen play and casting render from the studio room view without exposing private casting data',()=>{
   const engine=require('../apps/murder-mystery/test-engine.js');
-  const sandbox={window:{},escapeHtml:value=>String(value??'').replaceAll('<','&lt;').replaceAll('"','&quot;'),
+  const sandbox={window:{MysteryDirection:require('../apps/murder-mystery/map-direction.js')},nextStageControl:()=>'<button>다음 단계</button>',escapeHtml:value=>String(value??'').replaceAll('<','&lt;').replaceAll('"','&quot;'),
     btn:(action,label,cls,disabled,extra='')=>'<button class="'+cls+'" data-action="'+action+'" '+extra+(disabled?' disabled':'')+'>'+label+'</button>',
     roomHeader:()=>'<header>단계 진행</header>'};
   for(const name of ['study','stage'])vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../apps/murder-mystery/'+name+'.js'),'utf8'),sandbox);
@@ -196,7 +196,22 @@ test('full-screen play and casting render from the studio room view without expo
     assert.match(screen,/movement-blocked/);
     const p=room.players.find(p=>p.id===room.me).position;
     assert.equal(stage.tileDirection({closest:()=>({dataset:{x:p.x+1,y:p.y,blocked:''}})},room),'right');
-    assert.equal(stage.tileDirection({closest:()=>({dataset:{x:p.x+1,y:p.y,blocked:'닫힌 문'}})},room),null);
+    assert.equal(stage.tileDirection({closest:()=>({dataset:{x:p.x+1,y:p.y,blocked:'닫힌 문'}})},room),'right');
+    const twoDoors={...room,map:{...room.map,doors:[{id:'front',name:'앞문',x:p.x,y:p.y+1,open:false},
+      {id:'back',name:'뒷문',x:p.x,y:p.y-1,open:false}]}};
+    study.navigate('context-toggle');
+    const context=study.render(twoDoors);
+    assert.match(context,/id="hudUtility"/);
+    assert.match(context,/data-door="front"/);
+    assert.doesNotMatch(context,/data-door="back"|class="scene-panel"/);
+    study.navigate('whisper-toggle');assert.match(study.render(room),/id="hudUtility".*id="whisperPanel"/s);
+    study.navigate('progress-toggle');assert.match(study.render(room),/id="hudUtility".*다음 단계/s);
+    study.navigate('dock-reset');study.navigate('book-toggle');
+    const book=study.render(room);
+    assert.match(book,/scene-panel-header.*scene-panel-body/s);
+    assert.equal((book.match(/data-action="panel-close"/g)||[]).length,1);
+    assert.doesNotMatch(book,/책자 닫기/);
+    study.navigate('panel-close');
     study.navigate('inventory-toggle');assert.match(study.render(room),/inventory-only/);
     study.navigate('research-toggle');assert.match(study.render(room),/catalog-only/);
     study.navigate('panel-close');

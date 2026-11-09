@@ -40,18 +40,29 @@ window.MysteryStage=(()=>{
       button('voice-mic','마이크',false,'aria-pressed="'+!!voice?.micOn+'"')+
       button('voice-speaker','듣기',false,'aria-pressed="'+!!voice?.speakerOn+'"')+'</div>';
   }
-  function dock(room){
+  function panel(title,content,closeAction='panel-close'){
+    return '<section class="scene-panel" role="region" aria-label="'+esc(title)+'">'+
+      '<header class="scene-panel-header"><h2>'+esc(title)+'</h2>'+btn(closeAction,'닫기 <kbd>Esc</kbd>','btn btn-outline btn-sm')+'</header>'+
+      '<div class="scene-panel-body" tabindex="0">'+content+'</div></section>';
+  }
+  function dock(room,active,content){
     const invites=room.whispers?.proposals?.filter(p=>p.voters.includes(room.me)&&!p.yes.includes(room.me)).length||0;
     const pendingTurn=room.action?.currentActor?.id===room.me;
     const progress=room.progress;
     let progressLabel='단계 · 준비';
     if(pendingTurn)progressLabel='내 행동 차례';
     else if(progress?.total&&room.phase==='study')progressLabel='숙지 '+progress.ready+'/'+progress.total;
+    const titles={context:'주변 행동',whisper:'밀담',progress:'단계 · 준비'};
+    const right=active?'<section class="hud-utility" aria-label="'+titles[active]+'">'+
+      '<header><strong>'+titles[active]+'</strong>'+btn('panel-close','음성으로','btn btn-quiet btn-sm')+'</header>'+
+      '<div class="hud-utility-body" id="hudUtility" tabindex="0">'+content+'</div></section>':
+      '<section class="hud-voice" aria-label="음성 참여자">'+voices(room)+'</section>';
+    const toggle=(tab,label)=>button(tab+'-toggle',label,false,'aria-pressed="'+(active===tab)+'"');
     return '<footer class="game-dock"><nav class="hud-actions" aria-label="게임 액션">'+
       button('research-toggle','조사 정보',!room.investigation)+button('inventory-toggle','보유 카드',!room.investigation)+
-      button('book-toggle','책자')+button('context-toggle','주변 행동')+button('whisper-toggle',invites?'밀담 ('+invites+')':'밀담')+
-      button('progress-toggle',progressLabel)+'</nav><section id="hudStatus" class="hud-status" aria-label="현재 게임 상황">'+
-      status(room)+'</section><section class="hud-voice" aria-label="음성 참여자">'+voices(room)+'</section></footer>';
+      button('book-toggle','책자')+toggle('context','주변 행동')+toggle('whisper',invites?'밀담 ('+invites+')':'밀담')+
+      toggle('progress',progressLabel)+'</nav><section id="hudStatus" class="hud-status" aria-label="현재 게임 상황">'+
+      status(room)+'</section>'+right+'</footer>';
   }
   function casting(room,test=false){
     const cast=room.characters||[];
@@ -95,11 +106,18 @@ window.MysteryStage=(()=>{
   }
   function tileDirection(target,room){
     const tile=target?.closest?.('.game-scene .map-tile');
-    if(!tile||tile.dataset.blocked||!room?.map)return null;
+    if(!tile||!room?.map)return null;
     const position=room.players.find(p=>p.id===room.me)?.position;
     if(!position)return null;
     const delta=[Number(tile.dataset.x)-position.x,Number(tile.dataset.y)-position.y].join(',');
     return {'0,-1':'up','0,1':'down','-1,0':'left','1,0':'right'}[delta]||null;
+  }
+  function turnAtBlockedTile(room,direction){
+    const pos=room?.players.find(p=>p.id===room.me)?.position;
+    if(!pos||!window.MysteryDirection.valid(direction))return false;
+    const [dx,dy]=window.MysteryDirection.directions[direction];
+    const target=document.querySelector('#mapTiles [data-x="'+(pos.x+dx)+'"][data-y="'+(pos.y+dy)+'"]');
+    return !target||!!target.dataset.blocked;
   }
   function patchTiles(grid,next){
     // Keep the board and untouched tiles mounted when a player takes a step.
@@ -134,5 +152,5 @@ window.MysteryStage=(()=>{
     const roster=document.querySelector('.casting-roster'),selection=roster?.querySelector('.selected');
     if(selection)roster.scrollLeft=selection.offsetLeft-(roster.clientWidth-selection.offsetWidth)/2;
   }
-  return {dock,status,voices,casting,preview,mount,patchTiles,highlightPosition,shortcuts,tileDirection};
+  return {dock,panel,status,voices,casting,preview,mount,patchTiles,highlightPosition,shortcuts,tileDirection,turnAtBlockedTile};
 })();
