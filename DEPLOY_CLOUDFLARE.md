@@ -60,3 +60,7 @@ Cloudflare 계정과 **Cloudflare DNS에 등록된 도메인**이 있다면, [Cl
 **PC를 꺼도 24시간 열려 있는 사이트**를 원하는 경우 Cloudflare Tunnel이 아니라 Cloudflare Workers + Durable Objects 등으로 서버 구조를 다시 개발해야 합니다. 현재 Node.js 파일 저장 서버를 Cloudflare Workers에 그대로 올릴 수는 없습니다.
 
 공식 문서: [Quick Tunnel](https://developers.cloudflare.com/tunnel/get-started/quick-tunnels/) · [Cloudflare Tunnel 설정](https://developers.cloudflare.com/tunnel/get-started/) · [Windows 설치](https://developers.cloudflare.com/tunnel/downloads/)
+
+## 제작소 운영자 인증
+
+서버 환경 변수 `STUDIO_ADMIN_PASSWORD`를 24바이트 이상으로 설정하고 재시작/재배포하세요. `/mystery-editor`에 접속하여 사용자 이름 `operator`로 인증합니다. 설정하지 않으면 제작소·테스트 모드는 잠기고 일반 게임만 공개됩니다. 외부 접속은 HTTPS를 사용하세요. [상세 설정](OPERATOR_STUDIO.md)

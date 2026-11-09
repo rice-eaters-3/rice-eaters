@@ -46,6 +46,8 @@ function scenario(){
 test('editor JSON import validation, creator-only secrets, room play, manual portal & locked door',async t=>{
  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'mystery-editor-'));
  process.env.DATA_DIR=dir;
+ process.env.STUDIO_ADMIN_PASSWORD=require('node:crypto').randomBytes(32).toString('hex');
+ const auth='Basic '+Buffer.from('operator:'+process.env.STUDIO_ADMIN_PASSWORD).toString('base64');
  const {handler}=require('../server.js');
  const srv=http.createServer(handler);
  await new Promise(ok=>srv.listen(0,'127.0.0.1',ok));
@@ -54,6 +56,7 @@ test('editor JSON import validation, creator-only secrets, room play, manual por
  const people=[{cookie:''},{cookie:''},{cookie:''}];
  async function req(i,route,method='GET',payload){
    const person=people[i],headers={};
+   if(i===0&&route.startsWith('/api/editor/'))headers.Authorization=auth;
    if(person.cookie)headers.Cookie=person.cookie;
    if(payload!==undefined)headers['Content-Type']='application/json';
    const r=await fetch(base+route,{method,headers,body:payload===undefined?undefined:JSON.stringify(payload)});
@@ -64,9 +67,9 @@ test('editor JSON import validation, creator-only secrets, room play, manual por
  const proxied=await fetch(base+'/api/editor/publish',{method:'POST',headers:{
    'Content-Type':'application/json','X-Forwarded-For':'203.0.113.9'
  },body:JSON.stringify({package:scenario()})});
- assert.equal(proxied.status,403,'Cloudflare-style forwarded client must not be able to publish secrets');
+ assert.equal(proxied.status,401,'Cloudflare-style forwarded client must not be able to publish secrets');
  const externalHost=await fetch(base+'/api/editor/own',{headers:{'X-Forwarded-Host':'public.trycloudflare.com'}});
- assert.equal(externalHost.status,403,'public tunnel host cannot open local author manuscripts');
+ assert.equal(externalHost.status,401,'public tunnel host cannot open local author manuscripts');
  const pkg=scenario();
  const invalid=scenario();invalid.game.floors[0].portals[0].toX=99;
  assert.equal((await post(0,'/api/editor/publish',{package:invalid})).status,400,'bad portal rejected');
@@ -77,7 +80,9 @@ test('editor JSON import validation, creator-only secrets, room play, manual por
  const catalog=(await req(2,'/api/stories')).data.stories;
  assert.ok(catalog.some(v=>v.id===id&&v.players===2),'new author story is playable by guests');
  assert.equal(JSON.stringify(catalog).includes('역할 A만 아는 비밀'),false,'story catalog does not contain book secrets');
- assert.equal((await req(1,'/api/editor/own/'+id)).status,403,'non-owner cannot download a case manuscript');
+ assert.equal((await req(1,'/api/editor/own/'+id)).status,401,'non-owner cannot download a case manuscript');
+ const otherBrowser=await fetch(base+'/api/editor/own/'+id,{headers:{Authorization:auth}});
+ assert.equal(otherBrowser.status,200,'operator access survives a new player session');
  const authorDraft=await req(0,'/api/editor/own/'+id);
  assert.equal(authorDraft.status,200);
  assert.equal(authorDraft.data.game.booklets.alpha.culprit,true);
@@ -143,7 +148,7 @@ test('editor JSON import validation, creator-only secrets, room play, manual por
  assert.equal(descend.status,200);
  assert.equal(descend.data.map.floorId,'basement','explicit downstairs action leads to basement');
  const db=JSON.parse(fs.readFileSync(path.join(dir,'state.json'),'utf8'));
- assert.equal(db.customStories[id].owner,people[0].cookie.split('=')[1]);
+ assert.equal(db.customStories[id].owner,'server-operator');
  assert.equal(db.rooms[code].mapPositions[selected.data.me].floor,'basement');
  assert.equal(db.rooms[code].doorStates['ground:locked1'].open,true);
 });

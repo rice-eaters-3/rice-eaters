@@ -5,6 +5,7 @@ const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
+const {requireOperator}=require('./private/studio-auth.js');
 const d1Case = require('./mystery-content/d1-gaming.case.json');
 const actionEngine = require('./mystery-content/action-engine.js');
 const endingEngine = require('./apps/murder-mystery/ending-engine.js');
@@ -436,34 +437,28 @@ function roomCode(){
   do{id=Array.from(crypto.randomBytes(6),b=>alphabet[b%alphabet.length]).join('')}while(db.rooms[id]);
   return id;
 }
-function localAuthorRequest(req){
-  const host=String(req.headers.host||'');
-  const remote=req.socket.remoteAddress||'';
-  return ['127.0.0.1','::1','::ffff:127.0.0.1'].includes(remote)&&
-    /^(localhost|127\.0\.0\.1|\[::1\]):[0-9]{1,5}$/.test(host)&&
-    !req.headers['x-forwarded-for']&&!req.headers['cf-connecting-ip']&&
-    !req.headers['x-forwarded-proto']&&!req.headers['x-forwarded-host'];
-}
 function validateOrigin(req){
   const origin=req.headers.origin;
   if(origin && origin!==('http://'+req.headers.host) && origin!==('https://'+req.headers.host)) fail(403,'다른 출처의 요청은 허용되지 않습니다.');
 }
 async function api(req,res,url,sid){
   const pathname=url.pathname;
+  if(pathname==='/api/editor'||pathname.startsWith('/api/editor/')){
+    requireOperator(req,res);
+    if(!['GET','HEAD'].includes(req.method)){validateOrigin(req);if(req.headers['sec-fetch-site']==='cross-site')fail(403,'다른 출처의 요청은 허용되지 않습니다.');}
+  }
   if(req.method==='GET'&&pathname==='/api/stories')
     return json(res,200,{stories:[...STORIES,...Object.values(db.customStories).map(v=>v.story)].map(publicStory)});
   // Preview sources contain every character secret and clue back. Expose them
-  // only to the author on loopback; never to public Cloudflare visitors.
+  // only after operator authentication, including through a public tunnel.
   if(req.method==='GET'&&pathname==='/api/editor/test-library'){
-    if(!localAuthorRequest(req))fail(403,'테스트용 비밀 원고는 localhost에서만 열 수 있습니다.');
     const builtins=STORIES.map(s=>({id:s.id,title:s.title,players:s.players,source:'built-in'}));
-    const own=Object.entries(db.customStories).filter(([,v])=>v.owner===sid)
+    const own=Object.entries(db.customStories)
       .map(([id,v])=>({id,title:v.story.title,players:v.story.players,source:'published'}));
     return json(res,200,{stories:[...builtins,...own]});
   }
   const testCase=pathname.match(/^\/api\/editor\/test-case\/([a-z0-9-]+)$/);
   if(req.method==='GET'&&testCase){
-    if(!localAuthorRequest(req))fail(403,'테스트용 비밀 원고는 localhost에서만 열 수 있습니다.');
     const storyId=testCase[1],story=STORIES.find(s=>s.id===storyId);
     if(story){
       const game=privateMysteries[storyId];
@@ -471,13 +466,12 @@ async function api(req,res,url,sid){
       return json(res,200,{format:'rice-mystery-v1',story,game,spawn:game.spawn||game.floorplan?.spawn||{}});
     }
     const entry=db.customStories[storyId];
-    if(!entry||entry.owner!==sid)fail(403,'자신이 등록한 시나리오만 테스트할 수 있습니다.');
+    if(!entry)fail(404,'등록된 시나리오가 없습니다.');
     return json(res,200,{format:'rice-mystery-v1',story:entry.story,
       game:entry.game,spawn:entry.game.spawn||{}});
   }
   if(req.method==='POST'&&pathname==='/api/editor/test-validate'){
     validateOrigin(req);
-    if(!localAuthorRequest(req))fail(403,'시나리오 사전 검증은 localhost 제작자만 사용할 수 있습니다.');
     const payload=await requestBody(req,2*1024*1024);
     const pkg=(()=>{try{return validateMystery(payload.package)}catch(e){fail(400,e.message)}})();
     // Return the validated temporary copy for preview only: do not publish or persist.
@@ -486,24 +480,20 @@ async function api(req,res,url,sid){
   if(req.method==='POST'&&pathname==='/api/editor/publish'){
     validateOrigin(req);
     // User-authored secrets must not be writable by anonymous internet visitors.
-    if(!localAuthorRequest(req))fail(403,'시나리오 발행은 로컬 PC의 localhost 주소에서만 허용됩니다.');
     const body=await requestBody(req,2*1024*1024);
-    if(Object.values(db.customStories).filter(v=>v.owner===sid).length>=20)fail(429,'계정당 시나리오 최대 20편');
     if(Object.keys(db.customStories).length>=80)fail(503,'서버 저장 가능 시나리오가 가득 찼습니다.');
     const parsed=(()=>{try{return validateMystery(body.package)}catch(e){fail(400,e.message)}})();
-    const id='custom-'+randomId(5),entry={owner:sid,story:{...parsed.story,id},game:{...parsed.game,spawn:parsed.spawn}};
+    const id='custom-'+randomId(5),entry={owner:'server-operator',story:{...parsed.story,id},game:{...parsed.game,spawn:parsed.spawn}};
     db.customStories[id]=entry;persist();logActivity('scenario_published',sid,{story:id});
     return json(res,201,{story:publicStory(entry.story),id});
   }
   if(req.method==='GET'&&pathname==='/api/editor/own'){
-    if(!localAuthorRequest(req))fail(403,'localhost 제작자만 원고를 열 수 있습니다.');
-    return json(res,200,{stories:Object.entries(db.customStories).filter(([id,v])=>v.owner===sid).map(([id,v])=>({id,title:v.story.title}))});
+    return json(res,200,{stories:Object.entries(db.customStories).map(([id,v])=>({id,title:v.story.title}))});
   }
   const editorId=pathname.match(/^\/api\/editor\/own\/([a-z0-9-]+)$/);
   if(req.method==='GET'&&editorId){
-    if(!localAuthorRequest(req))fail(403,'localhost 제작자만 원고를 열 수 있습니다.');
     const entry=db.customStories[editorId[1]];
-    if(!entry||entry.owner!==sid)fail(403,'제작자만 비공개 원고를 열람할 수 있습니다.');
+    if(!entry)fail(404,'등록된 시나리오가 없습니다.');
     return json(res,200,{format:'rice-mystery-v1',story:entry.story,game:entry.game,spawn:entry.game.spawn});
   }
   if(req.method==='GET'&&pathname==='/api/mars/data'){
@@ -1030,13 +1020,16 @@ function staticFile(req,res,url,sid){
   if(name.endsWith('/'))name+='index.html';
   const resolved=path.resolve(ROOT,'.'+name);
   if(!resolved.startsWith(ROOT+path.sep)||name.split('/').some(p=>['data','.git','node_modules','tests','.github','private','mystery-content'].includes(p))||['/server.js','/package.json','/Dockerfile','/.dockerignore','/.gitignore'].includes(name))fail(403,'접근할 수 없는 경로입니다.');
+  const protectedFile=path.relative(ROOT,resolved).split(path.sep).join('/');
+  const operatorFile=/^apps\/murder-mystery\/(?:editor\.(?:html|js|css)|test\.(?:html|css)|test-(?:ui|engine)\.js)$/.test(protectedFile);
+  if(operatorFile)requireOperator(req,res);
   const ext=path.extname(resolved).toLowerCase();
   if(!MIME[ext])fail(404,'지원하지 않는 파일입니다.');
   let stat;
   try{stat=fs.statSync(resolved)}catch(e){fail(404,'파일을 찾을 수 없습니다.')}
   if(!stat.isFile())fail(404,'파일을 찾을 수 없습니다.');
   if(ext==='.html')logActivity('page_view',sid,{page:name});
-  res.writeHead(200,{'Content-Type':MIME[ext],'Content-Length':stat.size,'X-Content-Type-Options':'nosniff','Cache-Control':ext==='.html'?'no-store':'public, max-age=120'});
+  res.writeHead(200,{'Content-Type':MIME[ext],'Content-Length':stat.size,'X-Content-Type-Options':'nosniff','Cache-Control':operatorFile||ext==='.html'?'no-store':'public, max-age=120'});
   if(req.method==='HEAD'){res.end();return;}
   fs.createReadStream(resolved).pipe(res);
 }

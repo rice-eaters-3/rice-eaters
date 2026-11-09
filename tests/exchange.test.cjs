@@ -35,14 +35,16 @@ function mystery(){
 test('private clue sharing, transfer consent, ownership, same-tile expiration and stage votes',async t=>{
   const dataDir=fs.mkdtempSync(path.join(os.tmpdir(),'mystery-shares-'));
   process.env.DATA_DIR=dataDir;
-  const {handler}=require('../server.js');
+  process.env.STUDIO_ADMIN_PASSWORD=require('node:crypto').randomBytes(32).toString('hex');
+ const auth='Basic '+Buffer.from('operator:'+process.env.STUDIO_ADMIN_PASSWORD).toString('base64');
+ const {handler}=require('../server.js');
   const server=http.createServer(handler);
   await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
   t.after(async()=>{server.closeAllConnections();await new Promise(resolve=>server.close(resolve));
     fs.rmSync(dataDir,{recursive:true,force:true})});
   const base='http://127.0.0.1:'+server.address().port,people=[{cookie:''},{cookie:''},{cookie:''}];
   async function req(id,route,method='GET',data){
-    const headers={};if(people[id].cookie)headers.Cookie=people[id].cookie;
+    const headers={};if(id===0&&route.startsWith('/api/editor/'))headers.Authorization=auth;if(people[id].cookie)headers.Cookie=people[id].cookie;
     if(data!==undefined)headers['Content-Type']='application/json';
     const result=await fetch(base+route,{method,headers,body:data===undefined?undefined:JSON.stringify(data)});
     const cookie=result.headers.get('set-cookie');if(cookie)people[id].cookie=cookie.split(';')[0];
