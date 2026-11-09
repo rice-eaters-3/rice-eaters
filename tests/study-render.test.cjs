@@ -35,6 +35,17 @@ test('RPG screen: map is main, 7-chapter booklet is paged, cards reveal only aut
   const map=view.render(room);
   assert.ok(map.includes('mapTiles'),'map is shown first');
   assert.ok(map.includes('door-closed'),'a closed door has a distinct tile style');
+  assert.ok(map.includes('data-blocked="벽"'),'walls clearly marked');
+  assert.ok(map.includes('data-blocked="닫힌 문"'),'closed door explains blocked movement');
+  assert.ok(map.includes('current-position'),'own tile highlighted');
+  assert.ok(map.includes('data-action="map-center"'),'own location can be centered');
+  const furnished={...room,map:{...room.map,doors:[],objects:[{x:2,y:1,name:'책상',solid:true}]}};
+  assert.ok(view.render(furnished).includes('data-blocked="가구"'),'solid objects mark blocked movement');
+  furnished.map.objects[0].solid=false;
+  assert.ok(!view.render(furnished).includes('data-blocked="가구"'),'decorative objects stay traversable');
+  const crowded={...room,map:{...room.map,doors:[],avatars:[...room.map.avatars,...['p2','p3','p4'].map(id=>({id,name:id,x:2,y:1}))]}};
+  assert.ok(view.render(crowded).includes('data-blocked="정원 초과"'),'capacity includes other players only');
+
   assert.ok(map.includes('data-door-action="open"'),'adjacent player may open a closed door');
   assert.ok(!map.includes('PRIVATE DOSSIER'),'book is initially closed');
   assert.ok(map.includes('data-direction="up"'),'directional controls shown');
@@ -134,13 +145,13 @@ test('RPG screen: map is main, 7-chapter booklet is paged, cards reveal only aut
   assert.ok(waiting.slice(at,at+115).includes('disabled'),'whisper disabled while separate');
   // The partial UI update must refresh whisper controls, not only sprite locations.
   let swapped='';
-  const tile={innerHTML:''};
+  const tile={innerHTML:'',style:{},setAttribute(){}};
   const document={
     getElementById:id=>id==='adventureRoot'?{}:id==='mapTiles'?tile:
       id==='whisperPanel'?{replaceWith:node=>{swapped=node.innerHTML||node.html||''}}:null,
     querySelector:()=>null,
     createElement:()=>({
-      set innerHTML(v){this.firstElementChild={innerHTML:v,html:v};},
+      set innerHTML(v){this.firstElementChild={innerHTML:v,html:v,style:{cssText:''}};},
       firstElementChild:null
     })
   };

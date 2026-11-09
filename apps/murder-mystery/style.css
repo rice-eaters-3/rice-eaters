@@ -579,3 +579,18 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(-
 .clue-modal-footer .btn{flex:1;min-height:44px;white-space:normal}
 .research-frame .research-status{margin:8px 0 12px;min-height:32px;font-size:12px}
 @media(max-width:560px){.clue-modal-root{padding:8px}.clue-modal{padding:12px;max-height:96vh}.clue-modal-card{min-height:290px}.clue-modal-front h3{font-size:21px}}
+
+/* Stable square cells: viewport size changes the scroll area, never tile geometry. */
+.big-map{display:block;min-height:0;max-height:65vh;max-height:65dvh;padding:12px;overscroll-behavior:contain;scrollbar-width:auto;scrollbar-gutter:stable;touch-action:pan-x pan-y;overflow:auto}
+.big-map .map-tiles{grid-template-columns:repeat(var(--map-width),var(--tile-size,44px));grid-auto-rows:var(--tile-size,44px);width:max-content;max-width:none;margin:0 auto;box-sizing:content-box}
+.big-map .map-tile{width:var(--tile-size,44px);height:var(--tile-size,44px);min-width:0;min-height:0;box-sizing:border-box}
+.map-toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:14px}
+.map-toolbar button{min-height:44px;touch-action:manipulation}
+.map-toolbar output{min-width:46px;text-align:center;font-variant-numeric:tabular-nums}
+.map-legend{display:flex;flex-wrap:wrap;gap:6px 14px;margin:10px 0;color:#e5d5b9;font-size:12px}
+.map-tile.movement-blocked::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(135deg,#10152177 0 3px,transparent 3px 8px);pointer-events:none;z-index:2}
+.tile-blocked-marker{position:absolute;bottom:1px;left:1px;z-index:5;min-width:15px;padding:1px 2px;border-radius:3px;background:#201c26;color:#ffe1cb;border:1px solid #d8ab8b;font:700 10px/1.1 sans-serif;pointer-events:none}
+.tile-me-marker{position:absolute;top:0;right:0;z-index:7;background:#ecda91;color:#20252c;border-radius:3px;padding:2px;font:800 11px/1 sans-serif;pointer-events:none}
+.world-tiles .map-tile.current-position{outline:3px solid #fff0a6;outline-offset:-3px;z-index:3}
+.map-scroller:focus-visible,.map-toolbar button:focus-visible{outline:3px solid #fff0a6;outline-offset:3px}
+@media(max-width:680px){.map-toolbar{gap:5px}.map-toolbar button{padding:8px}.big-map{padding:8px;max-height:55vh;max-height:55dvh}.map-legend{font-size:11px}.map-controls{justify-content:flex-start}.map-controls .dpad .btn{min-height:48px}}
