@@ -6,10 +6,11 @@
     (typeof require==='function'?require('./ending-engine.js'):null);
   const ClueFront=root?.MysteryClueFront||
     (typeof require==='function'?require('./clue-front.js'):null);
-  const api=factory(Ending,ClueFront);
+  const Direction=root?.MysteryDirection||(typeof require==='function'?require('./map-direction.js'):null);
+  const api=factory(Ending,ClueFront,Direction);
   if(typeof module!=='undefined'&&module.exports)module.exports=api;
   if(root)root.MysteryTestEngine=api;
-})(typeof window!=='undefined'?window:null,function(Ending,ClueFront){
+})(typeof window!=='undefined'?window:null,function(Ending,ClueFront,Direction){
   const PHASES=['synopsis','characters','study','investigation1','discussion1','investigation2','discussion2','action','ending'];
   const PHASE_NAMES=['시놉시스','캐릭터 선택','캐릭터 숙지','1차 조사','1차 토론','2차 조사','2차 토론·최종 결정','행동 단계','결말'];
   const deep=value=>JSON.parse(JSON.stringify(value));
@@ -32,7 +33,7 @@
       const starting=normalized.spawn?.[c.id]||normalized.game.spawn?.[c.id]||{floor:normalized.game.floors[0].id,x:1,y:1};
       return [c.id,deep(starting)];
     }));
-    const state={pkg:normalized,phase:'synopsis',roleId:cast[0].id,positions,
+    const state={pkg:normalized,phase:'synopsis',roleId:cast[0].id,positions,facings:{},
       selected:{},tokens:Object.fromEntries(cast.map(c=>[c.id,0])),granted:{},discovered:{},
       holdings:[],collected:{},publicCards:{},selectiveShares:[],offers:[],reservations:{},
       doorStates:{},action:null,verdict:{arrestedCharacterId:null,goals:{}},statusOverrides:{},serial:1,notes:[],studyReady:{}};
@@ -81,13 +82,15 @@
     state.selectiveShares=state.selectiveShares.filter(s=>near(state,s.from)&&near(state,s.to));
     state.offers=state.offers.filter(s=>near(state,s.from)&&near(state,s.to));
   }
-  function move(state,direction){
+  function move(state,direction,turnOnly=false){
     if(!playPhases.includes(state.phase))error('지도 이동은 캐릭터 숙지부터 가능합니다.');
-    const offset={up:[0,-1],down:[0,1],left:[-1,0],right:[1,0]}[direction];
-    if(!offset)error('방향을 선택하세요.');
-    const old=position(state),next={floor:old.floor,x:old.x+offset[0],y:old.y+offset[1]};
+    if(!Direction.valid(direction))error('방향을 선택하세요.');
+    const old=position(state);
+    if(turnOnly){state.facings[state.roleId]=direction;return old;}
+    const [dx,dy]=Direction.directions[direction];
+    const next={floor:old.floor,x:old.x+dx,y:old.y+dy};
     canEnter(state,next,state.roleId);
-    state.positions[state.roleId]=next;clearTemporaryShares(state);return next;
+    state.positions[state.roleId]=next;state.facings[state.roleId]=direction;clearTemporaryShares(state);return next;
   }
   function interact(state,kind,arg,operation){
     if(!playPhases.includes(state.phase))error('현재 사용할 수 없는 타일입니다.');
@@ -101,7 +104,7 @@
     }
     if(kind==='door'){
       const door=floor.doors?.find(d=>d.id===arg);
-      if(!door||Math.abs(pos.x-door.x)+Math.abs(pos.y-door.y)>1)error('문 바로 옆에서만 상호작용할 수 있습니다.');
+      if(!door||!Direction.isAhead(pos,door,state.facings[state.roleId]))error('바라보는 바로 앞의 문만 조작할 수 있습니다.');
       const key=doorKey(floor.id,door.id),status=doorView(state,floor,door);
       if(operation==='open'){
         if(status.locked){
@@ -322,7 +325,7 @@
     const s=state.pkg.story,g=state.pkg.game,role=player(state),phase=state.phase;
     const member=rid=>id(rid),yourPos=position(state),floor=floorOf(state,yourPos);
     const players=s.characters.map(c=>({id:member(c.id),name:c.name,characterId:c.id,
-      position:state.positions[c.id],studyReady:!!state.studyReady[c.id],online:true}));
+      position:state.positions[c.id],facing:Direction.facing(state.facings[c.id]),studyReady:!!state.studyReady[c.id],online:true}));
     const book=g.booklets?.[role.id],booklet=playPhases.includes(phase)&&book?{
       basic:{...role},background:book.background||[],timeline:book.timeline||[],inventory:book.inventory||[],
       culprit:!!book.culprit,objectives:book.objectives||'',notes:book.notes||'',
@@ -340,7 +343,7 @@
       capacity:g.investigation?.maxTileOccupants||3,
       avatars:s.characters.filter(c=>state.positions[c.id]?.floor===floor.id)
         .map(c=>({id:member(c.id),name:c.name,characterId:c.id,characterName:c.name,
-          symbol:c.symbol,accent:c.accent,...state.positions[c.id]}))}:null;
+          symbol:c.symbol,accent:c.accent,facing:Direction.facing(state.facings[c.id]),...state.positions[c.id]}))}:null;
     const canInvestigate=investigationPhases.includes(phase);
     const frontTitles=ClueFront.labels(cards(state),s.characters,g.floors);
     const sequence=ClueFront.sequenceAfter(cards(state),g.floors);

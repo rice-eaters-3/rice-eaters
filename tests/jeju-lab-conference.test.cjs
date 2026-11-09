@@ -106,6 +106,7 @@ test('studio simulation: locked professor suite, lobby key, two investigation st
   assert.ok(state.collected.seoha.some(c=>c.id==='prof_suite_key'));
   state.positions.seoha={floor:'upper',x:4,y:5};
   assert.equal(engine.roomView(state).map.rooms.some(r=>r.name==='교수 객실'),false);
+  engine.move(state,'up',true);
   engine.interact(state,'door','nw_door','open');
   view=engine.roomView(state);
   assert.ok(view.map.rooms.some(r=>r.name==='교수 객실'));

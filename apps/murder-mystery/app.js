@@ -118,7 +118,7 @@ function updateRoom(room,connection,force=false){
   if(room.clock)state.clockOffset=room.clock.serverNow-Date.now();
   if(old?.phase!==room.phase||old?.code!==room.code){
     castProgress=false;
-    window.MysteryStudy?.navigate('panel-close');
+    window.MysteryStudy?.navigate('dock-reset');
     window.MysteryStudy?.navigate('clue-close');
   }
   state.room=room;
@@ -141,7 +141,7 @@ function setRoom(room){
   if(room){routeRoom(room.code);updateRoom(room,state.connection,true);connectStream()}
   else{window.MysteryVoice?.disable();state.room=null;closeStream();stopPolling();history.replaceState(null,'','/mystery');render()}
 }
-async function moveMyPlayer(direction){
+async function moveMyPlayer(direction,turnOnly=false){
   if(!SOCIAL_PHASES.includes(state.room?.phase)||!state.room.map||state.moving||window.MysteryStudy.currentView()!=='map')return;
   if(!['up','down','left','right'].includes(direction))return;
   if(Date.now()-state.lastMoveAt<140)return;
@@ -149,7 +149,7 @@ async function moveMyPlayer(direction){
   state.moving=true;
   try{
     const code=state.room.code;
-    const updated=await api('/api/rooms/'+code+'/move','POST',{direction});
+    const updated=await api('/api/rooms/'+code+'/move','POST',{direction,turnOnly:turnOnly||window.MysteryStage.turnAtBlockedTile(state.room,direction)});
     if(state.room?.code===code)updateRoom(updated,state.connection);
   }catch(e){
     // Walls are an expected interaction: don't show a toast for every blocked step.
@@ -270,7 +270,7 @@ function synopsis(room){
 let castProgress=false;
 function characters(room){
   return window.MysteryStage.casting(room)+(castProgress?
-    '<section class="scene-panel" role="dialog" aria-label="단계 진행"><button class="btn panel-close" data-action="progress-toggle">닫기</button>'+roomHeader(room)+'</section>':'');
+    window.MysteryStage.panel('단계 진행',roomHeader(room),'progress-toggle'):'');
 }
 function preview(room){
   return roomHeader(room)+
@@ -452,7 +452,7 @@ $('app').addEventListener('click',e=>{
   if(button){perform(button.dataset.action,button);return;}
   if(window.MysteryStudy.currentView()==='map'){
     const direction=window.MysteryStage.tileDirection(e.target,state.room);
-    if(direction)moveMyPlayer(direction);
+    if(direction)moveMyPlayer(direction,window.MysteryStudy.activeDock()==='context');
   }
 });
 document.addEventListener('keydown',e=>{
@@ -464,8 +464,17 @@ document.addEventListener('keydown',e=>{
       if(e.key==='Enter'&&e.target?.tagName!=='BUTTON'){e.preventDefault();document.querySelector('.casting-description button:not(:disabled)')?.click();return;}
     }
     if(SOCIAL_PHASES.includes(state.room?.phase)&&!window.MysteryStudy.isModalOpen()){
-      if(e.key==='Escape'&&window.MysteryStudy.currentView()!=='map'){e.preventDefault();window.MysteryStudy.navigate('panel-close');render();return;}
-      const action=window.MysteryStage?.shortcuts[e.key.toLowerCase()];if(action){e.preventDefault();if(!e.repeat)$('app').querySelector('[data-action="'+action+'"]')?.click();return;}
+      if(e.key==='Escape'&&(window.MysteryStudy.currentView()!=='map'||window.MysteryStudy.activeDock())){e.preventDefault();window.MysteryStudy.navigate('panel-close');render();return;}
+      const action=window.MysteryStage?.shortcuts[e.key.toLowerCase()];
+      if(action){
+        e.preventDefault();
+        if(!e.repeat){
+          const button=$('app').querySelector('[data-action="'+action+'"]');
+          if(button)button.click();
+          else if(action==='voice-mic'||action==='voice-speaker')perform(action);
+        }
+        return;
+      }
     }
   }
   if(e.key==='Escape'&&window.MysteryStudy?.isModalOpen?.()){
@@ -482,8 +491,8 @@ document.addEventListener('keydown',e=>{
     const tag=e.target?.tagName?.toLowerCase();
     if(!['input','textarea','select'].includes(tag)&&!e.target?.isContentEditable){
       const direction={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right',
-        w:'up',a:'left',s:'down',d:'right'}[e.key];
-      if(direction){e.preventDefault();moveMyPlayer(direction);return;}
+        w:'up',a:'left',s:'down',d:'right'}[e.key.length===1?e.key.toLowerCase():e.key];
+      if(direction){e.preventDefault();moveMyPlayer(direction,e.shiftKey);return;}
     }
   }
   if(e.key==='Enter'&&e.target.id==='roomCode'){

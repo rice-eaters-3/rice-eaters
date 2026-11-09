@@ -114,12 +114,20 @@ test('editor JSON import validation, creator-only secrets, room play, manual por
  // Walk through a locked door is forbidden even though tile is floor.
  const blocked=await post(1,'/api/rooms/'+code+'/move',{direction:'left'});
  assert.equal(blocked.status,409,'locked door cannot be traversed');
+ assert.equal((await post(1,'/api/rooms/'+code+'/interact',{kind:'door',doorId:'locked1'})).status,409,
+   'a nearby door cannot be opened from another facing');
+ const turn=await post(1,'/api/rooms/'+code+'/move',{direction:'left',turnOnly:true});
+ assert.equal(turn.status,200);
+ assert.equal(turn.data.players.find(p=>p.id===turn.data.me).facing,'left');
+ assert.deepEqual(turn.data.players.find(p=>p.id===turn.data.me).position,{floor:'ground',x:3,y:1});
  assert.equal((await post(1,'/api/rooms/'+code+'/interact',{kind:'door',doorId:'locked1'})).status,403,
    'player without key cannot unlock');
+ assert.equal((await post(0,'/api/rooms/'+code+'/move',{direction:'right',turnOnly:true})).status,200);
  const door=await post(0,'/api/rooms/'+code+'/interact',{kind:'door',doorId:'locked1'});
  assert.equal(door.status,200,'key holder unlocks adjacent door');
  assert.equal(door.data.map.doors[0].locked,false);
  assert.equal(door.data.map.doors[0].open,true);
+ await new Promise(ok=>setTimeout(ok,140));
  assert.equal((await post(1,'/api/rooms/'+code+'/move',{direction:'left'})).status,200,
    'open door can be walked through');
  assert.equal((await post(0,'/api/rooms/'+code+'/interact',

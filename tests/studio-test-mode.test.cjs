@@ -82,7 +82,7 @@ test('clue ownership, prerequisites, two rounds, reservations and secrecy work a
  assert.equal(E.roomView(s).investigation.cards.find(c=>c.id==='alpha_note').revealed.length,1);
  E.switchRole(s,'beta');
  E.reserve(s,'key_card');E.investigate(s,'key_card');
- E.interact(s,'door','vault','open');
+ E.move(s,'right',true);E.interact(s,'door','vault','open');
  E.move(s,'right');
  E.switchRole(s,'alpha');
  assert.equal(E.roomView(s).investigation.cards.find(c=>c.id==='alpha_note').revealed.length,0,
@@ -107,9 +107,10 @@ test('tile collision, lock requirements, floor portals and persistent viewpoints
  const s=E.create(makeCase());E.switchPhase(s,'study');
  assert.throws(()=>E.move(s,'down'),/가구/);
  assert.throws(()=>E.move(s,'right'),/닫힌 문/);
+ E.move(s,'right',true);
  assert.throws(()=>E.interact(s,'door','vault','open'),/열쇠/);
  E.switchPhase(s,'investigation1');E.reserve(s,'key_card');E.investigate(s,'key_card');
- E.interact(s,'door','vault','open');
+ E.move(s,'right',true);E.interact(s,'door','vault','open');
  E.move(s,'right');assert.deepEqual(E.position(s),{floor:'ground',x:2,y:1});
  E.move(s,'right');E.move(s,'down');
  E.interact(s,'portal',0);

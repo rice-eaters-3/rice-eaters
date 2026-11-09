@@ -287,10 +287,12 @@ test('server: four-player mystery flow, persistence, and Mars save endpoints',as
   await walk(0,['right','down','down','right']);
   assert.equal((await post(clients[0],'/api/rooms/'+code+'/move',{direction:'down'})).status,409,
     'a closed but unlocked dining door still blocks movement');
+  assert.equal((await post(clients[0],'/api/rooms/'+code+'/move',{direction:'down',turnOnly:true})).status,200);
   const openDining=await post(clients[0],'/api/rooms/'+code+'/interact',
     {kind:'door',doorId:'dining-door',doorAction:'open'});
   assert.equal(openDining.status,200,'any nearby player may open an unlocked door');
   assert.equal(openDining.data.map.doors.find(d=>d.id==='dining-door').open,true);
+  await new Promise(ok=>setTimeout(ok,140));
   await walk(0,['down','down','down','down']);
   await walk(2,['right']);
   const joinedPos=(await call(clients[0],'/api/rooms/'+code)).data.players;
