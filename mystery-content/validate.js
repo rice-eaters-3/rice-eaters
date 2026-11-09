@@ -1,7 +1,7 @@
 'use strict';
 // Strict JSON import boundary: no eval, HTML, executable scripts, external URLs,
 // unsafe file paths or prototype-dependent keys. Metadata is copied to plain objects.
-const artThemes=new Set(['d1-crown-of-ashes','cruel-heart-island','neon-memory-quarantine','stellar-academy-first-case']);
+const artThemes=new Set(['d1-crown-of-ashes','cruel-heart-island','neon-memory-quarantine','stellar-academy-first-case','jeju-lab-conference']);
 const id=/^[a-z][a-z0-9_-]{0,35}$/;
 const text=(s,max=160)=>typeof s==='string'?s.trim().slice(0,max):'';
 const obj=x=>x&&typeof x==='object'&&!Array.isArray(x)?x:{};
