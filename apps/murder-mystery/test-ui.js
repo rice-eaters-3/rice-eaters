@@ -155,10 +155,16 @@ function render(){
       '</select>'+btn('test-set-status','이 캐릭터 상태 적용','btn btn-outline')+'</div></section>'+body;
   }
   $('testStage').dataset.story=room.story?.artTheme||room.story?.id||'';
-  window.MysteryStage.rememberMap();
   $('testStage').innerHTML=body;
   window.MysteryStage?.mount();
   updateClock();
+}
+function moveOnMap(direction){
+  engine.move(state,direction);
+  const room=engine.roomView(state);
+  window.MysteryRoomState.room=room;
+  if(!window.MysteryStudy.patch(room)){render();return;}
+  meta();updateClock();
 }
 function requireHolding(button){
   const el=button.closest('[data-holding-card]'),holdingId=button.dataset.holding||el?.dataset.holdingCard;
@@ -204,7 +210,7 @@ function runAction(button){
   if(['book-toggle','research-toggle','book-prev','book-next','book-chapter'].includes(action)){
     window.MysteryStudy.navigate(action,button.dataset.chapter);render();return;
   }
-  if(action==='move'){engine.move(state,button.dataset.direction);render();return;}
+  if(action==='move'){moveOnMap(button.dataset.direction);return;}
   if(action==='interact'){
     engine.interact(state,button.dataset.kind,button.dataset.kind==='portal'?Number(button.dataset.index):button.dataset.door,button.dataset.doorAction);
     render();return;
@@ -266,7 +272,7 @@ $('testStage').addEventListener('click',event=>{
     if(button)runAction(button);
     else if(window.MysteryStudy.currentView()==='map'){
       const direction=window.MysteryStage.tileDirection(event.target,window.MysteryRoomState.room);
-      if(direction){engine.move(state,direction);render();}
+      if(direction)moveOnMap(direction);
     }
   }catch(e){note('테스트 동작: '+e.message,true);
     if(button?.dataset.action==='interact')window.alert('액션을 수행할 수 없습니다.\n'+e.message);}
@@ -312,7 +318,7 @@ document.addEventListener('keydown',event=>{
   }
   const dir={arrowup:'up',w:'up',arrowdown:'down',s:'down',arrowleft:'left',a:'left',arrowright:'right',d:'right'}[key];
   if(dir&&window.MysteryStudy.currentView()==='map'){
-    event.preventDefault();try{engine.move(state,dir);render()}catch(e){note(e.message,true)}
+    event.preventDefault();try{moveOnMap(dir)}catch(e){note(e.message,true)}
   }
 });
 setInterval(updateClock,1000);
