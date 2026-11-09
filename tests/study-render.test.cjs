@@ -75,7 +75,7 @@ test('RPG screen: map is main, 7-chapter booklet is paged, cards reveal only aut
     ]}};
   const mapWithResearch=view.render(investigation);
   assert.ok(mapWithResearch.includes('조사 토큰'));
-  assert.ok(mapWithResearch.includes('🔎 서재 1'),'map action uses anonymous place label');
+  assert.ok(mapWithResearch.includes('<strong>서재 1</strong>'),'map action uses anonymous place label');
   assert.ok(mapWithResearch.includes('조사 가능 정보 확인 (R)'));
   assert.ok(!mapWithResearch.includes('research-card'),'map view no longer permanently renders card list');
   sandbox.window.MysteryRoomState.room=investigation;
@@ -112,20 +112,27 @@ test('RPG screen: map is main, 7-chapter booklet is paged, cards reveal only aut
     collected:[]
   }};
   const exchangeView=view.render(ownCase);
-  for(const action of ['card-public','card-share','exchange-offer','exchange-reply','exchange-cancel'])
+  assert.doesNotMatch(exchangeView,/data-action="card-public"|data-action="card-share"/);
+  for(const action of ['exchange-offer','exchange-reply','exchange-cancel'])
     assert.ok(exchangeView.includes('data-action="'+action+'"'),action+' control is visible');
   assert.ok(exchangeView.includes('tokenTransferTarget'),'token transfer target selector exists');
   assert.ok(!exchangeView.includes('양도 전 비밀 &lt;important&gt;'),'the holding grid also stays front-only');
   const ownedRoom={...ownCase,investigation:{...ownCase.investigation,cards:ownCase.investigation.cards.map(c=>
     c.id==='desk'?{...c,title:'조사한 편지',heldByMe:1,revealed:[{back:'양도 전 비밀 <important>'}]}:c)}};
   sandbox.window.MysteryRoomState.room=ownedRoom;
-  view.navigate('clue-open','desk');view.navigate('clue-flip');
+  view.navigate('clue-open','desk','holding1');
+  const holdingModal=view.render(ownedRoom);
+  assert.match(holdingModal,/data-holding-card="holding1"/);
+  assert.match(holdingModal,/data-action="card-public"/);
+  assert.match(holdingModal,/data-action="card-share"/);
+  assert.doesNotMatch(holdingModal,/양도 전 비밀/);
+  view.navigate('clue-flip');
   assert.ok(view.render(ownedRoom).includes('양도 전 비밀 &lt;important&gt;'),
     'authorized holding reverse must be escaped in modal');
   view.navigate('clue-close');
   const noTrades={...ownCase,phase:'discussion1',investigation:{...ownCase.investigation,canInvestigate:false}};
   const readOnly=view.render(noTrades);
-  assert.ok(readOnly.includes('조사한 편지'),'owned cards remain readable in discussion');
+  assert.ok(readOnly.includes('data-holding="holding1"'),'owned cards remain readable in discussion');
   assert.ok(!readOnly.includes('data-action="card-public"'),'sharing controls unavailable outside an investigation');
 
   view.navigate('book-toggle');
@@ -201,7 +208,9 @@ test('full-screen play and casting render from the studio room view without expo
       {id:'back',name:'뒷문',x:p.x,y:p.y-1,open:false}]}};
     study.navigate('context-toggle');
     const context=study.render(twoDoors);
-    assert.match(context,/id="hudUtility"/);
+    assert.match(context,/left-utility.*id="hudUtility".*class="game-dock".*aria-label="음성 참여자"/s);
+    assert.match(context,/id="sceneLocation".*바라보는 중/);
+    assert.doesNotMatch(context,/class="map-room-name/);
     assert.match(context,/data-door="front"/);
     assert.doesNotMatch(context,/data-door="back"|class="scene-panel"/);
     study.navigate('whisper-toggle');assert.match(study.render(room),/id="hudUtility".*id="whisperPanel"/s);
@@ -216,4 +225,28 @@ test('full-screen play and casting render from the studio room view without expo
     study.navigate('research-toggle');assert.match(study.render(room),/catalog-only/);
     study.navigate('panel-close');
   }
+});
+
+test('stage guide opens once per phase and consequential card actions require confirmation',()=>{
+  let dialog=null,opened=0;
+  const prompts=[];
+  const sandbox={window:{confirm:message=>{prompts.push(message);return false;}},setTimeout:()=>1,clearTimeout(){},
+    document:{getElementById:()=>dialog,querySelector:()=>null,body:{classList:{toggle(){},contains(){return false;}},
+      append(node){dialog=node;}},createElement:()=>({setAttribute(){},showModal(){opened++;},close(){},remove(){dialog=null;},addEventListener(){}})}};
+  vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../apps/murder-mystery/stage.js'),'utf8'),sandbox);
+  const stage=sandbox.window.MysteryStage;
+  const room={code:'ABCDEF',story:{id:'test'},phase:'characters',players:[{id:'guest',name:'게스트'}],
+    investigation:{tokens:3,myCards:[{id:'h1',title:'편지'}],incomingOffers:[{id:'o1',type:'token',amount:2,fromName:'게스트'}]}};
+  stage.mount(room,1);assert.equal(opened,0);
+  room.phase='study';stage.mount(room,2);stage.mount(room,2);assert.equal(opened,1);
+  assert.match(dialog.innerHTML,/캐릭터 숙지.*I 키/s);
+  room.phase='investigation1';stage.mount(room,3);assert.equal(opened,2);
+  assert.match(dialog.innerHTML,/1차 조사.*E 키/s);
+  assert.equal(stage.confirmAction(room,'card-share',{holdingId:'h1',toId:'guest'}),false);
+  assert.equal(stage.confirmAction(room,'card-public',{holdingId:'h1'}),false);
+  assert.equal(stage.confirmAction(room,'exchange-offer',{type:'token',toId:'guest',amount:2}),false);
+  assert.equal(stage.confirmAction(room,'exchange-reply',{offerId:'o1',accept:true}),false);
+  assert.equal(stage.confirmAction(room,'clue-investigate'),false);
+  assert.match(prompts.join('\n'),/게스트님에게 선택 공개.*영구 공개.*조사 토큰 2개.*양도를 수락.*조사 토큰 1개/s);
+  assert.throws(()=>stage.confirmAction(room,'exchange-offer',{type:'token',toId:'guest',amount:4}),/보유 토큰/);
 });

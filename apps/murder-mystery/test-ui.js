@@ -156,7 +156,7 @@ function render(){
   }
   $('testStage').dataset.story=room.story?.artTheme||room.story?.id||'';
   $('testStage').innerHTML=body;
-  window.MysteryStage?.mount();
+  window.MysteryStage?.mount(room,phaseStart);
   updateClock();
 }
 function nextStageControl(){
@@ -206,10 +206,11 @@ function runAction(button){
   if(['map-zoom-in','map-zoom-out','map-center'].includes(action)){window.MysteryStudy.navigate(action);return;}
   if(action==='cast-preview'){window.MysteryStage.preview(button.dataset.character,window.MysteryRoomState.room);render();return;}
   if(action==='progress-toggle'&&state.phase==='characters'){castProgress=!castProgress;render();return;}
+  if(action==='local-page'){window.MysteryStudy.navigate(action,button.dataset.chapter);render();return;}
   if(['inventory-toggle','context-toggle','whisper-toggle','progress-toggle','panel-close'].includes(action)){window.MysteryStudy.navigate(action);render();return;}
   if(['voice-mic','voice-speaker'].includes(action)){note('테스트 모드에서는 음성 통화를 연결하지 않습니다. 실제 게임에서 확인하세요.');return;}
   if(['clue-open','clue-flip','clue-close'].includes(action)){
-    window.MysteryStudy.navigate(action,button.dataset.card);render();return;
+    window.MysteryStudy.navigate(action,button.dataset.card,button.dataset.holding);render();return;
   }
   if(['book-toggle','research-toggle','book-prev','book-next','book-chapter'].includes(action)){
     window.MysteryStudy.navigate(action,button.dataset.chapter);render();return;
@@ -223,6 +224,7 @@ function runAction(button){
     state.studyReady[state.roleId]=true;note('숙지 완료 처리됨 (현재 캐릭터만).');render();return;
   }
   if(action==='clue-investigate'){
+    if(!window.MysteryStage.confirmAction(window.MysteryRoomState.room,action))return;
     const cardId=button.dataset.card;
     if(state.reservations[cardId]!==state.roleId)engine.reserve(state,cardId);
     engine.investigate(state,cardId);
@@ -235,26 +237,33 @@ function runAction(button){
   if(action==='release'){engine.release(state,currentReserved());render();return;}
   if(action==='investigate'){
     const c=currentReserved();if(!c)throw Error('먼저 조사를 진행할 카드를 선택하세요.');
+    if(!window.MysteryStage.confirmAction(window.MysteryRoomState.room,action))return;
     engine.investigate(state,c);note('조사 완료 · 해당 캐릭터의 토큰 1개가 소모되었습니다.');render();return;
   }
-  if(action==='card-public'){engine.publicShare(state,requireHolding(button));note('전체 공개 완료 · 모든 캐릭터에게 영구 공개됩니다.');render();return;}
+  if(action==='card-public'){
+    const holdingId=requireHolding(button);
+    if(!window.MysteryStage.confirmAction(window.MysteryRoomState.room,action,{holdingId}))return;
+    engine.publicShare(state,holdingId);note('전체 공개 완료 · 모든 캐릭터에게 영구 공개됩니다.');render();return;
+  }
   if(action==='card-share'){
     const holding=requireHolding(button),target=button.closest('[data-holding-card]')?.querySelector('select[data-share-target]')?.value;
+    if(!window.MysteryStage.confirmAction(window.MysteryRoomState.room,action,{holdingId:holding,toId:target}))return;
     engine.share(state,holding,roleFromPlayerId(target));note('같은 타일에서만 보이는 선택 공개를 적용했습니다.');render();return;
   }
   if(action==='card-unshare'){engine.unshare(state,requireHolding(button),roleFromPlayerId(button.dataset.target));render();return;}
   if(action==='exchange-offer'){
-    const kind=button.dataset.exchangeType;
-    if(kind==='card'){
-      const holder=button.closest('[data-holding-card]'),target=holder?.querySelector('select[data-share-target]')?.value;
-      engine.makeOffer(state,'card',requireHolding(button),roleFromPlayerId(target));
-    }else if(kind==='token'){
-      engine.makeOffer(state,'token',null,roleFromPlayerId($('tokenTransferTarget')?.value),Number($('tokenTransferAmount')?.value));
-    }else throw Error('지원하지 않는 양도 방식입니다.');
+    const type=button.dataset.exchangeType;
+    if(!['card','token'].includes(type))throw Error('지원하지 않는 양도 방식입니다.');
+    const holdingId=type==='card'?requireHolding(button):null;
+    const toId=type==='card'?button.closest('[data-holding-card]')?.querySelector('[data-share-target]')?.value:$('tokenTransferTarget')?.value;
+    const amount=type==='token'?Number($('tokenTransferAmount')?.value):null;
+    if(!window.MysteryStage.confirmAction(window.MysteryRoomState.room,action,{type,holdingId,toId,amount}))return;
+    engine.makeOffer(state,type,holdingId,roleFromPlayerId(toId),amount);
     note('양도 요청을 보냈습니다. 받는 캐릭터 시점으로 변경해 수락 또는 거절을 테스트하세요.');render();return;
   }
   if(action==='exchange-reply'){
     const accept=button.dataset.accept==='true';
+    if(!window.MysteryStage.confirmAction(window.MysteryRoomState.room,action,{offerId:button.dataset.offerId,accept}))return;
     engine.replyOffer(state,button.dataset.offerId,accept);note(accept?'양도가 완료되었습니다.':'양도를 거절했습니다.');render();return;
   }
   if(action==='exchange-cancel'){
@@ -297,6 +306,7 @@ $('testMeta').addEventListener('click',event=>{
   const btn=event.target.closest('[data-test-focus]');if(btn)roleTo(btn.dataset.testFocus);
 });
 document.addEventListener('keydown',event=>{
+  if(document.getElementById('phaseIntro')?.open)return;
   if(state&&!event.altKey&&!event.metaKey&&!event.ctrlKey&&!['INPUT','TEXTAREA','SELECT'].includes(event.target?.tagName)&&!event.target?.isContentEditable){
     if(state.phase==='characters'&&(event.key.toLowerCase()==='p'||(event.key==='Escape'&&castProgress))){event.preventDefault();castProgress=!castProgress;render();return;}
     if(state.phase==='characters'&&castProgress)return;

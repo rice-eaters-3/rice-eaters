@@ -693,18 +693,41 @@ kbd{font:600 10px monospace;border:1px solid #a5946a;border-radius:4px;padding:2
 .game-dock .hud-button:focus-visible,.scene-hint .btn:focus-visible{outline:2px solid #ebc77d;outline-offset:2px}
 @media(prefers-reduced-motion:reduce){.game-dock .hud-button{transition:none}}
 
-/* The right dock stays usable while the map remains interactive. */
-.game-dock>.hud-utility,.game-dock>.hud-voice{height:clamp(102px,16dvh,142px)}
-.hud-utility{min-width:0;display:grid;grid-template-rows:auto minmax(0,1fr);gap:4px}
-.hud-utility>header{display:flex;align-items:center;justify-content:space-between;gap:8px;color:#eff5fa;font-size:13px}
-.hud-utility>header .btn{padding:4px 8px;color:#d1e6f2}
-.hud-utility-body{overflow:auto;min-height:0;overscroll-behavior:contain;padding:2px 8px 4px 0;scrollbar-width:thin}
-.hud-utility .surface{margin:4px 0;padding:8px;border:1px solid #3d5363;box-shadow:none;background:#142534}
-.hud-utility .host-advance{display:flex;flex-wrap:wrap;gap:6px}
-.hud-utility .host-advance p,.hud-utility .context-actions small{font-size:12px;line-height:1.4;margin:3px 0}
-.hud-utility .whisper-panel h3,.hud-utility .whisper-panel .eyebrow{display:none}
-.hud-utility .context-actions{gap:5px;margin:0 0 6px;padding:7px;border-color:#42596a;background:#182b3b}
-.hud-utility .facing-caption{width:100%}
+/* Local controls occupy a separate lane, leaving the floor and voice area visible. */
+.map-play-area{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr);min-height:0;min-width:0}
+.map-play-area.with-utility{grid-template-columns:minmax(220px,clamp(220px,24vw,360px)) minmax(0,1fr)}
+.left-utility{
+  align-self:end;display:grid;grid-template-rows:auto minmax(0,1fr);min-width:0;
+  max-height:calc(100% - 16px);margin:8px 0 8px 10px;padding:10px 12px;
+  background:#162638;border:1px solid #526a7b;border-radius:10px;
+}
+.left-utility>header{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px;color:#eff5fa;font-size:13px}
+.left-utility>header .btn{padding:4px 8px;color:#d1e6f2}
+.left-utility-body{overflow:auto;min-height:0;overscroll-behavior:contain;scrollbar-width:thin}
+.context-utility .left-utility-body{scrollbar-width:none}
+.left-utility .surface{margin:4px 0;padding:8px;border:1px solid #3d5363;box-shadow:none;background:#142534}
+.left-utility .host-advance{display:flex;flex-wrap:wrap;gap:6px}
+.left-utility .host-advance p,.left-utility .context-actions small{font-size:12px;line-height:1.4;margin:3px 0}
+.left-utility .whisper-panel h3,.left-utility .whisper-panel .eyebrow{display:none}
+.left-utility .context-actions{gap:5px;margin:0 0 6px;padding:6px;border-color:#42596a;background:#182b3b}
+.local-clues{display:grid;gap:5px}
+.local-clues>b{display:flex;justify-content:space-between;gap:6px;font-size:12px}
+.local-clues>b small{color:#abd6e7;font-size:11px}
+.local-clue{display:grid;gap:3px;text-align:left;white-space:normal;padding:5px 8px;background:#1a2c3d;color:#eef4f8;border:1px solid #516779}
+.local-clue small{font-size:10px;color:#b9c6d1}
+.local-clue.available{border-color:#84bdad;background:#203e3d}
+.local-clue.available small{color:#b0e9d9}
+.local-clue-pages{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#cedce5}
+.local-clue-pages button{padding:4px 9px}
+#sceneLocation{display:flex;flex-wrap:wrap;gap:3px 12px;align-items:center;font-size:12px}
+#sceneLocation strong{color:#f6f9fb}.scene-facing{color:#bfe0ef}
+.scene-controls{color:#a9bdc9;margin-left:auto}
+@media(max-width:740px){
+  .map-play-area.with-utility{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto}
+  .map-play-area.with-utility .scene-map{grid-row:1}
+  .map-play-area.with-utility .left-utility{grid-row:2;margin:4px 8px;max-height:min(33dvh,225px)}
+  .scene-controls{display:none}
+}
 .hud-actions .hud-button[aria-pressed="true"]{background:#244655;border-color:#91c8db;color:#f6fbff}
 .facing-caption{font-size:12px;color:#bfe0ef;font-weight:700}
 .map-facing{position:absolute;z-index:7;line-height:1;color:#f7f9fc;text-shadow:0 0 3px #0a1522,0 1px 3px #0a1522;font-size:clamp(9px,calc(var(--tile-size)*.38),17px);pointer-events:none}
@@ -718,4 +741,19 @@ kbd{font:600 10px monospace;border:1px solid #a5946a;border-radius:4px;padding:2
 }
 .research-frame .btn-clue-view:hover,.owned-clue .btn-clue-view:hover{color:#fff;background:#2b5271;border-color:#173047}
 .btn-clue-view:focus-visible{outline:2px solid #5792b6;outline-offset:2px}
-@media(max-width:1000px){.hud-utility{grid-column:1/-1}.game-dock>.hud-utility,.game-dock>.hud-voice{height:96px}}
+
+
+.owned-card-grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,170px),220px));align-items:start}
+.owned-card-grid .research-frame{min-height:190px}
+.token-trade summary{cursor:pointer;font-weight:700;color:#eef5f9}
+.holding-actions{display:flex;flex-wrap:wrap;align-items:end;gap:8px;border-top:1px solid #4f6273;padding-top:12px;margin-top:10px}
+.holding-actions label{display:grid;gap:4px;flex:1 1 170px;font-size:12px;color:#dce7ef}
+.holding-actions select{width:100%;min-height:35px;color:#edf5fc;background:#1a2b3d;border:1px solid #71869a;border-radius:6px;padding:4px 8px}
+.holding-shares{flex-basis:100%;font-size:12px}
+.hud-voice-buttons [data-action="voice-mic"][aria-pressed="false"]{color:#e5eaf1;border-color:#778492}
+.hud-voice-buttons [data-action="voice-mic"][aria-pressed="true"]{color:#c7f9df;border-color:#87c4a2;background:#25483f}
+.phase-intro{max-width:min(90vw,650px);padding:20px 24px;border:0;background:transparent;color:#fff;text-align:center}
+.phase-intro::backdrop{background:#050b13ed}
+.phase-intro h1{margin:6px 0 16px;color:#fff;font-size:clamp(34px,7vw,68px);line-height:1.15}
+.phase-intro p{line-height:1.75;color:#edf3f8;margin:0 0 12px}
+.phase-intro .btn{border-color:#8196aa;color:#fff;margin-top:12px}

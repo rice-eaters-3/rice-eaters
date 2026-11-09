@@ -289,7 +289,7 @@ function render(){
   if(!room.me){root.innerHTML=preview(room);window.MysteryStage.mount();return}
   root.innerHTML='<div class="status-strip"><span>◉ '+escapeHtml(state.connection)+' · 참가자별 독립 세션</span><span>새로고침해도 방에 다시 연결됩니다.</span></div>'+
     (room.phase==='lobby'?lobby(room):room.phase==='synopsis'?synopsis(room):room.phase==='characters'?characters(room):window.MysteryStudy.render(room));
-  window.MysteryStage?.mount();
+  window.MysteryStage?.mount(room);
   updateClockDisplay();
 }
 function nameFromInput(){
@@ -301,10 +301,11 @@ function nameFromInput(){
 async function perform(action,button){
   if(action==='cast-preview'){window.MysteryStage.preview(button.dataset.character,state.room);render();return;}
   if(action==='progress-toggle'&&state.room?.phase==='characters'){castProgress=!castProgress;render();return;}
+  if(action==='local-page'){window.MysteryStudy.navigate(action,button.dataset.chapter);render();return;}
   if(['inventory-toggle','context-toggle','whisper-toggle','progress-toggle','panel-close'].includes(action)){window.MysteryStudy.navigate(action);render();return;}
   if(['map-zoom-in','map-zoom-out','map-center'].includes(action)){window.MysteryStudy.navigate(action);return;}
   if(['clue-open','clue-flip','clue-close'].includes(action)){
-    window.MysteryStudy.navigate(action,button.dataset.card);render();return;
+    window.MysteryStudy.navigate(action,button.dataset.card,button.dataset.holding);render();return;
   }
   if(action==='move'){await moveMyPlayer(button.dataset.direction);return;}
   if(action==='interact'){
@@ -368,9 +369,7 @@ async function perform(action,button){
           {type:'token',toId:document.getElementById('tokenTransferTarget')?.value,amount}:
           {type:'card',holdingId,toId:targetId}):
         {offerId:button.dataset.offerId,accept:action==='exchange-reply'&&button.dataset.accept==='true'};
-      if(action==='card-public'&&!window.confirm('이 조사 카드의 뒷면을 모든 참가자에게 영구 공개할까요? 취소할 수 없습니다.'))return;
-      if(action==='exchange-offer'&&!window.confirm(
-        isToken?amount+'개 조사 토큰을 양도 제안할까요?':'이 조사 카드의 양도를 상대방에게 제안할까요?'))return;
+      if(!window.MysteryStage.confirmAction(room,action,body))return;
       const result=await api('/api/rooms/'+code+'/'+action,'POST',body);
       updateRoom(result,state.connection,true);
       if(action==='card-public')toast('카드가 전체 공개되었습니다. 이 공개는 되돌릴 수 없습니다.');
@@ -415,7 +414,7 @@ async function perform(action,button){
         throw Error('이번 조사 단계에서 같은 인물의 소지품은 1장만 조사할 수 있습니다.');
       if(!clue||clue.locked||clue.taken||clue.excluded||room.investigation.tokens<1)
         throw Error('현재 이 조사 카드를 조사할 수 없습니다.');
-      if(!window.confirm('조사 토큰 1개를 사용해 카드 뒷면을 확인할까요?'))return;
+      if(!window.MysteryStage.confirmAction(room,action))return;
       if(clue.reservedBy!==room.me)
         await api('/api/rooms/'+code+'/reserve','POST',{cardId});
       const result=await api('/api/rooms/'+code+'/investigate','POST',{cardId});
@@ -425,7 +424,7 @@ async function perform(action,button){
     } else if(['reserve','release','investigate'].includes(action)){
       const cardId=button.dataset.card||room?.investigation?.cards.find(c=>c.reservedBy===room.me)?.id;
       if(!cardId)throw Error('조사할 카드를 선택해주세요.');
-      if(action==='investigate'&&!window.confirm('조사 토큰 1개를 사용해 카드 뒷면을 확인할까요?'))return;
+      if(!window.MysteryStage.confirmAction(room,action))return;
       const result=await api('/api/rooms/'+code+'/'+action,'POST',{cardId});
       updateRoom(result,state.connection,true);
       if(action==='reserve'&&window.MysteryStudy.currentView()==='map'){
@@ -444,6 +443,7 @@ async function perform(action,button){
   }catch(err){toast(err.message)}
   finally{state.busy=false;render()}
 }
+window.addEventListener('mystery-voice-change',render);
 $('app').addEventListener('change',e=>{
   if(e.target.id==='storySelection'){state.selectedStory=e.target.value;render();}
 });
@@ -456,6 +456,7 @@ $('app').addEventListener('click',e=>{
   }
 });
 document.addEventListener('keydown',e=>{
+  if(document.getElementById('phaseIntro')?.open)return;
   if(!e.altKey&&!e.metaKey&&!e.ctrlKey&&!['INPUT','TEXTAREA','SELECT'].includes(e.target?.tagName)&&!e.target?.isContentEditable){
     if(state.room?.phase==='characters'){
       if(e.key.toLowerCase()==='p'||(e.key==='Escape'&&castProgress)){e.preventDefault();castProgress=!castProgress;render();return;}
