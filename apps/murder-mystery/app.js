@@ -316,6 +316,7 @@ function nameFromInput(){
   return name;
 }
 async function perform(action,button){
+  if(['map-zoom-in','map-zoom-out','map-center'].includes(action)){window.MysteryStudy.navigate(action);return;}
   if(['clue-open','clue-flip','clue-close'].includes(action)){
     window.MysteryStudy.navigate(action,button.dataset.card);render();return;
   }

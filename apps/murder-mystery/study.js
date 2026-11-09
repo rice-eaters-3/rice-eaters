@@ -2,7 +2,7 @@
 // All confidential booklet/back text comes from authorized room API responses.
 window.MysteryStudy=(function(){
   const esc=v=>escapeHtml(v);
-  const ui={view:'map',page:0,lastResearchSignature:null,modalCardId:null,modalSide:'front'};
+  const ui={view:'map',page:0,lastResearchSignature:null,modalCardId:null,modalSide:'front',tileSize:44};
   const names=['기본 정보','중요 정보','사건에 대한 정보','나의 소지품','범인 여부','승리 목표','기타 정보'];
   // Render multi-paragraph fiction as separate folio paragraphs while escaping
   // every fragment; never treat author-supplied scene prose as markup.
@@ -76,23 +76,28 @@ window.MysteryStudy=(function(){
       const candidates=[[midX,midY]];
       for(let yy=a.y;yy<a.y+a.height;yy++)for(let xx=a.x;xx<a.x+a.width;xx++)candidates.push([xx,yy]);
       const place=candidates.find(([xx,yy])=>m.tiles[yy]?.[xx]==='.'&&regionAt(xx,yy)?.id===a.id);
-      if(place)zoneLabels.set(place[0]+','+place[1],a.name);
+      if(place&&!(m.rooms||[]).some(r=>r.name===a.name))zoneLabels.set(place[0]+','+place[1],a.name);
     }
     const research=new Map();
     for(const c of room.investigation?.cards||[])if(c.location?.floor===m.floorId){
       const k=c.location.x+','+c.location.y;research.set(k,[...(research.get(k)||[]),c]);
     }
-    return '<div id="mapTiles" class="map-tiles world-tiles" style="--map-width:'+m.tiles[0].length+'" role="img" aria-label="'+esc(m.title)+'">'+
+    return '<div id="mapTiles" class="map-tiles world-tiles" style="--map-width:'+m.tiles[0].length+';--tile-size:'+ui.tileSize+'px" role="img" aria-label="'+esc(m.title)+'">'+
       m.tiles.flatMap((row,y)=>Array.from(row,(tile,x)=>{
         const k=x+','+y,loc=rooms.get(k),portalsHere=portals.get(k)||[],door=doors.get(k),region=regionAt(x,y),here=people.get(k)||[],cards=research.get(k)||[],furniture=props.get(k)||[];
+        const mine=here.some(a=>a.id===room.me);
+        const blocked=tile!=='.'?'벽':furniture.some(o=>o.solid)?'가구':door?.locked?'잠긴 문':door&&!door.open?'닫힌 문':here.filter(a=>a.id!==room.me).length>=(m.capacity||3)?'정원 초과':'';
+        const marker=blocked==='벽'?'×':blocked==='가구'?'⊘':blocked.includes('문')?'잠김':blocked?'만석':'';
         const edge=region?['n','e','s','w'].filter((dir,i)=>{
           const [dx,dy]=[[0,-1],[1,0],[0,1],[-1,0]][i];
           return regionAt(x+dx,y+dy)?.id!==region.id;
         }).map(v=>' edge-'+v).join(''):'';
         return '<div class="map-tile '+(tile==='#'?'wall':'walk')+(portalsHere.length?' portal':'')+(door?' door-tile':'')+
           (door?.locked?' door-locked':door&&!door.open?' door-closed':door?' door-open':'')+(region?' map-region pattern-'+esc(region.pattern):'')+
-          (cards.length?' investigable':'')+(furniture.length?' furnished':'')+edge+'" style="'+(region?'--region-color:'+esc(region.color)+';':'')+
-          '" title="'+esc(door?.name||portalsHere[0]?.label||furniture.map(o=>o.name).join(' · ')||loc?.name||region?.name||'')+'">'+
+          (cards.length?' investigable':'')+(furniture.length?' furnished':'')+(blocked?' movement-blocked':'')+(mine?' current-position':'')+edge+'" style="'+(region?'--region-color:'+esc(region.color)+';':'')+
+          '" data-x="'+x+'" data-y="'+y+'" data-blocked="'+esc(blocked)+'" title="'+esc((blocked?'이동 불가 · '+blocked+' — ':'')+(mine?'내 위치 — ':'')+(door?.name||portalsHere[0]?.label||furniture.map(o=>o.name).join(' · ')||loc?.name||region?.name||'')+' ('+x+', '+y+')')+'">'+
+          (blocked?'<span class="tile-blocked-marker" aria-label="'+esc(blocked)+' · 이동 불가">'+(blocked==='닫힌 문'?'닫힘':marker)+'</span>':'')+
+          (mine?'<span class="tile-me-marker">나</span>':'')+
           (loc?'<span class="map-room-name">'+esc(loc.icon)+' '+esc(loc.name)+'</span>':
             zoneLabels.has(k)?'<span class="map-room-name region-name">'+esc(zoneLabels.get(k))+'</span>':'')+
           (furniture.length?'<span class="map-prop" title="'+esc(furniture.map(o=>o.name).join(' · '))+'">'+
@@ -209,7 +214,10 @@ window.MysteryStudy=(function(){
     const inv=room.investigation;
     return '<div class="adventure-grid"><section class="surface panel-pad adventure-main"><div class="adventure-heading"><div class="eyebrow">WORLD MAP · '+esc(room.map?.floorId||'')+'</div><h2>'+esc(room.map?.title||'공용 건물')+'</h2>'+
       '<p class="muted small">WASD / 방향키 이동 · 계단 위에서 상호작용 버튼으로 층 이동 · 타일 최대 '+(room.map?.capacity||3)+'명</p></div>'+
-      '<div class="map-scroller big-map" tabindex="0">'+mapHtml(room)+'</div>'+
+      '<div class="map-toolbar" aria-label="지도 보기 설정">'+btn2('map-zoom-out','− 축소')+'<output id="mapZoomLabel" aria-live="polite">'+Math.round(ui.tileSize/44*100)+'%</output>'+btn2('map-zoom-in','＋ 확대')+btn2('map-center','◎ 내 위치')+'</div>'+
+      '<div class="map-legend"><span>× 벽</span><span>⊘ 가구 · 통행 불가</span><span>닫힘 / 잠김 · 문 열기 필요</span><span>만석 · 정원 초과</span><span>나 · 현재 위치</span><span>✧ 조사 장소</span></div>'+
+      '<p class="muted small">지도가 화면보다 크면 좌우·위아래로 스크롤하세요. ⊘ 표시가 있는 가구 칸은 이동할 수 없습니다.</p>'+
+      '<div class="map-scroller big-map" tabindex="0" role="region" aria-label="스크롤 가능한 지도">'+mapHtml(room)+'</div>'+
       '<div class="map-controls"><div class="dpad"><span></span>'+btn2('move','↑','data-direction="up"')+'<span></span>'+
       btn2('move','←','data-direction="left"')+btn2('move','↓','data-direction="down"')+btn2('move','→','data-direction="right"')+'</div>'+
       '<div class="map-action-column">'+btn('book-toggle','📖 책자 확인 (I)','btn btn-outline')+
@@ -444,7 +452,7 @@ window.MysteryStudy=(function(){
     const oldMap=document.getElementById('mapTiles'),oldCards=document.querySelector('.research-sidebar');
     if(!oldMap)return false;
     const temporary=document.createElement('div');temporary.innerHTML=mapHtml(room);
-    if(temporary.firstElementChild)oldMap.innerHTML=temporary.firstElementChild.innerHTML;
+    if(temporary.firstElementChild){oldMap.innerHTML=temporary.firstElementChild.innerHTML;oldMap.style.cssText=temporary.firstElementChild.style.cssText;oldMap.setAttribute('aria-label',room.map.title);}
     if(oldCards){const wrapper=document.createElement('div');wrapper.innerHTML=investigationCards(room);
       const present=oldCards.querySelector('.research-grid');
       if(present&&wrapper.firstElementChild)present.replaceWith(wrapper.firstElementChild);
@@ -467,6 +475,20 @@ window.MysteryStudy=(function(){
     return true;
   }
   function navigate(action,chapter){
+    if(action.startsWith('map-')){
+      const grid=document.getElementById('mapTiles'),scroller=grid?.closest('.map-scroller');
+      if(!grid||!scroller)return true;
+      if(action==='map-center'){
+        const me=grid.querySelector('.current-position');
+        if(me){const a=me.getBoundingClientRect(),b=scroller.getBoundingClientRect();scroller.scrollBy({left:a.left-b.left-(scroller.clientWidth-a.width)/2,top:a.top-b.top-(scroller.clientHeight-a.height)/2,behavior:'auto'});}
+      }else if(['map-zoom-in','map-zoom-out'].includes(action)){
+        const old=ui.tileSize;ui.tileSize=Math.max(32,Math.min(64,old+(action==='map-zoom-in'?4:-4)));
+        const x=(scroller.scrollLeft+scroller.clientWidth/2)/(old+1),y=(scroller.scrollTop+scroller.clientHeight/2)/(old+1);
+        grid.style.setProperty('--tile-size',ui.tileSize+'px');scroller.scrollLeft=x*(ui.tileSize+1)-scroller.clientWidth/2;scroller.scrollTop=y*(ui.tileSize+1)-scroller.clientHeight/2;
+        document.getElementById('mapZoomLabel').textContent=Math.round(ui.tileSize/44*100)+'%';
+      }
+      return true;
+    }
     if(action==='clue-close'){ui.modalCardId=null;ui.modalSide='front';return true;}
     if(action==='clue-open'){
       if(!window.MysteryRoomState?.room?.investigation?.cards.some(c=>c.id===chapter))return false;

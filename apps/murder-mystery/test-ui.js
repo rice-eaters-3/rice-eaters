@@ -200,6 +200,7 @@ function runAction(button){
     engine.setGoal(state,characterId,value==='yes'?true:value==='no'?false:null);
     note('개인 목표 판정이 반영되었습니다.');render();return;
   }
+  if(['map-zoom-in','map-zoom-out','map-center'].includes(action)){window.MysteryStudy.navigate(action);return;}
   if(['clue-open','clue-flip','clue-close'].includes(action)){
     window.MysteryStudy.navigate(action,button.dataset.card);render();return;
   }
