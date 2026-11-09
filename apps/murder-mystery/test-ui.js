@@ -308,6 +308,7 @@ $('testMeta').addEventListener('click',event=>{
 document.addEventListener('keydown',event=>{
   if(document.getElementById('phaseIntro')?.open)return;
   if(state&&!event.altKey&&!event.metaKey&&!event.ctrlKey&&!['INPUT','TEXTAREA','SELECT'].includes(event.target?.tagName)&&!event.target?.isContentEditable){
+    if(window.MysteryStudy?.bookArrow(state.phase,event.key)){event.preventDefault();render();return;}
     if(state.phase==='characters'&&(event.key.toLowerCase()==='p'||(event.key==='Escape'&&castProgress))){event.preventDefault();castProgress=!castProgress;render();return;}
     if(state.phase==='characters'&&castProgress)return;
     if(state.phase==='characters'&&['ArrowLeft','ArrowRight'].includes(event.key)){event.preventDefault();window.MysteryStage.preview(event.key==='ArrowLeft'?'prev':'next',window.MysteryRoomState.room);render();return;}

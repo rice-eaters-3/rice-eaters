@@ -55,7 +55,8 @@ window.MysteryStudy=(function(){
         '<button class="index-tab '+(current.chapter===i?'selected':'')+'" data-action="book-chapter" data-chapter="'+i+'">'+String(i+1).padStart(2,'0')+' · '+name+'</button>').join('')+'</nav>'+
       '<article class="folio"><div class="folio-top">'+esc(room.story?.title||'MYSTERY CASE')+' · CONFIDENTIAL <span>'+String(n+1).padStart(2,'0')+' / '+all.length+'</span></div>'+
       '<div class="folio-content"><span class="eyebrow">CHAPTER '+String(current.chapter+1).padStart(2,'0')+'</span><h3>'+esc(chapters[current.chapter])+'</h3>'+current.html+'</div>'+
-      '<div class="folio-bottom"><small>해당 장 '+within+' / '+total+'</small><div>'+btn2('book-prev','← 이전 장','',n===0)+' '+btn2('book-next','다음 장 →','',n===all.length-1)+'</div></div></article></div>';
+      '<div class="folio-bottom"><small>해당 장 '+within+' / '+total+
+      (room.phase==='study'?' · ← / → 키로 넘기기':'')+'</small><div>'+btn2('book-prev','← 이전 장','',n===0)+' '+btn2('book-next','다음 장 →','',n===all.length-1)+'</div></div></article></div>';
   }
   function mapHtml(room){
     const m=room.map;if(!m)return '<p>제공된 맵이 없습니다.</p>';
@@ -103,11 +104,12 @@ window.MysteryStudy=(function(){
   }
   function clueStatus(room,c){
     const inv=room.investigation;
-    if(c.sequenceLocked)return '순서 잠김 · '+esc(c.sequenceAfter||'이전 카드')+' 조사 후 열림';
-    if(c.requiresPresence&&!c.atLocation&&!c.heldByMe&&!c.public)return '이 카드의 현장 타일로 이동해야 합니다';
     if(c.public)return '전체 공개';
     if(c.sharedToMe)return '선택 공개받음';
     if(c.heldByMe)return '내 보유 카드';
+    if(c.placeLimitReached)return '이번 조사 단계에서 이 장소의 카드 1장 조사 완료';
+    if(c.sequenceLocked)return '순서 잠김 · '+esc(c.sequenceAfter||'이전 카드')+' 조사 후 열림';
+    if(c.requiresPresence&&!c.atLocation)return '이 카드의 현장 타일로 이동해야 합니다';
     if(c.personLimitReached)return '이번 조사 단계에서 이 인물의 소지품 1장 조사 완료';
     if(c.taken)return '다른 플레이어가 조사함';
     if(c.locked)return '선행 조건 또는 조사 단계 잠김';
@@ -119,7 +121,7 @@ window.MysteryStudy=(function(){
   }
   function canSpend(room,c){
     const inv=room.investigation;
-    return !!(inv?.canInvestigate&&!c.locked&&!c.sequenceLocked&&!c.personLimitReached&&!c.taken&&!c.excluded&&
+    return !!(inv?.canInvestigate&&!c.locked&&!c.sequenceLocked&&!c.personLimitReached&&!c.placeLimitReached&&!c.taken&&!c.excluded&&
       (!c.reservedBy||c.reservedBy===room.me)&&inv.tokens>=1&&!c.heldByMe&&
       (!c.requiresPresence||c.atLocation));
   }
@@ -431,8 +433,8 @@ window.MysteryStudy=(function(){
       return '<section class="game-scene"><div class="scene-hint"><div id="sceneLocation">'+stage.location(room)+'</div>'+
         '<span class="scene-controls">WASD · 방향키 · 옆 칸 터치 · Shift + 방향키로 방향만 바꾸기</span>'+
         '<button type="button" data-action="map-center" class="btn btn-sm">내 위치</button></div>'+
-        '<div class="map-play-area'+(left?' with-utility':'')+'">'+left+
-        '<div id="adventureRoot" class="scene-map big-map" tabindex="0" aria-label="게임 지도">'+mapHtml(room)+'</div></div>'+
+        '<div class="map-play-area">'+
+        '<div id="adventureRoot" class="scene-map big-map" tabindex="0" aria-label="게임 지도">'+mapHtml(room)+'</div>'+left+'</div>'+
         stage.dock(room,ui.dock)+overlay+clueModal(room)+'</section>';
     }
     return roomHeader(room)+
@@ -579,5 +581,11 @@ window.MysteryStudy=(function(){
   }
   const currentView=()=>ui.view;
   const isModalOpen=()=>!!ui.modalCardId;
-  return {render,patch,navigate,currentView,isModalOpen,mapHtml,activeDock:()=>ui.dock};
+  function bookArrow(phase,key){
+    if(phase!=='study'||ui.view!=='book'||isModalOpen())return false;
+    if(key==='ArrowLeft')return navigate('book-prev');
+    if(key==='ArrowRight')return navigate('book-next');
+    return false;
+  }
+  return {render,patch,navigate,currentView,isModalOpen,mapHtml,bookArrow,activeDock:()=>ui.dock};
 })();

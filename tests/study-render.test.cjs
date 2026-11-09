@@ -61,11 +61,15 @@ test('RPG screen: map is main, 7-chapter booklet is paged, cards reveal only aut
   assert.ok(html.includes('중요 &lt;비밀&gt;'),'secret escaped');
   assert.ok(!html.includes('중요 <비밀>'),'secret not raw HTML');
   assert.ok(!html.includes('이야기 2'),'only one narrative page shown at once');
-  view.navigate('book-next');
-  assert.ok(view.render(room).includes('이야기 2'),'next page advances');
+  assert.equal(view.bookArrow('investigation1','ArrowRight'),false);
+  assert.equal(view.bookArrow('study','ArrowRight'),true);
+  assert.ok(view.render(room).includes('이야기 2'),'right arrow advances the study booklet');
+  assert.equal(view.bookArrow('study','ArrowLeft'),true);
+  assert.ok(view.render(room).includes('중요 &lt;비밀&gt;'),'left arrow returns to the previous page');
   view.navigate('book-chapter',4);
   assert.ok(view.render(room).includes('당신은 범인이 아닙니다.'));
   view.navigate('book-toggle');
+  assert.equal(view.bookArrow('study','ArrowRight'),false,'closed booklet leaves arrows to the map');
   const investigation={...room,phase:'investigation1',
     investigation:{tokens:4,totalTokens:4,canInvestigate:true,myCards:[],nearby:[],cards:[
       {id:'desk',frontTitle:'서재 1',title:null,subtitle:null,type:'place',location:{floor:'ground',x:1,y:1},
@@ -208,6 +212,10 @@ test('full-screen play and casting render from the studio room view without expo
       {id:'back',name:'뒷문',x:p.x,y:p.y-1,open:false}]}};
     study.navigate('context-toggle');
     const context=study.render(twoDoors);
+    for(const scene of [screen,context]){
+      assert.match(scene,/class="map-play-area"><div id="adventureRoot"/);
+      assert.doesNotMatch(scene,/with-utility/);
+    }
     assert.match(context,/left-utility.*id="hudUtility".*class="game-dock".*aria-label="음성 참여자"/s);
     assert.match(context,/id="sceneLocation".*바라보는 중/);
     assert.doesNotMatch(context,/class="map-room-name/);

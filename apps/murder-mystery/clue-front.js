@@ -33,6 +33,23 @@
       (discovered?.[card.id]||[]).some(entry=>entry.playerId===playerId&&
         (entry.phase||'investigation1')===phase));
   }
+  // A map area is one place even when its cards sit on different tiles.
+  // Maps without area boundaries use the actual clue tile as the place.
+  function placeKey(card,floors){
+    const pos=card.location;
+    if(!pos)return null;
+    const floor=(floors||[]).find(f=>f.id===pos.floor);
+    const area=(floor?.areas||[]).findIndex(a=>pos.x>=a.x&&pos.y>=a.y&&
+      pos.x<a.x+a.width&&pos.y<a.y+a.height);
+    return JSON.stringify(area<0?[pos.floor,'tile',pos.x,pos.y]:[pos.floor,'area',area]);
+  }
+  function placeInvestigationUsed(cards,floors,discovered,playerId,phase,card){
+    if(!playerId||!['investigation1','investigation2'].includes(phase))return false;
+    const place=placeKey(card,floors);
+    return place!==null&&(cards||[]).some(candidate=>
+      (discovered?.[candidate.id]||[]).some(entry=>entry.playerId===playerId&&
+        (entry.phase||'investigation1')===phase)&&placeKey(candidate,floors)===place);
+  }
   function groupKey(card,floors){
     return card.type==='belonging'&&card.owner?
       'owner:'+card.owner:'place:'+locationName(card,floors);
@@ -111,5 +128,5 @@
       })
     };
   }
-  return {labels,locationName,sequenceAfter,groupKey,personalInvestigationUsed,hiddenAreas,isConcealedCard,playerFloor};
+  return {labels,locationName,sequenceAfter,groupKey,personalInvestigationUsed,placeInvestigationUsed,hiddenAreas,isConcealedCard,playerFloor};
 });

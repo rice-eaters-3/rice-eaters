@@ -101,7 +101,9 @@ test('studio simulation: locked professor suite, lobby key, two investigation st
   assert.equal(view.investigation.cards.some(c=>c.id==='prof_scene_sketch'),false);
   assert.throws(()=>engine.reserve(state,'prof_scene_sketch'),/잠겨/);
   assert.throws(()=>engine.reserve(state,'lobby_safety_envelope'),/이전 조사 카드/);
+  engine.switchRole(state,'jiwoo');state.positions.jiwoo={floor:'ground',x:3,y:2};
   engine.reserve(state,'lobby_checkin');engine.investigate(state,'lobby_checkin');
+  engine.switchRole(state,'seoha');
   engine.reserve(state,'lobby_safety_envelope');engine.investigate(state,'lobby_safety_envelope');
   assert.ok(state.collected.seoha.some(c=>c.id==='prof_suite_key'));
   state.positions.seoha={floor:'upper',x:4,y:5};
@@ -113,10 +115,12 @@ test('studio simulation: locked professor suite, lobby key, two investigation st
   assert.ok(view.investigation.cards.some(c=>c.id==='prof_scene_sketch'));
   state.positions.seoha={floor:'upper',x:3,y:2};
   engine.reserve(state,'prof_scene_sketch');engine.investigate(state,'prof_scene_sketch');
+  engine.switchRole(state,'jiwoo');state.positions.jiwoo={floor:'upper',x:3,y:2};
   engine.reserve(state,'prof_watch_reading');engine.investigate(state,'prof_watch_reading');
   assert.throws(()=>engine.reserve(state,'prof_protection_memo'),/해금/);
   engine.switchRole(state,'sion');state.positions.sion={floor:'annex',x:3,y:2};
   engine.reserve(state,'print_job_log');engine.investigate(state,'print_job_log');
+  engine.switchRole(state,'minji');state.positions.minji={floor:'annex',x:3,y:2};
   engine.reserve(state,'print_credit_plan');engine.investigate(state,'print_credit_plan');
   engine.switchPhase(state,'discussion1');
   engine.switchPhase(state,'investigation2');
