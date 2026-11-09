@@ -44,3 +44,7 @@ Railway Free 플랜의 볼륨은 기본 0.5GB, 프로젝트당 1개까지 사용
 **운영 범위:** 10명 이내 테스트를 위한 프로토타입. 공개 주소는 누구나 열 수 있으므로 개인 식별 정보나 실제 비밀 자료를 올리지 않는 것이 좋다. 현재는 게임 방 코드만 있으며 사이트 전체 인증, 요청 제한, 다중 서버 간 파일 동기화는 아직 없다. 운영 시 서버 인스턴스는 **1개**로 유지한다.
 
 공식 문서: [Dockerfile 빌드](https://docs.railway.com/builds/dockerfiles) · [볼륨](https://docs.railway.com/volumes) · [공개 도메인](https://docs.railway.com/networking/public-networking) · [Healthchecks](https://docs.railway.com/deployments/healthchecks).
+
+## 제작소 운영자 인증
+
+서버 환경 변수 `STUDIO_ADMIN_PASSWORD`를 24바이트 이상으로 설정하고 재시작/재배포하세요. `/mystery-editor`에 접속하여 사용자 이름 `operator`로 인증합니다. 설정하지 않으면 제작소·테스트 모드는 잠기고 일반 게임만 공개됩니다. 외부 접속은 HTTPS를 사용하세요. [상세 설정](OPERATOR_STUDIO.md)

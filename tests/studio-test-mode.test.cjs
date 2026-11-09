@@ -139,36 +139,38 @@ test('consensual card/token transfer, public irreversible share, and action sequ
  assert.equal(s.action.dead.length,0,'prior protection blocks later attack');
  assert.ok(s.action.log.some(e=>e.kind==='blocked'));
 });
-test('public test endpoints restrict unpublished manuscript access to localhost and never publish',async t=>{
+test('public test endpoints restrict unpublished manuscript access to the operator and never publish',async t=>{
  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'studio-test-'));
  process.env.DATA_DIR=dir;
+ process.env.STUDIO_ADMIN_PASSWORD=require('node:crypto').randomBytes(32).toString('hex');
+ const auth='Basic '+Buffer.from('operator:'+process.env.STUDIO_ADMIN_PASSWORD).toString('base64');
  const {handler}=require('../server.js');
  const server=http.createServer(handler);
  await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
  t.after(async()=>{server.closeAllConnections();await new Promise(done=>server.close(done));fs.rmSync(dir,{recursive:true,force:true})});
  const addr='http://127.0.0.1:'+server.address().port;
- let r=await fetch(addr+'/mystery-test');assert.equal(r.status,200);
+ let r=await fetch(addr+'/mystery-test',{headers:{Authorization:auth}});assert.equal(r.status,200);
  assert.match(await r.text(),/시나리오 테스트 모드/);
- r=await fetch(addr+'/api/editor/test-library');assert.equal(r.status,200);
+ r=await fetch(addr+'/api/editor/test-library',{headers:{Authorization:auth}});assert.equal(r.status,200);
  const list=(await r.json()).stories;
  assert.ok(list.some(x=>x.id==='d1-crown-of-ashes'));
- r=await fetch(addr+'/api/editor/test-case/d1-crown-of-ashes');
+ r=await fetch(addr+'/api/editor/test-case/d1-crown-of-ashes',{headers:{Authorization:auth}});
  assert.equal(r.status,200);
  const data=await r.json();
  assert.equal(data.story.players,7);
  assert.ok(data.game.booklets.mac.culprit);
  r=await fetch(addr+'/api/editor/test-case/d1-crown-of-ashes',{headers:{'X-Forwarded-For':'203.0.113.99'}});
- assert.equal(r.status,403,'proxy clients cannot read secret booklets');
+ assert.equal(r.status,401,'proxy clients cannot read secret booklets');
  r=await fetch(addr+'/api/editor/test-library',{headers:{'X-Forwarded-For':'203.0.113.99'}});
- assert.equal(r.status,403,'proxy clients cannot list author-only sources');
+ assert.equal(r.status,401,'proxy clients cannot list author-only sources');
  r=await fetch(addr+'/mystery-content/d1-gaming.case.json');
  assert.equal(r.status,403,'private source remains blocked from static serving');
  r=await fetch(addr+'/api/editor/test-validate',{method:'POST',
-   headers:{'Content-Type':'application/json'},body:JSON.stringify({package:makeCase()})});
+   headers:{'Content-Type':'application/json',Authorization:auth},body:JSON.stringify({package:makeCase()})});
  assert.equal(r.status,200);
  const draft=await r.json();assert.equal(draft.story.players,3);
  r=await fetch(addr+'/api/editor/test-validate',{method:'POST',
    headers:{'Content-Type':'application/json','X-Forwarded-For':'203.0.113.99'},
    body:JSON.stringify({package:makeCase()})});
- assert.equal(r.status,403);
+ assert.equal(r.status,401);
 });

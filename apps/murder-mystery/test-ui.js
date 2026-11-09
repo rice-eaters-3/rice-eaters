@@ -26,14 +26,14 @@ function note(text,error=false){
 async function library(){
   try{
     const r=await fetch('/api/editor/test-library',{credentials:'same-origin'});
-    if(!r.ok)throw Error('기본 시나리오는 localhost에서만 선택 가능합니다.');
+    if(!r.ok)throw Error('운영자 인증을 확인하고 다시 접속하세요.');
     const d=await r.json(),picker=$('testSource');
     for(const s of d.stories||[]){
       const option=document.createElement('option');option.value='server:'+s.id;
       option.textContent=(s.source==='published'?'📁 등록한 원고 · ':'📕 기본 원고 · ')+s.title+' ('+s.players+'인)';
       picker.appendChild(option);
     }
-  }catch(e){note('현재 편집 중인 JSON은 테스트할 수 있습니다. 기본 시나리오 선택은 http://localhost:3000/mystery-test 에서 가능합니다.');}
+  }catch(e){note('원고 목록을 불러오지 못했습니다. 운영자 인증과 서버 연결을 확인하세요.');}
 }
 async function load(){
   const chosen=$('testSource').value;
@@ -43,7 +43,7 @@ async function load(){
       const saved=localStorage.getItem(key);
       if(!saved)throw Error('먼저 제작소에서 시나리오를 편집하거나 JSON을 불러오세요.');
       pkg=JSON.parse(saved);sourceName='현재 편집 원고';
-      if(['localhost','127.0.0.1','[::1]'].includes(location.hostname)){
+      {
         const validation=await fetch('/api/editor/test-validate',{
           method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},
           body:JSON.stringify({package:pkg})

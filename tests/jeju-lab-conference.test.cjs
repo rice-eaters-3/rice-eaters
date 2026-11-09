@@ -175,6 +175,8 @@ test('new Jeju case is available from real server catalog while its culprit and 
   const http=require('node:http'),os=require('node:os');
   const folder=fs.mkdtempSync(path.join(os.tmpdir(),'jeju-case-http-'));
   const previous=process.env.DATA_DIR;process.env.DATA_DIR=folder;
+  process.env.STUDIO_ADMIN_PASSWORD=require('node:crypto').randomBytes(32).toString('hex');
+  const auth='Basic '+Buffer.from('operator:'+process.env.STUDIO_ADMIN_PASSWORD).toString('base64');
   const {handler}=require('../server.js');
   const server=http.createServer(handler);
   await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
@@ -193,7 +195,7 @@ test('new Jeju case is available from real server catalog while its culprit and 
   assert.equal(listing.players,7);
   assert.ok(!JSON.stringify(stories).includes('creatorGuide'));
   assert.ok(!JSON.stringify(stories).includes('prof_corrected_draft'));
-  const author=await fetch(base+'/api/editor/test-case/jeju-lab-conference');
+  const author=await fetch(base+'/api/editor/test-case/jeju-lab-conference',{headers:{Authorization:auth}});
   assert.equal(author.status,200);
   const pkg=await author.json();
   assert.equal(pkg.game.investigation.cards.length,64);
