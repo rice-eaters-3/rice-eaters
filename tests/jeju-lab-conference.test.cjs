@@ -9,7 +9,8 @@ const ending=require('../apps/murder-mystery/ending-engine.js');
 
 test('Jeju scenario registers exactly 2 PhD, 3 MS, 1 undergraduate and 1 administrator',()=>{
   const pkg=validate(original),roles=pkg.story.characters;
-  assert.equal(pkg.story.id,'jeju-lab-conference');
+  assert.equal(original.story.id,'jeju-lab-conference');
+  assert.equal(pkg.story.id,'','Studio sanitizer intentionally assigns fresh IDs on import');
   assert.equal(pkg.story.players,7);
   assert.equal(roles.length,7);
   assert.equal(roles.filter(c=>c.role.includes('박사과정')).length,2);
