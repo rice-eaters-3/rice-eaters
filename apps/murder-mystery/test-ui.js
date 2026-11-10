@@ -206,8 +206,10 @@ function runAction(button){
   if(['map-zoom-in','map-zoom-out','map-center'].includes(action)){window.MysteryStudy.navigate(action);return;}
   if(action==='cast-preview'){window.MysteryStage.preview(button.dataset.character,window.MysteryRoomState.room);render();return;}
   if(action==='progress-toggle'&&state.phase==='characters'){castProgress=!castProgress;render();return;}
-  if(action==='local-page'){window.MysteryStudy.navigate(action,button.dataset.chapter);render();return;}
   if(['inventory-toggle','context-toggle','whisper-toggle','progress-toggle','panel-close'].includes(action)){window.MysteryStudy.navigate(action);render();return;}
+  if(['interact-preview','clue-confirm','choice-close'].includes(action)){
+    window.MysteryStudy.navigate(action,button);render();return;
+  }
   if(['voice-mic','voice-speaker'].includes(action)){note('테스트 모드에서는 음성 통화를 연결하지 않습니다. 실제 게임에서 확인하세요.');return;}
   if(['clue-open','clue-flip','clue-close'].includes(action)){
     window.MysteryStudy.navigate(action,button.dataset.card,button.dataset.holding);render();return;
@@ -217,6 +219,7 @@ function runAction(button){
   }
   if(action==='move'){moveOnMap(button.dataset.direction);return;}
   if(action==='interact'){
+    window.MysteryStudy.navigate('choice-close');render();
     engine.interact(state,button.dataset.kind,button.dataset.kind==='portal'?Number(button.dataset.index):button.dataset.door,button.dataset.doorAction);
     render();return;
   }
@@ -224,11 +227,10 @@ function runAction(button){
     state.studyReady[state.roleId]=true;note('숙지 완료 처리됨 (현재 캐릭터만).');render();return;
   }
   if(action==='clue-investigate'){
-    if(!window.MysteryStage.confirmAction(window.MysteryRoomState.room,action))return;
     const cardId=button.dataset.card;
     if(state.reservations[cardId]!==state.roleId)engine.reserve(state,cardId);
     engine.investigate(state,cardId);
-    window.MysteryStudy.navigate('clue-revealed');
+    window.MysteryStudy.navigate('clue-revealed',cardId);
     note('조사 토큰 1개 사용 · 카드 뒷면 열람 권한을 얻었습니다.');render();return;
   }
   if(action==='reserve'){
@@ -283,9 +285,9 @@ $('testStage').addEventListener('click',event=>{
   const button=event.target.closest('[data-action]');
   try{
     if(button)runAction(button);
-    else if(window.MysteryStudy.currentView()==='map'){
+    else if(window.MysteryStudy.currentView()==='map'&&!window.MysteryStudy.contextOpen()){
       const direction=window.MysteryStage.tileDirection(event.target,window.MysteryRoomState.room);
-      if(direction)moveOnMap(direction,window.MysteryStudy.activeDock()==='context');
+      if(direction)moveOnMap(direction);
     }
   }catch(e){note('테스트 동작: '+e.message,true);
     if(button?.dataset.action==='interact')window.alert('액션을 수행할 수 없습니다.\n'+e.message);}
@@ -307,6 +309,7 @@ $('testMeta').addEventListener('click',event=>{
 });
 document.addEventListener('keydown',event=>{
   if(document.getElementById('phaseIntro')?.open)return;
+  if(state&&engine.PHASES.indexOf(state.phase)>=2&&window.MysteryStudy.keyboardKey(event))return;
   if(state&&!event.altKey&&!event.metaKey&&!event.ctrlKey&&!['INPUT','TEXTAREA','SELECT'].includes(event.target?.tagName)&&!event.target?.isContentEditable){
     if(window.MysteryStudy?.bookArrow(state.phase,event.key)){event.preventDefault();render();return;}
     if(state.phase==='characters'&&(event.key.toLowerCase()==='p'||(event.key==='Escape'&&castProgress))){event.preventDefault();castProgress=!castProgress;render();return;}
@@ -318,10 +321,7 @@ document.addEventListener('keydown',event=>{
       const action=window.MysteryStage?.shortcuts[event.key.toLowerCase()];if(action){event.preventDefault();document.querySelector('[data-action="'+action+'"]')?.click();return;}
     }
   }
-  if(event.key==='Escape'&&window.MysteryStudy?.isModalOpen?.()){
-    event.preventDefault();window.MysteryStudy.navigate('clue-close');render();return;
-  }
-  if(window.MysteryStudy?.isModalOpen?.())return;
+  if(window.MysteryStudy.isModalOpen()||window.MysteryStudy.contextOpen())return;
   if(!state||event.altKey||event.metaKey||event.ctrlKey||
      ['INPUT','TEXTAREA','SELECT'].includes(event.target?.tagName)||event.target?.isContentEditable)return;
   const key=event.key.toLowerCase();

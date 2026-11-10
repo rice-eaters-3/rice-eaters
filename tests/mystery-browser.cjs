@@ -90,6 +90,85 @@ async function checkStudy(page, viewport) {
   assert.deepEqual(await mapGeometry(page), before, 'booklet changes the map geometry');
 }
 
+async function checkInvestigationKeys(page) {
+  const utility = page.locator('#hudUtility');
+  const selected = utility.locator('[aria-current=true]');
+  const prompt = page.locator('#choicePrompt');
+  const clue = page.locator('#clueModalRoot');
+  const press = key => page.keyboard.press(key);
+  const location = () => page.evaluate(() => {
+    const { room } = window.MysteryRoomState;
+    return room.players.find(player => player.id === room.me).position;
+  });
+  const walk = async (key, points) => {
+    for (const [x, y] of points) {
+      // The multiplayer server throttles successive moves to 140 ms.
+      await page.waitForTimeout(160);
+      await press(key);
+      await expect.poll(location).toMatchObject({ x, y });
+    }
+  };
+
+  await walk('ArrowRight', Array.from({ length: 8 }, (_, i) => [i + 3, 6]));
+  const stairs = await location();
+  await press('e');
+  await expect(selected).toContainText('아래층');
+  await press('ArrowDown');
+  await expect(selected).toContainText('위층');
+  await press('ArrowUp');
+  await expect(selected).toContainText('아래층');
+  assert.deepEqual(await location(), stairs, 'arrows must not move the player in the E menu');
+  await press('f');
+  await expect(prompt).toContainText('아래층');
+  await press('Escape');
+  await expect(selected).toContainText('아래층');
+  assert.deepEqual(await location(), stairs, 'opening or cancelling a stair action must not move the player');
+  await press('Escape');
+
+  await walk('ArrowLeft', Array.from({ length: 5 }, (_, i) => [9 - i, 6]));
+  await page.waitForTimeout(160);
+  await press('Shift+ArrowUp');
+  await expect(page.locator('#sceneLocation')).toContainText('위쪽');
+  await press('e');
+  await expect(selected).toContainText('닫기');
+  await press('f');
+  await expect(prompt).toContainText('닫기');
+  await press('f');
+  await expect(selected).toContainText('열기');
+  await press('f');
+  await press('f');
+  await expect(selected).toContainText('닫기');
+  await press('Escape');
+  await walk('ArrowUp', [[5, 5], [5, 4], [5, 3]]);
+  await walk('ArrowLeft', [[4, 3]]);
+
+  const tokens = page.locator('#hudStatus .token-count');
+  const initialTokens = Number(await tokens.innerText());
+  await press('e');
+  await expect(utility.locator('[data-card=time_practice_live]')).toBeDisabled();
+  await expect(utility.locator('[data-card=time_practice_live]')).toContainText('조사 불가');
+  await press('ArrowRight');
+  await expect(selected).toHaveAttribute('data-card', 'cult_old_team_photo');
+  await press('f');
+  await expect(clue).toBeVisible();
+  await press('f');
+  await expect(prompt).toContainText('조사 토큰 1개');
+  await press('Escape');
+  await expect(prompt).toHaveCount(0);
+  await expect(tokens).toHaveText(String(initialTokens));
+  await press('f');
+  await press('f');
+  await expect(clue.locator('.show-back')).toBeVisible();
+  await expect(tokens).toHaveText(String(initialTokens - 1));
+  await press('Escape');
+  await expect(selected).toHaveAttribute('data-card', 'cult_old_team_photo');
+  await press('e');
+  await expect(utility).toHaveCount(0);
+  await press('p');
+  await expect(selected).toBeVisible();
+  await press('Escape');
+}
+
 async function main() {
   const clients = [];
   const dataDir = mkdtempSync(join(tmpdir(), 'rice-mystery-browser-'));
@@ -123,6 +202,8 @@ async function main() {
     await page.keyboard.press('Escape');
     await expect(page.locator('#clueModalRoot')).toHaveCount(0);
     assert.deepEqual(await mapGeometry(page), before, 'closing clue popup changes the map geometry');
+    await page.keyboard.press('Escape');
+    await checkInvestigationKeys(page);
 
     const studio = await browser.newContext({
       baseURL,
@@ -135,7 +216,10 @@ async function main() {
     await preview.locator('#testPhase').selectOption('study');
     await dismissPhaseIntro(preview);
     for (const viewport of viewports) await checkStudy(preview, viewport);
-    console.log('Live room and Studio passed desktop and mobile map and booklet checks.');
+    await preview.locator('#testPhase').selectOption('investigation1');
+    await dismissPhaseIntro(preview);
+    await checkInvestigationKeys(preview);
+    console.log('Live room and Studio passed map, booklet, and keyboard investigation checks.');
   } finally {
     await browser?.close();
     for (const client of clients) await client.dispose();

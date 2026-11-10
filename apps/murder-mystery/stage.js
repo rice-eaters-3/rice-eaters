@@ -8,9 +8,9 @@ window.MysteryStage=(()=>{
   let selected=null,castRoom=null,introKey=null;
   const phaseHelp={
     study:'I 키로 개인 책자를 열고 ← → 방향키로 책장을 넘기세요. 다 읽으면 P 키로 숙지 완료를 표시하세요.',
-    investigation1:'E 키로 현재 칸의 단서를 찾고, R 키로 조사 목록을 여세요. 단서 뒷면을 확인할 때 토큰을 사용합니다.',
+    investigation1:'E 키로 주변 행동을 열고 방향키로 선택한 뒤 F 키로 여세요. Esc 또는 E 키로 지도 이동을 재개합니다. R 키로 전체 조사 목록을 열 수 있습니다.',
     discussion1:'C 키로 수집한 단서를 확인하고 참가자들과 첫 번째 추리를 나누세요. 준비되면 P 키에서 다음 단계에 동의하세요.',
-    investigation2:'새로 열린 단서와 1차에서 놓친 단서를 조사하세요. E 키로 현재 칸을 확인할 수 있습니다.',
+    investigation2:'E 키로 주변 행동을 열고 방향키로 단서를 고르세요. F 키로 열고, Esc 키로 닫습니다.',
     discussion2:'수집한 단서를 대조해 진범을 결정하세요. P 키에서 최종 결정과 다음 단계 진행을 확인하세요.',
     action:'P 키로 행동 순서와 내 차례에 가능한 행동을 확인하세요.',
     ending:'공통 결말과 내 캐릭터의 목표 달성 여부를 확인하세요.'
@@ -178,7 +178,7 @@ window.MysteryStage=(()=>{
     const title=card?'「'+card.title+'」':'이 조사 카드';
     const to=room?.players.find(p=>p.id===body.toId)?.name;
     let message;
-    if(action==='clue-investigate'||action==='investigate')message='조사 토큰 1개를 사용해 카드 뒷면을 확인할까요?';
+    if(action==='investigate')message='조사 토큰 1개를 사용해 카드 뒷면을 확인할까요?';
     if(action==='card-public')message=title+'을 모든 참가자에게 영구 공개할까요? 공개 후에는 취소할 수 없습니다.';
     if(action==='card-share'){
       if(!to)throw Error('공개할 참가자를 선택하세요.');
@@ -203,6 +203,7 @@ window.MysteryStage=(()=>{
     document.body.classList.toggle('immersive-game',immersive&&!document.body.classList.contains('studio-testing'));
     const roster=document.querySelector('.casting-roster'),selection=roster?.querySelector('.selected');
     if(selection)roster.scrollLeft=selection.offsetLeft-(roster.clientWidth-selection.offsetWidth)/2;
+    window.MysteryStudy?.syncKeyboard();
   }
   return {dock,panel,location,status,voices,confirmAction,casting,preview,mount,patchTiles,highlightPosition,shortcuts,tileDirection,turnAtBlockedTile};
 })();

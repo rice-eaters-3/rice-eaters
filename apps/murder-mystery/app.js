@@ -301,14 +301,17 @@ function nameFromInput(){
 async function perform(action,button){
   if(action==='cast-preview'){window.MysteryStage.preview(button.dataset.character,state.room);render();return;}
   if(action==='progress-toggle'&&state.room?.phase==='characters'){castProgress=!castProgress;render();return;}
-  if(action==='local-page'){window.MysteryStudy.navigate(action,button.dataset.chapter);render();return;}
   if(['inventory-toggle','context-toggle','whisper-toggle','progress-toggle','panel-close'].includes(action)){window.MysteryStudy.navigate(action);render();return;}
+  if(['interact-preview','clue-confirm','choice-close'].includes(action)){
+    window.MysteryStudy.navigate(action,button);render();return;
+  }
   if(['map-zoom-in','map-zoom-out','map-center'].includes(action)){window.MysteryStudy.navigate(action);return;}
   if(['clue-open','clue-flip','clue-close'].includes(action)){
     window.MysteryStudy.navigate(action,button.dataset.card,button.dataset.holding);render();return;
   }
   if(action==='move'){await moveMyPlayer(button.dataset.direction);return;}
   if(action==='interact'){
+    window.MysteryStudy.navigate('choice-close');render();
     try{
       const payload=button.dataset.kind==='portal'?
         {kind:'portal',portalIndex:Number(button.dataset.index)}:
@@ -416,11 +419,10 @@ async function perform(action,button){
         throw Error('이번 조사 단계에서 같은 인물의 소지품은 1장만 조사할 수 있습니다.');
       if(!clue||clue.locked||clue.taken||clue.excluded||room.investigation.tokens<1)
         throw Error('현재 이 조사 카드를 조사할 수 없습니다.');
-      if(!window.MysteryStage.confirmAction(room,action))return;
       if(clue.reservedBy!==room.me)
         await api('/api/rooms/'+code+'/reserve','POST',{cardId});
       const result=await api('/api/rooms/'+code+'/investigate','POST',{cardId});
-      window.MysteryStudy.navigate('clue-revealed');
+      window.MysteryStudy.navigate('clue-revealed',cardId);
       updateRoom(result,state.connection,true);
       toast('조사 토큰 1개를 사용했습니다. 카드 뒷면을 확인할 수 있습니다.');
     } else if(['reserve','release','investigate'].includes(action)){
@@ -452,13 +454,14 @@ $('app').addEventListener('change',e=>{
 $('app').addEventListener('click',e=>{
   const button=e.target.closest('button[data-action]');
   if(button){perform(button.dataset.action,button);return;}
-  if(window.MysteryStudy.currentView()==='map'){
+  if(window.MysteryStudy.currentView()==='map'&&!window.MysteryStudy.contextOpen()){
     const direction=window.MysteryStage.tileDirection(e.target,state.room);
-    if(direction)moveMyPlayer(direction,window.MysteryStudy.activeDock()==='context');
+    if(direction)moveMyPlayer(direction);
   }
 });
 document.addEventListener('keydown',e=>{
   if(document.getElementById('phaseIntro')?.open)return;
+  if(SOCIAL_PHASES.includes(state.room?.phase)&&window.MysteryStudy.keyboardKey(e))return;
   if(!e.altKey&&!e.metaKey&&!e.ctrlKey&&!['INPUT','TEXTAREA','SELECT'].includes(e.target?.tagName)&&!e.target?.isContentEditable){
     if(window.MysteryStudy?.bookArrow(state.room?.phase,e.key)){e.preventDefault();render();return;}
     if(state.room?.phase==='characters'){
@@ -481,10 +484,7 @@ document.addEventListener('keydown',e=>{
       }
     }
   }
-  if(e.key==='Escape'&&window.MysteryStudy?.isModalOpen?.()){
-    window.MysteryStudy.navigate('clue-close');render();return;
-  }
-  if(window.MysteryStudy?.isModalOpen?.())return;
+  if(window.MysteryStudy.isModalOpen()||window.MysteryStudy.contextOpen())return;
   if(SOCIAL_PHASES.includes(state.room?.phase)&&!e.altKey&&!e.metaKey&&!e.ctrlKey){
     const tag=e.target?.tagName?.toLowerCase();
     if(['i','r'].includes(e.key.toLowerCase())&&!['input','textarea','select'].includes(tag)&&!e.target?.isContentEditable){

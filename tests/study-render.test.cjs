@@ -254,7 +254,7 @@ test('stage guide opens once per phase and consequential card actions require co
   assert.equal(stage.confirmAction(room,'card-public',{holdingId:'h1'}),false);
   assert.equal(stage.confirmAction(room,'exchange-offer',{type:'token',toId:'guest',amount:2}),false);
   assert.equal(stage.confirmAction(room,'exchange-reply',{offerId:'o1',accept:true}),false);
-  assert.equal(stage.confirmAction(room,'clue-investigate'),false);
+  assert.equal(stage.confirmAction(room,'investigate'),false);
   assert.match(prompts.join('\n'),/게스트님에게 선택 공개.*영구 공개.*조사 토큰 2개.*양도를 수락.*조사 토큰 1개/s);
   assert.throws(()=>stage.confirmAction(room,'exchange-offer',{type:'token',toId:'guest',amount:4}),/보유 토큰/);
 });
