@@ -138,6 +138,8 @@
     if(previous&&!(state.discovered[previous]||[]).length)
       error('이 장소의 이전 조사 카드를 먼저 조사해야 합니다.');
     if(c.owner===state.roleId||(c.blockedFor||[]).includes(state.roleId))error('이 배역은 해당 카드를 조사할 수 없습니다.');
+    if(ClueFront.placeInvestigationUsed(cards(state),state.pkg.game.floors,state.discovered,id(state.roleId),state.phase,c))
+      error('이번 조사 단계에서 같은 장소의 단서는 1장만 조사할 수 있습니다.');
     if(c.type==='belonging'&&ClueFront.personalInvestigationUsed(
       cards(state),state.discovered,id(state.roleId),state.phase,c.owner))
       error('이번 조사 단계에서 해당 인물의 소지품은 1장만 조사할 수 있습니다. 2차 조사에서는 다시 1장을 조사할 수 있습니다.');
@@ -357,6 +359,8 @@
         const phaseLocked=!unlocked(state,c);
         const previous=sequence[c.id];
         const sequenceLocked=!!previous&&!(state.discovered[previous]||[]).length;
+        const placeLimitReached=ClueFront.placeInvestigationUsed(
+          cards(state),g.floors,state.discovered,member(role.id),phase,c);
         const personLimitReached=c.type==='belonging'&&ClueFront.personalInvestigationUsed(
           cards(state),state.discovered,member(role.id),state.phase,c.owner);
         const locked=phaseLocked||sequenceLocked;
@@ -367,7 +371,7 @@
           title:visible?c.title:null,subtitle:visible?c.subtitle:null,
           type:c.type,location:c.location||null,
           locked,sequenceLocked,sequenceAfter:sequenceLocked?frontTitles[previous]:null,
-          personLimitReached,
+          personLimitReached,placeLimitReached,
           requiresPresence:!!c.requiresPresence,atLocation:!!at,
           excluded:c.owner===role.id||(c.blockedFor||[]).includes(role.id),
           taken:prior.length>0&&!c.repeatable,repeatable:!!c.repeatable,transferable:c.transferable!==false,

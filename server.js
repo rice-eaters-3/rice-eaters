@@ -165,6 +165,8 @@ function investigationView(room,member){
     const unlocked=cardUnlocked(card,room);
     const previous=sequence[card.id];
     const sequenceLocked=!!previous&&!(discovered[previous]||[]).length;
+    const placeLimitReached=clueFront.placeInvestigationUsed(
+      spec.cards,floorsFor(room),discovered,member.id,room.phase,card);
     const personLimitReached=card.type==='belonging'&&clueFront.personalInvestigationUsed(
       spec.cards,discovered,member.id,room.phase,card.owner);
     if(!unlocked&&card.visibility==='hidden'&&!canRead)return [];
@@ -174,7 +176,7 @@ function investigationView(room,member){
       title:canRead?card.title:null,subtitle:canRead?card.subtitle:null,type:card.type,
       location:card.location||null,locked:!unlocked||sequenceLocked,
       sequenceLocked,sequenceAfter:sequenceLocked?frontTitles[previous]:null,
-      personLimitReached,
+      personLimitReached,placeLimitReached,
       requiresPresence:card.requiresPresence===true,
       atLocation:!!(card.location&&positionFor(room,member)?.floor===card.location.floor&&
         positionFor(room,member)?.x===card.location.x&&positionFor(room,member)?.y===card.location.y),
@@ -820,6 +822,8 @@ async function api(req,res,url,sid){
     }
     if(card.owner===player.characterId||(card.blockedFor||[]).includes(player.characterId))
       fail(403,'이 캐릭터는 해당 카드를 조사할 수 없습니다.');
+    if(clueFront.placeInvestigationUsed(spec.cards,floorsFor(room),data.discovered,player.id,room.phase,card))
+      fail(409,'이번 조사 단계에서 같은 장소의 단서는 1장만 조사할 수 있습니다.');
     if(card.type==='belonging'&&clueFront.personalInvestigationUsed(
       spec.cards,data.discovered,player.id,room.phase,card.owner))
       fail(409,'이번 조사 단계에서 해당 인물의 소지품은 1장만 조사할 수 있습니다. 2차 조사에서는 다시 1장을 조사할 수 있습니다.');

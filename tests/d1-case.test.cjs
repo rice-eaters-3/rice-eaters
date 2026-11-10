@@ -138,7 +138,15 @@ test('seven-player D1 case: private visions, first-round sealed clues, second-ro
   // A baseline fund clue opens a second-round document.
   assert.equal((await post(0,endpoint+'/reserve',{cardId:'cult_fund_account'})).status,200);
   assert.equal((await post(0,endpoint+'/investigate',{cardId:'cult_fund_account'})).status,200);
-  // New rule: each investigator can inspect only one belonging per other role, per round.
+  const nextRecord='cult_marvin_bill';
+  assert.equal((await call(0,endpoint)).data.investigation.cards.find(c=>c.id===nextRecord).placeLimitReached,true);
+  for(const action of ['reserve','investigate']){
+    const rejected=await post(0,endpoint+'/'+action,{cardId:nextRecord});
+    assert.equal(rejected.status,409);
+    assert.match(JSON.stringify(rejected.data),/같은 장소/);
+  }
+  assert.equal((await call(1,endpoint)).data.investigation.cards.find(c=>c.id===nextRecord).placeLimitReached,false);
+  // Each investigator can inspect only one belonging per other role, per round.
   assert.equal((await post(0,endpoint+'/reserve',{cardId:'cloud_huoguo_ladle'})).status,200);
   assert.equal((await post(0,endpoint+'/investigate',{cardId:'cloud_huoguo_ladle'})).status,200);
   const limited=(await call(0,endpoint)).data.investigation;
@@ -200,8 +208,12 @@ test('seven-player D1 case: private visions, first-round sealed clues, second-ro
   assert.equal(staircase.data.map.floorId,'operations');
   assert.equal((await post(4,endpoint+'/reserve',{cardId:'trick_spare_override'})).status,409,
     'first inspect the access log before the case containing its key');
-  assert.equal((await post(4,endpoint+'/reserve',{cardId:'time_karl_badge'})).status,200);
-  assert.equal((await post(4,endpoint+'/investigate',{cardId:'time_karl_badge'})).status,200);
+  assert.equal((await post(2,endpoint+'/reserve',{cardId:'time_karl_badge'})).status,200);
+  assert.equal((await post(2,endpoint+'/investigate',{cardId:'time_karl_badge'})).status,200);
+  assert.equal(wallets[0].data.investigation.cards.find(c=>c.id===nextRecord).placeLimitReached,false,
+    'the room allowance resets in round two');
+  assert.equal((await post(0,endpoint+'/reserve',{cardId:nextRecord})).status,200);
+  assert.equal((await post(0,endpoint+'/investigate',{cardId:nextRecord})).status,200);
   const keyReservation=await post(4,endpoint+'/reserve',{cardId:'trick_spare_override'});
   assert.equal(keyReservation.status,200);
   const foundKey=await post(4,endpoint+'/investigate',{cardId:'trick_spare_override'});
@@ -266,10 +278,19 @@ test('Studio simulator reveals sealed gallery only after throne evidence grants 
     'the first gallery evidence still requires entering the opened room');
   engine.switchPhase(state,'investigation2');
   engine.move(state,'up');engine.move(state,'up');engine.move(state,'up');
-  for(const [id,x,y] of [['cult_gargoyle_poster',15,3],['time_chajiwoo_photo',16,3],['cult_founder_mask',15,3]]){
-    state.positions.karl={floor:'penthouse',x,y};
-    engine.reserve(state,id);engine.investigate(state,id);
+  state.positions.karl={floor:'penthouse',x:15,y:3};
+  engine.reserve(state,'cult_gargoyle_poster');engine.investigate(state,'cult_gargoyle_poster');
+  state.positions.karl.x=16;
+  assert.equal(engine.roomView(state).investigation.cards.find(c=>c.id==='time_chajiwoo_photo').placeLimitReached,true);
+  assert.throws(()=>engine.reserve(state,'time_chajiwoo_photo'),/같은 장소/,
+    'moving to a different tile in the gallery does not reset the cap');
+  for(const [role,cardId,x] of [['jobi','time_chajiwoo_photo',16],['mac','cult_founder_mask',15]]){
+    engine.switchRole(state,role);
+    state.positions[role]={floor:'penthouse',x,y:3};
+    engine.reserve(state,cardId);engine.investigate(state,cardId);
   }
+  engine.switchRole(state,'hasu');
+  state.positions.hasu={floor:'penthouse',x:15,y:3};
   assert.equal(engine.reserve(state,'cult_hero_landing_syllabus'),true,
     'gallery evidence unlocks in story order after site research');
 });

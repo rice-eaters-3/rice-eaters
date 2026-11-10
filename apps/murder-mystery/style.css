@@ -162,8 +162,9 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(-
 .folio-content h4{font:700 25px/1.5 'Gowun Batang',serif;color:#5e4836;margin:7px 0 20px}
 .folio-content p{font:19px/2.05 'Gowun Batang',Georgia,serif;word-break:keep-all}
 .folio-content .verdict{max-width:550px}.folio .book-identity{margin-top:18px}
-.folio-bottom{border-top:1px solid #bba17d;padding-top:15px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.folio-bottom small{color:#826951}.folio-bottom .btn{color:#efe6d6;background:#5a4837;border-color:#92704a}
+.book-pagination{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:12px}
+.scene-panel-body .book-pagination{position:sticky;top:0;z-index:1;padding:6px 0;background:#142333}
+.book-pagination .btn{color:#f2f7fb;border-color:#879baa}
 
 /* Card fronts echo printed mystery-party cards, with optional reverse face. */
 .research-sidebar{min-width:0}.research-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:13px}
@@ -184,7 +185,7 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(-
 .time-stamp{font:700 24px ui-monospace,monospace;color:#906d4e;margin-bottom:20px}
 @media(max-width:1000px){.adventure-grid{grid-template-columns:1fr}.adventure-side{grid-template-columns:repeat(2,minmax(0,1fr))}.research-sidebar{grid-column:1/-1}.research-grid{grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}}
 @media(max-width:680px){.adventure-main{padding:15px!important}.adventure-side{grid-template-columns:1fr}.clock-unit{min-width:100%;padding:11px}.big-map{min-height:240px;padding:8px;justify-content:flex-start}.big-map .map-tiles{grid-template-columns:repeat(var(--map-width),30px);grid-auto-rows:30px}
-.book-layout{grid-template-columns:1fr}.book-index{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}.index-tab{font-size:11px;padding:8px}.folio{min-height:490px;padding:17px}.folio-content{margin:23px auto}.folio-content h3{font-size:29px}.folio-content p{font-size:16px}.folio-bottom .btn{font-size:12px;padding:7px}}
+.book-layout{grid-template-columns:1fr}.book-index{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}.index-tab{font-size:11px;padding:8px}.folio{min-height:490px;padding:17px}.folio-content{margin:23px auto}.folio-content h3{font-size:29px}.folio-content p{font-size:16px}.book-pagination .btn{font-size:12px;padding:7px}}
 
 
 /* Scenario-defined zones: separate rooms by color, texture and bold outlines. */
@@ -693,12 +694,12 @@ kbd{font:600 10px monospace;border:1px solid #a5946a;border-radius:4px;padding:2
 .game-dock .hud-button:focus-visible,.scene-hint .btn:focus-visible{outline:2px solid #ebc77d;outline-offset:2px}
 @media(prefers-reduced-motion:reduce){.game-dock .hud-button{transition:none}}
 
-/* Local controls occupy a separate lane, leaving the floor and voice area visible. */
-.map-play-area{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr);min-height:0;min-width:0}
-.map-play-area.with-utility{grid-template-columns:minmax(220px,clamp(220px,24vw,360px)) minmax(0,1fr)}
+/* The utility panel floats above the map without resizing its viewport. */
+.map-play-area{position:relative;display:grid;grid-template: minmax(0,1fr) / minmax(0,1fr);min-height:0;min-width:0}
 .left-utility{
-  align-self:end;display:grid;grid-template-rows:auto minmax(0,1fr);min-width:0;
-  max-height:calc(100% - 16px);margin:8px 0 8px 10px;padding:10px 12px;
+  position:absolute;z-index:8;inset-inline-start:10px;bottom:8px;
+  width:min(clamp(220px,24vw,360px),calc(100% - 20px));max-height:calc(100% - 16px);
+  display:grid;grid-template-rows:auto minmax(0,1fr);min-width:0;padding:10px 12px;
   background:#162638;border:1px solid #526a7b;border-radius:10px;
 }
 .left-utility>header{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px;color:#eff5fa;font-size:13px}
@@ -723,9 +724,7 @@ kbd{font:600 10px monospace;border:1px solid #a5946a;border-radius:4px;padding:2
 #sceneLocation strong{color:#f6f9fb}.scene-facing{color:#bfe0ef}
 .scene-controls{color:#a9bdc9;margin-left:auto}
 @media(max-width:740px){
-  .map-play-area.with-utility{grid-template-columns:minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto}
-  .map-play-area.with-utility .scene-map{grid-row:1}
-  .map-play-area.with-utility .left-utility{grid-row:2;margin:4px 8px;max-height:min(33dvh,225px)}
+  .left-utility{max-height:min(calc(100% - 16px),33dvh,225px)}
   .scene-controls{display:none}
 }
 .hud-actions .hud-button[aria-pressed="true"]{background:#244655;border-color:#91c8db;color:#f6fbff}

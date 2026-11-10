@@ -410,6 +410,8 @@ async function perform(action,button){
     } else if(action==='clue-investigate'){
       const cardId=button.dataset.card;
       const clue=room?.investigation?.cards.find(c=>c.id===cardId);
+      if(clue?.placeLimitReached)
+        throw Error('이번 조사 단계에서 같은 장소의 단서는 1장만 조사할 수 있습니다.');
       if(clue?.personLimitReached)
         throw Error('이번 조사 단계에서 같은 인물의 소지품은 1장만 조사할 수 있습니다.');
       if(!clue||clue.locked||clue.taken||clue.excluded||room.investigation.tokens<1)
@@ -458,6 +460,7 @@ $('app').addEventListener('click',e=>{
 document.addEventListener('keydown',e=>{
   if(document.getElementById('phaseIntro')?.open)return;
   if(!e.altKey&&!e.metaKey&&!e.ctrlKey&&!['INPUT','TEXTAREA','SELECT'].includes(e.target?.tagName)&&!e.target?.isContentEditable){
+    if(window.MysteryStudy?.bookArrow(state.room?.phase,e.key)){e.preventDefault();render();return;}
     if(state.room?.phase==='characters'){
       if(e.key.toLowerCase()==='p'||(e.key==='Escape'&&castProgress)){e.preventDefault();castProgress=!castProgress;render();return;}
       if(castProgress)return;

@@ -2126,7 +2126,35 @@
           "clueKind": "trick",
           "owner": null,
           "blockedFor": [],
-          "requires": [],
+          "requires": [
+            "memory_shutdown_map"
+          ],
+          "visibility": "hidden",
+          "repeatable": false,
+          "transferable": true,
+          "availableFromPhase": "investigation2",
+          "requiresPresence": true,
+          "location": {
+            "floor": "core",
+            "x": 3,
+            "y": 8
+          },
+          "grant": null,
+          "insights": {},
+          "sequenceOrder": 1
+        },
+        {
+          "id": "memory_ion_sibling",
+          "title": "대체 신원 계약서",
+          "subtitle": "",
+          "back": "대체 신분 서류에 이온의 가족 정보가 적혀 있고 봉인된 의료 기록이 묶여 있다. 첨부 감사 목록에 같은 서류 번호가 있으며 “열람을 막아 달라”는 요청문이 붙어 있다.",
+          "type": "information",
+          "clueKind": "trick",
+          "owner": null,
+          "blockedFor": [],
+          "requires": [
+            "memory_backup_before"
+          ],
           "visibility": "hidden",
           "repeatable": false,
           "transferable": true,
@@ -2140,30 +2168,6 @@
           "grant": null,
           "insights": {},
           "sequenceOrder": 2
-        },
-        {
-          "id": "memory_ion_sibling",
-          "title": "대체 신원 계약서",
-          "subtitle": "",
-          "back": "대체 신분 서류에 이온의 가족 정보가 적혀 있고 봉인된 의료 기록이 묶여 있다. 첨부 감사 목록에 같은 서류 번호가 있으며 “열람을 막아 달라”는 요청문이 붙어 있다.",
-          "type": "information",
-          "clueKind": "trick",
-          "owner": null,
-          "blockedFor": [],
-          "requires": [],
-          "visibility": "hidden",
-          "repeatable": false,
-          "transferable": true,
-          "availableFromPhase": "investigation2",
-          "requiresPresence": true,
-          "location": {
-            "floor": "core",
-            "x": 14,
-            "y": 8
-          },
-          "grant": null,
-          "insights": {},
-          "sequenceOrder": 3
         },
         {
           "id": "memory_emp_order",
@@ -2187,7 +2191,7 @@
           },
           "grant": null,
           "insights": {},
-          "sequenceOrder": 4
+          "sequenceOrder": 3
         },
         {
           "id": "memory_core_backdoor",
@@ -2198,7 +2202,9 @@
           "clueKind": "trick",
           "owner": null,
           "blockedFor": [],
-          "requires": [],
+          "requires": [
+            "memory_emp_order"
+          ],
           "visibility": "locked",
           "repeatable": false,
           "transferable": true,
@@ -2206,12 +2212,12 @@
           "requiresPresence": false,
           "location": {
             "floor": "core",
-            "x": 14,
+            "x": 3,
             "y": 8
           },
           "grant": null,
           "insights": {},
-          "sequenceOrder": 5
+          "sequenceOrder": 2
         },
         {
           "id": "memory_why_sealed",
@@ -2222,7 +2228,9 @@
           "clueKind": "trick",
           "owner": null,
           "blockedFor": [],
-          "requires": [],
+          "requires": [
+            "memory_core_backdoor"
+          ],
           "visibility": "locked",
           "repeatable": false,
           "transferable": true,
@@ -2235,7 +2243,7 @@
           },
           "grant": null,
           "insights": {},
-          "sequenceOrder": 6
+          "sequenceOrder": 4
         },
         {
           "id": "memory_implant_receipt",
@@ -2259,7 +2267,7 @@
           },
           "grant": null,
           "insights": {},
-          "sequenceOrder": 7
+          "sequenceOrder": 5
         },
         {
           "id": "memory_original_rights",
@@ -2283,7 +2291,7 @@
           },
           "grant": null,
           "insights": {},
-          "sequenceOrder": 8
+          "sequenceOrder": 6
         },
         {
           "id": "memory_culprit_reconstruction",
@@ -2310,7 +2318,7 @@
           },
           "grant": null,
           "insights": {},
-          "sequenceOrder": 9
+          "sequenceOrder": 7
         },
         {
           "id": "memory_ghost_sequence",

@@ -236,3 +236,36 @@ test('all four multiplayer rooms expose shared endings and each player’s own r
   });
  }
 });
+
+test('Neon vault reconstruction can be reached with one discovery per player and place',()=>{
+ const engine=require('../apps/murder-mystery/test-engine.js');
+ const pkg=cases[1],state=engine.create(pkg);
+ function research(role,cardId){
+  engine.switchRole(state,role);
+  const card=pkg.game.investigation.cards.find(c=>c.id===cardId);
+  if(card.requiresPresence)state.positions[role]={...card.location};
+  engine.reserve(state,cardId);engine.investigate(state,cardId);
+ }
+ engine.switchPhase(state,'investigation1');
+ research('nova','memory_emergency_log');
+ research('rune','memory_fake_patient');
+ research('nova','memory_echo_frame');
+ research('rune','memory_voice_repeat');
+ research('nova','memory_body_scan');
+ engine.switchPhase(state,'investigation2');
+ research('nova','memory_core_key');
+ state.positions.nova={floor:'core',x:14,y:5};
+ engine.move(state,'down',true);
+ engine.interact(state,'door','door_se','open');
+ research('nova','memory_shutdown_map');
+ research('nova','memory_backup_before');
+ research('rune','memory_ion_sibling');
+ research('ion','memory_emp_order');
+ research('rune','memory_core_backdoor');
+ research('mira','memory_why_sealed');
+ research('atlas','memory_implant_receipt');
+ research('echo','memory_original_rights');
+ research('sol','memory_ghost_sequence');
+ research('sol','memory_culprit_reconstruction');
+ assert.equal(engine.roomView(state).investigation.myCards.some(c=>c.cardId==='memory_culprit_reconstruction'),true);
+});

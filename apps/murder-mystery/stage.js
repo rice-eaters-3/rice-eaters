@@ -7,7 +7,7 @@ window.MysteryStage=(()=>{
     t:'whisper-toggle',p:'progress-toggle',m:'voice-mic',v:'voice-speaker'};
   let selected=null,castRoom=null,introKey=null;
   const phaseHelp={
-    study:'I 키로 개인 책자를 읽고, P 키를 눌러 숙지 완료를 표시하세요.',
+    study:'I 키로 개인 책자를 열고 ← → 방향키로 책장을 넘기세요. 다 읽으면 P 키로 숙지 완료를 표시하세요.',
     investigation1:'E 키로 현재 칸의 단서를 찾고, R 키로 조사 목록을 여세요. 단서 뒷면을 확인할 때 토큰을 사용합니다.',
     discussion1:'C 키로 수집한 단서를 확인하고 참가자들과 첫 번째 추리를 나누세요. 준비되면 P 키에서 다음 단계에 동의하세요.',
     investigation2:'새로 열린 단서와 1차에서 놓친 단서를 조사하세요. E 키로 현재 칸을 확인할 수 있습니다.',
