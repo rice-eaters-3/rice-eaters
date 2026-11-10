@@ -33,6 +33,26 @@
       (discovered?.[card.id]||[]).some(entry=>entry.playerId===playerId&&
         (entry.phase||'investigation1')===phase));
   }
+  function investigationPlace(card,floors){
+    if(card.type==='belonging')return null;
+    const pos=card.location;
+    if(!pos)return label(card.frontPlace)?['place',label(card.frontPlace)]:null;
+    const floor=(floors||[]).find(f=>f.id===pos.floor);
+    const area=(floor?.areas||[]).find(a=>inside(a,pos.x,pos.y));
+    if(area)return ['area',pos.floor,area.id||area.name];
+    const room=(floor?.rooms||[]).find(r=>r.x===pos.x&&r.y===pos.y);
+    if(label(room?.name))return ['room',pos.floor,room.name];
+    return ['tile',pos.floor,pos.x,pos.y];
+  }
+  function placeInvestigationUsed(cards,floors,discovered,playerId,phase,card){
+    if(!playerId||!['investigation1','investigation2'].includes(phase))return false;
+    const place=investigationPlace(card,floors);
+    if(!place)return false;
+    const key=JSON.stringify(place);
+    return cards.some(other=>(discovered?.[other.id]||[]).some(entry=>
+      entry.playerId===playerId&&(entry.phase||'investigation1')===phase)&&
+      JSON.stringify(investigationPlace(other,floors))===key);
+  }
   function groupKey(card,floors){
     return card.type==='belonging'&&card.owner?
       'owner:'+card.owner:'place:'+locationName(card,floors);
@@ -111,5 +131,5 @@
       })
     };
   }
-  return {labels,locationName,sequenceAfter,groupKey,personalInvestigationUsed,hiddenAreas,isConcealedCard,playerFloor};
+  return {labels,locationName,sequenceAfter,groupKey,personalInvestigationUsed,placeInvestigationUsed,hiddenAreas,isConcealedCard,playerFloor};
 });

@@ -465,6 +465,7 @@ document.addEventListener('keydown',e=>{
       if(e.key==='Enter'&&e.target?.tagName!=='BUTTON'){e.preventDefault();document.querySelector('.casting-description button:not(:disabled)')?.click();return;}
     }
     if(SOCIAL_PHASES.includes(state.room?.phase)&&!window.MysteryStudy.isModalOpen()){
+      if(window.MysteryStudy.bookArrow(e))return;
       if(e.key==='Escape'&&(window.MysteryStudy.currentView()!=='map'||window.MysteryStudy.activeDock())){e.preventDefault();window.MysteryStudy.navigate('panel-close');render();return;}
       const action=window.MysteryStage?.shortcuts[e.key.toLowerCase()];
       if(action){

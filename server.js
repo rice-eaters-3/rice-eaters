@@ -149,14 +149,15 @@ function investigationView(room,member){
   const data=exchangeFor(room);
   if(!spec||!data)return null;
   pruneExchanges(room);
-  const frontTitles=clueFront.labels(spec.cards,storyById(room.storyId).characters,floorsFor(room));
-  const sequence=clueFront.sequenceAfter(spec.cards,floorsFor(room));
+  const floors=floorsFor(room);
+  const frontTitles=clueFront.labels(spec.cards,storyById(room.storyId).characters,floors);
+  const sequence=clueFront.sequenceAfter(spec.cards,floors);
   const discovered=data.discovered||{};
   const held=data.holdings.filter(h=>h.ownerId===member.id);
   const nearby=tilePlayers(room,positionFor(room,member)||{floor:null,x:-1,y:-1})
     .filter(p=>p.id!==member.id).map(p=>({id:p.id,name:p.name}));
   const cards=spec.cards.flatMap(card=>{
-    if(clueFront.isConcealedCard(card,floorsFor(room),(f,d)=>doorState(room,f,d)))return [];
+    if(clueFront.isConcealedCard(card,floors,(f,d)=>doorState(room,f,d)))return [];
     const owned=held.filter(h=>h.cardId===card.id);
     const shares=data.selectiveShares.filter(x=>x.toId===member.id&&
       data.holdings.some(h=>h.id===x.holdingId&&h.cardId===card.id));
@@ -175,6 +176,7 @@ function investigationView(room,member){
       location:card.location||null,locked:!unlocked||sequenceLocked,
       sequenceLocked,sequenceAfter:sequenceLocked?frontTitles[previous]:null,
       personLimitReached,
+      placeLimitReached:clueFront.placeInvestigationUsed(spec.cards,floors,discovered,member.id,room.phase,card),
       requiresPresence:card.requiresPresence===true,
       atLocation:!!(card.location&&positionFor(room,member)?.floor===card.location.floor&&
         positionFor(room,member)?.x===card.location.x&&positionFor(room,member)?.y===card.location.y),
@@ -823,6 +825,8 @@ async function api(req,res,url,sid){
     if(card.type==='belonging'&&clueFront.personalInvestigationUsed(
       spec.cards,data.discovered,player.id,room.phase,card.owner))
       fail(409,'이번 조사 단계에서 해당 인물의 소지품은 1장만 조사할 수 있습니다. 2차 조사에서는 다시 1장을 조사할 수 있습니다.');
+    if(clueFront.placeInvestigationUsed(spec.cards,floorsFor(room),data.discovered,player.id,room.phase,card))
+      fail(409,'이번 조사 단계에서 같은 장소는 1장만 조사할 수 있습니다.');
     if((data.discovered[card.id]||[]).length&&!card.repeatable)
       fail(409,'이미 다른 플레이어가 조사한 카드입니다.');
     if((data.tokens[player.id]||0)<1)fail(409,'조사 토큰이 부족합니다.');

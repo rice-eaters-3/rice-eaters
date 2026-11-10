@@ -313,6 +313,7 @@ document.addEventListener('keydown',event=>{
     if(state.phase==='characters'&&['ArrowLeft','ArrowRight'].includes(event.key)){event.preventDefault();window.MysteryStage.preview(event.key==='ArrowLeft'?'prev':'next',window.MysteryRoomState.room);render();return;}
     if(state.phase==='characters'&&event.key==='Enter'&&event.target?.tagName!=='BUTTON'){event.preventDefault();document.querySelector('.casting-description button')?.click();return;}
     if(engine.PHASES.indexOf(state.phase)>=2&&!window.MysteryStudy.isModalOpen()){
+      if(window.MysteryStudy.bookArrow(event))return;
       if(event.key==='Escape'&&(window.MysteryStudy.currentView()!=='map'||window.MysteryStudy.activeDock())){event.preventDefault();window.MysteryStudy.navigate('panel-close');render();return;}
       const action=window.MysteryStage?.shortcuts[event.key.toLowerCase()];if(action){event.preventDefault();document.querySelector('[data-action="'+action+'"]')?.click();return;}
     }

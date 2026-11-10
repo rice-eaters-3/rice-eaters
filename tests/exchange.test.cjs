@@ -16,10 +16,13 @@ function mystery(){
       back:'편지의 비밀은 원래 소유자에게 남으면 안 된다',transferable:true},
     {id:'sealed',title:'봉인 기록',subtitle:'양도 금지',type:'information',
       back:'이 기록은 양도 금지이다',transferable:false},
+    {id:'same-place',title:'조사 기록',subtitle:'같은 구역의 두 번째 단서',type:'place',
+      back:'같은 구역에 남은 기록',transferable:true},
     {id:'later',title:'마지막 증언',subtitle:'두 번째 라운드',type:'place',
       back:'2차 조사에서 발견한 마지막 증거',transferable:true}
   ].map(c=>({...c,owner:null,blockedFor:[],requires:[],repeatable:false,visibility:'locked',
-    location:null,grant:null}));
+    location:['private','same-place','later'].includes(c.id)?
+      {floor:'ground',x:c.id==='private'?1:2,y:2}:null,grant:null}));
   return {format:'rice-mystery-v1',story:{
     title:'카드 공유 테스트 사건',subtitle:'교환 테스트',genre:'미스터리',
     teaser:'두 명의 등장인물',minutes:45,players:2,
@@ -29,7 +32,8 @@ function mystery(){
     discussion1:15,investigation2:20,discussion2:20,action:10,ending:15},
     investigation:{tokensPerPlayer:7,tokensPerSecondInvestigation:2,maxTileOccupants:3,cards},
     floors:[{id:'ground',title:'1층',legend:'복도',tiles:['######','#....#','#....#','######'],
-      areas:[],rooms:[],doors:[],portals:[]}]}
+      areas:[{id:'office',name:'서재',x:1,y:2,width:2,height:1,color:'#808080',pattern:'plain'}],
+      rooms:[],doors:[],portals:[]}]}
   };
 }
 test('private clue sharing, transfer consent, ownership, same-tile expiration and stage votes',async t=>{
@@ -110,6 +114,16 @@ test('private clue sharing, transfer consent, ownership, same-tile expiration an
   assert.equal((await req(1,endpoint)).data.investigation.cards.find(c=>c.id==='evidence').revealed.length,1,
     'global reveal available to every game member');
   const secret=await investigate('private'),nontransfer=await investigate('sealed');
+  const samePlace='same-place';
+  assert.equal((await req(0,endpoint)).data.investigation.cards.find(c=>c.id===samePlace).placeLimitReached,true);
+  for(const action of ['reserve','investigate']){
+    const blocked=await post(0,endpoint+'/'+action,{cardId:samePlace});
+    assert.equal(blocked.status,409);
+    assert.match(JSON.stringify(blocked.data),/같은 장소/);
+  }
+  assert.equal((await post(1,endpoint+'/reserve',{cardId:samePlace})).status,200);
+  assert.equal((await post(1,endpoint+'/investigate',{cardId:samePlace})).status,200,
+    'another player can discover a different card in the same place');
   assert.equal((await post(0,endpoint+'/exchange-offer',
     {type:'card',holdingId:nontransfer.id,toId:b})).status,403,
     'card-specific transfer prohibition is enforced on server');
@@ -135,6 +149,8 @@ test('private clue sharing, transfer consent, ownership, same-tile expiration an
   assert.equal(accepted.data.investigation.cards.find(c=>c.id==='private').revealed.length,1);
   assert.equal((await req(0,endpoint)).data.investigation.cards.find(c=>c.id==='private').revealed.length,0,
     'sender loses access to nonpublic card after transfer');
+  assert.equal((await req(0,endpoint)).data.investigation.cards.find(c=>c.id==='later').placeLimitReached,true,
+    'transferring a clue does not reset the investigation limit');
   assert.equal((await post(1,endpoint+'/exchange-reply',{offerId:offer,accept:true})).status,404,
     'second acceptance cannot transfer the same holding twice');
   const declined=await post(1,endpoint+'/exchange-offer',
@@ -191,6 +207,7 @@ test('private clue sharing, transfer consent, ownership, same-tile expiration an
     'old clue ownership persists into second investigation');
   assert.equal(round2.data.investigation.cards.find(c=>c.id==='evidence').public,true);
   assert.equal(round2.data.investigation.canInvestigate,true);
+  assert.equal(round2.data.investigation.cards.find(c=>c.id==='later').placeLimitReached,false);
   assert.equal((await post(0,endpoint+'/reserve',{cardId:'later'})).status,200,
     'new card can be investigated during stage 2');
   const newClue=await post(0,endpoint+'/investigate',{cardId:'later'});
@@ -208,4 +225,21 @@ test('private clue sharing, transfer consent, ownership, same-tile expiration an
   assert.equal(saved.rooms[code].investigation.publicCards.evidence.by,a);
   assert.equal(saved.rooms[code].investigation.holdings.find(c=>c.id===secret.id).ownerId,b);
   assert.equal(saved.rooms[code].investigation.tokens[a],tokensBefore-2+2-1);
+});
+
+test('Studio applies the same place limit across tiles and resets it in the second investigation',()=>{
+  const engine=require('../apps/murder-mystery/test-engine.js');
+  const state=engine.create(mystery());
+  engine.switchPhase(state,'investigation1');
+  engine.reserve(state,'private');
+  engine.investigate(state,'private');
+  assert.equal(engine.roomView(state).investigation.cards.find(c=>c.id==='same-place').placeLimitReached,true);
+  assert.throws(()=>engine.reserve(state,'same-place'),/같은 장소/);
+  engine.switchRole(state,'beta');
+  engine.reserve(state,'same-place');
+  engine.investigate(state,'same-place');
+  engine.switchRole(state,'alpha');
+  engine.switchPhase(state,'investigation2');
+  engine.reserve(state,'later');
+  engine.investigate(state,'later');
 });

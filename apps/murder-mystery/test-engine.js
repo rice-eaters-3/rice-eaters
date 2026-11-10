@@ -141,6 +141,8 @@
     if(c.type==='belonging'&&ClueFront.personalInvestigationUsed(
       cards(state),state.discovered,id(state.roleId),state.phase,c.owner))
       error('이번 조사 단계에서 해당 인물의 소지품은 1장만 조사할 수 있습니다. 2차 조사에서는 다시 1장을 조사할 수 있습니다.');
+    if(ClueFront.placeInvestigationUsed(cards(state),state.pkg.game.floors,state.discovered,id(state.roleId),state.phase,c))
+      error('이번 조사 단계에서 같은 장소는 1장만 조사할 수 있습니다.');
     if(c.requiresPresence&&c.location){
       const p=position(state);
       if(c.location.floor!==p.floor||c.location.x!==p.x||c.location.y!==p.y)error('조사 장소 타일로 이동해야 합니다.');
@@ -368,6 +370,7 @@
           type:c.type,location:c.location||null,
           locked,sequenceLocked,sequenceAfter:sequenceLocked?frontTitles[previous]:null,
           personLimitReached,
+          placeLimitReached:ClueFront.placeInvestigationUsed(cards(state),g.floors,state.discovered,member(role.id),phase,c),
           requiresPresence:!!c.requiresPresence,atLocation:!!at,
           excluded:c.owner===role.id||(c.blockedFor||[]).includes(role.id),
           taken:prior.length>0&&!c.repeatable,repeatable:!!c.repeatable,transferable:c.transferable!==false,

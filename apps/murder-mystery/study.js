@@ -51,11 +51,13 @@ window.MysteryStudy=(function(){
       total=all.filter(p=>p.chapter===current.chapter).length;
     const chapters=room.booklet?.actionOrder?[...names,'행동 단계']:names;
     return (embedded?'':'<div class="book-top"><div><span class="eyebrow">PRIVATE DOSSIER · PERSONAL ONLY</span><h2>나의 캐릭터 책자</h2></div>'+btn2('book-toggle','✕ 책자 닫기')+'</div>')+
+      '<nav class="book-pagination" aria-label="책자 페이지 이동">'+btn2('book-prev','← 이전 장','',n===0)+
+      '<span aria-live="polite">'+(n+1)+' / '+all.length+'</span>'+btn2('book-next','다음 장 →','',n===all.length-1)+'</nav>'+
       '<div class="book-layout"><nav class="book-index" aria-label="책자 목차">'+chapters.map((name,i)=>
         '<button class="index-tab '+(current.chapter===i?'selected':'')+'" data-action="book-chapter" data-chapter="'+i+'">'+String(i+1).padStart(2,'0')+' · '+name+'</button>').join('')+'</nav>'+
-      '<article class="folio"><div class="folio-top">'+esc(room.story?.title||'MYSTERY CASE')+' · CONFIDENTIAL <span>'+String(n+1).padStart(2,'0')+' / '+all.length+'</span></div>'+
+      '<article class="folio"><div class="folio-top">'+esc(room.story?.title||'MYSTERY CASE')+' · CONFIDENTIAL <span>해당 장 '+within+' / '+total+'</span></div>'+
       '<div class="folio-content"><span class="eyebrow">CHAPTER '+String(current.chapter+1).padStart(2,'0')+'</span><h3>'+esc(chapters[current.chapter])+'</h3>'+current.html+'</div>'+
-      '<div class="folio-bottom"><small>해당 장 '+within+' / '+total+'</small><div>'+btn2('book-prev','← 이전 장','',n===0)+' '+btn2('book-next','다음 장 →','',n===all.length-1)+'</div></div></article></div>';
+      '</article></div>';
   }
   function mapHtml(room){
     const m=room.map;if(!m)return '<p>제공된 맵이 없습니다.</p>';
@@ -109,6 +111,7 @@ window.MysteryStudy=(function(){
     if(c.sharedToMe)return '선택 공개받음';
     if(c.heldByMe)return '내 보유 카드';
     if(c.personLimitReached)return '이번 조사 단계에서 이 인물의 소지품 1장 조사 완료';
+    if(c.placeLimitReached)return '이번 조사 단계에서 이 장소의 카드 1장 조사 완료';
     if(c.taken)return '다른 플레이어가 조사함';
     if(c.locked)return '선행 조건 또는 조사 단계 잠김';
     if(c.excluded)return '내 배역은 이 카드를 조사할 수 없습니다';
@@ -119,7 +122,7 @@ window.MysteryStudy=(function(){
   }
   function canSpend(room,c){
     const inv=room.investigation;
-    return !!(inv?.canInvestigate&&!c.locked&&!c.sequenceLocked&&!c.personLimitReached&&!c.taken&&!c.excluded&&
+    return !!(inv?.canInvestigate&&!c.locked&&!c.sequenceLocked&&!c.personLimitReached&&!c.placeLimitReached&&!c.taken&&!c.excluded&&
       (!c.reservedBy||c.reservedBy===room.me)&&inv.tokens>=1&&!c.heldByMe&&
       (!c.requiresPresence||c.atLocation));
   }
@@ -431,7 +434,7 @@ window.MysteryStudy=(function(){
       return '<section class="game-scene"><div class="scene-hint"><div id="sceneLocation">'+stage.location(room)+'</div>'+
         '<span class="scene-controls">WASD · 방향키 · 옆 칸 터치 · Shift + 방향키로 방향만 바꾸기</span>'+
         '<button type="button" data-action="map-center" class="btn btn-sm">내 위치</button></div>'+
-        '<div class="map-play-area'+(left?' with-utility':'')+'">'+left+
+        '<div class="map-play-area">'+left+
         '<div id="adventureRoot" class="scene-map big-map" tabindex="0" aria-label="게임 지도">'+mapHtml(room)+'</div></div>'+
         stage.dock(room,ui.dock)+overlay+clueModal(room)+'</section>';
     }
@@ -579,5 +582,12 @@ window.MysteryStudy=(function(){
   }
   const currentView=()=>ui.view;
   const isModalOpen=()=>!!ui.modalCardId;
-  return {render,patch,navigate,currentView,isModalOpen,mapHtml,activeDock:()=>ui.dock};
+  function bookArrow(event){
+    if(ui.view!=='book'||!['ArrowLeft','ArrowRight'].includes(event.key))return false;
+    event.preventDefault();
+    const action=event.key==='ArrowLeft'?'book-prev':'book-next';
+    document.querySelector('.book-pagination [data-action="'+action+'"]')?.click();
+    return true;
+  }
+  return {render,patch,navigate,currentView,isModalOpen,mapHtml,bookArrow,activeDock:()=>ui.dock};
 })();
