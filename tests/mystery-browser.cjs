@@ -106,7 +106,7 @@ async function main() {
     });
     const baseURL = 'http://127.0.0.1:' + server.address().port;
     const game = await makeStudyRoom(baseURL, clients);
-    browser = await chromium.launch();
+    browser = await chromium.launch({ channel: 'chrome' });
     const live = await browser.newContext({ baseURL, storageState: await clients[0].storageState() });
     const page = await live.newPage();
     await page.goto('/mystery?room=' + game.code);

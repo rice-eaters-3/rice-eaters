@@ -19,5 +19,5 @@ jobs:
         with:
           node-version: '22'
       - run: npm install --no-save playwright@1.56.0
-      - run: npx playwright install --with-deps --only-shell chromium
+      - run: google-chrome --version
       - run: node tests/mystery-browser.cjs
