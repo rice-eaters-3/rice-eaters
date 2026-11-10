@@ -1,0 +1,23 @@
+name: Murder Mystery browser smoke
+on:
+  pull_request:
+    paths:
+      - 'apps/murder-mystery/**'
+      - 'mystery-content/**'
+      - 'private/**'
+      - 'server.js'
+      - 'tests/mystery-browser.cjs'
+      - '.github/workflows/mystery-browser.yml'
+  workflow_dispatch:
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save playwright@1.56.0
+      - run: npx playwright install --with-deps --only-shell chromium
+      - run: node tests/mystery-browser.cjs
