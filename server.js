@@ -1,6 +1,7 @@
 'use strict';
 // One server for the app library, solo Mars saves, and realtime mystery rooms.
-// Node.js 20+; no npm packages or external services required.
+// Node.js 20.12+; no npm packages or external services required.
+require('./private/load-env.js').loadEnv();
 const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
