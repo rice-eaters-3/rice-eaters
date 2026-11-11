@@ -4,7 +4,7 @@
   if(typeof module!=='undefined'&&module.exports)module.exports=cases;
   if(root)root.TraceCases=cases;
 })(typeof window!=='undefined'?window:null,function(){
-  return [
+  const cases=[
     {
       id:'cipher',year:'1943',number:'01',title:'두 번 쓰인 열쇠',subtitle:'봉인된 전보 두 장. 같은 자물쇠 하나.',
       category:'암호 분석',role:'공격자 · 암호 분석관',concept:'키 재사용',time:'5–8분',difficulty:1,
@@ -71,4 +71,32 @@
       sources:[{label:'Microsoft MSRC · WannaCrypt customer guidance',url:'https://www.microsoft.com/en-us/msrc/blog/2017/05/customer-guidance-for-wannacrypt-attacks/'}]
     }
   ];
+  cases.splice(3,0,{
+    id:'mitm',year:'2011',number:'04',title:'봉인 사이의 낯선 손',subtitle:'암호화된 두 통로. 대화 상대는 같지 않았다.',
+    category:'중간자 공격',role:'공격자 → 방어자',concept:'암호화와 상대 인증',time:'7–10분',difficulty:2,
+    quote:'“봉인이 멀쩡하다는 것과, 보낸 사람이 맞다는 것은 다른 문제였어요.”',
+    brief:'기록실로 향하던 서신이 중계소에서 읽혔다. 상대의 이름은 같지만 인증서의 열쇠가 다르다. 먼저 중계자의 자리에서 두 연결을 구성하고, 이후 접속 정책을 복구하라.',
+    objective:'중계자가 읽을 수 있는 두 연결을 만들고 시험한다. 방어 단계에서는 정상 연결을 살리고 위조·다른 이름·미등록 발급자 연결을 막는다.',
+    rules:['중계자는 K-99의 개인키만 갖고 있다. 기록실의 실제 열쇠는 K-41이다.','낡은 발급자 ROOT-D는 아직 신뢰 목록에 있다. 공격 단계에서는 이름을 확인해도 위조 인증서를 신뢰할 수 있다.','방어 단계의 발급자 목록과 이름 확인을 조정한 뒤 네 가지 연결을 시험한다. 암호화 자체와 상대 인증은 별개의 문제다.'],
+    hints:['발신자에게 보여줄 인증서는 기록실의 이름이면서 중계자가 개인키를 가진 것이어야 한다.','발신자 쪽에는 위조 K-99 인증서, 기록실 쪽에는 정상 K-41 인증서를 고른 뒤 중계 시험을 한다.','방어 단계에서는 ROOT-G만 신뢰하고 상대 이름을 확인한다. 모든 발급자를 지우면 정상 연결도 막힌다.'],
+    ending:'서신은 중계소에서 두 번 봉해지고 있었다. 신뢰 목록에서 손상된 발급자를 빼고 이름을 확인하자, 두 개의 자물쇠로 감춰진 낯선 손이 드러났다.',
+    history:'2011년 Google은 DigiNotar가 발급한 위조 인증서를 이용한 중간자 공격 시도를 보고했다. 이후 관련 인증기관의 신뢰를 철회했다. 암호화된 연결이라도 누구의 열쇠를 믿는지가 중요하다.',
+    model:'인증서 발급과 암호 연산은 카드 선택으로 단순화했다. 이름·열쇠·발급자는 모두 창작이며 실제 사이트나 트래픽에는 접속하지 않는다.',
+    sources:[{label:'Google Security Blog · 2011 MITM report',url:'https://security.googleblog.com/2011/08/update-on-attempted-man-in-middle.html'}]
+  });
+  cases.splice(5,0,{
+    id:'ddos',year:'2016',number:'06',title:'너무 많은 노크',subtitle:'초인종을 끄면, 기다리던 손님도 돌아간다.',
+    category:'DDoS 대응',role:'방어자 · 관문 운영자',concept:'분산 부하와 정상 이용자',time:'7–10분',difficulty:3,
+    quote:'“문 하나를 막았더니, 백 개의 문에서 노크가 들렸습니다.”',
+    brief:'작은 장치들에서 들어온 요청이 기록실의 처리 한도를 넘긴다. 하지만 같은 주소를 쓰는 이용자와 확인 화면을 풀지 못하는 정상 점검기도 있다. 네 차례의 부하를 모두 견딜 정책을 만들어라.',
+    objective:'4점 이내로 모든 정상 요청을 처리하면서, 네 차례 모두 원본 서버 부하를 5 이하로 유지한다.',
+    rules:['확인 화면은 2점, 서명된 점검기 예외는 1점, 정적 응답 캐시는 1점, 출처별 2개 제한은 1점이다.','일반 이용자와 공동 단말 이용자는 확인 화면을 통과하지만, 정상 점검기는 통과하지 못한다. 점검기만 검증된 서명표가 있다.','출처 제한은 캐시보다 먼저 적용된다. 캐시는 처리 결과를 재사용해 원본 부하를 줄인다. 모든 정상 요청이 살아야 한다.'],
+    hints:['공격 요청만 줄여도 피크 시간의 정상 요청이 원본 처리 한도를 넘을 수 있다.','확인 화면은 정상 점검기도 막는다. 서명표 예외가 필요하다. 출처별 제한은 공동 단말의 정상 이용자까지 잘라낸다.','확인 화면 + 서명표 예외 + 캐시를 선택한다. 2+1+1=4점으로 정상 서비스를 유지하며 원본 부하를 줄일 수 있다.'],
+    ending:'노크는 계속됐지만 정상 방문자는 들어왔다. 확인 화면이 무의미한 요청을 줄였고, 검증된 점검기는 예외로 통과했다. 캐시는 같은 질문에 매번 원본이 답해야 하는 부담을 덜었다.',
+    history:'2016년 10월 21일 Mirai 계열 봇넷을 사용한 DDoS 공격이 DNS 제공업체 Dyn에 영향을 주어 여러 인터넷 서비스의 접근을 방해했다. 카메라·녹화기 같은 인터넷 연결 장치들이 공격에 이용됐다.',
+    model:'원본 서버의 요청 처리 자원만 다루는 창작 부하 모형이다. 실제 회선 포화는 서버 내부 필터만으로 해결되지 않으며 상위 네트워크의 대응도 필요하다. 실제 요청이나 공격은 생성하지 않는다.',
+    sources:[{label:'US Department of Justice · 2016 IoT cyberattack',url:'https://www.justice.gov/archives/opa/pr/individual-pleads-guilty-participating-internet-things-cyberattack-2016'}]
+  });
+  cases.forEach((c,i)=>{c.number=String(i+1).padStart(2,'0');});
+  return cases;
 });

@@ -77,6 +77,44 @@
     ]
   };
   const clone=value=>JSON.parse(JSON.stringify(value));
+  const certificates=[
+    {id:'real',name:'기록실 원본',host:'records.lab',key:'K-41',issuer:'ROOT-G'},
+    {id:'forged',name:'중계소가 가진 인증서',host:'records.lab',key:'K-99',issuer:'ROOT-D'},
+    {id:'other',name:'다른 서비스',host:'letters.lab',key:'K-99',issuer:'ROOT-G'},
+    {id:'unknown',name:'미등록 발급자',host:'records.lab',key:'K-77',issuer:'ROOT-X'}
+  ];
+  const traffic=[
+    {id:'people',name:'일반 이용자',rates:[3,4,3,4],cached:[2,3,2,3],legitimate:true,challenge:true,ticket:false},
+    {id:'monitor',name:'정상 점검기',rates:[1,1,1,1],cached:[0,0,0,0],legitimate:true,challenge:false,ticket:true},
+    {id:'shared',name:'공동 단말 이용자',rates:[3,0,3,0],cached:[2,0,2,0],legitimate:true,challenge:true,ticket:false},
+    {id:'camera',name:'감염된 카메라들',rates:[8,2,8,2],cached:[0,0,0,0],legitimate:false,challenge:false,ticket:false},
+    {id:'router',name:'감염된 공유기들',rates:[2,8,2,8],cached:[0,0,0,0],legitimate:false,challenge:false,ticket:false}
+  ];
+  const defenses=[
+    {id:'challenge',name:'확인 화면',cost:2,detail:'확인 화면을 풀지 못하는 요청을 거부'},
+    {id:'ticket',name:'서명표 예외',cost:1,detail:'검증된 정상 점검기를 확인 화면에서 제외'},
+    {id:'cache',name:'정적 응답 캐시',cost:1,detail:'같은 정적 응답을 원본 대신 관문에서 처리'},
+    {id:'limit',name:'출처별 2개 제한',cost:1,detail:'한 출처에서 들어오는 요청을 차례마다 2개로 제한'}
+  ];
+  function defenseCost(state){return defenses.filter(d=>state.enabled.includes(d.id)).reduce((sum,d)=>sum+d.cost,0);}
+  function trafficRounds(state){
+    return [0,1,2,3].map(round=>{
+      const rows=traffic.map(group=>{
+        const requested=group.rates[round];
+        let accepted=state.enabled.includes('limit')?Math.min(2,requested):requested;
+        if(state.enabled.includes('challenge')&&!group.challenge&&
+          !(state.enabled.includes('ticket')&&group.ticket))accepted=0;
+        const cached=state.enabled.includes('cache')?Math.min(accepted,group.cached[round]):0;
+        return {...group,requested,accepted,origin:accepted-cached};
+      });
+      return {rows,load:rows.reduce((sum,r)=>sum+r.origin,0),
+        served:rows.filter(r=>r.legitimate).reduce((sum,r)=>sum+r.accepted,0),
+        expected:rows.filter(r=>r.legitimate).reduce((sum,r)=>sum+r.requested,0)};
+    });
+  }
+  function certificateAllowed(state,cert){
+    return state.roots.includes(cert.issuer)&&(!state.verifyHost||cert.host==='records.lab');
+  }
   function initial(id){
     switch(id){
       case 'cipher':return {key:Array(8).fill(0)};
@@ -84,6 +122,8 @@
       case 'trust':return {stage:0,path:['guest'],cuts:[]};
       case 'heartbeat':return {stage:0,claimed:3,response:null,left:'claimed',operator:'=',right:'actual'};
       case 'outbreak':return {patched:[],cuts:[]};
+      case 'mitm':return {stage:0,front:null,back:null,observed:false,roots:['ROOT-G','ROOT-D'],verifyHost:false};
+      case 'ddos':return {enabled:[]};
       default:throw Error('알 수 없는 사건입니다.');
     }
   }
@@ -176,6 +216,19 @@
       return lost.length?no('감염이 '+lost.map(n=>n.label).join('·')+'에 도달했습니다. 예산 안에서 다른 조합을 시험해 보세요.'):
         ok('병동과 보관소를 보호했습니다. 필수 업무선도 모두 유지됩니다.');
     }
+    if(id==='mitm'){
+      if(state.stage===0)return state.observed?ok('중계소에서 평문을 확인했습니다. 이제 접속 정책을 고칩니다.'):
+        no('두 연결을 고른 뒤 중계 시험을 실행해 보세요. 중계자는 K-99의 개인키만 갖고 있습니다.');
+      const tests=certificates.map(cert=>certificateAllowed(state,cert)===(cert.id==='real'));
+      return tests.every(Boolean)?ok('정상 기록실만 연결됩니다. 이름과 신뢰 목록이 모두 검증됐습니다.'):
+        no('정상 연결을 살리면서 위조·다른 이름·미등록 발급자 연결을 모두 거부해야 합니다.');
+    }
+    if(id==='ddos'){
+      const rounds=trafficRounds(state);
+      if(rounds.some(r=>r.served!==r.expected))return no('정상 이용자의 요청이 차단됐습니다. 공동 단말과 점검기를 확인해 보세요.');
+      if(rounds.some(r=>r.load>5))return no('원본 처리 한도 5를 넘는 차례가 있습니다. 차단뿐 아니라 처리 자원을 줄일 방법도 찾아보세요.');
+      return ok('네 차례 모두 정상 이용자를 살리고 원본 부하를 5 이하로 유지했습니다.');
+    }
     return no('알 수 없는 사건입니다.');
   }
   function toggle(list,value){return list.includes(value)?list.filter(v=>v!==value):[...list,value];}
@@ -198,7 +251,7 @@
       if(!edge||edge.essential||state.stage!==1)return next;
       next.cuts=toggle(state.cuts,edge.id);
       if(next.cuts.length>2)throw Error('차단은 두 연결까지만 가능합니다. 선택한 연결을 먼저 해제하세요.');
-    }else if(['trust','heartbeat'].includes(id)&&action.type==='switch'){
+    }else if(['trust','heartbeat','mitm'].includes(id)&&action.type==='switch'){
       if(state.stage!==0||!evaluate(id,state).ok)return next;
       next.stage=1;
     }else if(id==='heartbeat'&&action.type==='length'){
@@ -219,6 +272,19 @@
         next.cuts=toggle(state.cuts,action.id);
       }
       if(cost(next)>outbreak.budget)throw Error('대응 자원은 3점입니다. 기존 패치나 차단을 해제하고 다시 선택하세요.');
+    }else if(id==='mitm'&&['front','back'].includes(action.type)&&state.stage===0){
+      if(certificates.some(c=>c.id===action.id)){next[action.type]=action.id;next.observed=false;}
+    }else if(id==='mitm'&&action.type==='relay'&&state.stage===0){
+      if(state.front!=='forged'||state.back!=='real')throw Error('중계가 성립하지 않습니다. 발신자에게는 기록실 이름의 K-99 인증서, 기록실에는 실제 서버 인증서가 필요합니다.');
+      next.observed=true;
+    }else if(id==='mitm'&&action.type==='root'&&state.stage===1){
+      if(['ROOT-G','ROOT-D','ROOT-X'].includes(action.id))next.roots=toggle(state.roots,action.id);
+    }else if(id==='mitm'&&action.type==='hostname'&&state.stage===1){
+      next.verifyHost=!state.verifyHost;
+    }else if(id==='ddos'&&action.type==='defense'){
+      if(!defenses.some(d=>d.id===action.id))return next;
+      next.enabled=toggle(state.enabled,action.id);
+      if(defenseCost(next)>4)throw Error('대응 자원은 4점입니다. 선택한 정책을 먼저 해제하세요.');
     }
     return next;
   }
@@ -246,23 +312,27 @@
           state.response.every((v,i)=>v===memory[i])))&&(state.stage===0||state.response?.join('').includes('4729'));
       case 'outbreak':return uniqueKnown(state.patched,outbreak.nodes.filter(n=>n.id!=='intake').map(n=>n.id))&&
         uniqueKnown(state.cuts,outbreak.edges.filter(e=>!e.essential).map(e=>e.id))&&cost(state)<=outbreak.budget;
+      case 'mitm':return [0,1].includes(state.stage)&&['front','back'].every(k=>state[k]===null||certificates.some(c=>c.id===state[k]))&&
+        typeof state.observed==='boolean'&&typeof state.verifyHost==='boolean'&&uniqueKnown(state.roots,['ROOT-G','ROOT-D','ROOT-X'])&&
+        (!state.observed||state.front==='forged'&&state.back==='real')&&(state.stage===0||state.observed);
+      case 'ddos':return uniqueKnown(state.enabled,defenses.map(d=>d.id))&&defenseCost(state)<=4;
       default:return false;
     }
   }
   function restore(raw){
     const result={version:1,current:'cipher',completed:[],cases:{}};
     if(!raw||raw.version!==1)return result;
-    const ids=['cipher','ledger','trust','heartbeat','outbreak'];
+    const ids=['cipher','ledger','trust','mitm','heartbeat','ddos','outbreak'];
     if(ids.includes(raw.current))result.current=raw.current;
     for(const id of ids){
       const item=raw.cases?.[id];
       if(!item||!valid(id,item.board))continue;
       result.cases[id]={board:clone(item.board),hints:intBetween(item.hints,0,3)?item.hints:0};
       if(Array.isArray(raw.completed)&&raw.completed.includes(id)&&evaluate(id,item.board).ok&&
-        (!['trust','heartbeat'].includes(id)||item.board.stage===1))result.completed.push(id);
+        (!['trust','heartbeat','mitm'].includes(id)||item.board.stage===1))result.completed.push(id);
     }
     return result;
   }
   return {cipher,ledger,trust,memory,packets,outbreak,initial,valid,restore,decipher,stamps,trustReach,
-    canTravel,cost,spread,ruleAllows,act,evaluate};
+    canTravel,cost,spread,ruleAllows,act,evaluate,certificates,certificateAllowed,traffic,defenses,defenseCost,trafficRounds};
 });
