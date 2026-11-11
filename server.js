@@ -1028,6 +1028,7 @@ function staticFile(req,res,url,sid){
   try{name=decodeURIComponent(url.pathname)}catch(e){fail(400,'잘못된 경로입니다.')}
   if(name==='/'||name==='/index.html')name='/index.html';
   if(name==='/mars')name='/apps/terraforming-mars/index.html';
+  if(name==='/trace'||name==='/trace/')name='/apps/security-trace/index.html';
   if(name==='/mystery'||name==='/mystery/')name='/apps/murder-mystery/index.html';
   if(name==='/mystery-editor'||name==='/mystery-editor/')name='/apps/murder-mystery/editor.html';
   if(name==='/mystery-test'||name==='/mystery-test/')name='/apps/murder-mystery/test.html';
