@@ -4,7 +4,7 @@
 
 ## 실행 방법
 
-Node.js **20 이상**이 필요합니다. 패키지 설치는 필요하지 않습니다.
+Node.js **20.12 이상**이 필요합니다. 패키지 설치는 필요하지 않습니다.
 
 ```bash
 git pull
@@ -12,6 +12,23 @@ node server.js
 ```
 
 브라우저에서 **http://localhost:3000** 으로 접속하세요.
+
+관리자 비밀번호는 `server.js`와 같은 폴더의 `.env` 파일에 한 번 저장하세요. `.env.example`을 복사해 사용해도 됩니다. 이미 `.env`가 있으면 그대로 사용합니다.
+
+```dotenv
+STUDIO_ADMIN_PASSWORD="본인이 정한 긴 비밀번호"
+PORT=3000
+```
+
+비밀번호는 최소 24바이트입니다. `#`이나 공백이 있으면 위처럼 따옴표로 감싸세요. `node server.js`, `npm start`, `npm run dev` 모두 시작할 때 자동으로 읽으며, 변경 후에는 서버를 재시작하세요. 셸/호스팅에서 이미 설정한 환경 변수가 있으면 그 값이 우선합니다. `.env`는 Git과 Docker 이미지에서 제외됩니다.
+
+Windows PowerShell에서 `npm.ps1 cannot be loaded ... running scripts is disabled` 오류가 나면 다음처럼 실행하세요. 실행 정책을 바꿀 필요는 없습니다.
+
+```powershell
+npm.cmd start
+```
+
+또는 `node server.js`, `./start.cmd`로 실행하거나 `start.cmd`를 더블클릭할 수 있습니다. `.env` 자동 로딩은 동일합니다. 개발 모드는 `npm.cmd run dev`, 테스트는 `npm.cmd test`입니다.
 
 **Cloudflare 무료 외부 접속:** [DEPLOY_CLOUDFLARE.md](./DEPLOY_CLOUDFLARE.md) — PC에 서버를 켜두고 임시 HTTPS 링크를 무료로 공유합니다. 머더 미스터리는 Quick Tunnel에서 HTTP 폴링으로 동기화됩니다.
 
