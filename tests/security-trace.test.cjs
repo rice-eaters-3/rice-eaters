@@ -2,9 +2,10 @@
 const test=require('node:test'),assert=require('node:assert/strict');
 const E=require('../apps/security-trace/engine.js');
 const cases=require('../apps/security-trace/cases.js');
+const G=require('../apps/security-trace/archive.js');
 
 test('each historical case supplies playable rules, graduated hints, and primary sources',()=>{
-  assert.deepEqual(cases.map(c=>c.id),['cipher','ledger','trust','heartbeat','outbreak']);
+  assert.deepEqual(cases.map(c=>c.id),['cipher','ledger','trust','mitm','heartbeat','ddos','outbreak']);
   for(const c of cases){
     assert.equal(c.hints.length,3);
     assert.ok(c.rules.length>=3);
@@ -70,6 +71,68 @@ test('containment planning models successive infection, cost, and an alternate r
   assert.deepEqual(E.spread(b),[['intake'],['intake','desk','lab']]);
   assert.deepEqual(E.act('outbreak',b,{type:'cut',id:'d-h'}),b);
 });
+test('MITM needs two distinct encrypted connections and a tested identity policy',()=>{
+  let b=E.initial('mitm');
+  assert.throws(()=>E.act('mitm',b,{type:'relay'}),/중계/);
+  b=E.act('mitm',b,{type:'front',id:'forged'});
+  b=E.act('mitm',b,{type:'back',id:'real'});
+  assert.equal(E.evaluate('mitm',b).ok,false,'selecting certificates is not observing interception');
+  b=E.act('mitm',b,{type:'relay'});
+  assert.equal(E.evaluate('mitm',b).ok,true);
+  b=E.act('mitm',b,{type:'switch'});
+  assert.equal(E.evaluate('mitm',b).ok,false);
+  b=E.act('mitm',b,{type:'root',id:'ROOT-D'});
+  assert.equal(E.evaluate('mitm',b).ok,false,'trusted issuance alone accepts a different host');
+  b=E.act('mitm',b,{type:'hostname'});
+  assert.equal(E.evaluate('mitm',b).ok,true);
+  b=E.act('mitm',b,{type:'root',id:'ROOT-G'});
+  assert.equal(E.evaluate('mitm',b).ok,false,'blocking all connections also blocks the intended service');
+});
+test('DDoS policies preserve real clients and handle peak origin load within budget',()=>{
+  let b=E.initial('ddos');
+  assert.equal(E.evaluate('ddos',b).ok,false);
+  const limited=E.act('ddos',b,{type:'defense',id:'limit'});
+  assert.ok(E.trafficRounds(limited).some(r=>r.served<r.expected),'shared-address clients suffer collateral blocking');
+  for(const id of ['challenge','ticket'])b=E.act('ddos',b,{type:'defense',id});
+  assert.equal(E.evaluate('ddos',b).ok,false,'legitimate peak load still needs capacity relief');
+  b=E.act('ddos',b,{type:'defense',id:'cache'});
+  assert.equal(E.evaluate('ddos',b).ok,true);
+  assert.equal(E.defenseCost(b),4);
+  assert.deepEqual(E.trafficRounds(b).map(r=>r.load),[3,2,3,2]);
+  assert.throws(()=>E.act('ddos',b,{type:'defense',id:'limit'}),/4점/);
+});
+test('archive dossiers require cross-document evidence before sequential boxes open',()=>{
+  const s=G.initial();
+  assert.equal(G.available(s).length,6);
+  assert.equal(new Set(G.records.map(r=>r.person)).size,7);
+  assert.deepEqual(G.records.map(r=>r.id),cases.map(c=>c.id));
+  for(const r of G.records){
+    assert.ok(r.evidence.every(id=>G.documents.some(d=>d.id===id&&d.phase===r.phase)));
+    s.drafts[r.id]={person:r.person,team:r.team,outcome:r.outcome,evidence:[...r.evidence]};
+  }
+  assert.equal(G.assess('cipher',s).ok,false,'correct guesses are insufficient without reading their sources');
+  for(const id of ['members','rooms','a-field','a-letter'])s.read.push(id);
+  assert.equal(G.assess('cipher',s).ok,true);
+  assert.equal(G.seal('cipher',s,[]),false,'a narrative hypothesis also needs its field puzzle');
+  assert.equal(G.seal('cipher',s,['cipher']),true);
+  assert.equal(G.available(s).length,6,'one recovered file does not open the next box');
+  s.read.push('b-field','b-letter');
+  G.seal('ledger',s,['ledger']);
+  assert.equal(G.available(s).length,10);
+  for(const group of [['trust','mitm'],['heartbeat','ddos'],['outbreak']]){
+    for(const id of group){
+      const r=G.records.find(r=>r.id===id);
+      assert.ok(r.evidence.every(source=>G.available(s).some(d=>d.id===source)));
+      s.read.push(...r.evidence);
+      assert.equal(G.seal(id,s,[id]),true);
+    }
+  }
+  s.pins=['g-field','g-letter'];s.notes['g-field']='나중에 다시 읽기';
+  assert.deepEqual(G.restore(JSON.parse(JSON.stringify(s))),{...s,hints:Object.fromEntries(G.records.map(r=>[r.id,0]))});
+  const damaged=G.restore({sealed:['outbreak'],read:['g-field','g-letter'],drafts:s.drafts,pins:['g-field']});
+  assert.equal(damaged.sealed.length,0,'future sources cannot be unlocked by a damaged save');
+  assert.equal(damaged.pins.length,0);
+});
 test('progress restore retains real solutions and recovers safely from damaged or obsolete saves',()=>{
   const solved={key:[7,3,1,8,4,6,2,5]};
   const raw={version:1,current:'cipher',completed:['cipher','ledger','unknown'],cases:{
@@ -103,7 +166,7 @@ test('the app library and both short URLs serve the new application and its asse
     const r=await fetch(base+route);assert.equal(r.status,200);
     assert.match(await r.text(),/패킷의 흔적/);
   }
-  for(const file of ['style.css','app.js','engine.js','cases.js']){
+  for(const file of ['style.css','app.js','engine.js','cases.js','archive.js']){
     assert.equal((await fetch(base+'/apps/security-trace/'+file)).status,200,file);
   }
 });

@@ -1,11 +1,16 @@
 'use strict';
 (function(){
-  const E=window.TraceEngine,cases=window.TraceCases,root=document.getElementById('app');
+  const E=window.TraceEngine,G=window.TraceArchive,cases=window.TraceCases,root=document.getElementById('app');
   const storageKey='rice_trace_v1';
   const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   let progress=E.restore(null),storageIssue='',screen='archive',feedback=null,historyOpen=false,frames=null,frame=0;
   const undoStacks={};
-  try{progress=E.restore(JSON.parse(localStorage.getItem(storageKey)));}
+  const archiveUI={tab:'records',doc:'members',record:'cipher',query:'',message:null};
+  progress.archive=G.initial();
+  try{
+    const raw=JSON.parse(localStorage.getItem(storageKey));
+    progress=E.restore(raw);progress.archive=G.restore(raw?.archive);
+  }
   catch(error){storageIssue='기존 기록을 읽지 못했습니다. 새 사건 기록으로 시작합니다.';}
   const current=()=>cases.find(c=>c.id===progress.current)||cases[0];
   function session(){
@@ -24,40 +29,103 @@
   function announce(message){document.getElementById('announcer').textContent=message;}
   function openCase(id){
     if(!cases.some(c=>c.id===id))return;
+    if(!canOpen(id)){
+      screen='archive';archiveUI.tab='registry';archiveUI.record=id;
+      archiveUI.message={ok:false,message:'먼저 기록을 대조해 담당자·소속·결과의 가설과 근거를 연결하세요.'};
+      render();return;
+    }
     progress.current=id;screen='case';feedback=null;historyOpen=false;frames=null;frame=0;
     session();save();render();
     root.querySelector('h1')?.focus({preventScroll:true});
     window.scrollTo({top:0,behavior:'instant'});
   }
+  function canOpen(id){return !!progress.cases[id]||G.assess(id,progress.archive).ok;}
   function archive(){
-    const next=cases.find(c=>!progress.completed.includes(c.id))||cases[0];
-    const resume=progress.cases[progress.current]&&!progress.completed.includes(progress.current)?current():next;
-    return '<section class="hero"><div><span class="eyebrow">A FIELD GUIDE TO THE UNSEEN</span>'+
-      '<h1 tabindex="-1">누군가 지나갔다.<br><em>흔적은 남았다.</em></h1>'+
-      '<p class="hero-copy">암호문 속의 반복, 장부의 작은 오차, 너무 친절한 답신.<br>'+
-      '공격자의 눈으로 틈을 찾고, 방어자의 손으로 경계를 세우세요. 다섯 개의 사건을 풀다 보면 보안의 역사가 당신의 추리가 됩니다.</p>'+
-      '<div class="hero-actions">'+button('open','사건 기록 열기 <span aria-hidden="true">↗</span>','data-case="'+resume.id+'"')+
-      '<span class="micro">1인 플레이 · 약 30–45분<br>전문 지식 없이 시작 · 자동 저장</span></div></div>'+
-      '<div class="hero-art" aria-hidden="true"><div class="file-preview"><div class="preview-top"><span>ARCHIVE / EVIDENCE</span><span>NO. 001—005</span></div>'+
-      '<div class="preview-title">Nothing<br>is invisible.<span>EVERY SYSTEM LEAVES A TRACE.</span></div>'+
-      '<div class="tape">83 45 <strong>40</strong> 86<br>28 48 <strong>68</strong> 15</div>'+
-      '<span class="red-stamp">OPEN CASE</span><span class="preview-note">해답은 바깥에 있지 않다.<br>기록을 다시 읽을 것.</span></div></div></section>'+
-      '<section aria-labelledby="archiveTitle"><div class="archive-heading"><div><div class="eyebrow">THE FIRST COLLECTION</div><h2 id="archiveTitle">미해결 기록 보관함</h2></div>'+
-      '<div class="archive-progress"><span class="progress-track"><span style="width:'+progress.completed.length/5*100+'%"></span></span><span>'+
-      progress.completed.length+' / 5 해결</span></div></div><div class="case-grid">'+
-      cases.map(c=>{
-        const cleared=progress.completed.includes(c.id),featured=c.id===resume.id&&!cleared;
-        return '<button type="button" class="case-card'+(featured?' featured':'')+'" data-action="open" data-case="'+c.id+'">'+
-          '<div class="card-top"><span class="eyebrow">CASE '+c.number+'</span>'+(cleared?'<span class="completed-tag">해결 완료 ✓</span>':'')+'</div>'+
-          '<div class="card-year">'+c.year+'</div><h3>'+esc(c.title)+'</h3><p>'+esc(c.subtitle)+'</p>'+
-          '<div class="card-bottom"><span>'+esc(c.category)+' · '+c.time+'</span><span class="file-arrow" aria-hidden="true">↗</span></div></button>';
-      }).join('')+
-      '<aside class="archive-note"><span class="eyebrow">NO GUESSWORK. ONLY CLUES.</span><h3>외운 답보다,<br>발견한 원리.</h3>'+
-      '<p>각 사건은 다른 규칙으로 움직입니다. 실패에는 벌점이 없습니다. 되돌리기와 세 단계의 힌트를 이용해 가설을 실험하세요.</p>'+
-      '<p>실제 역사를 바탕으로 만든 창작 이야기입니다. 모든 사건은 원하는 순서로 열 수 있습니다.</p></aside></div></section>';
+    const state=progress.archive,available=G.available(state);
+    const doc=available.find(d=>d.id===archiveUI.doc)||available[0];
+    if(!state.read.includes(doc.id)){state.read.push(doc.id);save();}
+    const tabs=[['records','기록 검색'],['people','인명 대장'],['registry','복원 등록부']];
+    const secretary=state.sealed.length===7?'등록부가 돌아왔어요. 이제 마지막 장을 읽을 수 있어요.':
+      state.sealed.length<2?'서기 아리 — 먼저 입국 대장과 청사 안내도를 읽어 보세요. 기록 A와 B의 단서는 같은 상자에 있어요.':
+      state.sealed.length<4?'서기 아리 — 두 번째 상자를 열었어요. 앞선 직원의 편지가 다른 직원의 신원을 말해 줄지도 몰라요.':
+      state.sealed.length<6?'서기 아리 — 세 번째 상자가 열렸어요. 성공한 것뿐 아니라 무엇을 살렸는지도 기록해 주세요.':
+      '서기 아리 — 마지막 봉투예요. 병동의 불이 꺼지지 않았는지 확인해 주세요.';
+    return '<section class="restoration-intro"><div><div class="eyebrow">BUREAU OF LOST RECORDS / CHAPTER '+(Math.min(4,Math.floor(state.sealed.length/2)+1))+'</div>'+
+      '<h1 tabindex="-1">사라진 등록부를<br>다시 써 주세요.</h1><p>복원국의 일곱 직원이 남긴 현장 보고서와 편지. 이름과 소속, 마지막 결과가 뒤섞였습니다. '+
+      '기록을 검색하고 두 근거를 비교해 등록부를 복원하세요. 추론한 보안 원리는 현장 퍼즐에서 직접 검증합니다.</p></div>'+
+      '<aside class="secretary-note"><span class="eyebrow">ARCHIVIST / ARI</span><p>'+esc(secretary)+'</p><div class="archive-progress">'+
+      '<span class="progress-track"><span style="width:'+state.sealed.length/7*100+'%"></span></span><b>'+state.sealed.length+' / 7 복원</b></div>'+
+      '<small>현장 검증 '+progress.completed.length+' / 7 · 읽은 기록 '+state.read.length+' / '+G.documents.length+'</small></aside></section>'+
+      '<nav class="archive-tabs" aria-label="복원국 작업">'+tabs.map(([id,label])=>button('archive-tab',label,
+        'data-tab="'+id+'" aria-current="'+(archiveUI.tab===id)+'"','strip-button')).join('')+'</nav>'+
+      (archiveUI.message?'<p class="feedback '+(archiveUI.message.ok?'success':'error')+'" role="status">'+esc(archiveUI.message.message)+'</p>':'')+
+      (archiveUI.tab==='records'?documentDesk(available,doc):archiveUI.tab==='people'?peopleDesk():registryDesk())+
+      (state.pins.length?comparisonDesk():'')+(state.sealed.length===7?epilogue():'');
+  }
+  function documentDesk(available,doc){
+    const state=progress.archive,q=archiveUI.query.trim().toLocaleLowerCase();
+    const found=available.filter(d=>(d.title+' '+d.kind+' '+d.text.join(' ')).toLocaleLowerCase().includes(q));
+    const tags=['손수건','회중시계','솔잎','장갑','붉은 실','작은 종','도면'].filter(t=>doc.text.join(' ').includes(t));
+    return '<div class="document-desk"><aside class="document-index"><form id="record-search"><label for="recordSearch">기록 속 단어 찾기</label>'+
+      '<div class="search-line"><input id="recordSearch" name="query" type="search" maxlength="100" value="'+esc(archiveUI.query)+'" placeholder="예: 시계, 장갑, ROOT-D">'+
+      '<button class="button" type="submit">검색</button></div></form><p class="micro">'+found.length+'건 / 공개 '+available.length+'건 · '+(G.documents.length-available.length)+'건 봉인</p>'+
+      '<nav aria-label="공개된 기록">'+found.map(d=>button('read-doc','<b>'+esc(d.title)+'</b><small>'+esc(d.kind)+' · '+(state.read.includes(d.id)?'읽음':'새 기록')+'</small>',
+        'data-doc="'+d.id+'" aria-current="'+(d.id===doc.id)+'"','doc-entry')).join('')+
+      (!found.length?'<p class="puzzle-note">검색 결과가 없습니다. 다른 단어를 쓰거나 복원 등록부에서 후속 상자를 열어 보세요.</p>':'')+'</nav>'+
+      button('clear-search','검색 지우기','','button quiet')+'</aside><article class="document-reader" aria-labelledby="documentTitle">'+
+      '<div class="eyebrow">'+esc(doc.kind)+' / '+doc.id.toUpperCase()+'</div><h2 id="documentTitle">'+esc(doc.title)+'</h2>'+
+      doc.text.map(p=>'<p>'+esc(p)+'</p>').join('')+'<div class="word-links">'+tags.map(t=>button('search-word',esc(t),'data-term="'+esc(t)+'"','word-link')).join('')+'</div>'+
+      button('pin-doc',state.pins.includes(doc.id)?'비교대에서 내리기':'비교대에 올리기','data-doc="'+doc.id+'"','button secondary')+
+      '<label class="note-label" for="docNote">이 기록에 메모 남기기 <small>자동 저장 · 2,000자</small></label>'+
+      '<textarea id="docNote" data-doc="'+doc.id+'" maxlength="2000" rows="3" placeholder="아직 확정하지 못한 가설도 적어 두세요.">'+esc(state.notes[doc.id]||'')+'</textarea></article></div>';
+  }
+  function peopleDesk(){
+    return '<section class="people-desk" aria-label="직원 인명 대장">'+G.people.map(p=>{
+      const record=G.records.find(r=>r.person===p.id),sealed=progress.archive.sealed.includes(record.id);
+      return '<article class="person-file"><span class="person-initial" aria-hidden="true">'+esc(p.name[0])+'</span><h2>'+esc(p.name)+'</h2><p>'+esc(p.note)+'</p>'+
+        (sealed?'<p class="recovered">'+G.teams.find(t=>t.id===record.team).name+' · 기록 '+record.label+'<br>'+G.outcomes.find(o=>o.id===record.outcome).name+'</p>':
+          '<p class="micro">소속 · 담당 기록 · 결과 미확인</p>')+button('search-word','이 이름으로 기록 찾기','data-term="'+esc(p.name)+'"','button quiet')+'</article>';
+    }).join('')+'</section>';
+  }
+  function draftSelect(id,field,label,options,draft,sealed){
+    return '<label>'+label+'<select id="draft-'+field+'" data-draft="'+field+'" data-case="'+id+'"'+(sealed?' disabled':'')+'><option value="">아직 모름</option>'+
+      options.map(option=>'<option value="'+option.id+'"'+(draft[field]===option.id?' selected':'')+'>'+esc(option.name)+'</option>').join('')+'</select></label>';
+  }
+  function registryDesk(){
+    const state=progress.archive,r=G.records.find(r=>r.id===archiveUI.record)||G.records[0];
+    const c=cases.find(c=>c.id===r.id),draft=state.drafts[r.id]||G.blankDraft(),sealed=state.sealed.includes(r.id);
+    const available=G.available(state),discovered=r.evidence.every(id=>available.some(d=>d.id===id)),hints=state.hints[r.id]||0;
+    return '<div class="registry-desk"><nav class="registry-index" aria-label="복원 대상">'+G.records.map(record=>button('select-record',
+      '<b>기록 '+record.label+'</b><small>'+cases.find(c=>c.id===record.id).year+' · '+(state.sealed.includes(record.id)?'복원 완료':record.evidence.every(id=>available.some(d=>d.id===id))?'추론 가능':'후속 상자')+'</small>',
+      'data-case="'+record.id+'" aria-current="'+(record.id===r.id)+'"','doc-entry')).join('')+'</nav>'+
+      '<section class="registry-form"><div class="eyebrow">RECOVERY FILE / '+r.label+'</div><h2>'+esc(c.title)+'</h2>'+
+      '<p>현장에 남은 개인 소지품으로 담당자를, 보고서의 방 이름으로 소속을, 동료의 확인서로 결과를 복원하세요.</p>'+
+      (!discovered?'<p class="feedback">이 기록의 근거는 아직 봉인된 상자에 있습니다. 앞선 상자의 두 기록을 복원하세요.</p>':'')+
+      '<div class="deduction-fields">'+draftSelect(r.id,'person','담당자',G.people,draft,sealed)+draftSelect(r.id,'team','소속',G.teams,draft,sealed)+
+      draftSelect(r.id,'outcome','마지막 결과',G.outcomes,draft,sealed)+'</div>'+
+      '<h3>첨부한 근거 두 장</h3><div class="attached-evidence">'+(draft.evidence.length?draft.evidence.map(id=>'<span>'+esc(G.documents.find(d=>d.id===id).title)+'</span>').join(''):'<p class="micro">기록 검색에서 근거 두 장을 비교대에 올린 뒤 첨부하세요.</p>')+'</div>'+
+      '<div class="registry-actions">'+button('attach-evidence','비교대의 두 기록 첨부','data-case="'+r.id+'"','button quiet',sealed||state.pins.length!==2)+
+      button('check-record',sealed?'복원 확정 ✓':'추론 대조','data-case="'+r.id+'"','button',sealed||!discovered)+
+      button('open',progress.completed.includes(r.id)?'현장 검증 다시 보기':'현장 퍼즐로 검증','data-case="'+r.id+'"','button secondary',!canOpen(r.id))+'</div>'+
+      '<p class="micro">세 항목과 근거를 한 묶음으로 대조합니다. 맞은 칸만 따로 알려주지는 않습니다.</p>'+
+      (sealed?'<p class="recovered">직원의 기록이 등록부로 돌아왔습니다. 후속 기록이 있는지 기록 검색을 확인하세요.</p>':'')+
+      '<div class="record-hints">'+button('record-hint','등록부 추리 도움말 · '+hints+'/3','data-case="'+r.id+'"','button quiet',hints===3||!discovered)+
+      Array.from({length:hints},(_,i)=>'<p>'+esc(G.hint(r.id,i+1))+'</p>').join('')+'</div></section></div>';
+  }
+  function comparisonDesk(){
+    const state=progress.archive;
+    return '<section class="comparison-desk"><div class="archive-heading"><h2>두 기록의 비교대</h2><small>'+state.pins.length+' / 2</small></div><div class="comparison-grid">'+
+      state.pins.map(id=>{const d=G.documents.find(d=>d.id===id);return '<article><h3>'+esc(d.title)+'</h3>'+d.text.map(p=>'<p>'+esc(p)+'</p>').join('')+
+        button('pin-doc','비교대에서 내리기','data-doc="'+id+'"','button quiet')+'</article>';}).join('')+'</div></section>';
+  }
+  function epilogue(){
+    return '<section class="history-file guild-ending"><div class="eyebrow">THE LAST PAGE / 7 RECORDS RESTORED</div><h2>이름이 돌아온 자리</h2>'+
+      '<p>서기 아리는 마지막 빈칸을 채운 뒤에도 서랍을 닫지 않았다. 회중시계를 고쳐 준 손, 붉은 실로 묶은 검증표, 답변을 기다리던 작은 종. 따로 놓으면 잡음이던 기록들이 이제 서로의 증인이 됐다.</p>'+
+      '<p>일곱 직원은 서로 다른 시대의 실패를 다시 걸었다. 어떤 이는 틈을 찾았고, 어떤 이는 문을 지켰다. 모두가 지키려 했던 것은 같은 것이었다. 믿을 수 있는 상대와, 멈추지 않아야 할 일.</p>'+
+      '<p class="recovered">복원국 등록부 전권 복원 완료 · 이제 각 사건의 실제 역사와 기록을 자유롭게 다시 살펴볼 수 있습니다.</p></section>';
   }
   function stageRole(c,b){
-    if(['trust','heartbeat'].includes(c.id))return b.stage===0?'공격자 · 틈을 찾는 사람':'방어자 · 경계를 세우는 사람';
+    if(['trust','heartbeat','mitm'].includes(c.id))return b.stage===0?'공격자 · 틈을 찾는 사람':'방어자 · 경계를 세우는 사람';
     return c.role;
   }
   function sidebar(c,item){
@@ -213,26 +281,62 @@
         button('frame','다음 →','data-delta="1"','button quiet',frame===frames.length-1)+'</div>'+
         '<p class="puzzle-note" style="margin-top:12px">현재 감염 '+infected.length+'대 · 계획을 바꾸면 시험을 처음부터 다시 합니다.</p>':'')+'</section>';
   }
+  function mitmBoard(b){
+    if(b.stage===0)return '<p class="puzzle-note">요청한 상대 records.lab · 실제 서버 키 K-41 · 중계자가 가진 개인키 K-99</p>'+
+      '<div class="relay-route"><span>발신자</span><b>암호 통로 ①</b><span class="middle-node">중계자</span><b>암호 통로 ②</b><span>기록실</span></div>'+
+      '<div class="certificate-columns">'+['front','back'].map((side,i)=>'<section><h3>통로 '+(i+1)+' · '+(i===0?'발신자에게 보여줄 인증서':'기록실에서 받을 인증서')+'</h3>'+
+        E.certificates.map(cert=>button(side,'<b>'+esc(cert.name)+'</b><span>'+esc(cert.host)+'</span><small>열쇠 '+cert.key+' / 발급자 '+cert.issuer+'</small>',
+          'id="'+side+'-'+cert.id+'" data-id="'+cert.id+'" aria-pressed="'+(b[side]===cert.id)+'"','record-row')).join('')+'</section>').join('')+'</div>'+
+      button('relay','중계 시험','id="relay"','button secondary')+
+      '<div class="terminal packet-response" style="margin-top:16px">'+(b.observed?'통로 ① 발신자 ↔ 중계자 / K-99<br>중계자가 읽은 가상 서신: 전보상자 7<br>통로 ② 중계자 ↔ 기록실 / K-41':'두 인증서를 고르고 중계 시험을 실행하세요.')+'</div>';
+    return '<p class="puzzle-note">이름 검사를 켜고, 신뢰할 인증서 발급자를 선택하세요. 실제 상대의 이름은 records.lab입니다.</p>'+
+      '<div class="edge-list">'+button('hostname','상대 이름 확인 <small>'+(b.verifyHost?'사용 중':'꺼짐')+'</small>',
+        'id="verify-host" aria-pressed="'+b.verifyHost+'"','edge-row')+
+      ['ROOT-G','ROOT-D','ROOT-X'].map(id=>button('root','발급자 '+id+'<small>'+(b.roots.includes(id)?'신뢰함':'신뢰하지 않음')+'</small>',
+        'id="root-'+id+'" data-id="'+id+'" aria-pressed="'+b.roots.includes(id)+'"','edge-row')).join('')+'</div>'+
+      '<div class="subhead"><h3>연결 검증표</h3><small>정상 기록실만 허용해야 합니다</small></div><div class="packet-tests">'+
+      E.certificates.map(cert=>{
+        const allowed=E.certificateAllowed(b,cert),correct=allowed===(cert.id==='real'),tested=feedback?.tested;
+        return '<div class="packet-test'+(tested?(correct?' pass':' fail'):'')+'"><span>'+esc(cert.name)+'<br><small>'+cert.host+' / '+cert.issuer+'</small></span><strong>'+
+          (tested?(allowed?'허용':'거부')+' · '+(correct?'정상 처리':'오류'):'검증 대기')+'</strong></div>';
+      }).join('')+'</div>';
+  }
+  function ddosBoard(b){
+    const rounds=E.trafficRounds(b),tested=feedback?.tested;
+    return '<div class="budget"><span>관문 대응 자원 <small>원본 처리 한도 5 / 차례</small></span><strong>'+E.defenseCost(b)+' / 4</strong></div>'+
+      '<div class="edge-list">'+E.defenses.map(d=>button('defense','<span><b>'+esc(d.name)+'</b><br><small>'+esc(d.detail)+'</small></span><strong>'+
+        (b.enabled.includes(d.id)?'선택됨':'미선택')+' · '+d.cost+'점</strong>',
+        'id="defense-'+d.id+'" data-id="'+d.id+'" aria-pressed="'+b.enabled.includes(d.id)+'"','edge-row')).join('')+'</div>'+
+      '<div class="subhead"><h3>관문에 도착한 요청</h3><small>네 차례의 실제 요청 수</small></div><div class="traffic-sources">'+
+      E.traffic.map(group=>'<article><b>'+esc(group.name)+'</b><span>'+group.rates.join(' / ')+'</span><small>'+
+        (group.challenge?'확인 화면 가능':group.ticket?'확인 화면 불가 · 검증된 서명표':'확인 화면 불가 · 서명표 없음')+
+        (group.cached.some(n=>n)?'<br>재사용 가능한 정적 응답 '+group.cached.join(' / '):'')+'</small></article>').join('')+'</div>'+
+      '<div class="subhead"><h3>부하 시험 결과</h3><small>차단된 정상 요청도 실패로 봅니다</small></div>'+
+      '<div class="traffic-rounds">'+rounds.map((round,i)=>'<article class="'+(tested?(round.load<=5&&round.served===round.expected?'safe':'overloaded'):'')+'">'+
+        '<b>'+(i+1)+'차례</b><div class="load-meter"><span style="width:'+Math.min(100,round.load/5*100)+'%"></span></div>'+
+        '<p>원본 부하 <strong>'+(tested?round.load:'—')+' / 5</strong></p><p>정상 처리 '+(tested?round.served+' / '+round.expected:'검증 대기')+'</p></article>').join('')+'</div>'+
+      button('traffic-test','네 차례 부하 시험','id="traffic-test"','button secondary');
+  }
   function solved(c){
-    const next=cases[cases.findIndex(x=>x.id===c.id)+1];
     return '<div class="solved-banner"><div class="eyebrow">CASE CLOSED / '+c.number+'</div><h2>흔적이 하나의 이야기가 됐다.</h2>'+
       '<p>'+esc(c.ending)+'</p><div class="solved-actions">'+
-      (next?button('open','다음 사건 · '+esc(next.title),'data-case="'+next.id+'"'):button('archive','사건집 돌아보기'))+
+      button('record-return','등록부에 검증 결과 남기기','data-case="'+c.id+'"')+
       button('reset','이 사건 다시 풀기','','button secondary')+'</div></div>'+history(c);
   }
   function caseView(){
     const c=current(),item=session(),b=item.board,cleared=progress.completed.includes(c.id);
-    const role=stageRole(c,b),attack=role.startsWith('공격자'),twoStage=['trust','heartbeat'].includes(c.id);
+    const role=stageRole(c,b),attack=role.startsWith('공격자'),twoStage=['trust','heartbeat','mitm'].includes(c.id);
     const readyToSwitch=twoStage&&b.stage===0&&E.evaluate(c.id,b).ok;
     const stageText=twoStage?(b.stage===0?'01 / 틈을 찾기':'02 / 경계를 세우기'):'EVIDENCE DESK';
     const titles={cipher:'공유 키 복원기',ledger:'세 장부의 교차점',trust:b.stage===1?'신뢰 철회 계획':'방문자의 이동 경로',
-      heartbeat:b.stage===1?'응답 장치의 경계 검사':'통신 장치 응답 실험',outbreak:'병원망 대응 계획'};
-    const renderers={cipher:cipherBoard,ledger:ledgerBoard,trust:trustBoard,heartbeat:heartbeatBoard,outbreak:outbreakBoard};
+      heartbeat:b.stage===1?'응답 장치의 경계 검사':'통신 장치 응답 실험',outbreak:'병원망 대응 계획',
+      mitm:b.stage===1?'인증 신뢰 정책':'중계소의 두 봉인',ddos:'분산 요청과 관문 처리'};
+    const renderers={cipher:cipherBoard,ledger:ledgerBoard,trust:trustBoard,heartbeat:heartbeatBoard,outbreak:outbreakBoard,mitm:mitmBoard,ddos:ddosBoard};
     const submitTitle={cipher:'전보 해독 확인',ledger:'증거 연결 확인',trust:b.stage===1?'차단 계획 확인':'경로 확인',
-      heartbeat:b.stage===1?'경계 검사':'응답 분석 확인',outbreak:'대응 계획 확정'};
-    return '<nav class="case-strip" aria-label="사건 선택">'+button('archive','← 목록','','strip-button')+
+      heartbeat:b.stage===1?'경계 검사':'응답 분석 확인',outbreak:'대응 계획 확정',mitm:b.stage===1?'인증 정책 검증':'중계 결과 확인',ddos:'관문 계획 확정'};
+    return '<nav class="case-strip" aria-label="사건 선택">'+button('archive','← 기록실','','strip-button')+
       cases.map(x=>button('open',x.number+' / '+x.year+(progress.completed.includes(x.id)?' ✓':''),
-        'data-case="'+x.id+'" aria-current="'+(c.id===x.id)+'" aria-label="'+esc(x.title)+'"','strip-button')).join('')+'</nav>'+
+        'data-case="'+x.id+'" aria-current="'+(c.id===x.id)+'" aria-label="'+esc(x.title)+'"','strip-button',!canOpen(x.id))).join('')+'</nav>'+
       '<header class="case-heading"><div><span class="role-pill'+(attack?' attack':'')+'"><span class="role-dot"></span>'+esc(role)+'</span>'+
       '<div class="eyebrow">CASE '+c.number+' / '+esc(c.category)+' / '+esc(c.concept)+'</div><h1 tabindex="-1">'+esc(c.title)+'</h1><p>'+esc(c.subtitle)+'</p></div>'+
       '<div class="year-badge" aria-hidden="true">'+c.year+'</div></header>'+
@@ -267,10 +371,48 @@
     try{
       if(action==='open'){openCase(target.dataset.case);return;}
       if(action==='archive'){screen='archive';render();window.scrollTo({top:0,behavior:'instant'});return;}
+      if(action==='archive-tab'){
+        archiveUI.tab=target.dataset.tab;archiveUI.message=null;render();return;
+      }
+      if(action==='read-doc'){
+        if(!G.available(progress.archive).some(d=>d.id===target.dataset.doc))return;
+        archiveUI.doc=target.dataset.doc;archiveUI.message=null;render();
+        root.querySelector('.document-reader')?.scrollIntoView({block:'nearest'});return;
+      }
+      if(action==='clear-search'||action==='search-word'){
+        archiveUI.query=action==='clear-search'?'':target.dataset.term;
+        archiveUI.tab='records';render();return;
+      }
+      if(action==='pin-doc'){
+        const state=progress.archive,id=target.dataset.doc;
+        if(!state.read.includes(id)||!G.available(state).some(d=>d.id===id))return;
+        if(state.pins.includes(id))state.pins=state.pins.filter(d=>d!==id);
+        else if(state.pins.length===2){
+          archiveUI.message={ok:false,message:'비교대에는 두 장을 올릴 수 있습니다. 기존 기록을 한 장 내린 뒤 추가하세요.'};render();return;
+        }else state.pins.push(id);
+        archiveUI.message=null;save();render();return;
+      }
+      if(action==='select-record'||action==='record-return'){
+        screen='archive';archiveUI.tab='registry';archiveUI.record=target.dataset.case;archiveUI.message=null;
+        if(action==='record-return')G.seal(target.dataset.case,progress.archive,progress.completed);
+        save();render();window.scrollTo({top:0,behavior:'instant'});return;
+      }
+      if(['attach-evidence','check-record','record-hint'].includes(action)){
+        const id=target.dataset.case,state=progress.archive;
+        if(!G.records.some(r=>r.id===id)||state.sealed.includes(id))return;
+        state.drafts[id]||=G.blankDraft();
+        if(action==='attach-evidence'&&state.pins.length===2)state.drafts[id].evidence=[...state.pins];
+        if(action==='check-record'){
+          archiveUI.message=G.assess(id,state);
+          if(G.seal(id,state,progress.completed))archiveUI.message={ok:true,message:'기록이 복원됐습니다. 후속 상자의 봉인을 확인하세요.'};
+        }
+        if(action==='record-hint')state.hints[id]=Math.min(3,(state.hints[id]||0)+1);
+        save();render();return;
+      }
       const c=current(),item=session();
       if(action==='dial'){update({type:'dial',index:Number(target.dataset.index),delta:Number(target.dataset.delta)});return;}
-      if(['session','job','print','travel','cut','patch'].includes(action)){update({type:action,id:target.dataset.id});return;}
-      if(action==='probe'||action==='switch'){update({type:action});if(action==='switch')announce('시점 전환. 방어자의 자리입니다.');return;}
+      if(['session','job','print','travel','cut','patch','front','back','root','defense'].includes(action)){update({type:action,id:target.dataset.id});return;}
+      if(['probe','switch','relay','hostname'].includes(action)){update({type:action});if(action==='switch')announce('시점 전환. 방어자의 자리입니다.');return;}
       if(action==='hint'){
         item.hints=Math.min(3,item.hints+1);save();render();announce(c.hints[item.hints-1]);return;
       }
@@ -292,11 +434,15 @@
         frames=E.spread(item.board);frame=frames.length-1;
         feedback=E.evaluate(c.id,item.board);render();announce(feedback.message);return;
       }
+      if(action==='traffic-test'){
+        feedback={...E.evaluate(c.id,item.board),tested:true};render();announce(feedback.message);return;
+      }
       if(action==='submit'){
         feedback={...E.evaluate(c.id,item.board),tested:true};
-        const isFinal=!['trust','heartbeat'].includes(c.id)||item.board.stage===1;
+        const isFinal=!['trust','heartbeat','mitm'].includes(c.id)||item.board.stage===1;
         if(feedback.ok&&isFinal){
           if(!progress.completed.includes(c.id))progress.completed.push(c.id);
+          G.seal(c.id,progress.archive,progress.completed);
           save();
         }
         render();announce(feedback.message);
@@ -306,8 +452,22 @@
   });
   root.addEventListener('input',event=>{
     if(event.target.id==='claimed')document.getElementById('lengthValue').textContent=event.target.value;
+    if(event.target.id==='docNote'){
+      progress.archive.notes[event.target.dataset.doc]=event.target.value.slice(0,2000);save();
+    }
+  });
+  root.addEventListener('submit',event=>{
+    if(event.target.id!=='record-search')return;
+    event.preventDefault();
+    archiveUI.query=new FormData(event.target).get('query').toString().slice(0,100);render();
   });
   root.addEventListener('change',event=>{
+    const field=event.target.dataset.draft,id=event.target.dataset.case;
+    if(['person','team','outcome'].includes(field)&&G.records.some(r=>r.id===id)&&!progress.archive.sealed.includes(id)){
+      progress.archive.drafts[id]||=G.blankDraft();
+      progress.archive.drafts[id][field]=event.target.value;
+      archiveUI.message=null;save();render();return;
+    }
     const type=event.target.dataset.control;
     if(!type)return;
     const numeric=['length','jobShift','printShift'].includes(type);
