@@ -9,6 +9,6 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "test": "node --test tests/operator-auth.test.cjs tests/server.test.cjs tests/study-render.test.cjs tests/editor.test.cjs tests/voice-controls.test.cjs tests/exchange.test.cjs tests/d1-case.test.cjs tests/three-mysteries.test.cjs tests/four-narratives.test.cjs tests/mystery-illustrations.test.cjs tests/studio-test-mode.test.cjs tests/mystery-real-art.test.cjs tests/mystery-endings.test.cjs tests/mystery-conclusion-v2.test.cjs tests/clue-front.test.cjs tests/evidence-copy.test.cjs tests/jeju-lab-conference.test.cjs tests/security-trace.test.cjs"
+    "test": "node --test tests/operator-auth.test.cjs tests/server.test.cjs tests/study-render.test.cjs tests/editor.test.cjs tests/voice-controls.test.cjs tests/exchange.test.cjs tests/d1-case.test.cjs tests/three-mysteries.test.cjs tests/four-narratives.test.cjs tests/mystery-illustrations.test.cjs tests/studio-test-mode.test.cjs tests/mystery-real-art.test.cjs tests/mystery-endings.test.cjs tests/mystery-conclusion-v2.test.cjs tests/clue-front.test.cjs tests/evidence-copy.test.cjs tests/jeju-lab-conference.test.cjs tests/security-trace.test.cjs tests/multiplayer-test-case.test.cjs"
   }
 }

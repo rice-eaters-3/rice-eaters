@@ -2,7 +2,7 @@
 
 const assert = require('node:assert/strict');
 const { randomBytes } = require('node:crypto');
-const { mkdtempSync, rmSync } = require('node:fs');
+const { mkdtempSync, rmSync, mkdirSync } = require('node:fs');
 const http = require('node:http');
 const { tmpdir } = require('node:os');
 const { join } = require('node:path');
@@ -219,6 +219,38 @@ async function main() {
     await preview.locator('#testPhase').selectOption('investigation1');
     await dismissPhaseIntro(preview);
     await checkInvestigationKeys(preview);
+    const screenshots=join(process.cwd(),'artifacts/mystery');
+    mkdirSync(screenshots,{recursive:true});
+    await preview.setViewportSize(viewports[0]);
+    await preview.locator('#testSource').selectOption('server:jeju-lab-conference');
+    await preview.locator('#testLoad').click();
+    await preview.locator('#testPhase').selectOption('study');
+    await dismissPhaseIntro(preview);
+    await preview.locator('[data-action=book-toggle]').click();
+    await expect(preview.locator('image[href$="/seoha.webp"]').first()).toBeAttached();
+    await preview.screenshot({path:join(screenshots,'jeju-study-desktop.png'),fullPage:true});
+    await preview.keyboard.press('Escape');
+    const jeju=require('../mystery-content/jeju-lab-conference.case.json');
+    const artFiles=['backgrounds/jeju-lab-conference-background.webp',
+      ...[...jeju.story.characters,jeju.story.victim].map(c=>'portraits/'+jeju.story.id+'/'+c.id+'.webp'),
+      ...jeju.game.investigation.cards.map(c=>'clues/'+jeju.story.id+'/'+c.id+'.webp')];
+    for(const file of artFiles){
+      const response=await studio.request.get('/apps/murder-mystery/assets/'+file);
+      assert.equal(response.status(),200,file);assert.ok((await response.body()).length>5000,file);
+    }
+    await preview.locator('#testPhase').selectOption('investigation1');
+    await dismissPhaseIntro(preview);
+    await preview.locator('[data-action=research-toggle]').click();
+    await preview.screenshot({path:join(screenshots,'jeju-investigation-desktop.png'),fullPage:true});
+    const qa=await browser.newContext({baseURL});const qaPage=await qa.newPage();
+    await qaPage.goto('/mystery');
+    await qaPage.locator('#storySelection').selectOption('multiplayer-test');
+    await qaPage.locator('#testPlayerCount').selectOption('3');
+    await qaPage.locator('#displayName').fill('브라우저 테스트');
+    await qaPage.locator('[data-action=create]').click();
+    await expect(qaPage.getByText('1 / 3명 참가',{exact:true})).toBeVisible();
+    await qaPage.screenshot({path:join(screenshots,'qa-three-player-lobby.png'),fullPage:true});
+    console.log('Jeju real assets and variable-capacity QA room creation passed.');
     console.log('Live room and Studio passed map, booklet, and keyboard investigation checks.');
   } finally {
     await browser?.close();

@@ -160,19 +160,30 @@ test('common and individual endings branch by real culprit and preserve all seve
   }
 });
 
-test('Jeju artwork uses only in-browser placeholders; no real or generated image assets',()=>{
+test('Jeju cover, portraits, NPC, map avatars and all 64 evidence cards use individual real assets',()=>{
   const source=fs.readFileSync(path.join(__dirname,'../apps/murder-mystery/illustrations.js'),'utf8');
   const context={window:{}};
   vm.runInNewContext(source,context);
   const art=context.window.MysteryArt;
   const theme=original.story.id;
   const c=original.story.characters[0];
-  const screens=[art.cover(theme),art.portrait(c,theme),art.clue({id:'lobby_checkin',title:'로비 기록'},theme),art.victim(original.story)];
+  const screens=[art.cover(theme),...original.story.characters.map(c=>art.portrait(c,theme)),
+    ...original.story.characters.map(c=>art.avatar({characterId:c.id,name:c.name},theme)),
+    ...original.game.investigation.cards.map(c=>art.clue(c,theme)),art.victim(original.story)];
   for(const picture of screens){
-    assert.match(picture,/data-placeholder="true"/);
-    assert.doesNotMatch(picture,/<image\s+href=/,'no image file should be requested');
+    assert.doesNotMatch(picture,/data-placeholder="true"/);
+    const file=picture.match(/<image href="([^"]+)"/)[1];
+    const bytes=fs.readFileSync(path.join(__dirname,'..',file));
+    assert.equal(bytes.subarray(0,4).toString(),'RIFF');
+    assert.equal(bytes.subarray(8,12).toString(),'WEBP');
+    assert.ok(bytes.length>5000,file);
   }
-  assert.match(art.cover(theme),/ART PLACEHOLDER/);
+  for(const card of original.game.investigation.cards){
+    const markup=art.clue({...card,id:'holding_test',cardId:card.id},theme);
+    assert.ok(markup.includes('/'+card.id+'.webp'));
+    assert.doesNotMatch(markup,/slice|clipPath|<text/,'evidence must stay unobscured');
+  }
+  assert.match(art.clue({id:'unknown'},theme),/data-placeholder="true"/);
 });
 
 

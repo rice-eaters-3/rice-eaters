@@ -22,4 +22,5 @@ module.exports=[
   ,require('./neon-memory-quarantine.case.json').story
   ,require('./stellar-academy-first-case.case.json').story
   ,require('./jeju-lab-conference.case.json').story
+  ,require('./multiplayer-test.case.json').story
 ];

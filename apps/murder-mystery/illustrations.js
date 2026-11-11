@@ -241,6 +241,19 @@ window.MysteryArt=(function(){
     '<text x="50%" y="'+(h/2+39)+'" font-size="'+(cover?31:portrait?19:22)+'" text-anchor="middle" fill="#e6e0d5" font-family="sans-serif">'+safeLabel+'</text>'+
     '<text x="50%" y="'+(h/2+70)+'" font-size="13" text-anchor="middle" fill="'+base+'" font-family="monospace">ART PLACEHOLDER · '+safeId+'</text></svg>';
  }
+
+ const jejuPortraitIds=new Set(["seoha", "doyun", "minji", "sion", "yuna", "jiwoo", "haerim", "prof_jeong"]);
+ const jejuClueIds=new Set(["seoha_commit_print", "seoha_defense_email", "seoha_phone_log", "seoha_review_letter", "doyun_poster_tube", "doyun_qa_screenshot", "doyun_consulting_agreement", "doyun_redacted_metrics", "minji_complaint_receipt", "minji_slide_revision", "minji_call_log", "minji_unsent_speech", "sion_resume_draft", "sion_recruiter_card", "sion_family_call", "sion_poster_loan", "yuna_video_edit_sheet", "yuna_slide_markups", "yuna_reimbursement_slip", "yuna_sketchbook", "jiwoo_overseas_plan", "jiwoo_model_notebook", "jiwoo_alumni_contact", "jiwoo_hallway_sketch", "haerim_expense_ledger", "haerim_m02_return", "haerim_personal_receipt", "haerim_audit_draft", "lobby_checkin", "lobby_safety_envelope", "lobby_private_expense", "dinner_placecard", "dinner_award_photo", "dinner_empty_shelf", "kitchen_clock", "kitchen_washcloth", "lounge_group_post", "lounge_conference_program", "lounge_scheduled_message", "prof_scene_sketch", "prof_watch_reading", "prof_protection_memo", "prof_corrected_draft", "bedroom_names", "bedroom_phone_history", "bedroom_alumni_email", "terrace_rain_gauge", "terrace_sliding_door", "terrace_lights", "utility_m02_register", "utility_suitelog", "utility_keyloop", "print_job_log", "print_credit_plan", "print_margin_note", "annex_runner_history", "annex_qa_original", "annex_eval_manifest", "store_props", "store_stone_chip", "store_poster_fiber", "parking_shuttle", "parking_entry_image", "parking_wifi_record"]);
+ function jejuAsset(kind,id,label,small=false){
+  const cover=kind==='cover',portrait=kind==='portrait';
+  if(!cover&&!(portrait?jejuPortraitIds:jejuClueIds).has(id))return jejuDummy(kind,id,label);
+  const file=cover?'backgrounds/jeju-lab-conference-background.webp':
+    (portrait?'portraits/':'clues/')+jejuTheme+'/'+id+'.webp';
+  const w=cover?1024:portrait?432:512,h=cover?440:portrait?576:512;
+  const css=cover?'mystery-story-cover':portrait?'mystery-portrait real-portrait'+(small?' portrait-compact':''):'mystery-clue-art real-clue-art standalone-evidence';
+  return '<svg class="'+css+'" data-asset="'+escape(id)+'" viewBox="0 0 '+w+' '+h+'" role="img" aria-label="'+escape(label||'시나리오 일러스트')+'" xmlns="http://www.w3.org/2000/svg">'+
+   '<image href="'+path+file+'" width="'+w+'" height="'+h+'" preserveAspectRatio="xMidYMid '+(cover?'slice':'meet')+'"/></svg>';
+ }
  const standaloneProps={'cruel-heart-island':new Set(['boat','cabinet','plant','fireplace','camera','terminal','sofa','table','wardrobe','fridge','generator','shelf','server']),'d1-crown-of-ashes':new Set(['sink','fridge','pc','gargoyle','throne','stove','table','camera','plant','desk','bed','cabinet','terminal','server','generator','statue']),'stellar-academy-first-case':new Set(['bed','cabinet','desk','shelf','telescope','projector','terminal','medical','door','generator']),'neon-memory-quarantine':new Set(['terminal','sofa','cabinet','camera','medical','pod','generator','server'])};
  const storyFor=id=>Object.hasOwn(A,id)?id:id==='d1-gaming'?'d1-crown-of-ashes':null;
  const knownStory=id=>A[storyFor(id)]||null;
@@ -329,7 +342,7 @@ window.MysteryArt=(function(){
    (portraitMode?12:13)+'" font-weight="600">'+(portraitMode?title:initials)+'</text></svg>';
  }
  function portrait(c,story,small=false){
-  if(story===jejuTheme)return jejuDummy('portrait',c?.id,c?.name,c?.accent);
+  if(story===jejuTheme)return jejuAsset('portrait',c?.id,c?.name,small);
   const asset=standalonePortrait(story,c?.id);
   const css='mystery-portrait real-portrait'+(small?' portrait-compact':'');
   if(asset)return compose(story,[0,0,...asset.size],c.id,c.name+' 캐릭터 초상화',css,'portrait',c.accent,asset);
@@ -382,7 +395,7 @@ window.MysteryArt=(function(){
   return null;
  }
  function clue(c,story){
-  if(story===jejuTheme)return jejuDummy('clue',c?.cardId||c?.id,c?.title||c?.name);
+  if(story===jejuTheme)return jejuAsset('clue',c?.cardId||c?.id,c?.title||c?.name);
   const theme=storyFor(story),data=knownStory(story),label=c?.title||c?.name||'조사 카드';
   const cardId=c?.cardId||c?.id;
   if(individualClues[theme]?.has(cardId)){
@@ -436,7 +449,7 @@ window.MysteryArt=(function(){
   return artCrop(story,data.stairs[key],'mystery-stair-art',portal?.label||'층 이동');
  }
  function cover(story){
-  if(story===jejuTheme)return jejuDummy('cover','jeju-lab-cover','제주 학회 MT · 이미지 준비 중');
+  if(story===jejuTheme)return jejuAsset('cover','jeju-lab-cover','제주 학회 MT · 구름곶 펜션');
   const data=knownStory(story);
   if(!data)return null;
   const file=data.file.replace('.webp','-background.webp');
@@ -445,6 +458,7 @@ window.MysteryArt=(function(){
     '<image href="'+path+'backgrounds/'+file+'" width="1024" height="440" preserveAspectRatio="xMidYMid slice"/></svg>';
  }
  function avatar(c,story){
+  if(story===jejuTheme&&jejuPortraitIds.has(c?.characterId))return artCrop(story,[86,38,270,270],'mystery-avatar-art',c.name+' 미니 아바타',{file:'portraits/'+jejuTheme+'/'+c.characterId+'.webp',size:[432,576]});
   const asset=standalonePortrait(story,c?.characterId);
   if(asset)return artCrop(story,[86,38,270,270],'mystery-avatar-art',c.name+' 미니 아바타',asset);
   const data=knownStory(story);
@@ -457,7 +471,7 @@ window.MysteryArt=(function(){
  }
  function victim(story){
   const c=story?.victim,theme=story?.artTheme||story?.id;
-  if(theme===jejuTheme&&c)return '<figure class="mystery-victim">'+jejuDummy('portrait',c.id,c.name)+
+  if(theme===jejuTheme&&c)return '<figure class="mystery-victim">'+jejuAsset('portrait',c.id,c.name,true)+
     '<figcaption><small>피해자 · NPC</small><b>'+escape(c.name)+'</b></figcaption></figure>';
   if(!c||!standalonePortrait(theme,c.id))return '';
   return '<figure class="mystery-victim">'+portrait(c,theme,true)+

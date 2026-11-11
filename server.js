@@ -16,7 +16,7 @@ const privateMysteries = {
   'd1-crown-of-ashes':{...d1Case.game,spawn:d1Case.spawn},
   ...Object.fromEntries([
     'cruel-heart-island','neon-memory-quarantine','stellar-academy-first-case',
-    'jeju-lab-conference'
+    'jeju-lab-conference','multiplayer-test'
   ].map(id=>{
     const pkg=require('./mystery-content/'+id+'.case.json');
     return [id,{...pkg.game,spawn:pkg.spawn}];
@@ -35,6 +35,13 @@ fs.mkdirSync(DATA_DIR, {recursive: true});
 const STORIES = require('./mystery-content/stories.js');
 const validateMystery = require('./mystery-content/validate.js').validate;
 function storyById(id){return STORIES.find(s=>s.id===id)||db.customStories?.[id]?.story||null;}
+// Only the built-in QA case has a variable cast. Normal stories retain their full cast.
+function storyForRoom(room){
+  const story=storyById(room.storyId);
+  if(story.id!=='multiplayer-test')return story;
+  const count=Number.isInteger(room.targetPlayers)&&room.targetPlayers>=3&&room.targetPlayers<=7?room.targetPlayers:7;
+  return {...story,players:count,characters:story.characters.slice(0,count)};
+}
 const cleanName = (name) => typeof name === 'string' ? name.trim().replace(/\s+/g,' ').slice(0,18) : '';
 const randomId = (n=20) => crypto.randomBytes(n).toString('hex');
 const readState = () => {
@@ -57,7 +64,12 @@ const signals=new Map(); // ephemeral targeted WebRTC signaling; never persisted
 const reservationTtl=90000;
 const phaseDefault={synopsis:5,characters:5,study:20,investigation1:20,discussion1:15,
   investigation2:20,discussion2:20,action:10,ending:15};
-function gameFor(room){return privateMysteries[room.storyId]||db.customStories?.[room.storyId]?.game||{}}
+function gameFor(room){
+  const game=privateMysteries[room.storyId]||db.customStories?.[room.storyId]?.game||{};
+  if(room.storyId!=='multiplayer-test')return game;
+  const cast=new Set(storyForRoom(room).characters.map(c=>c.id));
+  return {...game,investigation:{...game.investigation,cards:game.investigation.cards.filter(c=>!c.owner||cast.has(c.owner))}};
+}
 function floorsFor(room){const g=gameFor(room);return g.floors|| (g.floorplan?[{...g.floorplan,id:'ground',portals:[]}]:[])}
 function floorFor(room,id){return floorsFor(room).find(f=>f.id===id)}
 function positionFor(room,p){const pos=room.mapPositions?.[p.id];return pos?{floor:pos.floor||'ground',x:pos.x,y:pos.y}:null}
@@ -80,7 +92,7 @@ function phaseReadiness(room){
     room.phase==='study'?room.players.filter(p=>p.studyReady).length:
     next?room.players.filter(p=>room.advanceVotes?.[p.id]===true).length:0;
   return {next,ready,total:room.players.length,canAdvance:!!next&&
-    room.players.length===storyById(room.storyId).players&&ready===room.players.length&&
+    room.players.length===storyForRoom(room).players&&ready===room.players.length&&
     (room.phase!=='action'||!gameFor(room).action||room.actions?.done===true)};
 }
 function occupantCount(room,pos,exceptId){
@@ -149,7 +161,7 @@ function investigationView(room,member){
   const data=exchangeFor(room);
   if(!spec||!data)return null;
   pruneExchanges(room);
-  const frontTitles=clueFront.labels(spec.cards,storyById(room.storyId).characters,floorsFor(room));
+  const frontTitles=clueFront.labels(spec.cards,storyForRoom(room).characters,floorsFor(room));
   const sequence=clueFront.sequenceAfter(spec.cards,floorsFor(room));
   const discovered=data.discovered||{};
   const held=data.holdings.filter(h=>h.ownerId===member.id);
@@ -321,7 +333,7 @@ function online(room,p){
     Date.now()-(recentPresence.get(room.id)?.get(p.sid)||0)<PRESENCE_TTL_MS;
 }
 function publicStory(story){
-  return {id:story.id,victim:story.victim,artTheme:story.artTheme||'',title:story.title,subtitle:story.subtitle,teaser:story.teaser,genre:story.genre,minutes:story.minutes,players:story.players};
+  return {id:story.id,victim:story.victim,artTheme:story.artTheme||'',title:story.title,subtitle:story.subtitle,teaser:story.teaser,genre:story.genre,minutes:story.minutes,players:story.players,...(story.testOnly?{testOnly:true,minPlayers:story.minPlayers,maxPlayers:story.maxPlayers}:{})};
 }
 function endingStatus(room){
   const toCharacter=ids=>(ids||[]).map(id=>room.players.find(p=>p.id===id)?.characterId).filter(Boolean);
@@ -339,7 +351,7 @@ function endingStatus(room){
   return result;
 }
 function roomView(room,sid){
-  const story=storyById(room.storyId),game=gameFor(room);
+  const story=storyForRoom(room),game=gameFor(room);
   const member=room.players.find(p=>p.sid===sid),isMember=!!member;
   const char=member&&story.characters.find(c=>c.id===member.characterId);
   const notes=isMember&&PLAY_PHASES.includes(room.phase)&&char?game.booklets?.[char.id]:null;
@@ -537,8 +549,11 @@ async function api(req,res,url,sid){
     const story=storyById(body.storyId),name=cleanName(body.name);
     if(!story||!name)fail(400,'스토리와 표시 이름을 확인해주세요.');
     if(Object.keys(db.rooms).length>=200)fail(503,'현재 생성 가능한 방 수를 초과했습니다.');
+    const targetPlayers=story.id==='multiplayer-test'?(body.playerCount??7):story.players;
+    if(story.id==='multiplayer-test'&&(!Number.isInteger(targetPlayers)||targetPlayers<3||targetPlayers>7))
+      fail(400,'테스트 시나리오는 3~7인으로 설정하세요.');
     const code=roomCode(),player={id:randomId(8),sid,name,read:false,characterId:null};
-    const room={id:code,storyId:story.id,host:sid,phase:'lobby',players:[player],createdAt:now(),whispers:{groups:[],proposals:[]}};
+    const room={id:code,storyId:story.id,targetPlayers,host:sid,phase:'lobby',players:[player],createdAt:now(),whispers:{groups:[],proposals:[]}};
     db.rooms[code]=room;persist();logActivity('room_created',sid,{room:code,story:story.id});
     return json(res,201,roomView(room,sid));
   }
@@ -566,7 +581,7 @@ async function api(req,res,url,sid){
     if(!name)fail(400,'표시 이름을 입력해주세요.');
     if(room.phase!=='lobby')fail(409,'이미 시작한 방입니다.');
     if(room.players.some(p=>p.sid===sid))return json(res,200,roomView(room,sid));
-    if(room.players.length>=storyById(room.storyId).players)fail(409,'방이 가득 찼습니다.');
+    if(room.players.length>=storyForRoom(room).players)fail(409,'방이 가득 찼습니다.');
     if(room.players.some(p=>p.name===name))fail(409,'이미 사용 중인 이름입니다.');
     room.players.push({id:randomId(8),sid,name,read:false,characterId:null});
     persist();logActivity('room_joined',sid,{room:room.id});
@@ -590,7 +605,7 @@ async function api(req,res,url,sid){
   if(action==='start'){
     if(room.host!==sid)fail(403,'방장만 게임을 시작할 수 있습니다.');
     if(room.phase!=='lobby')fail(409,'이미 게임이 시작되었습니다.');
-    if(room.players.length!==storyById(room.storyId).players)fail(409,'정원이 모두 모여야 시작할 수 있습니다.');
+    if(room.players.length!==storyForRoom(room).players)fail(409,'정원이 모두 모여야 시작할 수 있습니다.');
     if(!room.players.every(p=>online(room,p)))fail(409,'모든 참가자가 온라인이어야 시작할 수 있습니다.');
     phaseChange(room,'synopsis',sid);room.gameStartedAt=room.phaseStartedAt;
     room.players.forEach(p=>{p.read=false;p.characterId=null});
@@ -605,7 +620,7 @@ async function api(req,res,url,sid){
   }
   if(action==='character'){
     if(room.phase!=='characters')fail(409,'현재 캐릭터 선택 단계가 아닙니다.');
-    const char=storyById(room.storyId).characters.find(c=>c.id===body.characterId);
+    const char=storyForRoom(room).characters.find(c=>c.id===body.characterId);
     if(!char)fail(400,'존재하지 않는 캐릭터입니다.');
     if(room.players.some(p=>p!==player&&p.characterId===char.id))fail(409,'다른 참가자가 이미 선택한 캐릭터입니다.');
     player.characterId=char.id;
@@ -676,7 +691,7 @@ async function api(req,res,url,sid){
       room.verdict.arrestedCharacterId=id;
     }else if(action==='verdict-status'){
       if(room.phase!=='ending')fail(409,'캐릭터 최종 상태는 결말 단계에서만 정정할 수 있습니다.');
-      if(!storyById(room.storyId).characters.some(c=>c.id===body.characterId))
+      if(!storyForRoom(room).characters.some(c=>c.id===body.characterId))
         fail(400,'존재하지 않는 캐릭터입니다.');
       if(!['auto','alive','dead','restrained','escaped'].includes(body.status))
         fail(400,'최종 상태는 자동·생존·사망·제압·탈출 중 하나여야 합니다.');
@@ -686,7 +701,7 @@ async function api(req,res,url,sid){
       if(endingStatus(room).dead.includes(room.verdict.arrestedCharacterId))
         room.verdict.arrestedCharacterId=null;
     }else{
-      if(!storyById(room.storyId).characters.some(c=>c.id===body.characterId))
+      if(!storyForRoom(room).characters.some(c=>c.id===body.characterId))
         fail(400,'목표를 평가할 캐릭터를 찾을 수 없습니다.');
       if(body.achieved!==true&&body.achieved!==false&&body.achieved!==null)
         fail(400,'목표 결과는 달성·실패·미판정 중 하나여야 합니다.');

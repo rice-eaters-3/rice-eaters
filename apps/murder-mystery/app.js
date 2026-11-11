@@ -170,7 +170,7 @@ function storyTile(story){
   return '<div class="story-card"><div class="eyebrow">CASE FILE 001 · '+escapeHtml(story.genre)+'</div>'+
   '<div class="story-illustration">'+(window.MysteryArt?.cover(story.artTheme||story.id)||'')+'</div>'+
   '<h3 class="story-title">'+escapeHtml(story.title)+'</h3><p>'+escapeHtml(story.teaser)+'</p>'+
-  '<div class="story-meta"><span>♟ '+story.players+'인 전용</span><span>◷ 약 '+story.minutes+'분</span><span>✦ 추리와 비밀</span></div></div>';
+  '<div class="story-meta"><span>♟ '+(story.testOnly?'3~7인 · 테스트 전용':story.players+'인 전용')+'</span><span>◷ 약 '+story.minutes+'분</span><span>✦ 추리와 비밀</span></div></div>';
 }
 function home(){
   const story=state.stories.find(x=>x.id===state.selectedStory)||state.stories[0];
@@ -182,11 +182,12 @@ function home(){
     '<div class="section-row"><div><div class="eyebrow">SELECT YOUR CASE</div><h2 style="margin-bottom:0">플레이할 이야기</h2></div><span class="muted small">등록된 시나리오 선택</span></div>'+
     '<div class="story-layout"><div><label class="field-label" for="storySelection">시나리오 선택</label>'+
     '<select id="storySelection" class="text-field">'+state.stories.map(x=>'<option value="'+escapeHtml(x.id)+'" '+(story?.id===x.id?'selected':'')+'>'+
-      escapeHtml(x.title)+' ('+x.players+'명)</option>').join('')+'</select>'+
+      escapeHtml(x.title)+' ('+(x.testOnly?'3~7':x.players)+'명)</option>').join('')+'</select>'+
     (story?storyTile(story):'<p>시나리오를 불러오지 못했습니다.</p>')+
     '<p class="muted small"><a href="/mystery-editor">✎ 머더 미스터리 편집기 · 새 시나리오 만들기</a></p></div>'+
     '<section class="surface form-box"><h3 class="form-title">새로운 방 만들기</h3><p class="subheading">방장이 되어 친구를 초대하세요. 선택한 시나리오의 정원이 접속하면 게임을 시작할 수 있습니다.</p>'+
     '<div><label class="field-label" for="displayName">플레이어 표시 이름</label><input class="text-field" id="displayName" maxlength="18" autocomplete="nickname" placeholder="예: 탐정 김" value="'+escapeHtml(state.name)+'"></div>'+
+    (story?.testOnly?'<div><label class="field-label" for="testPlayerCount">테스트 정원</label><select id="testPlayerCount" class="text-field">'+[3,4,5,6,7].map(n=>'<option value="'+n+'">'+n+'명</option>').join('')+'</select><p class="muted small">선택한 수만큼 테스터 배역이 열립니다. 오직 기능 점검용입니다.</p></div>':'')+
     btn('create','사건의 방 만들기 →','btn btn-primary btn-wide',!story)+
     '<div class="line"></div><label class="field-label" for="roomCode">친구가 보낸 방 코드가 있나요?</label>'+
     '<input class="text-field" id="roomCode" autocomplete="off" maxlength="6" placeholder="6자리 방 코드" style="text-transform:uppercase">'+
@@ -341,7 +342,7 @@ async function perform(action,button){
       const name=nameFromInput();
       const selected=state.stories.find(x=>x.id===state.selectedStory)||state.stories[0];
       if(!selected)throw Error('스토리를 불러오지 못했습니다.');
-      setRoom(await api('/api/rooms','POST',{storyId:selected.id,name}));
+      setRoom(await api('/api/rooms','POST',{storyId:selected.id,name,...(selected.testOnly?{playerCount:Number($('testPlayerCount')?.value||3)}:{})}));
     } else if(action==='find'){
       const value=($('roomCode')?.value||'').trim().toUpperCase();
       if(!/^[A-HJ-NP-Z2-9]{6}$/.test(value))throw Error('6자리 영문/숫자 방 코드를 입력해주세요.');
