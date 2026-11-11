@@ -18,7 +18,10 @@ jobs:
         with:
           node-version: '22'
       - run: npm install --no-save playwright@1.56.0
-      - name: Install Korean fonts for visual checks
+      # Fonts improve screenshots; a package-mirror outage must not skip game tests.
+      - name: Install Korean fonts for screenshots (optional)
+        continue-on-error: true
+        timeout-minutes: 1
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y fonts-noto-cjk
