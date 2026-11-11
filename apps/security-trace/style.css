@@ -126,6 +126,7 @@ summary{cursor:pointer;font-size:12px;font-weight:700}.rules ol{padding-left:19p
 .graph-node.patched{background:#d9eccb;border:2px solid #448052}.graph-node.infected{background:#f0d4c0;border:2px solid #ae5636}
 .graph-node.infected small{color:#8e3d25}.graph-node.target{box-shadow:0 0 0 3px #d6d98b}
 .graph-legend{display:flex;flex-wrap:wrap;gap:7px 16px;font-size:10px;color:#61705a;margin:8px 0 16px}
+.graph-scroll-note{flex-basis:100%;font-size:11px}
 .edge-list{display:grid;gap:6px;margin-top:14px}
 .edge-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 12px;border:1px solid #c9d0bf;background:#f1f3e8;text-align:left;color:var(--ink);font-size:12px}
 .edge-row small{font-size:10px;color:var(--muted);flex-shrink:0}.edge-row[aria-pressed=true]{background:#efe0d0;border-color:#ba765a}.edge-row[aria-pressed=true] small{color:#974b2b}

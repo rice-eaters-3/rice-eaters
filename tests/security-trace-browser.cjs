@@ -16,6 +16,7 @@ async function main(){
     await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
     browser=await chromium.launch({channel:'chrome'});
     const page=await browser.newPage({viewport:{width:1440,height:1050}});
+    await page.emulateMedia({reducedMotion:'reduce'});
     page.setDefaultTimeout(8000);
     const errors=[];
     page.on('pageerror',error=>errors.push(error.message));

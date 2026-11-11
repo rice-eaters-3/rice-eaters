@@ -153,7 +153,7 @@
       (defending?'<p class="puzzle-note">아래 연결을 눌러 신뢰를 철회하세요. 주황 노드는 현재 공격자가 도달할 수 있는 곳입니다.</p>':
         '<div class="stamp-list" aria-label="보유 인장">'+[...held].map(g=>'<span>'+spec.stamps[g]+' 인장</span>').join('')+'</div>')+
       graph(spec,nodes,e=>b.cuts.includes(e.id)?'cut':b.path.some((id,i)=>i>0&&b.path[i-1]===e.from&&id===e.to)?'path':'')+
-      '<div class="graph-legend"><span>→ 연결의 방향</span><span>실선 · 필수 업무</span><span>점선 · 철회 가능한 신뢰</span></div>'+
+      '<div class="graph-legend"><span>→ 연결의 방향</span><span>실선 · 필수 업무</span><span>점선 · 철회 가능한 신뢰</span><span class="graph-scroll-note">↔ 지도를 좌우로 스크롤할 수 있습니다</span></div>'+
       (!defending?pathNames(b.path):'')+
       '<div class="edge-list">'+spec.edges.map(e=>{
         const from=spec.nodes.find(n=>n.id===e.from),to=spec.nodes.find(n=>n.id===e.to);
@@ -202,7 +202,7 @@
     return '<div class="budget"><span>대응 자원 <small>패치 2점 / 연결 차단 1점</small></span><strong>'+E.cost(b)+' / 3</strong></div>'+
       '<p class="puzzle-note">기계를 눌러 패치를 준비하고, 아래 점선 연결을 골라 차단하세요. 선택을 다시 누르면 해제됩니다.</p>'+
       graph(spec,nodes,e=>b.cuts.includes(e.id)?'cut':'')+
-      '<div class="graph-legend"><span>주황 · 감염</span><span>초록 · 패치</span><span>바깥 테두리 · 보호 목표</span></div>'+
+      '<div class="graph-legend"><span>주황 · 감염</span><span>초록 · 패치</span><span>바깥 테두리 · 보호 목표</span><span class="graph-scroll-note">↔ 지도를 좌우로 스크롤할 수 있습니다</span></div>'+
       '<div class="edge-list">'+spec.edges.map(e=>button('cut',
         spec.nodes.find(n=>n.id===e.from).label+' → '+spec.nodes.find(n=>n.id===e.to).label+
         '<small>'+(e.essential?'필수 업무선':b.cuts.includes(e.id)?'차단됨 · 1점':'연결됨 · 차단 1점')+'</small>',

@@ -38,7 +38,7 @@
       {id:'lab',label:'연구실',grant:'research',x:53,y:20},
       {id:'print',label:'인쇄실',grant:'print',x:53,y:80},
       {id:'backup',label:'백업실',grant:'operator',x:76,y:50},
-      {id:'archive',label:'기록실',grant:null,x:95,y:50}
+      {id:'archive',label:'기록실',grant:null,x:92,y:50}
     ],
     stamps:{visit:'방문',relay:'중계',staff:'직원',research:'연구',print:'인쇄',operator:'운영'},
     edges:[
