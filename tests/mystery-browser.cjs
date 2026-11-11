@@ -224,6 +224,7 @@ async function main() {
     await preview.setViewportSize(viewports[0]);
     await preview.locator('#testSource').selectOption('server:jeju-lab-conference');
     await preview.locator('#testLoad').click();
+    await expect(preview.locator('#testStatus')).toContainText('제주 학회 MT');
     await preview.locator('#testPhase').selectOption('study');
     await dismissPhaseIntro(preview);
     await preview.locator('[data-action=book-toggle]').click();
@@ -242,6 +243,11 @@ async function main() {
     await dismissPhaseIntro(preview);
     await preview.locator('[data-action=research-toggle]').click();
     await preview.screenshot({path:join(screenshots,'jeju-investigation-desktop.png'),fullPage:true});
+    await preview.locator('[data-action=clue-open][data-card=doyun_poster_tube]').click();
+    await preview.locator('#clueModalRoot [data-action=clue-confirm]').click();
+    await preview.locator('#choicePrompt [data-action=clue-investigate]').click();
+    await expect(preview.locator('#clueModalRoot image[href$="/doyun_poster_tube.webp"]')).toBeVisible();
+    await preview.screenshot({path:join(screenshots,'jeju-clue-reverse-desktop.png'),fullPage:true});
     const qa=await browser.newContext({baseURL});const qaPage=await qa.newPage();
     await qaPage.goto('/mystery');
     await qaPage.locator('#storySelection').selectOption('multiplayer-test');
