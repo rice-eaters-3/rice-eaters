@@ -1,0 +1,1605 @@
+{
+  "format": "rice-mystery-v1",
+  "story": {
+    "id": "multiplayer-test",
+    "title": "[테스트 전용] 바나나 서버 실종 사건",
+    "subtitle": "3~7인 멀티플레이 기능 점검실",
+    "genre": "테스트 전용 · 더미 시나리오",
+    "teaser": "재미와 추리는 없습니다. 바나나 서버가 사라졌습니다. 방 생성, 문, 계단, 조사, 공개, 양도, 밀담, 투표, 행동, 결말을 점검하세요.",
+    "minutes": 15,
+    "players": 7,
+    "minPlayers": 3,
+    "maxPlayers": 7,
+    "testOnly": true,
+    "synopsis": [
+      "이 시나리오는 오직 기능 테스트용입니다. 진범은 테스터 1이며 누구나 이 사실을 알고 있습니다.",
+      "바나나 서버가 출근하지 않았습니다. 종이컵은 모른 척하고 있습니다. 모든 참가자는 시놉시스 확인 후 방장의 다음 단계 버튼을 기다리세요.",
+      "지도에서 문과 계단을 이용하고, 같은 타일에서 밀담과 카드 공개·양도를 시험하세요. 1차와 2차 조사, 투표, 행동, 결말까지 진행해 보세요."
+    ],
+    "characters": [
+      {
+        "id": "tester1",
+        "name": "테스터 1",
+        "role": "기능 점검 담당 1",
+        "hint": "정답은 중요하지 않습니다. 기능을 눌러 보세요.",
+        "symbol": "1",
+        "accent": "#b69bcc"
+      },
+      {
+        "id": "tester2",
+        "name": "테스터 2",
+        "role": "기능 점검 담당 2",
+        "hint": "정답은 중요하지 않습니다. 기능을 눌러 보세요.",
+        "symbol": "2",
+        "accent": "#87c0c7"
+      },
+      {
+        "id": "tester3",
+        "name": "테스터 3",
+        "role": "기능 점검 담당 3",
+        "hint": "정답은 중요하지 않습니다. 기능을 눌러 보세요.",
+        "symbol": "3",
+        "accent": "#d8ad83"
+      },
+      {
+        "id": "tester4",
+        "name": "테스터 4",
+        "role": "기능 점검 담당 4",
+        "hint": "정답은 중요하지 않습니다. 기능을 눌러 보세요.",
+        "symbol": "4",
+        "accent": "#9fc893"
+      },
+      {
+        "id": "tester5",
+        "name": "테스터 5",
+        "role": "기능 점검 담당 5",
+        "hint": "정답은 중요하지 않습니다. 기능을 눌러 보세요.",
+        "symbol": "5",
+        "accent": "#dc9da7"
+      },
+      {
+        "id": "tester6",
+        "name": "테스터 6",
+        "role": "기능 점검 담당 6",
+        "hint": "정답은 중요하지 않습니다. 기능을 눌러 보세요.",
+        "symbol": "6",
+        "accent": "#9aaee0"
+      },
+      {
+        "id": "tester7",
+        "name": "테스터 7",
+        "role": "기능 점검 담당 7",
+        "hint": "정답은 중요하지 않습니다. 기능을 눌러 보세요.",
+        "symbol": "7",
+        "accent": "#d8cb87"
+      }
+    ]
+  },
+  "spawn": {
+    "tester1": {
+      "floor": "ground",
+      "x": 1,
+      "y": 2
+    },
+    "tester2": {
+      "floor": "ground",
+      "x": 2,
+      "y": 2
+    },
+    "tester3": {
+      "floor": "ground",
+      "x": 3,
+      "y": 2
+    },
+    "tester4": {
+      "floor": "ground",
+      "x": 4,
+      "y": 2
+    },
+    "tester5": {
+      "floor": "ground",
+      "x": 1,
+      "y": 3
+    },
+    "tester6": {
+      "floor": "ground",
+      "x": 2,
+      "y": 3
+    },
+    "tester7": {
+      "floor": "ground",
+      "x": 3,
+      "y": 3
+    }
+  },
+  "game": {
+    "booklets": {
+      "tester1": {
+        "background": [
+          "당신은 테스터 1입니다. 오늘의 임무는 버튼이 잘 눌리는지 확인하는 것입니다.",
+          "범인은 테스터 1입니다. 추리보다 동기화와 권한 검사가 우선입니다."
+        ],
+        "timeline": [
+          {
+            "time": "09:00",
+            "title": "기능 점검 시작",
+            "detail": "고양이가 로그인을 했다고 주장했다."
+          },
+          {
+            "time": "09:01",
+            "title": "종이 확인",
+            "detail": "아무 의미 없는 종이를 네 장 챙겼다."
+          }
+        ],
+        "inventory": [
+          {
+            "id": "tester1_item1",
+            "name": "테스트 종이 1",
+            "description": "테스터 1의 테스트 종이 1. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다."
+          },
+          {
+            "id": "tester1_item2",
+            "name": "테스트 종이 2",
+            "description": "테스터 1의 테스트 종이 2. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다."
+          },
+          {
+            "id": "tester1_item3",
+            "name": "테스트 종이 3",
+            "description": "테스터 1의 테스트 종이 3. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다."
+          },
+          {
+            "id": "tester1_item4",
+            "name": "테스트 종이 4",
+            "description": "테스터 1의 테스트 종이 4. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다."
+          }
+        ],
+        "culprit": true,
+        "objectives": "카드를 조사하고 공개·선택 공개·양도를 각각 한 번 시도하세요.",
+        "notes": "이 시나리오는 오직 테스트용입니다.",
+        "actionNotes": "행동을 사용하거나 패스하여 결말까지 확인하세요."
+      },
+      "tester2": {
+        "background": [
+          "당신은 테스터 2입니다. 오늘의 임무는 버튼이 잘 눌리는지 확인하는 것입니다.",
+          "범인은 테스터 1입니다. 추리보다 동기화와 권한 검사가 우선입니다."
+        ],
+        "timeline": [
+          {
+            "time": "09:00",
+            "title": "기능 점검 시작",
+            "detail": "고양이가 로그인을 했다고 주장했다."
+          },
+          {
+            "time": "09:01",
+            "title": "종이 확인",
+            "detail": "아무 의미 없는 종이를 네 장 챙겼다."
+          }
+        ],
+        "inventory": [
+          {
+            "id": "tester2_item1",
+            "name": "테스트 종이 1",
+            "description": "테스터 2의 테스트 종이 1. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다."
+          },
+          {
+            "id": "tester2_item2",
+            "name": "테스트 종이 2",
+            "description": "테스터 2의 테스트 종이 2. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다."
+          },
+          {
+            "id": "tester2_item3",
+            "name": "테스트 종이 3",
+            "description": "테스터 2의 테스트 종이 3. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다."
+          },
+          {
+            "id": "tester2_item4",
+            "name": "테스트 종이 4",
+            "description": "테스터 2의 테스트 종이 4. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다."
+          }
+        ],
+        "culprit": false,
+        "objectives": "카드를 조사하고 공개·선택 공개·양도를 각각 한 번 시도하세요.",
+        "notes": "이 시나리오는 오직 테스트용입니다.",
+        "actionNotes": "행동을 사용하거나 패스하여 결말까지 확인하세요."
+      },
+      "tester3": {
+        "background": [
+          "당신은 테스터 3입니다. 오늘의 임무는 버튼이 잘 눌리는지 확인하는 것입니다.",
+          "범인은 테스터 1입니다. 추리보다 동기화와 권한 검사가 우선입니다."
+        ],
+        "timeline": [
+          {
+            "time": "09:00",
+            "title": "기능 점검 시작",
+            "detail": "고양이가 로그인을 했다고 주장했다."
+          },
+          {
+            "time": "09:01",
+            "title": "종이 확인",
+            "detail": "아무 의미 없는 종이를 네 장 챙겼다."
+          }
+        ],
+        "inventory": [
+          {
+            "id": "tester3_item1",
+            "name": "테스트 종이 1",
+            "description": "테스터 3의 테스트 종이 1. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다."
+          },
+          {
+            "id": "tester3_item2",
+            "name": "테스트 종이 2",
+            "description": "테스터 3의 테스트 종이 2. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다."
+          },
+          {
+            "id": "tester3_item3",
+            "name": "테스트 종이 3",
+            "description": "테스터 3의 테스트 종이 3. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다."
+          },
+          {
+            "id": "tester3_item4",
+            "name": "테스트 종이 4",
+            "description": "테스터 3의 테스트 종이 4. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다."
+          }
+        ],
+        "culprit": false,
+        "objectives": "카드를 조사하고 공개·선택 공개·양도를 각각 한 번 시도하세요.",
+        "notes": "이 시나리오는 오직 테스트용입니다.",
+        "actionNotes": "행동을 사용하거나 패스하여 결말까지 확인하세요."
+      },
+      "tester4": {
+        "background": [
+          "당신은 테스터 4입니다. 오늘의 임무는 버튼이 잘 눌리는지 확인하는 것입니다.",
+          "범인은 테스터 1입니다. 추리보다 동기화와 권한 검사가 우선입니다."
+        ],
+        "timeline": [
+          {
+            "time": "09:00",
+            "title": "기능 점검 시작",
+            "detail": "고양이가 로그인을 했다고 주장했다."
+          },
+          {
+            "time": "09:01",
+            "title": "종이 확인",
+            "detail": "아무 의미 없는 종이를 네 장 챙겼다."
+          }
+        ],
+        "inventory": [
+          {
+            "id": "tester4_item1",
+            "name": "테스트 종이 1",
+            "description": "테스터 4의 테스트 종이 1. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다."
+          },
+          {
+            "id": "tester4_item2",
+            "name": "테스트 종이 2",
+            "description": "테스터 4의 테스트 종이 2. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다."
+          },
+          {
+            "id": "tester4_item3",
+            "name": "테스트 종이 3",
+            "description": "테스터 4의 테스트 종이 3. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다."
+          },
+          {
+            "id": "tester4_item4",
+            "name": "테스트 종이 4",
+            "description": "테스터 4의 테스트 종이 4. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다."
+          }
+        ],
+        "culprit": false,
+        "objectives": "카드를 조사하고 공개·선택 공개·양도를 각각 한 번 시도하세요.",
+        "notes": "이 시나리오는 오직 테스트용입니다.",
+        "actionNotes": "행동을 사용하거나 패스하여 결말까지 확인하세요."
+      },
+      "tester5": {
+        "background": [
+          "당신은 테스터 5입니다. 오늘의 임무는 버튼이 잘 눌리는지 확인하는 것입니다.",
+          "범인은 테스터 1입니다. 추리보다 동기화와 권한 검사가 우선입니다."
+        ],
+        "timeline": [
+          {
+            "time": "09:00",
+            "title": "기능 점검 시작",
+            "detail": "고양이가 로그인을 했다고 주장했다."
+          },
+          {
+            "time": "09:01",
+            "title": "종이 확인",
+            "detail": "아무 의미 없는 종이를 네 장 챙겼다."
+          }
+        ],
+        "inventory": [
+          {
+            "id": "tester5_item1",
+            "name": "테스트 종이 1",
+            "description": "테스터 5의 테스트 종이 1. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다."
+          },
+          {
+            "id": "tester5_item2",
+            "name": "테스트 종이 2",
+            "description": "테스터 5의 테스트 종이 2. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다."
+          },
+          {
+            "id": "tester5_item3",
+            "name": "테스트 종이 3",
+            "description": "테스터 5의 테스트 종이 3. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다."
+          },
+          {
+            "id": "tester5_item4",
+            "name": "테스트 종이 4",
+            "description": "테스터 5의 테스트 종이 4. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다."
+          }
+        ],
+        "culprit": false,
+        "objectives": "카드를 조사하고 공개·선택 공개·양도를 각각 한 번 시도하세요.",
+        "notes": "이 시나리오는 오직 테스트용입니다.",
+        "actionNotes": "행동을 사용하거나 패스하여 결말까지 확인하세요."
+      },
+      "tester6": {
+        "background": [
+          "당신은 테스터 6입니다. 오늘의 임무는 버튼이 잘 눌리는지 확인하는 것입니다.",
+          "범인은 테스터 1입니다. 추리보다 동기화와 권한 검사가 우선입니다."
+        ],
+        "timeline": [
+          {
+            "time": "09:00",
+            "title": "기능 점검 시작",
+            "detail": "고양이가 로그인을 했다고 주장했다."
+          },
+          {
+            "time": "09:01",
+            "title": "종이 확인",
+            "detail": "아무 의미 없는 종이를 네 장 챙겼다."
+          }
+        ],
+        "inventory": [
+          {
+            "id": "tester6_item1",
+            "name": "테스트 종이 1",
+            "description": "테스터 6의 테스트 종이 1. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다."
+          },
+          {
+            "id": "tester6_item2",
+            "name": "테스트 종이 2",
+            "description": "테스터 6의 테스트 종이 2. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다."
+          },
+          {
+            "id": "tester6_item3",
+            "name": "테스트 종이 3",
+            "description": "테스터 6의 테스트 종이 3. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다."
+          },
+          {
+            "id": "tester6_item4",
+            "name": "테스트 종이 4",
+            "description": "테스터 6의 테스트 종이 4. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다."
+          }
+        ],
+        "culprit": false,
+        "objectives": "카드를 조사하고 공개·선택 공개·양도를 각각 한 번 시도하세요.",
+        "notes": "이 시나리오는 오직 테스트용입니다.",
+        "actionNotes": "행동을 사용하거나 패스하여 결말까지 확인하세요."
+      },
+      "tester7": {
+        "background": [
+          "당신은 테스터 7입니다. 오늘의 임무는 버튼이 잘 눌리는지 확인하는 것입니다.",
+          "범인은 테스터 1입니다. 추리보다 동기화와 권한 검사가 우선입니다."
+        ],
+        "timeline": [
+          {
+            "time": "09:00",
+            "title": "기능 점검 시작",
+            "detail": "고양이가 로그인을 했다고 주장했다."
+          },
+          {
+            "time": "09:01",
+            "title": "종이 확인",
+            "detail": "아무 의미 없는 종이를 네 장 챙겼다."
+          }
+        ],
+        "inventory": [
+          {
+            "id": "tester7_item1",
+            "name": "테스트 종이 1",
+            "description": "테스터 7의 테스트 종이 1. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다."
+          },
+          {
+            "id": "tester7_item2",
+            "name": "테스트 종이 2",
+            "description": "테스터 7의 테스트 종이 2. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다."
+          },
+          {
+            "id": "tester7_item3",
+            "name": "테스트 종이 3",
+            "description": "테스터 7의 테스트 종이 3. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다."
+          },
+          {
+            "id": "tester7_item4",
+            "name": "테스트 종이 4",
+            "description": "테스터 7의 테스트 종이 4. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다."
+          }
+        ],
+        "culprit": false,
+        "objectives": "카드를 조사하고 공개·선택 공개·양도를 각각 한 번 시도하세요.",
+        "notes": "이 시나리오는 오직 테스트용입니다.",
+        "actionNotes": "행동을 사용하거나 패스하여 결말까지 확인하세요."
+      }
+    },
+    "floors": [
+      {
+        "id": "ground",
+        "title": "1층 · 테스트홀",
+        "legend": "문과 계단, 같은 타일 대화와 카드 공유를 점검하세요.",
+        "tiles": [
+          "###########",
+          "#....#....#",
+          "#....#....#",
+          "#.........#",
+          "#....#....#",
+          "#....#....#",
+          "###########"
+        ],
+        "areas": [
+          {
+            "id": "left",
+            "name": "서쪽 테스트실",
+            "x": 1,
+            "y": 1,
+            "width": 4,
+            "height": 5,
+            "color": "#697e94",
+            "pattern": "wood"
+          },
+          {
+            "id": "right",
+            "name": "동쪽 테스트실",
+            "x": 6,
+            "y": 1,
+            "width": 4,
+            "height": 5,
+            "color": "#927b67",
+            "pattern": "carpet"
+          }
+        ],
+        "rooms": [
+          {
+            "x": 2,
+            "y": 1,
+            "name": "서쪽 테스트실",
+            "icon": "□"
+          },
+          {
+            "x": 8,
+            "y": 1,
+            "name": "동쪽 테스트실",
+            "icon": "○"
+          }
+        ],
+        "doors": [
+          {
+            "id": "test_door",
+            "name": "중앙 테스트 문",
+            "x": 5,
+            "y": 3,
+            "closed": true,
+            "locked": false
+          }
+        ],
+        "portals": [
+          {
+            "x": 1,
+            "y": 5,
+            "toFloor": "upper",
+            "toX": 1,
+            "toY": 5,
+            "label": "2층으로"
+          }
+        ],
+        "objects": [
+          {
+            "id": "test_desk",
+            "x": 3,
+            "y": 1,
+            "name": "테스트 책상",
+            "kind": "desk",
+            "icon": "▤",
+            "solid": false
+          }
+        ]
+      },
+      {
+        "id": "upper",
+        "title": "2층 · 테스트실",
+        "legend": "문과 계단, 같은 타일 대화와 카드 공유를 점검하세요.",
+        "tiles": [
+          "###########",
+          "#....#....#",
+          "#....#....#",
+          "#.........#",
+          "#....#....#",
+          "#....#....#",
+          "###########"
+        ],
+        "areas": [
+          {
+            "id": "left",
+            "name": "서쪽 테스트실",
+            "x": 1,
+            "y": 1,
+            "width": 4,
+            "height": 5,
+            "color": "#697e94",
+            "pattern": "wood"
+          },
+          {
+            "id": "right",
+            "name": "동쪽 테스트실",
+            "x": 6,
+            "y": 1,
+            "width": 4,
+            "height": 5,
+            "color": "#927b67",
+            "pattern": "carpet"
+          }
+        ],
+        "rooms": [
+          {
+            "x": 2,
+            "y": 1,
+            "name": "서쪽 테스트실",
+            "icon": "□"
+          },
+          {
+            "x": 8,
+            "y": 1,
+            "name": "동쪽 테스트실",
+            "icon": "○"
+          }
+        ],
+        "doors": [
+          {
+            "id": "test_door",
+            "name": "중앙 테스트 문",
+            "x": 5,
+            "y": 3,
+            "closed": true,
+            "locked": true,
+            "requiresItem": "qa_key"
+          }
+        ],
+        "portals": [
+          {
+            "x": 1,
+            "y": 5,
+            "toFloor": "ground",
+            "toX": 1,
+            "toY": 5,
+            "label": "1층으로"
+          }
+        ],
+        "objects": [
+          {
+            "id": "test_desk",
+            "x": 3,
+            "y": 1,
+            "name": "테스트 책상",
+            "kind": "desk",
+            "icon": "▤",
+            "solid": false
+          }
+        ]
+      }
+    ],
+    "phaseMinutes": {
+      "synopsis": 1,
+      "characters": 1,
+      "study": 1,
+      "investigation1": 1,
+      "discussion1": 1,
+      "investigation2": 1,
+      "discussion2": 1,
+      "action": 1,
+      "ending": 1
+    },
+    "investigation": {
+      "tokensPerPlayer": 8,
+      "tokensPerSecondInvestigation": 8,
+      "maxTileOccupants": 3,
+      "cards": [
+        {
+          "id": "tester1_item1",
+          "title": "테스터 1의 테스트 종이 1",
+          "subtitle": "",
+          "type": "belonging",
+          "owner": "tester1",
+          "back": "테스터 1의 테스트 종이 1. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다.",
+          "sequenceOrder": 1,
+          "blockedFor": [
+            "tester1"
+          ],
+          "location": null,
+          "requires": [],
+          "visibility": "locked",
+          "transferable": true,
+          "availableFromPhase": "investigation1"
+        },
+        {
+          "id": "tester1_item2",
+          "title": "테스터 1의 테스트 종이 2",
+          "subtitle": "",
+          "type": "belonging",
+          "owner": "tester1",
+          "back": "테스터 1의 테스트 종이 2. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다.",
+          "sequenceOrder": 2,
+          "blockedFor": [
+            "tester1"
+          ],
+          "location": null,
+          "requires": [],
+          "visibility": "locked",
+          "transferable": true,
+          "availableFromPhase": "investigation1"
+        },
+        {
+          "id": "tester1_item3",
+          "title": "테스터 1의 테스트 종이 3",
+          "subtitle": "",
+          "type": "belonging",
+          "owner": "tester1",
+          "back": "테스터 1의 테스트 종이 3. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다.",
+          "sequenceOrder": 3,
+          "blockedFor": [
+            "tester1"
+          ],
+          "location": null,
+          "requires": [],
+          "visibility": "locked",
+          "transferable": true,
+          "availableFromPhase": "investigation2"
+        },
+        {
+          "id": "tester1_item4",
+          "title": "테스터 1의 테스트 종이 4",
+          "subtitle": "",
+          "type": "belonging",
+          "owner": "tester1",
+          "back": "테스터 1의 테스트 종이 4. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다.",
+          "sequenceOrder": 4,
+          "blockedFor": [
+            "tester1"
+          ],
+          "location": null,
+          "requires": [],
+          "visibility": "locked",
+          "transferable": false,
+          "availableFromPhase": "investigation2"
+        },
+        {
+          "id": "tester2_item1",
+          "title": "테스터 2의 테스트 종이 1",
+          "subtitle": "",
+          "type": "belonging",
+          "owner": "tester2",
+          "back": "테스터 2의 테스트 종이 1. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다.",
+          "sequenceOrder": 1,
+          "blockedFor": [
+            "tester2"
+          ],
+          "location": null,
+          "requires": [],
+          "visibility": "locked",
+          "transferable": true,
+          "availableFromPhase": "investigation1"
+        },
+        {
+          "id": "tester2_item2",
+          "title": "테스터 2의 테스트 종이 2",
+          "subtitle": "",
+          "type": "belonging",
+          "owner": "tester2",
+          "back": "테스터 2의 테스트 종이 2. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다.",
+          "sequenceOrder": 2,
+          "blockedFor": [
+            "tester2"
+          ],
+          "location": null,
+          "requires": [],
+          "visibility": "locked",
+          "transferable": true,
+          "availableFromPhase": "investigation1"
+        },
+        {
+          "id": "tester2_item3",
+          "title": "테스터 2의 테스트 종이 3",
+          "subtitle": "",
+          "type": "belonging",
+          "owner": "tester2",
+          "back": "테스터 2의 테스트 종이 3. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다.",
+          "sequenceOrder": 3,
+          "blockedFor": [
+            "tester2"
+          ],
+          "location": null,
+          "requires": [],
+          "visibility": "locked",
+          "transferable": true,
+          "availableFromPhase": "investigation2"
+        },
+        {
+          "id": "tester2_item4",
+          "title": "테스터 2의 테스트 종이 4",
+          "subtitle": "",
+          "type": "belonging",
+          "owner": "tester2",
+          "back": "테스터 2의 테스트 종이 4. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다.",
+          "sequenceOrder": 4,
+          "blockedFor": [
+            "tester2"
+          ],
+          "location": null,
+          "requires": [],
+          "visibility": "locked",
+          "transferable": false,
+          "availableFromPhase": "investigation2"
+        },
+        {
+          "id": "tester3_item1",
+          "title": "테스터 3의 테스트 종이 1",
+          "subtitle": "",
+          "type": "belonging",
+          "owner": "tester3",
+          "back": "테스터 3의 테스트 종이 1. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다.",
+          "sequenceOrder": 1,
+          "blockedFor": [
+            "tester3"
+          ],
+          "location": null,
+          "requires": [],
+          "visibility": "locked",
+          "transferable": true,
+          "availableFromPhase": "investigation1"
+        },
+        {
+          "id": "tester3_item2",
+          "title": "테스터 3의 테스트 종이 2",
+          "subtitle": "",
+          "type": "belonging",
+          "owner": "tester3",
+          "back": "테스터 3의 테스트 종이 2. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다.",
+          "sequenceOrder": 2,
+          "blockedFor": [
+            "tester3"
+          ],
+          "location": null,
+          "requires": [],
+          "visibility": "locked",
+          "transferable": true,
+          "availableFromPhase": "investigation1"
+        },
+        {
+          "id": "tester3_item3",
+          "title": "테스터 3의 테스트 종이 3",
+          "subtitle": "",
+          "type": "belonging",
+          "owner": "tester3",
+          "back": "테스터 3의 테스트 종이 3. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다.",
+          "sequenceOrder": 3,
+          "blockedFor": [
+            "tester3"
+          ],
+          "location": null,
+          "requires": [],
+          "visibility": "locked",
+          "transferable": true,
+          "availableFromPhase": "investigation2"
+        },
+        {
+          "id": "tester3_item4",
+          "title": "테스터 3의 테스트 종이 4",
+          "subtitle": "",
+          "type": "belonging",
+          "owner": "tester3",
+          "back": "테스터 3의 테스트 종이 4. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다.",
+          "sequenceOrder": 4,
+          "blockedFor": [
+            "tester3"
+          ],
+          "location": null,
+          "requires": [],
+          "visibility": "locked",
+          "transferable": false,
+          "availableFromPhase": "investigation2"
+        },
+        {
+          "id": "tester4_item1",
+          "title": "테스터 4의 테스트 종이 1",
+          "subtitle": "",
+          "type": "belonging",
+          "owner": "tester4",
+          "back": "테스터 4의 테스트 종이 1. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다.",
+          "sequenceOrder": 1,
+          "blockedFor": [
+            "tester4"
+          ],
+          "location": null,
+          "requires": [],
+          "visibility": "locked",
+          "transferable": true,
+          "availableFromPhase": "investigation1"
+        },
+        {
+          "id": "tester4_item2",
+          "title": "테스터 4의 테스트 종이 2",
+          "subtitle": "",
+          "type": "belonging",
+          "owner": "tester4",
+          "back": "테스터 4의 테스트 종이 2. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다.",
+          "sequenceOrder": 2,
+          "blockedFor": [
+            "tester4"
+          ],
+          "location": null,
+          "requires": [],
+          "visibility": "locked",
+          "transferable": true,
+          "availableFromPhase": "investigation1"
+        },
+        {
+          "id": "tester4_item3",
+          "title": "테스터 4의 테스트 종이 3",
+          "subtitle": "",
+          "type": "belonging",
+          "owner": "tester4",
+          "back": "테스터 4의 테스트 종이 3. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다.",
+          "sequenceOrder": 3,
+          "blockedFor": [
+            "tester4"
+          ],
+          "location": null,
+          "requires": [],
+          "visibility": "locked",
+          "transferable": true,
+          "availableFromPhase": "investigation2"
+        },
+        {
+          "id": "tester4_item4",
+          "title": "테스터 4의 테스트 종이 4",
+          "subtitle": "",
+          "type": "belonging",
+          "owner": "tester4",
+          "back": "테스터 4의 테스트 종이 4. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다.",
+          "sequenceOrder": 4,
+          "blockedFor": [
+            "tester4"
+          ],
+          "location": null,
+          "requires": [],
+          "visibility": "locked",
+          "transferable": false,
+          "availableFromPhase": "investigation2"
+        },
+        {
+          "id": "tester5_item1",
+          "title": "테스터 5의 테스트 종이 1",
+          "subtitle": "",
+          "type": "belonging",
+          "owner": "tester5",
+          "back": "테스터 5의 테스트 종이 1. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다.",
+          "sequenceOrder": 1,
+          "blockedFor": [
+            "tester5"
+          ],
+          "location": null,
+          "requires": [],
+          "visibility": "locked",
+          "transferable": true,
+          "availableFromPhase": "investigation1"
+        },
+        {
+          "id": "tester5_item2",
+          "title": "테스터 5의 테스트 종이 2",
+          "subtitle": "",
+          "type": "belonging",
+          "owner": "tester5",
+          "back": "테스터 5의 테스트 종이 2. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다.",
+          "sequenceOrder": 2,
+          "blockedFor": [
+            "tester5"
+          ],
+          "location": null,
+          "requires": [],
+          "visibility": "locked",
+          "transferable": true,
+          "availableFromPhase": "investigation1"
+        },
+        {
+          "id": "tester5_item3",
+          "title": "테스터 5의 테스트 종이 3",
+          "subtitle": "",
+          "type": "belonging",
+          "owner": "tester5",
+          "back": "테스터 5의 테스트 종이 3. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다.",
+          "sequenceOrder": 3,
+          "blockedFor": [
+            "tester5"
+          ],
+          "location": null,
+          "requires": [],
+          "visibility": "locked",
+          "transferable": true,
+          "availableFromPhase": "investigation2"
+        },
+        {
+          "id": "tester5_item4",
+          "title": "테스터 5의 테스트 종이 4",
+          "subtitle": "",
+          "type": "belonging",
+          "owner": "tester5",
+          "back": "테스터 5의 테스트 종이 4. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다.",
+          "sequenceOrder": 4,
+          "blockedFor": [
+            "tester5"
+          ],
+          "location": null,
+          "requires": [],
+          "visibility": "locked",
+          "transferable": false,
+          "availableFromPhase": "investigation2"
+        },
+        {
+          "id": "tester6_item1",
+          "title": "테스터 6의 테스트 종이 1",
+          "subtitle": "",
+          "type": "belonging",
+          "owner": "tester6",
+          "back": "테스터 6의 테스트 종이 1. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다.",
+          "sequenceOrder": 1,
+          "blockedFor": [
+            "tester6"
+          ],
+          "location": null,
+          "requires": [],
+          "visibility": "locked",
+          "transferable": true,
+          "availableFromPhase": "investigation1"
+        },
+        {
+          "id": "tester6_item2",
+          "title": "테스터 6의 테스트 종이 2",
+          "subtitle": "",
+          "type": "belonging",
+          "owner": "tester6",
+          "back": "테스터 6의 테스트 종이 2. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다.",
+          "sequenceOrder": 2,
+          "blockedFor": [
+            "tester6"
+          ],
+          "location": null,
+          "requires": [],
+          "visibility": "locked",
+          "transferable": true,
+          "availableFromPhase": "investigation1"
+        },
+        {
+          "id": "tester6_item3",
+          "title": "테스터 6의 테스트 종이 3",
+          "subtitle": "",
+          "type": "belonging",
+          "owner": "tester6",
+          "back": "테스터 6의 테스트 종이 3. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다.",
+          "sequenceOrder": 3,
+          "blockedFor": [
+            "tester6"
+          ],
+          "location": null,
+          "requires": [],
+          "visibility": "locked",
+          "transferable": true,
+          "availableFromPhase": "investigation2"
+        },
+        {
+          "id": "tester6_item4",
+          "title": "테스터 6의 테스트 종이 4",
+          "subtitle": "",
+          "type": "belonging",
+          "owner": "tester6",
+          "back": "테스터 6의 테스트 종이 4. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다.",
+          "sequenceOrder": 4,
+          "blockedFor": [
+            "tester6"
+          ],
+          "location": null,
+          "requires": [],
+          "visibility": "locked",
+          "transferable": false,
+          "availableFromPhase": "investigation2"
+        },
+        {
+          "id": "tester7_item1",
+          "title": "테스터 7의 테스트 종이 1",
+          "subtitle": "",
+          "type": "belonging",
+          "owner": "tester7",
+          "back": "테스터 7의 테스트 종이 1. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다.",
+          "sequenceOrder": 1,
+          "blockedFor": [
+            "tester7"
+          ],
+          "location": null,
+          "requires": [],
+          "visibility": "locked",
+          "transferable": true,
+          "availableFromPhase": "investigation1"
+        },
+        {
+          "id": "tester7_item2",
+          "title": "테스터 7의 테스트 종이 2",
+          "subtitle": "",
+          "type": "belonging",
+          "owner": "tester7",
+          "back": "테스터 7의 테스트 종이 2. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다.",
+          "sequenceOrder": 2,
+          "blockedFor": [
+            "tester7"
+          ],
+          "location": null,
+          "requires": [],
+          "visibility": "locked",
+          "transferable": true,
+          "availableFromPhase": "investigation1"
+        },
+        {
+          "id": "tester7_item3",
+          "title": "테스터 7의 테스트 종이 3",
+          "subtitle": "",
+          "type": "belonging",
+          "owner": "tester7",
+          "back": "테스터 7의 테스트 종이 3. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다.",
+          "sequenceOrder": 3,
+          "blockedFor": [
+            "tester7"
+          ],
+          "location": null,
+          "requires": [],
+          "visibility": "locked",
+          "transferable": true,
+          "availableFromPhase": "investigation2"
+        },
+        {
+          "id": "tester7_item4",
+          "title": "테스터 7의 테스트 종이 4",
+          "subtitle": "",
+          "type": "belonging",
+          "owner": "tester7",
+          "back": "테스터 7의 테스트 종이 4. 바나나는 우주선을 타고 출근했다. 이 문장이 다른 참가자에게 자동 공개되면 안 됩니다.",
+          "sequenceOrder": 4,
+          "blockedFor": [
+            "tester7"
+          ],
+          "location": null,
+          "requires": [],
+          "visibility": "locked",
+          "transferable": false,
+          "availableFromPhase": "investigation2"
+        },
+        {
+          "id": "ground_left_1",
+          "title": "1층 · 테스트홀 left 메모 1",
+          "subtitle": "",
+          "type": "place",
+          "owner": null,
+          "back": "테스트 메모 1. 펭귄은 회의실에서 라면을 끓였습니다. 조사·앞뒷면·단계 제한을 확인하세요.",
+          "sequenceOrder": 1,
+          "location": {
+            "floor": "ground",
+            "x": 2,
+            "y": 2
+          },
+          "requires": [],
+          "visibility": "locked",
+          "requiresPresence": true,
+          "transferable": true,
+          "availableFromPhase": "investigation1",
+          "grant": {
+            "id": "qa_key",
+            "name": "2층 테스트 열쇠",
+            "description": "2층 중앙 문의 잠금을 해제하는 테스트 열쇠."
+          }
+        },
+        {
+          "id": "ground_left_2",
+          "title": "1층 · 테스트홀 left 메모 2",
+          "subtitle": "",
+          "type": "place",
+          "owner": null,
+          "back": "테스트 메모 2. 펭귄은 회의실에서 라면을 끓였습니다. 조사·앞뒷면·단계 제한을 확인하세요.",
+          "sequenceOrder": 2,
+          "location": {
+            "floor": "ground",
+            "x": 2,
+            "y": 2
+          },
+          "requires": [],
+          "visibility": "locked",
+          "requiresPresence": true,
+          "transferable": true,
+          "availableFromPhase": "investigation1"
+        },
+        {
+          "id": "ground_left_3",
+          "title": "1층 · 테스트홀 left 메모 3",
+          "subtitle": "",
+          "type": "place",
+          "owner": null,
+          "back": "테스트 메모 3. 펭귄은 회의실에서 라면을 끓였습니다. 조사·앞뒷면·단계 제한을 확인하세요.",
+          "sequenceOrder": 3,
+          "location": {
+            "floor": "ground",
+            "x": 2,
+            "y": 2
+          },
+          "requires": [],
+          "visibility": "locked",
+          "requiresPresence": true,
+          "transferable": true,
+          "availableFromPhase": "investigation2"
+        },
+        {
+          "id": "ground_left_4",
+          "title": "1층 · 테스트홀 left 메모 4",
+          "subtitle": "",
+          "type": "place",
+          "owner": null,
+          "back": "테스트 메모 4. 펭귄은 회의실에서 라면을 끓였습니다. 조사·앞뒷면·단계 제한을 확인하세요.",
+          "sequenceOrder": 4,
+          "location": {
+            "floor": "ground",
+            "x": 2,
+            "y": 2
+          },
+          "requires": [],
+          "visibility": "locked",
+          "requiresPresence": true,
+          "transferable": true,
+          "availableFromPhase": "investigation2"
+        },
+        {
+          "id": "ground_right_1",
+          "title": "1층 · 테스트홀 right 메모 1",
+          "subtitle": "",
+          "type": "place",
+          "owner": null,
+          "back": "테스트 메모 1. 펭귄은 회의실에서 라면을 끓였습니다. 조사·앞뒷면·단계 제한을 확인하세요.",
+          "sequenceOrder": 1,
+          "location": {
+            "floor": "ground",
+            "x": 8,
+            "y": 2
+          },
+          "requires": [],
+          "visibility": "locked",
+          "requiresPresence": true,
+          "transferable": true,
+          "availableFromPhase": "investigation1"
+        },
+        {
+          "id": "ground_right_2",
+          "title": "1층 · 테스트홀 right 메모 2",
+          "subtitle": "",
+          "type": "place",
+          "owner": null,
+          "back": "테스트 메모 2. 펭귄은 회의실에서 라면을 끓였습니다. 조사·앞뒷면·단계 제한을 확인하세요.",
+          "sequenceOrder": 2,
+          "location": {
+            "floor": "ground",
+            "x": 8,
+            "y": 2
+          },
+          "requires": [],
+          "visibility": "locked",
+          "requiresPresence": true,
+          "transferable": true,
+          "availableFromPhase": "investigation1"
+        },
+        {
+          "id": "ground_right_3",
+          "title": "1층 · 테스트홀 right 메모 3",
+          "subtitle": "",
+          "type": "place",
+          "owner": null,
+          "back": "테스트 메모 3. 펭귄은 회의실에서 라면을 끓였습니다. 조사·앞뒷면·단계 제한을 확인하세요.",
+          "sequenceOrder": 3,
+          "location": {
+            "floor": "ground",
+            "x": 8,
+            "y": 2
+          },
+          "requires": [],
+          "visibility": "locked",
+          "requiresPresence": true,
+          "transferable": true,
+          "availableFromPhase": "investigation2"
+        },
+        {
+          "id": "ground_right_4",
+          "title": "1층 · 테스트홀 right 메모 4",
+          "subtitle": "",
+          "type": "place",
+          "owner": null,
+          "back": "테스트 메모 4. 펭귄은 회의실에서 라면을 끓였습니다. 조사·앞뒷면·단계 제한을 확인하세요.",
+          "sequenceOrder": 4,
+          "location": {
+            "floor": "ground",
+            "x": 8,
+            "y": 2
+          },
+          "requires": [],
+          "visibility": "locked",
+          "requiresPresence": true,
+          "transferable": true,
+          "availableFromPhase": "investigation2"
+        },
+        {
+          "id": "upper_left_1",
+          "title": "2층 · 테스트실 left 메모 1",
+          "subtitle": "",
+          "type": "place",
+          "owner": null,
+          "back": "테스트 메모 1. 펭귄은 회의실에서 라면을 끓였습니다. 조사·앞뒷면·단계 제한을 확인하세요.",
+          "sequenceOrder": 1,
+          "location": {
+            "floor": "upper",
+            "x": 2,
+            "y": 2
+          },
+          "requires": [],
+          "visibility": "locked",
+          "requiresPresence": true,
+          "transferable": true,
+          "availableFromPhase": "investigation1"
+        },
+        {
+          "id": "upper_left_2",
+          "title": "2층 · 테스트실 left 메모 2",
+          "subtitle": "",
+          "type": "place",
+          "owner": null,
+          "back": "테스트 메모 2. 펭귄은 회의실에서 라면을 끓였습니다. 조사·앞뒷면·단계 제한을 확인하세요.",
+          "sequenceOrder": 2,
+          "location": {
+            "floor": "upper",
+            "x": 2,
+            "y": 2
+          },
+          "requires": [],
+          "visibility": "locked",
+          "requiresPresence": true,
+          "transferable": true,
+          "availableFromPhase": "investigation1"
+        },
+        {
+          "id": "upper_left_3",
+          "title": "2층 · 테스트실 left 메모 3",
+          "subtitle": "",
+          "type": "place",
+          "owner": null,
+          "back": "테스트 메모 3. 펭귄은 회의실에서 라면을 끓였습니다. 조사·앞뒷면·단계 제한을 확인하세요.",
+          "sequenceOrder": 3,
+          "location": {
+            "floor": "upper",
+            "x": 2,
+            "y": 2
+          },
+          "requires": [],
+          "visibility": "locked",
+          "requiresPresence": true,
+          "transferable": true,
+          "availableFromPhase": "investigation2"
+        },
+        {
+          "id": "upper_left_4",
+          "title": "2층 · 테스트실 left 메모 4",
+          "subtitle": "",
+          "type": "place",
+          "owner": null,
+          "back": "테스트 메모 4. 펭귄은 회의실에서 라면을 끓였습니다. 조사·앞뒷면·단계 제한을 확인하세요.",
+          "sequenceOrder": 4,
+          "location": {
+            "floor": "upper",
+            "x": 2,
+            "y": 2
+          },
+          "requires": [],
+          "visibility": "locked",
+          "requiresPresence": true,
+          "transferable": true,
+          "availableFromPhase": "investigation2"
+        },
+        {
+          "id": "upper_right_1",
+          "title": "2층 · 테스트실 right 메모 1",
+          "subtitle": "",
+          "type": "place",
+          "owner": null,
+          "back": "테스트 메모 1. 펭귄은 회의실에서 라면을 끓였습니다. 조사·앞뒷면·단계 제한을 확인하세요.",
+          "sequenceOrder": 1,
+          "location": {
+            "floor": "upper",
+            "x": 8,
+            "y": 2
+          },
+          "requires": [],
+          "visibility": "locked",
+          "requiresPresence": true,
+          "transferable": true,
+          "availableFromPhase": "investigation1"
+        },
+        {
+          "id": "upper_right_2",
+          "title": "2층 · 테스트실 right 메모 2",
+          "subtitle": "",
+          "type": "place",
+          "owner": null,
+          "back": "테스트 메모 2. 펭귄은 회의실에서 라면을 끓였습니다. 조사·앞뒷면·단계 제한을 확인하세요.",
+          "sequenceOrder": 2,
+          "location": {
+            "floor": "upper",
+            "x": 8,
+            "y": 2
+          },
+          "requires": [],
+          "visibility": "locked",
+          "requiresPresence": true,
+          "transferable": true,
+          "availableFromPhase": "investigation1"
+        },
+        {
+          "id": "upper_right_3",
+          "title": "2층 · 테스트실 right 메모 3",
+          "subtitle": "",
+          "type": "place",
+          "owner": null,
+          "back": "테스트 메모 3. 펭귄은 회의실에서 라면을 끓였습니다. 조사·앞뒷면·단계 제한을 확인하세요.",
+          "sequenceOrder": 3,
+          "location": {
+            "floor": "upper",
+            "x": 8,
+            "y": 2
+          },
+          "requires": [],
+          "visibility": "locked",
+          "requiresPresence": true,
+          "transferable": true,
+          "availableFromPhase": "investigation2"
+        },
+        {
+          "id": "upper_right_4",
+          "title": "2층 · 테스트실 right 메모 4",
+          "subtitle": "",
+          "type": "place",
+          "owner": null,
+          "back": "테스트 메모 4. 펭귄은 회의실에서 라면을 끓였습니다. 조사·앞뒷면·단계 제한을 확인하세요.",
+          "sequenceOrder": 4,
+          "location": {
+            "floor": "upper",
+            "x": 8,
+            "y": 2
+          },
+          "requires": [],
+          "visibility": "locked",
+          "requiresPresence": true,
+          "transferable": true,
+          "availableFromPhase": "investigation2"
+        }
+      ]
+    },
+    "action": {
+      "order": [
+        "tester1",
+        "tester2",
+        "tester3",
+        "tester4",
+        "tester5",
+        "tester6",
+        "tester7"
+      ],
+      "roles": {
+        "tester1": [
+          {
+            "id": "test_action1",
+            "title": "테스트 행동 1",
+            "description": "테스트 상태 변경을 실행합니다. 실제 이야기에 의미는 없습니다.",
+            "kind": "guard",
+            "targetMode": "self",
+            "range": "anywhere",
+            "publicText": "테스터 1의 기능 점검 행동",
+            "consumesItem": false
+          }
+        ],
+        "tester2": [
+          {
+            "id": "test_action2",
+            "title": "테스트 행동 2",
+            "description": "테스트 상태 변경을 실행합니다. 실제 이야기에 의미는 없습니다.",
+            "kind": "reveal",
+            "targetMode": "none",
+            "range": "anywhere",
+            "publicText": "테스터 2의 기능 점검 행동",
+            "consumesItem": false
+          }
+        ],
+        "tester3": [
+          {
+            "id": "test_action3",
+            "title": "테스트 행동 3",
+            "description": "테스트 상태 변경을 실행합니다. 실제 이야기에 의미는 없습니다.",
+            "kind": "escape",
+            "targetMode": "self",
+            "range": "anywhere",
+            "publicText": "테스터 3의 기능 점검 행동",
+            "consumesItem": false
+          }
+        ],
+        "tester4": [
+          {
+            "id": "test_action4",
+            "title": "테스트 행동 4",
+            "description": "테스트 상태 변경을 실행합니다. 실제 이야기에 의미는 없습니다.",
+            "kind": "restrain",
+            "targetMode": "other",
+            "range": "anywhere",
+            "publicText": "테스터 4의 기능 점검 행동",
+            "consumesItem": false
+          }
+        ],
+        "tester5": [
+          {
+            "id": "test_action5",
+            "title": "테스트 행동 5",
+            "description": "테스트 상태 변경을 실행합니다. 실제 이야기에 의미는 없습니다.",
+            "kind": "attack",
+            "targetMode": "other",
+            "range": "anywhere",
+            "publicText": "테스터 5의 기능 점검 행동",
+            "consumesItem": false
+          }
+        ],
+        "tester6": [
+          {
+            "id": "test_action6",
+            "title": "테스트 행동 6",
+            "description": "테스트 상태 변경을 실행합니다. 실제 이야기에 의미는 없습니다.",
+            "kind": "guard",
+            "targetMode": "any",
+            "range": "anywhere",
+            "publicText": "테스터 6의 기능 점검 행동",
+            "consumesItem": false
+          }
+        ],
+        "tester7": [
+          {
+            "id": "test_action7",
+            "title": "테스트 행동 7",
+            "description": "테스트 상태 변경을 실행합니다. 실제 이야기에 의미는 없습니다.",
+            "kind": "reveal",
+            "targetMode": "none",
+            "range": "anywhere",
+            "publicText": "테스터 7의 기능 점검 행동",
+            "consumesItem": false
+          }
+        ]
+      },
+      "intro": "각 참가자의 행동 또는 패스를 확인하세요.",
+      "endingNotes": "기능 점검이 종료되었습니다."
+    },
+    "ending": {
+      "common": {
+        "captured": {
+          "title": "진범 구속 성공 · 테스트",
+          "paragraphs": [
+            "테스트 결말입니다. 바나나 서버가 다시 출근했습니다.",
+            "개인 목표와 상태에 따른 결말 표시를 확인하세요."
+          ]
+        },
+        "missed": {
+          "title": "진범 구속 실패 · 테스트",
+          "paragraphs": [
+            "테스트 결말입니다. 바나나 서버가 다시 출근했습니다.",
+            "개인 목표와 상태에 따른 결말 표시를 확인하세요."
+          ]
+        }
+      },
+      "characters": {
+        "tester1": {
+          "intro": "테스터 1: 개인 결말 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "captured": "테스터 1: 진범 구속 성공 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "missed": "테스터 1: 진범 구속 실패 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "goalAchieved": "테스터 1: 목표 달성 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "goalFailed": "테스터 1: 목표 실패 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "dead": "테스터 1: 사망 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "arrested": "테스터 1: 구속 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "restrained": "테스터 1: 제압 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "escaped": "테스터 1: 탈출 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "alive": "테스터 1: 생존 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "closing": "테스터 1: 점검 완료 화면입니다. 오렌지색 서버가 춤을 춥니다."
+        },
+        "tester2": {
+          "intro": "테스터 2: 개인 결말 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "captured": "테스터 2: 진범 구속 성공 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "missed": "테스터 2: 진범 구속 실패 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "goalAchieved": "테스터 2: 목표 달성 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "goalFailed": "테스터 2: 목표 실패 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "dead": "테스터 2: 사망 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "arrested": "테스터 2: 구속 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "restrained": "테스터 2: 제압 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "escaped": "테스터 2: 탈출 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "alive": "테스터 2: 생존 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "closing": "테스터 2: 점검 완료 화면입니다. 오렌지색 서버가 춤을 춥니다."
+        },
+        "tester3": {
+          "intro": "테스터 3: 개인 결말 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "captured": "테스터 3: 진범 구속 성공 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "missed": "테스터 3: 진범 구속 실패 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "goalAchieved": "테스터 3: 목표 달성 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "goalFailed": "테스터 3: 목표 실패 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "dead": "테스터 3: 사망 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "arrested": "테스터 3: 구속 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "restrained": "테스터 3: 제압 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "escaped": "테스터 3: 탈출 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "alive": "테스터 3: 생존 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "closing": "테스터 3: 점검 완료 화면입니다. 오렌지색 서버가 춤을 춥니다."
+        },
+        "tester4": {
+          "intro": "테스터 4: 개인 결말 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "captured": "테스터 4: 진범 구속 성공 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "missed": "테스터 4: 진범 구속 실패 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "goalAchieved": "테스터 4: 목표 달성 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "goalFailed": "테스터 4: 목표 실패 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "dead": "테스터 4: 사망 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "arrested": "테스터 4: 구속 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "restrained": "테스터 4: 제압 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "escaped": "테스터 4: 탈출 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "alive": "테스터 4: 생존 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "closing": "테스터 4: 점검 완료 화면입니다. 오렌지색 서버가 춤을 춥니다."
+        },
+        "tester5": {
+          "intro": "테스터 5: 개인 결말 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "captured": "테스터 5: 진범 구속 성공 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "missed": "테스터 5: 진범 구속 실패 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "goalAchieved": "테스터 5: 목표 달성 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "goalFailed": "테스터 5: 목표 실패 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "dead": "테스터 5: 사망 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "arrested": "테스터 5: 구속 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "restrained": "테스터 5: 제압 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "escaped": "테스터 5: 탈출 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "alive": "테스터 5: 생존 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "closing": "테스터 5: 점검 완료 화면입니다. 오렌지색 서버가 춤을 춥니다."
+        },
+        "tester6": {
+          "intro": "테스터 6: 개인 결말 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "captured": "테스터 6: 진범 구속 성공 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "missed": "테스터 6: 진범 구속 실패 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "goalAchieved": "테스터 6: 목표 달성 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "goalFailed": "테스터 6: 목표 실패 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "dead": "테스터 6: 사망 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "arrested": "테스터 6: 구속 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "restrained": "테스터 6: 제압 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "escaped": "테스터 6: 탈출 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "alive": "테스터 6: 생존 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "closing": "테스터 6: 점검 완료 화면입니다. 오렌지색 서버가 춤을 춥니다."
+        },
+        "tester7": {
+          "intro": "테스터 7: 개인 결말 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "captured": "테스터 7: 진범 구속 성공 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "missed": "테스터 7: 진범 구속 실패 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "goalAchieved": "테스터 7: 목표 달성 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "goalFailed": "테스터 7: 목표 실패 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "dead": "테스터 7: 사망 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "arrested": "테스터 7: 구속 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "restrained": "테스터 7: 제압 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "escaped": "테스터 7: 탈출 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "alive": "테스터 7: 생존 화면입니다. 오렌지색 서버가 춤을 춥니다.",
+          "closing": "테스터 7: 점검 완료 화면입니다. 오렌지색 서버가 춤을 춥니다."
+        }
+      }
+    }
+  }
+}
