@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Private 영역 · 관리자 앱 선택</title>
+  <style>
+    :root{color-scheme:dark;font-family:Inter,Pretendard,"Apple SD Gothic Neo",system-ui,sans-serif;background:#10131b;color:#f1f4f8}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 15% 0,#342432 0,transparent 42%),radial-gradient(ellipse at 95% 20%,#17333a 0,transparent 38%),#10131b}
+    main{width:min(920px,100%);margin:auto;padding:64px 24px}.eyebrow{color:#e6ad94;letter-spacing:.18em;font-size:12px;font-weight:750}.hero{margin:20px 0 30px}.hero h1{font-size:clamp(34px,6vw,56px);line-height:1.08;margin:0 0 14px}.hero p{color:#b8c1cd;line-height:1.7;max-width:660px;margin:0}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px}.card{display:flex;flex-direction:column;padding:24px;border:1px solid #394554;border-radius:18px;background:rgba(27,32,43,.88);min-height:230px}.icon{font-size:34px}.card h2{font-size:21px;margin:18px 0 8px}.card p{color:#b8c1cd;line-height:1.6;margin:0 0 22px;flex:1}.card a{align-self:flex-start;background:#b64c43;color:white;text-decoration:none;padding:11px 15px;border-radius:9px;font-weight:700}.card a:hover{background:#ce6255}.note{margin-top:22px;color:#929eac;font-size:13px;line-height:1.6}
+  </style>
+</head>
+<body>
+  <main>
+    <div class="eyebrow">PRIVATE AREA · OPERATOR ACCESS</div>
+    <header class="hero">
+      <h1>관리자 권한 앱 선택</h1>
+      <p>인증된 운영자 전용 도구입니다. 사용할 앱을 선택하세요.</p>
+    </header>
+    <section class="grid" aria-label="관리자 앱">
+      <article class="card">
+        <div class="icon" aria-hidden="true">🕯️</div>
+        <h2>머더 미스터리 제작소</h2>
+        <p>시나리오, 캐릭터, 조사 자료, 맵과 결말 분기를 편집하고 테스트합니다.</p>
+        <a href="/mystery-editor">제작소 열기 →</a>
+      </article>
+      <article class="card">
+        <div class="icon" aria-hidden="true">✧</div>
+        <h2>Live2D 모션 아틀리에</h2>
+        <p>캐릭터 모델을 조립하고 움직임을 확인한 뒤 VTube Studio용 파일을 내보냅니다.</p>
+        <a href="/apps/live2d-studio/index.html">아틀리에 열기 →</a>
+      </article>
+    </section>
+    <p class="note">이 페이지와 두 제작 도구는 서버 운영자 인증이 필요합니다.</p>
+  </main>
+</body>
+</html>
