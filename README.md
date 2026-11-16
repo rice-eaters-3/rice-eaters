@@ -227,3 +227,7 @@ npm test
 ## 제작소 운영자 설정
 
 제작소와 테스트 모드는 운영자 전용입니다. 서버에 `STUDIO_ADMIN_PASSWORD`(24바이트 이상)를 설정하고 재시작한 뒤 사용자 이름 `operator`로 인증하세요. 미설정 시 해당 기능은 잠기며 일반 게임은 계속 동작합니다. 공개 주소는 HTTPS를 사용하세요. 자세한 설정과 비밀번호 변경 방법은 [OPERATOR_STUDIO.md](OPERATOR_STUDIO.md)를 참고하세요.
+
+## 모션 아틀리에 (Live2D)
+
+`http://localhost:3000/live2d`에서 프롬프트로 상반신 모델을 제작하고 VTube Studio용 ZIP으로 내보냅니다. 샘플은 연결 없이 볼 수 있으며, 새 생성에는 웹 화면에서 이미지 API를 연결해야 합니다. [생성 범위·API·검증 상태 안내](apps/live2d-studio/README.md)를 확인하세요.

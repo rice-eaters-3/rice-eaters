@@ -32,6 +32,7 @@ const LOG_FILE = path.join(DATA_DIR, 'activity.jsonl');
 const PORT = Number(process.env.PORT || 3000);
 const HOST = process.env.HOST || '0.0.0.0';
 fs.mkdirSync(DATA_DIR, {recursive: true});
+const live2dService = require('./private/live2d/service.js').createService({dataDir:DATA_DIR});
 
 const STORIES = require('./mystery-content/stories.js');
 const validateMystery = require('./mystery-content/validate.js').validate;
@@ -462,6 +463,7 @@ function validateOrigin(req){
 }
 async function api(req,res,url,sid){
   const pathname=url.pathname;
+  if(pathname.startsWith('/api/live2d/'))return live2dService.handle(req,res,url,sid);
   if(pathname==='/api/editor'||pathname.startsWith('/api/editor/')){
     requireOperator(req,res);
     if(!['GET','HEAD'].includes(req.method)){validateOrigin(req);if(req.headers['sec-fetch-site']==='cross-site')fail(403,'다른 출처의 요청은 허용되지 않습니다.');}
@@ -1038,12 +1040,13 @@ async function api(req,res,url,sid){
   }
   fail(404,'지원하지 않는 동작입니다.');
 }
-const MIME={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.ico':'image/x-icon','.webp':'image/webp','.woff2':'font/woff2'};
+const MIME={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.ico':'image/x-icon','.webp':'image/webp','.woff2':'font/woff2','.moc3':'application/octet-stream','.zip':'application/zip'};
 function staticFile(req,res,url,sid){
   let name;
   try{name=decodeURIComponent(url.pathname)}catch(e){fail(400,'잘못된 경로입니다.')}
   if(name==='/'||name==='/index.html')name='/index.html';
   if(name==='/mars')name='/apps/terraforming-mars/index.html';
+  if(name==='/live2d'||name==='/live2d/')name='/apps/live2d-studio/index.html';
   if(name==='/trace'||name==='/trace/')name='/apps/security-trace/index.html';
   if(name==='/mystery'||name==='/mystery/')name='/apps/murder-mystery/index.html';
   if(name==='/mystery-editor'||name==='/mystery-editor/')name='/apps/murder-mystery/editor.html';
