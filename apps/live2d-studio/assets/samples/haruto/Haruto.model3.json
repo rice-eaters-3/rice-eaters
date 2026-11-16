@@ -1,0 +1,35 @@
+{
+  "Version": 3,
+  "FileReferences": {
+    "Moc": "Haruto.moc3",
+    "Textures": [
+      "textures/texture_00.png"
+    ],
+    "Physics": "Haruto.physics3.json",
+    "DisplayInfo": "Haruto.cdi3.json",
+    "Expressions": [
+      {
+        "Name": "Smile",
+        "File": "expressions/smile.exp3.json"
+      }
+    ]
+  },
+  "Groups": [
+    {
+      "Target": "Parameter",
+      "Name": "EyeBlink",
+      "Ids": [
+        "ParamEyeLOpen",
+        "ParamEyeROpen"
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Name": "LipSync",
+      "Ids": [
+        "ParamMouthOpenY"
+      ]
+    }
+  ],
+  "HitAreas": []
+}

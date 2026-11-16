@@ -10,10 +10,10 @@
   <div class="prompt-tags"><button type="button" data-prompt="차분한 분위기의 성인 천문학자 캐릭터. 라벤더색 단발머리, 청록색 눈, 크림색 세일러 재킷과 금색 별 브로치.">✦ 별빛 연구자</button><button type="button" data-prompt="따뜻한 분위기의 성인 남성 바리스타 캐릭터. 갈색 짧은 머리, 호박색 눈, 아이보리 셔츠와 짙은 초록색 앞치마.">☕ 숲속 바리스타</button></div>
   <button id="generate" class="primary" disabled>API 연결 후 캐릭터 만들기 <span>↗</span></button><p class="fine">생성 1회 = 이미지 API 1회 호출. 요금은 연결한 API 계정에 청구됩니다.</p></form>
   <section class="scope"><span class="mini-icon">◇</span><div><b>자동 리깅 초안</b><p>고개 · 눈 · 입 · 호흡 · 머리카락<br>상반신 16파츠 / 13개 파라미터<br>독립 눈동자·손 리깅·편집용 cmo3 제외</p></div></section>
-  <div class="history-head"><h2>작업 기록</h2><button id="sample" class="text-button">루미 샘플 열기</button></div><div id="history" class="history"><p class="fine">새로 만든 모델이 여기에 표시돼요.</p></div>
+  <div class="history-head"><h2>작업 기록</h2><button id="sample" class="text-button">샘플 열기</button></div><select id="sample-select" aria-label="샘플 캐릭터 선택"></select><div id="history" class="history"><p class="fine">새로 만든 모델이 여기에 표시돼요.</p></div>
  </aside>
  <section class="workspace" aria-label="모델 작업 화면">
-  <div class="workspace-top"><div><span class="eyebrow">LIVE CANVAS</span><h2 id="preview-name">Lumi <span class="pill">샘플</span></h2></div><button id="fit" class="quiet">↺ 정면으로</button></div>
+  <div class="workspace-top"><div><span class="eyebrow">LIVE CANVAS</span><h2 id="preview-name">캐릭터 <span class="pill">샘플</span></h2></div><button id="fit" class="quiet">↺ 정면으로</button></div>
   <div class="canvas-wrap"><div class="canvas-caption"><span class="dot green"></span>실제 MOC3 런타임</div><canvas id="model-canvas" aria-label="Live2D 모델 미리보기"></canvas><div id="canvas-message" role="status">모델 런타임을 준비하고 있어요…</div><div class="canvas-footer"><span id="mesh-info">파츠를 불러오는 중</span><span>상반신 · 투명 배경</span></div></div>
   <div class="playback"><label class="switch"><input id="idle" type="checkbox" checked> 자동 움직임</label><label class="switch"><input id="follow" type="checkbox"> 시선에 고개 맞추기</label><button id="blink" class="quiet">눈 깜빡임</button><button id="talk" class="quiet">입 움직임</button></div>
   <section class="progress-card"><div class="progress-heading"><span id="stage-label">샘플을 불러오는 중</span><span id="stage-detail">루미 · LUMI</span></div><ol id="stages"><li data-stage="generating">파츠 생성</li><li data-stage="parts">파츠 분석</li><li data-stage="rigging">리깅</li><li data-stage="validating">검증</li><li data-stage="ready">완료</li></ol><p id="status" role="status" aria-live="polite">이미지로 꾸민 미리보기가 아닌 실제 모델 파일을 읽어요.</p></section>

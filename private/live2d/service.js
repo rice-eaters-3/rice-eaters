@@ -4,6 +4,7 @@ const {analyzeAtlas,validateProject,rig,documents}=require('./compiler.js');
 const {validate}=require('./core.js');
 const {zip}=require('./zip.js');
 const MODEL='gpt-image-2.5-flare';
+const SAMPLES=require('./samples.json');
 const jsonText=v=>JSON.stringify(v,null,2)+'\n';
 function fault(status,message){throw Object.assign(Error(message),{status});}
 const productionPrompt=description=>`Create an ORIGINAL adult anime VTuber character based on this direction: ${description}\nThis is a production texture atlas, NOT a portrait or a reference sheet. Square transparent PNG. EXACTLY 4 columns x 4 rows of equally sized cells, no lines, text, labels, backgrounds, shadows or watermarks. Each cell contains ONLY ONE isolated colored character part, centered with generous 12% transparent margin; entire part visible. All parts match one character, front facing, symmetrical, clean polished cel shading. Parts in row-major order: (1) back hair silhouette, (2) upper torso costume with neck but NO head or face, (3) blank skin face oval with subtle nose, NO eyes brows mouth hair, (4) front bangs only, (5) character left open eye, sclera iris lashes together, (6) right matching eye, (7) small closed smiling mouth line, (8) open mouth interior only, (9) left eyebrow, (10) right eyebrow, (11) left ear, (12) right ear, (13) left side hair lock, (14) right side hair lock, (15) small hair ornament, (16) neck ribbon. Eyes and mouths contain no surrounding skin patch. Do not add features to the blank face. Do not connect cells. Keep back hair no longer than shoulder length for this rig.`;
@@ -52,10 +53,11 @@ function createService({dataDir,fetchImpl=globalThis.fetch,baseUrl=process.env.L
     const origin=req.headers.origin;if((origin&&origin!=='http://'+req.headers.host&&origin!=='https://'+req.headers.host)||req.headers['sec-fetch-site']==='cross-site')fault(403,'다른 출처의 요청은 허용되지 않습니다.');
     if(!String(req.headers['content-type']||'').startsWith('application/json'))fault(415,'JSON 요청이 필요합니다.');
    }
-   if(method==='GET'&&route==='/sample/export'){
-    const dir=path.join(__dirname,'../../apps/live2d-studio/assets/samples/lumi'),files={};for(const file of fileNames({name:'Lumi'}))files['Lumi/'+file]=fs.readFileSync(path.join(dir,file));return output(res,200,zip(files),{'Content-Type':'application/zip','Content-Disposition':'attachment; filename="Lumi.zip"'});
+   if(method==='GET'&&(route==='/sample/export'||/^\/samples\/[^/]+\/export$/.test(route))){
+    const id=route==='/sample/export'?'lumi':route.split('/')[2],sample=SAMPLES.find(s=>s.id===id);if(!sample)fault(404,'샘플을 찾을 수 없습니다.');
+    const dir=path.join(__dirname,'../../apps/live2d-studio/assets/samples',sample.id),files={};for(const file of fileNames(sample))files[sample.name+'/'+file]=fs.readFileSync(path.join(dir,file));if(fs.existsSync(path.join(dir,'official-core-validation.json')))files[sample.name+'/official-core-validation.json']=fs.readFileSync(path.join(dir,'official-core-validation.json'));return output(res,200,zip(files),{'Content-Type':'application/zip','Content-Disposition':'attachment; filename="'+sample.name+'.zip"'});
    }
-   if(method==='GET'&&route==='/config'){const c=connection(sid);return output(res,200,{endpoint,defaultModel,connected:!!c,model:c?.model||null,expiresAt:c?.expires||null});}
+   if(method==='GET'&&route==='/config'){const c=connection(sid);return output(res,200,{endpoint,defaultModel,samples:SAMPLES,connected:!!c,model:c?.model||null,expiresAt:c?.expires||null});}
    if(method==='POST'&&route==='/connection'){
     connections.delete(sid);const body=await readBody(req);if(typeof body.key!=='string'||body.key.length<10||body.key.length>512||/[\r\n]/.test(body.key)||!/^[-a-zA-Z0-9_.:]{1,100}$/.test(body.model||''))fault(400,'API 키와 이미지 모델 ID를 입력해 주세요.');
     await upstream('/models/'+encodeURIComponent(body.model),body.key);connections.set(sid,{key:body.key,model:body.model,expires:Date.now()+ttl});return output(res,200,{connected:true,model:body.model,expiresAt:Date.now()+ttl});
