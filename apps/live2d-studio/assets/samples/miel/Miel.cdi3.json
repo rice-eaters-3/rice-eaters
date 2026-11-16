@@ -27,16 +27,6 @@
       "Name": "오른쪽 눈"
     },
     {
-      "Id": "ParamBrowLY",
-      "GroupId": "",
-      "Name": "왼쪽 눈썹"
-    },
-    {
-      "Id": "ParamBrowRY",
-      "GroupId": "",
-      "Name": "오른쪽 눈썹"
-    },
-    {
       "Id": "ParamMouthOpenY",
       "GroupId": "",
       "Name": "입 벌리기"
@@ -70,52 +60,48 @@
   "ParameterGroups": [],
   "Parts": [
     {
-      "Id": "Part_Body",
-      "Name": "몸·의상"
+      "Id": "Part_Portrait_0",
+      "Name": "원화 영역 1"
     },
     {
-      "Id": "Part_Head",
-      "Name": "얼굴·머리카락"
+      "Id": "Part_Portrait_1",
+      "Name": "원화 영역 2"
     },
     {
-      "Id": "Part_EyeLOpen",
-      "Name": "왼쪽 눈"
+      "Id": "Part_Portrait_2",
+      "Name": "원화 영역 3"
     },
     {
-      "Id": "Part_EyeROpen",
-      "Name": "오른쪽 눈"
+      "Id": "Part_Portrait_3",
+      "Name": "원화 영역 4"
+    },
+    {
+      "Id": "Part_Portrait_4",
+      "Name": "원화 영역 5"
+    },
+    {
+      "Id": "Part_Portrait_5",
+      "Name": "원화 영역 6"
+    },
+    {
+      "Id": "Part_Portrait_6",
+      "Name": "원화 영역 7"
+    },
+    {
+      "Id": "Part_Portrait_7",
+      "Name": "원화 영역 8"
     },
     {
       "Id": "Part_EyeLClosed",
-      "Name": "왼쪽 감은 눈"
+      "Name": "왼쪽 눈 감김"
     },
     {
       "Id": "Part_EyeRClosed",
-      "Name": "오른쪽 감은 눈"
-    },
-    {
-      "Id": "Part_BrowL",
-      "Name": "왼쪽 눈썹"
-    },
-    {
-      "Id": "Part_BrowR",
-      "Name": "오른쪽 눈썹"
-    },
-    {
-      "Id": "Part_MouthClosed",
-      "Name": "다문 입"
+      "Name": "오른쪽 눈 감김"
     },
     {
       "Id": "Part_MouthOpen",
-      "Name": "열린 입"
-    },
-    {
-      "Id": "Part_Accessory",
-      "Name": "보조 장식"
-    },
-    {
-      "Id": "Part_HairLock",
-      "Name": "보조 머리카락"
+      "Name": "말하기"
     }
   ]
 }

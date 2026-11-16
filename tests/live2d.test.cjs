@@ -7,6 +7,7 @@ const {createService}=require('../private/live2d/service');
 const {zip}=require('../private/live2d/zip');
 const sample=path.join(__dirname,'../apps/live2d-studio/assets/samples/lumi');
 const portrait=require('../private/live2d/portrait-rig');
+const registered=require('../private/live2d/registered-rig');
 const atlas=fs.readFileSync(path.join(sample,'textures/texture_00.png'));
 const key='test-only-key-never-persist-001';
 function entries(buffer){const result={};let at=0;while(buffer.readUInt32LE(at)===0x04034b50){const size=buffer.readUInt32LE(at+18),n=buffer.readUInt16LE(at+26),extra=buffer.readUInt16LE(at+28),name=buffer.toString('utf8',at+30,at+30+n),start=at+30+n+extra,data=buffer.subarray(start,start+size);assert.equal(buffer.readUInt32LE(at+14),crc32(data));result[name]=data;at=start+size;}assert.equal(buffer.readUInt32LE(at),0x02014b50);return result;}
@@ -64,13 +65,13 @@ test('upstream denial, URL-only images and missing parts fail honestly without a
 });
 for(const [id,preset] of Object.entries(portrait.PRESETS))test(preset.name+' portrait rework: reproducible real MOC3, closed-eye sprites, all parameter extremes',async()=>{
  const dir=path.join(sample,'..',id),project=JSON.parse(fs.readFileSync(path.join(dir,'project.json'))),buffer=fs.readFileSync(path.join(dir,preset.name+'.moc3'));
- assert.equal(project.format,'rice-live2d-portrait-v2');assert.deepEqual(portrait.rig(project).buffer,buffer);assert.equal(project.layers.filter(l=>l.visible).length,10);
- const report=await validate(buffer);assert.equal(report.parameters,13);assert.equal(report.drawables,10);assert.ok(Object.values(report.effects).every(n=>n>0));
+ const v3=project.format==='rice-live2d-registered-v3';assert.ok(v3||project.format==='rice-live2d-portrait-v2');assert.deepEqual((v3?registered:portrait).rig(project).buffer,buffer);
+ const report=await validate(buffer);assert.equal(report.parameters,project.parameters.length);assert.equal(report.drawables,project.layers.filter(l=>l.visible).length);assert.ok(Object.values(report.effects).every(n=>n>0));
  const official=JSON.parse(fs.readFileSync(path.join(dir,'official-core-validation.json')));assert.equal(official.runtime,'Live2D Cubism Core');assert.ok(Object.values(official.effects).every(n=>n>0));assert.equal(official.steamVTubeStudioVerified,false);
  const handle=open(await runtime(),buffer),m=handle.model;try{
-  m.parameters.values.set(m.parameters.defaultValues);m.update();const leftOpen=m.drawables.ids.indexOf('EyeLOpen'),leftClosed=m.drawables.ids.indexOf('EyeLClosed');assert.equal(m.drawables.opacities[leftOpen],1);assert.equal(m.drawables.opacities[leftClosed],0);
-  m.parameters.values[m.parameters.ids.indexOf('ParamEyeLOpen')]=0;m.update();assert.equal(m.drawables.opacities[leftOpen],0);assert.equal(m.drawables.opacities[leftClosed],1);
-  if(['miel','nari','ruri'].includes(id)){m.parameters.values[m.parameters.ids.indexOf('ParamMouthOpenY')]=.3;m.update();assert.ok(m.drawables.opacities[m.drawables.ids.indexOf('MouthOpen')]>.99,'speaking mouth stays opaque');assert.ok(m.drawables.opacities[m.drawables.ids.indexOf('MouthClosed')]<.01,'closed mouth is absent while speaking');}
+  m.parameters.values.set(m.parameters.defaultValues);m.update();const leftOpen=m.drawables.ids.indexOf('EyeLOpen'),leftClosed=m.drawables.ids.indexOf('EyeLClosed');if(!v3)assert.equal(m.drawables.opacities[leftOpen],1);assert.equal(m.drawables.opacities[leftClosed],0);
+  m.parameters.values[m.parameters.ids.indexOf('ParamEyeLOpen')]=0;m.update();if(!v3)assert.equal(m.drawables.opacities[leftOpen],0);assert.equal(m.drawables.opacities[leftClosed],1);
+  if(['miel','nari','ruri'].includes(id)){m.parameters.values[m.parameters.ids.indexOf('ParamMouthOpenY')]=.3;m.update();assert.ok(m.drawables.opacities[m.drawables.ids.indexOf('MouthOpen')]>.99,'speaking mouth stays opaque');if(!v3)assert.ok(m.drawables.opacities[m.drawables.ids.indexOf('MouthClosed')]<.01,'closed mouth is absent while speaking');}
   for(const direction of [-1,1]){for(let i=0;i<m.parameters.count;i++)m.parameters.values[i]=direction<0?m.parameters.minimumValues[i]:m.parameters.maximumValues[i];m.update();for(const points of m.drawables.vertexPositions)assert.ok(points.every(Number.isFinite));}
   for(const uv of m.drawables.vertexUvs)assert.ok(uv.every(v=>v>=0&&v<=1));
  }finally{handle.release();}
@@ -81,4 +82,18 @@ test('built-in models export complete VTube Studio folders without an API key',a
  const config=await(await fetch(base+'/config')).json();assert.equal(config.connected,false);assert.equal(config.samples.length,6);
  for(const s of config.samples){const response=await fetch(base+'/samples/'+s.id+'/export');assert.equal(response.status,200);const files=entries(Buffer.from(await response.arrayBuffer())),doc=JSON.parse(files[s.name+'/'+s.name+'.model3.json']);for(const f of [doc.FileReferences.Moc,...doc.FileReferences.Textures,doc.FileReferences.Physics,doc.FileReferences.DisplayInfo,...doc.FileReferences.Expressions.map(e=>e.File)])assert.ok(files[s.name+'/'+f],f);assert.equal(files[s.name+'/'+doc.FileReferences.Moc].toString('ascii',0,4),'MOC3');}
  assert.equal((await fetch(base+'/samples/unknown/export')).status,404);
+});
+for(const id of ['miel','nari','ruri'])test(id+' canonical face is not repositioned, and the painted head/neck mesh stays continuous',async()=>{
+ const dir=path.join(sample,'..',id),p=JSON.parse(fs.readFileSync(path.join(dir,'project.json'))),atlas=fs.readFileSync(path.join(dir,'textures/texture_00.png')),compiled=registered.rig(p),raw=registered.rawCanonical(atlas,p);
+ assert.equal(require('node:crypto').createHash('sha256').update(raw).digest('hex'),p.reference.rgbaSha256,'packing preserves every canonical RGBA pixel');
+ const metadata=JSON.parse(fs.readFileSync(path.join(dir,'registration.json')));assert.deepEqual(registered.createProject(metadata,atlas),p);
+ const handle=open(await runtime(),compiled.buffer),m=handle.model;try{
+  m.parameters.values.set(m.parameters.defaultValues);m.update();const vertices=new Map();
+  for(const mesh of compiled.meshes.filter(x=>x.kind==='base')){const i=m.drawables.ids.indexOf(mesh.id),v=m.drawables.vertexPositions[i],uv=m.drawables.vertexUvs[i];for(let n=0;n<v.length;n+=2){const x=uv[n]*p.atlas[0]-p.reference.rect[0],y=(1-uv[n+1])*p.atlas[1]-p.reference.rect[1];assert.ok(Math.abs(v[n]-(x-p.canvas[0]/2)/1000)<1e-6);assert.ok(Math.abs(v[n+1]-(p.canvas[1]/2-y)/1000)<1e-6);const key=mesh.sourcePoints[n]+','+mesh.sourcePoints[n+1];if(!vertices.has(key))vertices.set(key,[]);vertices.get(key).push([i,n]);}}
+  const pose={ParamAngleX:22,ParamAngleY:-17,ParamAngleZ:11,ParamBodyAngleZ:5,ParamBodyAngleX:4,ParamBreath:.8,ParamHairSway:.7,ParamMouthForm:-.2};for(const [key,value] of Object.entries(pose))m.parameters.values[m.parameters.ids.indexOf(key)]=value;m.update();let joins=0;
+  for(const group of vertices.values()){if(group.length<2)continue;joins++;const [first,offset]=group[0],a=m.drawables.vertexPositions[first];for(const [i,n] of group.slice(1)){const b=m.drawables.vertexPositions[i];assert.ok(Math.abs(a[offset]-b[n])<2e-5&&Math.abs(a[offset+1]-b[n+1])<2e-5,'shared painted edges must not peel apart');}}
+  assert.ok(joins>10);
+ }finally{handle.release();}
+ const decoded=decode(atlas);for(const layer of p.layers.filter(l=>l.kind!=='base')){assert.equal(layer.source[2]-layer.source[0],layer.target[2]-layer.target[0]);assert.equal(layer.source[3]-layer.source[1],layer.target[3]-layer.target[1]);for(let y=layer.source[1]+12;y<layer.source[3]-12;y++)for(let x=layer.source[0]+12;x<layer.source[2]-12;x++)assert.equal(decoded.rgba[(y*decoded.width+x)*4+3],255,'expression interior must cover the underlying open eye/closed lip');}
+ assert.ok(p.registration.blink.medianErrorPx<1.5);assert.ok(p.registration.talk.medianErrorPx<1.5);
 });
