@@ -5,8 +5,14 @@ const {decode}=require('./png');
 const {writeMoc}=require('./moc-writer');
 const {PARAMS,documents}=require('./compiler');
 const PARTS=[['Body','몸·의상','body',0],['Head','얼굴·머리카락','head',1],['EyeLOpen','왼쪽 눈','eyeLOpen',2],['EyeROpen','오른쪽 눈','eyeROpen',3],['EyeLClosed','왼쪽 감은 눈','eyeLClosed',4],['EyeRClosed','오른쪽 감은 눈','eyeRClosed',5],['BrowL','왼쪽 눈썹','browL',6],['BrowR','오른쪽 눈썹','browR',7],['MouthClosed','다문 입','mouthClosed',8],['MouthOpen','열린 입','mouthOpen',9],['Accessory','보조 장식','accessory',10],['HairLock','보조 머리카락','hair',11]];
+function vtuberPreset(name,title,{eyeY=331,mouthY=417,head=[300,20,724,470],body=[140,410,884,1536]}={}){
+ return {name,title,pivot:[512,455],face:[390,275,645,465],targets:[body,head,[427,eyeY,483,eyeY+34],[552,eyeY,608,eyeY+34],[427,eyeY+25,483,eyeY+34],[552,eyeY+25,608,eyeY+34],[427,eyeY-23,483,eyeY-10],[552,eyeY-23,608,eyeY-10],[489,mouthY,541,mouthY+10],[495,mouthY-7,535,mouthY+25],[660,150,715,205],[330,100,410,190]],hidden:['Accessory','HairLock']};
+}
 const PRESETS={
  shizuku:{name:'Shizuku',title:'시즈쿠 · 음침한 미녀',pivot:[512,442],face:[395,230,640,435],headY:[[0,0],[128,235],[210,430],[270,510],[400,1100]],targets:[[100,390,920,1536],[180,0,844,1050],[441,270,492,295],[546,264,599,289],[441,286,492,295],[546,280,599,289],[440,247,493,259],[546,241,600,253],[503,374,537,382],[500,368,538,401],[400,235,625,320],[750,410,820,850]],hidden:['Accessory','HairLock']},
+ miel:vtuberPreset('Miel','미엘 · 고양이 카페',{body:[140,375,884,1536]}),
+ nari:vtuberPreset('Nari','나리 · 별빛 사서'),
+ ruri:vtuberPreset('Ruri','루리 · 바다 탐험가',{eyeY:310,mouthY:380,body:[140,335,884,1536]}),
  haruto:{name:'Haruto',title:'하루토 · 쾌활한 반장',pivot:[512,310],face:[410,140,620,330],targets:[[78,270,946,1536],[343,0,681,315],[424,179,476,200],[529,177,582,198],[424,192,476,200],[529,190,582,198],[417,157,476,174],[524,155,587,172],[475,279,551,289],[478,269,549,301],[475,390,551,680],[425,0,540,100]],hidden:['Accessory','HairLock']}
 };
 function bounds(image,index){

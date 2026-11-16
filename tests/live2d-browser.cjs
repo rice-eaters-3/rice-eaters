@@ -15,7 +15,7 @@ const {chromium,expect}=require('playwright/test');
   await page.locator('#idle').check();for(let i=0;i<12;i++){await page.waitForTimeout(160);await page.locator('#model-canvas').screenshot({path:'live2d-browser-artifacts/lumi-frame-'+String(i).padStart(2,'0')+'.png'});}
   await page.setViewportSize({width:390,height:844});await page.screenshot({path:'live2d-browser-artifacts/studio-mobile.png',fullPage:true});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);assert.deepEqual(errors,[]);
   await page.setViewportSize({width:1440,height:1080});
-  for(const [id,name] of [['shizuku','Shizuku'],['haruto','Haruto']]){
+  for(const [id,name] of [['shizuku','Shizuku'],['haruto','Haruto'],['miel','Miel'],['nari','Nari'],['ruri','Ruri']]){
    await page.locator('#sample-select').selectOption(id);await expect(page.locator('#preview-name')).toContainText(name);await expect(page.locator('#canvas-message')).toBeHidden();await expect(page.locator('#mesh-info')).toContainText('10 메시');await page.locator('#fit').click();
    await page.screenshot({path:'live2d-browser-artifacts/'+id+'-studio.png',fullPage:true});await page.locator('#model-canvas').screenshot({path:'live2d-browser-artifacts/'+id+'-model.png'});
    const neutral=await page.locator('#model-canvas').evaluate(c=>c.toDataURL());
@@ -29,6 +29,6 @@ const {chromium,expect}=require('playwright/test');
   }
   await page.setViewportSize({width:390,height:844});await page.screenshot({path:'live2d-browser-artifacts/rework-mobile.png',fullPage:true});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
   await page.goto('http://127.0.0.1:'+server.address().port+'/live2d?sample=shizuku');await expect(page.locator('#preview-name')).toContainText('Shizuku');await expect(page.locator('#canvas-message')).toBeHidden();assert.deepEqual(errors,[]);
-  console.log('Live2D browser: Lumi and both portrait reworks render actual WebGL pixels, respond to controls and export ZIPs; desktop/mobile and direct sample links passed');
+  console.log('Live2D browser: Lumi and five portrait models render actual WebGL pixels, respond to controls and export ZIPs; desktop/mobile and direct sample links passed');
  }finally{await browser?.close();await new Promise(r=>server.close(r));fs.rmSync(dir,{recursive:true,force:true});}
 })().catch(e=>{console.error(e);process.exitCode=1;});

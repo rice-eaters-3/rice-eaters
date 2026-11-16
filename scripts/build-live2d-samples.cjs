@@ -14,5 +14,5 @@ async function build(id,outDir){
  if(process.env.LIVE2D_QA_DRAW_DIR){const handle=core.open(await core.runtime(),compiled.buffer);try{handle.model.update();const d=handle.model.drawables;fs.mkdirSync(process.env.LIVE2D_QA_DRAW_DIR,{recursive:true});fs.writeFileSync(path.join(process.env.LIVE2D_QA_DRAW_DIR,id+'-draw.json'),JSON.stringify({ids:[...d.ids],positions:d.vertexPositions.map(v=>[...v]),uvs:d.vertexUvs.map(v=>[...v]),indices:d.indices.map(v=>[...v]),orders:[...d.drawOrders],opacity:[...d.opacities]}));}finally{handle.release();}}
  console.log(name+': '+compiled.buffer.length+' bytes, 13 parameters; all runtime effects verified');
 }
-if(require.main===module)(async()=>{for(const id of Object.keys(portrait.PRESETS))await build(id,process.argv[2]);})().catch(e=>{console.error(e);process.exitCode=1;});
+if(require.main===module)(async()=>{for(const id of process.argv[3]?process.argv[3].split(','):Object.keys(portrait.PRESETS))await build(id,process.argv[2]);})().catch(e=>{console.error(e);process.exitCode=1;});
 module.exports={build};

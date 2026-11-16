@@ -77,7 +77,7 @@ for(const [id,preset] of Object.entries(portrait.PRESETS))test(preset.name+' por
 test('both reworked models export complete VTube Studio folders without an API key',async t=>{
  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'live2d-samples-')),service=createService({dataDir:dir,fetchImpl:()=>{throw Error('sample must not call AI');}}),server=http.createServer((req,res)=>service.handle(req,res,new URL(req.url,'http://localhost'),'viewer'));
  await new Promise(r=>server.listen(0,'127.0.0.1',r));t.after(async()=>{service.close();await new Promise(r=>server.close(r));fs.rmSync(dir,{recursive:true,force:true});});const base='http://127.0.0.1:'+server.address().port+'/api/live2d';
- const config=await(await fetch(base+'/config')).json();assert.equal(config.connected,false);assert.equal(config.samples.length,3);
+ const config=await(await fetch(base+'/config')).json();assert.equal(config.connected,false);assert.equal(config.samples.length,6);
  for(const s of config.samples){const response=await fetch(base+'/samples/'+s.id+'/export');assert.equal(response.status,200);const files=entries(Buffer.from(await response.arrayBuffer())),doc=JSON.parse(files[s.name+'/'+s.name+'.model3.json']);for(const f of [doc.FileReferences.Moc,...doc.FileReferences.Textures,doc.FileReferences.Physics,doc.FileReferences.DisplayInfo,...doc.FileReferences.Expressions.map(e=>e.File)])assert.ok(files[s.name+'/'+f],f);assert.equal(files[s.name+'/'+doc.FileReferences.Moc].toString('ascii',0,4),'MOC3');}
  assert.equal((await fetch(base+'/samples/unknown/export')).status,404);
 });

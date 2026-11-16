@@ -1,0 +1,35 @@
+{
+  "Version": 3,
+  "FileReferences": {
+    "Moc": "Miel.moc3",
+    "Textures": [
+      "textures/texture_00.png"
+    ],
+    "Physics": "Miel.physics3.json",
+    "DisplayInfo": "Miel.cdi3.json",
+    "Expressions": [
+      {
+        "Name": "Smile",
+        "File": "expressions/smile.exp3.json"
+      }
+    ]
+  },
+  "Groups": [
+    {
+      "Target": "Parameter",
+      "Name": "EyeBlink",
+      "Ids": [
+        "ParamEyeLOpen",
+        "ParamEyeROpen"
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Name": "LipSync",
+      "Ids": [
+        "ParamMouthOpenY"
+      ]
+    }
+  ],
+  "HitAreas": []
+}
