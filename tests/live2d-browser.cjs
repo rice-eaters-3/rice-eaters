@@ -37,9 +37,9 @@ const {chromium,expect}=require('playwright/test');
     for(const mode of ['head','expression','blink','speech']){
      await page.locator('[data-review="'+mode+'"]').click();await expect(page.locator('[data-review="'+mode+'"]')).toHaveAttribute('aria-pressed','true');
      const recording=await page.locator('#model-canvas').evaluate(async canvas=>{
-      const stream=canvas.captureStream(12),type='video/webm;codecs=vp9';if(!MediaRecorder.isTypeSupported(type))throw Error('VP9 recording unavailable');
+      const output=document.createElement('canvas');output.width=canvas.width;output.height=canvas.height;const ctx=output.getContext('2d');let frame;const paint=()=>{ctx.fillStyle='#f3f0f7';ctx.fillRect(0,0,output.width,output.height);ctx.drawImage(canvas,0,0);frame=requestAnimationFrame(paint);};paint();const stream=output.captureStream(12),type='video/webm;codecs=vp9';if(!MediaRecorder.isTypeSupported(type))throw Error('VP9 recording unavailable');
       const recorder=new MediaRecorder(stream,{mimeType:type,videoBitsPerSecond:2200000}),chunks=[];recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data);};
-      const done=new Promise(resolve=>{recorder.onstop=resolve;});recorder.start();await new Promise(r=>setTimeout(r,6200));recorder.stop();await done;stream.getTracks().forEach(t=>t.stop());
+      const done=new Promise(resolve=>{recorder.onstop=resolve;});recorder.start();await new Promise(r=>setTimeout(r,6200));recorder.stop();await done;cancelAnimationFrame(frame);stream.getTracks().forEach(t=>t.stop());
       const bytes=new Uint8Array(await new Blob(chunks,{type}).arrayBuffer());let binary='';for(let i=0;i<bytes.length;i+=8192)binary+=String.fromCharCode(...bytes.subarray(i,i+8192));return btoa(binary);
      });
      const bytes=Buffer.from(recording,'base64');assert.ok(bytes.length>10000,'review records actual moving WebGL canvas');fs.writeFileSync('live2d-browser-artifacts/'+id+'-review-'+mode+'.webm',bytes);
