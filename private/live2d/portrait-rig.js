@@ -5,8 +5,14 @@ const {decode}=require('./png');
 const {writeMoc}=require('./moc-writer');
 const {PARAMS,documents}=require('./compiler');
 const PARTS=[['Body','몸·의상','body',0],['Head','얼굴·머리카락','head',1],['EyeLOpen','왼쪽 눈','eyeLOpen',2],['EyeROpen','오른쪽 눈','eyeROpen',3],['EyeLClosed','왼쪽 감은 눈','eyeLClosed',4],['EyeRClosed','오른쪽 감은 눈','eyeRClosed',5],['BrowL','왼쪽 눈썹','browL',6],['BrowR','오른쪽 눈썹','browR',7],['MouthClosed','다문 입','mouthClosed',8],['MouthOpen','열린 입','mouthOpen',9],['Accessory','보조 장식','accessory',10],['HairLock','보조 머리카락','hair',11]];
+function vtuberPreset(name,title,{eyeY=331,mouthY=417,head=[300,20,724,470],body=[140,410,884,1536]}={}){
+ return {name,title,pivot:[512,455],face:[390,275,645,465],targets:[body,head,[427,eyeY,483,eyeY+34],[552,eyeY,608,eyeY+34],[427,eyeY+25,483,eyeY+34],[552,eyeY+25,608,eyeY+34],[427,eyeY-23,483,eyeY-10],[552,eyeY-23,608,eyeY-10],[489,mouthY,541,mouthY+10],[495,mouthY-7,535,mouthY+25],[660,150,715,205],[330,100,410,190]],hidden:['Accessory','HairLock']};
+}
 const PRESETS={
  shizuku:{name:'Shizuku',title:'시즈쿠 · 음침한 미녀',pivot:[512,442],face:[395,230,640,435],headY:[[0,0],[128,235],[210,430],[270,510],[400,1100]],targets:[[100,390,920,1536],[180,0,844,1050],[441,270,492,295],[546,264,599,289],[441,286,492,295],[546,280,599,289],[440,247,493,259],[546,241,600,253],[503,374,537,382],[500,368,538,401],[400,235,625,320],[750,410,820,850]],hidden:['Accessory','HairLock']},
+ miel:vtuberPreset('Miel','미엘 · 고양이 카페',{body:[140,375,884,1536]}),
+ nari:vtuberPreset('Nari','나리 · 별빛 사서'),
+ ruri:vtuberPreset('Ruri','루리 · 바다 탐험가',{eyeY:310,mouthY:380,body:[140,335,884,1536]}),
  haruto:{name:'Haruto',title:'하루토 · 쾌활한 반장',pivot:[512,310],face:[410,140,620,330],targets:[[78,270,946,1536],[343,0,681,315],[424,179,476,200],[529,177,582,198],[424,192,476,200],[529,190,582,198],[417,157,476,174],[524,155,587,172],[475,279,551,289],[478,269,549,301],[475,390,551,680],[425,0,540,100]],hidden:['Accessory','HairLock']}
 };
 function bounds(image,index){
@@ -16,12 +22,12 @@ function bounds(image,index){
 }
 function analyze(png,id){
  const preset=PRESETS[id];if(!preset)throw Error('Unknown portrait preset');const image=decode(png);let transparent=0;for(let i=3;i<image.rgba.length;i+=4)if(image.rgba[i]<32)transparent++;if(transparent<image.width*image.height*.2)throw Error('Portrait atlas must have alpha transparency');
- return {format:'rice-live2d-portrait-v2',rig:'cohesive-portrait-v2',canvas:[1024,1536],atlas:[image.width,image.height],preset:id,pivot:preset.pivot,face:preset.face,headY:preset.headY||null,layers:PARTS.map(([key,name,role,order],i)=>{const b=bounds(image,i);if(id==='haruto'&&key==='Head')b.source[3]=345;return {id:key,name,role,order,source:b.source,pixelCount:b.count,target:preset.targets[i],visible:!preset.hidden.includes(key)};}),parameters:PARAMS};
+ return {format:'rice-live2d-portrait-v2',rig:'cohesive-portrait-v2',canvas:[1024,1536],atlas:[image.width,image.height],preset:id,pivot:preset.pivot,face:preset.face,headY:preset.headY||null,layers:PARTS.map(([key,name,role,order],i)=>{const b=bounds(image,i);if(id==='haruto'&&key==='Head')b.source[3]=345;return {id:key,name,role,order,source:b.source,pixelCount:b.count,target:preset.targets[i],visible:!preset.hidden.includes(key)};}),parameters:PARAMS.map(p=>({...p,keys:['miel','nari','ruri'].includes(id)&&p.id==='ParamMouthOpenY'?[0,.2,1]:[...p.keys]}))};
 }
 const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
 function interpolate(points,x){for(let i=1;i<points.length;i++){if(x<=points[i][0]){const [a,b]=[points[i-1],points[i]];return a[1]+(b[1]-a[1])*clamp((x-a[0])/(b[0]-a[0]));}}return points.at(-1)[1];}
 function rig(project){
- if(project.format!=='rice-live2d-portrait-v2'||project.layers.length!==12)throw Error('Invalid portrait project');const [w,h]=project.canvas,[aw,ah]=project.atlas,[px,py]=project.pivot,face=project.face,idx=Object.fromEntries(PARAMS.map((p,i)=>[p.id,i]));
+ if(project.format!=='rice-live2d-portrait-v2'||project.layers.length!==12)throw Error('Invalid portrait project');const [w,h]=project.canvas,[aw,ah]=project.atlas,[px,py]=project.pivot,face=project.face,parameters=project.parameters||PARAMS,idx=Object.fromEntries(parameters.map((p,i)=>[p.id,i]));
  const meshes=project.layers.filter(l=>l.visible).sort((a,b)=>a.order-b.order).map(layer=>{
   const [x0,y0,x1,y1]=layer.target,[u0,v0,u1,v1]=layer.source,isBody=layer.role==='body',isHead=layer.role==='head',grid=isHead?16:4,vertices=[],uvs=[],indices=[];
   const rows=Array.from({length:grid+1},(_,i)=>i/grid);if(isHead&&project.headY)for(const [source] of project.headY){const fraction=(source-v0)/(v1-v0);if(fraction>0&&fraction<1)rows.push(fraction);}rows.sort((a,b)=>a-b);
@@ -44,7 +50,7 @@ function rig(project){
   }return out;}
   return {id:layer.id,order:500+layer.order,vertices:deform({}),uvs,indices,bound:authored.map(id=>idx[id]),deform,opacity(values){const open=clamp(values[layer.role.startsWith('eyeL')?'ParamEyeLOpen':'ParamEyeROpen']??1);if(layer.role.endsWith('Open')&&layer.role.startsWith('eye'))return clamp((open-.2)/.65);if(layer.role.endsWith('Closed')&&layer.role.startsWith('eye'))return 1-clamp((open-.2)/.65);if(layer.role==='mouthOpen')return clamp((values.ParamMouthOpenY||0)*5);if(layer.role==='mouthClosed')return 1-clamp((values.ParamMouthOpenY||0)*5);return 1;}};
  });
- return {...writeMoc({width:w,height:h,parameters:PARAMS,meshes}),parameters:PARAMS,meshes};
+ return {...writeMoc({width:w,height:h,parameters,meshes}),parameters,meshes};
 }
 function modelDocuments(name,project){return documents(name,project);}
 module.exports={PRESETS,analyze,rig,modelDocuments};

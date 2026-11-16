@@ -70,14 +70,15 @@ for(const [id,preset] of Object.entries(portrait.PRESETS))test(preset.name+' por
  const handle=open(await runtime(),buffer),m=handle.model;try{
   m.parameters.values.set(m.parameters.defaultValues);m.update();const leftOpen=m.drawables.ids.indexOf('EyeLOpen'),leftClosed=m.drawables.ids.indexOf('EyeLClosed');assert.equal(m.drawables.opacities[leftOpen],1);assert.equal(m.drawables.opacities[leftClosed],0);
   m.parameters.values[m.parameters.ids.indexOf('ParamEyeLOpen')]=0;m.update();assert.equal(m.drawables.opacities[leftOpen],0);assert.equal(m.drawables.opacities[leftClosed],1);
+  if(['miel','nari','ruri'].includes(id)){m.parameters.values[m.parameters.ids.indexOf('ParamMouthOpenY')]=.3;m.update();assert.ok(m.drawables.opacities[m.drawables.ids.indexOf('MouthOpen')]>.99,'speaking mouth stays opaque');assert.ok(m.drawables.opacities[m.drawables.ids.indexOf('MouthClosed')]<.01,'closed mouth is absent while speaking');}
   for(const direction of [-1,1]){for(let i=0;i<m.parameters.count;i++)m.parameters.values[i]=direction<0?m.parameters.minimumValues[i]:m.parameters.maximumValues[i];m.update();for(const points of m.drawables.vertexPositions)assert.ok(points.every(Number.isFinite));}
   for(const uv of m.drawables.vertexUvs)assert.ok(uv.every(v=>v>=0&&v<=1));
  }finally{handle.release();}
 });
-test('both reworked models export complete VTube Studio folders without an API key',async t=>{
+test('built-in models export complete VTube Studio folders without an API key',async t=>{
  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'live2d-samples-')),service=createService({dataDir:dir,fetchImpl:()=>{throw Error('sample must not call AI');}}),server=http.createServer((req,res)=>service.handle(req,res,new URL(req.url,'http://localhost'),'viewer'));
  await new Promise(r=>server.listen(0,'127.0.0.1',r));t.after(async()=>{service.close();await new Promise(r=>server.close(r));fs.rmSync(dir,{recursive:true,force:true});});const base='http://127.0.0.1:'+server.address().port+'/api/live2d';
- const config=await(await fetch(base+'/config')).json();assert.equal(config.connected,false);assert.equal(config.samples.length,3);
+ const config=await(await fetch(base+'/config')).json();assert.equal(config.connected,false);assert.equal(config.samples.length,6);
  for(const s of config.samples){const response=await fetch(base+'/samples/'+s.id+'/export');assert.equal(response.status,200);const files=entries(Buffer.from(await response.arrayBuffer())),doc=JSON.parse(files[s.name+'/'+s.name+'.model3.json']);for(const f of [doc.FileReferences.Moc,...doc.FileReferences.Textures,doc.FileReferences.Physics,doc.FileReferences.DisplayInfo,...doc.FileReferences.Expressions.map(e=>e.File)])assert.ok(files[s.name+'/'+f],f);assert.equal(files[s.name+'/'+doc.FileReferences.Moc].toString('ascii',0,4),'MOC3');}
  assert.equal((await fetch(base+'/samples/unknown/export')).status,404);
 });

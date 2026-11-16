@@ -1,0 +1,421 @@
+{
+  "format": "rice-live2d-portrait-v2",
+  "rig": "cohesive-portrait-v2",
+  "canvas": [
+    1024,
+    1536
+  ],
+  "atlas": [
+    1448,
+    1086
+  ],
+  "preset": "miel",
+  "pivot": [
+    512,
+    455
+  ],
+  "face": [
+    390,
+    275,
+    645,
+    465
+  ],
+  "headY": null,
+  "layers": [
+    {
+      "id": "Body",
+      "name": "몸·의상",
+      "role": "body",
+      "order": 0,
+      "source": [
+        18,
+        14,
+        344,
+        394
+      ],
+      "pixelCount": 76402,
+      "target": [
+        140,
+        375,
+        884,
+        1536
+      ],
+      "visible": true
+    },
+    {
+      "id": "Head",
+      "name": "얼굴·머리카락",
+      "role": "head",
+      "order": 1,
+      "source": [
+        377,
+        32,
+        713,
+        387
+      ],
+      "pixelCount": 86749,
+      "target": [
+        300,
+        20,
+        724,
+        470
+      ],
+      "visible": true
+    },
+    {
+      "id": "EyeLOpen",
+      "name": "왼쪽 눈",
+      "role": "eyeLOpen",
+      "order": 2,
+      "source": [
+        770,
+        143,
+        1023,
+        286
+      ],
+      "pixelCount": 22735,
+      "target": [
+        427,
+        331,
+        483,
+        365
+      ],
+      "visible": true
+    },
+    {
+      "id": "EyeROpen",
+      "name": "오른쪽 눈",
+      "role": "eyeROpen",
+      "order": 3,
+      "source": [
+        1154,
+        144,
+        1405,
+        287
+      ],
+      "pixelCount": 22483,
+      "target": [
+        552,
+        331,
+        608,
+        365
+      ],
+      "visible": true
+    },
+    {
+      "id": "EyeLClosed",
+      "name": "왼쪽 감은 눈",
+      "role": "eyeLClosed",
+      "order": 4,
+      "source": [
+        74,
+        554,
+        305,
+        619
+      ],
+      "pixelCount": 6410,
+      "target": [
+        427,
+        356,
+        483,
+        365
+      ],
+      "visible": true
+    },
+    {
+      "id": "EyeRClosed",
+      "name": "오른쪽 감은 눈",
+      "role": "eyeRClosed",
+      "order": 5,
+      "source": [
+        426,
+        558,
+        662,
+        620
+      ],
+      "pixelCount": 6551,
+      "target": [
+        552,
+        356,
+        608,
+        365
+      ],
+      "visible": true
+    },
+    {
+      "id": "BrowL",
+      "name": "왼쪽 눈썹",
+      "role": "browL",
+      "order": 6,
+      "source": [
+        783,
+        524,
+        1009,
+        588
+      ],
+      "pixelCount": 3746,
+      "target": [
+        427,
+        308,
+        483,
+        321
+      ],
+      "visible": true
+    },
+    {
+      "id": "BrowR",
+      "name": "오른쪽 눈썹",
+      "role": "browR",
+      "order": 7,
+      "source": [
+        1164,
+        524,
+        1390,
+        587
+      ],
+      "pixelCount": 3729,
+      "target": [
+        552,
+        308,
+        608,
+        321
+      ],
+      "visible": true
+    },
+    {
+      "id": "MouthClosed",
+      "name": "다문 입",
+      "role": "mouthClosed",
+      "order": 8,
+      "source": [
+        84,
+        890,
+        283,
+        933
+      ],
+      "pixelCount": 1643,
+      "target": [
+        489,
+        417,
+        541,
+        427
+      ],
+      "visible": true
+    },
+    {
+      "id": "MouthOpen",
+      "name": "열린 입",
+      "role": "mouthOpen",
+      "order": 9,
+      "source": [
+        455,
+        846,
+        635,
+        980
+      ],
+      "pixelCount": 17006,
+      "target": [
+        495,
+        410,
+        535,
+        442
+      ],
+      "visible": true
+    },
+    {
+      "id": "Accessory",
+      "name": "보조 장식",
+      "role": "accessory",
+      "order": 10,
+      "source": [
+        789,
+        824,
+        1010,
+        1028
+      ],
+      "pixelCount": 20151,
+      "target": [
+        660,
+        150,
+        715,
+        205
+      ],
+      "visible": false
+    },
+    {
+      "id": "HairLock",
+      "name": "보조 머리카락",
+      "role": "hair",
+      "order": 11,
+      "source": [
+        1150,
+        824,
+        1357,
+        985
+      ],
+      "pixelCount": 6792,
+      "target": [
+        330,
+        100,
+        410,
+        190
+      ],
+      "visible": false
+    }
+  ],
+  "parameters": [
+    {
+      "id": "ParamAngleX",
+      "name": "고개 좌우",
+      "min": -30,
+      "max": 30,
+      "default": 0,
+      "keys": [
+        -30,
+        0,
+        30
+      ]
+    },
+    {
+      "id": "ParamAngleY",
+      "name": "고개 상하",
+      "min": -30,
+      "max": 30,
+      "default": 0,
+      "keys": [
+        -30,
+        0,
+        30
+      ]
+    },
+    {
+      "id": "ParamAngleZ",
+      "name": "고개 기울기",
+      "min": -30,
+      "max": 30,
+      "default": 0,
+      "keys": [
+        -30,
+        0,
+        30
+      ]
+    },
+    {
+      "id": "ParamEyeLOpen",
+      "name": "왼쪽 눈",
+      "min": 0,
+      "max": 1,
+      "default": 1,
+      "keys": [
+        0,
+        1
+      ]
+    },
+    {
+      "id": "ParamEyeROpen",
+      "name": "오른쪽 눈",
+      "min": 0,
+      "max": 1,
+      "default": 1,
+      "keys": [
+        0,
+        1
+      ]
+    },
+    {
+      "id": "ParamBrowLY",
+      "name": "왼쪽 눈썹",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "keys": [
+        -1,
+        0,
+        1
+      ]
+    },
+    {
+      "id": "ParamBrowRY",
+      "name": "오른쪽 눈썹",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "keys": [
+        -1,
+        0,
+        1
+      ]
+    },
+    {
+      "id": "ParamMouthOpenY",
+      "name": "입 벌리기",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "keys": [
+        0,
+        0.2,
+        1
+      ]
+    },
+    {
+      "id": "ParamMouthForm",
+      "name": "입 모양",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "keys": [
+        -1,
+        0,
+        1
+      ]
+    },
+    {
+      "id": "ParamBodyAngleX",
+      "name": "몸 좌우",
+      "min": -10,
+      "max": 10,
+      "default": 0,
+      "keys": [
+        -10,
+        0,
+        10
+      ]
+    },
+    {
+      "id": "ParamBodyAngleZ",
+      "name": "몸 기울기",
+      "min": -10,
+      "max": 10,
+      "default": 0,
+      "keys": [
+        -10,
+        0,
+        10
+      ]
+    },
+    {
+      "id": "ParamBreath",
+      "name": "호흡",
+      "min": 0,
+      "max": 1,
+      "default": 0,
+      "keys": [
+        0,
+        1
+      ]
+    },
+    {
+      "id": "ParamHairSway",
+      "name": "머리카락 흔들림",
+      "min": -1,
+      "max": 1,
+      "default": 0,
+      "keys": [
+        -1,
+        0,
+        1
+      ]
+    }
+  ]
+}

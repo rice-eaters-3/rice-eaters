@@ -1,0 +1,121 @@
+{
+  "Version": 3,
+  "Parameters": [
+    {
+      "Id": "ParamAngleX",
+      "GroupId": "",
+      "Name": "고개 좌우"
+    },
+    {
+      "Id": "ParamAngleY",
+      "GroupId": "",
+      "Name": "고개 상하"
+    },
+    {
+      "Id": "ParamAngleZ",
+      "GroupId": "",
+      "Name": "고개 기울기"
+    },
+    {
+      "Id": "ParamEyeLOpen",
+      "GroupId": "",
+      "Name": "왼쪽 눈"
+    },
+    {
+      "Id": "ParamEyeROpen",
+      "GroupId": "",
+      "Name": "오른쪽 눈"
+    },
+    {
+      "Id": "ParamBrowLY",
+      "GroupId": "",
+      "Name": "왼쪽 눈썹"
+    },
+    {
+      "Id": "ParamBrowRY",
+      "GroupId": "",
+      "Name": "오른쪽 눈썹"
+    },
+    {
+      "Id": "ParamMouthOpenY",
+      "GroupId": "",
+      "Name": "입 벌리기"
+    },
+    {
+      "Id": "ParamMouthForm",
+      "GroupId": "",
+      "Name": "입 모양"
+    },
+    {
+      "Id": "ParamBodyAngleX",
+      "GroupId": "",
+      "Name": "몸 좌우"
+    },
+    {
+      "Id": "ParamBodyAngleZ",
+      "GroupId": "",
+      "Name": "몸 기울기"
+    },
+    {
+      "Id": "ParamBreath",
+      "GroupId": "",
+      "Name": "호흡"
+    },
+    {
+      "Id": "ParamHairSway",
+      "GroupId": "",
+      "Name": "머리카락 흔들림"
+    }
+  ],
+  "ParameterGroups": [],
+  "Parts": [
+    {
+      "Id": "Part_Body",
+      "Name": "몸·의상"
+    },
+    {
+      "Id": "Part_Head",
+      "Name": "얼굴·머리카락"
+    },
+    {
+      "Id": "Part_EyeLOpen",
+      "Name": "왼쪽 눈"
+    },
+    {
+      "Id": "Part_EyeROpen",
+      "Name": "오른쪽 눈"
+    },
+    {
+      "Id": "Part_EyeLClosed",
+      "Name": "왼쪽 감은 눈"
+    },
+    {
+      "Id": "Part_EyeRClosed",
+      "Name": "오른쪽 감은 눈"
+    },
+    {
+      "Id": "Part_BrowL",
+      "Name": "왼쪽 눈썹"
+    },
+    {
+      "Id": "Part_BrowR",
+      "Name": "오른쪽 눈썹"
+    },
+    {
+      "Id": "Part_MouthClosed",
+      "Name": "다문 입"
+    },
+    {
+      "Id": "Part_MouthOpen",
+      "Name": "열린 입"
+    },
+    {
+      "Id": "Part_Accessory",
+      "Name": "보조 장식"
+    },
+    {
+      "Id": "Part_HairLock",
+      "Name": "보조 머리카락"
+    }
+  ]
+}
