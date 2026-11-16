@@ -31,6 +31,15 @@ const STATE_FILE = path.join(DATA_DIR, 'state.json');
 const LOG_FILE = path.join(DATA_DIR, 'activity.jsonl');
 const PORT = Number(process.env.PORT || 3000);
 const HOST = process.env.HOST || '0.0.0.0';
+function voiceIceServers(){
+  try{
+    const configured=JSON.parse(process.env.WEBRTC_ICE_SERVERS_JSON||'[]');
+    if(Array.isArray(configured)&&configured.length&&configured.every(s=>s&&s.urls))return configured;
+  }catch(e){console.warn('[voice] invalid WEBRTC_ICE_SERVERS_JSON; using public STUN only');}
+  return [{urls:'stun:stun.l.google.com:19302'}];
+}
+const VOICE_ICE_SERVERS=voiceIceServers();
+const VOICE_ICE_POLICY=process.env.WEBRTC_ICE_TRANSPORT_POLICY==='relay'?'relay':'all';
 fs.mkdirSync(DATA_DIR, {recursive: true});
 const live2dService = require('./private/live2d/service.js').createService({dataDir:DATA_DIR});
 
@@ -95,7 +104,21 @@ function phaseReadiness(room){
     next?room.players.filter(p=>room.advanceVotes?.[p.id]===true).length:0;
   return {next,ready,total:room.players.length,canAdvance:!!next&&
     room.players.length===storyForRoom(room).players&&ready===room.players.length&&
-    (room.phase!=='action'||!gameFor(room).action||room.actions?.done===true)};
+    (room.phase!=='action'||!gameFor(room).action||room.actions?.done===true)&&
+    (room.phase!=='discussion2'||room.verdict?.resolved===true)};
+}
+function ballotView(room,member){
+  const v=room.verdict||{};
+  return {round:v.round||1,myVote:Object.hasOwn(v.ballots||{},member.id)?v.ballots[member.id]:undefined,
+    eligible:v.tiedCandidates||[null,...room.players.filter(p=>p.characterId&&!endingStatus(room).dead.includes(p.characterId))
+      .map(p=>p.characterId)],resolved:!!v.resolved,
+    results:v.history||[],waitingFor:(room.players||[]).filter(p=>p.characterId&&!Object.hasOwn(v.ballots||{},p.id)).length};
+}
+function recordNotification(room,playerId,type,text){
+  const player=room.players.find(p=>p.id===playerId);if(!player)return;
+  player.notifications||=[];
+  player.notifications.push({id:randomId(6),type,text,at:Date.now()});
+  if(player.notifications.length>20)player.notifications.splice(0,player.notifications.length-20);
 }
 function occupantCount(room,pos,exceptId){
   return room.players.filter(p=>p.id!==exceptId&&positionFor(room,p)?.floor===pos.floor
@@ -262,6 +285,7 @@ function publicWhispers(room,member){
 function phaseChange(room,phase,sid){
   room.phase=phase;room.phaseStartedAt=Date.now();
   room.advanceVotes={};
+  if(phase==='discussion2')room.verdict={round:1,ballots:{},history:[],resolved:false,tiedCandidates:null,goals:{},statuses:{}};
   if(phase==='ending'&&room.verdict?.arrestedCharacterId&&
     endingStatus(room).dead.includes(room.verdict.arrestedCharacterId)){
     room.verdict.arrestedCharacterId=null;
@@ -390,6 +414,8 @@ function roomView(room,sid){
   const arrested=room.verdict?.arrestedCharacterId||null;
   return {
     code:room.id,phase:room.phase,story:publicStory(story),
+    voiceIceServers:isMember?VOICE_ICE_SERVERS:undefined,
+    voiceIceTransportPolicy:isMember?VOICE_ICE_POLICY:undefined,
     castingMap:castingFloor?{title:castingFloor.title,tiles:castingFloor.tiles}:null,
     progress:phaseReadiness(room),
     advanceVotes:isMember?Object.fromEntries(room.players.map(p=>[p.id,room.advanceVotes?.[p.id]===true])):null,
@@ -408,9 +434,11 @@ function roomView(room,sid){
     booklet,map,investigation:investigationView(room,member),
     action:isMember&&['action','ending'].includes(room.phase)&&room.actions?
       actionEngine.view(room,member,game):null,
+    notifications:isMember?(member.notifications||[]).slice(-12):null,
     verdict:showVerdict?{
       isHost:room.host===sid,
       arrestedCharacterId:statuses.dead.includes(arrested)?null:arrested,
+      ballot:ballotView(room,member),
       candidates:room.players.filter(p=>p.characterId).map(p=>({
         id:p.characterId,name:story.characters.find(c=>c.id===p.characterId)?.name||p.name,
         dead:statuses.dead.includes(p.characterId)}))
@@ -525,7 +553,7 @@ async function api(req,res,url,sid){
     ownedPlayer(room,sid);
     return subscribe(req,res,room,sid);
   }
-  const match=pathname.match(/^\/api\/rooms\/([A-Z2-9]{6})(?:\/(join|start|act|advance|advance-vote|advance-unvote|read|character|leave|study-ready|move|interact|reserve|release|investigate|card-public|card-share|card-unshare|exchange-offer|exchange-reply|exchange-cancel|whisper-request|whisper-vote|whisper-leave|verdict-arrest|verdict-goal|verdict-status|signal|signals))?$/);
+  const match=pathname.match(/^\/api\/rooms\/([A-Z2-9]{6})(?:\/(join|start|act|advance|advance-vote|advance-unvote|read|character|leave|study-ready|move|interact|reserve|release|investigate|card-public|card-share|card-unshare|exchange-offer|exchange-reply|exchange-cancel|whisper-request|whisper-vote|whisper-leave|verdict-vote|verdict-arrest|verdict-goal|verdict-status|signal|signals))?$/);
   if(req.method==='GET'&&match&&match[2]==='signals'){
     const room=roomOrFail(match[1]),me=ownedPlayer(room,sid);
     const after=Math.max(0,Number(url.searchParams.get('after'))||0);
@@ -682,8 +710,30 @@ async function api(req,res,url,sid){
     persist();sendState(room);
     return json(res,200,roomView(room,sid));
   }
+  if(action==='verdict-vote'){
+    if(room.phase!=='discussion2')fail(409,'최종 투표는 2차 토론 단계에서만 할 수 있습니다.');
+    room.verdict||={round:1,ballots:{},history:[],resolved:false,tiedCandidates:null,goals:{},statuses:{}};
+    const v=room.verdict;
+    if(v.resolved)fail(409,'투표 결과가 이미 확정되었습니다.');
+    const raw=body.characterId===null||body.characterId===''?null:body.characterId;
+    const eligible=v.tiedCandidates||room.players.filter(p=>p.characterId&&!endingStatus(room).dead.includes(p.characterId)).map(p=>p.characterId);
+    if(raw!==null&&!eligible.includes(raw))fail(400,'현재 투표에서 선택할 수 없는 대상입니다.');
+    v.ballots||={};v.ballots[player.id]=raw;
+    const voters=room.players.filter(p=>p.characterId);
+    if(voters.every(p=>Object.hasOwn(v.ballots,p.id))){
+      const counts={};for(const p of voters){const key=v.ballots[p.id]||'';counts[key]=(counts[key]||0)+1;}
+      const max=Math.max(...Object.values(counts));
+      const tied=Object.keys(counts).filter(key=>counts[key]===max);
+      v.history||=[];v.history.push({round:v.round||1,counts,votes:Object.fromEntries(voters.map(p=>[p.characterId,v.ballots[p.id]]))});
+      if(tied.length===1){v.arrestedCharacterId=tied[0]||null;v.resolved=true;v.tiedCandidates=null;}
+      else{v.tiedCandidates=tied.map(key=>key||null);v.round=(v.round||1)+1;v.ballots={};}
+    }
+    logActivity('verdict_vote',sid,{room:room.id,round:v.round,complete:!!v.resolved});
+    persist();sendState(room);return json(res,200,roomView(room,sid));
+  }
   if(['verdict-arrest','verdict-goal','verdict-status'].includes(action)){
-    if(room.host!==sid)fail(403,'최종 구속 및 개인 목표 판정은 방장만 지정할 수 있습니다.');
+    if(action==='verdict-arrest')fail(403,'구속 대상은 참가자 전체의 투표 결과로 결정됩니다.');
+    if(room.host!==sid)fail(403,'개인 목표와 최종 상태 판정은 방장만 지정할 수 있습니다.');
     if(!['discussion2','action','ending'].includes(room.phase))fail(409,'최종 결정 단계 이후에만 사용할 수 있습니다.');
     room.verdict||={arrestedCharacterId:null,goals:{}};
     if(action==='verdict-arrest'){
@@ -887,6 +937,8 @@ async function api(req,res,url,sid){
         // Irreversible global reveal by card ID. Transfers cannot undo this.
         if(!inv.publicCards[card.id])
           inv.publicCards[card.id]={at:Date.now(),by:player.id};
+        for(const other of room.players)if(other.id!==player.id)
+          recordNotification(room,other.id,'card-share',player.name+'님이 「'+(card.title||'조사 카드')+'」를 전체 공개했습니다.');
         logActivity('card_publicized',sid,{room:room.id,card:card.id});
       }else{
         const target=room.players.find(p=>p.id===body.toId);
@@ -897,6 +949,7 @@ async function api(req,res,url,sid){
           if(!inv.selectiveShares.some(x=>x.holdingId===holding.id&&x.toId===target.id))
             inv.selectiveShares.push({holdingId:holding.id,ownerId:player.id,toId:target.id,
               floor:pos.floor,x:pos.x,y:pos.y,at:Date.now()});
+          recordNotification(room,target.id,'card-share',player.name+'님이 조사 카드 정보를 선택 공개했습니다.');
           logActivity('card_shared_nearby',sid,{room:room.id,card:card.id,target:target.id});
         }else{
           inv.selectiveShares=inv.selectiveShares.filter(x=>x.holdingId!==holding.id||x.toId!==target.id);
@@ -928,6 +981,7 @@ async function api(req,res,url,sid){
       if(inv.offers.filter(o=>o.fromId===player.id).length>=12)
         fail(429,'동시에 진행할 수 있는 양도 제안은 최대 12개입니다.');
       inv.offers.push(offer);
+      recordNotification(room,target.id,'exchange',player.name+'님이 '+(offer.type==='card'?'조사 카드':'조사 토큰 '+offer.amount+'개')+' 양도를 요청했습니다.');
       logActivity('exchange_offered',sid,{room:room.id,type:offer.type,target:target.id});
       persist();sendState(room);return json(res,200,roomView(room,sid));
     }
@@ -959,7 +1013,9 @@ async function api(req,res,url,sid){
         inv.tokens[to.id]=(inv.tokens[to.id]||0)+proposal.amount;
       }
       logActivity('exchange_accepted',sid,{room:room.id,type:proposal.type,from:from.id,to:to.id});
-    }else logActivity('exchange_declined',sid,{room:room.id,type:proposal.type});
+      recordNotification(room,from.id,'exchange',player.name+'님이 양도 요청을 수락했습니다.');
+    }else{logActivity('exchange_declined',sid,{room:room.id,type:proposal.type});
+      recordNotification(room,proposal.fromId, 'exchange',player.name+'님이 양도 요청을 거절했습니다.');}
     inv.offers=inv.offers.filter(o=>o!==proposal&&
       !(proposal.type==='card'&&o.type==='card'&&o.holdingId===proposal.holdingId));
     pruneExchanges(room);
@@ -1001,12 +1057,14 @@ async function api(req,res,url,sid){
         if(ws.proposals.some(p=>p.groupId===active.id))fail(409,'이미 진행 중인 밀담 승인 요청이 있습니다.');
         ws.proposals.push({id:randomId(5),kind:'join',groupId:active.id,candidate:player.id,
           floor:pos.floor,x:pos.x,y:pos.y,voters:[...active.members],yes:[],expiresAt:Date.now()+60000});
+        for(const id of active.members)recordNotification(room,id,'whisper',player.name+'님이 진행 중인 밀담에 참여를 요청했습니다.');
       }else{
         if(playersHere.length<2)fail(409,'같은 타일에 다른 사람이 있어야 밀담을 시작할 수 있습니다.');
         if(ws.proposals.some(p=>p.kind==='create'&&here(p)))fail(409,'이 타일에는 이미 밀담 요청이 있습니다.');
         const voters=playersHere.filter(p=>!ws.groups.some(g=>g.members.includes(p.id))).map(p=>p.id);
         ws.proposals.push({id:randomId(5),kind:'create',candidate:player.id,
           floor:pos.floor,x:pos.x,y:pos.y,voters,yes:[player.id],expiresAt:Date.now()+60000});
+        for(const id of voters)if(id!==player.id)recordNotification(room,id,'whisper',player.name+'님이 밀담을 신청했습니다.');
       }
     }else{
       const proposal=ws.proposals.find(p=>p.id===body.proposalId);
@@ -1014,6 +1072,7 @@ async function api(req,res,url,sid){
       if(!here(proposal))fail(409,'밀담 타일 밖에서는 승인할 수 없습니다.');
       if(body.accept!==true){
         ws.proposals=ws.proposals.filter(p=>p!==proposal);
+        recordNotification(room,proposal.candidate,'whisper',player.name+'님이 밀담 요청을 거절했습니다.');
       }else{
         if(!proposal.yes.includes(player.id))proposal.yes.push(player.id);
         if(proposal.voters.every(id=>proposal.yes.includes(id))){
@@ -1021,14 +1080,17 @@ async function api(req,res,url,sid){
             const members=proposal.voters.filter(id=>tilePlayers(room,pos).some(p=>p.id===id));
             if(members.length>=2&&members.length<=(gameFor(room).investigation?.maxTileOccupants||3)){
               ws.groups.push({id:randomId(6),members,floor:pos.floor,x:pos.x,y:pos.y});
+              for(const id of members)if(id!==player.id)recordNotification(room,id,'whisper','밀담 요청이 승인되어 비공개 음성 채널이 열렸습니다.');
             }
           }else{
             const current=ws.groups.find(g=>g.id===proposal.groupId);
             const candidate=room.players.find(p=>p.id===proposal.candidate);
             const candidatePos=candidate&&positionFor(room,candidate);
             if(current&&candidatePos&&here(candidatePos)&&
-                current.members.length<(gameFor(room).investigation?.maxTileOccupants||3))
+                current.members.length<(gameFor(room).investigation?.maxTileOccupants||3)){
               current.members.push(candidate.id);
+              recordNotification(room,candidate.id,'whisper','밀담 참여 요청이 승인되었습니다.');
+            }
           }
           ws.proposals=ws.proposals.filter(p=>p!==proposal);
         }

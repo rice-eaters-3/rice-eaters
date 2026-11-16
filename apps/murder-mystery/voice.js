@@ -3,8 +3,9 @@
 // Listener-only mode requires no microphone permission. Peer connections use STUN;
 // a TURN relay is still necessary for reliable cross-NAT audio.
 window.MysteryVoice=(function(){
-  let stream=null,room=null,timer=null,cursor=0,active=false,micOn=false,speakerOn=false,busy=false;
+  let stream=null,room=null,timer=null,cursor=0,active=false,micOn=false,speakerOn=false,busy=false,micPending=false;
   const peers=new Map(),audio=new Map();
+  const helloAt=new Map(),disconnectTimers=new Map();
   let audioContext=null,meterTimer=null;
   const meters=new Map(),talkUntil=new Map(),gains=new Map();
   function meter(id,stream){
@@ -66,6 +67,7 @@ window.MysteryVoice=(function(){
     catch(e){console.warn('Voice signaling',e.message)}
   }
   function closePeer(id){
+    clearTimeout(disconnectTimers.get(id));disconnectTimers.delete(id);
     meters.get(id)?.source.disconnect();meters.delete(id);talkUntil.delete(id);
     const p=peers.get(id);
     if(p){p.pc.close();peers.delete(id)}
@@ -107,7 +109,7 @@ window.MysteryVoice=(function(){
   }
   function getPeer(id){
     if(peers.has(id))return peers.get(id);
-    const pc=new RTCPeerConnection({iceServers:[{urls:'stun:stun.l.google.com:19302'}]});
+    const pc=new RTCPeerConnection({iceServers:room?.voiceIceServers?.length?room.voiceIceServers:[{urls:'stun:stun.l.google.com:19302'}],iceTransportPolicy:room?.voiceIceTransportPolicy||'all',iceCandidatePoolSize:4});
     // Negotiate sendrecv once. Adding a microphone later only replaces this
     // sender's track, avoiding repeated renegotiation and listen-only failures.
     const transceiver=pc.addTransceiver('audio',{direction:'sendrecv'});
@@ -126,16 +128,20 @@ window.MysteryVoice=(function(){
       if(speakerOn)node.play().catch(()=>{});
     };
     pc.onconnectionstatechange=()=>{
-      if(['failed','closed'].includes(pc.connectionState))closePeer(id);
+      clearTimeout(disconnectTimers.get(id));disconnectTimers.delete(id);
+      if(pc.connectionState==='disconnected')disconnectTimers.set(id,setTimeout(()=>{
+        if(pc.connectionState==='disconnected'){closePeer(id);helloAt.delete(id);}
+      },7000));
+      if(['failed','closed'].includes(pc.connectionState)){closePeer(id);helloAt.delete(id);}
     };
     routeOutgoing();
     return p;
   }
-  async function offer(id){
+  async function offer(id,iceRestart=false){
     const p=getPeer(id);
     if(p.pc.signalingState!=='stable')return;
     try{
-      const description=await p.pc.createOffer();await p.pc.setLocalDescription(description);
+      const description=await p.pc.createOffer(iceRestart?{iceRestart:true}:undefined);await p.pc.setLocalDescription(description);
       await send(id,'offer',{sdp:p.pc.localDescription.toJSON()});
     }catch(e){console.warn('WebRTC offer',e)}
   }
@@ -145,7 +151,7 @@ window.MysteryVoice=(function(){
     try{
       if(msg.type==='bye'){closePeer(id);return}
       if(msg.type==='hello'){
-        if(room.me<id)await offer(id);
+        if(room.me<id)await offer(id,peers.get(id)?.pc.connectionState!=='connected');
         return;
       }
       const p=getPeer(id);
@@ -173,6 +179,13 @@ window.MysteryVoice=(function(){
       const packet=await api('/api/rooms/'+room.code+'/signals?after='+cursor);
       for(const msg of packet.signals||[])await receive(msg);
       cursor=packet.cursor;volumes();
+      const now=Date.now();
+      for(const other of room.players){
+        if(other.id===room.me)continue;
+        const state=peers.get(other.id)?.pc.connectionState;
+        if(state==='connected'||state==='connecting')continue;
+        if(now-(helloAt.get(other.id)||0)>4500){helloAt.set(other.id,now);await send(other.id,'hello');}
+      }
     }catch(e){console.warn('Voice signal polling',e.message)}
     finally{busy=false}
   }
@@ -183,7 +196,7 @@ window.MysteryVoice=(function(){
     active=true;cursor=0;
     timer=setInterval(tick,900);
     meterTimer=setInterval(paintMeters,120);
-    for(const p of room.players)if(p.id!==room.me)await send(p.id,'hello');
+    for(const p of room.players)if(p.id!==room.me){helloAt.set(p.id,Date.now());await send(p.id,'hello');}
     tick();
   }
   async function setMicrophone(on){
@@ -195,13 +208,19 @@ window.MysteryVoice=(function(){
       if(!speakerOn)disable();
       return;
     }
-    if(micOn)return;
+    if(micOn||micPending)return;
     if(!navigator.mediaDevices?.getUserMedia)
       throw Error('마이크는 HTTPS 또는 localhost의 지원 브라우저에서만 켤 수 있습니다.');
-    const acquired=await navigator.mediaDevices.getUserMedia({
-      audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true},video:false
-    });
+    micPending=true;
+    let acquired;
+    try{
+      try{acquired=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true,channelCount:1},video:false});}
+      catch(first){if(!['OverconstrainedError','TypeError'].includes(first.name))throw first;
+        acquired=await navigator.mediaDevices.getUserMedia({audio:true,video:false});}
+    }catch(error){micPending=false;throw Error(error.name==='NotAllowedError'?'브라우저의 마이크 권한을 허용한 뒤 다시 시도해주세요.':error.name==='NotFoundError'?'사용할 수 있는 마이크를 찾지 못했습니다.':error.message||'마이크를 열지 못했습니다.');}
+    micPending=false;
     stream=acquired;micOn=true;
+    for(const track of acquired.getAudioTracks())if('contentHint' in track)track.contentHint='speech';
     for(const track of acquired.getAudioTracks())track.addEventListener?.('ended',()=>{
       if(stream!==acquired)return;
       setMicrophone(false);
@@ -221,9 +240,9 @@ window.MysteryVoice=(function(){
   function disable(){
     if(active&&room)
       for(const p of room.players)if(p.id!==room.me)send(p.id,'bye');
-    active=false;micOn=false;speakerOn=false;clearInterval(timer);timer=null;
+    active=false;micOn=false;speakerOn=false;micPending=false;clearInterval(timer);timer=null;
     clearInterval(meterTimer);meterTimer=null;
-    for(const id of [...peers.keys()])closePeer(id);
+    for(const id of [...peers.keys()])closePeer(id);helloAt.clear();
     for(const track of stream?.getTracks()||[])track.stop();
     stream=null;for(const m of meters.values())m.source.disconnect();meters.clear();talkUntil.clear();audioContext?.close();audioContext=null;
   }
@@ -246,7 +265,7 @@ window.MysteryVoice=(function(){
         'aria-pressed="'+speakerOn+'"')+'</div>'+
       '<p class="voice-status">'+(micOn?'● 마이크 전송 중':'○ 마이크 전송 안 함')+
         ' · '+(speakerOn?'상대 음성 듣는 중':'상대 음성 음소거')+'</p>'+
-      '<p class="muted small">네트워크에 따라 TURN 중계 서버 없이는 통화 연결이 실패할 수 있습니다.</p></div>';
+      '<p class="muted small">연결이 불안정한 네트워크에서는 서버에 TURN 중계 설정이 필요합니다.</p></div>';
   }
   return {
     setMicrophone,setSpeaker,disable,sync,controls,status,

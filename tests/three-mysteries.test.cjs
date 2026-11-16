@@ -166,6 +166,24 @@ test('all four multiplayer rooms expose shared endings and each player’s own r
     assert.deepEqual(c.revealed,[]);
    }
    for(const phase of ['discussion1','investigation2','discussion2','action']){
+    if(phase==='action'){
+     const culprit=story.characters.find(c=>game.booklets[c.id].culprit).id;
+     const other=story.characters.find(c=>c.id!==culprit).id;
+     if(count===6){
+      for(let i=0;i<count-1;i++)assert.equal((await post(i,ep+'/verdict-vote',{characterId:i%2?other:culprit})).data.verdict.ballot.results.length,0,
+       'individual choices stay private until every player has voted');
+      const tie=await post(count-1,ep+'/verdict-vote',{characterId:(count-1)%2?other:culprit});
+      assert.equal(tie.data.verdict.ballot.resolved,false);
+      assert.equal(tie.data.verdict.ballot.results.length,1,'the completed round becomes public');
+      assert.deepEqual(tie.data.verdict.ballot.eligible.slice().sort(),[culprit,other].sort(),'only tied suspects remain eligible');
+      for(let i=0;i<count;i++)assert.equal((await post(i,ep+'/verdict-vote',{characterId:culprit})).status,200);
+     }else{
+      for(let i=0;i<count;i++)assert.equal((await post(i,ep+'/verdict-vote',{characterId:culprit})).status,200);
+     }
+     const publicVote=(await call(1,ep)).data.verdict.ballot;
+     assert.equal(publicVote.resolved,true,'unique plurality resolves the arrest');
+     assert.equal(publicVote.results.at(-1).votes[story.characters[0].id],culprit);
+    }
     for(let i=0;i<count;i++)assert.equal((await post(i,ep+'/advance-vote')).status,200);
     const result=await post(0,ep+'/advance');
     assert.equal(result.data.phase,phase);
@@ -195,17 +213,15 @@ test('all four multiplayer rooms expose shared endings and each player’s own r
    assert.equal((await post(0,ep+'/advance')).data.phase,'ending');
    const murderer=story.characters.find(c=>game.booklets[c.id].culprit).id;
    const firstRole=story.characters[0].id;
-   // Only the host can set the final prisoner or decide personal goal outcomes.
+   // Every player submits an individual ballot; no host override can replace the result.
    assert.equal((await post(1,ep+'/verdict-arrest',{characterId:murderer})).status,403);
+   assert.equal((await post(0,ep+'/verdict-arrest',{characterId:firstRole})).status,403);
    assert.equal((await post(1,ep+'/verdict-goal',{characterId:firstRole,achieved:true})).status,403);
-   let wrong=await post(0,ep+'/verdict-arrest',{characterId:firstRole});
-   assert.equal(wrong.status,200);
-   assert.equal(wrong.data.ending.common.captured,false);
-   assert.equal(wrong.data.ending.personal.status,'arrested');
-   let correct=await post(0,ep+'/verdict-arrest',{characterId:murderer});
-   assert.equal(correct.status,200);
-   assert.equal(correct.data.ending.common.captured,true);
-   assert.equal(correct.data.ending.common.arrestedCharacterId,murderer);
+   const correct=(await call(0,ep)).data;
+   assert.equal(correct.verdict.arrestedCharacterId,murderer);
+   assert.equal(correct.ending.common.captured,true);
+   assert.equal(correct.ending.common.arrestedCharacterId,murderer);
+   assert.equal(correct.ending.personal.status,firstRole===murderer?'arrested':'alive');
    const achieved=await post(0,ep+'/verdict-goal',{characterId:firstRole,achieved:true});
    assert.equal(achieved.status,200);
    assert.equal(achieved.data.ending.personal.goalMet,true);
@@ -229,10 +245,10 @@ test('all four multiplayer rooms expose shared endings and each player’s own r
    const missed=(await call(1,ep)).data.ending.common;
    assert.equal(missed.verdictType,'unresolved');
    assert.equal(missed.arrestedName,null);
-   assert.equal((await post(0,ep+'/verdict-arrest',{characterId:murderer})).status,409);
+   assert.equal((await post(0,ep+'/verdict-arrest',{characterId:murderer})).status,403);
    const victim=(await call(count,ep)).data;
    assert.equal(victim.ending,null,'a visitor must never receive private endings');
-   assert.equal((await post(0,ep+'/verdict-arrest',{characterId:'not_a_character'})).status,400);
+   assert.equal((await post(0,ep+'/verdict-arrest',{characterId:'not_a_character'})).status,403);
   });
  }
 });

@@ -175,10 +175,13 @@ window.MysteryStudy=(function(){
   function cardFront(room,card,holding){
     const title=card?.frontTitle||holding?.title||'조사 카드';
     const status=holding?(holding.public?'전체 공개':'내 보유 카드'):clueStatus(room,card);
+    const owners=(card?.acquiredBy||[]).map(id=>room.players.find(p=>p.id===id)).filter(Boolean);
+    const ownership=holding?'내가 소유':card?.heldByMe?'내가 소유':owners.length?'소유: '+owners.map(p=>p.id===room.me?'나':p.name).join(', '):'';
     const data='data-card="'+esc(card?.id||holding.cardId)+'"'+(holding?' data-holding="'+esc(holding.id)+'"':'');
-    return '<article class="research-card"><div class="research-frame">'+
+    return '<article class="research-card '+(card?.public||holding?.public?'globally-public ':'')+(holding?'owned-by-me':owners.some(p=>p.id===room.me)?'owned-by-me':owners.length?'owned-by-other':'')+'"><div class="research-frame">'+
       '<div class="research-meta">MYSTERY · SEALED EVIDENCE</div><div class="research-seal" aria-hidden="true">✦</div>'+
       '<h4>'+esc(title)+'</h4><span class="research-status">'+status+'</span>'+
+      (ownership?'<span class="research-owner">'+esc(ownership)+'</span>':'')+
       btn('clue-open',holding?'카드 열기':card.revealed?.length?'카드 보기 · 앞/뒷면':'카드 보기','btn btn-clue-view btn-sm',false,data)+
       '</div></article>';
   }
@@ -306,6 +309,29 @@ window.MysteryStudy=(function(){
       ((offers||outgoing)?'<section class="exchange-requests"><h4>양도 요청</h4>'+offers+outgoing+'</section>':'')+
       '</section>';
   }
+  function cardSidebar(room){
+    const inv=room.investigation;if(!inv)return '';
+    const publicCards=(inv.cards||[]).filter(c=>c.public);
+    const owned=inv.myCards||[];
+    const other=(inv.cards||[]).filter(c=>!c.heldByMe&&!c.public&&(c.acquiredBy||[]).length);
+    const item=(title,kind)=>'<li class="card-quick-item '+kind+'">'+esc(title)+'</li>';
+    return '<aside id="cardQuickList" class="card-quick-list" aria-label="카드 요약">'+
+      '<h3>카드 요약</h3><section><h4>내가 가진 카드 · '+owned.length+'</h4><ul>'+
+      (owned.map(c=>item(c.title||inv.cards.find(x=>x.id===c.cardId)?.frontTitle||'조사 카드',c.public?'public':'mine')).join('')||'<li class="empty-card">없음</li>')+
+      '</ul></section><section><h4>전체 공개 카드 · '+publicCards.length+'</h4><ul>'+
+      (publicCards.map(c=>item(c.frontTitle||c.title||'조사 카드',c.heldByMe?'public mine':'public')).join('')||'<li class="empty-card">없음</li>')+
+      '</ul></section><section><h4>다른 참가자 보유 · '+other.length+'</h4><ul>'+
+      (other.map(c=>{const names=(c.acquiredBy||[]).map(id=>room.players.find(p=>p.id===id)?.name).filter(Boolean);
+        return item(c.frontTitle+' · '+names.join(', '),'other');}).join('')||'<li class="empty-card">없음</li>')+
+      '</ul></section></aside>';
+  }
+  function notificationPopups(room){
+    const notes=(room.notifications||[]).slice(-4);
+    return '<aside id="actionNotifications" class="action-notifications" aria-live="polite" aria-label="받은 알림">'+
+      notes.map(n=>'<div class="action-notification '+esc(n.type||'')+'"><b>'+
+        (n.type==='whisper'?'밀담 요청':n.type==='card-share'?'카드 공유':n.type==='exchange'?'양도 알림':'알림')+
+        '</b><span>'+esc(n.text)+'</span></div>').join('')+'</aside>';
+  }
   function researchView(room,embedded=!!window.MysteryStage){
     const inv=room.investigation;
     if(!inv)return '<p>조사 정보가 아직 준비되지 않았습니다.</p>';
@@ -365,12 +391,21 @@ window.MysteryStudy=(function(){
 
   function verdictPanel(room){
     const v=room.verdict;
-    if(!v||!v.isHost)return '';
+    if(!v)return '';
+    const ballot=v.ballot||{},eligible=ballot.eligible||[];
+    const labelFor=id=>id===null?'아무도 구속하지 않음':(v.candidates||[]).find(c=>c.id===id)?.name||id;
+    const ballotUi=(room.phase==='discussion2'||ballot.results?.length)?
+      '<section class="final-ballot"><h4>최종 구속 투표 · '+ballot.round+'차</h4>'+
+      (ballot.resolved?'<p>투표가 확정되었습니다. 최다 득표: <strong>'+esc(labelFor(v.arrestedCharacterId))+'</strong></p>':
+      '<p>각자 한 명에게 투표합니다. 모든 표가 제출되면 결과를 공개하며, 동점이면 동점 후보만 다시 투표합니다. 현재 미투표 '+(ballot.waitingFor||0)+'명</p>'+
+      '<select id="finalBallotTarget" aria-label="최종 구속 투표 대상">'+eligible.map(id=>{
+        if(id===null)return '<option value=""'+(ballot.myVote===null?' selected':'')+'>아무도 구속하지 않음</option>';
+        const c=(v.candidates||[]).find(x=>x.id===id);return c?'<option value="'+esc(id)+'"'+(ballot.myVote===id?' selected':'')+'>'+esc(c.name)+'</option>':'';
+      }).join('')+'</select>'+btn('verdict-vote',ballot.myVote===undefined?'투표 제출':'투표 확정 / 변경','btn btn-primary',!eligible.length))+
+      (ballot.results||[]).map(round=>'<div class="ballot-result"><b>'+round.round+'차 결과 · 전체 공개</b><ul>'+Object.entries(round.counts||{}).map(([id,count])=>'<li>'+esc(labelFor(id||null))+' · '+count+'표</li>').join('')+'</ul><details><summary>참가자별 투표 보기</summary><ul>'+Object.entries(round.votes||{}).map(([voter,target])=>'<li>'+esc((room.characters||[]).find(c=>c.id===voter)?.name||voter)+' → '+esc(labelFor(target))+'</li>').join('')+'</ul></details></div>').join('')+
+      '</section>':'';
+    if(!v.isHost||room.phase!=='ending')return ballotUi;
     const selected=v.arrestedCharacterId||'';
-    const options='<option value="">아무도 구속하지 않음</option>'+
-      (v.candidates||[]).map(c=>'<option value="'+esc(c.id)+'"'+
-        (selected===c.id?' selected':'')+(c.dead?' disabled':'')+'>'+esc(c.name)+
-        (c.dead?' · 사망':'')+'</option>').join('');
     const names=room.ending?.editor?.characters||[];
     const adjudications=room.phase==='ending'?
       '<h4>캐릭터별 목표 및 최종 상태 판정 (방장 전용)</h4><p class="muted small">목표는 증거와 행동 기록을 확인해 달성/실패로 판정합니다. 행동 결과가 잘못 반영된 경우 상태를 정정할 수 있습니다.</p>'+
@@ -389,12 +424,7 @@ window.MysteryStudy=(function(){
             '<option value="'+value+'"'+((c.override||'auto')===value?' selected':'')+'>'+label+'</option>').join('')+
         '</select>'+btn('verdict-status','상태 저장','btn btn-outline btn-sm',false,
          'data-character="'+esc(c.id)+'"')+'</div>').join('')+'</div>':'';
-    return '<section class="ending-control surface panel-pad"><div class="eyebrow">HOST CONTROL · FINAL VERDICT</div>'+
-      '<h3>'+ (room.phase==='ending'?'최종 구속 및 승리 목표 판정':'최종 구속 대상 결정')+'</h3>'+
-      '<p class="muted small">구속 대상을 지목하면 결말 단계에서 진범 여부에 따라 공통 이야기가 선택됩니다. 진범은 결말 단계까지 미공개입니다.</p>'+
-      '<div class="ending-arrest-row"><select id="endingArrestTarget" aria-label="구속할 플레이어">'+options+'</select>'+
-      btn('verdict-arrest','구속 대상 확정','btn btn-primary')+'</div>'+
-      adjudications+'</section>';
+    return ballotUi+'<section class="ending-control surface panel-pad"><div class="eyebrow">HOST CONTROL · ENDING REVIEW</div>'+adjudications+'</section>';
   }
   function endingStage(room){
     const ending=room.ending;
@@ -405,6 +435,7 @@ window.MysteryStudy=(function(){
     return '<div class="ending-story">'+
       '<section class="ending-common surface panel-pad">'+
       '<div class="eyebrow">EPILOGUE · COMMON ENDING</div>'+
+      '<div class="tts-controls">'+btn('tts-ending','🔊 결말 듣기','btn btn-outline btn-sm')+btn('tts-stop','음성 정지','btn btn-quiet btn-sm')+'</div>'+
       '<div class="ending-cover">'+caseCover+'</div>'+
       '<p class="ending-verdict">'+(global.verdictType==='captured'?'진범 구속 성공':
         global.verdictType==='wrongful'?'오인 구속 · 진범 미검거':'진범 미구속')+
@@ -429,7 +460,7 @@ window.MysteryStudy=(function(){
     if(ui.dock==='whisper')return whisper(room);
     if(ui.dock==='progress')return (room.phase==='study'?
       btn('study-ready','숙지 완료','btn btn-primary btn-sm',!!room.players.find(p=>p.id===room.me)?.studyReady):'')+
-      nextStageControl(room)+verdictPanel(room)+actionStage(room);
+      nextStageControl(room)+(room.phase==='ending'?verdictPanel(room):'')+actionStage(room);
     return '';
   }
   function updateDock(room){
@@ -459,7 +490,9 @@ window.MysteryStudy=(function(){
         '<button type="button" data-action="map-center" class="btn btn-sm">내 위치</button></div>'+
         '<div class="map-play-area">'+
         '<div id="adventureRoot" class="scene-map big-map" tabindex="0" aria-label="게임 지도">'+mapHtml(room)+'</div>'+left+'</div>'+
-        stage.dock(room,ui.dock)+overlay+modal+promptHtml()+'</section>';
+        stage.dock(room,ui.dock)+cardSidebar(room)+notificationPopups(room)+
+        ((room.phase==='discussion2'||room.verdict?.ballot?.results?.length)?'<aside class="ballot-popover">'+verdictPanel(room)+'</aside>':'')+
+        overlay+modal+promptHtml()+'</section>';
     }
     return roomHeader(room)+
       '<div class="section-row"><div><div class="eyebrow">MYSTERY PHASE · '+esc(room.phase.toUpperCase())+'</div>'+
@@ -472,6 +505,8 @@ window.MysteryStudy=(function(){
       '<div id="adventureRoot">'+(ui.view==='book'?book(room):ui.view==='research'?researchView(room):mapView(room))+'</div>'+modal+promptHtml());
   }
   function patch(room){
+    const quick=document.getElementById('cardQuickList');if(quick){const temp=document.createElement('div');temp.innerHTML=cardSidebar(room);const next=temp.firstElementChild;if(next&&quick.outerHTML!==next.outerHTML)quick.replaceWith(next);else if(!next)quick.remove();}
+    const notices=document.getElementById('actionNotifications');if(notices){const temp=document.createElement('div');temp.innerHTML=notificationPopups(room);const next=temp.firstElementChild;if(next&&notices.outerHTML!==next.outerHTML)notices.replaceWith(next);else if(!next)notices.remove();}
     const location=document.getElementById('sceneLocation');if(location)location.innerHTML=window.MysteryStage.location(room);
     const hud=document.getElementById('hudStatus');if(hud)hud.innerHTML=window.MysteryStage.status(room);
     if(window.MysteryStage)updateDock(room);

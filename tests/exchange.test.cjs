@@ -95,6 +95,7 @@ test('private clue sharing, transfer consent, ownership, same-tile expiration an
   assert.equal((await post(0,endpoint+'/card-share',{holdingId:evidence.id,toId:b})).status,200);
   bob=(await req(1,endpoint)).data.investigation;
   assert.equal(bob.cards.find(c=>c.id==='evidence').sharedToMe,true);
+  assert.ok((await req(1,endpoint)).data.notifications.some(n=>n.type==='card-share'),'target receives a card-share notification');
   assert.match(bob.cards.find(c=>c.id==='evidence').revealed[0].back,/유리 조각/);
   assert.equal((await post(0,endpoint+'/card-share',{holdingId:evidence.id,toId:'invalid'})).status,400);
   const away=await post(1,endpoint+'/move',{direction:'right'});
@@ -113,6 +114,7 @@ test('private clue sharing, transfer consent, ownership, same-tile expiration an
   assert.equal(permanent.data.investigation.cards.find(c=>c.id==='evidence').public,true);
   assert.equal((await req(1,endpoint)).data.investigation.cards.find(c=>c.id==='evidence').revealed.length,1,
     'global reveal available to every game member');
+  assert.ok((await req(1,endpoint)).data.notifications.some(n=>n.text.includes('전체 공개')),'global share notifies other players');
   const secret=await investigate('private'),nontransfer=await investigate('sealed');
   const samePlace='same-place';
   assert.equal((await req(0,endpoint)).data.investigation.cards.find(c=>c.id===samePlace).placeLimitReached,true);
@@ -174,6 +176,7 @@ test('private clue sharing, transfer consent, ownership, same-tile expiration an
   assert.equal((await req(1,endpoint)).data.investigation.tokens,tokensGuestBefore+2);
   const cancelled=await post(0,endpoint+'/exchange-offer',{type:'token',amount:1,toId:b});
   assert.equal(cancelled.status,200);
+  assert.ok((await req(1,endpoint)).data.notifications.some(n=>n.type==='exchange'),'transfer target receives a notification');
   offer=cancelled.data.investigation.outgoingOffers[0].id;
   await new Promise(resolve=>setTimeout(resolve,160));
   assert.equal((await post(1,endpoint+'/move',{direction:'right'})).status,200);
@@ -215,6 +218,7 @@ test('private clue sharing, transfer consent, ownership, same-tile expiration an
   assert.equal(newClue.data.investigation.myCards.some(c=>c.cardId==='later'),true);
   for(const i of [0,1])await post(i,endpoint+'/advance-vote');
   assert.equal((await post(0,endpoint+'/advance')).data.phase,'discussion2');
+  for(const i of [0,1])assert.equal((await post(i,endpoint+'/verdict-vote',{characterId:'alpha'})).status,200);
   for(const i of [0,1])await post(i,endpoint+'/advance-vote');
   assert.equal((await post(0,endpoint+'/advance')).data.phase,'action');
   for(const i of [0,1])await post(i,endpoint+'/advance-vote');

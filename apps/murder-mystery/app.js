@@ -257,7 +257,7 @@ function synopsis(room){
     '<div class="reading-layout"><article class="paper"><div class="stamp">CONFIDENTIAL · DO NOT LEAVE THIS ROOM</div>'+
     (cover?'<div class="story-illustration">'+cover+'</div>':'')+
     (window.MysteryArt?.victim(room.story)||'')+
-    '<h2>'+escapeHtml(room.story.title)+'</h2>'+room.synopsis.map(p=>'<p>'+escapeHtml(p)+'</p>').join('')+
+    '<h2>'+escapeHtml(room.story.title)+'</h2><div class="tts-controls">'+btn('tts-synopsis','🔊 시놉시스 듣기','btn btn-outline btn-sm')+btn('tts-stop','음성 정지','btn btn-quiet btn-sm')+'</div>'+room.synopsis.map(p=>'<p>'+escapeHtml(p)+'</p>').join('')+
     '<div class="stamp" style="text-align:right;border:0;margin-top:30px">— END OF PROLOGUE —</div></article>'+
     '<aside class="surface panel-pad reading-sidebar"><div class="eyebrow">READING CONFIRMATION</div><h2>모두 읽으셨나요?</h2>'+
     '<p class="muted small">각자 시놉시스를 읽은 뒤 확인해주세요. 전원이 확인하면 방장이 캐릭터 선택 단계로 진행합니다.</p>'+
@@ -300,6 +300,15 @@ function nameFromInput(){
   return name;
 }
 async function perform(action,button){
+  if(action==='tts-synopsis'||action==='tts-ending'){
+    if(!('speechSynthesis' in window)){toast('이 브라우저에서는 음성 읽기를 지원하지 않습니다.');return;}
+    window.speechSynthesis.cancel();
+    const text=action==='tts-synopsis'?(state.room?.synopsis||[]).join('\n\n'):
+      [state.room?.ending?.common?.title,...(state.room?.ending?.common?.paragraphs||[]),
+        state.room?.ending?.personal?.title,...(state.room?.ending?.personal?.paragraphs||[])].filter(Boolean).join('\n\n');
+    const utterance=new SpeechSynthesisUtterance(text);utterance.lang='ko-KR';utterance.rate=.95;window.speechSynthesis.speak(utterance);return;
+  }
+  if(action==='tts-stop'){window.speechSynthesis?.cancel();return;}
   if(action==='cast-preview'){window.MysteryStage.preview(button.dataset.character,state.room);render();return;}
   if(action==='progress-toggle'&&state.room?.phase==='characters'){castProgress=!castProgress;render();return;}
   if(['inventory-toggle','context-toggle','whisper-toggle','progress-toggle','panel-close'].includes(action)){window.MysteryStudy.navigate(action);render();return;}
@@ -380,12 +389,10 @@ async function perform(action,button){
       else if(action==='card-share')toast('같은 타일의 플레이어에게 카드가 선택 공개되었습니다.');
       else if(action==='exchange-offer')toast('양도 요청을 보냈습니다. 상대방의 승인을 기다립니다.');
       else if(action==='exchange-reply')toast(body.accept?'양도를 수락했습니다.':'양도를 거절했습니다.');
-    } else if(action==='verdict-arrest'){
-      if(room?.me!==room?.hostId)throw Error('방장만 구속 대상을 지정할 수 있습니다.');
-      const characterId=document.getElementById('endingArrestTarget')?.value||null;
-      if(!window.confirm(characterId?'이 캐릭터를 최종 구속 대상으로 지정할까요?':'아무도 구속하지 않는 것으로 확정할까요?'))return;
-      updateRoom(await api('/api/rooms/'+code+'/verdict-arrest','POST',{characterId}),state.connection,true);
-      toast('최종 구속 대상이 설정되었습니다.');
+    } else if(action==='verdict-vote'){
+      const characterId=document.getElementById('finalBallotTarget')?.value||null;
+      updateRoom(await api('/api/rooms/'+code+'/verdict-vote','POST',{characterId}),state.connection,true);
+      toast('투표를 제출했습니다. 전원 투표 후 결과가 공개됩니다.');
     } else if(action==='verdict-goal'){
       if(room?.me!==room?.hostId)throw Error('방장만 개인 목표를 판정할 수 있습니다.');
       const characterId=button.dataset.character;

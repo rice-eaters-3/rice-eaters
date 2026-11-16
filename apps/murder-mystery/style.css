@@ -762,3 +762,25 @@ kbd{font:600 10px monospace;border:1px solid #a5946a;border-radius:4px;padding:2
 .phase-intro h1{margin:6px 0 16px;color:#fff;font-size:clamp(34px,7vw,68px);line-height:1.15}
 .phase-intro p{line-height:1.75;color:#edf3f8;margin:0 0 12px}
 .phase-intro .btn{border-color:#8196aa;color:#fff;margin-top:12px}
+
+/* Fixed quick reference keeps clue ownership visible without changing the map viewport. */
+.map-play-area:has(#cardQuickList) #adventureRoot{padding-right:270px}
+.card-quick-list{position:absolute;z-index:7;inset:10px 10px 10px auto;width:250px;overflow:auto;padding:12px;background:#122333f2;border:1px solid #687e8a;border-radius:10px;color:#edf3f5;scrollbar-width:thin}
+.card-quick-list h3{margin:0 0 10px;color:#f1d69d;font-size:16px}
+.card-quick-list section{margin:10px 0;padding-top:8px;border-top:1px solid #ffffff24}
+.card-quick-list h4{margin:0 0 6px;font-size:12px;color:#c4d6de}
+.card-quick-list ul{list-style:none;padding:0;margin:0;display:grid;gap:5px}
+.card-quick-item{font-size:11px;line-height:1.35;padding:7px 8px;border:1px solid #586874;border-radius:6px;background:#1c3040}
+.card-quick-item.mine{border-left:3px solid #72c5a0}.card-quick-item.public{background:#493c25;border:1px solid #d5b45d;color:#fff1c7;box-shadow:inset 0 0 0 1px #f4d77b55}
+.card-quick-item.other{border-left:3px solid #91a8d6;color:#d6e1f7}.empty-card{font-size:11px;color:#90a2ad}
+.research-card.globally-public .research-frame{border:2px solid #e5c768;background:linear-gradient(145deg,#544525,#232d33);box-shadow:0 0 0 2px #f4d77836,0 8px 20px #0006}
+.research-card.owned-by-me .research-status{color:#b9f0cf}.research-card.owned-by-other .research-status{color:#d4ddfb}
+.research-owner{display:block;margin:5px 0;color:#c9d5dc;font-size:10px;text-align:center}
+.action-notifications{position:absolute;z-index:15;right:275px;top:10px;width:min(330px,calc(100% - 290px));display:grid;gap:6px;pointer-events:none}
+.action-notification{display:grid;gap:3px;padding:9px 12px;border:1px solid #d3b66d;border-radius:9px;background:#182b3bee;color:#f3ede2;box-shadow:0 6px 22px #0008;animation:notification-in .2s ease-out}
+.action-notification b{font-size:11px;color:#f3d88f}.action-notification span{font-size:12px;line-height:1.4}
+@keyframes notification-in{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.ballot-popover{position:absolute;z-index:12;left:12px;top:12px;width:min(360px,calc(100% - 24px));max-height:45%;overflow:auto;background:#122333f2;border:1px solid #d0b16c;border-radius:10px;padding:10px;box-shadow:0 8px 24px #0008}
+.ballot-popover .ending-control{display:none}.final-ballot h4{margin:0 0 7px}.final-ballot p{font-size:12px;line-height:1.5}.final-ballot select{width:100%;margin-bottom:7px}.ballot-result{border-top:1px solid #ffffff2a;padding-top:5px;margin-top:7px;font-size:12px}.ballot-result ul{margin:4px 0;padding-left:20px}
+.tts-controls{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+@media(max-width:850px){.map-play-area:has(#cardQuickList) #adventureRoot{padding-right:0}.card-quick-list{display:none}.action-notifications{right:8px;width:min(300px,calc(100% - 16px));top:8px}.ballot-popover{top:8px;left:8px;width:min(330px,calc(100% - 16px));max-height:42%}}

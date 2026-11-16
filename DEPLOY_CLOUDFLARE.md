@@ -64,3 +64,7 @@ Cloudflare 계정과 **Cloudflare DNS에 등록된 도메인**이 있다면, [Cl
 ## 제작소 운영자 인증
 
 서버 환경 변수 `STUDIO_ADMIN_PASSWORD`를 24바이트 이상으로 설정하고 재시작/재배포하세요. `/mystery-editor`에 접속하여 사용자 이름 `operator`로 인증합니다. 설정하지 않으면 제작소·테스트 모드는 잠기고 일반 게임만 공개됩니다. 외부 접속은 HTTPS를 사용하세요. [상세 설정](OPERATOR_STUDIO.md)
+
+## 음성 연결 개선
+
+음성 통화는 WebRTC 직접 연결을 우선 사용합니다. 일부 공유기·회사망·모바일 통신망은 직접 연결을 막으므로, 그런 환경에서는 TURN relay가 필요합니다. 발급받은 TURN provider credentials를 서버의 `WEBRTC_ICE_SERVERS_JSON` 환경 변수로 설정한 뒤 서버를 재시작하세요. 직접 연결이 계속 불안정하면 `WEBRTC_ICE_TRANSPORT_POLICY=relay`로 relay 연결을 강제할 수 있습니다. 예시 형식은 `.env.example`에 있습니다. 실제 자격 증명은 저장소에 커밋하지 마세요. 앱은 ICE 재시도와 연결 복구를 수행하지만, TURN 자격 증명 없이는 모든 네트워크에서 통화를 보장할 수 없습니다.

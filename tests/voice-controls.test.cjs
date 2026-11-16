@@ -75,7 +75,7 @@ test('independent microphone and speaker toggles, listen-only access and microph
       return {getAudioTracks:()=>[t],getTracks:()=>[t]};
     }}},
     console:{warn:()=>{}},
-    setInterval:(fn,delay)=>{if(delay===120)meterTick=fn;return 123;},clearInterval:()=>{},
+    setInterval:(fn,delay)=>{if(delay===120)meterTick=fn;return 123;},clearInterval:()=>{},clearTimeout:()=>{},setTimeout:()=>123,
     document:{querySelectorAll:()=>[speakerChip],createElement:()=>({play:async()=>{},pause:()=>{},remove:()=>{},dataset:{}}),
       body:{appendChild:()=>{}}},
     MediaStream:class{constructor(tracks){this.tracks=tracks}},

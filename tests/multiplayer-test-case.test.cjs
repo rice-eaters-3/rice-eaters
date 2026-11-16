@@ -84,7 +84,8 @@ test('real multiplayer QA rooms complete all phases for every capacity from 3 to
   }
   assert.equal((await advance()).phase,'discussion2');
   assert.equal((await req(1,endpoint+'/verdict-arrest',{characterId:'tester1'})).status,403);
-  await post(0,endpoint+'/verdict-arrest',{characterId:'tester1'});
+  for(let i=0;i<count;i++)await post(i,endpoint+'/verdict-vote',{characterId:'tester1'});
+  assert.equal((await req(0,endpoint)).data.verdict.arrestedCharacterId,'tester1');
   const action=await advance();assert.equal(action.phase,'action');assert.equal(action.action.total,count);
   for(let i=0;i<count;i++)await post(i,endpoint+'/act',{abilityId:i===0?'test_action1':i===1?'test_action2':i===2?'test_action3':'pass'});
   const final=await advance();assert.equal(final.phase,'ending');assert.ok(final.ending);
