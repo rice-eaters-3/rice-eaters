@@ -1,0 +1,137 @@
+{
+  "Version": 3,
+  "Parameters": [
+    {
+      "Id": "ParamAngleX",
+      "GroupId": "",
+      "Name": "고개 좌우"
+    },
+    {
+      "Id": "ParamAngleY",
+      "GroupId": "",
+      "Name": "고개 상하"
+    },
+    {
+      "Id": "ParamAngleZ",
+      "GroupId": "",
+      "Name": "고개 기울기"
+    },
+    {
+      "Id": "ParamEyeLOpen",
+      "GroupId": "",
+      "Name": "왼쪽 눈"
+    },
+    {
+      "Id": "ParamEyeROpen",
+      "GroupId": "",
+      "Name": "오른쪽 눈"
+    },
+    {
+      "Id": "ParamBrowLY",
+      "GroupId": "",
+      "Name": "왼쪽 눈썹"
+    },
+    {
+      "Id": "ParamBrowRY",
+      "GroupId": "",
+      "Name": "오른쪽 눈썹"
+    },
+    {
+      "Id": "ParamMouthOpenY",
+      "GroupId": "",
+      "Name": "입 벌리기"
+    },
+    {
+      "Id": "ParamMouthForm",
+      "GroupId": "",
+      "Name": "입 모양"
+    },
+    {
+      "Id": "ParamBodyAngleX",
+      "GroupId": "",
+      "Name": "몸 좌우"
+    },
+    {
+      "Id": "ParamBodyAngleZ",
+      "GroupId": "",
+      "Name": "몸 기울기"
+    },
+    {
+      "Id": "ParamBreath",
+      "GroupId": "",
+      "Name": "호흡"
+    },
+    {
+      "Id": "ParamHairSway",
+      "GroupId": "",
+      "Name": "머리카락 흔들림"
+    }
+  ],
+  "ParameterGroups": [],
+  "Parts": [
+    {
+      "Id": "Part_HairBack",
+      "Name": "뒷머리"
+    },
+    {
+      "Id": "Part_Body",
+      "Name": "의상·목"
+    },
+    {
+      "Id": "Part_Face",
+      "Name": "얼굴"
+    },
+    {
+      "Id": "Part_HairFront",
+      "Name": "앞머리"
+    },
+    {
+      "Id": "Part_EyeL",
+      "Name": "왼쪽 눈"
+    },
+    {
+      "Id": "Part_EyeR",
+      "Name": "오른쪽 눈"
+    },
+    {
+      "Id": "Part_MouthClosed",
+      "Name": "다문 입"
+    },
+    {
+      "Id": "Part_MouthOpen",
+      "Name": "열린 입"
+    },
+    {
+      "Id": "Part_BrowL",
+      "Name": "왼쪽 눈썹"
+    },
+    {
+      "Id": "Part_BrowR",
+      "Name": "오른쪽 눈썹"
+    },
+    {
+      "Id": "Part_EarL",
+      "Name": "왼쪽 귀"
+    },
+    {
+      "Id": "Part_EarR",
+      "Name": "오른쪽 귀"
+    },
+    {
+      "Id": "Part_HairSideL",
+      "Name": "왼쪽 옆머리"
+    },
+    {
+      "Id": "Part_HairSideR",
+      "Name": "오른쪽 옆머리"
+    },
+    {
+      "Id": "Part_StarClip",
+      "Name": "머리 장식"
+    },
+    {
+      "Id": "Part_Ribbon",
+      "Name": "리본"
+    }
+  ]
+}
