@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>모션 아틀리에 · Prompt to Live2D</title><link rel="stylesheet" href="/apps/live2d-studio/style.css"></head>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><title>모션 아틀리에 · Prompt to Live2D</title><link rel="stylesheet" href="/apps/live2d-studio/style.css?v=3"></head>
 <body>
 <header><a href="/" class="brand"><span class="brand-icon">✧</span><span>모션 아틀리에<small>PROMPT TO LIVE2D</small></span></a><span class="header-note">한 문장에서 시작하는, 나만의 캐릭터</span><button id="connect" class="connection"><span id="connection-dot" class="dot"></span><span id="connection-text">AI API 연결</span></button></header>
 <main>
@@ -9,12 +9,12 @@
   <label for="prompt">어떤 캐릭터를 만들까요?</label><textarea id="prompt" minlength="10" maxlength="3000" required placeholder="예: 라벤더색 단발머리와 청록색 눈을 가진 성인 캐릭터. 크림색 세일러 재킷과 금색 별 장식. 차분하고 다정한 분위기."></textarea>
   <div class="prompt-tags"><button type="button" data-prompt="차분한 분위기의 성인 천문학자 캐릭터. 라벤더색 단발머리, 청록색 눈, 크림색 세일러 재킷과 금색 별 브로치.">✦ 별빛 연구자</button><button type="button" data-prompt="따뜻한 분위기의 성인 남성 바리스타 캐릭터. 갈색 짧은 머리, 호박색 눈, 아이보리 셔츠와 짙은 초록색 앞치마.">☕ 숲속 바리스타</button></div>
   <button id="generate" class="primary" disabled>API 연결 후 캐릭터 만들기 <span>↗</span></button><p class="fine">생성 1회 = 이미지 API 1회 호출. 요금은 연결한 API 계정에 청구됩니다.</p></form>
-  <section class="scope"><span class="mini-icon">◇</span><div><b>자동 리깅 초안</b><p>고개 · 눈 · 입 · 호흡 · 머리카락<br>상반신 16파츠 / 13개 파라미터<br>독립 눈동자·손 리깅·편집용 cmo3 제외</p></div></section>
+  <section class="scope"><span class="mini-icon">◇</span><div><b>자동 리깅 초안</b><p>고개 · 눈 · 입 · 호흡 · 머리카락<br>캐릭터별 눈·입·고개·호흡 리깅<br>독립 눈동자·손 리깅·편집용 cmo3 제외</p></div></section>
   <div class="history-head"><h2>작업 기록</h2><button id="sample" class="text-button">샘플 열기</button></div><select id="sample-select" aria-label="샘플 캐릭터 선택"></select><div id="history" class="history"><p class="fine">새로 만든 모델이 여기에 표시돼요.</p></div>
  </aside>
  <section class="workspace" aria-label="모델 작업 화면">
-  <div class="workspace-top"><div><span class="eyebrow">LIVE CANVAS</span><h2 id="preview-name">캐릭터 <span class="pill">샘플</span></h2></div><button id="fit" class="quiet">↺ 정면으로</button></div>
-  <div class="canvas-wrap"><div class="canvas-caption"><span class="dot green"></span>실제 MOC3 런타임</div><canvas id="model-canvas" aria-label="Live2D 모델 미리보기"></canvas><div id="canvas-message" role="status">모델 런타임을 준비하고 있어요…</div><div class="canvas-footer"><span id="mesh-info">파츠를 불러오는 중</span><span>상반신 · 투명 배경</span></div></div>
+  <div class="workspace-top"><div><span class="eyebrow">LIVE CANVAS</span><h2 id="preview-name">캐릭터 <span class="pill">샘플</span></h2></div><div class="workspace-actions"><button id="compare-source" class="quiet" hidden>원화와 비교</button><button id="fit" class="quiet">↺ 정면으로</button></div></div>
+  <div class="canvas-wrap"><div class="canvas-caption"><span class="dot green"></span><span id="canvas-mode">실제 MOC3 런타임</span></div><canvas id="model-canvas" aria-label="Live2D 모델 미리보기"></canvas><canvas id="reference-canvas" aria-label="제작 원화 비교" hidden></canvas><div id="canvas-message" role="status">모델 런타임을 준비하고 있어요…</div><div class="canvas-footer"><span id="mesh-info">파츠를 불러오는 중</span><span>상반신 · 투명 배경</span></div></div>
   <div class="playback"><label class="switch"><input id="idle" type="checkbox" checked> 자동 움직임</label><label class="switch"><input id="follow" type="checkbox"> 시선에 고개 맞추기</label><button id="blink" class="quiet">눈 깜빡임</button><button id="talk" class="quiet">입 움직임</button></div>
   <section class="progress-card"><div class="progress-heading"><span id="stage-label">샘플을 불러오는 중</span><span id="stage-detail">루미 · LUMI</span></div><ol id="stages"><li data-stage="generating">파츠 생성</li><li data-stage="parts">파츠 분석</li><li data-stage="rigging">리깅</li><li data-stage="validating">검증</li><li data-stage="ready">완료</li></ol><p id="status" role="status" aria-live="polite">이미지로 꾸민 미리보기가 아닌 실제 모델 파일을 읽어요.</p></section>
  </section>
@@ -23,4 +23,4 @@
  </aside>
 </main>
 <dialog id="api-dialog"><form id="api-form"><button type="button" id="close-api" class="dialog-close" aria-label="닫기">×</button><div class="eyebrow">CONNECT YOUR AI</div><h2>제작에 사용할 API 연결</h2><p class="muted">OpenAI 이미지 API 또는 운영자가 설정한 호환 서버를 사용해요. 키는 이 서버의 메모리에만 1시간 보관하며, 파일·브라우저 저장소에는 저장하지 않아요.</p><label for="api-endpoint">연결 주소</label><output id="api-endpoint"></output><label for="api-model">이미지 모델 ID</label><input id="api-model" value="gpt-image-2.5-flare" autocomplete="off" required><label for="api-key">API 키</label><input id="api-key" type="password" autocomplete="off" placeholder="API 키를 입력하세요" required minlength="10"><p class="fine">투명 PNG와 base64 이미지 출력을 지원해야 합니다. 연결 시 모델 사용 권한을 확인해요.</p><p id="api-error" role="alert"></p><button id="api-submit" class="primary">연결 확인</button><button type="button" id="disconnect" class="text-button">연결 해제</button></form></dialog>
-<script src="/apps/live2d-studio/vendor/purismcore.js"></script><script src="/apps/live2d-studio/renderer.js"></script><script src="/apps/live2d-studio/app.js"></script></body></html>
+<script src="/apps/live2d-studio/vendor/purismcore.js"></script><script src="/apps/live2d-studio/renderer.js?v=3"></script><script src="/apps/live2d-studio/app.js?v=3"></script></body></html>

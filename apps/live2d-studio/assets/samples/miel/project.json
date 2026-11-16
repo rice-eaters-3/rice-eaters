@@ -1,268 +1,142 @@
 {
-  "format": "rice-live2d-portrait-v2",
-  "rig": "cohesive-portrait-v2",
+  "name": "Miel",
+  "preset": "miel",
   "canvas": [
     1024,
     1536
   ],
   "atlas": [
-    1448,
-    1086
-  ],
-  "preset": "miel",
-  "pivot": [
-    512,
-    455
+    2048,
+    2048
   ],
   "face": [
-    390,
-    275,
-    645,
-    465
+    340,
+    250,
+    700,
+    480
   ],
-  "headY": null,
-  "layers": [
-    {
-      "id": "Body",
-      "name": "몸·의상",
-      "role": "body",
-      "order": 0,
-      "source": [
-        18,
-        14,
-        344,
-        394
-      ],
-      "pixelCount": 76402,
+  "neck": [
+    470,
+    580
+  ],
+  "pivot": [
+    512,
+    520
+  ],
+  "mouth": [
+    472,
+    398,
+    574,
+    456
+  ],
+  "patches": {
+    "EyeLClosed": {
       "target": [
-        140,
-        375,
-        884,
-        1536
+        372,
+        292,
+        500,
+        382
       ],
-      "visible": true
-    },
-    {
-      "id": "Head",
-      "name": "얼굴·머리카락",
-      "role": "head",
-      "order": 1,
       "source": [
-        377,
+        1064,
         32,
-        713,
-        387
-      ],
-      "pixelCount": 86749,
-      "target": [
-        300,
-        20,
-        724,
-        470
-      ],
-      "visible": true
+        1192,
+        122
+      ]
     },
-    {
-      "id": "EyeLOpen",
-      "name": "왼쪽 눈",
-      "role": "eyeLOpen",
-      "order": 2,
-      "source": [
-        770,
-        143,
-        1023,
-        286
-      ],
-      "pixelCount": 22735,
+    "EyeRClosed": {
       "target": [
-        427,
-        331,
-        483,
-        365
+        542,
+        292,
+        670,
+        382
       ],
-      "visible": true
+      "source": [
+        1064,
+        154,
+        1192,
+        244
+      ]
     },
-    {
-      "id": "EyeROpen",
-      "name": "오른쪽 눈",
-      "role": "eyeROpen",
-      "order": 3,
-      "source": [
-        1154,
-        144,
-        1405,
-        287
-      ],
-      "pixelCount": 22483,
+    "MouthOpen": {
       "target": [
-        552,
-        331,
-        608,
-        365
+        472,
+        398,
+        574,
+        456
       ],
-      "visible": true
-    },
-    {
-      "id": "EyeLClosed",
-      "name": "왼쪽 감은 눈",
-      "role": "eyeLClosed",
-      "order": 4,
       "source": [
-        74,
-        554,
-        305,
-        619
-      ],
-      "pixelCount": 6410,
-      "target": [
-        427,
-        356,
-        483,
-        365
-      ],
-      "visible": true
-    },
-    {
-      "id": "EyeRClosed",
-      "name": "오른쪽 감은 눈",
-      "role": "eyeRClosed",
-      "order": 5,
-      "source": [
-        426,
-        558,
-        662,
-        620
-      ],
-      "pixelCount": 6551,
-      "target": [
-        552,
-        356,
-        608,
-        365
-      ],
-      "visible": true
-    },
-    {
-      "id": "BrowL",
-      "name": "왼쪽 눈썹",
-      "role": "browL",
-      "order": 6,
-      "source": [
-        783,
-        524,
-        1009,
-        588
-      ],
-      "pixelCount": 3746,
-      "target": [
-        427,
-        308,
-        483,
-        321
-      ],
-      "visible": true
-    },
-    {
-      "id": "BrowR",
-      "name": "오른쪽 눈썹",
-      "role": "browR",
-      "order": 7,
-      "source": [
-        1164,
-        524,
-        1390,
-        587
-      ],
-      "pixelCount": 3729,
-      "target": [
-        552,
-        308,
-        608,
-        321
-      ],
-      "visible": true
-    },
-    {
-      "id": "MouthClosed",
-      "name": "다문 입",
-      "role": "mouthClosed",
-      "order": 8,
-      "source": [
-        84,
-        890,
-        283,
-        933
-      ],
-      "pixelCount": 1643,
-      "target": [
-        489,
-        417,
-        541,
-        427
-      ],
-      "visible": true
-    },
-    {
-      "id": "MouthOpen",
-      "name": "열린 입",
-      "role": "mouthOpen",
-      "order": 9,
-      "source": [
-        455,
-        846,
-        635,
-        980
-      ],
-      "pixelCount": 17006,
-      "target": [
-        495,
-        410,
-        535,
-        442
-      ],
-      "visible": true
-    },
-    {
-      "id": "Accessory",
-      "name": "보조 장식",
-      "role": "accessory",
-      "order": 10,
-      "source": [
-        789,
-        824,
-        1010,
-        1028
-      ],
-      "pixelCount": 20151,
-      "target": [
-        660,
-        150,
-        715,
-        205
-      ],
-      "visible": false
-    },
-    {
-      "id": "HairLock",
-      "name": "보조 머리카락",
-      "role": "hair",
-      "order": 11,
-      "source": [
-        1150,
-        824,
-        1357,
-        985
-      ],
-      "pixelCount": 6792,
-      "target": [
-        330,
-        100,
-        410,
-        190
-      ],
-      "visible": false
+        1064,
+        276,
+        1166,
+        334
+      ]
     }
-  ],
+  },
+  "reference": {
+    "rect": [
+      8,
+      8,
+      1032,
+      1544
+    ],
+    "rgbaSha256": "9e4ad6bb3adeb36e83bde1c867c3251c21f644d1c54bd5ddc903648dca46a496"
+  },
+  "registration": {
+    "blink": {
+      "matrix": [
+        [
+          0.9998972043401039,
+          0.00026803384543193923,
+          0.025939970191377636
+        ],
+        [
+          -0.00026803384543193923,
+          0.9998972043401039,
+          -0.18759435580778425
+        ]
+      ],
+      "matches": 124,
+      "inliers": 102,
+      "medianErrorPx": 0.533806562423706,
+      "scale": 0.9998972402648673
+    },
+    "talk": {
+      "matrix": [
+        [
+          1.0001292446716918,
+          -0.00041505224156554346,
+          0.13605733320729074
+        ],
+        [
+          0.00041505224156554346,
+          1.0001292446716918,
+          -0.5072815379608028
+        ]
+      ],
+      "matches": 132,
+      "inliers": 123,
+      "medianErrorPx": 0.5746054649353027,
+      "scale": 1.0001293307947388
+    },
+    "patches": {
+      "EyeLClosed": {
+        "rimMeanDifference": 6.3542250233426705,
+        "featherPx": 10
+      },
+      "EyeRClosed": {
+        "rimMeanDifference": 7.118464052287582,
+        "featherPx": 10
+      },
+      "MouthOpen": {
+        "rimMeanDifference": 2.779680365296804,
+        "featherPx": 10
+      }
+    }
+  },
+  "steamVTubeStudioVerified": false,
+  "format": "rice-live2d-registered-v3",
+  "rig": "canonical-portrait-v3",
   "parameters": [
     {
       "id": "ParamAngleX",
@@ -308,6 +182,8 @@
       "default": 1,
       "keys": [
         0,
+        0.2,
+        0.8,
         1
       ]
     },
@@ -319,30 +195,8 @@
       "default": 1,
       "keys": [
         0,
-        1
-      ]
-    },
-    {
-      "id": "ParamBrowLY",
-      "name": "왼쪽 눈썹",
-      "min": -1,
-      "max": 1,
-      "default": 0,
-      "keys": [
-        -1,
-        0,
-        1
-      ]
-    },
-    {
-      "id": "ParamBrowRY",
-      "name": "오른쪽 눈썹",
-      "min": -1,
-      "max": 1,
-      "default": 0,
-      "keys": [
-        -1,
-        0,
+        0.2,
+        0.8,
         1
       ]
     },
@@ -354,7 +208,7 @@
       "default": 0,
       "keys": [
         0,
-        0.2,
+        0.18,
         1
       ]
     },
@@ -416,6 +270,217 @@
         0,
         1
       ]
+    }
+  ],
+  "layers": [
+    {
+      "id": "Portrait_0",
+      "name": "원화 영역 1",
+      "kind": "base",
+      "target": [
+        43,
+        0,
+        340,
+        580
+      ],
+      "source": [
+        51,
+        8,
+        348,
+        588
+      ],
+      "visible": true,
+      "order": 0
+    },
+    {
+      "id": "Portrait_1",
+      "name": "원화 영역 2",
+      "kind": "base",
+      "target": [
+        340,
+        0,
+        700,
+        398
+      ],
+      "source": [
+        348,
+        8,
+        708,
+        406
+      ],
+      "visible": true,
+      "order": 1
+    },
+    {
+      "id": "Portrait_2",
+      "name": "원화 영역 3",
+      "kind": "base",
+      "target": [
+        340,
+        398,
+        472,
+        456
+      ],
+      "source": [
+        348,
+        406,
+        480,
+        464
+      ],
+      "visible": true,
+      "order": 2
+    },
+    {
+      "id": "Portrait_3",
+      "name": "원화 영역 4",
+      "kind": "base",
+      "target": [
+        472,
+        398,
+        574,
+        456
+      ],
+      "source": [
+        480,
+        406,
+        582,
+        464
+      ],
+      "visible": true,
+      "order": 3
+    },
+    {
+      "id": "Portrait_4",
+      "name": "원화 영역 5",
+      "kind": "base",
+      "target": [
+        574,
+        398,
+        700,
+        456
+      ],
+      "source": [
+        582,
+        406,
+        708,
+        464
+      ],
+      "visible": true,
+      "order": 4
+    },
+    {
+      "id": "Portrait_5",
+      "name": "원화 영역 6",
+      "kind": "base",
+      "target": [
+        340,
+        456,
+        700,
+        580
+      ],
+      "source": [
+        348,
+        464,
+        708,
+        588
+      ],
+      "visible": true,
+      "order": 5
+    },
+    {
+      "id": "Portrait_6",
+      "name": "원화 영역 7",
+      "kind": "base",
+      "target": [
+        700,
+        0,
+        1000,
+        580
+      ],
+      "source": [
+        708,
+        8,
+        1008,
+        588
+      ],
+      "visible": true,
+      "order": 6
+    },
+    {
+      "id": "Portrait_7",
+      "name": "원화 영역 8",
+      "kind": "base",
+      "target": [
+        0,
+        580,
+        1018,
+        1536
+      ],
+      "source": [
+        8,
+        588,
+        1026,
+        1544
+      ],
+      "visible": true,
+      "order": 7
+    },
+    {
+      "id": "EyeLClosed",
+      "name": "왼쪽 눈 감김",
+      "kind": "EyeLClosed",
+      "target": [
+        372,
+        292,
+        500,
+        382
+      ],
+      "source": [
+        1064,
+        32,
+        1192,
+        122
+      ],
+      "visible": true,
+      "order": 8
+    },
+    {
+      "id": "EyeRClosed",
+      "name": "오른쪽 눈 감김",
+      "kind": "EyeRClosed",
+      "target": [
+        542,
+        292,
+        670,
+        382
+      ],
+      "source": [
+        1064,
+        154,
+        1192,
+        244
+      ],
+      "visible": true,
+      "order": 9
+    },
+    {
+      "id": "MouthOpen",
+      "name": "말하기",
+      "kind": "MouthOpen",
+      "target": [
+        472,
+        398,
+        574,
+        456
+      ],
+      "source": [
+        1064,
+        276,
+        1166,
+        334
+      ],
+      "visible": true,
+      "order": 10
     }
   ]
 }

@@ -4,6 +4,7 @@ const portrait=require('../private/live2d/portrait-rig');
 const core=require('../private/live2d/core');
 const {zip}=require('../private/live2d/zip');
 async function build(id,outDir){
+ const registeredDir=path.join(__dirname,'../apps/live2d-studio/assets/samples',id);if(fs.existsSync(path.join(registeredDir,'registration.json')))return require('./build-registered-models.cjs').build(id,outDir);
  const dir=path.join(__dirname,'../apps/live2d-studio/assets/samples',id),atlas=fs.readFileSync(path.join(dir,'textures/texture_00.png')),project=portrait.analyze(atlas,id),name=portrait.PRESETS[id].name,compiled=portrait.rig(project),files={[name+'.moc3']:compiled.buffer,'textures/texture_00.png':atlas};
  for(const [file,value] of Object.entries(portrait.modelDocuments(name,project)))files[file]=Buffer.from(JSON.stringify(value,null,2)+'\n');
  files['validation.json']=Buffer.from(JSON.stringify(await core.validate(compiled.buffer),null,2)+'\n');

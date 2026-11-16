@@ -1,5 +1,26 @@
 [
   {
+    "id": "miel",
+    "name": "Miel",
+    "title": "미엘 · 고양이 카페",
+    "format": "registered-v3",
+    "revision": 3
+  },
+  {
+    "id": "nari",
+    "name": "Nari",
+    "title": "나리 · 별빛 사서",
+    "format": "registered-v3",
+    "revision": 3
+  },
+  {
+    "id": "ruri",
+    "name": "Ruri",
+    "title": "루리 · 바다 탐험가",
+    "format": "registered-v3",
+    "revision": 3
+  },
+  {
     "id": "shizuku",
     "name": "Shizuku",
     "title": "시즈쿠 · 음침한 미녀",
@@ -9,24 +30,6 @@
     "id": "haruto",
     "name": "Haruto",
     "title": "하루토 · 쾌활한 반장",
-    "format": "portrait-v2"
-  },
-  {
-    "id": "miel",
-    "name": "Miel",
-    "title": "미엘 · 고양이 카페",
-    "format": "portrait-v2"
-  },
-  {
-    "id": "nari",
-    "name": "Nari",
-    "title": "나리 · 별빛 사서",
-    "format": "portrait-v2"
-  },
-  {
-    "id": "ruri",
-    "name": "Ruri",
-    "title": "루리 · 바다 탐험가",
     "format": "portrait-v2"
   },
   {
