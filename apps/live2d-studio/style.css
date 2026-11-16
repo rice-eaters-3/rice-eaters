@@ -3,3 +3,5 @@
 #sample-select{font-size:11px;margin:8px 0 15px;padding:9px;color:#806997}.scope p{overflow-wrap:anywhere}
 
 .workspace-actions{display:flex;gap:7px;align-items:center}#reference-canvas{position:absolute;inset:0;pointer-events:none}
+
+.motion-review{padding:14px 0}.review-buttons{display:flex;flex-wrap:wrap;gap:8px}.review-buttons [aria-pressed="true"]{background:#e6ddfb;border-color:#8064b4;color:#483365}#authoring-download{margin:8px 0 14px;width:100%}#parts-audit{line-height:1.65}

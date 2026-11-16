@@ -75,3 +75,18 @@ ZIP에는 `.moc3`, `.model3.json`, `.physics3.json`, `.cdi3.json`, 표정, 텍�
 이번 변경은 검수한 샘플 3종의 제작 경로를 교체한 것입니다. 사용자 API 키를 사용하는 일반 16파츠 자동 생성기는 기존 동작을 유지하며, 같은 품질을 보장하는 것으로 표시하지 않습니다. 시즈쿠·하루토·루미는 이전 제작 방식의 샘플입니다. Steam VTube Studio 직접 실행 검증은 여전히 미실시입니다.
 
 확인한 공식 시각 자료: [호쇼 마린 공식 캐릭터 이미지](https://hololive.hololivepro.com/talents/houshou-marine/), [텐코 시부키 공식 캐릭터 이미지](https://stellive.me/shibuki). 참고 이미지는 저장소나 모델 패키지에 포함하지 않습니다.
+
+## 동작별 확인과 메시 원본 편집
+
+미리보기 아래 **고개 좌우 / 표정·입 모양 / 깜빡임 / 말하기**는 다른 자동 움직임을 멈추고 선택한 파라미터만 6초 주기로 재생합니다. 고개 좌우는 ParamAngleX만, 표정은 기존 Smile의 ParamMouthForm만, 깜빡임은 양쪽 EyeOpen만, 말하기는 MouthOpenY만 사용합니다. 음성·웹캠을 입력하거나 Steam VTube Studio를 실행하는 기능은 아닙니다. 현재 v3의 좌우는 작은 2D 이동·압축이며 옆얼굴이 드러나는 회전은 없습니다. 표정은 입 모양만 변하고 감정별 눈썹·눈·볼 표정은 없습니다.
+
+**현재 v3는 뚜따용 완성 모델이 아닙니다.** Portrait_* 메시들은 그림을 공간별로 나눈 영역이며 얼굴·앞머리·옷 같은 해부학적/의상별 파츠가 아닙니다. 눈 감김·말하기는 주변 피부까지 포함한 패치입니다. 가려진 이마·흰자·목·몸을 그려 넣은 PSD, 독립 눈동자/눈꺼풀/입술, 머리·몸 교체용 디포머, 편집용 cmo3는 없습니다.
+
+파츠 배치 탭의 **실제 메시 원본 ZIP**은 미엘·나리·루리의 실제 메시별 투명 PNG, 원본 픽셀 좌표, 고유 ID, 중립 메시 정점/UV/삼각형, 파라미터 연결, project.json과 registration.json을 내보냅니다. manifest.json은 위 지원 여부를 false로 기록합니다. PNG로 나눠 내보냈다는 이유로 Cubism 파츠 분리를 완료했다고 표시하지 않습니다.
+
+- 내보내기: `node scripts/live2d-authoring.cjs export miel Miel-mesh-source.zip`
+- ZIP을 풀어 PNG를 같은 크기·같은 위치로 수정한 뒤: `node scripts/live2d-authoring.cjs repack <원본폴더> <별도출력폴더>`
+
+재패킹은 텍스처와 MOC3를 새로 만들고 런타임에서 파라미터를 검증합니다. bundled 샘플은 덮어쓰지 않습니다. 이 경로는 프로젝트 전용 소스 편집이며 Cubism Editor 편집 프로젝트를 대신하지 않습니다. 독립 파츠와 가려진 면을 복원하는 재제작이 있어야 머리·몸·옷의 자유로운 교체가 가능합니다.
+
+참고: [Live2D 소재 분리 안내](https://docs.live2d.com/en/cubism-editor-manual/divide-the-material/), [일러스트 가공: 가려진 면의 복원](https://docs.live2d.com/en/cubism-editor-tutorials/psd/), [cmo3와 moc3 파일 종류](https://docs.live2d.com/en/cubism-editor-manual/file-type-and-extension/).
