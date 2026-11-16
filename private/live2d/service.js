@@ -53,6 +53,11 @@ function createService({dataDir,fetchImpl=globalThis.fetch,baseUrl=process.env.L
     const origin=req.headers.origin;if((origin&&origin!=='http://'+req.headers.host&&origin!=='https://'+req.headers.host)||req.headers['sec-fetch-site']==='cross-site')fault(403,'다른 출처의 요청은 허용되지 않습니다.');
     if(!String(req.headers['content-type']||'').startsWith('application/json'))fault(415,'JSON 요청이 필요합니다.');
    }
+   if(method==='GET'&&/^\/samples\/[^/]+\/authoring$/.test(route)){
+    const sample=SAMPLES.find(s=>s.id===route.split('/')[2]);if(!sample)fault(404,'샘플을 찾을 수 없습니다.');
+    const dir=path.join(__dirname,'../../apps/live2d-studio/assets/samples',sample.id),project=JSON.parse(fs.readFileSync(path.join(dir,'project.json')));if(project.format!=='rice-live2d-registered-v3')fault(409,'해당 샘플의 메시 원본 내보내기는 지원하지 않습니다.');
+    const result=require('./authoring').exportSource(dir);return output(res,200,result.buffer,{'Content-Type':'application/zip','Content-Disposition':'attachment; filename="'+sample.name+'-mesh-source.zip"'});
+   }
    if(method==='GET'&&(route==='/sample/export'||/^\/samples\/[^/]+\/export$/.test(route))){
     const id=route==='/sample/export'?'lumi':route.split('/')[2],sample=SAMPLES.find(s=>s.id===id);if(!sample)fault(404,'샘플을 찾을 수 없습니다.');
     const dir=path.join(__dirname,'../../apps/live2d-studio/assets/samples',sample.id),files={};for(const file of fileNames(sample))files[sample.name+'/'+file]=fs.readFileSync(path.join(dir,file));if(fs.existsSync(path.join(dir,'official-core-validation.json')))files[sample.name+'/official-core-validation.json']=fs.readFileSync(path.join(dir,'official-core-validation.json'));return output(res,200,zip(files),{'Content-Type':'application/zip','Content-Disposition':'attachment; filename="'+sample.name+'.zip"'});

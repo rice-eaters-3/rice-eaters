@@ -8,6 +8,8 @@ const {zip}=require('../private/live2d/zip');
 const sample=path.join(__dirname,'../apps/live2d-studio/assets/samples/lumi');
 const portrait=require('../private/live2d/portrait-rig');
 const registered=require('../private/live2d/registered-rig');
+const authoring=require('../private/live2d/authoring');
+const motionReview=require('../apps/live2d-studio/motion-review');
 const atlas=fs.readFileSync(path.join(sample,'textures/texture_00.png'));
 const key='test-only-key-never-persist-001';
 function entries(buffer){const result={};let at=0;while(buffer.readUInt32LE(at)===0x04034b50){const size=buffer.readUInt32LE(at+18),n=buffer.readUInt16LE(at+26),extra=buffer.readUInt16LE(at+28),name=buffer.toString('utf8',at+30,at+30+n),start=at+30+n+extra,data=buffer.subarray(start,start+size);assert.equal(buffer.readUInt32LE(at+14),crc32(data));result[name]=data;at=start+size;}assert.equal(buffer.readUInt32LE(at),0x02014b50);return result;}
@@ -96,4 +98,21 @@ for(const id of ['miel','nari','ruri'])test(id+' canonical face is not repositio
  }finally{handle.release();}
  const decoded=decode(atlas);for(const layer of p.layers.filter(l=>l.kind!=='base')){assert.equal(layer.source[2]-layer.source[0],layer.target[2]-layer.target[0]);assert.equal(layer.source[3]-layer.source[1],layer.target[3]-layer.target[1]);for(let y=layer.source[1]+12;y<layer.source[3]-12;y++)for(let x=layer.source[0]+12;x<layer.source[2]-12;x++)assert.equal(decoded.rgba[(y*decoded.width+x)*4+3],255,'expression interior must cover the underlying open eye/closed lip');}
  assert.ok(p.registration.blink.medianErrorPx<1.5);assert.ok(p.registration.talk.medianErrorPx<1.5);
+});
+
+test('review channels stay isolated and expose actual model limitations',()=>{
+ for(const [mode,allowed] of Object.entries({head:['ParamAngleX'],expression:['ParamMouthForm'],blink:['ParamEyeLOpen','ParamEyeROpen'],speech:['ParamMouthOpenY']})){
+  const seen=[];for(let t=0;t<6;t+=.1){const v=motionReview.values(mode,t);assert.deepEqual(Object.keys(v),allowed);seen.push(JSON.stringify(v));}assert.ok(new Set(seen).size>4,mode);
+ }
+ assert.equal(motionReview.values('blink',1.5).ParamEyeLOpen,0);assert.equal(motionReview.values('speech',0).ParamMouthOpenY,0);assert.throws(()=>motionReview.values('unknown',0));
+});
+test('mesh-source export preserves every actual layer and can rebuild a working model',async t=>{
+ const dir=path.join(__dirname,'../apps/live2d-studio/assets/samples/miel'),{files,capabilities,buffer}=authoring.exportSource(dir),source=entries(buffer),project=JSON.parse(files['project.json']),atlasImage=decode(fs.readFileSync(path.join(dir,'textures/texture_00.png')));
+ assert.equal(capabilities.headBodySwapReady,false);assert.equal(capabilities.semanticArtSeparation,false);assert.equal(capabilities.editableCmo3,false);assert.equal(capabilities.layers.length,project.layers.length);
+ for(const layer of project.layers){const im=decode(source['layers/'+layer.id+'.png']),[l,top,r,b]=layer.source;assert.equal(im.width,r-l);assert.equal(im.height,b-top);for(let y=top;y<b;y++)assert.deepEqual(im.rgba.subarray((y-top)*im.width*4,(y-top+1)*im.width*4),atlasImage.rgba.subarray((y*atlasImage.width+l)*4,(y*atlasImage.width+r)*4));}
+ const temp=fs.mkdtempSync(path.join(os.tmpdir(),'live2d-authoring-'));t.after(()=>fs.rmSync(temp,{recursive:true,force:true}));const input=path.join(temp,'in'),out=path.join(temp,'out');for(const [name,bytes] of Object.entries(files)){const dest=path.join(input,name);fs.mkdirSync(path.dirname(dest),{recursive:true});fs.writeFileSync(dest,bytes);}
+ const rebuilt=await require('../scripts/live2d-authoring.cjs').repack(input,out);assert.equal(rebuilt.report.parameters,11);assert.ok(Object.values(rebuilt.report.effects).every(n=>n>0));
+ const original=registered.rawCanonical(fs.readFileSync(path.join(dir,'textures/texture_00.png')),project),after=registered.rawCanonical(rebuilt.texture,rebuilt.project);assert.equal(original.length,after.length);for(let at=0;at<original.length;at+=4){assert.equal(original[at+3],after[at+3]);if(original[at+3])assert.deepEqual(original.subarray(at,at+4),after.subarray(at,at+4));}
+ // Crops of a portrait are not mislabeled as independently painted hair/face parts.
+ assert.ok(capabilities.layers.some(l=>l.kind==='base'&&l.id.startsWith('Portrait_')));assert.ok(!Object.keys(files).some(f=>f.endsWith('.cmo3')||f.endsWith('.psd')));
 });
