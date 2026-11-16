@@ -6,6 +6,7 @@ const {runtime,open,validate}=require('../private/live2d/core');
 const {createService}=require('../private/live2d/service');
 const {zip}=require('../private/live2d/zip');
 const sample=path.join(__dirname,'../apps/live2d-studio/assets/samples/lumi');
+const portrait=require('../private/live2d/portrait-rig');
 const atlas=fs.readFileSync(path.join(sample,'textures/texture_00.png'));
 const key='test-only-key-never-persist-001';
 function entries(buffer){const result={};let at=0;while(buffer.readUInt32LE(at)===0x04034b50){const size=buffer.readUInt32LE(at+18),n=buffer.readUInt16LE(at+26),extra=buffer.readUInt16LE(at+28),name=buffer.toString('utf8',at+30,at+30+n),start=at+30+n+extra,data=buffer.subarray(start,start+size);assert.equal(buffer.readUInt32LE(at+14),crc32(data));result[name]=data;at=start+size;}assert.equal(buffer.readUInt32LE(at),0x02014b50);return result;}
@@ -60,4 +61,23 @@ test('upstream denial, URL-only images and missing parts fail honestly without a
  await call('/connection',{key,model:'test'});const j=(await call('/jobs',{name:'Bad',prompt:'An original adult character'})).data;let status;for(let i=0;i<30;i++){status=(await call('/jobs/'+j.id)).data;if(status.stage==='error')break;await new Promise(r=>setTimeout(r,10));}assert.equal(status.stage,'error');assert.match(status.error,/base64/);assert.equal((await fetch(base+'/jobs/'+j.id+'/export')).status,409);assert.equal(calls,2);
  deny=true;const rejected=await call('/connection',{key,model:'test'});assert.equal(rejected.status,401);assert.ok(!JSON.stringify(rejected).includes('secret upstream'));assert.equal((await call('/config')).data.connected,false);
  assert.throws(()=>createService({dataDir:dir,baseUrl:'http://external.example/v1'}),/HTTPS/);
+});
+for(const [id,preset] of Object.entries(portrait.PRESETS))test(preset.name+' portrait rework: reproducible real MOC3, closed-eye sprites, all parameter extremes',async()=>{
+ const dir=path.join(sample,'..',id),project=JSON.parse(fs.readFileSync(path.join(dir,'project.json'))),buffer=fs.readFileSync(path.join(dir,preset.name+'.moc3'));
+ assert.equal(project.format,'rice-live2d-portrait-v2');assert.deepEqual(portrait.rig(project).buffer,buffer);assert.equal(project.layers.filter(l=>l.visible).length,10);
+ const report=await validate(buffer);assert.equal(report.parameters,13);assert.equal(report.drawables,10);assert.ok(Object.values(report.effects).every(n=>n>0));
+ const official=JSON.parse(fs.readFileSync(path.join(dir,'official-core-validation.json')));assert.equal(official.runtime,'Live2D Cubism Core');assert.ok(Object.values(official.effects).every(n=>n>0));assert.equal(official.steamVTubeStudioVerified,false);
+ const handle=open(await runtime(),buffer),m=handle.model;try{
+  m.parameters.values.set(m.parameters.defaultValues);m.update();const leftOpen=m.drawables.ids.indexOf('EyeLOpen'),leftClosed=m.drawables.ids.indexOf('EyeLClosed');assert.equal(m.drawables.opacities[leftOpen],1);assert.equal(m.drawables.opacities[leftClosed],0);
+  m.parameters.values[m.parameters.ids.indexOf('ParamEyeLOpen')]=0;m.update();assert.equal(m.drawables.opacities[leftOpen],0);assert.equal(m.drawables.opacities[leftClosed],1);
+  for(const direction of [-1,1]){for(let i=0;i<m.parameters.count;i++)m.parameters.values[i]=direction<0?m.parameters.minimumValues[i]:m.parameters.maximumValues[i];m.update();for(const points of m.drawables.vertexPositions)assert.ok(points.every(Number.isFinite));}
+  for(const uv of m.drawables.vertexUvs)assert.ok(uv.every(v=>v>=0&&v<=1));
+ }finally{handle.release();}
+});
+test('both reworked models export complete VTube Studio folders without an API key',async t=>{
+ const dir=fs.mkdtempSync(path.join(os.tmpdir(),'live2d-samples-')),service=createService({dataDir:dir,fetchImpl:()=>{throw Error('sample must not call AI');}}),server=http.createServer((req,res)=>service.handle(req,res,new URL(req.url,'http://localhost'),'viewer'));
+ await new Promise(r=>server.listen(0,'127.0.0.1',r));t.after(async()=>{service.close();await new Promise(r=>server.close(r));fs.rmSync(dir,{recursive:true,force:true});});const base='http://127.0.0.1:'+server.address().port+'/api/live2d';
+ const config=await(await fetch(base+'/config')).json();assert.equal(config.connected,false);assert.equal(config.samples.length,3);
+ for(const s of config.samples){const response=await fetch(base+'/samples/'+s.id+'/export');assert.equal(response.status,200);const files=entries(Buffer.from(await response.arrayBuffer())),doc=JSON.parse(files[s.name+'/'+s.name+'.model3.json']);for(const f of [doc.FileReferences.Moc,...doc.FileReferences.Textures,doc.FileReferences.Physics,doc.FileReferences.DisplayInfo,...doc.FileReferences.Expressions.map(e=>e.File)])assert.ok(files[s.name+'/'+f],f);assert.equal(files[s.name+'/'+doc.FileReferences.Moc].toString('ascii',0,4),'MOC3');}
+ assert.equal((await fetch(base+'/samples/unknown/export')).status,404);
 });

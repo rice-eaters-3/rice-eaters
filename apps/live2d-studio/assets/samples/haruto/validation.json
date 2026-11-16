@@ -1,0 +1,24 @@
+{
+  "runtime": "Purism Core 1.1.0",
+  "coreVersion": 83951616,
+  "mocVersion": 3,
+  "drawables": 10,
+  "parameters": 13,
+  "effects": {
+    "ParamAngleX": 9,
+    "ParamAngleY": 9,
+    "ParamAngleZ": 9,
+    "ParamEyeLOpen": 2,
+    "ParamEyeROpen": 2,
+    "ParamBrowLY": 1,
+    "ParamBrowRY": 1,
+    "ParamMouthOpenY": 2,
+    "ParamMouthForm": 2,
+    "ParamBodyAngleX": 1,
+    "ParamBodyAngleZ": 1,
+    "ParamBreath": 1,
+    "ParamHairSway": 1
+  },
+  "validatedAt": "2026-11-16T08:29:40.646Z",
+  "steamVTubeStudioVerified": false
+}

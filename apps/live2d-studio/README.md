@@ -32,3 +32,14 @@ ZIP에는 `.moc3`, `.model3.json`, `.physics3.json`, `.cdi3.json`, 표정, 텍�
 - 웹 런타임: [SakuraMotion/PurismCore](https://github.com/SakuraMotion/PurismCore), v1.1.0, MIT. `vendor/PURISM_LICENSE.txt`를 참조하세요. Live2D사의 공식 SDK가 아닙니다.
 - Lumi 아틀라스: 이 프로젝트용 AI 생성. BOOTH·크몽 판매자의 이미지나 모델을 복제하지 않았습니다.
 - [VTube Studio 공식 모델 불러오기 안내](https://github.com/DenchiSoft/VTubeStudio/wiki/Loading-your-own-Models).
+
+
+## 시즈쿠·하루토 Live2D 리워크
+
+`/live2d?sample=shizuku`, `/live2d?sample=haruto`에서 두 캐릭터를 바로 엽니다. 샘플 선택 메뉴에서도 전환할 수 있고, API 연결 없이 모델을 조작·다운로드할 수 있습니다. 시즈쿠는 긴 헝클어진 머리·안경·회색 트레이닝복의 성인 여성, 하루토는 올린 머리·탄탄한 체격·단정한 교복의 성인 남성 디자인입니다.
+
+원화를 참조해 새 투명 파츠 아틀라스를 제작했습니다. 얼굴·귀·코·머리카락을 하나의 일관된 원화 메시로 유지하고, 눈을 뜬 파츠와 감은 파츠·눈썹·입을 분리했습니다. 전체 머리 변형을 공유하므로 얼굴 파츠를 서로 다른 방식으로 움직이지 않습니다. 머리카락 변형은 얼굴 영역 밖에 적용하며, 몸은 목 아래에 움직임을 배치합니다. 남자 캐릭터의 목 중복을 줄이기 위해 머리 메시의 아래 경계를 턱 윤곽에 맞춥니다. 여자 캐릭터는 긴 머리 안의 얼굴·목 비율을 맞추는 세로 좌표 매핑을 사용합니다.
+
+각 모델은 12개 원화 셀 중 10개 메시를 사용하며, 실제 MOC3에 13개 파라미터를 기록합니다. 프로젝트 형식은 `rice-live2d-portrait-v2`입니다. 이 두 샘플의 배치는 읽기 전용이고 기존 16파츠 AI 생성기의 배치 편집 경로를 바꾸지 않습니다. 깊은 3D 회전·독립 눈동자·손 리깅은 포함하지 않습니다. 작은 고개 움직임과 깜빡임·말하기·호흡용 모델입니다.
+
+`node scripts/build-live2d-samples.cjs <ZIP출력폴더>`로 아틀라스에서 모델을 다시 생성합니다. 검증용 공식 Core가 로컬에 있는 경우에만 `LIVE2D_QA_CORE_PATH`를 설정해 추가 검증할 수 있습니다. 공식 Core 파일 자체는 저장소나 ZIP에 재배포하지 않습니다. 현재 모델 2종 모두 공식 Cubism Core 5.1에서 파일 로딩과 13개 파라미터 반응을 검증했습니다. **Steam VTube Studio 직접 실행·카메라 추적 테스트는 미실시**입니다.
