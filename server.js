@@ -463,7 +463,10 @@ function validateOrigin(req){
 }
 async function api(req,res,url,sid){
   const pathname=url.pathname;
-  if(pathname.startsWith('/api/live2d/'))return live2dService.handle(req,res,url,sid);
+  if(pathname.startsWith('/api/live2d/')){
+    requireOperator(req,res);
+    return live2dService.handle(req,res,url,sid);
+  }
   if(pathname==='/api/editor'||pathname.startsWith('/api/editor/')){
     requireOperator(req,res);
     if(!['GET','HEAD'].includes(req.method)){validateOrigin(req);if(req.headers['sec-fetch-site']==='cross-site')fail(403,'다른 출처의 요청은 허용되지 않습니다.');}
@@ -1046,7 +1049,8 @@ function staticFile(req,res,url,sid){
   try{name=decodeURIComponent(url.pathname)}catch(e){fail(400,'잘못된 경로입니다.')}
   if(name==='/'||name==='/index.html')name='/index.html';
   if(name==='/mars')name='/apps/terraforming-mars/index.html';
-  if(name==='/live2d'||name==='/live2d/')name='/apps/live2d-studio/index.html';
+  if(name==='/private'||name==='/private/')name='/apps/operator/index.html';
+  if(name==='/live2d'||name==='/live2d/')name='/apps/operator/index.html';
   if(name==='/trace'||name==='/trace/')name='/apps/security-trace/index.html';
   if(name==='/mystery'||name==='/mystery/')name='/apps/murder-mystery/index.html';
   if(name==='/mystery-editor'||name==='/mystery-editor/')name='/apps/murder-mystery/editor.html';
@@ -1055,7 +1059,7 @@ function staticFile(req,res,url,sid){
   const resolved=path.resolve(ROOT,'.'+name);
   if(!resolved.startsWith(ROOT+path.sep)||name.split('/').some(p=>['data','.git','node_modules','tests','.github','private','mystery-content'].includes(p))||['/server.js','/package.json','/Dockerfile','/.dockerignore','/.gitignore'].includes(name))fail(403,'접근할 수 없는 경로입니다.');
   const protectedFile=path.relative(ROOT,resolved).split(path.sep).join('/');
-  const operatorFile=/^apps\/murder-mystery\/(?:editor\.(?:html|js|css)|test\.(?:html|css)|test-(?:ui|engine)\.js)$/.test(protectedFile);
+  const operatorFile=/^apps\/(?:operator\/index\.html|live2d-studio\/.*|murder-mystery\/(?:editor\.(?:html|js|css)|test\.(?:html|css)|test-(?:ui|engine)\.js))$/.test(protectedFile);
   if(operatorFile)requireOperator(req,res);
   const ext=path.extname(resolved).toLowerCase();
   if(!MIME[ext])fail(404,'지원하지 않는 파일입니다.');
