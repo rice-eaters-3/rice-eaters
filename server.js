@@ -1114,6 +1114,7 @@ function staticFile(req,res,url,sid){
   if(name==='/private'||name==='/private/')name='/apps/operator/index.html';
   if(name==='/live2d'||name==='/live2d/')name='/apps/operator/index.html';
   if(name==='/trace'||name==='/trace/')name='/apps/security-trace/index.html';
+  if(name==='/dilemma'||name==='/dilemma/')name='/apps/eternal-return-dilemma/index.html';
   if(name==='/mystery'||name==='/mystery/')name='/apps/murder-mystery/index.html';
   if(name==='/mystery-editor'||name==='/mystery-editor/')name='/apps/murder-mystery/editor.html';
   if(name==='/mystery-test'||name==='/mystery-test/')name='/apps/murder-mystery/test.html';
